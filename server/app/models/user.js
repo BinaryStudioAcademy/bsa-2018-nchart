@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../config/index");
+const Group = require("./group");
 
 const User = sequelize.define("user", {
   firstName: {
@@ -17,6 +18,14 @@ const User = sequelize.define("user", {
 });
 
 // this method creates table if it doesn't exit
-User.sync();
+User.sync().then(()=>{
+  Group.sync();
+  return User.hasMany(Group, {
+    foreignKey: 'owner_id',
+    sourceKey: 'id',
+    onDelete: 'CASCADE',
+    constraints: false
+  });
+});
 
 module.exports = User;
