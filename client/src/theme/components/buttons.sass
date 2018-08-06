@@ -1,0 +1,38 @@
+@import ../variables
+@import ../colors
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700')
+
+.ui-widget.ui-button,
+.ui-button
+	width: 158px
+	height: 50px
+	padding: 15px
+	border: none
+	color: #fff
+	font-weight: 600
+	font-family: 'Lato'
+	&:disabled
+		background-color: $disabledButtonColor
+		color: $textColorDark
+		opacity: 1
+
+	
+.ui-widget.ui-button-default,
+.ui-button-default,
+.ui-button-default:active
+	background-color: $defaultButtonColor
+	border: none
+	&:enabled:hover
+		border: none
+		background-color: $defaultButtonHover
+
+.ui-widget.ui-button-secondary,
+.ui-button-secondary,
+.ui-button-secondary:active
+	background-color: $secondaryButtonColor
+	&:enabled:hover
+		border: none
+		background-color: $secondaryButtonHover
+
+.ui-button-text-only .ui-button-text
+	padding: 0
