@@ -8,4 +8,4 @@ class GroupRepository extends generalRepository {
   }
 }
 
-module.exports = GroupRepository;
+module.exports = new GroupRepository();

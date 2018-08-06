@@ -8,4 +8,4 @@ class ProjectRepository extends generalRepository {
   }
 }
 
-module.exports = ProjectRepository;
+module.exports = new ProjectRepository();

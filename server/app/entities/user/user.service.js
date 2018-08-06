@@ -2,29 +2,29 @@ const UserRepository = require("./user.repository");
 
 module.exports = {
   findAll: callback => {
-    new UserRepository().getAll((err, data) => {
+    UserRepository.getAll((err, data) => {
       callback(null, data);
     });
   },
   findById: (id, callback) => {
-    new UserRepository().getById(id, (err, data) => {
+    UserRepository.getById(id, (err, data) => {
       callback(err, data);
     });
   },
   save: (obj, callback) => {
-    new UserRepository().save(obj, (err, data) => {
+    UserRepository.save(obj, (err, data) => {
       callback(err, data);
     });
   },
 
   removeById: (id, callback) => {
-    new UserRepository().removeById(id, (err, data) => {
+    UserRepository.removeById(id, (err, data) => {
       callback(err, data);
     });
   },
 
   update: (id, obj, callback) => {
-    new UserRepository().update(id, obj, (err, data) => {
+    UserRepository.update(id, obj, (err, data) => {
       callback(err, data);
     });
   }

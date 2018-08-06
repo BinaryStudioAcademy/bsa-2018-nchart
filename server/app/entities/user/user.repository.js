@@ -8,4 +8,4 @@ class UserRepository extends generalRepository {
   }
 }
 
-module.exports = UserRepository;
+module.exports = new UserRepository();
