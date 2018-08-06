@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 @NgModule({
-	exports: [],
-	imports: []
+	imports: [],
+	exports: []
 })
 export class UIKitModule {}
