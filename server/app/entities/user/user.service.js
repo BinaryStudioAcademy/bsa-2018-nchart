@@ -1,4 +1,8 @@
 const UserRepository = require("./user.repository");
+const CompanyService = require("../company/company.service");
+const CompanyUserService = require("../company_user/company_user.service");
+const GroupService = require("../group/group.service");
+const GroupUserService = require("../group_user/group_user.service");
 
 module.exports = {
   findAll: callback => {
@@ -12,8 +16,48 @@ module.exports = {
     });
   },
   save: (obj, callback) => {
+    let payload = {
+      user: null,
+      company: null,
+      company_user: null,
+      group: null,
+      group_user: null
+    };
     UserRepository.save(obj, (err, data) => {
-      callback(err, data);
+      if (err) {
+        callback(err, data);
+      }
+      payload.user = Object.assign({}, data);
+    });
+    CompanyService.save(obj, (err, data) => {
+      if (err) {
+        callback(err, data);
+      }
+      payload.company = Object.assign({}, data);
+      CompanyUserService.save(
+        payload.user.id,
+        payload.company.id,
+        (err, data) => {
+          if (err) {
+            callback(err, data);
+          }
+          payload.company_user = Object.assign({}, data);
+        }
+      );
+    });
+    GroupService.save("General", (err, data) => {
+      if (err) {
+        callback(err, data);
+      }
+      payload.group = Object.assign({}, data);
+      GroupUserService.save(payload.user.id, payload.group.id, (err, data) => {
+        if (err) {
+          callback(err, data);
+        }
+        payload.group_user = Object.assign({}, data);
+        console.log(payload);
+      });
+      callback(err, payload);
     });
   },
 

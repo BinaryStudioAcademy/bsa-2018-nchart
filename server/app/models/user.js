@@ -1,29 +1,44 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../config/index");
-const Group = require("./group");
+const Company_User = require("./company/company_user");
+const Group_User = require("./group/group_user");
+const Company = require("./company/company");
+const Group = require("./group/group");
 
-const User = sequelize.define("user", {
-  firstName: {
+const User = sequelize.define("users", {
+  first_name: {
     type: Sequelize.STRING
   },
-  lastName: {
+  last_name: {
+    type: Sequelize.STRING
+  },
+  email: {
     type: Sequelize.STRING
   },
   password: {
-    type: Sequelize.STRING
-  },
-  type: {
     type: Sequelize.STRING
   }
 });
 
 // this method creates table if it doesn't exit
-User.sync().then(()=>{
+User.sync().then(() => {
+  Company.sync();
+  Company_User.sync();
+  return User.hasMany(Company_User, {
+    foreignKey: "user_id",
+    sourceKey: "id",
+    onDelete: "CASCADE",
+    constraints: false
+  });
+});
+
+User.sync().then(() => {
   Group.sync();
-  return User.hasMany(Group, {
-    foreignKey: 'owner_id',
-    sourceKey: 'id',
-    onDelete: 'CASCADE',
+  Group_User.sync();
+  return User.hasMany(Group_User, {
+    foreignKey: "user_id",
+    sourceKey: "id",
+    onDelete: "CASCADE",
     constraints: false
   });
 });

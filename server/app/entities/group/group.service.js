@@ -11,8 +11,8 @@ module.exports = {
       callback(err, data);
     });
   },
-  save: (obj, callback) => {
-    GroupRepository.save(obj, (err, data) => {
+  save: (name, callback) => {
+    GroupRepository.save(name, (err, data) => {
       callback(err, data);
     });
   },
