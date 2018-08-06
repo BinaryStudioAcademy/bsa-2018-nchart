@@ -2,26 +2,42 @@ import { storiesOf, moduleMetadata } from '@storybook/angular';
 // import { action } from '@storybook/addon-actions';
 import { SecondaryButtonComponent } from '../app/shared/components/buttons/secondary-button.component';
 import { DefaultButtonComponent } from '../app/shared/components/buttons/default-button.component';
-import {ButtonModule} from 'primeng/button';
+import { RadioButtonComponent } from '../app/shared/components/input//radioButton/radio-button.component';
+import { ButtonModule } from 'primeng/button';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 storiesOf('My Button', module)
 	.addDecorator(
 		moduleMetadata({
-		imports: [ButtonModule],
-		schemas: [],
-		declarations: [DefaultButtonComponent],
-		providers: [],
+			imports: [ButtonModule],
+			schemas: [],
+			declarations: [DefaultButtonComponent],
+			providers: []
 		})
 	)
 	.add('with some emoji', () => ({
 		component: SecondaryButtonComponent,
 		props: {
-			label: 'Hello',
-		},
+			label: 'Hello'
+		}
 	}))
 	.add('default', () => ({
 		component: DefaultButtonComponent,
 		props: {
-			label: 'World',
-		},
+			label: 'World'
+		}
+	}));
+
+storiesOf('Input', module)
+	.addDecorator(
+		moduleMetadata({
+			imports: [RadioButtonModule],
+			schemas: [],
+			declarations: [RadioButtonComponent],
+			providers: []
+		})
+	)
+	.add('default', () => ({
+		component: RadioButtonComponent,
+		props: {}
 	}));
