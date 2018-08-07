@@ -1,0 +1,9 @@
+<label class="input-label"
+	   [class.ui-input-label-disabled]="isDisabled()">{{label}}</label>
+<p-dropdown [options]="options" 
+			placeholder="{{placeholder}}" 
+			[formControl]="control"
+			[disabled]="isDisabled()"
+			[group]="true"
+			>
+</p-dropdown>

@@ -1,0 +1,76 @@
+@import ../variables
+@import ../colors
+
+.ui-dropdown .ui-dropdown-label
+	height: 40px
+	padding: 12px
+	color: $secondaryTextColor
+	font-size: $fontSize
+
+.ui-dropdown.ui-widget:enabled:active,
+.ui-dropdown.ui-widget:enabled:focus,
+.ui-dropdown.ui-widget:focus-within,
+.ui-dropdown:not(.ui-state-disabled):hover
+	border: 2px solid $activeColor
+	box-shadow: none
+	label.ui-dropdown-label,
+	.pi-caret-down:before
+		color: $primaryTextColor
+	label.ui-dropdown-label.ui-placeholder
+		color: $secondaryTextColor
+
+.ui-dropdown.ui-state-disabled
+	label.ui-dropdown-label,
+	.ui-dropdown-trigger
+		background-color: $disabledButtonColor
+	color: $secondaryTextColor
+	opacity: 1
+
+
+
+.ui-dropdown.ui-widget
+	min-width: 240px
+	border: 2px solid $disabledButtonColor
+
+.ui-dropdown label.ui-dropdown-label
+	width: 100%
+	color: $secondaryTextColor
+
+
+.ui-dropdown-trigger
+	border: 2px solid $disabledButtonColor
+	border: none
+	.pi-caret-down:before
+		color: $secondaryTextColor
+
+.ui-shadow
+	box-shadow: 0 0 10px $teriaryTextColor
+	::-webkit-scrollbar
+		width:  5px 
+
+	::-webkit-scrollbar-thumb
+		background: $teriaryTextColor
+
+	::-webkit-scrollbar-track
+		background: $disabledButtonColor	
+
+.ui-widget-content
+	border: none
+	
+.ui-dropdown-panel .ui-dropdown-list
+	color: $secondaryTextColor
+	padding: 0
+
+.ui-dropdown-panel .ui-dropdown-item
+	padding: 10px
+	padding-left: 20px
+	border-radius: 0
+	&.ui-state-highlight
+		background-color: $disabledButtonColor
+		color: $secondaryTextColor
+
+.ui-dropdown-panel .ui-dropdown-item:not(.ui-state-highlight):not(.ui-state-disabled):hover
+	background-color: $disabledButtonColor
+
+.ui-dropdown-item-group
+	padding: 12px

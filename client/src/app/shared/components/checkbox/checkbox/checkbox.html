@@ -1,0 +1,8 @@
+<div class="ui-g-12">
+	<p-checkbox name="groupname" 
+				value="{{value}}" 
+				[(ngModel)]="selectedValues"
+				[disabled]="isDisabled()">
+	</p-checkbox>
+	<label [class.ui-input-label-disabled]="isDisabled()">{{label}}</label>
+</div>
