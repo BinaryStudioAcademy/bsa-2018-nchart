@@ -8,7 +8,7 @@
 		"test": "ng test",
 		"lint": "ng lint",
 		"e2e": "ng e2e",
-		"format:fix": "pretty-quick --staged",
+		"format:fix": "pretty-quick --staged --config ./.prettierrc ./src",
 		"precommit": "run-s format:fix lint",
 		"storybook": "start-storybook -p 6006",
 		"build-storybook": "build-storybook"
