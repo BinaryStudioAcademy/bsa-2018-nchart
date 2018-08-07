@@ -26,11 +26,13 @@ module.exports = {
     UserRepository.save(obj, (err, data) => {
       if (err) {
         callback(err, data);
+        throw err;
       }
       payload.user = Object.assign({}, data);
       GroupService.save("General", (err, data) => {
         if (err) {
           callback(err, data);
+          throw err;
         }
         payload.group = Object.assign({}, data);
         GroupUserService.save(
@@ -39,26 +41,29 @@ module.exports = {
           (err, data) => {
             if (err) {
               callback(err, data);
+              throw err;
             }
             payload.group_user = Object.assign({}, data);
-          }
-        );
-      });
-      CompanyService.save(obj, (err, data) => {
-        if (err) {
-          callback(err, data);
-        }
-        payload.company = Object.assign({}, data);
-        CompanyUserService.save(
-          payload.user.id,
-          payload.company.id,
-          (err, data) => {
-            if (err) {
-              callback(err, data);
-            }
-            payload.company_user = Object.assign({}, data);
-            console.log(payload);
-            callback(err, payload);
+            CompanyService.save(obj, (err, data) => {
+              if (err) {
+                callback(err, data);
+                throw err;
+              }
+              payload.company = Object.assign({}, data);
+              CompanyUserService.save(
+                payload.user.id,
+                payload.company.id,
+                (err, data) => {
+                  if (err) {
+                    callback(err, data);
+                    throw err;
+                  }
+                  payload.company_user = Object.assign({}, data);
+                  console.log(payload);
+                  callback(null, payload);
+                }
+              );
+            });
           }
         );
       });

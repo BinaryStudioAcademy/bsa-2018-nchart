@@ -9,11 +9,24 @@ class UserRepository extends generalRepository {
 
   save(obj, callback) {
     this.model
-      .create(obj.user)
-      .then(data => {
-        callback(null, data.dataValues);
+      .findAll({
+        where: {
+          email: obj.user.email
+        }
       })
-      .catch(err => callback(err, obj.user));
+      .then(data => {
+        if (data.length === 0) {
+          this.model
+            .create(obj.user)
+            .then(data => {
+              callback(null, data.dataValues);
+            })
+            .catch(err => callback(err, obj.user));
+        } else {
+          throw new Error("user exists");
+        }
+      })
+      .catch(err => callback(err, null));
   }
 }
 

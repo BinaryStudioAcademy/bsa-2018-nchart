@@ -28,7 +28,7 @@ user.get("/:id", (req, res, next) => {
 user.post("/", (req, res, next) => {
   userService.save(req.body, (err, data) => {
     if (!err) {
-      res.json(req.body);
+      res.json(data);
     } else {
       res.status(400);
       res.end();
