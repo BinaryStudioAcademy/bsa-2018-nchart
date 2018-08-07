@@ -28,36 +28,40 @@ module.exports = {
         callback(err, data);
       }
       payload.user = Object.assign({}, data);
-    });
-    CompanyService.save(obj, (err, data) => {
-      if (err) {
-        callback(err, data);
-      }
-      payload.company = Object.assign({}, data);
-      CompanyUserService.save(
-        payload.user.id,
-        payload.company.id,
-        (err, data) => {
-          if (err) {
-            callback(err, data);
-          }
-          payload.company_user = Object.assign({}, data);
-        }
-      );
-    });
-    GroupService.save("General", (err, data) => {
-      if (err) {
-        callback(err, data);
-      }
-      payload.group = Object.assign({}, data);
-      GroupUserService.save(payload.user.id, payload.group.id, (err, data) => {
+      GroupService.save("General", (err, data) => {
         if (err) {
           callback(err, data);
         }
-        payload.group_user = Object.assign({}, data);
-        console.log(payload);
+        payload.group = Object.assign({}, data);
+        GroupUserService.save(
+          payload.user.id,
+          payload.group.id,
+          (err, data) => {
+            if (err) {
+              callback(err, data);
+            }
+            payload.group_user = Object.assign({}, data);
+          }
+        );
       });
-      callback(err, payload);
+      CompanyService.save(obj, (err, data) => {
+        if (err) {
+          callback(err, data);
+        }
+        payload.company = Object.assign({}, data);
+        CompanyUserService.save(
+          payload.user.id,
+          payload.company.id,
+          (err, data) => {
+            if (err) {
+              callback(err, data);
+            }
+            payload.company_user = Object.assign({}, data);
+            console.log(payload);
+            callback(err, payload);
+          }
+        );
+      });
     });
   },
 
