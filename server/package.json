@@ -21,6 +21,7 @@
 		"dotenv": "^6.0.0",
 		"express": "^4.16.3",
 		"husky": "^1.0.0-rc.13",
+		"jsonwebtoken": "^8.3.0",
 		"morgan": "^1.9.0",
 		"pg": "^7.4.3",
 		"pg-hstore": "^2.3.2",

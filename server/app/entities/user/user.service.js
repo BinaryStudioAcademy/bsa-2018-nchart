@@ -4,6 +4,8 @@ const CompanyService = require('../company/company.service');
 const CompanyUserService = require('../company/company_user/company_user.service');
 const GroupService = require('../group/group.service');
 const GroupUserService = require('../group/group_user/group_user.service');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 module.exports = {
 	findAll: callback => {
@@ -21,6 +23,7 @@ module.exports = {
 	save: (obj, mainCallBack) => {
 		// object with all created entities
 		const payload = {
+			token: null,
 			user: null,
 			company: null,
 			companyUser: null,
@@ -45,7 +48,16 @@ module.exports = {
 						if (err) {
 							return callback(err, null);
 						}
-						payload.user = data;
+						let tokenPayload = {
+							id: data.id,
+							firstName: data.firstName,
+							lastName: data.lastName,
+							email: data.email
+						};
+						payload.token = jwt.sign(payload, process.env.TOKEN, {
+							expiresIn: 60 * 60
+						});
+						payload.user = tokenPayload;
 						return callback(null);
 					});
 				},
@@ -106,7 +118,16 @@ module.exports = {
 
 	login: (obj, callback) => {
 		UserRepository.login(obj, (err, data) => {
-			callback(err, data);
+			let tokenPayload = {
+				id: data.id,
+				firstName: data.firstName,
+				lastName: data.lastName,
+				email: data.email
+			};
+			let token = jwt.sign(tokenPayload, process.env.TOKEN, {
+				expiresIn: 60 * 60
+			});
+			callback(err, token);
 		});
 	},
 

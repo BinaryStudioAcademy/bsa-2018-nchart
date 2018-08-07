@@ -5,8 +5,7 @@ const GroupUser = require('../../models/group/group_user');
 const Group = sequelize.define('group', {
 	name: {
 		type: Sequelize.STRING,
-		allowNull: false,
-		unique: true
+		allowNull: false
 	}
 });
 

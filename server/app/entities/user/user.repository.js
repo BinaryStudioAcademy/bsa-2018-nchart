@@ -40,7 +40,7 @@ class UserRepository extends generalRepository {
 				if (data === null) {
 					throw new Error('User does not exist');
 				} else if (data.dataValues.password === obj.password) {
-					callback(null, 'Success');
+					callback(null, data.dataValues);
 				} else {
 					throw new Error('Wrong password');
 				}
