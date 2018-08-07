@@ -29,7 +29,7 @@ module.exports = {
 		};
 		async.waterfall(
 			[
-				function(callback) {
+				callback => {
 					UserRepository.findByEmail(obj, (err, data) => {
 						if (err) {
 							return callback(err, null);
@@ -40,7 +40,7 @@ module.exports = {
 						throw new Error('User already exists');
 					});
 				},
-				function(callback) {
+				callback => {
 					UserRepository.save(obj, (err, data) => {
 						if (err) {
 							return callback(err, null);
@@ -49,7 +49,7 @@ module.exports = {
 						return callback(null);
 					});
 				},
-				function(callback) {
+				callback => {
 					GroupService.save('General', (err, data) => {
 						if (err) {
 							return callback(err, null);
@@ -58,7 +58,7 @@ module.exports = {
 						return callback(null);
 					});
 				},
-				function(callback) {
+				callback => {
 					GroupUserService.save(
 						payload.user.id,
 						payload.group.id,
@@ -71,7 +71,7 @@ module.exports = {
 						}
 					);
 				},
-				function(callback) {
+				callback => {
 					CompanyService.save(obj, (err, data) => {
 						if (err) {
 							return callback(err, null);
@@ -80,7 +80,7 @@ module.exports = {
 						return callback(null);
 					});
 				},
-				function(callback) {
+				callback => {
 					CompanyUserService.save(
 						payload.user.id,
 						payload.company.id,
