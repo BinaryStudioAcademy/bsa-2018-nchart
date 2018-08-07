@@ -1,16 +1,16 @@
-const Sequelize = require("sequelize");
-const sequelize = require("../../config/index");
+const Sequelize = require('sequelize');
+const sequelize = require('../../config/index');
 
-const Company_User = sequelize.define("company_user", {
-  user_id: {
-    type: Sequelize.INTEGER
-  },
-  company_id: {
-    type: Sequelize.INTEGER
-  },
-  is_admin: {
-    type: Sequelize.BOOLEAN
-  }
+const CompanyUser = sequelize.define('companyUser', {
+	userId: {
+		type: Sequelize.INTEGER
+	},
+	companyId: {
+		type: Sequelize.INTEGER
+	},
+	isAdmin: {
+		type: Sequelize.BOOLEAN
+	}
 });
 
-module.exports = Company_User;
+module.exports = CompanyUser;

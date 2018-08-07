@@ -1,13 +1,13 @@
-const Sequelize = require("sequelize");
-const sequelize = require("../../config/index");
+const Sequelize = require('sequelize');
+const sequelize = require('../../config/index');
 
-const Group_User = sequelize.define("group_user", {
-  group_id: {
-    type: Sequelize.INTEGER
-  },
-  user_id: {
-    type: Sequelize.INTEGER
-  }
+const GroupUser = sequelize.define('groupUser', {
+	groupId: {
+		type: Sequelize.INTEGER
+	},
+	userId: {
+		type: Sequelize.INTEGER
+	}
 });
 
-module.exports = Group_User;
+module.exports = GroupUser;

@@ -1,14 +1,12 @@
-function DBConnectionHandler() {
-  const sequelize = require("../config/index");
+const sequelize = require('../config/index');
 
-  sequelize
-    .authenticate()
-    .then(() => {
-      console.log("Connection has been established successfully.");
-    })
-    .catch(err => {
-      console.error("Unable to connect to the database:", err);
-    });
+function DBConnectionHandler() {
+	sequelize
+		.authenticate()
+		.then(() => 'Connection has been established successfully.')
+		.catch(err => {
+			throw err;
+		});
 }
 
 module.exports = DBConnectionHandler;
