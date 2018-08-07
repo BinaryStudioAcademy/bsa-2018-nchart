@@ -3,11 +3,11 @@ const cors = require('cors');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const initializeAPIRoutes = require('./routes');
+const dbConnect = require('./db/dbconnect');
+
+dbConnect();
 
 const app = express();
-
-// const initializeDB = require('./db');
-// initializeDB();
 
 app.get('/*', (req, res, next) => {
 	res.setHeader('Last-Modified', new Date().toUTCString());
