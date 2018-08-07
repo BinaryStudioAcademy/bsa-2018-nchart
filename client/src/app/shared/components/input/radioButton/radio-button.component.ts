@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-	selector: 'app-default-button',
+	selector: 'app-radio-button',
 	templateUrl: './radio-button.component.html'
 })
 export class RadioButtonComponent implements OnInit {
@@ -11,6 +11,8 @@ export class RadioButtonComponent implements OnInit {
 	value: string;
 	@Input()
 	label: string;
+	@Input()
+	disabled: string;
 	val: string;
 
 	constructor() {}
