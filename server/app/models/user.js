@@ -5,16 +5,21 @@ const GroupUser = require('./group/group_user');
 
 const User = sequelize.define('users', {
 	firstName: {
-		type: Sequelize.STRING
+		type: Sequelize.STRING,
+		allowNull: false
 	},
 	lastName: {
-		type: Sequelize.STRING
+		type: Sequelize.STRING,
+		allowNull: false
 	},
 	email: {
-		type: Sequelize.STRING
+		type: Sequelize.STRING,
+		allowNull: false,
+		unique: true
 	},
 	password: {
-		type: Sequelize.STRING
+		type: Sequelize.STRING,
+		allowNull: false
 	}
 });
 

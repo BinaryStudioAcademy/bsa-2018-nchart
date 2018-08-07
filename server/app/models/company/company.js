@@ -4,7 +4,8 @@ const CompanyUser = require('./company_user');
 
 const Company = sequelize.define('company', {
 	name: {
-		type: Sequelize.STRING
+		type: Sequelize.STRING,
+		allowNull: false
 	}
 });
 
