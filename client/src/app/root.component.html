@@ -1,2 +1,2 @@
-<h1>Welcome to {{ title }}!</h1>
-
+<h1>Welcome to {{ user ? user.name : null }}!</h1>
+<button (click)="dispatch()" >dispatch</button>
