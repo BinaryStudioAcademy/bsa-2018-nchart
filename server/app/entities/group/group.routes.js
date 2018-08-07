@@ -4,7 +4,6 @@ const groupService = require("../../entities/group/group.service");
 group.get("/", (req, res, next) => {
   groupService.findAll((err, data) => {
     if (!err) {
-      console.log(data);
       res.json(data);
     } else {
       res.status(400);

@@ -1,8 +1,8 @@
 const UserRepository = require("./user.repository");
 const CompanyService = require("../company/company.service");
-const CompanyUserService = require("../company_user/company_user.service");
+const CompanyUserService = require("../company/company_user/company_user.service");
 const GroupService = require("../group/group.service");
-const GroupUserService = require("../group_user/group_user.service");
+const GroupUserService = require("../group/group_user/group_user.service");
 
 module.exports = {
   findAll: callback => {
@@ -10,12 +10,15 @@ module.exports = {
       callback(null, data);
     });
   },
+
   findById: (id, callback) => {
     UserRepository.getById(id, (err, data) => {
       callback(err, data);
     });
   },
+
   save: (obj, callback) => {
+    // object with all created entities
     let payload = {
       user: null,
       company: null,
@@ -59,7 +62,6 @@ module.exports = {
                     throw err;
                   }
                   payload.company_user = Object.assign({}, data);
-                  console.log(payload);
                   callback(null, payload);
                 }
               );
@@ -67,6 +69,12 @@ module.exports = {
           }
         );
       });
+    });
+  },
+
+  login: (obj, callback) => {
+    UserRepository.login(obj, (err, data) => {
+      callback(err, data);
     });
   },
 

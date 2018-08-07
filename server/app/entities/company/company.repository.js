@@ -8,7 +8,7 @@ class CompanyRepository extends generalRepository {
   }
 
   save(obj, callback) {
-    if (obj.company) {
+    if (typeof obj.company === "string" && obj.company.length >= 1) {
       companyModel
         .create({
           name: obj.company
