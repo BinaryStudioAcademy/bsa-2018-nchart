@@ -1,10 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
 	selector: 'app-default-button',
 	templateUrl: './radio-button.component.html'
 })
 export class RadioButtonComponent implements OnInit {
+	@Input()
+	name: string;
+	@Input()
+	value: string;
+	@Input()
+	label: string;
+	val: string;
+
 	constructor() {}
 
 	ngOnInit() {}
