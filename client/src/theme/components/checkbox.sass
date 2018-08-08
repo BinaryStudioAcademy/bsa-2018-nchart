@@ -2,9 +2,11 @@
 @import ../colors
 
 
-.ui-chkbox-box
+.ui-chkbox .ui-chkbox-box
 	border: 2px solid $disabledButtonColor
-	margin-right: 12px
+	margin-right: 10px
+	width: 18px
+	height: 18px
 	
 	&.ui-state-active:not(.ui-state-disabled)
 		border: 2px solid $secondaryButtonColor
@@ -27,6 +29,9 @@
 	&.ui-state-disabled
 		opacity: 1
 		background-color: $disabledButtonColor
+	
+.ui-chkbox .ui-chkbox-icon
+	font-size: 1.1rem
 
 .ui-chkbox-box:not(.ui-state-disabled):not(.ui-state-active):hover,
 	border: 2px solid $disabledButtonColor
@@ -34,3 +39,7 @@
 	outline: none
 	background-color: $disabledButtonColor
 
+.ui-checkbox-wrp
+	display: flex
+	align-items: center
+	

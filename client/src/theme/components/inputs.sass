@@ -9,17 +9,23 @@
 	font-size: $fontSize
 	//min-width: 240px
 
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button 
+  -webkit-appearance: none; 
+  margin: 0
+
+.ui-inputtext.ng-dirty.ng-invalid
+	border-bottom-color: $disabledButtonColor
 
 .ui-inputtext
 	+input()
+	min-width: 240px
 
 .ui-widget
 	font-family: $fontFamily
 	
 
 .ui-inputtext:active
-.ui-inputtext.ui-state-focus, 
-.ui-inputtext:focus,
 .ui-inputtext:enabled:hover
 	+input()
 	border: 2px solid $activeColor
@@ -27,6 +33,8 @@
 	color: $primaryTextColor
 	& ~ .ui-inputgroup .ui-inputgroup-addon
 		border: 2px solid $activeColor
+	& ~ i
+		color: $primaryTextColor
 
 
 .input-label
@@ -45,14 +53,19 @@
 
 .ui-widget.ui-inputtext,
 .ui-widget.ui-inputtext.ui-input-error,
-.ui-inputtext.ui-state-focus, 
-.ui-inputtext:focus,
-.ui-inputtext:focus-within
-	&.ui-input-error
+.ui-widget.ui-inputtext.ui-input-success,
+.ui-inputtext.ui-state-focus
+	box-shadow: none
+	&:focus
+		box-shadow: none
+		border: 2px solid $activeColor
+		& ~ i
+			color: $primaryTextColor
+	&:focus.ui-input-error
 		border: 2px solid $errorColor
 		& ~ i
 			color: $errorColor
-	&.ui-input-success
+	&:focus.ui-input-success
 		border: 2px solid $successColor
 		& ~ i
 			color: $successColor
@@ -61,6 +74,8 @@
 		font-size: $fontSize
 		right: calc(1rem + 24px)
 		padding: 12px
+		color: $secondaryTextColor
+
 
 .ui-inputtext:disabled,
 .ui-dropdown.ui-widget.ui-state-disabled

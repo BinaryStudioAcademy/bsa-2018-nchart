@@ -1,59 +1,48 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserModule } from '@angular/platform-browser';
-
-import { ReactiveFormsModule } from '@angular/forms';
-import { SecondaryButtonComponent } from './components/buttons/secondary-button.component';
-import { DefaultButtonComponent } from './components/buttons/default-button.component';
-import { InputPasswordComponent } from './components/inputs/input-password/input-password.component';
+import { UIKitModule } from './uikit.module';
+// Buttons
+import { SecondaryButtonComponent } from './components/buttons/secondary-button/secondary-button.component';
+import { DefaultButtonComponent } from './components/buttons/default-button/default-button.component';
+import { ActionButtonComponent } from './components/buttons/action-button/action-button.component';
+import { ToolButtonComponent } from './components/buttons/tool-button/tool-button.component';
+// Inputs
 import { InputTextComponent } from './components/inputs/input-text/input-text.component';
+import { InputTextareaComponent } from './components/input/inputTextarea/input-textarea.component';
+// Dropdowns
 import { DropdownSimpleComponent } from './components/dropdowns/dropdown-simple/dropdown-simple.component';
 import { DropdownGroupComponent } from './components/dropdowns/dropdown-group/dropdown-group.component';
+// Checkbox
 import { CheckboxComponent } from './components/checkbox/checkbox/checkbox.component';
-
-import { AutoCompleteModule } from 'primeng/autocomplete';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { RadioButtonComponent } from '@app/shared/components/input/radioButton/radio-button.component';
-import { InputTextareaComponent } from '@app/shared/components/input/inputTextarea/input-textarea.component';
-import { ToggleComponent } from '@app/shared/components/input/toggle/toggle.component';
+import { CheckboxGroupComponent } from './components/checkbox/checkbox-group/checkbox-group.component';
+import { RadioButtonComponent } from './components/input/radioButton/radio-button.component';
 
 @NgModule({
-	imports: [
-		ReactiveFormsModule,
-		BrowserAnimationsModule,
-		BrowserModule,
-		CommonModule,
-		FormsModule,
-		InputTextareaModule,
-		AutoCompleteModule
-	],
+	imports: [UIKitModule],
 	exports: [
 		SecondaryButtonComponent,
 		DefaultButtonComponent,
-		InputPasswordComponent,
-		BrowserAnimationsModule,
-		BrowserModule,
+		ToolButtonComponent,
+		ActionButtonComponent,
 		InputTextComponent,
 		DropdownSimpleComponent,
 		DropdownGroupComponent,
 		CheckboxComponent,
+		CheckboxGroupComponent,
 		RadioButtonComponent,
-		InputTextareaComponent,
-		ToggleComponent
+		InputTextareaComponent
 	],
 	declarations: [
 		SecondaryButtonComponent,
 		DefaultButtonComponent,
-		InputPasswordComponent,
+		ActionButtonComponent,
+		ToolButtonComponent,
 		InputTextComponent,
 		DropdownSimpleComponent,
 		DropdownGroupComponent,
 		CheckboxComponent,
+		CheckboxGroupComponent,
 		RadioButtonComponent,
-		InputTextareaComponent,
-		ToggleComponent
+		InputTextareaComponent
 	]
 })
 export class SharedModule {}

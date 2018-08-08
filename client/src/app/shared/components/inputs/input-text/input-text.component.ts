@@ -7,15 +7,22 @@ import { FormControl } from '@angular/forms';
 })
 export class InputTextComponent implements OnInit {
 	@Input()
-	disabled: string;
+	disabled: boolean;
 	@Input()
 	label: string;
 	@Input()
 	errorMessage: string;
 	@Input()
+	type: string;
+	@Input()
 	control: FormControl;
-
-	constructor() {}
+	@Input()
+	icon: string;
+	@Input()
+	success: boolean;
+	@Input()
+	error: boolean;
+	inputFocus = false;
 
 	ngOnInit() {}
 

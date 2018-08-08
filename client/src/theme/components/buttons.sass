@@ -1,42 +1,185 @@
 @import ../variables
 @import ../colors
-@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700')
 
 .ui-widget.ui-button,
 .ui-button
-	width: 158px
-	height: 50px
-	padding: 15px
 	border: none
 	color: #fff
 	font-weight: 600
-	font-family: 'Lato'
+	font-size: $fontSize
+	padding: 15px
 	&:disabled
 		background-color: $disabledButtonColor
 		color: $primaryTextColor
 		opacity: 1
 
-	
+// Default Button
 .ui-widget.ui-button-default,
-.ui-button-default,
-.ui-button-default:active
+.ui-button-default
 	background-color: $defaultButtonColor
-	border: none
-	&:enabled:hover,
-	&:enabled:focus,
-	&:enabled:focus-within
+	&:enabled:hover
 		border: none
 		background-color: $defaultButtonHover
+	&:enabled:focus,
+	&:enabled:active
+		border: none
+		background-color: $defaultButtonColor
 
+// Secondary Button
 .ui-widget.ui-button-secondary,
-.ui-button-secondary,
-.ui-button-secondary:active
+.ui-button-secondary
 	background-color: $secondaryButtonColor
-	&:enabled:hover, 
-	&:enabled:focus
+	&:enabled:hover
 		border: none
 		background-color: $secondaryButtonHover
+	&:enabled:active,
+	&:enabled:focus
+		border: none
+		background-color: $secondaryButtonColor
 
-.ui-button-text-only .ui-button-text
+// Tool Button
+.ui-widget.ui-button-tool,
+.ui-button-tool
+	background-color: $whiteBackgroundColor
+	border: 2px solid $disabledButtonColor
+	color: $primaryTextColor
+	&:enabled:hover
+		border-color: $defaultButtonHover
+		background-color: $defaultButtonHover
+		color: $lightBackgroundColor
+	&:enabled:focus,
+	&:enabled:active
+		border-color: $activeButtonColor
+		background-color: $activeButtonColor
+		color: $lightBackgroundColor
+
+// Button Label
+.ui-button-text-only .ui-button-text,
+.ui-button .ui-button-text
 	padding: 0
-	font-size: $fontSize
+	display: inline-block
+
+.ui-button-text-icon-left .ui-button-icon-left
+	position: static
+	margin-right: 16px
+
+.ui-button-text-icon-right:disabled,
+.ui-button-text-icon-right:enabled
+	display: inline-flex
+	margin: 0
+	align-items: center
+	justify-content: center
+	.ui-button-icon-right
+		position: static
+		margin-top: 0
+		margin-left: 16px
+		order: 2
+
+// Action Button
+.ui-buttonset.ui-splitbutton 
+	min-width: 110px
+	box-shadow: 0 2px 2px $teriaryTextColor
+	background-color: $whiteBackgroundColor
+	border-radius: 3px
+	.ui-widget.ui-button:not(.ui-splitbutton-menubutton),
+	.ui-button:not(.ui-splitbutton-menubutton)
+		color: $primaryTextColor
+		min-width: 70px
+		background-color: transparent
+		.ui-button-icon-left
+			display: none
+
+	.ui-widget.ui-button:disabled,
+	.ui-button:disabled
+		background-color: #fff
+
+	.ui-splitbutton-menubutton
+		color: $primaryTextColor
+		min-width: 40px
+		background-color: transparent
+		padding-left: 0
+		position: relative
+		.pi-caret-down:before
+			text-align: left
+			display: flex
+
+	& .ui-widget-content .ui-button.ui-splitbutton-menubutton:focus, 
+	& .ui-widget.ui-button.ui-splitbutton-menubutton:focus, 
+	& .ui-button.ui-splitbutton-menubutton:focus
+		border: none
+
+	&:hover
+		background-color: $defaultButtonHover
+		.ui-splitbutton-menubutton:enabled,
+		.ui-widget.ui-button:enabled:not(.ui-splitbutton-menubutton),
+		.ui-button:enabled:not(.ui-splitbutton-menubutton)
+			color: $whiteBackgroundColor
+			background-color: transparent
+			border: none
+		.ui-widget.ui-button:disabled:hover,
+		.ui-button:disabled:hover
+			background-color: #fff
+
+	&:active,
+		.ui-splitbutton-menubutton:enabled,
+		.ui-widget.ui-button:enabled:not(.ui-splitbutton-menubutton),
+		.ui-button:enabled:not(.ui-splitbutton-menubutton)
+			color: #fff
+			background-color: $activeButtonColor
+			border: none
+		.ui-widget.ui-button:enabled,
+		.ui-button:enabled
+			background-color: $activeButtonColor
+
+// Action Button Menu
+.ui-menu
+	background: $whiteBackgroundColor
+	padding: 0
+	border-radius: 0
+	.ui-menuitem
+		border-radius: 0
+	.ui-menuitem > .ui-menuitem-link
+		color: $secondaryTextColor
+		border-radius: 0
+		padding-left: 20px
+	.ui-menuitem > .ui-menuitem-link:hover
+		background-color: $disabledButtonColor
+		color: $primaryTextColor
+
+// Sizes
+.ui-button-large
+	min-width: 158px
+	min-height: 50px
+
+.ui-button-big
+	min-width: 147px
+	min-height: 40px
+
+.ui-button-middle
+	min-width: 110px
+	min-height: 40px
+	&.ui-button-text-icon-left .ui-button-icon-left
+		margin-right: 10px
+		font-size: 0.8rem
+	&.ui-button-text-icon-right .ui-button-icon-right
+		margin-left: 10px
+		font-size: 0.8rem
+
+.ui-button-small
+	min-width: 85px
+	min-height: 24px
+	font-size: 0.8rem
+	&.ui-button-text-icon-left .ui-button-icon-left
+		margin-right: 6px
+		font-size: 0.8rem
+	&.ui-button-text-icon-right .ui-button-icon-right
+		margin-left: 6px
+		font-size: 0.8rem
+
+.ui-button-small.ui-widget.ui-button,
+.ui-button-small.ui-button
+	padding: 5px
+
+.ui-button-big.ui-widget.ui-button,
+.ui-button-big.ui-button
+	padding: 10px

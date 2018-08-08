@@ -15,9 +15,11 @@ export class DropdownSimpleComponent implements OnInit {
 	@Input()
 	label: any;
 	@Input()
-	disabled: string;
+	disabled: boolean;
 	@Input()
 	placeholder: string;
+	@Input()
+	group: boolean;
 
 	constructor() {}
 

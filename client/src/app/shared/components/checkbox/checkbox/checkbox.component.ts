@@ -6,14 +6,18 @@ import { FormControl } from '@angular/forms';
 	templateUrl: './checkbox.html'
 })
 export class CheckboxComponent implements OnInit {
-
-	@Input() control: FormControl;
-	@Input() label: string;
-	@Input() value: string;
-	@Input() disabled: string;
-	@Input() checked: string;
-
-	selectedValues: string[] = ['One', 'Three'];
+	@Input()
+	control: FormControl;
+	@Input()
+	label: string;
+	@Input()
+	value: string;
+	@Input()
+	disabled: boolean;
+	@Input()
+	checked: string;
+	@Input()
+	selectedValues: string[];
 
 	constructor() {}
 
@@ -24,7 +28,5 @@ export class CheckboxComponent implements OnInit {
 		return this.disabled;
 	}
 
-	ngOnInit() {
-	}
-
+	ngOnInit() {}
 }
