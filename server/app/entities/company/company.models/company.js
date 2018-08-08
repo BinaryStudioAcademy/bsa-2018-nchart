@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const sequelize = require('../../config/index');
+const sequelize = require('../../../config/index');
 const CompanyUser = require('./company_user');
 
 const Company = sequelize.define('company', {

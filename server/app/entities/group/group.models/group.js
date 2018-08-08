@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
-const sequelize = require('../../config/index');
-const GroupUser = require('../../models/group/group_user');
+const sequelize = require('../../../config/index');
+const GroupUser = require('./group_user');
 
 const Group = sequelize.define('group', {
 	name: {

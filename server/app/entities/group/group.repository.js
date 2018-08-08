@@ -1,6 +1,6 @@
-const generalRepository = require('../generalRepository');
-const groupModel = require('../../models/group/group');
-const groupUserModel = require('../../models/group/group_user');
+const generalRepository = require('../../common/repository/Repository');
+const groupModel = require('./group.models/group');
+const groupUserModel = require('./group.models/group_user');
 
 class GroupRepository extends generalRepository {
 	constructor() {

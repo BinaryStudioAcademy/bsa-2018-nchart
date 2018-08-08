@@ -1,6 +1,6 @@
-const generalRepository = require('../generalRepository');
-const companyModel = require('../../models/company/company');
-const companyUserModel = require('../../models/company/company_user');
+const generalRepository = require('../../common/repository/Repository');
+const companyModel = require('./company.models/company');
+const companyUserModel = require('./company.models/company_user');
 
 class CompanyRepository extends generalRepository {
 	constructor() {

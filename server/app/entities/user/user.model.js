@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
-const sequelize = require('../config/index');
-const CompanyUser = require('./company/company_user');
-const GroupUser = require('./group/group_user');
+const sequelize = require('../../config/index');
+const CompanyUser = require('../company/company.models/company_user');
+const GroupUser = require('../group/group.models/group_user');
 
 const User = sequelize.define('users', {
 	firstName: {

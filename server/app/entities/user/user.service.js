@@ -1,6 +1,6 @@
 const async = require('async');
 const UserRepository = require('./user.repository');
-const TokenService = require('../../common/token.service');
+const TokenService = require('../../common/services/token.service');
 const CompanyService = require('../company/company.service');
 const GroupService = require('../group/group.service');
 
