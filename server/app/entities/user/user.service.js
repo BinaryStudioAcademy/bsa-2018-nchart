@@ -2,9 +2,7 @@ const async = require('async');
 const UserRepository = require('./user.repository');
 const TokenService = require('../../common/token.service');
 const CompanyService = require('../company/company.service');
-const CompanyUserService = require('../company/company_user/company_user.service');
 const GroupService = require('../group/group.service');
-const GroupUserService = require('../group/group_user/group_user.service');
 
 class UserService {
 	constructor() {
@@ -28,7 +26,7 @@ class UserService {
 							.then(data =>
 								callback(null, {
 									token: TokenService.createToken(data),
-									user: data
+									user: data.dataValues
 								})
 							)
 							.catch(err =>
@@ -36,66 +34,73 @@ class UserService {
 							);
 					},
 					(payload, callback) => {
-						GroupService.save('General', (err, data) => {
-							if (err) {
-								return callback(err, null);
-							}
-							return callback(
-								null,
-								Object.assign({}, payload, { group: data })
-							);
-						});
-					},
-					(payload, callback) => {
-						GroupUserService.save(
-							payload.user.id,
-							payload.group.id,
-							(err, data) => {
-								if (err) {
-									return callback(err, null);
-								}
-								return callback(
+						GroupService.saveGroup('General')
+							.then(data =>
+								callback(
 									null,
 									Object.assign({}, payload, {
-										groupUser: data
+										group: data.dataValues
 									})
-								);
-							}
-						);
-					},
-					(payload, callback) => {
-						CompanyService.save(obj, (err, data) => {
-							if (err) {
-								return callback(err, null);
-							}
-							return callback(
-								null,
-								Object.assign({}, payload, { company: data })
+								)
+							)
+							.catch(err =>
+								callback(err.errors[0].message, null)
 							);
-						});
 					},
 					(payload, callback) => {
-						CompanyUserService.save(
+						GroupService.saveGroupUser(
 							payload.user.id,
-							payload.company.id,
-							(err, data) => {
-								if (err) {
-									return callback(err, null);
-								}
-								return callback(
+							payload.group.id
+						)
+							.then(data =>
+								callback(
 									null,
 									Object.assign({}, payload, {
-										companyUser: data
+										groupUser: data.dataValues
 									})
-								);
-							}
-						);
+								)
+							)
+							.catch(err =>
+								callback(err.errors[0].message, null)
+							);
+					},
+					(payload, callback) => {
+						CompanyService.saveCompany(obj)
+							.then(data =>
+								callback(
+									null,
+									Object.assign({}, payload, {
+										company: data.dataValues
+									})
+								)
+							)
+							.catch(err => {
+								callback(err.errors[0].message, null);
+							});
+					},
+					(payload, callback) => {
+						CompanyService.saveCompanyUser(
+							payload.user.id,
+							payload.company.id
+						)
+							.then(data =>
+								callback(
+									null,
+									Object.assign({}, payload, {
+										companyUser: data.dataValues
+									})
+								)
+							)
+							.catch(err => {
+								callback(err.errors[0].message, null);
+							});
 					}
 				],
 				(err, payload) => {
 					if (err) {
 						return reject(err);
 					}
+					// console.log(payload);
 					return resolve(payload.token);
 				}
 			);
