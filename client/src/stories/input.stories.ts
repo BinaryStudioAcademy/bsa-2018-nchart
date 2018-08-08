@@ -89,9 +89,13 @@ storiesOf('Input', module)
 		})
 	)
 	.add('RadioButtonFromComponent', () => ({
-		template: `<div class='ui-g' style='width:250px;margin-bottom:10px'>
-		<div class='ui-g-12'><app-radio-button name='group1' value='Option 1' label='Option 1' [disabled]='false' [(ngModel)]='val1' ></app-radio-button></div>
-	</div>`
+		component: RadioButtonComponent,
+		props: {
+			name: 'group1',
+			value: 'Option 1',
+			label: 'Option 1',
+			disabled: false
+		}
 	}))
 	.add('RadioButtonDisabledFromComponent', () => ({
 		component: RadioButtonComponent,
