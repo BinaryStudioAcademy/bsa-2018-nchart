@@ -24,6 +24,13 @@ import { InputTextareaComponent } from '../app/shared/components/input/inputText
 // Radiobutton
 import { RadioButtonComponent } from '../app/shared/components/input//radioButton/radio-button.component';
 import { RadioButtonModule } from 'primeng/radiobutton';
+// Checkbox
+import { CheckboxModule } from 'primeng/checkbox';
+import { CheckboxComponent } from '../app/shared/components/checkbox/checkbox/checkbox.component';
+// Dropdowns
+import { DropdownModule } from 'primeng/dropdown';
+import { DropdownSimpleComponent } from '../app/shared/components/dropdowns/dropdown-simple/dropdown-simple.component';
+import { DropdownGroupComponent } from '../app/shared/components/dropdowns/dropdown-group/dropdown-group.component';
 
 
 export const control1 = new FormControl('', Validators.required);
@@ -113,13 +120,11 @@ storiesOf('Buttons', module)
 		}
 	}), { notes: 'tag=app-tool-button\nlabel="Small Button"\nsize="small"' });
 
-storiesOf('Input', module)
+storiesOf('Radiobuttons', module)
 	.addDecorator(
 		moduleMetadata({
-			imports: [RadioButtonModule, InputTextareaModule],
-			schemas: [],
-			declarations: [RadioButtonComponent, InputTextareaComponent],
-			providers: []
+			imports: [RadioButtonModule],
+			declarations: [RadioButtonComponent]
 		})
 	)
 	.add('RadioButtonFromComponent', () => ({
@@ -142,26 +147,12 @@ storiesOf('Input', module)
 	}))
 	.add('RadioButton', () => ({
 		template: `<div class='ui-g' style='width:250px;margin-bottom:10px'>
-		<div class='ui-g-12'><p-radioButton name='group1' value='Option 1' label='Option 1' [(ngModel)]='val1' inputId='opt1'></p-radioButton></div>
-		<div class='ui-g-12'><p-radioButton name='group1' value='Option 2' label='Option 2' [(ngModel)]='val1' inputId='opt2'></p-radioButton></div>
-		<div class='ui-g-12'><p-radioButton name='group1' value='Option 3' label='Option 3' [(ngModel)]='val1' inputId='opt3'></p-radioButton></div>
-	</div>`
-	}))
-	.add('InputTextAreaFromComponent', () => ({
-		component: InputTextareaComponent,
-		props: {
-			rows: '5',
-			cols: '30',
-			disabled: 'false'
-		}
-	}))
-	.add('InputTextAreaDisabledFromComponent', () => ({
-		component: InputTextareaComponent,
-		props: {
-			rows: '5',
-			cols: '30',
-			disabled: 'true'
-		}
+		<div class='ui-g-12'><p-radioButton name='group1' value='Option 1' label='Option 1' [(ngModel)]='val1' inputId='opt1'>
+		</p-radioButton></div>
+		<div class='ui-g-12'><p-radioButton name='group1' value='Option 2' label='Option 2' [(ngModel)]='val1' inputId='opt2'>
+		</p-radioButton></div>
+		<div class='ui-g-12'><p-radioButton name='group1' value='Option 3' label='Option 3' [(ngModel)]='val1' inputId='opt3'>
+		</p-radioButton></div></div>`
 	}));
 
 storiesOf('Input fields', module)
@@ -169,9 +160,11 @@ storiesOf('Input fields', module)
 		moduleMetadata({
 			imports: [	InputTextModule,
 						FormsModule,
-						ReactiveFormsModule
+						ReactiveFormsModule,
+						InputTextareaModule
 					],
-			declarations: [	InputTextComponent
+			declarations: [	InputTextComponent,
+							InputTextareaComponent
 						],
 		})
 	)
@@ -198,7 +191,7 @@ storiesOf('Input fields', module)
 	.add('Input Text With Icon', () => ({
 		component: InputTextComponent,
 		props: {
-			control: control1,
+			control: new FormControl('', Validators.required),
 			label: 'Name',
 			type: 'number',
 			icon: 'fas fa-search',
@@ -217,6 +210,115 @@ storiesOf('Input fields', module)
 			error: true
 		}
 	}), { notes: 'tag=app-input-text\nlabel="Password"\ntype="password"\nerror="true"\nsuccess="true"' +
-					'\nerrorMessage="Name can`t be empty"\ncontrol="{{formControl}}"' 
-	});
+					'\nerrorMessage="Name can`t be empty"\ncontrol="{{formControl}}"'
+	})
 
+	.add('InputTextAreaFromComponent', () => ({
+		component: InputTextareaComponent,
+		props: {
+			rows: '5',
+			cols: '30',
+			disabled: 'false'
+		}
+	}))
+	.add('InputTextAreaDisabledFromComponent', () => ({
+		component: InputTextareaComponent,
+		props: {
+			rows: '5',
+			cols: '30',
+			disabled: 'true'
+		}
+	}));
+
+storiesOf('Checkbox', module)
+	.addDecorator(
+		moduleMetadata({
+			imports: [	CheckboxModule,
+						FormsModule,
+						ReactiveFormsModule
+					],
+			declarations: [CheckboxComponent]
+		})
+	)
+	.add('Checkbox default', () => ({
+		component: CheckboxComponent,
+		props: {
+			label: 'I definetly want to choose it',
+			value: 'first',
+			control: new FormControl('', Validators.required)
+		}
+	}), { notes: 'tag=app-checkbox\nlabel="I definetly want to choose it"\nvalue="first"\ncontrol="{{formControl}}"' })
+
+	.add('Checkbox checked', () => ({
+		component: CheckboxComponent,
+		props: {
+			label: 'I choose it!',
+			value: 'second',
+			selectedValues: ['second'],
+			control: new FormControl('', Validators.required)
+		}
+	}), { notes: 'tag=app-checkbox\nlabel="I choose it!"\nvalue="second"\nselectedValues="[\'second\']"\ncontrol="{{formControl}}"' })
+
+	.add('Checkbox disabled', () => ({
+		component: CheckboxComponent,
+		props: {
+			label: 'I`m disabled (',
+			value: 'third',
+			disabled: true,
+			control: new FormControl(true)
+		}
+	}), { notes: 'tag=app-checkbox\nlabel="I`m disabled ("\nvalue="third"\ndisabled="true"\ncontrol="{{formControl}}"' })
+
+	.add('Checkbox checked disabled', () => ({
+		component: CheckboxComponent,
+		props: {
+			label: 'I`m disabled too (',
+			value: 'fifth',
+			disabled: true,
+			selectedValues: ['fifth'],
+			control: new FormControl(true)
+		}
+	}), { notes: 'tag=app-checkbox\nlabel="I`m disabled too ("\nvalue="third"\ndisabled="true"\nselectedValues="[\'second\']"' });
+
+storiesOf('Dropdowns', module)
+	.addDecorator(
+		moduleMetadata({
+			imports: [	DropdownModule,
+						FormsModule,
+						ReactiveFormsModule,
+						BrowserAnimationsModule
+					],
+			declarations: [	DropdownSimpleComponent,
+							DropdownGroupComponent
+						]
+		})
+	)
+	.add('Simple Dropdown', () => ({
+		component: DropdownSimpleComponent,
+		props: {
+			placeholder: 'Select item',
+			options: [{name: 'Select me!'}],
+			control: new FormControl('', Validators.required),
+			optionLabel: 'name'
+		}
+	}), { notes: 'tag=dropdown-simple\nplaceholder="Select item"\noptions="[{name: \'Select me!\'}]"\noptionLabel="name"' })
+
+	.add('Dropdown Disabled', () => ({
+		component: DropdownSimpleComponent,
+		props: {
+			placeholder: 'Select item',
+			control: new FormControl('', Validators.required),
+			optionLabel: 'name',
+			disabled: true
+		}
+	}), { notes: 'tag=dropdown-simple\nplaceholder="Select item"\ndisabled="true"\noptionLabel="name"' })
+
+	.add('Group Dropdown', () => ({
+		component: DropdownSimpleComponent,
+		props: {
+			placeholder: 'Select item',
+			options: [{label: 'Group name', items: [{label: 'Select me!'}]}],
+			control: new FormControl('', Validators.required),
+			group: true
+		}
+	}), { notes: 'tag=dropdown-simple\noptions="[{label: \'Group name\', items: [{label: \'Select me!\'}]}]"' });
