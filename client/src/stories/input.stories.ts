@@ -1,29 +1,42 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
-// import { action } from '@storybook/addon-actions';
+import { action, centered } from '@storybook/addon-actions';
+
 import { SecondaryButtonComponent } from '../app/shared/components/buttons/secondary-button.component';
 import { DefaultButtonComponent } from '../app/shared/components/buttons/default-button.component';
+
+import { InputPasswordComponent } from '../app/shared/components/inputs/input-password/input-password.component';
+import { InputTextComponent } from '../app/shared/components/inputs/input-text/input-text.component';
+import {ButtonModule} from 'primeng/button';
+import {PasswordModule} from 'primeng/password';
+import {InputTextModule} from 'primeng/inputtext';
+import { FormControl, Validators } from '@angular/forms';
 import { RadioButtonComponent } from '../app/shared/components/input//radioButton/radio-button.component';
 import { InputTextareaComponent } from '../app/shared/components/input/inputTextarea/input-textarea.component';
-import { ButtonModule } from 'primeng/button';
+
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 
-storiesOf('My Button', module)
+export const control1 = new FormControl('one');
+export const control2 = new FormControl('');
+
+
+
+storiesOf('Buttons', module)
 	.addDecorator(
 		moduleMetadata({
-			imports: [ButtonModule],
-			schemas: [],
-			declarations: [DefaultButtonComponent],
-			providers: []
+		imports: [ButtonModule],
+		schemas: [],
+		declarations: [DefaultButtonComponent, SecondaryButtonComponent],
+		providers: [],
 		})
 	)
-	.add('with some emoji', () => ({
+	.add('Secondary', () => ({
 		component: SecondaryButtonComponent,
 		props: {
 			label: 'Hello'
 		}
 	}))
-	.add('default', () => ({
+	.add('Default', () => ({
 		component: DefaultButtonComponent,
 		props: {
 			label: 'World'
@@ -80,3 +93,25 @@ storiesOf('Input', module)
 			disabled: 'true'
 		}
 	}));
+
+
+// storiesOf('Inputs', module)
+// 	.addDecorator(
+// 		moduleMetadata ({
+// 		imports: [],
+// 		declarations: [],
+// 		providers: [],
+// 		})
+// 	)
+// 	.add('Password', () => ({
+// 		component: InputPasswordComponent,
+// 		props: {
+// 			control: control2
+// 		},
+// 	}))
+// 	.add('Text', () => ({
+// 		component: InputTextComponent,
+// 		props: {
+// 			label: 'Text field',
+// 		},
+// 	}));

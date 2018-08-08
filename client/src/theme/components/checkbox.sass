@@ -1,0 +1,36 @@
+@import ../variables
+@import ../colors
+
+
+.ui-chkbox-box
+	border: 2px solid $disabledButtonColor
+	margin-right: 12px
+	
+	&.ui-state-active:not(.ui-state-disabled)
+		border: 2px solid $secondaryButtonColor
+		background-color: $secondaryButtonColor
+		box-shadow: none
+		outline: none
+
+	&.ui-state-active.ui-state-disabled
+		background-color: $whiteBackgroundColor
+		opacity: 1
+		border: 2px solid $disabledButtonColor
+		.pi-check:before
+			color: $secondaryTextColor
+	
+	&.ui-state-focus
+		box-shadow: none
+		outline: none
+		background-color: $whiteBackgroundColor
+
+	&.ui-state-disabled
+		opacity: 1
+		background-color: $disabledButtonColor
+
+.ui-chkbox-box:not(.ui-state-disabled):not(.ui-state-active):hover,
+	border: 2px solid $disabledButtonColor
+	box-shadow: none
+	outline: none
+	background-color: $disabledButtonColor
+

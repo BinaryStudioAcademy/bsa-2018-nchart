@@ -13,7 +13,7 @@
 	font-family: 'Lato'
 	&:disabled
 		background-color: $disabledButtonColor
-		color: $textColorDark
+		color: $primaryTextColor
 		opacity: 1
 
 	
@@ -22,7 +22,9 @@
 .ui-button-default:active
 	background-color: $defaultButtonColor
 	border: none
-	&:enabled:hover
+	&:enabled:hover,
+	&:enabled:focus,
+	&:enabled:focus-within
 		border: none
 		background-color: $defaultButtonHover
 
@@ -30,7 +32,8 @@
 .ui-button-secondary,
 .ui-button-secondary:active
 	background-color: $secondaryButtonColor
-	&:enabled:hover
+	&:enabled:hover, 
+	&:enabled:focus
 		border: none
 		background-color: $secondaryButtonHover
 
