@@ -1,6 +1,6 @@
+const async = require('async');
 const UserRepository = require('./user.repository');
 const TokenService = require('../../common/token.service');
-// const async = require('async');
 // const CompanyService = require('../company/company.service');
 // const CompanyUserService = require('../company/company_user/company_user.service');
 // const GroupService = require('../group/group.service');
@@ -20,15 +20,27 @@ class UserService {
 	}
 
 	save(obj) {
-		return this.UserRepository.save(obj)
-			.then(data => TokenService.createToken(data))
-			.catch(err => {
-				const errArr = [];
-				for (let i = 0; i < err.errors.length; i + 1) {
-					errArr.push(err.errors[i].message);
+		return new Promise((resolve, reject) => {
+			async.waterfall(
+				[
+					callback => {
+						this.UserRepository.save(obj)
+							.then(data =>
+								callback(null, TokenService.createToken(data))
+							)
+							.catch(err =>
+								callback(err.errors[0].message, null)
+							);
+					}
+				],
+				(err, payload) => {
+					if (err) {
+						return reject(err);
+					}
+					return resolve(payload);
 				}
-				throw new Error(errArr.join(','));
-			});
+			);
+		});
 	}
 
 	login(obj) {

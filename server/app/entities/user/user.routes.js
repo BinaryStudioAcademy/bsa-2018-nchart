@@ -52,7 +52,7 @@ user.post('/register', (req, res) => {
 			res.json(data);
 		})
 		.catch(err => {
-			res.json(err.message);
+			res.json(err);
 			res.status(400);
 			res.end();
 		});
