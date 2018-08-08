@@ -1,39 +1,34 @@
-import { storiesOf, moduleMetadata } from '@storybook/angular';
+import { storiesOf, moduleMetadata, addDecorator } from '@storybook/angular';
 import '@storybook/addon-notes/register';
-import { configure, addDecorator } from '@storybook/angular';
 import { withNotes } from '@storybook/addon-notes';
-import { action } from '@storybook/addon-actions';
 // Forms
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormControl, Validators } from '@angular/forms';
-
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {BrowserModule} from '@angular/platform-browser';
-
-import {RouterTestingModule} from '@angular/router/testing';
+// Modules
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouterTestingModule } from '@angular/router/testing';
 // Buttons
-import {ButtonModule} from 'primeng/button';
+import { ButtonModule } from 'primeng/button';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { SecondaryButtonComponent } from '../app/shared/components/buttons/secondary-button/secondary-button.component';
 import { DefaultButtonComponent } from '../app/shared/components/buttons/default-button/default-button.component';
 import { ActionButtonComponent } from '../app/shared/components/buttons/action-button/action-button.component';
 import { ToolButtonComponent } from '../app/shared/components/buttons/tool-button/tool-button.component';
-
-import { InputPasswordComponent } from '../app/shared/components/inputs/input-password/input-password.component';
-import { InputTextComponent } from '../app/shared/components/inputs/input-text/input-text.component';
-
-import {PasswordModule} from 'primeng/password';
-import {InputTextModule} from 'primeng/inputtext';
-
-import { RadioButtonComponent } from '../app/shared/components/input//radioButton/radio-button.component';
-import { InputTextareaComponent } from '../app/shared/components/input/inputTextarea/input-textarea.component';
-
-import { RadioButtonModule } from 'primeng/radiobutton';
+// Inputs
+import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputTextComponent } from '../app/shared/components/inputs/input-text/input-text.component';
+import { InputTextareaComponent } from '../app/shared/components/input/inputTextarea/input-textarea.component';
+// Radiobutton
+import { RadioButtonComponent } from '../app/shared/components/input//radioButton/radio-button.component';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
-export const control1 = new FormControl('one');
-export const control2 = new FormControl('');
+
+export const control1 = new FormControl('', Validators.required);
+export const control3 = new FormControl('', Validators.required);
+export const control2 = new FormControl('', [Validators.required, Validators.minLength(3)]);
 
 addDecorator(withNotes);
 
@@ -169,23 +164,59 @@ storiesOf('Input', module)
 		}
 	}));
 
-	storiesOf('Input fields', module)
+storiesOf('Input fields', module)
 	.addDecorator(
 		moduleMetadata({
-			imports: [	RadioButtonModule,
-						InputTextModule,
+			imports: [	InputTextModule,
 						FormsModule,
 						ReactiveFormsModule
 					],
-			schemas: [],
-			declarations: [InputTextComponent],
-			providers: []
+			declarations: [	InputTextComponent
+						],
 		})
 	)
-	.add('Input text', () => ({
+	.add('Input Text', () => ({
 		component: InputTextComponent,
 		props: {
-			control: control1
+			control: control1,
+			label: 'Name',
+			type: 'text',
+			icon: 'fas fa-search'
 		}
-	}));
+	}), { notes: 'tag=app-input-text\nlabel="Name"\ntype="text"\nicon="fas fa-search"\ncontrol="{{formControl}}"' })
+
+	.add('Input Text Disabled', () => ({
+		component: InputTextComponent,
+		props: {
+			control: control3,
+			label: 'Name',
+			disabled: true,
+			icon: 'fas fa-search'
+		}
+	}), { notes: 'tag=app-input-text\nlabel="Name"\ndisabled="true"\ntype="text"\nicon="fas fa-search"\ncontrol="{{formControl}}"' })
+
+	.add('Input Text With Icon', () => ({
+		component: InputTextComponent,
+		props: {
+			control: control1,
+			label: 'Name',
+			type: 'number',
+			icon: 'fas fa-search',
+			success: true
+		}
+	}), { notes: 'tag=app-input-text\nlabel="Name"\ntype="number"\nsuccess="true"\nicon="fas fa-search"\ncontrol="{{formControl}}"' })
+
+	.add('Password', () => ({
+		component: InputTextComponent,
+		props: {
+			control: control2,
+			label: 'Password',
+			type: 'password',
+			errorMessage: 'Name can`t be empty',
+			success: true,
+			error: true
+		}
+	}), { notes: 'tag=app-input-text\nlabel="Password"\ntype="password"\nerror="true"\nsuccess="true"' +
+					'\nerrorMessage="Name can`t be empty"\ncontrol="{{formControl}}"' 
+	});
 

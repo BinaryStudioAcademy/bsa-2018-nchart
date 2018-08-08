@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
 @Component({
 	selector: 'app-input-text',
@@ -7,10 +7,15 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class InputTextComponent implements OnInit {
 
-	@Input() disabled: string;
+	@Input() disabled: boolean;
 	@Input() label: string;
 	@Input() errorMessage: string;
-	@Input() control: any;
+	@Input() type: string;
+	@Input() control: FormControl;
+	@Input() icon: string;
+	@Input() success: boolean;
+	@Input() error: boolean;
+	inputFocus = false;
 
 	constructor() { }
 

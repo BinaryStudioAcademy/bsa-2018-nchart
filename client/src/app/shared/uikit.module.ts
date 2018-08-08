@@ -1,4 +1,11 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
+// Forms
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { RadioButtonModule } from 'primeng/radiobutton';
@@ -7,7 +14,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { CheckboxModule } from 'primeng/checkbox';
 import { SplitButtonModule } from 'primeng/splitbutton';
-import {RouterTestingModule} from '@angular/router/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 
 @NgModule({
@@ -19,7 +26,12 @@ import {RouterTestingModule} from '@angular/router/testing';
 				InputTextModule,
 				DropdownModule,
 				CheckboxModule,
-				RouterTestingModule
+				RouterTestingModule,
+				FormsModule,
+				ReactiveFormsModule,
+				CommonModule,
+				BrowserAnimationsModule,
+				BrowserModule
 			],
 	exports: [	ButtonModule,
 				SplitButtonModule,
@@ -29,7 +41,12 @@ import {RouterTestingModule} from '@angular/router/testing';
 				InputTextModule,
 				DropdownModule,
 				CheckboxModule,
-				RouterTestingModule
+				RouterTestingModule,
+				FormsModule,
+				ReactiveFormsModule,
+				CommonModule,
+				BrowserAnimationsModule,
+				BrowserModule
 			],
 	declarations: []
 })
