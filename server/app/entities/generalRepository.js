@@ -3,59 +3,32 @@ class Repository {
 		this.model = model;
 	}
 
-	getAll(callback) {
-		this.model
-			.findAll()
-			.then(data => {
-				callback(null, data);
-			})
-			.catch(err => {
-				callback(err, null);
-			});
+	getAll() {
+		return this.model.findAll();
 	}
 
-	save(obj, callback) {
-		this.model
-			.create(obj)
-			.then(() => {
-				callback(null, obj);
-			})
-			.catch(err => callback(err, obj));
+	save(obj) {
+		return this.model.create(obj);
 	}
 
-	getById(id, callback) {
-		this.model
-			.findById(id)
-			.then(data => {
-				callback(null, data);
-			})
-			.catch(err => callback(err, null));
+	getById(id) {
+		return this.model.findById(id);
 	}
 
-	removeById(id, callback) {
-		this.model
-			.destroy({
-				where: {
-					id
-				}
-			})
-			.then(() => {
-				callback(null, 'Object deleted');
-			})
-			.catch(err => callback(err, null));
+	removeById(id) {
+		return this.model.destroy({
+			where: {
+				id
+			}
+		});
 	}
 
-	update(id, obj, callback) {
-		this.model
-			.update(obj, {
-				where: {
-					id
-				}
-			})
-			.then(() => {
-				callback(null, obj);
-			})
-			.catch(err => callback(err, obj));
+	update(id, obj) {
+		return this.model.update(obj, {
+			where: {
+				id
+			}
+		});
 	}
 }
 

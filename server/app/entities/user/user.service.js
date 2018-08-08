@@ -1,145 +1,78 @@
-const async = require('async');
 const UserRepository = require('./user.repository');
-const CompanyService = require('../company/company.service');
-const CompanyUserService = require('../company/company_user/company_user.service');
-const GroupService = require('../group/group.service');
-const GroupUserService = require('../group/group_user/group_user.service');
-const jwt = require('jsonwebtoken');
-require('dotenv').config();
+const TokenService = require('../../common/token.service');
+// const async = require('async');
+// const CompanyService = require('../company/company.service');
+// const CompanyUserService = require('../company/company_user/company_user.service');
+// const GroupService = require('../group/group.service');
+// const GroupUserService = require('../group/group_user/group_user.service');
 
-module.exports = {
-	findAll: callback => {
-		UserRepository.getAll((err, data) => {
-			callback(null, data);
-		});
-	},
-
-	findById: (id, callback) => {
-		UserRepository.getById(id, (err, data) => {
-			callback(err, data);
-		});
-	},
-
-	save: (obj, mainCallBack) => {
-		// object with all created entities
-		const payload = {
-			token: null,
-			user: null,
-			company: null,
-			companyUser: null,
-			group: null,
-			groupUser: null
-		};
-		async.waterfall(
-			[
-				callback => {
-					UserRepository.findByEmail(obj, (err, data) => {
-						if (err) {
-							return callback(err, null);
-						}
-						if (data === null) {
-							return callback(null);
-						}
-						throw new Error('User already exists');
-					});
-				},
-				callback => {
-					UserRepository.save(obj, (err, data) => {
-						if (err) {
-							return callback(err, null);
-						}
-						let tokenPayload = {
-							id: data.id,
-							firstName: data.firstName,
-							lastName: data.lastName,
-							email: data.email
-						};
-						payload.token = jwt.sign(payload, process.env.TOKEN, {
-							expiresIn: 60 * 60
-						});
-						payload.user = tokenPayload;
-						return callback(null);
-					});
-				},
-				callback => {
-					GroupService.save('General', (err, data) => {
-						if (err) {
-							return callback(err, null);
-						}
-						payload.group = data;
-						return callback(null);
-					});
-				},
-				callback => {
-					GroupUserService.save(
-						payload.user.id,
-						payload.group.id,
-						(err, data) => {
-							if (err) {
-								return callback(err, null);
-							}
-							payload.groupUser = data;
-							return callback(null);
-						}
-					);
-				},
-				callback => {
-					CompanyService.save(obj, (err, data) => {
-						if (err) {
-							return callback(err, null);
-						}
-						payload.company = data;
-						return callback(null);
-					});
-				},
-				callback => {
-					CompanyUserService.save(
-						payload.user.id,
-						payload.company.id,
-						(err, data) => {
-							if (err) {
-								return callback(err, null);
-							}
-							payload.companyUser = data;
-							return callback(null);
-						}
-					);
-				}
-			],
-			err => {
-				if (err) {
-					mainCallBack(err, null);
-					throw err;
-				}
-				return mainCallBack(null, payload);
-			}
-		);
-	},
-
-	login: (obj, callback) => {
-		UserRepository.login(obj, (err, data) => {
-			let tokenPayload = {
-				id: data.id,
-				firstName: data.firstName,
-				lastName: data.lastName,
-				email: data.email
-			};
-			let token = jwt.sign(tokenPayload, process.env.TOKEN, {
-				expiresIn: 60 * 60
-			});
-			callback(err, token);
-		});
-	},
-
-	removeById: (id, callback) => {
-		UserRepository.removeById(id, (err, data) => {
-			callback(err, data);
-		});
-	},
-
-	update: (id, obj, callback) => {
-		UserRepository.update(id, obj, (err, data) => {
-			callback(err, data);
-		});
+class UserService {
+	constructor() {
+		this.UserRepository = UserRepository;
 	}
-};
+
+	getAll() {
+		return this.UserRepository.getAll();
+	}
+
+	getById(id) {
+		return this.UserRepository.getById(id);
+	}
+
+	save(obj) {
+		return this.UserRepository.save(obj)
+			.then(data => TokenService.createToken(data))
+			.catch(err => {
+				const errArr = [];
+				for (let i = 0; i < err.errors.length; i + 1) {
+					errArr.push(err.errors[i].message);
+				}
+				throw new Error(errArr.join(','));
+			});
+	}
+
+	login(obj) {
+		return this.UserRepository.findByEmail(obj)
+			.then(data => {
+				if (data === null) {
+					throw new Error('User does not exist');
+				} else if (data.dataValues.password === obj.password) {
+					return TokenService.createToken(data.dataValues);
+				} else {
+					throw new Error('Wrong password');
+				}
+			})
+			.catch(err => {
+				throw new Error(err);
+			});
+	}
+
+	removeById(id) {
+		return this.UserRepository.removeById(id)
+			.then(data => {
+				if (data === 0) {
+					throw new Error('Object did not exist');
+				} else {
+					return 'Object deleted';
+				}
+			})
+			.catch(err => {
+				throw new Error(err);
+			});
+	}
+
+	updateUser(id, obj) {
+		return this.UserRepository.update(id, obj)
+			.then(data => {
+				if (data[0] === 0) {
+					throw new Error('Object does not exist');
+				}
+				return 'Object updated';
+			})
+			.catch(err => {
+				throw new Error(err);
+			});
+	}
+}
+
+module.exports = new UserService();
