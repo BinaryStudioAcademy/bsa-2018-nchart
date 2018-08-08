@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-	selector: 'app-secondary-button',
-	templateUrl: './secondary-button.html'
+	selector: 'app-default-button',
+	templateUrl: './tool-button.html'
 })
-export class SecondaryButtonComponent implements OnInit {
+export class ToolButtonComponent implements OnInit {
 
 	@Input() label: string;
 	@Input() icon: string;

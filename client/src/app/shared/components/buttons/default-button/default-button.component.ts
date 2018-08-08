@@ -10,6 +10,7 @@ export class DefaultButtonComponent implements OnInit {
 	@Input() icon: string;
 	@Input() iconPosition: string;
 	@Input() disabled: boolean;
+	@Input() size;
 
 	constructor() { }
 
