@@ -7,7 +7,7 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class InputPasswordComponent implements OnInit {
 
-	@Input() control: FormControl;
+	@Input() control: any;
 
 	constructor() { }
 

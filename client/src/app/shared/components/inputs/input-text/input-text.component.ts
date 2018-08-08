@@ -10,7 +10,7 @@ export class InputTextComponent implements OnInit {
 	@Input() disabled: string;
 	@Input() label: string;
 	@Input() errorMessage: string;
-	@Input() control: FormControl;
+	@Input() control: any;
 
 	constructor() { }
 

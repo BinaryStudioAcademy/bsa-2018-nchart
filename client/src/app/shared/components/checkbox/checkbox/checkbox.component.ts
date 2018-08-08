@@ -12,8 +12,7 @@ export class CheckboxComponent implements OnInit {
 	@Input() value: string;
 	@Input() disabled: string;
 	@Input() checked: string;
-
-	selectedValues: string[] = ['One', 'Three'];
+	@Input() selectedValues: string[];
 
 	constructor() {}
 
