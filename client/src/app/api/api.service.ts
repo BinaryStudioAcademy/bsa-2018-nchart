@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { AuthHeader } from '@app/api/request/authHeader.model';
@@ -20,8 +20,9 @@ export class ApiService {
 	}
 
 	makeRequest(request: ServiceRequest): Observable<any> {
-		const { type, url, payload, headers } = request;
-		(<HttpHeaders>headers).append(
+		const { type, url, payload } = request;
+
+		const headers = request.headers.append(
 			this.authHeader.name,
 			this.authHeader.value
 		);
