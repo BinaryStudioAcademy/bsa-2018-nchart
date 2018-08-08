@@ -13,6 +13,7 @@ import { DropdownSimpleComponent } from './components/dropdowns/dropdown-simple/
 import { DropdownGroupComponent } from './components/dropdowns/dropdown-group/dropdown-group.component';
 // Checkbox
 import { CheckboxComponent } from './components/checkbox/checkbox/checkbox.component';
+import { CheckboxGroupComponent } from './components/checkbox/checkbox-group/checkbox-group.component';
 import { RadioButtonComponent } from './components/input/radioButton/radio-button.component';
 
 
@@ -26,6 +27,7 @@ import { RadioButtonComponent } from './components/input/radioButton/radio-butto
 				DropdownSimpleComponent,
 				DropdownGroupComponent,
 				CheckboxComponent,
+				CheckboxGroupComponent,
 				RadioButtonComponent,
 				InputTextareaComponent
 	],
@@ -37,6 +39,7 @@ import { RadioButtonComponent } from './components/input/radioButton/radio-butto
 					DropdownSimpleComponent,
 					DropdownGroupComponent,
 					CheckboxComponent,
+					CheckboxGroupComponent,
 					RadioButtonComponent,
 					InputTextareaComponent
 	]

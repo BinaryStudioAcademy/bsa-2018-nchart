@@ -27,6 +27,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 // Checkbox
 import { CheckboxModule } from 'primeng/checkbox';
 import { CheckboxComponent } from '../app/shared/components/checkbox/checkbox/checkbox.component';
+import { CheckboxGroupComponent } from '../app/shared/components/checkbox/checkbox-group/checkbox-group.component';
 // Dropdowns
 import { DropdownModule } from 'primeng/dropdown';
 import { DropdownSimpleComponent } from '../app/shared/components/dropdowns/dropdown-simple/dropdown-simple.component';
@@ -237,7 +238,9 @@ storiesOf('Checkbox', module)
 						FormsModule,
 						ReactiveFormsModule
 					],
-			declarations: [CheckboxComponent]
+			declarations: [	CheckboxComponent,
+							CheckboxGroupComponent
+						]
 		})
 	)
 	.add('Checkbox default', () => ({
@@ -278,7 +281,27 @@ storiesOf('Checkbox', module)
 			selectedValues: ['fifth'],
 			control: new FormControl(true)
 		}
-	}), { notes: 'tag=app-checkbox\nlabel="I`m disabled too ("\nvalue="third"\ndisabled="true"\nselectedValues="[\'second\']"' });
+	}), { notes: 'tag=app-checkbox\nlabel="I`m disabled too ("\nvalue="third"\ndisabled="true"\nselectedValues="[\'second\']"' })
+
+	.add('Checkbox group', () => ({
+		component: CheckboxGroupComponent,
+		props: {
+			checks: [{
+				label: 'First item',
+				value: 'first',
+				disabled: false
+			}, {
+				label: 'Seventh item',
+				value: 'second',
+				disabled: false
+			}, {
+				label: 'Fifth item',
+				value: 'third',
+				disabled: true
+			}],
+			selectedValues: ['second', 'third']
+		}
+	}), { notes: 'tag=app-checkbox-group\nchecks="[{label:..., value:..., disabled:...}]"' });
 
 storiesOf('Dropdowns', module)
 	.addDecorator(
