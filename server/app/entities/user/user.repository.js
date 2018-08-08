@@ -1,16 +1,16 @@
-const generalRepository = require('../../common/repository/Repository');
+const Repository = require('../../common/repository/repository');
 const userModel = require('./user.model');
 
-class UserRepository extends generalRepository {
+class UserRepository extends Repository {
 	constructor() {
 		super();
 		this.model = userModel;
 	}
 
-	findByEmail(obj) {
+	findByEmail(email) {
 		return this.model.findOne({
 			where: {
-				email: obj.email
+				email
 			}
 		});
 	}

@@ -1,5 +1,6 @@
 const user = require('express').Router();
 const userService = require('../../entities/user/user.service');
+// const GeneratePayload = require('../../common/middleware/payload.middleware');
 
 user.get('/', (req, res) => {
 	userService
@@ -78,6 +79,19 @@ user.post('/login', (req, res) => {
 		})
 		.catch(err => {
 			res.json(err.message);
+			res.status(400);
+			res.end();
+		});
+});
+
+user.post('/verifyToken', (req, res) => {
+	userService
+		.verifyToken(req.body.token)
+		.then(data => {
+			res.json(data);
+		})
+		.catch(err => {
+			res.json(err);
 			res.status(400);
 			res.end();
 		});

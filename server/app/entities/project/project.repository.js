@@ -1,7 +1,7 @@
-const generalRepository = require('../../common/repository/Repository');
+const Repository = require('../../common/repository/repository');
 const projectModel = require('./project.models/project');
 
-class ProjectRepository extends generalRepository {
+class ProjectRepository extends Repository {
 	constructor() {
 		super();
 		this.model = projectModel;

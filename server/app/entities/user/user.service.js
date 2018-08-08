@@ -25,7 +25,7 @@ class UserService {
 						this.UserRepository.save(obj)
 							.then(data =>
 								callback(null, {
-									token: TokenService.createToken(data),
+									tokenSecret: TokenService.createToken(data),
 									user: data.dataValues
 								})
 							)
@@ -101,14 +101,14 @@ class UserService {
 						return reject(err);
 					}
 					// console.log(payload);
-					return resolve(payload.token);
+					return resolve(payload.tokenSecret);
 				}
 			);
 		});
 	}
 
 	login(obj) {
-		return this.UserRepository.findByEmail(obj)
+		return this.UserRepository.findByEmail(obj.email)
 			.then(data => {
 				if (data === null) {
 					throw new Error('User does not exist');
@@ -121,6 +121,40 @@ class UserService {
 			.catch(err => {
 				throw new Error(err);
 			});
+	}
+
+	verifyToken(token) {
+		return new Promise((resolve, reject) => {
+			async.waterfall(
+				[
+					callback => {
+						TokenService.verifyToken(token)
+							.then(data => callback(null, data))
+							.catch(err => {
+								callback(err, null);
+							});
+					},
+					(email, callback) => {
+						this.UserRepository.findByEmail(email)
+							.then(data => callback(null, data))
+							.catch(err => {
+								callback(err, null);
+							});
+					}
+				],
+				(err, payload) => {
+					if (err) {
+						return reject(err);
+					}
+					return resolve({
+						id: payload.id,
+						firstName: payload.firstName,
+						lastName: payload.lastName,
+						email: payload.email
+					});
+				}
+			);
+		});
 	}
 
 	removeById(id) {
