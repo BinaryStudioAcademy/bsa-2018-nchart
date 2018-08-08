@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
 	selector: 'app-radio-button',
@@ -8,11 +9,12 @@ export class RadioButtonComponent implements OnInit {
 	@Input()
 	name: string;
 	@Input()
-	value: string;
+	label?: string;
 	@Input()
-	label: string;
+	disabled = false;
 	@Input()
-	disabled: string;
+	control?: FormControl;
+
 	val: string;
 
 	constructor() {}
