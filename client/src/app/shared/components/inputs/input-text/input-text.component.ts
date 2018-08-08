@@ -1,21 +1,23 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
 @Component({
 	selector: 'app-input-text',
 	templateUrl: './input-text.component.html'
 })
 export class InputTextComponent implements OnInit {
+	@Input()
+	disabled: string;
+	@Input()
+	label: string;
+	@Input()
+	errorMessage: string;
+	@Input()
+	control: FormControl;
 
-	@Input() disabled: string;
-	@Input() label: string;
-	@Input() errorMessage: string;
-	@Input() control: FormControl;
+	constructor() {}
 
-	constructor() { }
-
-	ngOnInit() {
-	}
+	ngOnInit() {}
 
 	isDisabled() {
 		if (this.disabled) {
@@ -23,5 +25,4 @@ export class InputTextComponent implements OnInit {
 		}
 		return this.disabled;
 	}
-
 }

@@ -1,10 +1,8 @@
 import { NgModule } from '@angular/core';
-
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {BrowserModule} from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { SecondaryButtonComponent } from './components/buttons/secondary-button.component';
@@ -15,43 +13,47 @@ import { DropdownSimpleComponent } from './components/dropdowns/dropdown-simple/
 import { DropdownGroupComponent } from './components/dropdowns/dropdown-group/dropdown-group.component';
 import { CheckboxComponent } from './components/checkbox/checkbox/checkbox.component';
 
-import { ButtonModule } from 'primeng/button';
-import { RadioButtonModule } from 'primeng/radiobutton';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonComponent } from '@app/shared/components/input/radioButton/radio-button.component';
 import { InputTextareaComponent } from '@app/shared/components/input/inputTextarea/input-textarea.component';
-
+import { ToggleComponent } from '@app/shared/components/input/toggle/toggle.component';
 
 @NgModule({
-	imports: [	ReactiveFormsModule,
-				BrowserAnimationsModule,
-				BrowserModule,
-				CommonModule,
-				FormsModule,
-				RadioButtonModule,
-				InputTextareaModule
+	imports: [
+		ReactiveFormsModule,
+		BrowserAnimationsModule,
+		BrowserModule,
+		CommonModule,
+		FormsModule,
+		InputTextareaModule,
+		AutoCompleteModule
 	],
-	exports: [	SecondaryButtonComponent,
-				DefaultButtonComponent,
-				InputPasswordComponent,
-				BrowserAnimationsModule,
-				BrowserModule,
-				InputTextComponent,
-				DropdownSimpleComponent,
-				DropdownGroupComponent,
-				CheckboxComponent,
-				RadioButtonComponent,
-				InputTextareaComponent
+	exports: [
+		SecondaryButtonComponent,
+		DefaultButtonComponent,
+		InputPasswordComponent,
+		BrowserAnimationsModule,
+		BrowserModule,
+		InputTextComponent,
+		DropdownSimpleComponent,
+		DropdownGroupComponent,
+		CheckboxComponent,
+		RadioButtonComponent,
+		InputTextareaComponent,
+		ToggleComponent
 	],
-	declarations: [	SecondaryButtonComponent,
-					DefaultButtonComponent,
-					InputPasswordComponent,
-					InputTextComponent,
-					DropdownSimpleComponent,
-					DropdownGroupComponent,
-					CheckboxComponent,
-					RadioButtonComponent,
-					InputTextareaComponent
+	declarations: [
+		SecondaryButtonComponent,
+		DefaultButtonComponent,
+		InputPasswordComponent,
+		InputTextComponent,
+		DropdownSimpleComponent,
+		DropdownGroupComponent,
+		CheckboxComponent,
+		RadioButtonComponent,
+		InputTextareaComponent,
+		ToggleComponent
 	]
 })
 export class SharedModule {}

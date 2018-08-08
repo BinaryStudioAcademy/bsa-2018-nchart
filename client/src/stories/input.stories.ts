@@ -6,28 +6,27 @@ import { DefaultButtonComponent } from '../app/shared/components/buttons/default
 
 import { InputPasswordComponent } from '../app/shared/components/inputs/input-password/input-password.component';
 import { InputTextComponent } from '../app/shared/components/inputs/input-text/input-text.component';
-import {ButtonModule} from 'primeng/button';
-import {PasswordModule} from 'primeng/password';
-import {InputTextModule} from 'primeng/inputtext';
-import { FormControl, Validators } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
+import { PasswordModule } from 'primeng/password';
+import { InputTextModule } from 'primeng/inputtext';
+import { FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { RadioButtonComponent } from '../app/shared/components/input//radioButton/radio-button.component';
 import { InputTextareaComponent } from '../app/shared/components/input/inputTextarea/input-textarea.component';
 
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ToggleComponent } from '../app/shared/components/input/toggle/toggle.component';
 
 export const control1 = new FormControl('one');
 export const control2 = new FormControl('');
 
-
-
 storiesOf('Buttons', module)
 	.addDecorator(
 		moduleMetadata({
-		imports: [ButtonModule],
-		schemas: [],
-		declarations: [DefaultButtonComponent, SecondaryButtonComponent],
-		providers: [],
+			imports: [ButtonModule],
+			schemas: [],
+			declarations: [DefaultButtonComponent, SecondaryButtonComponent],
+			providers: []
 		})
 	)
 	.add('Secondary', () => ({
@@ -46,13 +45,21 @@ storiesOf('Buttons', module)
 storiesOf('Input', module)
 	.addDecorator(
 		moduleMetadata({
-			imports: [RadioButtonModule, InputTextareaModule],
+			imports: [
+				RadioButtonModule,
+				InputTextareaModule,
+				ReactiveFormsModule
+			],
 			schemas: [],
-			declarations: [RadioButtonComponent, InputTextareaComponent],
+			declarations: [
+				RadioButtonComponent,
+				InputTextareaComponent,
+				ToggleComponent
+			],
 			providers: []
 		})
 	)
-	.add('RadioButtonFromComponent', () => ({
+	.add('RadioButton', () => ({
 		component: RadioButtonComponent,
 		props: {
 			name: 'group1',
@@ -61,7 +68,7 @@ storiesOf('Input', module)
 			disabled: false
 		}
 	}))
-	.add('RadioButtonDisabledFromComponent', () => ({
+	.add('RadioButtonDisabled', () => ({
 		component: RadioButtonComponent,
 		props: {
 			name: 'group1',
@@ -70,14 +77,7 @@ storiesOf('Input', module)
 			disabled: 'true'
 		}
 	}))
-	.add('RadioButton', () => ({
-		template: `<div class='ui-g' style='width:250px;margin-bottom:10px'>
-		<div class='ui-g-12'><p-radioButton name='group1' value='Option 1' label='Option 1' [(ngModel)]='val1' inputId='opt1'></p-radioButton></div>
-		<div class='ui-g-12'><p-radioButton name='group1' value='Option 2' label='Option 2' [(ngModel)]='val1' inputId='opt2'></p-radioButton></div>
-		<div class='ui-g-12'><p-radioButton name='group1' value='Option 3' label='Option 3' [(ngModel)]='val1' inputId='opt3'></p-radioButton></div>
-	</div>`
-	}))
-	.add('InputTextAreaFromComponent', () => ({
+	.add('InputTextArea', () => ({
 		component: InputTextareaComponent,
 		props: {
 			rows: '5',
@@ -85,15 +85,24 @@ storiesOf('Input', module)
 			disabled: 'false'
 		}
 	}))
-	.add('InputTextAreaDisabledFromComponent', () => ({
+	.add('InputTextAreaDisabled', () => ({
 		component: InputTextareaComponent,
 		props: {
 			rows: '5',
 			cols: '30',
 			disabled: 'true'
 		}
+	}))
+	.add('Toggle', () => ({
+		component: ToggleComponent,
+		props: {}
+	}))
+	.add('ToggleDisabled', () => ({
+		component: ToggleComponent,
+		props: {
+			disabled: true
+		}
 	}));
-
 
 // storiesOf('Inputs', module)
 // 	.addDecorator(

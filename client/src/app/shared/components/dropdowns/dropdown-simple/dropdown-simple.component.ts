@@ -1,19 +1,23 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import {SelectItem} from 'primeng/api';
 
 @Component({
 	selector: 'app-dropdown-simple',
 	templateUrl: './dropdown-simple.html'
 })
 export class DropdownSimpleComponent implements OnInit {
-
-	@Input() control: FormControl;
-	@Input() options: Object[];
-	@Input() optionLabel: any;
-	@Input() label: any;
-	@Input() disabled: string;
-	@Input() placeholder: string;
+	@Input()
+	control: FormControl;
+	@Input()
+	options: Object[];
+	@Input()
+	optionLabel: any;
+	@Input()
+	label: any;
+	@Input()
+	disabled: string;
+	@Input()
+	placeholder: string;
 
 	constructor() {}
 
@@ -24,7 +28,5 @@ export class DropdownSimpleComponent implements OnInit {
 		return this.disabled;
 	}
 
-	ngOnInit() {
-	}
-
+	ngOnInit() {}
 }
