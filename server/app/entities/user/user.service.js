@@ -174,7 +174,7 @@ class UserService {
 				if (data === 0) {
 					throw new Error('Object did not exist');
 				} else {
-					return 'Object deleted';
+					return null;
 				}
 			})
 			.catch(err => {
