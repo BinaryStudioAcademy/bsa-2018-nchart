@@ -1,1 +1,22 @@
-<textarea [rows]="rows" [cols]="cols" pInputTextarea [(ngModel)]="val" [disabled]='disabled'></textarea>
+<label class="input-label"
+	   [class.ui-input-label-disabled]="disabled"
+>{{label}}</label>
+
+<textarea 	[formControl]="control"
+        pInputTextarea 
+        [rows]="rows"
+        [cols]="cols"
+		(input)="inputFocus = true"
+		(blur)="inputFocus = false"
+        [disabled]="disabled"
+        [autoResize]="autoResize"
+		[class.ui-input-error]="error && control.invalid && control.dirty"
+		[class.ui-input-success]="success && control.valid"
+></textarea>
+<i class="{{icon}}" *ngIf="(!success && !error) || ((success || error) && !inputFocus)"></i>
+<i class="fas fa-check success-icon" *ngIf="success && inputFocus && control.valid"></i>
+<i class="fas fa-question error-icon" *ngIf="error && inputFocus && control.invalid && control.dirty"></i>
+
+<div class="input-label input-label-error"
+	 *ngIf="error && inputFocus && control.invalid && control.dirty"
+>{{errorMessage}}</div>

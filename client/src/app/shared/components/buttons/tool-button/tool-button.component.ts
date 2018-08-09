@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-	selector: 'app-default-button',
+	selector: 'app-tool-button',
 	templateUrl: './tool-button.html'
 })
 export class ToolButtonComponent implements OnInit {

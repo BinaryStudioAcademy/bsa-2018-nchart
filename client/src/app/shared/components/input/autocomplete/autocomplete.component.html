@@ -1,0 +1,11 @@
+<p-autoComplete 
+    [formControl]="control"
+    [suggestions]="filteredItems" 
+    (completeMethod)="filterBrands($event)" 
+    [placeholder]="placeholder"  
+    [minLength]="minLength" 
+    [dropdown]="dropdown">
+</p-autoComplete>
+<app-tool-button label="Filter" size="middle" icon="fas fa-filter" iconPosition="right" *ngIf="filterButton"></app-tool-button>
+
+<pre>{{control.value | json}}</pre>

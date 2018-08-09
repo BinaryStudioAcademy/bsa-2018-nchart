@@ -1,0 +1,155 @@
+import { storiesOf, moduleMetadata, addDecorator } from '@storybook/angular';
+import '@storybook/addon-notes/register';
+import { withNotes } from '@storybook/addon-notes';
+// Forms
+import { FormControl, Validators } from '@angular/forms';
+// Modules
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouterTestingModule } from '@angular/router/testing';
+// Buttons
+import { ButtonModule } from 'primeng/button';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { SecondaryButtonComponent } from '../app/shared/components/buttons/secondary-button/secondary-button.component';
+import { DefaultButtonComponent } from '../app/shared/components/buttons/default-button/default-button.component';
+import { ActionButtonComponent } from '../app/shared/components/buttons/action-button/action-button.component';
+import { ToolButtonComponent } from '../app/shared/components/buttons/tool-button/tool-button.component';
+
+export const control1 = new FormControl('', Validators.required);
+export const control2 = new FormControl('', [
+	Validators.required,
+	Validators.minLength(3)
+]);
+
+addDecorator(withNotes);
+
+storiesOf('Buttons', module)
+	.addDecorator(
+		moduleMetadata({
+			imports: [
+				ButtonModule,
+				SplitButtonModule,
+				RouterTestingModule,
+				BrowserAnimationsModule,
+				BrowserModule
+			],
+			declarations: [
+				DefaultButtonComponent,
+				SecondaryButtonComponent,
+				ActionButtonComponent,
+				ToolButtonComponent
+			]
+		})
+	)
+	.add(
+		'Secondary Button',
+		() => ({
+			component: SecondaryButtonComponent,
+			props: {
+				label: 'Secondary',
+				size: 'big'
+			}
+		}),
+		{ notes: 'tag=app-secondary-button\nlabel="Secondary"\nsize="big"' }
+	)
+
+	.add(
+		'Default Button',
+		() => ({
+			component: DefaultButtonComponent,
+			props: {
+				label: 'Default Button',
+				icon: 'fas fa-check',
+				iconPosition: 'right',
+				size: 'large'
+			}
+		}),
+		{
+			notes:
+				'tag=app-default-button\nlabel="Default Button"\nsize="large"\nicon="fas fa-check"\niconPosition="right"'
+		}
+	)
+
+	.add(
+		'Disabled Button',
+		() => ({
+			component: DefaultButtonComponent,
+			props: {
+				label: 'Default Button',
+				icon: 'fas fa-check',
+				iconPosition: 'left',
+				disabled: true,
+				size: 'large'
+			}
+		}),
+		{
+			notes:
+				'tag=app-default-button\nlabel="Default Button"\nsize="large"\nicon="fas fa-check"\niconPosition="right"\ndisabled="true"'
+		}
+	)
+
+	.add(
+		'Action Button',
+		() => ({
+			component: ActionButtonComponent,
+			props: {
+				label: 'Action',
+				items: [
+					{ label: 'One', icon: 'fas fa-check' },
+					{ label: 'Two', icon: 'fa-refresh' }
+				]
+			}
+		}),
+		{
+			notes:
+				"tag=app-action-button\nlabel=\"Action\"\nitems=\"[{label: 'One', icon: 'fas fa-check'}, {label: 'Two']\""
+		}
+	)
+
+	.add(
+		'Action Button Disabled',
+		() => ({
+			component: ActionButtonComponent,
+			props: {
+				label: 'Save',
+				disabled: true,
+				items: [
+					{ label: 'One', icon: 'fas fa-check' },
+					{ label: 'Two', icon: 'fa-refresh' }
+				]
+			}
+		}),
+		{
+			notes:
+				'tag=app-action-button\nlabel="Save"\ndisabled="true"\nitems="[{label: \'One\', icon: \'fas fa-check\'}, {label: \'Two\']"'
+		}
+	)
+
+	.add(
+		'Tool Button',
+		() => ({
+			component: ToolButtonComponent,
+			props: {
+				label: 'Filter',
+				size: 'middle',
+				icon: 'fas fa-filter',
+				iconPosition: 'right'
+			}
+		}),
+		{
+			notes:
+				'tag=app-tool-button\nlabel="Filter"\nsize="middle"\nicon="fas fa-filter\niconPosition="right"'
+		}
+	)
+
+	.add(
+		'Small Button',
+		() => ({
+			component: ToolButtonComponent,
+			props: {
+				label: 'Small Button',
+				size: 'small'
+			}
+		}),
+		{ notes: 'tag=app-tool-button\nlabel="Small Button"\nsize="small"' }
+	);

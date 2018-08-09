@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
 	selector: 'app-input-textarea',
@@ -10,8 +11,23 @@ export class InputTextareaComponent implements OnInit {
 	@Input()
 	cols: string;
 	@Input()
-	disabled: string;
-	val: string;
+	autoResize: boolean;
+	@Input()
+	disabled: boolean;
+	@Input()
+	label: string;
+	@Input()
+	errorMessage: string;
+	@Input()
+	control?: FormControl;
+	@Input()
+	icon: string;
+	@Input()
+	success: boolean;
+	@Input()
+	error: boolean;
+
+	inputFocus = false;
 
 	constructor() {}
 

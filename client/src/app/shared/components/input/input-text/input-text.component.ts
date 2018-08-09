@@ -22,6 +22,7 @@ export class InputTextComponent implements OnInit {
 	success: boolean;
 	@Input()
 	error: boolean;
+
 	inputFocus = false;
 
 	ngOnInit() {}

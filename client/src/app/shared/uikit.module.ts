@@ -7,12 +7,15 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
+import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { CheckboxModule } from 'primeng/checkbox';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { RouterTestingModule } from '@angular/router/testing';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 @NgModule({
 	imports: [
@@ -28,7 +31,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 		ReactiveFormsModule,
 		CommonModule,
 		BrowserAnimationsModule,
-		BrowserModule
+		BrowserModule,
+		AutoCompleteModule,
+		RadioButtonModule,
+		InputSwitchModule
 	],
 	exports: [
 		ButtonModule,
@@ -43,7 +49,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 		ReactiveFormsModule,
 		CommonModule,
 		BrowserAnimationsModule,
-		BrowserModule
+		BrowserModule,
+		AutoCompleteModule,
+		RadioButtonModule,
+		InputSwitchModule
 	],
 	declarations: []
 })
