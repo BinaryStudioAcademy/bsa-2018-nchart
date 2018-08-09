@@ -20,12 +20,7 @@ class UserService {
 				if (data === null) {
 					throw new Error('Object did not exist');
 				} else {
-					return {
-						id: data.id,
-						firstName: data.firstName,
-						lastName: data.lastName,
-						email: data.email
-					};
+					return data;
 				}
 			})
 			.catch(err => {
@@ -42,7 +37,9 @@ class UserService {
 							.then(data =>
 								callback(null, {
 									tokenSecret: TokenService.createToken(data),
-									user: data.dataValues
+									user: this.createUserPayload(
+										data.dataValues
+									)
 								})
 							)
 							.catch(err => callback(err, null));
@@ -112,7 +109,10 @@ class UserService {
 						return reject(ErrorService.createCustomDBError(err));
 					}
 					// console.log(payload);
-					return resolve(payload.tokenSecret);
+					return resolve({
+						token: payload.tokenSecret,
+						user: payload.user
+					});
 				}
 			);
 		});
@@ -124,7 +124,10 @@ class UserService {
 				if (data === null) {
 					throw new Error('Object did not exist');
 				} else if (data.dataValues.password === obj.password) {
-					return TokenService.createToken(data.dataValues);
+					return {
+						token: TokenService.createToken(data.dataValues),
+						user: this.createUserPayload(data.dataValues)
+					};
 				} else {
 					throw new Error('Wrong password');
 				}
@@ -157,12 +160,7 @@ class UserService {
 					if (err) {
 						return reject(ErrorService.createCustomDBError(err));
 					}
-					return resolve({
-						id: payload.id,
-						firstName: payload.firstName,
-						lastName: payload.lastName,
-						email: payload.email
-					});
+					return resolve(this.createUserPayload(payload));
 				}
 			);
 		});
@@ -193,6 +191,17 @@ class UserService {
 			.catch(err => {
 				throw ErrorService.createCustomDBError(err);
 			});
+	}
+
+	// this must be used in class method...
+	createUserPayload(data) {
+		this.data = data;
+		return {
+			id: this.data.id,
+			firstName: this.data.firstName,
+			lastName: this.data.lastName,
+			email: this.data.email
+		};
 	}
 }
 

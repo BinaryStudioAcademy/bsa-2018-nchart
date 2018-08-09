@@ -8,6 +8,18 @@ class UserRepository extends Repository {
 		this.model = userModel;
 	}
 
+	getAll() {
+		return this.model.findAll({
+			attributes: ['id', 'firstName', 'lastName', 'email']
+		});
+	}
+
+	getById(id) {
+		return this.model.findById(id, {
+			attributes: ['id', 'firstName', 'lastName', 'email']
+		});
+	}
+
 	findByEmail(email) {
 		return this.model
 			.findOne({
