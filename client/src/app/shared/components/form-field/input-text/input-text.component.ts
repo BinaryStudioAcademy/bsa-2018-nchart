@@ -6,18 +6,12 @@ import { FormControl } from '@angular/forms';
 	templateUrl: './input-text.component.html'
 })
 export class InputTextComponent implements OnInit {
-	@Input()
-	disabled: boolean;
-	@Input()
-	label: string;
-	@Input()
-	placeholder: string;
-	@Input()
-	type: string;
-	@Input()
-	control: FormControl;
-	@Input()
-	icon: string;
+	@Input() disabled: boolean;
+	@Input() label: string;
+	@Input() placeholder: string;
+	@Input() type: string;
+	@Input() control: FormControl;
+	@Input() icon: string;
 
 	ngOnInit() {}
 

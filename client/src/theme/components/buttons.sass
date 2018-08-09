@@ -3,54 +3,60 @@
 
 .ui-widget.ui-button,
 .ui-button
-	border: none
-	color: #fff
+	transition: .4s ease
+	padding: 15px
 	font-weight: 600
-	font-size: $fontSize
-	&:disabled
-		background-color: $disabledButtonColor
-		color: $primaryTextColor
+	&:disabled,
+	&:disabled:hover
+		background-color: $disabledColor
+		border-color: $disabledColor
+		color: $stateHoverTextColor
 		opacity: 1
+
 
 // Default Button
 .ui-widget.ui-button-default,
 .ui-button-default
 	background-color: $defaultButtonColor
+	border-color: $defaultButtonColor
 	&:enabled:hover
-		border: none
 		background-color: $defaultButtonHover
+		border-color: $defaultButtonHover
+		box-shadow: 0 1px 3px $teriaryColor
 	&:enabled:focus,
 	&:enabled:active
-		border: none
 		background-color: $defaultButtonColor
+		border-color: $defaultButtonColor
 
 // Secondary Button
 .ui-widget.ui-button-secondary,
 .ui-button-secondary
 	background-color: $secondaryButtonColor
+	border-color: $secondaryButtonColor
 	&:enabled:hover
-		border: none
 		background-color: $secondaryButtonHover
+		border-color: $secondaryButtonHover
+		box-shadow: 0 1px 3px $teriaryColor
 	&:enabled:active,
 	&:enabled:focus
-		border: none
 		background-color: $secondaryButtonColor
+		border-color: $secondaryButtonColor
 
 // Tool Button
 .ui-widget.ui-button-tool,
 .ui-button-tool
-	background-color: $whiteBackgroundColor
-	border: 2px solid $disabledButtonColor
-	color: $primaryTextColor
+	background-color: $stateDefaultBgColor
+	border: 2px solid $disabledColor
+	color: $stateDefaultTextColor
 	&:enabled:hover
-		border-color: $defaultButtonHover
 		background-color: $defaultButtonHover
-		color: $lightBackgroundColor
-	&:enabled:focus,
-	&:enabled:active
-		border-color: $activeButtonColor
+		border: 2px solid $defaultButtonHover
+		box-shadow: 0 1px 3px $teriaryColor
+	&:enabled:active,
+	&:enabled:focus
 		background-color: $activeButtonColor
-		color: $lightBackgroundColor
+		border: 2px solid $activeButtonColor
+
 
 // Button Label
 .ui-button-text-only .ui-button-text,
@@ -76,16 +82,22 @@
 
 // Action Button
 .ui-buttonset.ui-splitbutton 
-	min-width: 110px
-	box-shadow: 0 2px 2px $teriaryTextColor
-	background-color: $whiteBackgroundColor
-	border-radius: 3px
-	padding: 15px
+	box-shadow: 0 2px 2px $teriaryColor
+	background-color: $stateDefaultBgColor
+	border-radius: $borderRadius
+	transition: 0.4s ease
+	cursor: pointer
+
+	.ui-widget.ui-button,
+	.ui-button
+		border: none
+		background-color: transparent
+		color: $stateDefaultTextColor
+		padding: 12px
+
 	.ui-widget.ui-button:not(.ui-splitbutton-menubutton),
 	.ui-button:not(.ui-splitbutton-menubutton)
-		color: $primaryTextColor
 		min-width: 70px
-		background-color: transparent
 		.ui-button-icon-left
 			display: none
 
@@ -94,9 +106,8 @@
 		background-color: #fff
 
 	.ui-splitbutton-menubutton
-		color: $primaryTextColor
+		padding-left: 0
 		min-width: 40px
-		background-color: transparent
 		padding-left: 0
 		position: relative
 		.pi-caret-down:before
@@ -110,15 +121,13 @@
 
 	&:hover
 		background-color: $defaultButtonHover
-		.ui-splitbutton-menubutton:enabled,
-		.ui-widget.ui-button:enabled:not(.ui-splitbutton-menubutton),
-		.ui-button:enabled:not(.ui-splitbutton-menubutton)
-			color: $whiteBackgroundColor
-			background-color: transparent
-			border: none
-		.ui-widget.ui-button:disabled:hover,
-		.ui-button:disabled:hover
-			background-color: #fff
+		box-shadow: 0 1px 3px $teriaryColor
+		.ui-widget.ui-button,
+		.ui-button
+			color: $stateHoverBgColor
+			&:disabled
+				background-color: #fff
+				color: $stateDefaultTextColor
 
 	&:active,
 		.ui-splitbutton-menubutton:enabled,
@@ -133,9 +142,10 @@
 
 // Action Button Menu
 .ui-menu
-	background: $whiteBackgroundColor
+	background: $stateDefaultBgColor
 	padding: 0
 	border-radius: 0
+	box-shadow: 0 1px 3px $teriaryColor
 	.ui-menuitem
 		border-radius: 0
 	.ui-menuitem > .ui-menuitem-link
@@ -143,8 +153,8 @@
 		border-radius: 0
 		padding-left: 20px
 	.ui-menuitem > .ui-menuitem-link:hover
-		background-color: $disabledButtonColor
-		color: $primaryTextColor
+		background-color: $disabledColor
+		color: $stateDefaultTextColor
 
 // Sizes
 .ui-button-large

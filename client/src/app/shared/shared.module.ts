@@ -1,25 +1,19 @@
 import { NgModule } from '@angular/core';
 import { UIKitModule } from '@app/shared/uikit.module';
-import { SecondaryButtonComponent } from './components/button/secondary-button/secondary-button.component';
-import { DefaultButtonComponent } from './components/button/default-button/default-button.component';
-import { ToolButtonComponent } from './components/button/tool-button/tool-button.component';
+import { ButtonComponent } from './components/button/button/button.component';
 import { ActionButtonComponent } from './components/button/action-button/action-button.component';
 import { FormFieldModule } from './components/form-field/form-field.module';
 
 @NgModule({
 	imports: [UIKitModule, FormFieldModule],
 	exports: [
-		SecondaryButtonComponent,
-		DefaultButtonComponent,
-		ToolButtonComponent,
+		ButtonComponent,
 		ActionButtonComponent,
 		FormFieldModule
 	],
 	declarations: [
-		SecondaryButtonComponent,
-		DefaultButtonComponent,
-		ActionButtonComponent,
-		ToolButtonComponent
+		ButtonComponent,
+		ActionButtonComponent
 	]
 })
 export class SharedModule {}

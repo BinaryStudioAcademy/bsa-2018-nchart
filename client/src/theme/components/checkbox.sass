@@ -3,43 +3,36 @@
 
 
 .ui-chkbox .ui-chkbox-box
-	border: 2px solid $disabledButtonColor
+	border-color: $disabledColor
 	margin-right: 10px
 	width: 18px
 	height: 18px
+	box-shadow: none
 	
 	&.ui-state-active:not(.ui-state-disabled)
-		border: 2px solid $secondaryButtonColor
-		background-color: $secondaryButtonColor
-		box-shadow: none
-		outline: none
+		border-color: $successColor
+		background-color: $successColor
 
 	&.ui-state-active.ui-state-disabled
-		background-color: $whiteBackgroundColor
+		background-color: $stateDefaultBgColor
 		opacity: 1
-		border: 2px solid $disabledButtonColor
+		border-color: $disabledColor
 		.pi-check:before
 			color: $secondaryTextColor
-	
-	&.ui-state-focus
-		box-shadow: none
-		outline: none
-		background-color: $whiteBackgroundColor
 
 	&.ui-state-disabled
 		opacity: 1
-		background-color: $disabledButtonColor
+		background-color: $disabledColor
 	
-.ui-chkbox .ui-chkbox-icon
-	font-size: 1.1rem
-
-.ui-chkbox-box:not(.ui-state-disabled):not(.ui-state-active):hover,
-	border: 2px solid $disabledButtonColor
-	box-shadow: none
-	outline: none
-	background-color: $disabledButtonColor
+// .ui-chkbox .ui-chkbox-icon
+// 	font-size: 1.1rem
 
 .ui-checkbox-wrp
 	display: flex
-	align-items: center
+	.ui-checkbox-label
+		align-self: center
+
+.ui-chkbox-box:not(.ui-state-disabled):not(.ui-state-active):hover,
+	border-color: $secondaryTextColor
+
 	

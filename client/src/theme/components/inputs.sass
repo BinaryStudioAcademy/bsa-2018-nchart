@@ -3,88 +3,67 @@
 
 =input()
 	padding: 12px
-	border: 2px solid $disabledButtonColor
-	color: $secondaryTextColor
-	font-size: $fontSize
-	//min-width: 240px
+	min-width: 240px
+	border-width: 2px
+	box-shadow: none
 
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button 
   -webkit-appearance: none; 
   margin: 0
 
-.ui-inputtext.ng-dirty.ng-invalid
-	border-bottom-color: $disabledButtonColor
 
 .ui-inputtext
 	+input()
-	min-width: 240px
-
-.ui-widget
-	font-family: $fontFamily
-	
-
-.ui-inputtext:active
-.ui-inputtext:enabled:hover
-	+input()
-	border: 2px solid $activeColor
-	box-shadow: none
-	color: $primaryTextColor
-	& ~ .ui-inputgroup .ui-inputgroup-addon
-		border: 2px solid $activeColor
-	& ~ i
-		color: $primaryTextColor
-
+	&:active,
+	&:enabled:hover
+		+input()
+		& ~ i
+			color: $stateActiveTextColor
 
 .input-label
 	display: block
-	font-family: $fontFamily
-	font-size: 0.9rem
-	color: $primaryTextColor
 	padding: 5px 0
 
-.input-label.input-label-error
-	display: block
-	font-family: $fontFamily
-	font-size: 0.7rem
-	color: $errorColor
-	padding: 5px 0
 
 .ui-widget.ui-inputtext,
 .ui-widget.ui-inputtext.ui-input-error,
-.ui-widget.ui-inputtext.ui-input-success,
-.ui-inputtext.ui-state-focus
-	box-shadow: none
-	&:focus
-		box-shadow: none
-		border: 2px solid $activeColor
+.ui-widget.ui-inputtext.ui-input-success
+	&.ng-dirty.ng-invalid
+		border-bottom-color: $disabledColor
+		&:hover
+			border-color: $activeColor
 		& ~ i
-			color: $primaryTextColor
-	&:focus.ui-input-error
-		border: 2px solid $errorColor
-		& ~ i
-			color: $errorColor
-	&:focus.ui-input-success
-		border: 2px solid $successColor
+			color: $stateErrorBorderColor
+	&.ng-dirty.ng-invalid:focus
+		border-color: $stateErrorBorderColor
+	
+	&:focus.ng-dirty.ng-valid
+		border-color: $successColor
 		& ~ i
 			color: $successColor
+	&:focus
+		& ~ i
+			color: $stateActiveTextColor
 	& ~ i
 		position: relative
-		font-size: $fontSize
 		right: calc(1rem + 24px)
 		padding: 12px
 		color: $secondaryTextColor
 
 
+.input-label.input-label-error
+	color: $stateErrorBorderColor
+
 .ui-inputtext:disabled,
 .ui-dropdown.ui-widget.ui-state-disabled
-	background-color: $disabledButtonColor
+	background-color: $disabledColor
 	color: $secondaryTextColor
 	opacity: 1
 
 .ui-input-label-disabled
 	color: $secondaryTextColor
 
-.ui-password-panel
-	display: none
-
+label
+	font-family: $fontFamily
+	font-size: $fontSize

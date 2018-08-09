@@ -10,10 +10,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 // Buttons
 import { ButtonModule } from 'primeng/button';
 import { SplitButtonModule } from 'primeng/splitbutton';
-import { DefaultButtonComponent } from '../app/shared/components/button/default-button/default-button.component';
-import { SecondaryButtonComponent } from '../app/shared/components/button/secondary-button/secondary-button.component';
+import { ButtonComponent } from '../app/shared/components/button/button/button.component';
 import { ActionButtonComponent } from '../app/shared/components/button/action-button/action-button.component';
-import { ToolButtonComponent } from '../app/shared/components/button/tool-button/tool-button.component';
 
 export const control1 = new FormControl('', Validators.required);
 export const control2 = new FormControl('', [
@@ -34,20 +32,19 @@ storiesOf('Buttons', module)
 				BrowserModule
 			],
 			declarations: [
-				DefaultButtonComponent,
-				SecondaryButtonComponent,
-				ActionButtonComponent,
-				ToolButtonComponent
+				ButtonComponent,
+				ActionButtonComponent
 			]
 		})
 	)
 	.add(
 		'Secondary Button',
 		() => ({
-			component: SecondaryButtonComponent,
+			component: ButtonComponent,
 			props: {
 				label: 'Secondary',
-				size: 'big'
+				size: 'big',
+				type: 'default'
 			}
 		}),
 		{ notes: 'tag=app-secondary-button\nlabel="Secondary"\nsize="big"' }
@@ -56,12 +53,13 @@ storiesOf('Buttons', module)
 	.add(
 		'Default Button',
 		() => ({
-			component: DefaultButtonComponent,
+			component: ButtonComponent,
 			props: {
 				label: 'Default Button',
 				icon: 'fas fa-check',
 				iconPosition: 'right',
-				size: 'large'
+				size: 'large',
+				type: 'secondary'
 			}
 		}),
 		{
@@ -73,13 +71,14 @@ storiesOf('Buttons', module)
 	.add(
 		'Disabled Button',
 		() => ({
-			component: DefaultButtonComponent,
+			component: ButtonComponent,
 			props: {
 				label: 'Default Button',
 				icon: 'fas fa-check',
 				iconPosition: 'left',
 				disabled: true,
-				size: 'large'
+				size: 'large',
+				type: 'secondary'
 			}
 		}),
 		{
@@ -128,12 +127,13 @@ storiesOf('Buttons', module)
 	.add(
 		'Tool Button',
 		() => ({
-			component: ToolButtonComponent,
+			component: ButtonComponent,
 			props: {
 				label: 'Filter',
 				size: 'middle',
 				icon: 'fas fa-filter',
-				iconPosition: 'right'
+				iconPosition: 'right',
+				type: 'tool'
 			}
 		}),
 		{
@@ -145,10 +145,11 @@ storiesOf('Buttons', module)
 	.add(
 		'Small Button',
 		() => ({
-			component: ToolButtonComponent,
+			component: ButtonComponent,
 			props: {
 				label: 'Small Button',
-				size: 'small'
+				size: 'small',
+				type: 'secondary'
 			}
 		}),
 		{ notes: 'tag=app-tool-button\nlabel="Small Button"\nsize="small"' }

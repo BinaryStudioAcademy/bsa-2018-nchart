@@ -3,23 +3,16 @@ import { FormControl } from '@angular/forms';
 
 @Component({
 	selector: 'app-dropdown-simple',
-	templateUrl: './dropdown-simple.html'
+	templateUrl: './dropdown-simple.component.html'
 })
 export class DropdownSimpleComponent implements OnInit {
-	@Input()
-	control: FormControl;
-	@Input()
-	options: Object[];
-	@Input()
-	optionLabel: any;
-	@Input()
-	label: any;
-	@Input()
-	disabled: boolean;
-	@Input()
-	placeholder: string;
-	@Input()
-	group: boolean;
+	@Input() control: FormControl;
+	@Input() options: any[];
+	@Input() optionLabel: any;
+	@Input() label: any;
+	@Input() disabled: boolean;
+	@Input() placeholder: string;
+	@Input() group: boolean;
 
 	constructor() {}
 

@@ -9,7 +9,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // Dropdowns
 import { DropdownModule } from 'primeng/dropdown';
 import { DropdownSimpleComponent } from '../app/shared/components/form-field/dropdown/dropdown-simple/dropdown-simple.component';
-import { DropdownGroupComponent } from '../app/shared/components/form-field/dropdown/dropdown-group/dropdown-group.component';
 
 storiesOf('Dropdowns', module)
 	.addDecorator(
@@ -20,7 +19,7 @@ storiesOf('Dropdowns', module)
 				ReactiveFormsModule,
 				BrowserAnimationsModule
 			],
-			declarations: [DropdownSimpleComponent, DropdownGroupComponent]
+			declarations: [DropdownSimpleComponent]
 		})
 	)
 	.add(

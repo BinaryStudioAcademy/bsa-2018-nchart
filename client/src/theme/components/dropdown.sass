@@ -5,44 +5,26 @@
 	height: 40px
 	padding: 12px
 	color: $secondaryTextColor
-	font-size: $fontSize
 	min-width: 200px
 
-// p-dropdown.ng-dirty.ng-invalid > .ui-dropdown
-// 	border-bottom-color: $disabledButtonColor
-
-// .ui-dropdown.ui-widget
-// 	width: 600px!important
+.ui-dropdown.ui-widget
+	box-shadow: none
+	min-width: 240px
 
 .ui-dropdown.ui-widget:enabled:active,
 .ui-dropdown.ui-widget:enabled:focus,
 .ui-dropdown.ui-widget:focus-within,
 .ui-dropdown:not(.ui-state-disabled):hover
-	border: 2px solid $activeColor
-	box-shadow: none
 	label.ui-dropdown-label,
 	.pi-caret-down:before
-		color: $primaryTextColor
-	label.ui-dropdown-label.ui-placeholder
-		color: $secondaryTextColor
+		color: $stateDefaultTextColor
 
 .ui-dropdown.ui-state-disabled
 	label.ui-dropdown-label,
 	.ui-dropdown-trigger
-		background-color: $disabledButtonColor
+		background-color: $disabledColor
 	color: $secondaryTextColor
 	opacity: 1
-
-
-
-.ui-dropdown.ui-widget
-	min-width: 240px
-	border: 2px solid $disabledButtonColor
-
-.ui-dropdown label.ui-dropdown-label
-	width: 100%
-	color: $secondaryTextColor
-
 
 .ui-dropdown .ui-dropdown-trigger
 	border: none
@@ -50,15 +32,15 @@
 		color: $secondaryTextColor
 
 .ui-shadow
-	box-shadow: 0 0 10px $teriaryTextColor
+	box-shadow: $boxShadow
 	::-webkit-scrollbar
 		width:  5px 
 
 	::-webkit-scrollbar-thumb
-		background: $teriaryTextColor
+		background: $teriaryColor
 
 	::-webkit-scrollbar-track
-		background: $disabledButtonColor	
+		background: $disabledColor	
 
 .ui-widget-content
 	border: none
@@ -66,17 +48,21 @@
 .ui-dropdown-panel .ui-dropdown-list
 	color: $secondaryTextColor
 	padding: 0
+	background-color: $stateDefaultBgColor
 
 .ui-dropdown-panel .ui-dropdown-item
 	padding: 10px
 	padding-left: 20px
 	border-radius: 0
 	&.ui-state-highlight
-		background-color: $disabledButtonColor
+		background-color: $disabledColor
 		color: $secondaryTextColor
 
 .ui-dropdown-panel .ui-dropdown-item:not(.ui-state-highlight):not(.ui-state-disabled):hover
-	background-color: $disabledButtonColor
+	background-color: $disabledColor
 
 .ui-dropdown-item-group
 	padding: 12px
+
+p-dropdown.ng-dirty.ng-invalid > .ui-dropdown
+	border-color: $errorColor

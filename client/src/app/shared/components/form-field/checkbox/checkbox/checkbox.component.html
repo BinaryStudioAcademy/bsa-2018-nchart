@@ -1,6 +1,6 @@
 <div class="ui-g-12 ui-checkbox-wrp">
 	<p-checkbox name="groupname" 
-				value="{{value}}" 
+				[value]="value" 
 				[(ngModel)]="selectedValues"
 				[disabled]="isDisabled()">
 	</p-checkbox>

@@ -6,6 +6,6 @@
     [minLength]="minLength" 
     [dropdown]="dropdown">
 </p-autoComplete>
-<app-tool-button label="Filter" size="middle" icon="fas fa-filter" iconPosition="right" *ngIf="filterButton"></app-tool-button>
+<app-button label="Filter" type="tool" size="middle" icon="fas fa-filter" iconPosition="right" *ngIf="filterButton"></app-button>
 
 <pre>{{control.value | json}}</pre>

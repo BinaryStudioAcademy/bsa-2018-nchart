@@ -1,9 +1,9 @@
-<button disabled="{{disabled}}" 
+<button [attr.disabled]="disabled" 
 		[icon]="icon" 
-		iconPos="{{iconPosition}}" 
+		[iconPos]="iconPosition" 
 		pButton
 		(click)="onClick()"
 		[ngClass]="getClasses()"
-		label="{{label}}"
+		[label]="label"
 >
 </button>
