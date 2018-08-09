@@ -18,7 +18,7 @@ import {
 
 @Component({
 	selector: 'app-toggle',
-	templateUrl: './toggle.component.html'
+	template: './toggle.component.html'
 	// providers: [TOGGLE_VALUE_ACCESSOR]
 })
 export class ToggleComponent implements ControlValueAccessor {

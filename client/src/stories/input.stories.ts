@@ -20,19 +20,20 @@ import { ToolButtonComponent } from '../app/shared/components/buttons/tool-butto
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputTextComponent } from '../app/shared/components/inputs/input-text/input-text.component';
-import { InputTextareaComponent } from '../app/shared/components/input/inputTextarea/input-textarea.component';
+import { InputTextareaComponent } from '../app/shared/components/inputs/inputTextarea/input-textarea.component';
 // Radiobutton
-import { RadioButtonComponent } from '../app/shared/components/input//radioButton/radio-button.component';
+import { RadioButtonComponent } from '../app/shared/components/checkbuttons/radioButton/radio-button.component';
 import { RadioButtonModule } from 'primeng/radiobutton';
-// Checkbox
+// Check
 import { CheckboxModule } from 'primeng/checkbox';
-import { CheckboxComponent } from '../app/shared/components/checkbox/checkbox/checkbox.component';
-import { CheckboxGroupComponent } from '../app/shared/components/checkbox/checkbox-group/checkbox-group.component';
+import { CheckboxComponent } from '../app/shared/components/checkbuttons/checkbox/checkbox.component';
+import { CheckboxGroupComponent } from '../app/shared/components/checkbuttons/checkbox-group/checkbox-group.component';
+import { ToggleComponent } from '../app/shared/components/checkbuttons/toggle/toggle.component';
 // Dropdowns
 import { DropdownModule } from 'primeng/dropdown';
 import { DropdownSimpleComponent } from '../app/shared/components/dropdowns/dropdown-simple/dropdown-simple.component';
 import { DropdownGroupComponent } from '../app/shared/components/dropdowns/dropdown-group/dropdown-group.component';
-import { ToggleComponent } from '../app/shared/components/input/toggle/toggle.component';
+
 
 export const control1 = new FormControl('', Validators.required);
 export const control3 = new FormControl('', Validators.required);
@@ -122,7 +123,7 @@ storiesOf('Buttons', module)
 		}),
 		{
 			notes:
-				"tag=app-action-button\nlabel=\"Action\"\nitems=\"[{label: 'One', icon: 'fas fa-check'}, {label: 'Two']\""
+				'tag=app-action-button\nlabel=\"Action\"\nitems=\"[{label: \'One\', icon: \'fas fa-check\'}, {label: \'Two\']\"'
 		}
 	)
 
@@ -199,7 +200,7 @@ storiesOf('Radiobuttons', module)
 			disabled: 'true'
 		}
 	}))
-	.add('RadioButton', () => ({
+	.add('RadioButton Group', () => ({
 		template: `<div class='ui-g' style='width:250px;margin-bottom:10px'>
 		<div class='ui-g-12'><p-radioButton name='group1' value='Option 1' label='Option 1' [(ngModel)]='val1' inputId='opt1'>
 		</p-radioButton></div>
@@ -218,7 +219,10 @@ storiesOf('Input fields', module)
 				ReactiveFormsModule,
 				InputTextareaModule
 			],
-			declarations: [InputTextComponent, InputTextareaComponent]
+			declarations: [	InputTextComponent,
+							InputTextareaComponent,
+							ToggleComponent
+						]
 		})
 	)
 	.add(
@@ -229,7 +233,8 @@ storiesOf('Input fields', module)
 				control: control1,
 				label: 'Name',
 				type: 'text',
-				icon: 'fas fa-search'
+				icon: 'fas fa-search',
+				placeholder: 'Enter your name'
 			}
 		}),
 		{
@@ -246,7 +251,8 @@ storiesOf('Input fields', module)
 				control: control3,
 				label: 'Name',
 				disabled: true,
-				icon: 'fas fa-search'
+				icon: 'fas fa-search',
+				placeholder: 'Disabled'
 			}
 		}),
 		{
@@ -308,17 +314,17 @@ storiesOf('Input fields', module)
 			cols: '30',
 			disabled: 'true'
 		}
-	}))
-	.add('Toggle', () => ({
-		component: ToggleComponent,
-		props: {}
-	}))
-	.add('ToggleDisabled', () => ({
-		component: ToggleComponent,
-		props: {
-			disabled: true
-		}
 	}));
+	// .add('Toggle', () => ({
+	// 	component: ToggleComponent,
+	// 	props: {}
+	// }))
+	// .add('ToggleDisabled', () => ({
+	// 	component: ToggleComponent,
+	// 	props: {
+	// 		disabled: true
+	// 	}
+	// }));
 
 storiesOf('Checkbox', module)
 	.addDecorator(
@@ -481,12 +487,12 @@ storiesOf('Dropdowns', module)
 				options: [
 					{ label: 'Group name', items: [{ label: 'Select me!' }] }
 				],
-				control: new FormControl('', Validators.required),
+				control: new FormControl(''),
 				group: true
 			}
 		}),
 		{
 			notes:
-				"tag=dropdown-simple\noptions=\"[{label: 'Group name', items: [{label: 'Select me!'}]}]\""
+				'tag=dropdown-simple\noptions=\"[{label: \'Group name\', items: [{label: \'Select me!\'}]}]\"'
 		}
 	);

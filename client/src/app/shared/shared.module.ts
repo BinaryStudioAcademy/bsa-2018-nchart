@@ -7,14 +7,15 @@ import { ActionButtonComponent } from './components/buttons/action-button/action
 import { ToolButtonComponent } from './components/buttons/tool-button/tool-button.component';
 // Inputs
 import { InputTextComponent } from './components/inputs/input-text/input-text.component';
-import { InputTextareaComponent } from './components/input/inputTextarea/input-textarea.component';
+import { InputTextareaComponent } from './components/inputs/inputTextarea/input-textarea.component';
 // Dropdowns
 import { DropdownSimpleComponent } from './components/dropdowns/dropdown-simple/dropdown-simple.component';
 import { DropdownGroupComponent } from './components/dropdowns/dropdown-group/dropdown-group.component';
-// Checkbox
-import { CheckboxComponent } from './components/checkbox/checkbox/checkbox.component';
-import { CheckboxGroupComponent } from './components/checkbox/checkbox-group/checkbox-group.component';
-import { RadioButtonComponent } from './components/input/radioButton/radio-button.component';
+// Check
+import { CheckboxComponent } from './components/checkbuttons/checkbox/checkbox.component';
+import { CheckboxGroupComponent } from './components/checkbuttons/checkbox-group/checkbox-group.component';
+import { RadioButtonComponent } from './components/checkbuttons/radioButton/radio-button.component';
+// import { ToggleComponent } from './components/checkbuttons/toggle/toggle.component';
 
 @NgModule({
 	imports: [UIKitModule],
@@ -29,7 +30,8 @@ import { RadioButtonComponent } from './components/input/radioButton/radio-butto
 		CheckboxComponent,
 		CheckboxGroupComponent,
 		RadioButtonComponent,
-		InputTextareaComponent
+		InputTextareaComponent,
+		// ToggleComponent
 	],
 	declarations: [
 		SecondaryButtonComponent,
@@ -42,7 +44,8 @@ import { RadioButtonComponent } from './components/input/radioButton/radio-butto
 		CheckboxComponent,
 		CheckboxGroupComponent,
 		RadioButtonComponent,
-		InputTextareaComponent
+		InputTextareaComponent,
+		// ToggleComponent
 	]
 })
 export class SharedModule {}

@@ -11,6 +11,8 @@ export class InputTextComponent implements OnInit {
 	@Input()
 	label: string;
 	@Input()
+	placeholder: string;
+	@Input()
 	errorMessage: string;
 	@Input()
 	type: string;
