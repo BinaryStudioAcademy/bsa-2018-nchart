@@ -1,12 +1,18 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+interface Checks {
+	label: string;
+	value: any;
+	disabled: boolean;
+}
+
 @Component({
 	selector: 'app-checkbox-group',
-	templateUrl: './checkbox-group.html'
+	templateUrl: './checkbox-group.component.html'
 })
 export class CheckboxGroupComponent implements OnInit {
 	@Input()
-	checks: Object[];
+	checks: Checks[];
 	@Input()
 	selectedValues: string[];
 

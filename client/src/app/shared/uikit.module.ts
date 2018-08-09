@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 // Forms
-import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { RadioButtonModule } from 'primeng/radiobutton';
@@ -27,8 +25,6 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 		DropdownModule,
 		CheckboxModule,
 		RouterTestingModule,
-		FormsModule,
-		ReactiveFormsModule,
 		CommonModule,
 		BrowserAnimationsModule,
 		BrowserModule,
@@ -45,8 +41,6 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 		DropdownModule,
 		CheckboxModule,
 		RouterTestingModule,
-		FormsModule,
-		ReactiveFormsModule,
 		CommonModule,
 		BrowserAnimationsModule,
 		BrowserModule,

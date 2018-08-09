@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 
 @Component({
 	selector: 'app-checkbox',
-	templateUrl: './checkbox.html'
+	templateUrl: './checkbox.component.html'
 })
 export class CheckboxComponent implements OnInit {
 	@Input()

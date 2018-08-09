@@ -9,23 +9,23 @@ import { FormControl, Validators } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // Buttons
 import { ButtonModule } from 'primeng/button';
-import { ToolButtonComponent } from '../app/shared/components/buttons/tool-button/tool-button.component';
 // Inputs
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-import { InputTextComponent } from '../app/shared/components/input/input-text/input-text.component';
-import { InputTextareaComponent } from '../app/shared/components/input/inputTextarea/input-textarea.component';
 // Toggle
-import { ToggleComponent } from '../app/shared/components/input/toggle/toggle.component';
 import { InputSwitchModule } from 'primeng/inputswitch';
 // Autocomplete
 import { AutoCompleteModule } from 'primeng/autocomplete';
-import { AutocompleteComponent } from '../app/shared/components/input/autocomplete/autocomplete.component';
+import { InputTextComponent } from '../app/shared/components/form-field/input-text/input-text.component';
+import { AutocompleteComponent } from '../app/shared/components/form-field/autocomplete/autocomplete.component';
+import { ToolButtonComponent } from '../app/shared/components/button/tool-button/tool-button.component';
+import { InputTextareaComponent } from '../app/shared/components/form-field/inputTextarea/input-textarea.component';
+import { ToggleComponent } from '../app/shared/components/form-field/toggle/toggle.component';
+import { requiredValidator } from '../app/shared/components/form-field/form-validators';
 
-export const control1 = new FormControl('', Validators.required);
 export const control2 = new FormControl('', [
-	Validators.required,
-	Validators.minLength(3)
+	requiredValidator('Password is required'),
+	// Validators.minLength(3)
 ]);
 
 addDecorator(withNotes);
@@ -144,9 +144,7 @@ storiesOf('Input fields', module)
 				control: control2,
 				label: 'Password',
 				type: 'password',
-				errorMessage: 'Name can`t be empty',
-				success: true,
-				error: true
+				icon: 'fas fa-user'
 			}
 		}),
 		{

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 @Component({
 	selector: 'app-default-button',
@@ -15,8 +15,20 @@ export class DefaultButtonComponent implements OnInit {
 	disabled: boolean;
 	@Input()
 	size;
+	@Output() click = new EventEmitter();
+
+	onClick() {
+		this.click.emit();
+	}
 
 	constructor() {}
 
 	ngOnInit() {}
+
+	getClasses() {
+		return {
+			'ui-button-default': true,
+			[`ui-button-${this.size}`]: true
+		};
+	}
 }

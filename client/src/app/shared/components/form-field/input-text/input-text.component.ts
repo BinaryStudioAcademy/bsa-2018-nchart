@@ -13,19 +13,11 @@ export class InputTextComponent implements OnInit {
 	@Input()
 	placeholder: string;
 	@Input()
-	errorMessage: string;
-	@Input()
 	type: string;
 	@Input()
 	control: FormControl;
 	@Input()
 	icon: string;
-	@Input()
-	success: boolean;
-	@Input()
-	error: boolean;
-
-	inputFocus = false;
 
 	ngOnInit() {}
 
@@ -34,5 +26,11 @@ export class InputTextComponent implements OnInit {
 			this.control.disable();
 		}
 		return this.disabled;
+	}
+
+	getError() {
+		const { errors } = this.control;
+
+		return errors && errors[Object.keys(errors)[0]];
 	}
 }

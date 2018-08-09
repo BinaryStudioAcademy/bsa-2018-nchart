@@ -10,10 +10,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 // Buttons
 import { ButtonModule } from 'primeng/button';
 import { SplitButtonModule } from 'primeng/splitbutton';
-import { SecondaryButtonComponent } from '../app/shared/components/buttons/secondary-button/secondary-button.component';
-import { DefaultButtonComponent } from '../app/shared/components/buttons/default-button/default-button.component';
-import { ActionButtonComponent } from '../app/shared/components/buttons/action-button/action-button.component';
-import { ToolButtonComponent } from '../app/shared/components/buttons/tool-button/tool-button.component';
+import { DefaultButtonComponent } from '../app/shared/components/button/default-button/default-button.component';
+import { SecondaryButtonComponent } from '../app/shared/components/button/secondary-button/secondary-button.component';
+import { ActionButtonComponent } from '../app/shared/components/button/action-button/action-button.component';
+import { ToolButtonComponent } from '../app/shared/components/button/tool-button/tool-button.component';
 
 export const control1 = new FormControl('', Validators.required);
 export const control2 = new FormControl('', [
@@ -102,7 +102,7 @@ storiesOf('Buttons', module)
 		}),
 		{
 			notes:
-				"tag=app-action-button\nlabel=\"Action\"\nitems=\"[{label: 'One', icon: 'fas fa-check'}, {label: 'Two']\""
+				'tag=app-action-button\nlabel="Action"\nitems="[{label: \'One\', icon: \'fas fa-check\'}, {label: \'Two\']"'
 		}
 	)
 

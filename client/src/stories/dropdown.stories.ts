@@ -8,8 +8,8 @@ import { FormControl, Validators } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // Dropdowns
 import { DropdownModule } from 'primeng/dropdown';
-import { DropdownSimpleComponent } from '../app/shared/components/dropdowns/dropdown-simple/dropdown-simple.component';
-import { DropdownGroupComponent } from '../app/shared/components/dropdowns/dropdown-group/dropdown-group.component';
+import { DropdownSimpleComponent } from '../app/shared/components/form-field/dropdown/dropdown-simple/dropdown-simple.component';
+import { DropdownGroupComponent } from '../app/shared/components/form-field/dropdown/dropdown-group/dropdown-group.component';
 
 storiesOf('Dropdowns', module)
 	.addDecorator(
@@ -72,6 +72,6 @@ storiesOf('Dropdowns', module)
 		}),
 		{
 			notes:
-				"tag=dropdown-simple\noptions=\"[{label: 'Group name', items: [{label: 'Select me!'}]}]\""
+				'tag=dropdown-simple\noptions="[{label: \'Group name\', items: [{label: \'Select me!\'}]}]"'
 		}
 	);
