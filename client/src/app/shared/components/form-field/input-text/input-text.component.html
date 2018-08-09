@@ -2,10 +2,10 @@
 	   [class.ui-input-label-disabled]="disabled"
 >{{label}}</label>
 
-<input 	[formControl]="control"
-		type="{{type}}" 
-		pInputText 
-		placeholder="{{placeholder}}"
+<input 	pInputText 
+		[formControl]="control"
+		[type]="type" 
+		[placeholder]="placeholder"
 		[attr.disabled]="isDisabled()"
 		[class.ui-input-error]="control.invalid && control.dirty"
 		[class.ui-input-success]="control.valid"

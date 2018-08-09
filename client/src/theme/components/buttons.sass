@@ -10,9 +10,8 @@
 	&:disabled:hover
 		background-color: $disabledColor
 		border-color: $disabledColor
-		color: $stateHoverTextColor
+		color: $stateDefaultTextColor
 		opacity: 1
-
 
 // Default Button
 .ui-widget.ui-button-default,
@@ -22,7 +21,7 @@
 	&:enabled:hover
 		background-color: $defaultButtonHover
 		border-color: $defaultButtonHover
-		box-shadow: 0 1px 3px $teriaryColor
+		box-shadow: $boxShadow
 	&:enabled:focus,
 	&:enabled:active
 		background-color: $defaultButtonColor
@@ -36,7 +35,7 @@
 	&:enabled:hover
 		background-color: $secondaryButtonHover
 		border-color: $secondaryButtonHover
-		box-shadow: 0 1px 3px $teriaryColor
+		box-shadow: $boxShadow
 	&:enabled:active,
 	&:enabled:focus
 		background-color: $secondaryButtonColor
@@ -51,12 +50,11 @@
 	&:enabled:hover
 		background-color: $defaultButtonHover
 		border: 2px solid $defaultButtonHover
-		box-shadow: 0 1px 3px $teriaryColor
+		box-shadow: $boxShadow
 	&:enabled:active,
 	&:enabled:focus
 		background-color: $activeButtonColor
 		border: 2px solid $activeButtonColor
-
 
 // Button Label
 .ui-button-text-only .ui-button-text,
@@ -82,7 +80,7 @@
 
 // Action Button
 .ui-buttonset.ui-splitbutton 
-	box-shadow: 0 2px 2px $teriaryColor
+	box-shadow: $boxShadow
 	background-color: $stateDefaultBgColor
 	border-radius: $borderRadius
 	transition: 0.4s ease
