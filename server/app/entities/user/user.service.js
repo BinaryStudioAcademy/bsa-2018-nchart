@@ -3,6 +3,7 @@ const UserRepository = require('./user.repository');
 const TokenService = require('../../common/services/token.service');
 const CompanyService = require('../company/company.service');
 const GroupService = require('../group/group.service');
+const ErrorService = require('../../common/services/error.service');
 
 class UserService {
 	constructor() {
@@ -14,7 +15,22 @@ class UserService {
 	}
 
 	getById(id) {
-		return this.UserRepository.getById(id);
+		return this.UserRepository.getById(id)
+			.then(data => {
+				if (data === null) {
+					throw new Error('Object did not exist');
+				} else {
+					return {
+						id: data.id,
+						firstName: data.firstName,
+						lastName: data.lastName,
+						email: data.email
+					};
+				}
+			})
+			.catch(err => {
+				throw ErrorService.createCustomDBError(err);
+			});
 	}
 
 	save(obj) {
@@ -29,9 +45,7 @@ class UserService {
 									user: data.dataValues
 								})
 							)
-							.catch(err =>
-								callback(err.errors[0].message, null)
-							);
+							.catch(err => callback(err, null));
 					},
 					(payload, callback) => {
 						GroupService.saveGroup('General')
@@ -43,9 +57,7 @@ class UserService {
 									})
 								)
 							)
-							.catch(err =>
-								callback(err.errors[0].message, null)
-							);
+							.catch(err => callback(err, null));
 					},
 					(payload, callback) => {
 						GroupService.saveGroupUser(
@@ -60,9 +72,7 @@ class UserService {
 									})
 								)
 							)
-							.catch(err =>
-								callback(err.errors[0].message, null)
-							);
+							.catch(err => callback(err, null));
 					},
 					(payload, callback) => {
 						CompanyService.saveCompany(obj)
@@ -75,7 +85,7 @@ class UserService {
 								)
 							)
 							.catch(err => {
-								callback(err.errors[0].message, null);
+								callback(err, null);
 							});
 					},
 					(payload, callback) => {
@@ -92,13 +102,14 @@ class UserService {
 								)
 							)
 							.catch(err => {
-								callback(err.errors[0].message, null);
+								callback(err, null);
 							});
 					}
 				],
 				(err, payload) => {
 					if (err) {
-						return reject(err);
+						// console.log(err);
+						return reject(ErrorService.createCustomDBError(err));
 					}
 					// console.log(payload);
 					return resolve(payload.tokenSecret);
@@ -111,7 +122,7 @@ class UserService {
 		return this.UserRepository.findByEmail(obj.email)
 			.then(data => {
 				if (data === null) {
-					throw new Error('User does not exist');
+					throw new Error('Object did not exist');
 				} else if (data.dataValues.password === obj.password) {
 					return TokenService.createToken(data.dataValues);
 				} else {
@@ -119,7 +130,7 @@ class UserService {
 				}
 			})
 			.catch(err => {
-				throw new Error(err);
+				throw ErrorService.createCustomDBError(err);
 			});
 	}
 
@@ -144,7 +155,7 @@ class UserService {
 				],
 				(err, payload) => {
 					if (err) {
-						return reject(err);
+						return reject(ErrorService.createCustomDBError(err));
 					}
 					return resolve({
 						id: payload.id,
@@ -167,7 +178,7 @@ class UserService {
 				}
 			})
 			.catch(err => {
-				throw new Error(err);
+				throw ErrorService.createCustomDBError(err);
 			});
 	}
 
@@ -175,12 +186,12 @@ class UserService {
 		return this.UserRepository.update(id, obj)
 			.then(data => {
 				if (data[0] === 0) {
-					throw new Error('Object does not exist');
+					throw new Error('Object did not exist');
 				}
 				return 'Object updated';
 			})
 			.catch(err => {
-				throw new Error(err);
+				throw ErrorService.createCustomDBError(err);
 			});
 	}
 }
