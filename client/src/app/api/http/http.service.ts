@@ -49,7 +49,7 @@ export class HttpService {
 		}
 	}
 
-	prepareHeaders(requestHeaders) {
+	private prepareHeaders(requestHeaders) {
 		let headersConfig = {};
 
 		if (requestHeaders) {
