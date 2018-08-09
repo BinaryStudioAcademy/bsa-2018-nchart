@@ -1,4 +1,5 @@
 const async = require('async');
+const bcrypt = require('bcrypt');
 const UserRepository = require('./user.repository');
 const TokenService = require('../../common/services/token.service');
 const CompanyService = require('../company/company.service');
@@ -33,7 +34,20 @@ class UserService {
 			async.waterfall(
 				[
 					callback => {
-						this.UserRepository.save(obj)
+						bcrypt
+							.hash(obj.user.password, 10)
+							.then(hash => {
+								callback(
+									null,
+									Object.assign({}, obj.user, {
+										password: hash
+									})
+								);
+							})
+							.catch(err => callback(err, null));
+					},
+					(user, callback) => {
+						this.UserRepository.save(user)
 							.then(data =>
 								callback(null, {
 									tokenSecret: TokenService.createToken(data),
@@ -119,22 +133,51 @@ class UserService {
 	}
 
 	login(obj) {
-		return this.UserRepository.findByEmail(obj.email)
-			.then(data => {
-				if (data === null) {
-					throw new Error('Object did not exist');
-				} else if (data.dataValues.password === obj.password) {
-					return {
-						token: TokenService.createToken(data.dataValues),
-						user: this.createUserPayload(data.dataValues)
-					};
-				} else {
-					throw new Error('Wrong password');
+		return new Promise((resolve, reject) => {
+			async.waterfall(
+				[
+					callback => {
+						this.UserRepository.findByEmail(obj.email)
+							.then(data => {
+								if (data === null) {
+									throw new Error('Object did not exist');
+								}
+								callback(null, data);
+							})
+							.catch(err => {
+								callback(err, null);
+							});
+					},
+					(data, callback) => {
+						bcrypt
+							.compare(obj.password, data.dataValues.password)
+							.then(res => {
+								if (res === true) {
+									callback(null, {
+										token: TokenService.createToken(
+											data.dataValues
+										),
+										user: this.createUserPayload(
+											data.dataValues
+										)
+									});
+								} else {
+									throw new Error('Wrong password');
+								}
+							})
+							.catch(err => {
+								callback(err, null);
+							});
+					}
+				],
+				(err, payload) => {
+					if (err) {
+						return reject(ErrorService.createCustomDBError(err));
+					}
+					return resolve(payload);
 				}
-			})
-			.catch(err => {
-				throw ErrorService.createCustomDBError(err);
-			});
+			);
+		});
 	}
 
 	verifyToken(token) {

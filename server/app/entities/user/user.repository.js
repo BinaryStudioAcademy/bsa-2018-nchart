@@ -32,8 +32,8 @@ class UserRepository extends Repository {
 			});
 	}
 
-	save(obj) {
-		return this.model.create(obj.user).catch(err => {
+	save(user) {
+		return this.model.create(user).catch(err => {
 			throw ErrorService.createCustomDBError(err);
 		});
 	}
