@@ -483,7 +483,7 @@ storiesOf('Dropdowns', module)
 				options: [
 					{ label: 'Group name', items: [{ label: 'Select me!' }] }
 				],
-				control: new FormControl('', Validators.required),
+				control: new FormControl(''),
 				group: true
 			}
 		}),
