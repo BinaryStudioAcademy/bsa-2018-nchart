@@ -82,7 +82,8 @@ storiesOf('Buttons', module)
 				label: 'Default Button',
 				icon: 'fas fa-check',
 				iconPosition: 'right',
-				size: 'large'
+				size: 'large',
+				placeholder: 'Enter your name'
 			}
 		}),
 		{
@@ -100,7 +101,8 @@ storiesOf('Buttons', module)
 				icon: 'fas fa-check',
 				iconPosition: 'left',
 				disabled: true,
-				size: 'large'
+				size: 'large',
+				placeholder: 'Enter your name'
 			}
 		}),
 		{
