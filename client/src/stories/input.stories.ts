@@ -91,7 +91,7 @@ storiesOf('Input fields', module)
 				label: 'Name',
 				type: 'text',
 				icon: 'fas fa-search',
-				disabled: false
+				placeholder: 'Enter your name'
 			}
 		}),
 		{
@@ -108,7 +108,8 @@ storiesOf('Input fields', module)
 				control: new FormControl({ value: '', disabled: true }),
 				label: 'Name',
 				disabled: true,
-				icon: 'fas fa-search'
+				icon: 'fas fa-search',
+				placeholder: 'Disabled'
 			}
 		}),
 		{
@@ -158,7 +159,7 @@ storiesOf('Input fields', module)
 	.add('InputTextArea', () => ({
 		component: InputTextareaComponent,
 		props: {
-			rows: '5',
+			rows: '20',
 			cols: '30',
 			control: new FormControl({ value: '', disabled: false })
 		}

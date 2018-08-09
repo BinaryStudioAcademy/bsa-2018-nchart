@@ -2,13 +2,13 @@ import { storiesOf, moduleMetadata } from '@storybook/angular';
 import '@storybook/addon-notes/register';
 import { Component } from '@angular/core';
 // Forms
-import { FormsModule, FormGroup } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 // Buttons
 import { ButtonModule } from 'primeng/button';
 // Radiobutton
-import { RadioButtonComponent } from '../app/shared/components/input//radioButton/radio-button.component';
+import { RadioButtonComponent } from '../app/shared/components/checkbuttons//radioButton/radio-button.component';
 import { RadioButtonModule } from 'primeng/radiobutton';
 
 @Component({

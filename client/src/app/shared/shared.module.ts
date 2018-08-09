@@ -1,23 +1,23 @@
 import { NgModule } from '@angular/core';
-import { UIKitModule } from './uikit.module';
+import { UIKitModule } from '@app/shared/uikit.module';
 // Buttons
-import { SecondaryButtonComponent } from './components/buttons/secondary-button/secondary-button.component';
-import { DefaultButtonComponent } from './components/buttons/default-button/default-button.component';
-import { ActionButtonComponent } from './components/buttons/action-button/action-button.component';
-import { ToolButtonComponent } from './components/buttons/tool-button/tool-button.component';
+import { SecondaryButtonComponent } from '@app/shared/components/buttons/secondary-button/secondary-button.component';
+import { DefaultButtonComponent } from '@app/shared/components/buttons/default-button/default-button.component';
+import { ActionButtonComponent } from '@app/shared/components/buttons/action-button/action-button.component';
+import { ToolButtonComponent } from '@app/shared/components/buttons/tool-button/tool-button.component';
 // Inputs
-import { InputTextComponent } from './components/input/input-text/input-text.component';
+import { InputTextComponent } from '@app/shared/components/input/input-text/input-text.component';
 import { InputTextareaComponent } from './components/input/inputTextarea/input-textarea.component';
 // Dropdowns
-import { DropdownSimpleComponent } from './components/dropdowns/dropdown-simple/dropdown-simple.component';
-import { DropdownGroupComponent } from './components/dropdowns/dropdown-group/dropdown-group.component';
+import { DropdownSimpleComponent } from '@app/shared/components/dropdowns/dropdown-simple/dropdown-simple.component';
+import { DropdownGroupComponent } from '@app/shared/components/dropdowns/dropdown-group/dropdown-group.component';
 // Checkbox
-import { CheckboxComponent } from './components/checkbox/checkbox/checkbox.component';
-import { CheckboxGroupComponent } from './components/checkbox/checkbox-group/checkbox-group.component';
+import { CheckboxComponent } from './components/checkbuttons/checkbox/checkbox.component';
+import { CheckboxGroupComponent } from './components/checkbuttons/checkbox-group/checkbox-group.component';
 // RadioButtons
-import { RadioButtonComponent } from './components/input/radioButton/radio-button.component';
+import { RadioButtonComponent } from './components/checkbuttons/radioButton/radio-button.component';
 // Autocomplete
-import { AutocompleteComponent } from './components/input/autocomplete/autocomplete.component';
+import { AutocompleteComponent } from '@app/shared/components/input/autocomplete/autocomplete.component';
 // Toggle
 import { ToggleComponent } from './components/input/toggle/toggle.component';
 
