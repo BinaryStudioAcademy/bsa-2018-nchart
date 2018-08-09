@@ -1,15 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
-import { LoginComponent } from '@app/login/login.component';
-import { RegistrationComponent } from '@app/registration/registration.component';
-import { MainComponent } from '@app/main/main.component';
-import { ProjectComponent } from '@app/main/project/project.component';
-import { ProjectsComponent } from '@app/main/projects/projects.component';
-import { CompanyComponent } from '@app/main/company/company.component';
-import { CompaniesComponent } from '@app/main/companies/companies.component';
-
-import { AuthGuard } from '@app/guards/auth.guard';
+import { LoginComponent } from '@app/core/login/login.component';
+import { AuthGuard } from '@app/services/guards/auth.guard';
+import { ProjectComponent } from '@app/core/project/project.component';
+import { ProjectsComponent } from '@app/core/projects/projects.component';
+import { CompaniesComponent } from '@app/core/companies/companies.component';
+import { CompanyComponent } from '@app/core/company/company.component';
+import { AppComponent } from '@app/core/app/app.component';
 
 const appRoutes: Routes = [
 	{
@@ -23,13 +20,8 @@ const appRoutes: Routes = [
 		canActivate: [AuthGuard]
 	},
 	{
-		path: 'register',
-		component: RegistrationComponent,
-		canActivate: [AuthGuard]
-	},
-	{
 		path: 'app',
-		component: MainComponent,
+		component: AppComponent,
 		children: [
 			{
 				path: '',
@@ -60,12 +52,12 @@ const appRoutes: Routes = [
 	},
 	{
 		path: '**',
-		component: LoginComponent
+		redirectTo: 'app/project/draft'
 	}
 ];
 
 @NgModule({
-	imports: [RouterModule.forRoot(appRoutes)],
+	imports: [RouterModule.forRoot(appRoutes, { useHash: true })],
 	exports: [RouterModule]
 })
 export class AppRoutingModule {}
