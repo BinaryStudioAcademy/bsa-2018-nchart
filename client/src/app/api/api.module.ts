@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { ApiService } from '@app/api/api.service';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpService } from '@app/api/http/http.service';
 
 @NgModule({
 	imports: [HttpClientModule],
-	providers: [ApiService]
+	providers: [HttpService]
 })
 export class APIModule {}
