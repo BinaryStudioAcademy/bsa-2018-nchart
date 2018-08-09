@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "/bin/www",
 	"scripts": {
-		"start": "node ./bin/www",
+		"start": "nodemon ./bin/www",
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"lint": "eslint -c ./.eslintrc.json ./**/*.js",
 		"format:fix": "pretty-quick --staged  --config ./.prettierrc ./app/",

@@ -1,0 +1,51 @@
+version: '2'
+services:
+    backend:
+        container_name: nchart-backend
+        build:
+            context: ./server
+        ports:
+            - '9000:9000'
+        volumes:
+            - ./server/:/app
+        networks:
+            - postgres
+
+    client:
+        container_name: nchart-client
+        build:
+            context: ./client
+        ports:
+            - '4200:4200'
+            - '49153:49153'
+        volumes:
+            - ./client/:/app
+
+    postgres:
+        image: postgres:10.4
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: changeme
+            PGDATA: /data/postgres
+        volumes:
+            - ./data/postgres:/data/postgres
+        ports:
+            - '5432:5432'
+        networks:
+            - postgres
+        restart: unless-stopped
+
+    pgadmin:
+        links:
+            - postgres:postgres
+        image: fenglc/pgadmin4
+        volumes:
+            - ./data/pgadmin:/root/.pgadmin
+        ports:
+            - '5050:5050'
+        networks:
+            - postgres
+        restart: unless-stopped
+networks:
+    postgres:
+        driver: bridge
