@@ -5,6 +5,7 @@ import { RootComponent } from '@app/root.component';
 import { FeatureModule } from '@app/features/feature.module';
 import { ServiceModule } from '@app/services/service.module';
 import { RouterModule } from '@app/router/router.module';
+import { APIModule } from '@app/api/api.module';
 import { CoreModule } from '@app/core/core.module';
 
 @NgModule({
@@ -14,6 +15,7 @@ import { CoreModule } from '@app/core/core.module';
 		FeatureModule,
 		ServiceModule,
 		RouterModule,
+    APIModule,
 		CoreModule
 	],
 	providers: [],
