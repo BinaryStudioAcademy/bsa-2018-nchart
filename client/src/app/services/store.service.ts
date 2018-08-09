@@ -1,25 +1,33 @@
 import { Injectable } from '@angular/core';
 import { Action, select, Store } from '@ngrx/store';
 import { AppState } from '../models';
+import { distinctUntilChanged } from 'rxjs/internal/operators';
+import * as equal from 'fast-deep-equal';
+
+interface Connection {
+	subscriber: any;
+	selector: any;
+}
 
 @Injectable()
 export class StoreService {
 	constructor(private store$: Store<AppState>) {}
-
-	connect(connections: Map<any, any>) {
-		const subscriptions = [];
-		connections.forEach((subscriber, selector) => {
-			const subscription = this.createSubscription(selector).subscribe(
-				subscriber
-			);
-			subscriptions.push(subscription);
-		});
-
+	connect(connections: Array<Connection>) {
+		const subscriptions = connections.reduce((acc, connection) => {
+			const subscription = this.createSubscription(
+				connection.selector
+			).subscribe(connection.subscriber);
+			acc.push(subscription);
+			return acc;
+		}, []);
 		return this.disconnect(subscriptions);
 	}
 
 	createSubscription(selector: any) {
-		return this.store$.pipe(select(selector));
+		return this.store$.pipe(
+			select(selector),
+			distinctUntilChanged((prev, curr) => equal(prev, curr))
+		);
 	}
 
 	dispatch(action: Action) {

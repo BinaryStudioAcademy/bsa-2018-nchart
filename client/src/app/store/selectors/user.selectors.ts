@@ -1,3 +1,5 @@
-import { AppState } from '../../models';
+import { AppState } from '@app/models';
 
-export const user = (state: AppState) => state.userState.user;
+export const user = (state: AppState) => {
+	return state.user.info;
+};

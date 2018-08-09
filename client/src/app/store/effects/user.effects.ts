@@ -9,8 +9,8 @@ import {
 import { map, switchMap } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { User } from '../../models';
 import { ApiService } from '@app/services/api.service';
+import { User } from '@app/models';
 
 @Injectable()
 export class UserEffects {
@@ -18,11 +18,19 @@ export class UserEffects {
 
 	@Effect()
 	verifyToken$ = this.action$.pipe(
-		ofType(UserActionConstants.VERIFY_TOKEN),
+		ofType(UserActionConstants.USER_VERIFY_TOKEN),
 		switchMap((action: VerifyToken) =>
 			this.api.verifyToken(action.payload.token).pipe(
 				map((value: User) => new VerifyTokenComplete(value)),
-				catchError(error => of(new VerifyTokenFailed({ error })))
+				catchError(error => {
+					return of(
+						new VerifyTokenFailed({
+							action: action,
+							msg: 'test',
+							error: null
+						})
+					);
+				})
 			)
 		)
 	);

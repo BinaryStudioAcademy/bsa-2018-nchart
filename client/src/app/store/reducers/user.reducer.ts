@@ -1,37 +1,49 @@
-import { Actions } from '../actions/user/user.actions';
+import { Actions as UserActions } from '../actions/user/user.actions';
 import { UserActionConstants } from '../actions/user/user.action-types';
-import { UserState } from '@app/models';
+import { User, UserState } from '@app/models';
+import { combineReducers } from '@ngrx/store';
 
 export const initialState: UserState = {
-	user: null,
-	loggedIn: false,
-	loading: false,
-	error: null
+	info: {
+		id: null,
+		name: null,
+		email: null,
+		avatar: null,
+		first_name: null,
+		last_name: null,
+		created_at: null
+	},
+	isLoading: null
 };
 
-export const user = (state = initialState, action: Actions): UserState => {
+export const info = (state = initialState.info, action: UserActions): User => {
 	switch (action.type) {
-		case UserActionConstants.VERIFY_TOKEN: {
+		case UserActionConstants.USER_VERIFY_TOKEN__COMPLETE: {
 			return {
 				...state,
-				loading: true
-			};
-		}
-		case UserActionConstants.VERIFY_TOKEN_COMPLETE: {
-			return {
-				...state,
-				user: action.payload,
-				loading: false
-			};
-		}
-		case UserActionConstants.VERIFY_TOKEN__FAILED: {
-			return {
-				...state,
-				loading: false,
-				error: action.payload.error
+				...action.payload
 			};
 		}
 		default:
 			return state;
 	}
 };
+
+export const isLoading = (
+	state = initialState.isLoading,
+	action: UserActions
+): boolean => {
+	switch (action.type) {
+		case UserActionConstants.USER_VERIFY_TOKEN: {
+			return true;
+		}
+		case UserActionConstants.USER_VERIFY_TOKEN__COMPLETE:
+		case UserActionConstants.USER_VERIFY_TOKEN__FAILED: {
+			return false;
+		}
+		default:
+			return state;
+	}
+};
+
+export const user = combineReducers({ info, isLoading });

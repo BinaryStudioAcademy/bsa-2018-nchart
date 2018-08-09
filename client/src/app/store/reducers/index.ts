@@ -6,12 +6,33 @@ import {
 	initialState as userInitialState
 } from './user.reducer';
 
+import {
+	companiesReducer,
+	initialState as companiesInitialState
+} from './companies.reducer';
+
+import {
+	errorHandlerReducer,
+	initialState as errorHandlerInitialState
+} from './error-handler.reducer';
+
+import {
+	projectsReducer,
+	initialState as projectsInitialState
+} from './projects.reducer';
+
 export const initialState: AppState = {
-	userState: userInitialState
+	user: userInitialState,
+	errorHandler: errorHandlerInitialState,
+	companies: companiesInitialState,
+	projects: projectsInitialState
 };
 
 export const getReducers = () => ({
-	userState: userReducer
+	user: userReducer,
+	errorHandler: errorHandlerReducer,
+	companies: companiesReducer,
+	projects: projectsReducer
 });
 
 export const reducersToken = new InjectionToken<ActionReducerMap<AppState>>(

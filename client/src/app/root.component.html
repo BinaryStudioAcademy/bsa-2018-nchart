@@ -1,2 +1,6 @@
 <h1>Welcome to {{ user ? user.name : null }}!</h1>
+<p>{{ projects | json }}</p>
+<h1>{{ companies | json }}<p>
 <button (click)="dispatch()" >dispatch</button>
+<button (click)="dispatchC()" >companies dispatch</button>
+<button (click)="dispatchD()" >projects dispatch</button>
