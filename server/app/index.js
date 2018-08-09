@@ -32,7 +32,7 @@ app.use((req, res, next) => {
 
 // error handler
 app.use((err, req, res, next) => {
-	res.status(500).json(new GeneratePayload().generateFailure(err));
+	res.status(500).json(GeneratePayload.generateFailure(err));
 	next();
 });
 

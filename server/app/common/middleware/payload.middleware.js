@@ -23,4 +23,4 @@ class GeneratePayload {
 	}
 }
 
-module.exports = GeneratePayload;
+module.exports = new GeneratePayload();
