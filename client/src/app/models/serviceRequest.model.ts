@@ -1,5 +1,5 @@
 import { HttpHeaders } from '@angular/common/http';
-import { RequestType } from '@app/api/request/requestType.model';
+import { RequestType } from '@app/models/requestType.model';
 
 export class ServiceRequest {
 	public readonly type: RequestType;
