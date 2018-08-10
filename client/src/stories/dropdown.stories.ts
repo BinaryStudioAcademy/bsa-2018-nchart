@@ -71,6 +71,6 @@ storiesOf('Dropdowns', module)
 		}),
 		{
 			notes:
-				'tag=dropdown-simple\noptions="[{label: \'Group name\', items: [{label: \'Select me!\'}]}]"'
+				"tag=dropdown-simple\noptions=\"[{label: 'Group name', items: [{label: 'Select me!'}]}]\""
 		}
 	);

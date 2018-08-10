@@ -31,10 +31,7 @@ storiesOf('Buttons', module)
 				BrowserAnimationsModule,
 				BrowserModule
 			],
-			declarations: [
-				ButtonComponent,
-				ActionButtonComponent
-			]
+			declarations: [ButtonComponent, ActionButtonComponent]
 		})
 	)
 	.add(
@@ -101,7 +98,7 @@ storiesOf('Buttons', module)
 		}),
 		{
 			notes:
-				'tag=app-action-button\nlabel="Action"\nitems="[{label: \'One\', icon: \'fas fa-check\'}, {label: \'Two\']"'
+				"tag=app-action-button\nlabel=\"Action\"\nitems=\"[{label: 'One', icon: 'fas fa-check'}, {label: 'Two']\""
 		}
 	)
 

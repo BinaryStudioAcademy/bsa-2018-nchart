@@ -13,11 +13,16 @@ interface ActioButtonItem {
 	templateUrl: './action-button.component.html'
 })
 export class ActionButtonComponent implements OnInit {
-	@Input() checked: string;
-	@Input() disabled: boolean;
-	@Input() label: string;
-	@Input() items: ActioButtonItem[];
-	@Output() click = new EventEmitter();
+	@Input()
+	checked: string;
+	@Input()
+	disabled: boolean;
+	@Input()
+	label: string;
+	@Input()
+	items: ActioButtonItem[];
+	@Output()
+	click = new EventEmitter();
 
 	onClick() {
 		this.click.emit();
