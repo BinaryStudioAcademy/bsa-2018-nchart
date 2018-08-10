@@ -29,6 +29,11 @@ export const control2 = new FormControl('', [
 	minLengthValidator('Min length', 6)
 ]);
 
+export const control1 = new FormControl('', [
+	requiredValidator('Name is required'),
+	minLengthValidator('Min length', 3)
+]);
+
 addDecorator(withNotes);
 
 export const items: string[] = [
@@ -88,11 +93,11 @@ storiesOf('Input fields', module)
 		() => ({
 			component: InputTextComponent,
 			props: {
-				control: new FormControl({ value: '', disabled: false }),
+				control: new FormControl('', Validators.required),
 				label: 'Name',
 				type: 'text',
-				icon: 'fas fa-search',
-				placeholder: 'Enter your name'
+				placeholder: 'Enter your name',
+				showStates: false
 			}
 		}),
 		{
@@ -110,7 +115,9 @@ storiesOf('Input fields', module)
 				label: 'Name',
 				disabled: true,
 				icon: 'fas fa-search',
-				placeholder: 'Disabled'
+				iconPosition: 'left',
+				placeholder: 'Disabled',
+				showStates: false
 			}
 		}),
 		{
@@ -124,12 +131,12 @@ storiesOf('Input fields', module)
 		() => ({
 			component: InputTextComponent,
 			props: {
-				control: new FormControl('', Validators.required),
+				control: control1,
 				label: 'Name',
 				type: 'number',
 				icon: 'fas fa-search',
 				placeholder: 'input',
-				success: true
+				showStates: true
 			}
 		}),
 		{
@@ -147,7 +154,9 @@ storiesOf('Input fields', module)
 				label: 'Password',
 				type: 'password',
 				placeholder: 'password',
-				icon: 'fas fa-user'
+				icon: 'fas fa-user',
+				iconPosition: 'left',
+				showStates: true
 			}
 		}),
 		{
