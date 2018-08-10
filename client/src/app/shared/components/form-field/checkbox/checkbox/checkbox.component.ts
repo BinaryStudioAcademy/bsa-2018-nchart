@@ -6,12 +6,16 @@ import { FormControl } from '@angular/forms';
 	templateUrl: './checkbox.component.html'
 })
 export class CheckboxComponent implements OnInit {
-	@Input() control: FormControl;
-	@Input() label: string;
-	@Input() value: any;
-	@Input() disabled: boolean;
-	@Input() checked: string;
-	@Input() selectedValues: string[];
+	@Input()
+	control: FormControl;
+	@Input()
+	label: string;
+	@Input()
+	value: any;
+	@Input()
+	disabled: boolean;
+	@Input()
+	checked: string;
 
 	constructor() {}
 
