@@ -2,7 +2,7 @@ import { storiesOf, moduleMetadata, addDecorator } from '@storybook/angular';
 import '@storybook/addon-notes/register';
 import { withNotes } from '@storybook/addon-notes';
 // Forms
-import { FormsModule } from '@angular/forms';
+import { FormsModule, MinLengthValidator } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormControl, Validators } from '@angular/forms';
 // Modules
@@ -22,10 +22,11 @@ import { AutocompleteComponent } from '../app/shared/components/form-field/autoc
 import { InputTextareaComponent } from '../app/shared/components/form-field/inputTextarea/input-textarea.component';
 import { ToggleComponent } from '../app/shared/components/form-field/toggle/toggle.component';
 import { requiredValidator } from '../app/shared/components/form-field/form-validators';
+import { minLengthValidator } from '../app/shared/components/form-field/form-validators';
 
 export const control2 = new FormControl('', [
 	requiredValidator('Password is required'),
-	// Validators.minLength(3)
+	minLengthValidator('Min length', 6)
 ]);
 
 addDecorator(withNotes);
@@ -127,6 +128,7 @@ storiesOf('Input fields', module)
 				label: 'Name',
 				type: 'number',
 				icon: 'fas fa-search',
+				placeholder: 'input',
 				success: true
 			}
 		}),
@@ -144,6 +146,7 @@ storiesOf('Input fields', module)
 				control: control2,
 				label: 'Password',
 				type: 'password',
+				placeholder: 'password',
 				icon: 'fas fa-user'
 			}
 		}),
@@ -159,7 +162,9 @@ storiesOf('Input fields', module)
 		props: {
 			rows: '20',
 			cols: '30',
-			control: new FormControl({ value: '', disabled: false })
+			label: 'Text area',
+			placeholder: 'text area',
+			control: new FormControl()
 		}
 	}))
 	.add('InputTextAreaDisabled', () => ({
@@ -167,7 +172,10 @@ storiesOf('Input fields', module)
 		props: {
 			rows: '10',
 			cols: '30',
-			control: new FormControl({ value: '', disabled: true })
+			label: 'Text area',
+			placeholder: 'text area',
+			control: new FormControl(),
+			disabled: true
 		}
 	}))
 	.add('Toggle', () => ({

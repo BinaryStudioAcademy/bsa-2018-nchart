@@ -17,15 +17,9 @@ export class InputTextareaComponent implements OnInit {
 	@Input()
 	label: string;
 	@Input()
-	errorMessage: string;
-	@Input()
 	control?: FormControl;
 	@Input()
 	icon: string;
-	@Input()
-	success: boolean;
-	@Input()
-	error: boolean;
 
 	inputFocus = false;
 

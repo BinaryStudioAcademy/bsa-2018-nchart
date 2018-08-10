@@ -22,13 +22,29 @@ export class AutocompleteComponent implements OnInit {
 
 	filteredItems: any[];
 
-	filterBrands(event) {
+	filterItems(event) {
 		this.filteredItems = [];
 		for (let i = 0; i < this.items.length; i++) {
 			const item = this.items[i];
 			if (item.toLowerCase().indexOf(event.query.toLowerCase()) === 0) {
 				this.filteredItems.push(item);
 			}
+		}
+	}
+
+	getClasses() {
+		if (this.filterButton) {
+			return {
+				'ui-autocomplete-border-filterButton': true
+			};
+		}
+	}
+
+	getButtonClasses() {
+		if (this.filterButton) {
+			return {
+				'ui-autocomplete-filterButton-border': true
+			};
 		}
 	}
 

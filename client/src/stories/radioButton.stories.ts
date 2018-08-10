@@ -36,8 +36,7 @@ export class RadiobuttonGroupModelDrivenComponent implements OnInit {
 	}
 }
 
-
-@NgModule({
+/*@NgModule({
 	imports: [
 		FormsModule,
 		ReactiveFormsModule,
@@ -45,13 +44,20 @@ export class RadiobuttonGroupModelDrivenComponent implements OnInit {
 		RadioButtonModule
 	],
 	declarations: [RadioButtonComponent, RadiobuttonGroupModelDrivenComponent]
-}) class RadioGroupModule {}
+}) class RadioGroupModule {}*/
 
 storiesOf('Radiobuttons', module)
 	.addDecorator(
 		moduleMetadata({
 			imports: [
-				RadioGroupModule
+				FormsModule,
+				ReactiveFormsModule,
+				ButtonModule,
+				RadioButtonModule
+			],
+			declarations: [
+				RadioButtonComponent,
+				RadiobuttonGroupModelDrivenComponent
 			]
 		})
 	)

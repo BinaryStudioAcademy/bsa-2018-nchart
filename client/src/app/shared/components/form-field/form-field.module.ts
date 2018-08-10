@@ -10,6 +10,7 @@ import { InputTextareaComponent } from './inputTextarea/input-textarea.component
 import { ToggleComponent } from './toggle/toggle.component';
 import { DropdownSimpleComponent } from './dropdown/dropdown-simple/dropdown-simple.component';
 import { UIKitModule } from '../../uikit.module';
+import { RadioButtonComponent } from './checkbox/radioButton/radio-button.component';
 
 const formFieldComponents = [
 	ButtonComponent,
@@ -19,15 +20,12 @@ const formFieldComponents = [
 	InputTextComponent,
 	InputTextareaComponent,
 	ToggleComponent,
-	DropdownSimpleComponent
+	DropdownSimpleComponent,
+	RadioButtonComponent
 ];
 
 @NgModule({
-	imports: [
-		UIKitModule,
-		FormsModule,
-		ReactiveFormsModule
-	],
+	imports: [UIKitModule, FormsModule, ReactiveFormsModule],
 	declarations: formFieldComponents,
 	exports: formFieldComponents
 })
