@@ -47,7 +47,6 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 		AutoCompleteModule,
 		RadioButtonModule,
 		InputSwitchModule
-	],
-	declarations: []
+	]
 })
 export class UIKitModule {}

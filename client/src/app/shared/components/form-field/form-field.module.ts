@@ -8,9 +8,9 @@ import { CheckboxGroupComponent } from './checkbox/checkbox-group/checkbox-group
 import { InputTextComponent } from './input-text/input-text.component';
 import { ToggleComponent } from './toggle/toggle.component';
 import { DropdownSimpleComponent } from './dropdown/dropdown-simple/dropdown-simple.component';
-import { UIKitModule } from '../../uikit.module';
 import { RadioButtonComponent } from './checkbox/radioButton/radio-button.component';
 import { InputTextareaComponent } from '@app/shared/components/form-field/input-textarea/input-textarea.component';
+import { UIKitModule } from '@app/shared/uikit.module';
 
 const formFieldComponents = [
 	ButtonComponent,
@@ -25,7 +25,7 @@ const formFieldComponents = [
 ];
 
 @NgModule({
-	imports: [UIKitModule, FormsModule, ReactiveFormsModule],
+	imports: [FormsModule, ReactiveFormsModule, UIKitModule],
 	declarations: formFieldComponents,
 	exports: formFieldComponents
 })
