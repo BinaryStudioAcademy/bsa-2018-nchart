@@ -15,7 +15,7 @@ export class RadioButtonComponent implements OnInit {
 	@Input()
 	disabled: boolean;
 	@Input()
-	control?: FormControl;
+	control: FormControl;
 
 	constructor() {}
 
