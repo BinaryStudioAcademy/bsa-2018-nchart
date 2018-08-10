@@ -1,0 +1,71 @@
+@import ../variables
+@import ../colors
+
+=input()
+	padding: 12px
+	min-width: 240px
+	border-width: 2px
+	box-shadow: none
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button 
+  -webkit-appearance: none; 
+  margin: 0
+
+
+.ui-inputtext
+	+input()
+	&:active,
+	&:enabled:hover
+		+input()
+		& ~ i
+			color: $stateActiveTextColor
+
+.input-label
+	display: block
+	padding: 5px 0
+
+
+.ui-widget.ui-inputtext,
+.ui-widget.ui-inputtext.ui-input-error,
+.ui-widget.ui-inputtext.ui-input-success
+	&.ng-dirty.ng-invalid
+		border-bottom-color: $disabledColor
+		&:hover
+			border-color: $activeColor
+		& ~ i
+			color: $stateErrorBorderColor
+		&:focus
+			border-color: $stateErrorBorderColor
+	
+	&.ng-dirty.ng-valid
+		&:focus
+			border-color: $successColor
+		& ~ i
+			color: $successColor
+	&:focus
+		box-shadow: none
+	& ~ i
+		position: relative
+		right: calc(1rem + 24px)
+		padding: 12px
+		color: $stateDefaultTextColor
+
+
+.input-label.input-label-error
+	color: $stateErrorBorderColor
+	font-size: 0.7rem
+
+.ui-inputtext:disabled,
+.ui-dropdown.ui-widget.ui-state-disabled
+	background-color: $disabledColor
+	color: $secondaryTextColor
+	opacity: 1
+
+.ui-input-label-disabled
+	color: $secondaryTextColor
+
+label, .input-label
+	font-family: $fontFamily
+	font-size: $smallFontSize
+	color: $textColorDark

@@ -1,0 +1,5 @@
+export enum CompaniesActionConstants {
+	COMPANIES_LOAD_DATA = 'Companies: LOAD_DATA',
+	COMPANIES_LOAD_DATA__COMPLETE = 'Companies: LOAD_DATA__COMPLETE',
+	COMPANIES_LOAD_DATA__FAILED = 'Companies: LOAD_DATA__FAILED'
+}
