@@ -3,6 +3,7 @@ import { Action, select, Store } from '@ngrx/store';
 import { AppState } from '../models';
 import { distinctUntilChanged } from 'rxjs/internal/operators';
 import * as equal from 'fast-deep-equal';
+import { Subscription } from 'rxjs';
 
 interface Connection {
 	subscriber: any;
@@ -12,7 +13,7 @@ interface Connection {
 @Injectable()
 export class StoreService {
 	constructor(private store$: Store<AppState>) {}
-	connect(connections: Array<Connection>) {
+	connect(connections: Connection[]) {
 		const subscriptions = connections.reduce((acc, connection) => {
 			const subscription = this.createSubscription(
 				connection.selector
@@ -34,7 +35,7 @@ export class StoreService {
 		return this.store$.dispatch(action);
 	}
 
-	private disconnect(subscriptions = []) {
+	private disconnect(subscriptions: Subscription[] = []) {
 		return () => {
 			subscriptions.forEach(s => s.unsubscribe());
 		};

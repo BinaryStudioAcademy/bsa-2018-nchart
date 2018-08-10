@@ -36,13 +36,11 @@ export const isLoading = (
 	action: CompaniesActions
 ): boolean => {
 	switch (action.type) {
-		case CompaniesActionConstants.COMPANIES_LOAD_DATA: {
+		case CompaniesActionConstants.COMPANIES_LOAD_DATA:
 			return true;
-		}
 		case CompaniesActionConstants.COMPANIES_LOAD_DATA__COMPLETE:
-		case CompaniesActionConstants.COMPANIES_LOAD_DATA__FAILED: {
+		case CompaniesActionConstants.COMPANIES_LOAD_DATA__FAILED:
 			return false;
-		}
 		default:
 			return state;
 	}

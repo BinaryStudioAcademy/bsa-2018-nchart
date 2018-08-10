@@ -16,22 +16,22 @@ import { Observable } from 'rxjs/index';
 @Injectable()
 export class ProjectsEffects {
 	api = {
-		loadProjects: (): Observable<Array<Project>> => {
+		loadProjects: (): Observable<Project[]> => {
 			return of([
 				{
 					id: 'q1',
 					name: 'proj binary',
-					created_at: '12345678'
+					createdAt: '12345678'
 				},
 				{
 					id: 'q2',
 					name: 'proj macpaw',
-					created_at: '995678'
+					createdAt: '995678'
 				},
 				{
 					id: 'q3',
 					name: 'proj kpi',
-					created_at: '1'
+					createdAt: '1'
 				}
 			]);
 		}
@@ -44,7 +44,7 @@ export class ProjectsEffects {
 		ofType(ProjectsActionConstants.PROJECTS_LOAD_DATA),
 		switchMap((action: any) =>
 			this.api.loadProjects().pipe(
-				map((value: Array<Project>) => {
+				map((value: Project[]) => {
 					const {
 						result: all,
 						entities: { byId }

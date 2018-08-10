@@ -9,9 +9,9 @@ export const initialState: UserState = {
 		name: null,
 		email: null,
 		avatar: null,
-		first_name: null,
-		last_name: null,
-		created_at: null
+		firstName: null,
+		lastName: null,
+		createdAt: null
 	},
 	isLoading: null
 };

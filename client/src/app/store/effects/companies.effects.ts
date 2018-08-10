@@ -15,22 +15,22 @@ import { arrayOfCustomData } from '@app/models/custom.schema';
 @Injectable()
 export class CompaniesEffects {
 	api = {
-		loadCompanies: (): Observable<Array<Company>> => {
+		loadCompanies: (): Observable<Company[]> => {
 			return of([
 				{
 					id: 'q1',
 					name: 'binary',
-					created_at: '12345678'
+					createdAt: '12345678'
 				},
 				{
 					id: 'q2',
 					name: 'macpaw',
-					created_at: '995678'
+					createdAt: '995678'
 				},
 				{
 					id: 'q3',
 					name: 'kpi',
-					created_at: '1'
+					createdAt: '1'
 				}
 			]);
 		}
@@ -60,7 +60,7 @@ export class CompaniesEffects {
 						new LoadDataFailed({
 							action: action,
 							msg: 'test',
-							error: null
+							error
 						})
 					);
 				})
