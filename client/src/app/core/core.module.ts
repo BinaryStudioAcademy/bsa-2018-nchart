@@ -7,6 +7,7 @@ import { ProjectComponent } from '@app/core/project/project.component';
 import { ProjectsComponent } from '@app/core/projects/projects.component';
 import { RouterModule } from '@app/router/router.module';
 import { APIModule } from '@app/api/api.module';
+import { SharedModule } from '@app/shared/shared.module';
 
 @NgModule({
 	declarations: [
@@ -17,7 +18,7 @@ import { APIModule } from '@app/api/api.module';
 		ProjectComponent,
 		ProjectsComponent
 	],
-	imports: [RouterModule, APIModule],
+	imports: [RouterModule, APIModule, SharedModule],
 	exports: []
 })
 export class CoreModule {}
