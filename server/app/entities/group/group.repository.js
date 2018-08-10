@@ -9,8 +9,8 @@ class GroupRepository extends Repository {
 		this.groupUserModel = groupUserModel;
 	}
 
-	saveGroup(name = 'General') {
-		return this.groupModel.create({ name });
+	saveGroup(obj) {
+		return this.groupModel.create(obj);
 	}
 
 	saveGroupUser(userId, groupId) {

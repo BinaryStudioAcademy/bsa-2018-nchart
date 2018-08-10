@@ -5,8 +5,8 @@ class GroupService {
 		this.GroupRepository = GroupRepository;
 	}
 
-	saveGroup(name) {
-		return this.GroupRepository.saveGroup(name);
+	saveGroup(obj) {
+		return this.GroupRepository.saveGroup(obj);
 	}
 
 	saveGroupUser(userId, groupId) {

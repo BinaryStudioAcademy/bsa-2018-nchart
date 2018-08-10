@@ -6,6 +6,10 @@ const Group = sequelize.define('group', {
 	name: {
 		type: Sequelize.STRING,
 		allowNull: false
+	},
+	companyId: {
+		type: Sequelize.INTEGER,
+		allowNull: false
 	}
 });
 
