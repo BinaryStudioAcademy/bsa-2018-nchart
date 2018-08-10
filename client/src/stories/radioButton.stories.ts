@@ -66,7 +66,6 @@ storiesOf('Radiobuttons', module)
 		component: RadioButtonComponent,
 		props: {
 			name: 'group1',
-			value: 'Option 1',
 			label: 'Option 1',
 			disabled: false,
 			control: new FormControl()
@@ -76,7 +75,6 @@ storiesOf('Radiobuttons', module)
 		component: RadioButtonComponent,
 		props: {
 			name: 'group1',
-			value: 'Option 1',
 			label: 'Option 1',
 			disabled: true,
 			control: new FormControl()
