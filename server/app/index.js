@@ -4,7 +4,10 @@ const logger = require('morgan');
 const bodyParser = require('body-parser');
 const initializeAPIRoutes = require('./routes');
 const dbConnect = require('./db/dbconnect');
-const GeneratePayload = require('./common/middleware/payload.middleware');
+const {
+	successOrEmptyPayload,
+	errorPayload
+} = require('./common/middleware/payload.middleware');
 
 dbConnect();
 
@@ -23,23 +26,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 initializeAPIRoutes(app);
 
-// catch 200 and create payload
-app.use((req, res) => {
-	res.json(GeneratePayload.getResponsePayload(res));
-	res.end();
-});
-
-// catch 404 and forward to error handler
-app.use((req, res, next) => {
-	const err = new Error('Not Found');
-	err.status = 404;
-	next(err);
-});
+// pre-sending middleware
+app.use(successOrEmptyPayload);
 
 // error handler
-app.use((err, req, res, next) => {
-	res.status(500).json(GeneratePayload.generateFailure(err));
-	next();
-});
+app.use(errorPayload);
 
 module.exports = app;
