@@ -187,16 +187,17 @@ class UserService {
 					callback => {
 						TokenService.verifyToken(token)
 							.then(data => callback(null, data))
-							.catch(err => {
-								callback(err, null);
-							});
+							.catch(err => callback(err, null));
 					},
 					(email, callback) => {
 						this.UserRepository.findByEmail(email)
-							.then(data => callback(null, data))
-							.catch(err => {
-								callback(err, null);
-							});
+							.then(data => {
+								if (data === null) {
+									throw new Error('Object did not exist');
+								}
+								return callback(null, data);
+							})
+							.catch(err => callback(err, null));
 					}
 				],
 				(err, payload) => {
@@ -224,27 +225,52 @@ class UserService {
 	}
 
 	updateUser(id, obj) {
-		return this.UserRepository.update(id, obj)
-			.then(data => {
-				if (data[0] === 0) {
-					throw new Error('Object did not exist');
+		return new Promise((resolve, reject) => {
+			async.waterfall(
+				[
+					callback => {
+						bcrypt
+							.hash(obj.password, 10)
+							.then(hash => {
+								callback(
+									null,
+									Object.assign({}, obj, {
+										password: hash
+									})
+								);
+							})
+							.catch(err => callback(err, null));
+					},
+					(user, callback) => {
+						this.UserRepository.update(id, user)
+							.then(data => {
+								if (data === null || data[0] === 0) {
+									throw new Error('Object did not exist');
+								}
+								return callback(null, data);
+							})
+							.catch(err => callback(err, null));
+					}
+				],
+				(err, payload) => {
+					if (err) {
+						return reject(ErrorService.createCustomDBError(err));
+					}
+					return resolve(this.createUserPayload(payload));
 				}
-				return 'Object updated';
-			})
-			.catch(err => {
-				throw ErrorService.createCustomDBError(err);
-			});
+			);
+		});
 	}
 
 	// this must be used in class method...
 	createUserPayload(data) {
-		this.data = data;
-		return {
-			id: this.data.id,
-			firstName: this.data.firstName,
-			lastName: this.data.lastName,
-			email: this.data.email
+		this.payload = {
+			id: data.id,
+			firstName: data.firstName,
+			lastName: data.lastName,
+			email: data.email
 		};
+		return this.payload;
 	}
 }
 

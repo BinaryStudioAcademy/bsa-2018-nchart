@@ -1,25 +1,41 @@
 class GeneratePayload {
 	constructor() {
-		this.payload = null;
-		this.failure = null;
+		this.response = null;
 	}
 
-	generateSuccess(payload) {
-		this.payload = payload;
-		return {
-			payload: this.payload,
+	generateSuccess(payload, data) {
+		return this.setResponsePayload(payload, {
+			payload: data,
 			isSuccess: true,
 			errors: []
+		});
+	}
+
+	setResponsePayload(res, data) {
+		res.locals.payload = data;
+		this.response = res.locals.payload;
+		return this.response;
+	}
+
+	getResponsePayload(res) {
+		this.response = res.locals.payload;
+		return this.response;
+	}
+
+	nextWithData(next, res) {
+		return data => {
+			this.generateSuccess(res, data);
+			next();
 		};
 	}
 
 	generateFailure(err) {
-		this.failure = err;
-		return {
+		this.response = {
 			payload: null,
 			isSuccess: false,
-			errors: this.failure.errors
+			errors: err
 		};
+		return this.response;
 	}
 }
 

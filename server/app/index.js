@@ -23,6 +23,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 initializeAPIRoutes(app);
 
+// catch 200 and create payload
+app.use((req, res) => {
+	res.json(GeneratePayload.getResponsePayload(res));
+	res.end();
+});
+
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
 	const err = new Error('Not Found');
