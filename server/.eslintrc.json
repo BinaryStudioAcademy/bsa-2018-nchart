@@ -1,0 +1,13 @@
+{
+	"extends": "airbnb",
+	"rules": {
+		"no-console": 2,
+		"linebreak-style": "off",
+		"indent": ["error", "tab"],
+		"no-tabs": "off",
+		"arrow-parens": "off"
+	},
+	"env": {
+		"node": true
+	}
+}
