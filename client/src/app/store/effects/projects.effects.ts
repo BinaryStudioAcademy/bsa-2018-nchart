@@ -3,7 +3,6 @@ import { Effect, Actions, ofType } from '@ngrx/effects';
 import { map, switchMap } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { ApiService } from '@app/services/api.service';
 import { Project } from '@app/models';
 import { normalize } from 'normalizr';
 import { arrayOfCustomData } from '@app/models/custom.schema';
@@ -12,10 +11,33 @@ import {
 	LoadDataComplete,
 	LoadDataFailed
 } from '@app/store/actions/projects/projects.actions';
+import { Observable } from 'rxjs/index';
 
 @Injectable()
 export class ProjectsEffects {
-	constructor(private api: ApiService, private action$: Actions) {}
+	api = {
+		loadProjects: (): Observable<Array<Project>> => {
+			return of([
+				{
+					id: 'q1',
+					name: 'proj binary',
+					created_at: '12345678'
+				},
+				{
+					id: 'q2',
+					name: 'proj macpaw',
+					created_at: '995678'
+				},
+				{
+					id: 'q3',
+					name: 'proj kpi',
+					created_at: '1'
+				}
+			]);
+		}
+	};
+
+	constructor(private action$: Actions) {}
 
 	@Effect()
 	loadData$ = this.action$.pipe(

@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { map, switchMap } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
-import { ApiService } from '@app/services/api.service';
+import { Observable, of } from 'rxjs';
 import { CompaniesActionConstants } from '@app/store/actions/companies/companies.action-types';
 import { Company } from '@app/models';
 import {
@@ -15,7 +14,29 @@ import { arrayOfCustomData } from '@app/models/custom.schema';
 
 @Injectable()
 export class CompaniesEffects {
-	constructor(private api: ApiService, private action$: Actions) {}
+	api = {
+		loadCompanies: (): Observable<Array<Company>> => {
+			return of([
+				{
+					id: 'q1',
+					name: 'binary',
+					created_at: '12345678'
+				},
+				{
+					id: 'q2',
+					name: 'macpaw',
+					created_at: '995678'
+				},
+				{
+					id: 'q3',
+					name: 'kpi',
+					created_at: '1'
+				}
+			]);
+		}
+	};
+
+	constructor(private action$: Actions) {}
 
 	@Effect()
 	loadData$ = this.action$.pipe(

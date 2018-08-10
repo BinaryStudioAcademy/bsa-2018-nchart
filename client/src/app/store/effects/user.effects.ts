@@ -9,12 +9,20 @@ import {
 import { map, switchMap } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { ApiService } from '@app/services/api.service';
 import { User } from '@app/models';
 
 @Injectable()
 export class UserEffects {
-	constructor(private api: ApiService, private action$: Actions) {}
+	api = {
+		verifyToken: token => {
+			return of({
+				id: 1,
+				name: 'Ben Dover',
+				email: 'bendover@example.com'
+			});
+		}
+	};
+	constructor(private action$: Actions) {}
 
 	@Effect()
 	verifyToken$ = this.action$.pipe(
