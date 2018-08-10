@@ -1,0 +1,12 @@
+<p-tabView [activeIndex]="selectedTab" (onChange)="onTabChange($event)">
+	<p-tabPanel [header]="tab.header" 
+				*ngFor="let tab of tabs; let i = index" 
+				[closable]="tab.closable"
+				[disabled]="tab.disabled"
+				[leftIcon]="tab.leftIcon"
+				[rightIcon]="tab.rightIcon"
+				(click)="onClick()"
+	>
+        {{tab.content}}
+    </p-tabPanel>
+</p-tabView>

@@ -1,0 +1,51 @@
+@import ../variables
+@import ../colors
+
+.ui-tabview
+	background-color: $stateDefaultBgColor
+
+	&.ui-tabview-top>.ui-tabview-nav
+		padding: 18px 0
+
+	.ui-tabview-nav
+		border: none
+		background-color: $stateDefaultBgColor
+
+	.ui-tabview-nav li
+		margin-right: 24px
+		padding-bottom: 3px
+
+		&:last-child
+			margin-right: 0
+		& a
+			padding: 0
+
+		&.ui-state-active,
+		&.ui-state-default
+			border: none
+			background-color: $stateDefaultBgColor
+
+		.ui-tabview-title
+			border-bottom: 3px solid $stateDefaultBgColor
+
+		&.ui-tabview-selected .ui-tabview-title
+			border-bottom-color: $baseColor
+			font-weight: 600
+			cursor: pointer
+			padding: 0
+			padding-bottom: 5px
+
+		.ui-tabview-close
+			margin: 0 0 .6rem .2rem
+			color: $secondaryTextColor
+			transition: .4s ease
+			&:hover
+				color: $stateErrorTextColor
+		
+		.ui-tabview-right-icon,
+		.ui-tabview-left-icon
+			font-size: 0.7rem
+			margin: 0 8px
+
+	.ui-tabview-panel
+		padding: 0
