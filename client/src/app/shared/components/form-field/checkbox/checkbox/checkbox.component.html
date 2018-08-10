@@ -2,6 +2,7 @@
 	<p-checkbox name="groupname" 
 				[value]="value" 
 				[(ngModel)]="selectedValues"
+				[formControl]="control"
 				[disabled]="isDisabled()">
 	</p-checkbox>
 	<label class="ui-checkbox-label" [class.ui-input-label-disabled]="isDisabled()">{{label}}</label>

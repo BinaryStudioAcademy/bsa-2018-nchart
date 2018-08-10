@@ -93,17 +93,20 @@ storiesOf('Checkbox', module)
 					{
 						label: 'First item',
 						value: 'first',
-						disabled: false
+						disabled: false,
+						control: new FormControl()
 					},
 					{
 						label: 'Seventh item',
 						value: 'second',
-						disabled: false
+						disabled: false,
+						control: new FormControl()
 					},
 					{
 						label: 'Fifth item',
 						value: 'third',
-						disabled: true
+						disabled: true,
+						control: new FormControl()
 					}
 				],
 				selectedValues: ['second', 'third']
