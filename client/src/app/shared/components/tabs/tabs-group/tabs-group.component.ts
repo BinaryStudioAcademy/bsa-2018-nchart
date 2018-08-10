@@ -2,11 +2,11 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 interface Tabs {
 	header: string;
-	content: any;
-	closable: boolean;
-	disabled: boolean;
-	leftIcon: string;
-	rightIcon: string;
+	content?: any;
+	closable?: boolean;
+	disabled?: boolean;
+	leftIcon?: string;
+	rightIcon?: string;
 }
 
 @Component({

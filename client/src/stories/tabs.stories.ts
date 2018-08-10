@@ -1,16 +1,13 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import '@storybook/addon-notes/register';
 import { TabViewModule } from 'primeng/tabview';
-// Buttons
-import { ButtonModule } from 'primeng/button';
-import { ButtonComponent } from '../app/shared/components/button/button/button.component';
 import { TabsGroupComponent } from '../app/shared/components/tabs/tabs-group/tabs-group.component';
 
 storiesOf('Tabs', module)
 	.addDecorator(
 		moduleMetadata({
 			imports: [
-				TabViewModule, ButtonModule
+				TabViewModule
 			],
 			declarations: []
 		})
