@@ -1,0 +1,68 @@
+@import ../variables
+@import ../colors
+
+.ui-dropdown .ui-dropdown-label
+	height: 40px
+	padding: 12px
+	color: $secondaryTextColor
+	min-width: 200px
+
+.ui-dropdown.ui-widget
+	box-shadow: none
+	min-width: 240px
+
+.ui-dropdown.ui-widget:enabled:active,
+.ui-dropdown.ui-widget:enabled:focus,
+.ui-dropdown.ui-widget:focus-within,
+.ui-dropdown:not(.ui-state-disabled):hover
+	label.ui-dropdown-label,
+	.pi-caret-down:before
+		color: $stateDefaultTextColor
+
+.ui-dropdown.ui-state-disabled
+	label.ui-dropdown-label,
+	.ui-dropdown-trigger
+		background-color: $disabledColor
+	color: $secondaryTextColor
+	opacity: 1
+
+.ui-dropdown .ui-dropdown-trigger
+	border: none
+	.pi-caret-down:before
+		color: $secondaryTextColor
+
+.ui-shadow
+	box-shadow: $boxShadow
+	::-webkit-scrollbar
+		width:  5px 
+
+	::-webkit-scrollbar-thumb
+		background: $teriaryColor
+
+	::-webkit-scrollbar-track
+		background: $disabledColor	
+
+.ui-widget-content
+	border: none
+	
+.ui-dropdown-panel .ui-dropdown-list
+	color: $secondaryTextColor
+	padding: 0
+	background-color: $stateDefaultBgColor
+
+.ui-dropdown-panel .ui-dropdown-item
+	padding: 10px
+	padding-left: 20px
+	border-radius: 0
+	&.ui-state-highlight
+		background-color: $disabledColor
+		color: $secondaryTextColor
+
+.ui-dropdown-panel .ui-dropdown-item:not(.ui-state-highlight):not(.ui-state-disabled):hover
+	background-color: $disabledColor
+
+.ui-dropdown-item-group
+	padding: 12px
+
+p-dropdown.ng-dirty.ng-invalid > .ui-dropdown
+	border-color: $errorColor

@@ -1,44 +1,26 @@
-const ErrorService = require('../../common/services/error.service');
+const PayloadGeneratorService = require('../services/payload-generator.service');
 
-class GeneratePayload {
-	constructor() {
-		this.response = null;
+const successOrEmptyPayload = (req, res, next) => {
+	const payload = PayloadGeneratorService.getResponsePayload(res);
+
+	if (payload) {
+		res.json(payload);
+		res.end();
+	} else {
+		const err = new Error('Not Found');
+		err.status = 404;
+		next(err);
 	}
+};
 
-	generateSuccess(payload, data) {
-		return this.setResponsePayload(payload, {
-			payload: data,
-			isSuccess: true,
-			errors: []
-		});
-	}
+const errorPayload = (err, req, res, next) => {
+	res.status(err.status || 500).json(
+		PayloadGeneratorService.generateFailure(err)
+	);
+	next();
+};
 
-	setResponsePayload(res, data) {
-		res.locals.payload = data;
-		this.response = res.locals.payload;
-		return this.response;
-	}
-
-	getResponsePayload(res) {
-		this.response = res.locals.payload;
-		return this.response;
-	}
-
-	nextWithData(next, res) {
-		return data => {
-			this.generateSuccess(res, data);
-			next();
-		};
-	}
-
-	generateFailure(err) {
-		this.response = {
-			payload: null,
-			isSuccess: false,
-			errors: ErrorService.createCustomDBError(err)
-		};
-		return this.response;
-	}
-}
-
-module.exports = new GeneratePayload();
+module.exports = {
+	successOrEmptyPayload,
+	errorPayload
+};

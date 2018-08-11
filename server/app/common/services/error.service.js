@@ -9,7 +9,8 @@ class DBError extends Error {
 			{ message: 'Object did not exist', code: 5 },
 			{ message: 'Wrong password', code: 6 },
 			{ message: 'jwt expired', code: 7 },
-			{ message: 'Incorrect file extension', code: 8 }
+			{ message: 'Incorrect file extension', code: 8 },
+			{ message: 'No file were uploaded', code: 9 }
 		];
 	}
 
@@ -23,19 +24,14 @@ class DBError extends Error {
 					) {
 						errorPayload.push(this.customErrors[c]);
 					}
-					errorPayload.push({ message: err.errors[i].message });
 				}
 			}
-			return {
-				errors: errorPayload
-			};
+			return errorPayload;
 		}
 		if (err.message) {
 			for (let i = 0; i < this.customErrors.length; i += 1) {
 				if (err.message === this.customErrors[i].message) {
-					return {
-						errors: this.customErrors[i]
-					};
+					return this.customErrors[i];
 				}
 			}
 			return {

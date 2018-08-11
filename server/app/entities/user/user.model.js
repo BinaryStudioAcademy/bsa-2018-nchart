@@ -34,22 +34,27 @@ const User = sequelize.define('users', {
 
 // this method creates table if it doesn't exit
 User.sync().then(() => {
-	CompanyUser.sync();
-	return User.hasMany(CompanyUser, {
-		foreignKey: 'userId',
-		sourceKey: 'id',
-		onDelete: 'CASCADE',
-		constraints: false
-	});
-});
-
-User.sync().then(() => {
-	GroupUser.sync();
-	return User.hasMany(GroupUser, {
-		foreignKey: 'user_id',
-		sourceKey: 'id',
-		onDelete: 'CASCADE',
-		constraints: false
+	CompanyUser.sync().then(() =>
+		User.hasMany(CompanyUser, {
+			foreignKey: {
+				name: 'userId',
+				allowNull: false
+			},
+			sourceKey: 'id',
+			onDelete: 'CASCADE',
+			constraints: true
+		})
+	);
+	GroupUser.sync().then(() => {
+		User.hasMany(GroupUser, {
+			foreignKey: {
+				name: 'userId',
+				allowNull: false
+			},
+			sourceKey: 'id',
+			onDelete: 'CASCADE',
+			constraints: true
+		});
 	});
 });
 

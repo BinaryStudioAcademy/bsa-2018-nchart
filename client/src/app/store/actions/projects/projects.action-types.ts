@@ -1,0 +1,5 @@
+export enum ProjectsActionConstants {
+	PROJECTS_LOAD_DATA = 'Projects: LOAD_DATA',
+	PROJECTS_LOAD_DATA__COMPLETE = 'Projects: LOAD_DATA__COMPLETE',
+	PROJECTS_LOAD_DATA__FAILED = 'Projects: LOAD_DATA__FAILED'
+}

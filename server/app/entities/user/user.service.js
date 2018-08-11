@@ -59,33 +59,6 @@ class UserService {
 							.catch(err => callback(err, null));
 					},
 					(payload, callback) => {
-						GroupService.saveGroup('General')
-							.then(data =>
-								callback(
-									null,
-									Object.assign({}, payload, {
-										group: data.dataValues
-									})
-								)
-							)
-							.catch(err => callback(err, null));
-					},
-					(payload, callback) => {
-						GroupService.saveGroupUser(
-							payload.user.id,
-							payload.group.id
-						)
-							.then(data =>
-								callback(
-									null,
-									Object.assign({}, payload, {
-										groupUser: data.dataValues
-									})
-								)
-							)
-							.catch(err => callback(err, null));
-					},
-					(payload, callback) => {
 						CompanyService.saveCompany(obj)
 							.then(data =>
 								callback(
@@ -115,6 +88,36 @@ class UserService {
 							.catch(err => {
 								callback(err, null);
 							});
+					},
+					(payload, callback) => {
+						GroupService.saveGroup({
+							name: 'General',
+							companyId: payload.company.id
+						})
+							.then(data =>
+								callback(
+									null,
+									Object.assign({}, payload, {
+										group: data.dataValues
+									})
+								)
+							)
+							.catch(err => callback(err, null));
+					},
+					(payload, callback) => {
+						GroupService.saveGroupUser(
+							payload.user.id,
+							payload.group.id
+						)
+							.then(data =>
+								callback(
+									null,
+									Object.assign({}, payload, {
+										groupUser: data.dataValues
+									})
+								)
+							)
+							.catch(err => callback(err, null));
 					}
 				],
 				(err, payload) => {
