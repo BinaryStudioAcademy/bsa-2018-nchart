@@ -1,41 +1,25 @@
 const fs = require('fs');
 const Papa = require('papaparse');
 const async = require('async');
+const FsService = require('./fs.service');
+
+function parseLine(row, headers, jsonData) {
+	const payload = {};
+	for (let i = 0; i < headers.length; i += 1) {
+		if (
+			row.data[0][headers[i]] === null ||
+			row.data[0][headers[i]] === ''
+		) {
+			return;
+		}
+		payload[headers[i]] = row.data[0][headers[i]];
+	}
+	jsonData.push(payload);
+}
 
 class CsvService {
 	constructor() {
 		this.path = null;
-	}
-
-	save(file) {
-		return new Promise((resolve, reject) => {
-			// todo: rename file if exists otherwise it will be overwritten
-			if (fs.existsSync(`../server/app/fileStorage/${file.name}`)) {
-				return null;
-			}
-			const path = `../server/app/fileStorage/${file.name}`;
-			const stream = fs.createWriteStream(path);
-			return stream.once('open', () => {
-				stream.write(file.data);
-				stream.end(() => {
-					resolve(`../server/app/fileStorage/${file.name}`);
-				});
-				stream.on('error', () => {
-					this.delete(path);
-					reject(new Error('error write stream'));
-				});
-			});
-		});
-	}
-
-	delete(path) {
-		this.path = path;
-		return new Promise((resolve, reject) => {
-			fs.unlink(this.path, err => {
-				if (err) reject(err);
-				resolve('done');
-			});
-		});
 	}
 
 	processFile(file) {
@@ -43,7 +27,7 @@ class CsvService {
 			async.waterfall(
 				[
 					callback => {
-						this.save(file)
+						FsService.save(file)
 							.then(data => callback(null, data))
 							.catch(err => callback(err, null));
 					},
@@ -58,7 +42,7 @@ class CsvService {
 							.catch(err => callback(err, null));
 					},
 					(path, payload, callback) => {
-						this.delete(path)
+						FsService.deleteFile(path)
 							.then(data => {
 								if (data === 'done') {
 									callback(null, payload);
@@ -85,6 +69,16 @@ class CsvService {
 					preview: 1,
 					// returns headers
 					complete(results) {
+						for (let i = 0; i < results.data[0].length; i += 1) {
+							if (
+								results.data[0][i] === '' ||
+								results.data[0][i] === ' ' ||
+								results.data[0][i] === undefined ||
+								results.data[0][i] === null
+							) {
+								results.data[0].splice(i);
+							}
+						}
 						resolve(results.data[0]);
 					}
 				});
@@ -98,24 +92,18 @@ class CsvService {
 		return new Promise(resolve => {
 			fs.readFile(this.path, 'utf8', (err, contents) => {
 				Papa.parse(contents, {
+					trimHeaders: true,
 					skipEmptyLines: 'greedy',
 					// make it see the numbers and boolean
 					dynamicTyping: true,
 					// header - makes keys from the first row
-					header: true,
+					header: headers,
 					// used for a very large files
 					worker: true,
 					step(row) {
-						for (let i = 0; i < headers.length; i += 1) {
-							if (!(headers[i] in row.data[0])) {
-								return;
-							}
-						}
-						jsonData.push(row.data[0]);
-						// console.log(row.data[0]);
+						parseLine(row, headers, jsonData);
 					},
 					complete() {
-						// console.log(jsonData, results);
 						resolve(jsonData);
 					}
 				});

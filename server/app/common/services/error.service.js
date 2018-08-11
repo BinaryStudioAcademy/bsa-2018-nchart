@@ -35,7 +35,8 @@ class DBError extends Error {
 				}
 			}
 			return {
-				message: err.message
+				message: err.message,
+				stack: err.stack
 			};
 		}
 		if (typeof err === 'string') {

@@ -31,7 +31,8 @@
 		"pg": "^7.4.3",
 		"pg-hstore": "^2.3.2",
 		"pretty-quick": "^1.6.0",
-		"sequelize": "^4.38.0"
+		"sequelize": "^4.38.0",
+		"xlsx": "^0.13.3"
 	},
 	"devDependencies": {
 		"babel-eslint": "^8.2.6",
