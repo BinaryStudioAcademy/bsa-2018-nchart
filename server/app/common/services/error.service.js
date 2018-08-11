@@ -8,7 +8,8 @@ class DBError extends Error {
 			{ message: 'email must be unique', code: 4 },
 			{ message: 'Object did not exist', code: 5 },
 			{ message: 'Wrong password', code: 6 },
-			{ message: 'jwt expired', code: 7 }
+			{ message: 'jwt expired', code: 7 },
+			{ message: 'Incorrect file extension', code: 8 }
 		];
 	}
 
@@ -22,6 +23,7 @@ class DBError extends Error {
 					) {
 						errorPayload.push(this.customErrors[c]);
 					}
+					errorPayload.push({ message: err.errors[i].message });
 				}
 			}
 			return {
@@ -36,6 +38,9 @@ class DBError extends Error {
 					};
 				}
 			}
+			return {
+				message: err.message
+			};
 		}
 		if (typeof err === 'string') {
 			for (let i = 0; i < this.customErrors.length; i += 1) {

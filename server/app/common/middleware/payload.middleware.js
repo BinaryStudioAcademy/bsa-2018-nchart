@@ -1,3 +1,5 @@
+const ErrorService = require('../../common/services/error.service');
+
 class GeneratePayload {
 	constructor() {
 		this.response = null;
@@ -33,7 +35,7 @@ class GeneratePayload {
 		this.response = {
 			payload: null,
 			isSuccess: false,
-			errors: err
+			errors: ErrorService.createCustomDBError(err)
 		};
 		return this.response;
 	}
