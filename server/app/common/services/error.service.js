@@ -47,9 +47,7 @@ class DBError extends Error {
 				}
 			}
 		}
-		return {
-			errors: err
-		};
+		return err;
 	}
 }
 

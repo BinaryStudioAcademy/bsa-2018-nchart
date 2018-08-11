@@ -7,15 +7,16 @@ const fileService = file =>
 			xlsx: /.+(\.xlsx)$/
 		};
 		if (!file) {
-			reject(new Error('No file were uploaded'));
+			throw new Error('No file were uploaded');
 		}
 		if (pattern.csv.test(file.fileKey.name)) {
 			resolve(CsvService.processFile(file.fileKey));
 		} else if (pattern.xlsx.test(file.fileKey.name)) {
 			resolve('xlsx');
 		} else {
-			reject(new Error('Incorrect file extension'));
+			throw new Error('Incorrect file extension');
 		}
+		return reject(new Error('Something went wrong'));
 	});
 
 module.exports = fileService;

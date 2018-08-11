@@ -1,6 +1,5 @@
 const Repository = require('../../common/repository/repository');
 const userModel = require('./user.model');
-const ErrorService = require('../../common/services/error.service');
 
 class UserRepository extends Repository {
 	constructor() {
@@ -21,21 +20,15 @@ class UserRepository extends Repository {
 	}
 
 	findByEmail(email) {
-		return this.model
-			.findOne({
-				where: {
-					email
-				}
-			})
-			.catch(err => {
-				throw ErrorService.createCustomDBError(err);
-			});
+		return this.model.findOne({
+			where: {
+				email
+			}
+		});
 	}
 
 	save(user) {
-		return this.model.create(user).catch(err => {
-			throw ErrorService.createCustomDBError(err);
-		});
+		return this.model.create(user);
 	}
 }
 
