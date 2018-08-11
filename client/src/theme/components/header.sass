@@ -1,0 +1,36 @@
+@import ../variables
+@import ../colors
+
+.ui-widget-header 
+    background: $backgroundWhiteColor
+    border: 0
+
+.header-logo
+    max-width: 150px
+    max-height: 150px
+
+.header-buttons-container
+    float: right 
+ 
+.header-user-button
+    border: 0
+    
+.header-user-button .ui-buttonset.ui-splitbutton
+    box-shadow: none
+.header-user-button .ui-buttonset.ui-splitbutton:hover
+    box-shadow: none
+.header-user-button .ui-menu 
+    width: 9.7em
+.header-user-button .ui-buttonset.ui-splitbutton .ui-widget.ui-button:not(.ui-splitbutton-menubutton), .ui-buttonset.ui-splitbutton .ui-button:not(.ui-splitbutton-menubutton) 
+    min-width: 100px
+.header-user-button .ui-buttonset.ui-splitbutton .ui-widget.ui-button, .ui-buttonset.ui-splitbutton .ui-button
+    padding-left: 0
+
+.header-user-logo
+    position: absolute
+    right: 50px
+    cursor: pointer
+    z-index: 1200
+    max-width: 40px
+    max-height: 40px
+    border-radius: 50%

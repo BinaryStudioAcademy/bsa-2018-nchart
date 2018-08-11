@@ -1,10 +1,20 @@
-<p-toolbar>
-    <div class="ui-toolbar-group-left">
+<div class="ui-g ui-widget-header">
+    <div class="ui-g-3">
+            <img src="../../../../assets/nChartLogo.svg" class="header-logo">
     </div>
-    <div class="ui-toolbar-group-center">
+    <div class="ui-g-6">
         <p-tabMenu [model]="items"></p-tabMenu>
     </div>
-    <div class="ui-toolbar-group-right">
-        <app-button label="Sign in" size="middle" type="default"></app-button>
+    <div class="ui-g-3">
+        <div class="header-buttons-container">
+            <img class="header-user-logo" src="../../../../assets/user.jpeg" *ngIf="isAuthorized">
+            <app-button label="Sign in" size="middle" type="default" (click)="onClick($event)" *ngIf="!isAuthorized" routerLink="/login"></app-button>
+            <app-button-action label="User" *ngIf="isAuthorized" [items]="userButtons" [ngClass]="getUserButtonClasses()"></app-button-action> 
+        </div>
     </div>
-</p-toolbar>
+</div>
+
+      
+
+
+       
