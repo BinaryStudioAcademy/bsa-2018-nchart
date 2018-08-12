@@ -69,12 +69,14 @@ class ExcelService {
 
 	processFile(file) {
 		return new Promise((resolve, reject) => {
+			let globalPath = null;
 			async.waterfall(
 				[
 					callback => {
 						FsService.save(file)
-							.then(data => {
-								callback(null, data);
+							.then(path => {
+								globalPath = path;
+								callback(null, path);
 							})
 							.catch(err => {
 								callback(err, null);
@@ -83,25 +85,17 @@ class ExcelService {
 					(path, callback) => {
 						this.read(path)
 							.then(data => {
-								callback(null, path, data);
+								callback(null, data);
 							})
 							.catch(err => {
 								callback(err, null);
 							});
-					},
-					(path, payload, callback) => {
-						FsService.deleteFile(path)
-							.then(data => {
-								if (data === 'done') {
-									callback(null, payload);
-								}
-							})
-							.catch(err => callback(err, null));
 					}
 				],
-				(err, payload) => {
-					if (err) {
-						reject(err);
+				(error, payload) => {
+					FsService.deleteFile(globalPath).catch(err => reject(err));
+					if (error) {
+						reject(error);
 					}
 					resolve(payload);
 				}

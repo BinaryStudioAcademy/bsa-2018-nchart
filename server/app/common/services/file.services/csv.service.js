@@ -28,50 +28,55 @@ class CsvService {
 
 	processFile(file) {
 		return new Promise((resolve, reject) => {
+			let globalPath = null;
 			async.waterfall(
 				[
 					callback => {
 						FsService.save(file)
-							.then(data => callback(null, data))
+							.then(path => {
+								globalPath = path;
+								callback(null, path);
+							})
 							.catch(err => callback(err, null));
 					},
 					(path, callback) => {
-						fs.readFile(path, 'utf8', (error, contents) => {
-							if (error) {
-								callback(error, null);
-							}
-							this.getHeaders(contents)
-								.then(data => callback(null, path, data))
-								.catch(err => callback(err, null));
-						});
+						this.readFileContent(path)
+							.then(contents => {
+								callback(null, path, contents);
+							})
+							.catch(err => callback(err, null));
+					},
+					(path, contents, callback) => {
+						this.getHeaders(contents)
+							.then(headers => callback(null, path, headers))
+							.catch(err => callback(err, null));
 					},
 					(path, headers, callback) => {
 						this.generateJSON(path, headers)
-							.then(data => callback(null, path, data))
+							.then(data => callback(null, data))
 							.catch(err => callback(err, null));
-					},
-					(path, payload, callback) => {
-						FsService.deleteFile(path)
-							.then(data => {
-								if (data === 'done') {
-									callback(null, payload);
-								}
-							})
-							.catch(err => callback(err, path));
 					}
 				],
 				(error, payload) => {
+					FsService.deleteFile(globalPath).catch(err => reject(err));
 					if (error) {
-						// todo: not sure if this will work
-						FsService.deleteFile(payload)
-							.then(() => {
-								reject(error);
-							})
-							.catch(err => reject(err));
+						reject(error);
 					}
 					resolve(payload);
 				}
 			);
+		});
+	}
+
+	readFileContent(path) {
+		this.path = null;
+		return new Promise((resolve, reject) => {
+			fs.readFile(path, 'utf8', (error, contents) => {
+				if (error) {
+					reject(error, null);
+				}
+				resolve(contents);
+			});
 		});
 	}
 

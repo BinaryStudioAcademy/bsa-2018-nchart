@@ -1,5 +1,6 @@
 const fs = require('fs');
 const uuidv4 = require('uuid/v4');
+const download = require('download-file');
 
 class FsService {
 	save(file) {
@@ -25,15 +26,37 @@ class FsService {
 		});
 	}
 
-	deleteFile(path) {
-		this.path = path;
-		return new Promise((resolve, reject) => {
-			fs.unlink(this.path, err => {
-				if (err) reject(err);
-				resolve('done');
+	saveFromLink(url) {
+		this.url = url;
+		return new Promise(resolve => {
+			const options = {
+				directory: '../server/app/fileStorage/',
+				filename: `${uuidv4()}.file`
+			};
+			while (fs.existsSync(options.directory + options.filename)) {
+				options.filename = `${uuidv4()}.file`;
+			}
+			download(url, options, err => {
+				if (err) throw err;
+				return resolve(options.directory + options.filename);
 			});
+			// todo: fix error handling if its possible
+			// return reject(new Error('Something went wrong'));
+		});
+	}
+
+	deleteFile(path) {
+		return new Promise((resolve, reject) => {
+			if (path && fs.existsSync(path)) {
+				this.path = path;
+				fs.unlink(this.path, err => {
+					if (err) reject(err);
+					resolve('done');
+				});
+			} else {
+				resolve("File already doesn't exist");
+			}
 		});
 	}
 }
-
 module.exports = new FsService();
