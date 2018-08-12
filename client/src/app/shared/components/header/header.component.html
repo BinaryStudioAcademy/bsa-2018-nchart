@@ -7,7 +7,8 @@
     </div>
     <div class="ui-g-3 header-component">
         <div class="header-profile-container">
-            <app-button label="Sign in" size="middle" type="default" (click)="onClick($event)" *ngIf="!isAuthorized" routerLink="/login"></app-button>
+            <app-button label="New project" size="middle" type="default" routerLink='/app/projects/draft' icon="fas fa-plus" iconPosition="left" class="header-newProject-button"></app-button>
+            <app-button label="Sign in" size="middle" type="default" (click)="onClick($event)" *ngIf="!isAuthorized" routerLink="/login" ></app-button>
             <app-header-profile label="User" *ngIf="isAuthorized" [items]="profileItems" image="../../../../assets/user.jpeg"></app-header-profile>
         </div>
     </div>
