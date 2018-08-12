@@ -12,7 +12,7 @@ export class HeaderComponent implements OnInit {
 
 	items: MenuItem[];
 	authItems: MenuItem[];
-	userButtons;
+	profileItems: MenuItem[];
 
 	ngOnInit() {
 		this.authItems = [
@@ -22,11 +22,10 @@ export class HeaderComponent implements OnInit {
 		this.items = [
 			{
 				label: this.projectName,
-				routerLink: ['/app/projects/id'],
-				style: { 'margin-right': '100px', color: 'red' }
+				routerLink: ['/app/projects/draft']
 			}
 		];
-		this.userButtons = [
+		this.profileItems = [
 			{
 				label: 'Sign out',
 				routerLink: ['/'],
@@ -42,17 +41,5 @@ export class HeaderComponent implements OnInit {
 		this.isAuthorized
 			? this.items.push(...this.authItems)
 			: this.items.splice(1);
-	}
-
-	getButtonClasses() {
-		return {
-			'header-button': true
-		};
-	}
-	getUserButtonClasses() {
-		return {
-			'header-button': true,
-			'header-user-button': true
-		};
 	}
 }

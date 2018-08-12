@@ -9,7 +9,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // Buttons
 import { ButtonModule } from 'primeng/button';
-import { ButtonComponent } from '../app/shared/components/button/button/button.component';
+import { ButtonComponent } from '@app/shared/components/button/button/button.component';
 // Inputs
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
@@ -17,12 +17,12 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputSwitchModule } from 'primeng/inputswitch';
 // Autocomplete
 import { AutoCompleteModule } from 'primeng/autocomplete';
-import { InputTextComponent } from '../app/shared/components/form-field/input-text/input-text.component';
-import { AutocompleteComponent } from '../app/shared/components/form-field/autocomplete/autocomplete.component';
-import { ToggleComponent } from '../app/shared/components/form-field/toggle/toggle.component';
-import { requiredValidator } from '../app/shared/components/form-field/form-validators';
-import { minLengthValidator } from '../app/shared/components/form-field/form-validators';
-import { InputTextareaComponent } from '../app/shared/components/form-field/input-textarea/input-textarea.component';
+import { InputTextComponent } from '@app/shared/components/form-field/input-text/input-text.component';
+import { AutocompleteComponent } from '@app/shared/components/form-field/autocomplete/autocomplete.component';
+import { ToggleComponent } from '@app/shared/components/form-field/toggle/toggle.component';
+import { requiredValidator } from '@app/shared/components/form-field/form-validators';
+import { minLengthValidator } from '@app/shared/components/form-field/form-validators';
+import { InputTextareaComponent } from '@app/shared/components/form-field/input-textarea/input-textarea.component';
 
 export const control2 = new FormControl('', [
 	requiredValidator('Password is required'),

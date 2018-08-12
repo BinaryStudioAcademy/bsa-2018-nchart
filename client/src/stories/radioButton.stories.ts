@@ -9,7 +9,7 @@ import { FormControl } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 // Radiobutton
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { RadioButtonComponent } from '../app/shared/components/form-field/checkbox/radioButton/radio-button.component';
+import { RadioButtonComponent } from '@app/shared/components/form-field/checkbox/radioButton/radio-button.component';
 
 @Component({
 	selector: 'app-radio-button-group',

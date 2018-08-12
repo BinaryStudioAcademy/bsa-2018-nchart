@@ -10,8 +10,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 // Buttons
 import { ButtonModule } from 'primeng/button';
 import { SplitButtonModule } from 'primeng/splitbutton';
-import { ButtonComponent } from '../app/shared/components/button/button/button.component';
-import { ActionButtonComponent } from '../app/shared/components/button/action-button/action-button.component';
+import { ButtonComponent } from '@app/shared/components/button/button/button.component';
+import { ActionButtonComponent } from '@app/shared/components/button/action-button/action-button.component';
 
 export const control1 = new FormControl('', Validators.required);
 export const control2 = new FormControl('', [
@@ -31,10 +31,7 @@ storiesOf('Buttons', module)
 				BrowserAnimationsModule,
 				BrowserModule
 			],
-			declarations: [
-				ButtonComponent,
-				ActionButtonComponent
-			]
+			declarations: [ButtonComponent, ActionButtonComponent]
 		})
 	)
 	.add(
@@ -101,7 +98,7 @@ storiesOf('Buttons', module)
 		}),
 		{
 			notes:
-				'tag=app-action-button\nlabel="Action"\nitems="[{label: \'One\', icon: \'fas fa-check\'}, {label: \'Two\']"'
+				"tag=app-action-button\nlabel=\"Action\"\nitems=\"[{label: 'One', icon: 'fas fa-check'}, {label: 'Two']\""
 		}
 	)
 

@@ -3,34 +3,81 @@
 
 .ui-widget-header 
     background: $backgroundWhiteColor
-    border: 0
+    border-bottom: 1px solid
+    font-size: 1rem
+    
 
+.header-container
+    height: 100px
+    padding: 1.5rem 1.5rem 0 1.5rem
+
+.header-component
+    padding: 0
+    
 .header-logo
-    max-width: 150px
-    max-height: 150px
+    width: 150px
+    height: 50px
 
-.header-buttons-container
+.header-profile-container
     float: right 
  
-.header-user-button
-    border: 0
-    
-.header-user-button .ui-buttonset.ui-splitbutton
-    box-shadow: none
-.header-user-button .ui-buttonset.ui-splitbutton:hover
-    box-shadow: none
-.header-user-button .ui-menu 
-    width: 9.7em
-.header-user-button .ui-buttonset.ui-splitbutton .ui-widget.ui-button:not(.ui-splitbutton-menubutton), .ui-buttonset.ui-splitbutton .ui-button:not(.ui-splitbutton-menubutton) 
-    min-width: 100px
-.header-user-button .ui-buttonset.ui-splitbutton .ui-widget.ui-button, .ui-buttonset.ui-splitbutton .ui-button
-    padding-left: 0
+.ui-tabmenu .ui-tabmenu-nav
+    text-align: center
 
-.header-user-logo
+.ui-tabmenu .ui-tabmenu-nav
+    text-align: center    
+
+.ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem
+    padding-bottom: 2.35rem
+    float: none
+    display: inline
+
+.ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem:first-child
+    margin-right: 40px
+   
+.ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem a 
+    float: none
+    display: inline-block
+
+    
+.header-profile
+    border: 0
+
+.header-profile-container
+    position: relative
+
+.header-profile .ui-buttonset.ui-splitbutton
+    box-shadow: none
+    background-color: transparent
+.header-profile .ui-buttonset.ui-splitbutton:hover
+    box-shadow: none
+    background-color: transparent
+.header-profile .ui-buttonset.ui-splitbutton:active .ui-widget.ui-button:enabled:not(.ui-splitbutton-menubutton), .ui-buttonset.ui-splitbutton:active .ui-button:enabled:not(.ui-splitbutton-menubutton) 
+    color: $textColorDark
+    background-color: transparent
+    border: none
+.header-profile .ui-buttonset.ui-splitbutton:active .ui-widget.ui-button:enabled, .ui-buttonset.ui-splitbutton:active .ui-button:enabled
+    color: $textColorDark
+    background-color: transparent
+    border: none
+
+.header-profile .ui-menu 
+    width: 9.7em
+.header-profile .ui-buttonset.ui-splitbutton .ui-widget.ui-button:not(.ui-splitbutton-menubutton), .ui-buttonset.ui-splitbutton .ui-button:not(.ui-splitbutton-menubutton) 
+    min-width: 100px
+.header-profile .ui-buttonset.ui-splitbutton .ui-widget.ui-button, .ui-buttonset.ui-splitbutton .ui-button
+    padding-left: 0
+.header-profile .ui-buttonset.ui-splitbutton:hover .ui-widget.ui-button, .ui-buttonset.ui-splitbutton:hover .ui-button 
+    color: $textColorDark
+.header-profile .ui-button .ui-button-text 
+    padding: .25em
+    font-size: 1rem
+    float: left
+
+.header-profile-image
     position: absolute
-    right: 50px
+    right: 40px
     cursor: pointer
-    z-index: 1200
-    max-width: 40px
-    max-height: 40px
+    max-width: 45px
+    max-height: 45px
     border-radius: 50%

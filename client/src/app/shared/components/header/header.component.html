@@ -1,15 +1,14 @@
-<div class="ui-g ui-widget-header">
-    <div class="ui-g-3">
+<div class="ui-g ui-widget-header header-container">
+    <div class="ui-g-3 header-component">
             <img src="../../../../assets/nChartLogo.svg" class="header-logo">
     </div>
-    <div class="ui-g-6">
+    <div class="ui-g-6 header-component">
         <p-tabMenu [model]="items"></p-tabMenu>
     </div>
-    <div class="ui-g-3">
-        <div class="header-buttons-container">
-            <img class="header-user-logo" src="../../../../assets/user.jpeg" *ngIf="isAuthorized">
+    <div class="ui-g-3 header-component">
+        <div class="header-profile-container">
             <app-button label="Sign in" size="middle" type="default" (click)="onClick($event)" *ngIf="!isAuthorized" routerLink="/login"></app-button>
-            <app-button-action label="User" *ngIf="isAuthorized" [items]="userButtons" [ngClass]="getUserButtonClasses()"></app-button-action> 
+            <app-header-profile label="User" *ngIf="isAuthorized" [items]="profileItems" image="../../../../assets/user.jpeg"></app-header-profile>
         </div>
     </div>
 </div>
