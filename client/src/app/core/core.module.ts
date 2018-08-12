@@ -8,17 +8,7 @@ import { ProjectsComponent } from '@app/core/projects/projects.component';
 import { RouterModule } from '@app/router/router.module';
 import { APIModule } from '@app/api/api.module';
 import { SharedModule } from '@app/shared/shared.module';
-import { StepperComponent } from '@app/core/project/stepper/stepper.component';
-import { LoadDataComponent } from './project/load-data/load-data.component';
-import { DataTableComponent } from './project/data-table/data-table.component';
-import { ListChartsComponent } from './project/list-charts/list-charts.component';
-import { CustomSettingsComponent } from './project/custom-settings/custom-settings.component';
-import { CustomChartComponent } from './project/custom-chart/custom-chart.component';
-import { CustomizeChartComponent } from './project/custom-chart/customize-chart/customize-chart.component';
-import { ChartComponent } from './project/custom-chart/chart/chart.component';
-import { ExportComponent } from './project/export/export.component';
-import { ChartPreviewComponent } from './project/list-charts/chart-preview/chart-preview.component';
-import { HeaderComponent } from './project/header/header.component';
+import { FeatureModule } from '@app/features/feature.module';
 
 @NgModule({
 	declarations: [
@@ -27,20 +17,9 @@ import { HeaderComponent } from './project/header/header.component';
 		CompanyComponent,
 		LoginComponent,
 		ProjectComponent,
-		ProjectsComponent,
-		StepperComponent,
-		LoadDataComponent,
-		DataTableComponent,
-		ListChartsComponent,
-		CustomSettingsComponent,
-		CustomChartComponent,
-		CustomizeChartComponent,
-		ChartComponent,
-		ExportComponent,
-		ChartPreviewComponent,
-		HeaderComponent
+		ProjectsComponent
 	],
-	imports: [RouterModule, APIModule, SharedModule],
+	imports: [RouterModule, APIModule, SharedModule, FeatureModule],
 	exports: []
 })
 export class CoreModule {}
