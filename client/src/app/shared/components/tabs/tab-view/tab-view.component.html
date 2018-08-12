@@ -1,0 +1,5 @@
+<p-tabView 	[activeIndex]="selectedTab" 
+			(onChange)="onTabChange($event)"
+>
+	<ng-content *ngFor="let tab of Tabs"></ng-content>	
+</p-tabView>

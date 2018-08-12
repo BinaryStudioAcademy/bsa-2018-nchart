@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { TabViewComponent } from '../tab-view/tab-view.component';
 
 interface Tabs {
 	header: string;
@@ -10,10 +11,10 @@ interface Tabs {
 }
 
 @Component({
-	selector: 'app-checkbox-group',
-	templateUrl: './tabs-group.component.html'
+	selector: 'app-tab-panel',
+	templateUrl: './tab-panel.component.html'
 })
-export class TabsGroupComponent implements OnInit {
+export class TabPanelComponent implements OnInit {
 	@Input() tabs: Tabs[];
 	@Input() selectedTab: number;
 	@Output() change = new EventEmitter();
