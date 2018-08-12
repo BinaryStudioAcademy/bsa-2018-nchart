@@ -13,7 +13,6 @@ export class HeaderComponent implements OnInit {
 	items: MenuItem[];
 	authItems: MenuItem[];
 	profileItems: MenuItem[];
-	activeItem: MenuItem;
 
 	ngOnInit() {
 		this.authItems = [
