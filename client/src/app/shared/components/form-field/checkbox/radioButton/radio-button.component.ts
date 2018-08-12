@@ -11,6 +11,8 @@ export class RadioButtonComponent implements OnInit {
 	@Input()
 	label: string;
 	@Input()
+	value: any;
+	@Input()
 	disabled: boolean;
 	@Input()
 	control: FormControl;

@@ -20,8 +20,8 @@ export class InputTextareaComponent implements OnInit {
 	control?: FormControl;
 	@Input()
 	icon: string;
-
-	inputFocus = false;
+	@Input()
+	placeholder: string;
 
 	constructor() {}
 

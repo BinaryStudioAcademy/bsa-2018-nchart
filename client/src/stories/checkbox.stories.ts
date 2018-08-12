@@ -39,7 +39,6 @@ storiesOf('Checkbox', module)
 			props: {
 				label: 'I choose it!',
 				value: 'second',
-				selectedValues: ['second'],
 				control: new FormControl('', Validators.required)
 			}
 		}),

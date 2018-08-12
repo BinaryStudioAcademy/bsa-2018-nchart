@@ -5,13 +5,20 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 	templateUrl: './button.component.html'
 })
 export class ButtonComponent implements OnInit {
-	@Input() label: string;
-	@Input() icon: string;
-	@Input() iconPosition: string;
-	@Input() disabled: boolean;
-	@Input() size: string;
-	@Input() type: string;
-	@Output() click = new EventEmitter();
+	@Input()
+	label = 'text';
+	@Input()
+	icon: string;
+	@Input()
+	iconPosition: string;
+	@Input()
+	disabled: boolean;
+	@Input()
+	size: 'small' | 'middle' | 'big' = 'middle';
+	@Input()
+	type: 'default' | 'secondary' = 'default';
+	@Output()
+	click = new EventEmitter();
 
 	onClick() {
 		this.click.emit();

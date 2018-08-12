@@ -6,12 +6,20 @@ import { FormControl } from '@angular/forms';
 	templateUrl: './input-text.component.html'
 })
 export class InputTextComponent implements OnInit {
-	@Input() disabled: boolean;
-	@Input() label: string;
-	@Input() placeholder: string;
-	@Input() type: string;
-	@Input() control: FormControl;
-	@Input() icon: string;
+	@Input()
+	disabled: boolean;
+	@Input()
+	label: string;
+	@Input()
+	placeholder: string;
+	@Input()
+	type: string;
+	@Input()
+	control: FormControl;
+	@Input()
+	icon: string;
+	@Input()
+	showStates: boolean;
 
 	ngOnInit() {}
 
@@ -26,5 +34,17 @@ export class InputTextComponent implements OnInit {
 		const { errors } = this.control;
 
 		return errors && errors[Object.keys(errors)[0]];
+	}
+
+	getClasses() {
+		return {
+			[`ui-input-${
+				this.control.valid
+					? 'success'
+					: this.control.dirty
+						? 'error'
+						: ''
+			}`]: this.showStates
+		};
 	}
 }

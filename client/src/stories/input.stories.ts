@@ -19,10 +19,10 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { InputTextComponent } from '../app/shared/components/form-field/input-text/input-text.component';
 import { AutocompleteComponent } from '../app/shared/components/form-field/autocomplete/autocomplete.component';
-import { InputTextareaComponent } from '../app/shared/components/form-field/inputTextarea/input-textarea.component';
 import { ToggleComponent } from '../app/shared/components/form-field/toggle/toggle.component';
 import { requiredValidator } from '../app/shared/components/form-field/form-validators';
 import { minLengthValidator } from '../app/shared/components/form-field/form-validators';
+import { InputTextareaComponent } from '../app/shared/components/form-field/input-textarea/input-textarea.component';
 
 export const control2 = new FormControl('', [
 	requiredValidator('Password is required'),
@@ -163,7 +163,7 @@ storiesOf('Input fields', module)
 			rows: '20',
 			cols: '30',
 			label: 'Text area',
-			placeholder: 'text area',
+			placeholder: '',
 			control: new FormControl()
 		}
 	}))

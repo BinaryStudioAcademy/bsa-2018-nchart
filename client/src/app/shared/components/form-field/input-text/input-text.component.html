@@ -7,12 +7,10 @@
 		[type]="type" 
 		[placeholder]="placeholder"
 		[attr.disabled]="isDisabled()"
-		[class.ui-input-error]="control.invalid && control.dirty"
-		[class.ui-input-success]="control.valid"
 >
-<i class="{{icon}}" *ngIf="control.pristine"></i>
-<i class="fas fa-check success-icon" *ngIf="control.valid"></i>
-<i class="fas fa-exclamation error-icon" *ngIf="control.invalid && control.dirty"></i>
+<i class="{{icon}}" *ngIf="icon"></i>
+<!-- <i class="fas fa-check success-icon" *ngIf="control.valid"></i>
+<i class="fas fa-exclamation error-icon" *ngIf="control.invalid && control.dirty"></i> -->
 
 <div class="input-label input-label-error"
 	 *ngIf="control.invalid && control.dirty"
