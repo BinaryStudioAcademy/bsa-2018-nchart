@@ -4,22 +4,13 @@
 .ui-main-block
 	width: 100%
 	min-height: 20px
-	border: 2px solid $disabledColor
 	border-top: none
 	padding: 16px 10px
-	border-radius: 2px
+	margin: 12px 0
+	border-radius: 3px
 	cursor: pointer
 	font-family: $fontFamily
 	font-size: $fontSize
 	transition: .1s ease
-
-	&:first-child
-		border-top: 2px solid $disabledColor
-
-	&:hover
-		border-bottom-color: rgba(151, 155, 174, 0.4)
-		box-shadow: 0 5px 12px rgba(151, 155, 174, 0.1), -5px 5px 12px rgba(151, 155, 174, 0.1), 5px 5px 12px rgba(151, 155, 174, 0.1)
-
-	&:active
-		box-shadow: none
-		border-bottom-color: $disabledColor
+	background-color: $stateDefaultBgColor
+	box-shadow: -1px 1px 3px rgba(151, 155, 174, 0.2), 1px 1px 3px rgba(151, 155, 174, 0.2)
