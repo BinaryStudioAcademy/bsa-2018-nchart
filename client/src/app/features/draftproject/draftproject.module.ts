@@ -9,7 +9,6 @@ import { CustomizeChartComponent } from '@app/features/draftproject/custom-chart
 import { ChartComponent } from '@app/features/draftproject/custom-chart/chart/chart.component';
 import { ExportComponent } from '@app/features/draftproject/export/export.component';
 import { ChartPreviewComponent } from '@app/features/draftproject/list-charts/chart-preview/chart-preview.component';
-import { HeaderComponent } from '@app/features/draftproject/header/header.component';
 
 @NgModule({
 	imports: [],
@@ -23,8 +22,7 @@ import { HeaderComponent } from '@app/features/draftproject/header/header.compon
 		CustomizeChartComponent,
 		ChartComponent,
 		ExportComponent,
-		ChartPreviewComponent,
-		HeaderComponent
+		ChartPreviewComponent
 	],
 	exports: [
 		StepperComponent,
@@ -36,8 +34,7 @@ import { HeaderComponent } from '@app/features/draftproject/header/header.compon
 		CustomizeChartComponent,
 		ChartComponent,
 		ExportComponent,
-		ChartPreviewComponent,
-		HeaderComponent
+		ChartPreviewComponent
 	]
 })
 export class DraftprojectModule {}
