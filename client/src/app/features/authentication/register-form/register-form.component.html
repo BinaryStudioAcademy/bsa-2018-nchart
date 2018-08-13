@@ -3,22 +3,23 @@
         <app-input-text
             type="text"
             label="Name"
-            [(control)]="registerForm.controls.name"
+            [control]="registerForm.controls.name"
+            [showStates]="true"
         ></app-input-text>
         <app-input-text
             type="text"
             label="Email"
-            [(control)]="registerForm.controls.email"
+            [control]="registerForm.controls.email"
         ></app-input-text>
         <app-input-text
             type="password"
             label="Password"
-            [(control)]="registerForm.controls.password"
+            [control]="registerForm.controls.password"
         ></app-input-text>
         <app-input-text
             type="password"
             label="Confirm password"
-            [(control)]="registerForm.controls.confirmPassword"
+            [control]="registerForm.controls.confirmPassword"
         ></app-input-text>
     </div>
     <div class="ui-g-4 ui-g-offset-4 ui-fluid">
