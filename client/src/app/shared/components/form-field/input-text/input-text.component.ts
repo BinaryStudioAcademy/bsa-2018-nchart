@@ -11,7 +11,7 @@ export class InputTextComponent implements OnInit {
 	@Input()
 	label: string;
 	@Input()
-	placeholder: string;
+	placeholder: string = '';
 	@Input()
 	type: string;
 	@Input()
