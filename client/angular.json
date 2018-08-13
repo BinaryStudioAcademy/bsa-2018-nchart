@@ -19,7 +19,12 @@
 						"polyfills": "src/polyfills.ts",
 						"tsConfig": "src/tsconfig.app.json",
 						"assets": ["src/favicon.ico", "src/assets"],
-						"styles": ["src/styles.sass"],
+						"styles": [
+							"node_modules/primeicons/primeicons.css",
+							"node_modules/primeng/resources/themes/omega/theme.css",
+							"node_modules/primeng/resources/primeng.min.css",
+							"src/styles.sass"
+						],
 						"scripts": []
 					},
 					"configurations": {

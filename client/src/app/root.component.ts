@@ -5,6 +5,4 @@ import { Component } from '@angular/core';
 	templateUrl: './root.component.html',
 	styleUrls: ['./root.component.sass']
 })
-export class RootComponent {
-	title = 'client';
-}
+export class RootComponent {}

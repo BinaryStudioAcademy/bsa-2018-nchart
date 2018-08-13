@@ -1,0 +1,87 @@
+@import ../variables
+@import ../colors
+
+=input()
+	padding: 12px
+	min-width: 240px
+	border-width: 2px
+	box-shadow: none
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button 
+  -webkit-appearance: none; 
+  margin: 0
+
+
+.ui-inputtext
+	+input()
+
+.input-label
+	display: block
+	padding: 5px 0
+
+.ui-input-wrp
+	position: relative
+	width: auto
+
+	&:hover i,
+		color: $stateActiveTextColor
+
+	i
+		padding: 12px
+		color: $stateDefaultTextColor
+
+	i.ui-input-icon-left
+		position: absolute
+		left: 0
+		top: 2px
+		& ~ .ui-widget.ui-inputtext
+			padding-left: 38px
+
+	i.ui-input-icon-right
+		position: relative
+		right: calc(1rem + 24px)
+
+.ui-widget.ui-inputtext
+	padding-right: 38px
+	&:focus
+		box-shadow: none
+
+	&.ng-dirty.ng-invalid:not(.ui-input-error)
+		border-bottom-color: $disabledColor
+		&:hover, &:focus
+			border-color: $activeColor
+
+	&.ui-input-error
+		border-bottom-color: $disabledColor
+		&:hover
+			border-color: $activeColor
+		& ~ i
+			color: $stateErrorBorderColor
+		&:focus
+			border-color: $stateErrorBorderColor
+	
+	&.ui-input-success
+		&:focus
+			border-color: $successColor
+		& ~ i
+			color: $successColor
+
+
+.input-label.input-label-error
+	color: $stateErrorBorderColor
+	font-size: 0.7rem
+
+.ui-inputtext:disabled,
+.ui-dropdown.ui-widget.ui-state-disabled
+	background-color: $disabledColor
+	color: $secondaryTextColor
+	opacity: 1
+
+.ui-input-label-disabled
+	color: $secondaryTextColor
+
+label, .input-label
+	font-family: $fontFamily
+	font-size: $smallFontSize
+	color: $textColorDark
