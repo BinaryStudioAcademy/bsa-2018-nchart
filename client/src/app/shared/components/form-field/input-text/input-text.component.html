@@ -2,16 +2,20 @@
 	   [class.ui-input-label-disabled]="disabled"
 >{{label}}</label>
 
-<input 	pInputText 
+<div class="ui-input-wrp">
+	<i [ngClass]="getIconClasses()" *ngIf="icon && iconPosition=='left'"></i>
+	<input 	pInputText 
 		[formControl]="control"
 		[type]="type" 
 		[placeholder]="placeholder"
 		[attr.disabled]="isDisabled()"
->
-<i class="{{icon}}" *ngIf="icon"></i>
-<!-- <i class="fas fa-check success-icon" *ngIf="control.valid"></i>
-<i class="fas fa-exclamation error-icon" *ngIf="control.invalid && control.dirty"></i> -->
+		[ngClass]="getClasses()"
+	>
+	<i [ngClass]="getIconClasses()" *ngIf="icon && iconPosition!='left' && (!control.dirty || !showStates)"></i>
+	<i class="ui-input-icon-right fas fa-check success-icon" *ngIf="showStates && control.valid"></i>
+	<i class="ui-input-icon-right fas fa-exclamation error-icon" *ngIf="showStates && control.invalid && control.dirty"></i>
 
-<div class="input-label input-label-error"
-	 *ngIf="control.invalid && control.dirty"
->{{getError()}}</div>
+	<div class="input-label input-label-error"
+		*ngIf="showStates && control.invalid && control.dirty"
+	>{{getError()}}</div>
+</div>

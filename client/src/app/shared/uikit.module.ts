@@ -16,6 +16,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { ToolbarModule } from 'primeng/toolbar';
+import { TabViewModule } from 'primeng/tabview';
 
 @NgModule({
 	imports: [
@@ -34,7 +35,8 @@ import { ToolbarModule } from 'primeng/toolbar';
 		RadioButtonModule,
 		InputSwitchModule,
 		ToolbarModule,
-		TabMenuModule
+		TabMenuModule,
+		TabViewModule
 	],
 	exports: [
 		ButtonModule,
@@ -52,7 +54,9 @@ import { ToolbarModule } from 'primeng/toolbar';
 		RadioButtonModule,
 		InputSwitchModule,
 		ToolbarModule,
-		TabMenuModule
-	]
+		TabMenuModule,
+		TabViewModule
+	],
+	declarations: []
 })
 export class UIKitModule {}
