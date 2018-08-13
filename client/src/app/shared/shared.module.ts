@@ -6,7 +6,12 @@ import { HeaderModule } from '@app/shared/components/header/header.module';
 
 @NgModule({
 	imports: [UIKitModule, FormFieldModule, HeaderModule],
-	exports: [ActionButtonComponent, FormFieldModule, HeaderModule],
+	exports: [
+		ActionButtonComponent,
+		FormFieldModule,
+		HeaderModule,
+		UIKitModule
+	],
 	declarations: [ActionButtonComponent]
 })
 export class SharedModule {}
