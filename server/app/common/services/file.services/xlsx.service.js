@@ -1,7 +1,7 @@
 const XLSX = require('xlsx');
 const async = require('async');
 const fs = require('fs');
-const FsService = require('./fs.service');
+const FsService = require('../../middleware/file.middleware');
 
 function parseHeaders(workbook) {
 	const sheet = workbook.Sheets[workbook.SheetNames[0]];

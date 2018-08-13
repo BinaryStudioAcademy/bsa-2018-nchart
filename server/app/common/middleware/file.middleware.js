@@ -2,7 +2,7 @@ const fs = require('fs');
 const uuidv4 = require('uuid/v4');
 const download = require('download-file');
 
-class FsService {
+class FileMiddleware {
 	save(file) {
 		let path = `../server/app/fileStorage/${uuidv4()}${file.name}`;
 		return new Promise((resolve, reject) => {
@@ -59,4 +59,4 @@ class FsService {
 		});
 	}
 }
-module.exports = new FsService();
+module.exports = new FileMiddleware();

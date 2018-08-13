@@ -1,9 +1,6 @@
 const LinkService = require('./link.service');
 const { readString, processFile } = require('./xlsx.service');
 
-/*
-    todo: a lot of formats need to be added and tested
- */
 function fileService(file, contents, link) {
 	const pattern = {
 		// todo: test all formats

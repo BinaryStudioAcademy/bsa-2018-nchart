@@ -1,6 +1,6 @@
 const remote = require('remote-file-size');
 const async = require('async');
-const FsService = require('./fs.service');
+const FsService = require('../../middleware/file.middleware');
 const { readFile } = require('./xlsx.service');
 
 class LinkService {
