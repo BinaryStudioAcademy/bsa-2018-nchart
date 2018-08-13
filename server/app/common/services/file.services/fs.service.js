@@ -6,7 +6,7 @@ class FsService {
 	save(file) {
 		let path = `../server/app/fileStorage/${uuidv4()}${file.name}`;
 		return new Promise((resolve, reject) => {
-			// todo: rename file if exists otherwise it will be overwritten
+			// rename file if exists, otherwise it will be overwritten
 			while (fs.existsSync(path)) {
 				path = `../server/app/fileStorage/${uuidv4()}${file.name}`;
 			}

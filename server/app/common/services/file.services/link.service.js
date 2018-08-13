@@ -40,7 +40,7 @@ class LinkService {
 							.catch(err => callback(err, null));
 					},
 					(path, callback) => {
-						XlsxService.read(path)
+						XlsxService.readFile(path)
 							.then(data => {
 								callback(null, data);
 							})
