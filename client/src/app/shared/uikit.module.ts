@@ -14,6 +14,7 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { TabViewModule } from 'primeng/tabview';
 
 @NgModule({
 	imports: [
@@ -30,7 +31,8 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 		BrowserModule,
 		AutoCompleteModule,
 		RadioButtonModule,
-		InputSwitchModule
+		InputSwitchModule,
+		TabViewModule
 	],
 	exports: [
 		ButtonModule,
@@ -46,7 +48,9 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 		BrowserModule,
 		AutoCompleteModule,
 		RadioButtonModule,
-		InputSwitchModule
-	]
+		InputSwitchModule,
+		TabViewModule
+	],
+	declarations: []
 })
 export class UIKitModule {}
