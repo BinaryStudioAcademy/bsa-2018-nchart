@@ -9,6 +9,12 @@ import { RouterModule } from '@app/router/router.module';
 import { APIModule } from '@app/api/api.module';
 import { SharedModule } from '@app/shared/shared.module';
 
+// import { ButtonModule } from 'primeng/button';
+// import { TabViewModule } from 'primeng/tabview';
+// import { InputTextModule } from 'primeng/inputtext';
+import { LoadFilesComponent } from '@app/core/load-files/load-files.component';
+// import { FileUploadModule } from 'primeng/fileupload';
+
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -16,7 +22,8 @@ import { SharedModule } from '@app/shared/shared.module';
 		CompanyComponent,
 		LoginComponent,
 		ProjectComponent,
-		ProjectsComponent
+		ProjectsComponent,
+		LoadFilesComponent
 	],
 	imports: [RouterModule, APIModule, SharedModule],
 	exports: []

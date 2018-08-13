@@ -1,0 +1,77 @@
+@import ../variables
+@import ../colors
+
+.load-data-block
+	.ui-fileupload-content
+		background-color: $disabledColor
+		border: 2px solid $disabledColor
+		border-top: none
+		margin-top: 5px
+		min-height: 100px
+		border-radius: 3px
+		.upload-file-text
+			color: $teriaryColor
+			font-family: $fontFamily
+			margin: 0
+			i
+				margin-right: 5px
+		
+	.ui-messages .ui-messages-close
+		font-size: 1.2rem
+		transition: .4s ease
+		border-radius: 3px
+		&:hover
+			background-color: transparent
+			color: $stateErrorTextColor
+
+	.ui-fileupload-buttonbar
+		background: $stateActiveBgColor
+		border: none
+		padding: 0
+		.ui-button:last-child:enabled
+			background-color: $activeButtonColor
+
+		.ui-widget-header .ui-button, 
+		.ui-widget-content .ui-button, 
+		.ui-widget.ui-button, 
+		.ui-button
+			background-color: $defaultButtonColor
+			border: none
+			border-radius: 0
+			color: $stateActiveBgColor
+			border-radius: 3px
+			padding: 5px 10px
+			.ui-button-icon-left
+				margin-right: 5px
+				font-size: 1rem
+				position: relative
+				bottom: -2px
+				left: 0
+
+	.ui-fileupload-choose:not(.ui-state-disabled):hover,
+	.ui-widget-header .ui-button:enabled:hover
+		background-color: $defaultButtonHover
+		border: 2px solid $defaultButtonHover
+		border: none
+		color: $stateActiveBgColor
+
+.load-url-group
+	display: grid
+	grid-template-columns: calc(100% - 110px) 110px
+	label
+		display: none
+	.ui-widget.ui-inputtext
+		border-radius: 3px 0 0 3px
+	.ui-widget.ui-button
+		border-radius: 0 3px 3px 0
+
+.load-data-paste textarea.ui-widget.ui-inputtext
+	width: 100%
+	resize: none
+	.ui-widget-content .ui-button, .ui-widget.ui-button
+		border-radius: 3px
+		border-color: $defaultButtonColor
+		background-color: $defaultButtonColor
+
+.load-data-url .ui-input-wrp
+	width: 100%	
