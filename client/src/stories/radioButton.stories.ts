@@ -1,6 +1,6 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import '@storybook/addon-notes/register';
-import { Component, OnInit, NgModule } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 // Forms
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -9,7 +9,7 @@ import { FormControl } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 // Radiobutton
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { RadioButtonComponent } from '@app/shared/components/form-field/checkbox/radioButton/radio-button.component';
+import { RadioButtonComponent } from '../app/shared/components/form-field/checkbox/radioButton/radio-button.component';
 
 @Component({
 	selector: 'app-radio-button-group',
