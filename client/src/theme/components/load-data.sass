@@ -1,7 +1,6 @@
-@import ../variables
 @import ../colors
 
-.load-data-block
+.load-data-container
 	.ui-fileupload-content
 		background-color: $disabledColor
 		border: 2px solid $disabledColor
@@ -15,21 +14,11 @@
 			margin: 0
 			i
 				margin-right: 5px
-		
-	.ui-messages .ui-messages-close
-		font-size: 1.2rem
-		transition: .4s ease
-		border-radius: 3px
-		&:hover
-			background-color: transparent
-			color: $stateErrorTextColor
 
 	.ui-fileupload-buttonbar
-		background: $stateActiveBgColor
+		background: white
 		border: none
 		padding: 0
-		.ui-button:last-child:enabled
-			background-color: $activeButtonColor
 
 		.ui-widget-header .ui-button, 
 		.ui-widget-content .ui-button, 
@@ -60,18 +49,15 @@
 	grid-template-columns: calc(100% - 110px) 110px
 	label
 		display: none
-	.ui-widget.ui-inputtext
+	.ui-inputtext
 		border-radius: 3px 0 0 3px
+	.ui-widget.ui-button-default,
 	.ui-widget.ui-button
 		border-radius: 0 3px 3px 0
 
 .load-data-paste textarea.ui-widget.ui-inputtext
 	width: 100%
 	resize: none
-	.ui-widget-content .ui-button, .ui-widget.ui-button
-		border-radius: 3px
-		border-color: $defaultButtonColor
-		background-color: $defaultButtonColor
 
-.load-data-url .ui-input-wrp
+.ui-input-wrp
 	width: 100%	

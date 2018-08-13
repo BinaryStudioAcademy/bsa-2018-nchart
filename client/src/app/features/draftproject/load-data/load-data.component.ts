@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { requiredValidator, patternValidator } from '../../shared/components/form-field/form-validators';
+import { requiredValidator, patternValidator } from '../../../shared/components/form-field/form-validators';
 
 @Component({
-	selector: 'app-load-files',
-	templateUrl: './load-files.component.html',
-	styleUrls: ['./load-files.component.sass']
+	selector: 'app-load-data',
+	templateUrl: './load-data.component.html',
+	styleUrls: ['./load-data.component.sass']
 })
-export class LoadFilesComponent implements OnInit {
+export class LoadDataComponent implements OnInit {
 
 	uploadedFiles: any[] = [];
 

@@ -2,7 +2,7 @@ import { storiesOf, moduleMetadata } from '@storybook/angular';
 import '@storybook/addon-notes/register';
 
 import { ReactiveFormsModule } from '@angular/forms';
-import { LoadFilesComponent } from '../app/core/load-files/load-files.component';
+import { LoadDataComponent } from '../app/features/draftproject/load-data/load-data.component';
 import { TabViewModule } from 'primeng/tabview';
 import { FileUploadModule } from 'primeng/fileupload';
 import { InputTextModule } from 'primeng/inputtext';
@@ -21,12 +21,12 @@ storiesOf('Load files', module)
 				TabViewModule, FileUploadModule, InputTextareaModule,
 				ReactiveFormsModule, ButtonModule
 			],
-			declarations: [LoadFilesComponent, InputTextareaComponent, InputTextComponent,
+			declarations: [LoadDataComponent, InputTextareaComponent, InputTextComponent,
 				ButtonComponent]
 		})
 	)
 
 	.add('Load', () => ({
-		template: `<app-load-files></app-load-files>`,
+		template: `<app-load-data></app-load-data>`,
 		props: {}
 	}));
