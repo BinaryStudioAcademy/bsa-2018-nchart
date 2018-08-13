@@ -1,3 +1,17 @@
-<p>
-  login-form works!
-</p>
+<form [formGroup]="loginForm">
+    <div class="ui-fluid">
+        <app-input-text
+            type="text"
+            label="Email"
+            [(control)]="loginForm.controls.email"
+        ></app-input-text>
+        <app-input-text
+            type="password"
+            label="Password"
+            [(control)]="loginForm.controls.password"
+        ></app-input-text>
+    </div>
+    <div class="ui-g-4 ui-g-offset-4 ui-fluid">
+        <app-button label="Login"></app-button>
+    </div>
+</form>
