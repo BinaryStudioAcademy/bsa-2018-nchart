@@ -6,7 +6,7 @@
 	"scripts": {
 		"start": "nodemon ./bin/www",
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"lint": "eslint -c ./.eslintrc.json ./**/*.js --fix",
+		"lint": "eslint ./app/**/*.js -c ./.eslintrc.json",
 		"format:fix": "pretty-quick --staged  --config ./.prettierrc ./app/",
 		"precommit": "run-s format:fix lint"
 	},
