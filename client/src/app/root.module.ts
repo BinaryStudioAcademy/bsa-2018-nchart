@@ -9,6 +9,7 @@ import { CoreModule } from '@app/core/core.module';
 import { SharedModule } from '@app/shared/shared.module';
 import { EffectModule } from '@app/store/effects/effect.module';
 import { ReducerModule } from '@app/store/reducers/reducer.module';
+import { VirtualScrollModule } from 'angular2-virtual-scroll';
 
 @NgModule({
 	declarations: [RootComponent],
@@ -20,7 +21,8 @@ import { ReducerModule } from '@app/store/reducers/reducer.module';
 		RouterModule,
 		CoreModule,
 		EffectModule,
-		ReducerModule
+		ReducerModule,
+		VirtualScrollModule
 	],
 	providers: [],
 	bootstrap: [RootComponent]
