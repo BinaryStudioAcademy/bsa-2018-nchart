@@ -36,7 +36,7 @@ class FsService {
 			while (fs.existsSync(options.directory + options.filename)) {
 				options.filename = `${uuidv4()}.file`;
 			}
-			download(url, options, err => {
+			download(this.url, options, err => {
 				if (err) throw err;
 				return resolve(options.directory + options.filename);
 			});

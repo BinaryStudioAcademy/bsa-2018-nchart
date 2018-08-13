@@ -1,5 +1,5 @@
-const XlsxService = require('./xlsx.service');
 const LinkService = require('./link.service');
+const { readString, processFile } = require('./xlsx.service');
 
 /*
     todo: a lot of formats need to be added and tested
@@ -31,7 +31,7 @@ function fileService(file, contents, link) {
 	};
 	if (contents !== '' && typeof contents === 'string') {
 		// return CsvService.processString(contents);
-		return XlsxService.readString(contents);
+		return readString(contents);
 	}
 	if (pattern.url.test(link)) {
 		return LinkService.processLink(link);
@@ -41,7 +41,7 @@ function fileService(file, contents, link) {
 	} else if (file) {
 		for (let i = 0; i < pattern.supportedExt.length; i += 1) {
 			if (pattern.supportedExt[i].test(file.fileKey.name)) {
-				return XlsxService.processFile(file.fileKey);
+				return processFile(file.fileKey);
 			}
 		}
 	}

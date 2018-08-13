@@ -1,13 +1,13 @@
 const remote = require('remote-file-size');
 const async = require('async');
 const FsService = require('./fs.service');
-const XlsxService = require('./xlsx.service');
+const { readFile } = require('./xlsx.service');
 
 class LinkService {
 	checkSize(url) {
 		this.url = url;
 		return new Promise((resolve, reject) => {
-			remote(url, (err, sizeBytes) => {
+			remote(this.url, (err, sizeBytes) => {
 				if (err) {
 					reject(err);
 				}
@@ -40,7 +40,7 @@ class LinkService {
 							.catch(err => callback(err, null));
 					},
 					(path, callback) => {
-						XlsxService.readFile(path)
+						readFile(path)
 							.then(data => {
 								callback(null, data);
 							})
