@@ -52,6 +52,7 @@ class LinkService {
 				(error, payload) => {
 					FsService.deleteFile(globalPath).catch(err => reject(err));
 					if (error) {
+						// todo: create some error, if file is messed up shit
 						reject(error);
 					}
 					resolve(payload);

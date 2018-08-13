@@ -27,7 +27,6 @@ function fileService(file, contents, link) {
 		url: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w-]+)+[\w\-_~:/?#[\]@!&',;=.]+$/
 	};
 	if (contents !== '' && typeof contents === 'string') {
-		// return CsvService.processString(contents);
 		return readString(contents);
 	}
 	if (pattern.url.test(link)) {
