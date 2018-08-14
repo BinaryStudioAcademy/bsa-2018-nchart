@@ -6,14 +6,18 @@ export interface DimensionOption {
 	description?: string;
 }
 
+type gen = number | boolean | string;
+type chartValue = gen | gen[];
+
 export interface CustomizeOption {
-	value?: number;
+	value?: chartValue;
 	option?: string;
 	description?: string;
 }
 
 export interface Chart {
-	type?: number;
+	id?: number;
+	type?: string;
 	name?: string;
 	description?: string;
 	dimension_settings?: DimensionOption[];
