@@ -16,7 +16,7 @@
             <app-button
                 class="ui-fluid"
                 label="Login"
-                [disabled]="!loginForm.valid"
+                [disabled]="loginForm.invalid"
                 (click)="onClickLogin()"
             ></app-button>
         </div>
