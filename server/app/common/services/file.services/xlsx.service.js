@@ -3,6 +3,28 @@ const async = require('async');
 const fs = require('fs');
 const FsService = require('../../middleware/file.middleware');
 
+function renameFiles(arr) {
+	const count = {};
+	arr.forEach((x, i) => {
+		if (arr.indexOf(x) !== i) {
+			let c;
+			if (x in count) {
+				count[x] += 1;
+				c = count[x];
+			} else {
+				count[x] = 1;
+				c = count[x];
+			}
+			let j = c + 1;
+			let k = `${x}(${j})`;
+
+			while (arr.indexOf(k) !== -1) k = `${x}(${(j += 1)})`;
+			Object.assign(arr, { [i]: k });
+		}
+	});
+	return arr;
+}
+
 const parseHeaders = workbook => {
 	const sheet = workbook.Sheets[workbook.SheetNames[0]];
 	const range = XLSX.utils.decode_range(sheet['!ref']);
@@ -20,7 +42,7 @@ const parseHeaders = workbook => {
 			countBreak += 1;
 			/* if 3 cell in a row undefined - break */
 			if (countBreak === 3) {
-				return headers;
+				return renameFiles(headers);
 			}
 			buffer.push(hdr);
 		}
@@ -35,7 +57,7 @@ const parseHeaders = workbook => {
 			headers.push(hdr);
 		}
 	}
-	return headers;
+	return renameFiles(headers);
 };
 
 const getHeaders = (path, content) => {
