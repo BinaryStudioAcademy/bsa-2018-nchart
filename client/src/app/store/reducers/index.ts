@@ -7,6 +7,11 @@ import {
 } from './user.reducer';
 
 import {
+	chartsReducer,
+	initialState as chartsInitialState
+} from './charts.reducer';
+
+import {
 	companiesReducer,
 	initialState as companiesInitialState
 } from './companies.reducer';
@@ -25,14 +30,16 @@ export const initialState: AppState = {
 	user: userInitialState,
 	errorHandler: errorHandlerInitialState,
 	companies: companiesInitialState,
-	projects: projectsInitialState
+	projects: projectsInitialState,
+	charts: chartsInitialState
 };
 
 export const getReducers = () => ({
 	user: userReducer,
 	errorHandler: errorHandlerReducer,
 	companies: companiesReducer,
-	projects: projectsReducer
+	projects: projectsReducer,
+	charts: chartsReducer
 });
 
 export const reducersToken = new InjectionToken<ActionReducerMap<AppState>>(
