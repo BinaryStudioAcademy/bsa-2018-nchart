@@ -45,18 +45,15 @@
 		color: $stateActiveBgColor
 
 .load-url-group
-	display: grid
-	grid-template-columns: calc(100% - 110px) 110px
-	label
-		display: none
-	.ui-inputtext
-		border-radius: 3px 0 0 3px
-	.ui-widget.ui-button-default,
-	.ui-widget.ui-button
-		border-radius: 0 3px 3px 0
 	.ui-input-wrp
 		width: 100%	
+		// margin-bottom: 12px
+		height: 57px
+		.input-label-error
+			padding-bottom: 0
+			height: 12px
 
 .load-data-paste textarea.ui-widget.ui-inputtext
 	width: 100%
 	resize: none
+	margin-bottom: 12px

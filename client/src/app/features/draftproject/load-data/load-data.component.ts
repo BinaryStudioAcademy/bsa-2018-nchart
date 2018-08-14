@@ -18,7 +18,7 @@ export class LoadDataComponent implements OnInit {
 		requiredValidator('URL can`t be empty')
 	]);
 
-	onUpload(event) {
+	onUpload(event): void {
 		for (const file of event.files) {
 			this.uploadedFiles.push(file);
 		}
