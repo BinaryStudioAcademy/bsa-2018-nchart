@@ -48,3 +48,13 @@ export function maxLengthValidator(
 		}
 	};
 }
+
+export function patternValidator(msg?: string, pattern?: any): ValidatorFn {
+	return (control: AbstractControl): ValidationMessage => {
+		if (!pattern.test(control.value)) {
+			return { required: msg };
+		} else {
+			return null;
+		}
+	};
+}

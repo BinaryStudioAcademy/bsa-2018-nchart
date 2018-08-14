@@ -10,6 +10,7 @@ import { APIModule } from '@app/api/api.module';
 import { SharedModule } from '@app/shared/shared.module';
 import { FeatureModule } from '@app/features/feature.module';
 
+
 @NgModule({
 	declarations: [
 		AppComponent,
