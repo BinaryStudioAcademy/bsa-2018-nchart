@@ -3,12 +3,12 @@
         <app-input-text
             type="text"
             label="Email"
-            [control]="loginForm.controls.email"
+            [control]="loginForm.controls['email']"
         ></app-input-text>
         <app-input-text
             type="password"
             label="Password"
-            [control]="loginForm.controls.password"
+            [control]="loginForm.controls['password']"
         ></app-input-text>
     </div>
     <div class="ui-g">
