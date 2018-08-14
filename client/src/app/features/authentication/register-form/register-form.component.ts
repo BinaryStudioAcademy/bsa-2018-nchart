@@ -1,6 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
-import { requiredValidator } from '@app/shared/components/form-field/form-validators';
+import {
+	requiredValidator,
+	maxLengthValidator,
+	emailValidator,
+	minLengthValidator,
+	pattertValidator,
+	passwordValidator,
+	passwordMatchValidator
+} from '@app/shared/components/form-field/form-validators';
 
 @Component({
 	selector: 'app-register-form',
@@ -10,6 +18,19 @@ import { requiredValidator } from '@app/shared/components/form-field/form-valida
 export class RegisterFormComponent implements OnInit {
 	registerForm: FormGroup;
 
+	private passwordControl = new FormControl('', [
+		requiredValidator(),
+		minLengthValidator('Minimum length of password is', 8),
+		passwordValidator()
+	]);
+
+	private confirmPasswordControl = new FormControl('', [
+		requiredValidator(),
+		minLengthValidator('Minimum length of password is', 8),
+		passwordValidator(),
+		passwordMatchValidator(this.passwordControl)
+	]);
+
 	constructor(private formBuilder: FormBuilder) {}
 
 	ngOnInit() {
@@ -18,16 +39,19 @@ export class RegisterFormComponent implements OnInit {
 
 	initForm() {
 		this.registerForm = this.formBuilder.group({
-			name: new FormControl('', [requiredValidator('Field is required')]),
-			email: new FormControl('', [
-				requiredValidator('Field is required')
+			name: new FormControl('', [
+				requiredValidator(),
+				pattertValidator(
+					'Name should contain only alphabetic characters',
+					/^[a-zа-яэіїє]+$/i
+				),
+				maxLengthValidator('Maximum length of name is', 100)
 			]),
-			password: new FormControl('', [
-				requiredValidator('Field is required')
-			]),
-			confirmPassword: new FormControl('', [
-				requiredValidator('Field is required')
-			])
+			email: new FormControl('', [requiredValidator(), emailValidator()]),
+			password: this.passwordControl,
+			confirmPassword: this.confirmPasswordControl
 		});
 	}
+
+	onClickCreateProfile() {}
 }

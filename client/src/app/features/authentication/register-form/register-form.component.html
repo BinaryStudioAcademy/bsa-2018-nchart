@@ -4,7 +4,6 @@
             type="text"
             label="Name"
             [control]="registerForm.controls.name"
-            [showStates]="true"
         ></app-input-text>
         <app-input-text
             type="text"
@@ -23,6 +22,10 @@
         ></app-input-text>
     </div>
     <div class="ui-g-4 ui-g-offset-4 ui-fluid">
-        <app-button label="Create profile"></app-button>
+        <app-button
+            label="Create profile"
+            [disabled]="!registerForm.valid"
+            (click)="onClickCreateProfile()"
+        ></app-button>
     </div>
 </form>
