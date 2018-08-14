@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
-import { requiredValidator } from '@app/shared/components/form-field/form-validators';
+import {
+	requiredValidator,
+	emailValidator
+} from '@app/shared/components/form-field/form-validators';
 
 @Component({
 	selector: 'app-login-form',
@@ -18,12 +21,10 @@ export class LoginFormComponent implements OnInit {
 
 	initForm() {
 		this.loginForm = this.formBuilder.group({
-			email: new FormControl('', [
-				requiredValidator('Field is required')
-			]),
-			password: new FormControl('', [
-				requiredValidator('Field is required')
-			])
+			email: new FormControl('', [requiredValidator(), emailValidator()]),
+			password: new FormControl('', [requiredValidator()])
 		});
 	}
+
+	onClickLogin() {}
 }
