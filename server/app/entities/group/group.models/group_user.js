@@ -12,4 +12,6 @@ const GroupUser = sequelize.define('groupUser', {
 	}
 });
 
+GroupUser.sync();
+
 module.exports = GroupUser;
