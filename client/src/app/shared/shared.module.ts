@@ -17,6 +17,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 		ActionButtonComponent,
 		FormFieldModule,
 		HeaderModule,
+		UIKitModule,
 		MainBlockComponent
 	],
 	declarations: [ActionButtonComponent, MainBlockComponent]
