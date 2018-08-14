@@ -6,9 +6,9 @@ import { fieldsValidators, OptionalType } from '@app/models';
 export class FormService {
 	constructor() {}
 
-	createFormControls(
-		initialValues: any,
-		validators: fieldsValidators<OptionalType<any>>
+	createFormControls<T>(
+		initialValues: OptionalType<T>,
+		validators: fieldsValidators<OptionalType<T>>
 	) {
 		return Object.keys(initialValues).reduce((previous, key) => {
 			previous[key] = new FormControl(initialValues[key], validators[
