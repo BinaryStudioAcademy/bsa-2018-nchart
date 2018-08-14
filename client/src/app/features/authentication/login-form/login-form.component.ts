@@ -1,9 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
-import {
-	requiredValidator,
-	emailValidator
-} from '@app/shared/components/form-field/form-validators';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Component({
 	selector: 'app-login-form',
@@ -11,20 +7,11 @@ import {
 	styleUrls: ['./login-form.component.sass']
 })
 export class LoginFormComponent implements OnInit {
+	@Input()
 	loginForm: FormGroup;
 
-	constructor(private formBuilder: FormBuilder) {}
+	constructor() {}
 
-	ngOnInit() {
-		this.initForm();
-	}
-
-	initForm() {
-		this.loginForm = this.formBuilder.group({
-			email: new FormControl('', [requiredValidator(), emailValidator()]),
-			password: new FormControl('', [requiredValidator()])
-		});
-	}
-
+	ngOnInit() {}
 	onClickLogin() {}
 }
