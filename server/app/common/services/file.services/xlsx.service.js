@@ -6,28 +6,32 @@ const FsService = require('../../middleware/file.middleware');
 const parseHeaders = workbook => {
 	const sheet = workbook.Sheets[workbook.SheetNames[0]];
 	const range = XLSX.utils.decode_range(sheet['!ref']);
-	const headers = [];
+	let headers = [];
 	let C;
 	const R = range.s.r;
 	/* start in the first row */
 	/* walk every column in the range */
 	let countBreak = 0;
+	let buffer = [];
 	for (C = range.s.c; C <= range.e.c; C += 1) {
 		const cell = sheet[XLSX.utils.encode_cell({ c: C, r: R })];
+		let hdr = `UNKNOWN_${C}`; // <-- replace with your desired default
 		if (!cell) {
 			countBreak += 1;
 			/* if 3 cell in a row undefined - break */
 			if (countBreak === 3) {
 				return headers;
 			}
+			buffer.push(hdr);
 		}
 		/* find the cell in the first row */
-		let hdr = `UNKNOWN_${C}`; // <-- replace with your desired default
 		if (cell && cell.t && cell.v !== '' && cell.v !== ' ') {
 			countBreak = 0;
 			hdr = XLSX.utils.format_cell(cell);
-			headers.push(hdr);
-		} else {
+			if (buffer.length >= 1) {
+				headers = headers.concat(buffer);
+			}
+			buffer = [];
 			headers.push(hdr);
 		}
 	}
