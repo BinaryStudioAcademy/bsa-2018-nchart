@@ -16,4 +16,6 @@ const CompanyUser = sequelize.define('companyUser', {
 	}
 });
 
+CompanyUser.sync();
+
 module.exports = CompanyUser;

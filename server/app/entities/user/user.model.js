@@ -36,26 +36,22 @@ const User = sequelize.define('users', {
 User.sync().then(() => {
 	CompanyUser.sync().then(() =>
 		User.hasMany(CompanyUser, {
-			foreignKey: {
-				name: 'userId',
-				allowNull: false
-			},
+			foreignKey: 'userId',
 			sourceKey: 'id',
 			onDelete: 'CASCADE',
-			constraints: true
+			constraints: false
 		})
 	);
+	CompanyUser.belongsTo(User, { foreignKey: 'userId' });
 	GroupUser.sync().then(() => {
 		User.hasMany(GroupUser, {
-			foreignKey: {
-				name: 'userId',
-				allowNull: false
-			},
+			foreignKey: 'userId',
 			sourceKey: 'id',
 			onDelete: 'CASCADE',
-			constraints: true
+			constraints: false
 		});
 	});
+	GroupUser.belongsTo(User, { foreignKey: 'userId' });
 });
 
 module.exports = User;

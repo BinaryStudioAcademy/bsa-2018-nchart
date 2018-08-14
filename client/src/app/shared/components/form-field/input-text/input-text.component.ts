@@ -19,6 +19,8 @@ export class InputTextComponent implements OnInit {
 	@Input()
 	icon: string;
 	@Input()
+	iconPosition: string;
+	@Input()
 	showStates: boolean;
 
 	ngOnInit() {}
@@ -45,6 +47,14 @@ export class InputTextComponent implements OnInit {
 						? 'error'
 						: ''
 			}`]: this.showStates
+		};
+	}
+
+	getIconClasses() {
+		return {
+			'ui-input-icon-right': this.icon && !this.iconPosition,
+			[`${this.icon}`]: this.icon,
+			[`ui-input-icon-${this.iconPosition}`]: this.icon
 		};
 	}
 }

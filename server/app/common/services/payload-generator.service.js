@@ -1,3 +1,5 @@
+const ErrorService = require('./error.service');
+
 class PayloadGeneratorService {
 	static generateSuccess(res, data) {
 		return PayloadGeneratorService.setResponsePayload(res, {
@@ -26,7 +28,7 @@ class PayloadGeneratorService {
 		const response = {
 			payload: null,
 			isSuccess: false,
-			errors: err
+			errors: ErrorService.createCustomDBError(err)
 		};
 		return response;
 	}

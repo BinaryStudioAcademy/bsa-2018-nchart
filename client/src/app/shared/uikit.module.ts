@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
+import { TabMenuModule } from 'primeng/tabmenu';
 // Forms
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
@@ -14,6 +15,8 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { ToolbarModule } from 'primeng/toolbar';
+import { TabViewModule } from 'primeng/tabview';
 
 @NgModule({
 	imports: [
@@ -30,7 +33,10 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 		BrowserModule,
 		AutoCompleteModule,
 		RadioButtonModule,
-		InputSwitchModule
+		InputSwitchModule,
+		ToolbarModule,
+		TabMenuModule,
+		TabViewModule
 	],
 	exports: [
 		ButtonModule,
@@ -46,7 +52,11 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 		BrowserModule,
 		AutoCompleteModule,
 		RadioButtonModule,
-		InputSwitchModule
-	]
+		InputSwitchModule,
+		ToolbarModule,
+		TabMenuModule,
+		TabViewModule
+	],
+	declarations: []
 })
 export class UIKitModule {}
