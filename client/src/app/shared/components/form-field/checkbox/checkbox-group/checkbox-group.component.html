@@ -1,0 +1,10 @@
+<div class="ui-g" style="width:250px;margin-bottom:10px">
+	<div *ngFor="let check of checks" class="ui-g-12 ui-checkbox-wrp">
+		<p-checkbox name="groupname" 
+					[value]="check.value" 
+					[formControl]="check.control"
+					[disabled]="check.disabled">
+		</p-checkbox>
+		<label class="ui-checkbox-label" [class.ui-input-label-disabled]="check.disabled">{{check.label}}</label>
+	</div>
+</div>
