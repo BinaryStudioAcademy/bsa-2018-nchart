@@ -2,6 +2,7 @@ import { UserState } from './user-store.model';
 import { CompaniesState } from './companies-store.model';
 import { ErrorHandlerState } from './error-store.model';
 import { ProjectsState } from './projects-store.model';
+import { ChartsState } from '@app/models/charts-store.model';
 
 export class AppAction<T = undefined> {
 	readonly type: string;
@@ -22,4 +23,5 @@ export interface AppState {
 	errorHandler: ErrorHandlerState;
 	companies: CompaniesState;
 	projects: ProjectsState;
+	charts: ChartsState;
 }

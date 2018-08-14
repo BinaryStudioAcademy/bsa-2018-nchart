@@ -7,3 +7,5 @@ export * from './user-store.model';
 export * from './companies-store.model';
 export * from './projects-store.model';
 export * from './fields-validators.model';
+export * from './chart.model';
+export * from './charts-store.model';
