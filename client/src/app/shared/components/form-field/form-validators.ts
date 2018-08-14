@@ -36,13 +36,12 @@ export function minLengthValidator(
 	minLength?: number
 ): ValidatorFn {
 	return (control: AbstractControl): ValidationMessage => {
-		if (Validators.minLength(minLength)) {
-			return {
-				minLength: `${msg} ${minLength}`
-			};
-		} else {
-			return null;
-		}
+		const validationErrors = Validators.minLength(minLength).call(
+			null,
+			control
+		);
+
+		return validationErrors ? { minLength: `${msg} ${minLength}` } : null;
 	};
 }
 
@@ -51,13 +50,12 @@ export function maxLengthValidator(
 	maxLength?: number
 ): ValidatorFn {
 	return (control: AbstractControl): ValidationMessage => {
-		if (Validators.maxLength(maxLength)) {
-			return {
-				minLength: `${msg} ${maxLength}`
-			};
-		} else {
-			return null;
-		}
+		const validationErrors = Validators.maxLength(maxLength).call(
+			null,
+			control
+		);
+
+		return validationErrors ? { maxLength: `${msg} ${maxLength}` } : null;
 	};
 }
 
@@ -73,13 +71,7 @@ export function emailValidator(
 			? validatePattern(emailPattern, control)
 			: validatePattern(defaultPattern, control);
 
-		if (validationErrors) {
-			return {
-				required: msg || 'Invalid email'
-			};
-		} else {
-			return null;
-		}
+		return validationErrors ? { email: msg || 'Invalid email' } : null;
 	};
 }
 
@@ -89,13 +81,10 @@ export function pattertValidator(
 ): ValidatorFn {
 	return (control: AbstractControl): ValidationMessage => {
 		const validationErrors = validatePattern(patternExpression, control);
-		if (validationErrors) {
-			return {
-				required: msg || 'Not match with pattern expression'
-			};
-		} else {
-			return null;
-		}
+
+		return validationErrors
+			? { pattern: msg || 'Not match with pattern expression' }
+			: null;
 	};
 }
 
@@ -112,13 +101,12 @@ export function passwordValidator(
 
 		if (validationErrors) {
 			return {
-				required:
+				passwordPattern:
 					msg ||
 					'Password should contain alphabetic, numeric and special characters'
 			};
-		} else {
-			return null;
 		}
+		return null;
 	};
 }
 
@@ -130,12 +118,8 @@ export function passwordMatchValidator(
 		const passwordValue = password.value;
 		const confirmPasswordValue = control.value;
 
-		if (passwordValue !== confirmPasswordValue) {
-			return {
-				required: msg || 'Passwords aren`t match'
-			};
-		} else {
-			return null;
-		}
+		return passwordValue !== confirmPasswordValue
+			? { passwordMatch: msg || 'Passwords aren`t match' }
+			: null;
 	};
 }
