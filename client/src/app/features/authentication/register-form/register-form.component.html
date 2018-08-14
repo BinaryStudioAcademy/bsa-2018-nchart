@@ -21,11 +21,13 @@
             [control]="registerForm.controls.confirmPassword"
         ></app-input-text>
     </div>
-    <div class="ui-g-4 ui-g-offset-4 ui-fluid">
-        <app-button
-            label="Create profile"
-            [disabled]="!registerForm.valid"
-            (click)="onClickCreateProfile()"
-        ></app-button>
+    <div class="ui-g">
+        <div class="ui-g-4 ui-g-offset-4">
+            <app-button
+                label="Create profile"
+                [disabled]="!registerForm.valid"
+                (click)="onClickCreateProfile()"
+            ></app-button>
+        </div>
     </div>
 </form>

@@ -11,11 +11,13 @@
             [control]="loginForm.controls.password"
         ></app-input-text>
     </div>
-    <div class="ui-g-4 ui-g-offset-4 ui-fluid">
-        <app-button
-            label="Login"
-            [disabled]="!loginForm.valid"
-            (click)="onClickLogin()"
-        ></app-button>
+    <div class="ui-g">
+        <div class="ui-g-4 ui-g-offset-4">
+            <app-button
+                label="Login"
+                [disabled]="!loginForm.valid"
+                (click)="onClickLogin()"
+            ></app-button>
+        </div>
     </div>
 </form>
