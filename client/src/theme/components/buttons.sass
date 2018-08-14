@@ -25,6 +25,7 @@
 		box-shadow: $boxShadow
 	&:enabled:focus,
 	&:enabled:active
+		color: $stateActiveBgColor
 		background-color: $defaultButtonColor
 		border-color: $defaultButtonColor
 
@@ -124,6 +125,7 @@
 		.ui-widget.ui-button,
 		.ui-button
 			color: $stateHoverBgColor
+			border: none
 			&:disabled
 				background-color: #fff
 				color: $stateDefaultTextColor
