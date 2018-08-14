@@ -37,7 +37,7 @@ const parseHeaders = workbook => {
 	let buffer = [];
 	for (C = range.s.c; C <= range.e.c; C += 1) {
 		const cell = sheet[XLSX.utils.encode_cell({ c: C, r: R })];
-		let hdr = `UNKNOWN`; // <-- replace with your desired default
+		let hdr = 'UNKNOWN'; // <-- replace with your desired default
 		if (!cell) {
 			countBreak += 1;
 			/* if 3 cell in a row undefined - break */
