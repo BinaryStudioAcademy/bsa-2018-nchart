@@ -36,7 +36,7 @@ export function minLengthValidator(
 	minLength?: number
 ): ValidatorFn {
 	return (control: AbstractControl): ValidationMessage => {
-		if (control.value.length < minLength) {
+		if (Validators.minLength(minLength)) {
 			return {
 				minLength: `${msg} ${minLength}`
 			};
@@ -51,7 +51,7 @@ export function maxLengthValidator(
 	maxLength?: number
 ): ValidatorFn {
 	return (control: AbstractControl): ValidationMessage => {
-		if (control.value.length > maxLength) {
+		if (Validators.maxLength(maxLength)) {
 			return {
 				minLength: `${msg} ${maxLength}`
 			};
