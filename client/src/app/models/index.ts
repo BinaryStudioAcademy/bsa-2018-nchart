@@ -9,3 +9,4 @@ export * from './projects-store.model';
 export * from './fields-validators.model';
 export * from './chart.model';
 export * from './charts-store.model';
+export * from './file-data.model';

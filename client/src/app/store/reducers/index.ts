@@ -12,6 +12,11 @@ import {
 } from './charts.reducer';
 
 import {
+	loadedDataReducer,
+	initialState as loadedDataInitialState
+} from './loaded-data.reducer';
+
+import {
 	companiesReducer,
 	initialState as companiesInitialState
 } from './companies.reducer';
@@ -31,7 +36,8 @@ export const initialState: AppState = {
 	errorHandler: errorHandlerInitialState,
 	companies: companiesInitialState,
 	projects: projectsInitialState,
-	charts: chartsInitialState
+	charts: chartsInitialState,
+	loadedData: loadedDataInitialState
 };
 
 export const getReducers = () => ({
@@ -39,7 +45,8 @@ export const getReducers = () => ({
 	errorHandler: errorHandlerReducer,
 	companies: companiesReducer,
 	projects: projectsReducer,
-	charts: chartsReducer
+	charts: chartsReducer,
+	loadedData: loadedDataReducer
 });
 
 export const reducersToken = new InjectionToken<ActionReducerMap<AppState>>(

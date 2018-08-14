@@ -1,5 +1,5 @@
-import {AppAction, FailedAction, FileData} from '@app/models';
-import {LoadedDataActionConstants} from "./loaded-data.action-types";
+import { AppAction, FailedAction, FileData } from '@app/models';
+import { LoadedDataActionConstants } from './loaded-data.action-types';
 
 export class LoadData extends AppAction<any> {
 	readonly type = LoadedDataActionConstants.LOADEDDATA_LOAD_DATA;

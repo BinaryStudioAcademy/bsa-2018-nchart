@@ -1,9 +1,9 @@
-type column = {
-	title?: string,
-	type?: string
-};
+interface Column {
+	title?: string;
+	type?: string;
+}
 
 export interface FileData {
-	columns?: column[],
-	data?: any,
+	columns?: Column[];
+	data?: any;
 }

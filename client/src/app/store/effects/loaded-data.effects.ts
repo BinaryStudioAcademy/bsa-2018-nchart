@@ -3,36 +3,48 @@ import { Effect, Actions, ofType } from '@ngrx/effects';
 import { map, switchMap } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import { CompaniesActionConstants } from '@app/store/actions/companies/companies.action-types';
-import { Company } from '@app/models';
+import { FileData } from '@app/models';
 import {
-	LoadDataComplete,
-	LoadDataFailed
-} from '@app/store/actions/companies/companies.actions';
-import { normalize } from 'normalizr';
-import { arrayOfCustomData } from '@app/models/custom.schema';
+	LoadDataFailed,
+	LoadDataComplete
+} from '@app/store/actions/loaded-data/loaded-data.actions';
+import { LoadedDataActionConstants } from '@app/store/actions/loaded-data/loaded-data.action-types';
 
 @Injectable()
-export class CompaniesEffects {
+export class LoadedDataEffects {
 	api = {
-		loadCompanies: (): Observable<Company[]> => {
-			return of([
-				{
-					id: 'q1',
-					name: 'binary',
-					createdAt: '12345678'
-				},
-				{
-					id: 'q2',
-					name: 'macpaw',
-					createdAt: '995678'
-				},
-				{
-					id: 'q3',
-					name: 'kpi',
-					createdAt: '1'
-				}
-			]);
+		loadData: (): Observable<FileData> => {
+			return of({
+				columns: [
+					{
+						title: 'Product name',
+						type: 'string'
+					},
+					{
+						title: 'Price',
+						type: 'number'
+					},
+					{
+						title: 'Quantity',
+						type: 'string'
+					},
+					{
+						title: 'Quantity(2)',
+						type: 'string'
+					}
+				],
+				data: [
+					[null, null, 'FFMollis consequat', 9],
+					['Tvoluptatem', 10.32, 1, null],
+					['Tvoluptatem', 10.32, 1, null],
+					['Broken', null, 1, null],
+					['Broken1', 1, null, null],
+					['Tvoluptatem', 10.32, 1, null],
+					['Scelerisque lacinia', null, 1, null],
+					['Consectetur adipiscing', 28.72, 10, null],
+					['Condimentum aliquet', 13.9, 1, 'wtf']
+				]
+			});
 		}
 	};
 
@@ -40,20 +52,11 @@ export class CompaniesEffects {
 
 	@Effect()
 	loadData$ = this.action$.pipe(
-		ofType(CompaniesActionConstants.COMPANIES_LOAD_DATA),
+		ofType(LoadedDataActionConstants.LOADEDDATA_LOAD_DATA),
 		switchMap((action: any) =>
-			this.api.loadCompanies().pipe(
-				map((value: Array<Company>) => {
-					const {
-						result: all,
-						entities: { byId }
-					} = normalize(value, arrayOfCustomData);
-					return new LoadDataComplete({
-						companies: {
-							all,
-							byId
-						}
-					});
+			this.api.loadData().pipe(
+				map((payload: FileData) => {
+					return new LoadDataComplete(payload);
 				}),
 				catchError(error => {
 					return of(

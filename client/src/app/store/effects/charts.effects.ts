@@ -21,40 +21,35 @@ export class ChartsEffects {
 					id: 1,
 					type: '1',
 					name: 'Bar chart',
-					description:
-						'bar chbars with ent.',
+					description: 'bar chbars with ent.',
 					dimension_settings: [
 						{
 							variable: 'X Axis',
 							multiple: false,
 							required: true,
 							type: ['string', 'number'],
-							description:
-								'For d.'
+							description: 'For d.'
 						},
 						{
 							variable: 'Group',
 							multiple: false,
 							required: false,
 							type: ['string', 'number'],
-							description:
-								'For each reated.'
+							description: 'For each reated.'
 						},
 						{
 							variable: 'Size',
 							multiple: false,
 							required: false,
 							type: ['number'],
-							description:
-								'Acceptbar height.'
+							description: 'Acceptbar height.'
 						},
 						{
 							variable: 'Color',
 							multiple: false,
 							required: false,
 							type: ['string', 'number'],
-							description:
-								'Can  the list.'
+							description: 'Can  the list.'
 						}
 					],
 					customize_settings: [
@@ -71,8 +66,7 @@ export class ChartsEffects {
 						{
 							value: 40,
 							option: 'Left Margin',
-							description:
-								'margin fopixel'
+							description: 'margin fopixel'
 						},
 						{
 							value: 0,
@@ -82,20 +76,17 @@ export class ChartsEffects {
 						{
 							value: 0.1,
 							option: 'Horizontal Padding',
-							description:
-								'distance 0%, 1 = 100%)'
+							description: 'distance 0%, 1 = 100%)'
 						},
 						{
 							value: false,
 							option: 'Use Same Scale',
-							description:
-								'If set, every bcale'
+							description: 'If set, every bcale'
 						},
 						{
 							value: [],
 							option: 'Colour Scale',
-							description:
-								'list and mose two values'
+							description: 'list and mose two values'
 						}
 					]
 				},
@@ -110,32 +101,28 @@ export class ChartsEffects {
 							multiple: false,
 							required: true,
 							type: ['string', 'number'],
-							description:
-								'For each unique value ted.'
+							description: 'For each unique value ted.'
 						},
 						{
 							variable: 'Group',
 							multiple: false,
 							required: false,
 							type: ['string', 'number'],
-							description:
-								'For reated.'
+							description: 'For reated.'
 						},
 						{
 							variable: 'Size',
 							multiple: false,
 							required: false,
 							type: ['number'],
-							description:
-								'Accepts  height.'
+							description: 'Accepts  height.'
 						},
 						{
 							variable: 'Color',
 							multiple: false,
 							required: false,
 							type: ['string', 'number'],
-							description:
-								'Canin the list.'
+							description: 'Canin the list.'
 						}
 					],
 					customize_settings: [
@@ -163,20 +150,17 @@ export class ChartsEffects {
 						{
 							value: 0.1,
 							option: 'Horizontal Padding',
-							description:
-								'distance between b 100%)'
+							description: 'distance between b 100%)'
 						},
 						{
 							value: false,
 							option: 'Use Same Scale',
-							description:
-								'If set, eveme scale'
+							description: 'If set, eveme scale'
 						},
 						{
 							value: [],
 							option: 'Colour Scale',
-							description:
-								'liong those two values'
+							description: 'liong those two values'
 						}
 					]
 				},
@@ -191,32 +175,28 @@ export class ChartsEffects {
 							multiple: false,
 							required: true,
 							type: ['string', 'number'],
-							description:
-								'For ted.'
+							description: 'For ted.'
 						},
 						{
 							variable: 'Group',
 							multiple: false,
 							required: false,
 							type: ['string', 'number'],
-							description:
-								'For eated.'
+							description: 'For eated.'
 						},
 						{
 							variable: 'Size',
 							multiple: false,
 							required: false,
 							type: ['number'],
-							description:
-								'Accepts only column height.'
+							description: 'Accepts only column height.'
 						},
 						{
 							variable: 'Color',
 							multiple: false,
 							required: false,
 							type: ['string', 'number'],
-							description:
-								'C the list.'
+							description: 'C the list.'
 						}
 					],
 					customize_settings: [
@@ -233,8 +213,7 @@ export class ChartsEffects {
 						{
 							value: 40,
 							option: 'Left Margin',
-							description:
-								'marginpixel'
+							description: 'marginpixel'
 						},
 						{
 							value: 0,
@@ -244,14 +223,12 @@ export class ChartsEffects {
 						{
 							value: 0.1,
 							option: 'Horizontal Padding',
-							description:
-								'dis= 100%)'
+							description: 'dis= 100%)'
 						},
 						{
 							value: false,
 							option: 'Use Same Scale',
-							description:
-								'If setthe same scale'
+							description: 'If setthe same scale'
 						},
 						{
 							value: [],

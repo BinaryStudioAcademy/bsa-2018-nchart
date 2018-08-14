@@ -1,4 +1,4 @@
-import {FileData} from "./file-data.model";
+import { FileData } from './file-data.model';
 
 export interface LoadedDataState {
 	data: FileData;
