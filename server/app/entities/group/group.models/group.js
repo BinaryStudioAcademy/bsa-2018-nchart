@@ -14,13 +14,15 @@ const Group = sequelize.define('group', {
 });
 
 Group.sync().then(() => {
-	GroupUser.sync();
-	Group.hasMany(GroupUser, {
-		foreignKey: 'groupId',
-		sourceKey: 'id',
-		onDelete: 'CASCADE',
-		constraints: false
+	GroupUser.sync().then(() => {
+		Group.hasMany(GroupUser, {
+			foreignKey: 'groupId',
+			sourceKey: 'id',
+			onDelete: 'CASCADE',
+			constraints: false
+		});
 	});
+	GroupUser.belongsTo(Group, { foreignKey: 'groupId' });
 });
 
 module.exports = Group;
