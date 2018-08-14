@@ -53,6 +53,7 @@ const parseData = (data, headers) => {
 	}
 	const countNull = {};
 	const countNumber = {};
+	// todo: rename
 	const payload = {};
 	for (let i = 0; i < headers.length; i += 1) {
 		Object.assign(payload, { [headers[i]]: { data: [], type: '' } });
@@ -60,7 +61,11 @@ const parseData = (data, headers) => {
 		Object.assign(countNumber, { [headers[i]]: 0 });
 	}
 	let item;
+	// todo: rename
+	const testArr = [];
 	for (let i = 0; i < data.length; i += 1) {
+		// todo: rename
+		const arr = [];
 		for (let c = 0; c < headers.length; c += 1) {
 			item = data[i][headers[c]];
 			if (item === undefined || item === '' || item === ' ') {
@@ -75,13 +80,14 @@ const parseData = (data, headers) => {
 				}
 				countNumber[headers[c]] += 1;
 			}
+			arr.push(item);
 			payload[headers[c]].data.push(item);
 		}
+		testArr.push(arr);
 	}
 	for (let c = 0; c < headers.length; c += 1) {
-		// delete empty columns
 		if (countNull[headers[c]] === payload[headers[c]].data.length) {
-			delete payload[headers[c]];
+			payload[headers[c]].type = 'null';
 		} else if (
 			countNumber[headers[c]] === payload[headers[c]].data.length &&
 			countNumber[headers[c]] !== countNull[headers[c]]
@@ -91,8 +97,92 @@ const parseData = (data, headers) => {
 			payload[headers[c]].type = 'string';
 		}
 	}
-	return payload;
+	// todo: rename
+	const realPayload = {
+		columns: [],
+		data: testArr
+	};
+	for (let c = 0; c < headers.length; c += 1) {
+		realPayload.columns.push({
+			title: headers[c],
+			type: payload[headers[c]].type
+		});
+	}
+	return realPayload;
 };
+
+// format column array:
+/*
+{
+    "payload": {
+        "test1": {
+            "data": [
+                1,
+                1,
+                1,
+                null,
+                null,
+                null
+            ],
+            "type": "number"
+        },{}
+    },
+    "isSuccess": true,
+    "errors": []
+}
+ */
+
+//
+// const parseData = (data, headers) => {
+// 	function isNumber(str) {
+// 		const a = `${Number(str)}`;
+// 		if (a === 'NaN') {
+// 			return false;
+// 		}
+// 		return true;
+// 	}
+// 	const countNull = {};
+// 	const countNumber = {};
+// 	const payload = {};
+// 	for (let i = 0; i < headers.length; i += 1) {
+// 		Object.assign(payload, { [headers[i]]: { data: [], type: '' } });
+// 		Object.assign(countNull, { [headers[i]]: 0 });
+// 		Object.assign(countNumber, { [headers[i]]: 0 });
+// 	}
+// 	let item;
+// 	for (let i = 0; i < data.length; i += 1) {
+// 		for (let c = 0; c < headers.length; c += 1) {
+// 			item = data[i][headers[c]];
+// 			if (item === undefined || item === '' || item === ' ') {
+// 				item = null;
+// 			}
+// 			if (item === null) {
+// 				countNull[headers[c]] += 1;
+// 			}
+// 			if (isNumber(item)) {
+// 				if (item !== null) {
+// 					item = Number(item);
+// 				}
+// 				countNumber[headers[c]] += 1;
+// 			}
+// 			payload[headers[c]].data.push(item);
+// 		}
+// 	}
+// 	for (let c = 0; c < headers.length; c += 1) {
+// 		// delete empty columns
+// 		if (countNull[headers[c]] === payload[headers[c]].data.length) {
+// 			delete payload[headers[c]];
+// 		} else if (
+// 			countNumber[headers[c]] === payload[headers[c]].data.length
+// 			&& countNumber[headers[c]] !== countNull[headers[c]]
+// 		) {
+// 			payload[headers[c]].type = 'number';
+// 		} else {
+// 			payload[headers[c]].type = 'string';
+// 		}
+// 	}
+// 	return payload;
+// };
 
 const readFile = path =>
 	new Promise((resolve, reject) => {
