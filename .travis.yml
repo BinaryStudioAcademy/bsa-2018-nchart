@@ -16,3 +16,6 @@ install:
     - 'cd ../server'
     - 'npm i'
     - 'npm start'
+branches:
+    only:
+        - docker-test
