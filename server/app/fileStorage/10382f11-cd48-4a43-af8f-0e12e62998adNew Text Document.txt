@@ -1,0 +1,8 @@
+var Url = require(‘url’);
+
+var Path = require(‘path’);
+
+
+var url = ‘http://i.imgur.com/Mvv4bx8.jpg?querystring=true';
+
+var result = Path.extname(Url.parse(url).pathname); // ‘.jpg’

@@ -1,6 +1,7 @@
 const XLSX = require('xlsx');
 const async = require('async');
 const fs = require('fs');
+const uuidv4 = require('uuid/v4');
 const FsService = require('../../middleware/file.middleware');
 
 function renameFiles(arr) {
@@ -37,7 +38,7 @@ const parseHeaders = workbook => {
 	let buffer = [];
 	for (C = range.s.c; C <= range.e.c; C += 1) {
 		const cell = sheet[XLSX.utils.encode_cell({ c: C, r: R })];
-		let hdr = `UNKNOWN`; // <-- replace with your desired default
+		let hdr = 'UNKNOWN'; // <-- replace with your desired default
 		if (!cell) {
 			countBreak += 1;
 			/* if 3 cell in a row undefined - break */
@@ -131,11 +132,19 @@ const parseData = (data, headers) => {
 		columns: [],
 		data: temporaryRowPayload
 	};
+	let IDs = [];
+	// create IDs array
+	for (let c = 0; c < headers.length; c += 1) {
+		IDs.push(uuidv4());
+	}
+	// check if there any duplicates
+	IDs = renameFiles(IDs);
 	// set column types
 	for (let c = 0; c < headers.length; c += 1) {
 		payload.columns.push({
 			title: headers[c],
-			type: dataInColumns[headers[c]].type
+			type: dataInColumns[headers[c]].type,
+			id: IDs[c]
 		});
 	}
 	return payload;
