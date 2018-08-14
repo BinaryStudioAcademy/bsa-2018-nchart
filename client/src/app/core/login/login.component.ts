@@ -6,7 +6,7 @@ import {
 	minLengthValidator,
 	passwordValidator,
 	passwordMatchValidator,
-	pattertValidator,
+	patternValidator,
 	maxLengthValidator
 } from '@app/shared/components/form-field/form-validators';
 
@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
 		this.registerForm = this.formBuilder.group({
 			name: new FormControl('', [
 				requiredValidator(),
-				pattertValidator(
+				patternValidator(
 					'Name should contain only alphabetic characters',
 					/^[a-zа-яэіїє]+$/i
 				),

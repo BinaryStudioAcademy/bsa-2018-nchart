@@ -75,7 +75,7 @@ export function emailValidator(
 	};
 }
 
-export function pattertValidator(
+export function patternValidator(
 	msg?: string,
 	patternExpression?: string | RegExp
 ): ValidatorFn {
