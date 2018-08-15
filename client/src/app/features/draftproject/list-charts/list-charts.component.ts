@@ -50,19 +50,20 @@ export class ListChartsComponent implements OnInit {
 	}
 
 	getIconClasses(id) {
+		const chartById = this.chartList.find(el => el.id === id);
 		return {
 			'fas': true,
-			'fa-chart-bar': id === this.chartList[0].id,
-			'fa-braille': id === this.chartList[1].id,
-			'fa-ellipsis-h': id === this.chartList[2].id,
-			'fa-chart-line': id === this.chartList[3].id,
-			'fa-globe-americas': id === this.chartList[4].id,
+			'fa-chart-bar': 'Bar Chart' === chartById.name,
+			'fa-braille': 'Bubble Chart' === chartById.name,
+			'fa-ellipsis-h': 'Scatter Chart' === chartById.name,
+			'fa-chart-line': 'Line Chart' === chartById.name,
+			'fa-globe-americas': 'Map Chart' === chartById.name
 		};
 	}
 
 	getClasses(id) {
 		return {
-			[`chart-selected`]: id === this.selectedChart.id
+			'chart-selected': id === this.selectedChart.id
 		};
 	}
 }
