@@ -172,41 +172,6 @@ const readFile = path =>
 		});
 	});
 
-const processFile = file =>
-	new Promise((resolve, reject) => {
-		let globalPath = null;
-		async.waterfall(
-			[
-				callback => {
-					FsService.save(file)
-						.then(path => {
-							globalPath = path;
-							callback(null, path);
-						})
-						.catch(err => {
-							callback(err, null);
-						});
-				},
-				(path, callback) => {
-					readFile(path)
-						.then(data => {
-							callback(null, data);
-						})
-						.catch(err => {
-							callback(err, null);
-						});
-				}
-			],
-			(error, payload) => {
-				FsService.deleteFile(globalPath).catch(err => reject(err));
-				if (error) {
-					reject(error);
-				}
-				resolve(payload);
-			}
-		);
-	});
-
 const readString = content =>
 	new Promise((resolve, reject) => {
 		const headers = getHeaders(null, content);
@@ -220,6 +185,30 @@ const readString = content =>
 			reject(new Error('Messed up file'));
 		}
 		resolve(payload);
+	});
+
+const processFile = path =>
+	new Promise((resolve, reject) => {
+		async.waterfall(
+			[
+				callback => {
+					readFile(path)
+						.then(data => {
+							callback(null, data);
+						})
+						.catch(err => {
+							callback(err, null);
+						});
+				}
+			],
+			(error, payload) => {
+				FsService.deleteFile(path).catch(err => reject(err));
+				if (error) {
+					reject(error);
+				}
+				resolve(payload);
+			}
+		);
 	});
 
 module.exports = {
