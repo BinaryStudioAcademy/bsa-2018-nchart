@@ -1,5 +1,5 @@
-import { Validators } from '@angular/forms';
+import { ValidatorFn } from '@angular/forms';
 
-export type fieldsValidators<T> = { [P in keyof T]: Validators[] };
+export type fieldsValidators<T> = { [P in keyof T]: ValidatorFn[] };
 
 export type OptionalType<T> = { [P in keyof T]?: T[P] };
