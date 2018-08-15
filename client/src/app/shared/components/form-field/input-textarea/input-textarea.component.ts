@@ -21,7 +21,7 @@ export class InputTextareaComponent implements OnInit {
 	@Input()
 	icon: string;
 	@Input()
-	placeholder: string;
+	placeholder = '';
 
 	constructor() {}
 
