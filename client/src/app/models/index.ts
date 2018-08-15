@@ -11,3 +11,4 @@ export * from './chart.model';
 export * from './charts-store.model';
 export * from './file-data.model';
 export * from './file-data.store';
+export * from './user-chart-store.model';

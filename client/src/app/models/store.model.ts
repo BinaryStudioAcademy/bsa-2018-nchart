@@ -4,6 +4,7 @@ import { ErrorHandlerState } from './error-store.model';
 import { ProjectsState } from './projects-store.model';
 import { ChartsState } from '@app/models/charts-store.model';
 import { DataState } from '@app/models/file-data.store';
+import { UserChartState } from '@app/models/user-chart-store.model';
 
 export class AppAction<T = undefined> {
 	readonly type: string;
@@ -27,4 +28,5 @@ export interface AppState {
 	charts: ChartsState;
 	loadedData: DataState;
 	modifiedData: DataState;
+	userChart: UserChartState;
 }
