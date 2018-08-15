@@ -28,6 +28,28 @@ export const data = (
 				...action.payload
 			};
 		}
+		case ModifiedDataActionConstants.MODIFIEDDATA_CHANGE_CONTENT: {
+			state.data[action.payload.indexRow][action.payload.indexCol] =
+				action.payload.content;
+			return state;
+		}
+		case ModifiedDataActionConstants.MODIFIEDDATA_CHANGE_HEADER_TITLE: {
+			state.columns[action.payload.indexCol].title =
+				action.payload.newTitle;
+			return state;
+		}
+		case ModifiedDataActionConstants.MODIFIEDDATA_DELETE_COLUMN: {
+			const indexDeleted = action.payload.index;
+			state.columns.splice(indexDeleted, 1);
+			for (const row of state.data) {
+				row.splice(indexDeleted, 1);
+			}
+			return state;
+		}
+		case ModifiedDataActionConstants.MODIFIEDDATA_DELETE_ROW: {
+			state.data.splice(action.payload.index, 1);
+			return state;
+		}
 		default:
 			return state;
 	}
