@@ -7,7 +7,7 @@
             <div *ngFor='let el of dimensionsSettings' [ngClass]="getClasses(el.multiple, el.required)"  class="ui-g-5 dropArea">
               <h2>{{el.variable}}</h2>
               <i *ngIf="el.required" class="fa fa-asterisk fa-xs requiredIcon"></i>
-              <i *ngIf="el.multiple" class="fa fa-tags fa-xs multipleIcon"></i>
+              <i *ngIf="el.multiple" class="fa fa-list fa-xs multipleIcon"></i>
               <pre>{{el.type}}</pre>
               <div [dragula]="DIMENSIONS" [(dragulaModel)]='el.value' class="dropContainer">
                   <div class="draggble" *ngFor='let x of el.value'>{{x.variable}}

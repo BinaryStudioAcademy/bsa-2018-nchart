@@ -27,14 +27,14 @@
     cursor: grab
     color: white
     font-weight: 600
-    margin: 5px
+    margin: 5px 0
     padding: 10px
     font-family: $fontFamily
     font-size: 0.9rem
     letter-spacing: 1px
     line-height: 18px
     border-radius: 2px
-    background-color: $activeColor
+    background-color: $primaryColor
     text-align: left
     transition: opacity 0.4s ease-in-out
     box-shadow: $boxShadow
@@ -56,17 +56,14 @@
     top: 11px
     cursor: pointer
 
-.removeIcon:hover
-    color: $errorColor
-    transition: color 0.4s ease-in-out
-
 .requiredIcon
-    color: $activeColor
+    color: $errorColor
     position: absolute
     right: 10px
     top: 10px
 
 .multipleIcon
+    color: $secondaryColor
     position: absolute
     left: 10px
     top: 10px

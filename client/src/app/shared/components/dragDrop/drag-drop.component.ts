@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { DragulaService, DrakeFactory, MockDrake } from 'ng2-dragula';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { DragulaService } from 'ng2-dragula';
 import { Subscription } from 'rxjs';
 
 class Column {
@@ -10,7 +10,7 @@ class Column {
 	selector: 'app-drag-drop',
 	templateUrl: './drag-drop.component.html'
 })
-export class DragDropComponent implements OnInit {
+export class DragDropComponent implements OnInit, OnDestroy {
 	DIMENSIONS = 'DIMENSIONS';
 	public dimensionsSettings = [
 		{
@@ -81,38 +81,26 @@ export class DragDropComponent implements OnInit {
 		this.subs.add(
 			this._dragulaService
 				.dropModel(this.DIMENSIONS)
-				.subscribe(
-					({
-						el,
-						target,
-						source,
-						sourceModel,
-						targetModel,
-						item
-					}) => {
-						if (source.children.length === 0) {
-							source.parentElement.classList.remove('single');
-						}
-						if (
-							!target.parentElement.classList.contains('multiple')
-						) {
-							target.parentElement.classList.add('single');
-						}
-						if (
-							this.isValid(
-								target.parentElement.firstElementChild
-									.innerHTML,
-								item
-							)
-						) {
-							target.parentElement.classList.remove('single');
-							targetModel.splice(targetModel.indexOf(item), 1);
-						}
-						if (this.hasDuplicates(targetModel)) {
-							targetModel.splice(targetModel.indexOf(item), 1);
-						}
+				.subscribe(({ target, source, targetModel, item }) => {
+					if (source.children.length === 0) {
+						source.parentElement.classList.remove('single');
 					}
-				)
+					if (!target.parentElement.classList.contains('multiple')) {
+						target.parentElement.classList.add('single');
+					}
+					if (
+						this.isValid(
+							target.parentElement.firstElementChild.innerHTML,
+							item
+						)
+					) {
+						target.parentElement.classList.remove('single');
+						targetModel.splice(targetModel.indexOf(item), 1);
+					}
+					if (this.hasDuplicates(targetModel)) {
+						targetModel.splice(targetModel.indexOf(item), 1);
+					}
+				})
 		);
 
 		this.subs.add(
@@ -145,11 +133,11 @@ export class DragDropComponent implements OnInit {
 	}
 
 	isValid(target: string, item: Column) {
-		let result = this.dimensionsSettings.filter(obj => {
+		const result = this.dimensionsSettings.filter(obj => {
 			return obj.variable === target;
 		});
 
-		let isValid = result[0].type.indexOf(item.type);
+		const isValid = result[0].type.indexOf(item.type);
 		return isValid === -1;
 	}
 
