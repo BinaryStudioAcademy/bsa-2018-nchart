@@ -17,6 +17,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TabViewModule } from 'primeng/tabview';
+import { SpinnerModule } from 'primeng/spinner';
 
 @NgModule({
 	imports: [
@@ -36,7 +37,8 @@ import { TabViewModule } from 'primeng/tabview';
 		InputSwitchModule,
 		ToolbarModule,
 		TabMenuModule,
-		TabViewModule
+		TabViewModule,
+		SpinnerModule
 	],
 	exports: [
 		ButtonModule,
@@ -55,7 +57,8 @@ import { TabViewModule } from 'primeng/tabview';
 		InputSwitchModule,
 		ToolbarModule,
 		TabMenuModule,
-		TabViewModule
+		TabViewModule,
+		SpinnerModule
 	],
 	declarations: []
 })

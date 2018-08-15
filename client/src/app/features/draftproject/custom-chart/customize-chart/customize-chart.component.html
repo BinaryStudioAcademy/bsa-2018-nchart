@@ -1,15 +1,24 @@
 <div class="customize-chart-container">
 	<h3>Customize</h3>
 	<div>
-		<p>Label</p>
-		<input type="text">
+		<app-spinner [min]="0" [max]="100" [control]="control" label="Width"></app-spinner>
 	</div>
 	<div>
-		<p>Label</p>
-		<input type="text">
+		<app-spinner [min]="0" [max]="100" [control]="control" label="Height"></app-spinner>
 	</div>
 	<div>
-		<p>Label</p>
-		<input type="text">
+		<app-spinner [min]="0" [max]="100" [control]="control" label="Left Margin"></app-spinner>
+	</div>
+	<div>
+		<app-spinner [min]="0" [max]="100" [control]="control" label="Vertical Padding"></app-spinner>
+	</div>
+	<div>
+		<app-spinner [min]="0" [max]="100" [control]="control" label="Horizontal Padding"></app-spinner>
+	</div>
+	<div>
+		<app-spinner [min]="0" [max]="100" [control]="control" label="Use same scale"></app-spinner>
+	</div>
+	<div>
+		<app-checkbox label="User same scale" [control]="control"></app-checkbox>
 	</div>
 </div>
