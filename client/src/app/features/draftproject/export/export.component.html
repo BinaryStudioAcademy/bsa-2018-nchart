@@ -1,3 +1,28 @@
-<div class="export-container">
-	<h3>Export</h3>
-</div>
+<app-animated-block [indicator]="activeTab">
+	<h2><i class="fas fa-download"></i>Export</h2>
+	<div class="export-data-tabs-wrap">
+		<p-tabView 	activeIndex="0">
+	
+			<p-tabPanel header="Download">
+				<app-input-text		[control]="controlName"
+									placeholder="File name"
+									[showStates]="true"
+									label="Enter file name"
+				></app-input-text>
+				<app-dropdown-simple 	[options]="options"
+										[control]="controlType"
+										label="Select file type"
+				></app-dropdown-simple>
+				<app-button (onclick)="exportData()"
+							label="Load Data"
+							class="ui-button-position-right"
+							[disabled]="controlName.invalid"
+				></app-button>
+			</p-tabPanel>
+	
+			<p-tabPanel header="Embed">
+			</p-tabPanel>
+	
+		</p-tabView>
+	</div>
+</app-animated-block>
