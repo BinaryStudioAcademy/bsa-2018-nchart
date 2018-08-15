@@ -1,0 +1,16 @@
+<div>
+    <div class="ui-g">
+      <div class="ui-g-2" [dragula]="DIMENSIONS" id="columns" [(dragulaModel)]='columns'>
+        <div class="draggble" *ngFor='let el of columns' id={{el.variable}}>{{el.variable}}</div>
+      </div>
+      <div class="ui-g-8">
+            <div class="ui-g-3" 
+            class="draggble" 
+            *ngFor='let el of dimensionsSettings' 
+            [dragula]="DIMENSIONS" 
+            [(dragulaModel)]='el.value' 
+            [ngClass]="getClasses(el.multiple)"
+            [innerHtml]="el.variable"></div>
+        </div>
+    </div>
+  </div>
