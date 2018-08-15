@@ -3,7 +3,7 @@ import { DragulaService, DrakeFactory, MockDrake } from 'ng2-dragula';
 import { Subscription } from 'rxjs';
 
 class Column {
-	constructor(public variable: string, public type: Array<String>) {}
+	constructor(public variable: string, public type: string) {}
 }
 
 @Component({
@@ -51,8 +51,6 @@ export class DragDropComponent implements OnInit {
 		}
 	];
 
-	public test = ['Movie', 'Genre'];
-
 	public columns = [
 		{ variable: 'Movie', type: 'string' },
 		{ variable: 'Genre', type: 'number' },
@@ -77,8 +75,7 @@ export class DragDropComponent implements OnInit {
 					return true;
 				}
 				return target.id !== 'columns';
-			},
-			removeOnSpill: true
+			}
 		});
 
 		this.subs.add(
@@ -100,6 +97,16 @@ export class DragDropComponent implements OnInit {
 							!target.parentElement.classList.contains('multiple')
 						) {
 							target.parentElement.classList.add('single');
+						}
+						if (
+							this.isValid(
+								target.parentElement.firstElementChild
+									.innerHTML,
+								item
+							)
+						) {
+							target.parentElement.classList.remove('single');
+							targetModel.splice(targetModel.indexOf(item), 1);
 						}
 						if (this.hasDuplicates(targetModel)) {
 							targetModel.splice(targetModel.indexOf(item), 1);
@@ -135,6 +142,15 @@ export class DragDropComponent implements OnInit {
 				index === self.findIndex(t => t.variable === thing.variable)
 		);
 		return length !== array.length;
+	}
+
+	isValid(target: string, item: Column) {
+		let result = this.dimensionsSettings.filter(obj => {
+			return obj.variable === target;
+		});
+
+		let isValid = result[0].type.indexOf(item.type);
+		return isValid === -1;
 	}
 
 	remove(x, values, event) {
