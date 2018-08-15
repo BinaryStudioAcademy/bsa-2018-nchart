@@ -41,24 +41,13 @@ export class HttpService {
 				return this.http[request.type]<T>(url, { headers });
 			case RequestType.POST:
 			case RequestType.PUT:
-				headers = headers.append('Content-Type', 'application/json');
-
 				return this.http[request.type]<T>(url, request.payload, {
 					headers
 				});
 		}
 	}
 
-	private prepareHeaders(requestHeaders) {
-		let headersConfig = {};
-
-		if (requestHeaders) {
-			headersConfig = {
-				...requestHeaders
-			};
-		}
-
-		let headers = new HttpHeaders(headersConfig);
+	private prepareHeaders(headers = new HttpHeaders()) {
 
 		if (this.authHeader) {
 			headers = headers.append(AUTH_HEADER_NAME, this.authHeader);
