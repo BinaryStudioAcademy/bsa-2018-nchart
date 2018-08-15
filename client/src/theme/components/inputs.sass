@@ -22,7 +22,7 @@ input[type=number]::-webkit-outer-spin-button
 
 .ui-input-wrp
 	position: relative
-	width: 240px
+	width: 100%
 
 	&:hover i,
 		color: $stateActiveTextColor
@@ -71,7 +71,10 @@ input[type=number]::-webkit-outer-spin-button
 
 .input-label.input-label-error
 	color: $stateErrorBorderColor
+	min-height: 0.95rem
 	font-size: 0.7rem
+	padding: 0
+	margin-top: 0.25rem
 
 .ui-inputtext:disabled,
 .ui-dropdown.ui-widget.ui-state-disabled

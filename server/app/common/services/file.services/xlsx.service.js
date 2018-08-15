@@ -3,64 +3,96 @@ const async = require('async');
 const fs = require('fs');
 const FsService = require('../../middleware/file.middleware');
 
+function renameFiles(arr) {
+	const count = {};
+	arr.forEach((x, i) => {
+		if (arr.indexOf(x) !== i) {
+			let c;
+			if (x in count) {
+				count[x] += 1;
+				c = count[x];
+			} else {
+				count[x] = 1;
+				c = count[x];
+			}
+			let j = c + 1;
+			let k = `${x}(${j})`;
+
+			while (arr.indexOf(k) !== -1) k = `${x}(${(j += 1)})`;
+			Object.assign(arr, { [i]: k });
+		}
+	});
+	return arr;
+}
+
 const parseHeaders = workbook => {
 	const sheet = workbook.Sheets[workbook.SheetNames[0]];
 	const range = XLSX.utils.decode_range(sheet['!ref']);
-	const headers = [];
+	let headers = [];
 	let C;
 	const R = range.s.r;
 	/* start in the first row */
 	/* walk every column in the range */
 	let countBreak = 0;
+	let buffer = [];
 	for (C = range.s.c; C <= range.e.c; C += 1) {
 		const cell = sheet[XLSX.utils.encode_cell({ c: C, r: R })];
+		let hdr = `UNKNOWN`; // <-- replace with your desired default
 		if (!cell) {
 			countBreak += 1;
 			/* if 3 cell in a row undefined - break */
 			if (countBreak === 3) {
-				return headers;
+				return renameFiles(headers);
 			}
+			buffer.push(hdr);
 		}
 		/* find the cell in the first row */
-		let hdr = `UNKNOWN_${C}`; // <-- replace with your desired default
 		if (cell && cell.t && cell.v !== '' && cell.v !== ' ') {
 			countBreak = 0;
 			hdr = XLSX.utils.format_cell(cell);
-			headers.push(hdr);
-		} else {
+			if (buffer.length >= 1) {
+				headers = headers.concat(buffer);
+			}
+			buffer = [];
 			headers.push(hdr);
 		}
 	}
-	return headers;
+	return renameFiles(headers);
 };
 
 const getHeaders = (path, content) => {
+	// if user sent file
 	if (path) {
 		const workbook = XLSX.readFile(path);
 		return parseHeaders(workbook);
 	}
+	// if user sent string
 	const workbook = XLSX.read(content, { type: 'string' });
 	return parseHeaders(workbook);
 };
 
 const parseData = (data, headers) => {
+	// check if string if a valid number
 	function isNumber(str) {
-		const a = `${Number(str)}`;
-		if (a === 'NaN') {
+		const number = `${Number(str)}`;
+		if (number === 'NaN') {
 			return false;
 		}
 		return true;
 	}
+	// items needed for data parsing
 	const countNull = {};
 	const countNumber = {};
-	const payload = {};
+	const dataInColumns = {};
 	for (let i = 0; i < headers.length; i += 1) {
-		Object.assign(payload, { [headers[i]]: { data: [], type: '' } });
+		Object.assign(dataInColumns, { [headers[i]]: { data: [], type: '' } });
 		Object.assign(countNull, { [headers[i]]: 0 });
 		Object.assign(countNumber, { [headers[i]]: 0 });
 	}
 	let item;
+	const temporaryRowPayload = [];
 	for (let i = 0; i < data.length; i += 1) {
+		const temporaryArr = [];
 		for (let c = 0; c < headers.length; c += 1) {
 			item = data[i][headers[c]];
 			if (item === undefined || item === '' || item === ' ') {
@@ -69,27 +101,42 @@ const parseData = (data, headers) => {
 			if (item === null) {
 				countNull[headers[c]] += 1;
 			}
+			// check if cell is number
 			if (isNumber(item)) {
+				// if not null, convert into number
 				if (item !== null) {
 					item = Number(item);
 				}
 				countNumber[headers[c]] += 1;
 			}
-			payload[headers[c]].data.push(item);
+			temporaryArr.push(item);
+			dataInColumns[headers[c]].data.push(item);
 		}
+		temporaryRowPayload.push(temporaryArr);
 	}
+	// set data types for each column
 	for (let c = 0; c < headers.length; c += 1) {
-		// delete empty columns
-		if (countNull[headers[c]] === payload[headers[c]].data.length) {
-			delete payload[headers[c]];
+		if (countNull[headers[c]] === dataInColumns[headers[c]].data.length) {
+			dataInColumns[headers[c]].type = 'null';
 		} else if (
-			countNumber[headers[c]] === payload[headers[c]].data.length &&
+			countNumber[headers[c]] === dataInColumns[headers[c]].data.length &&
 			countNumber[headers[c]] !== countNull[headers[c]]
 		) {
-			payload[headers[c]].type = 'number';
+			dataInColumns[headers[c]].type = 'number';
 		} else {
-			payload[headers[c]].type = 'string';
+			dataInColumns[headers[c]].type = 'string';
 		}
+	}
+	const payload = {
+		columns: [],
+		data: temporaryRowPayload
+	};
+	// set column types
+	for (let c = 0; c < headers.length; c += 1) {
+		payload.columns.push({
+			title: headers[c],
+			type: dataInColumns[headers[c]].type
+		});
 	}
 	return payload;
 };
@@ -161,7 +208,7 @@ const readString = content =>
 			{ header: headers, range: 1 }
 		);
 		const payload = parseData(data, headers);
-		if (payload.length === 0) {
+		if (payload.data.length === 0) {
 			reject(new Error('Messed up file'));
 		}
 		resolve(payload);

@@ -14,7 +14,6 @@ import { SharedModule } from '@app/shared/shared.module';
 import { TabViewModule } from 'primeng/tabview';
 import { FileUploadModule } from 'primeng/fileupload';
 
-
 @NgModule({
 	imports: [SharedModule, TabViewModule, FileUploadModule, CommonModule],
 	declarations: [

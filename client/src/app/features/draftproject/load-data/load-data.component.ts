@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { requiredValidator, patternValidator } from '../../../shared/components/form-field/form-validators';
+import {
+	requiredValidator,
+	patternValidator
+} from '../../../shared/components/form-field/form-validators';
 
 @Component({
 	selector: 'app-load-data',
@@ -8,6 +11,7 @@ import { requiredValidator, patternValidator } from '../../../shared/components/
 	styleUrls: ['./load-data.component.sass']
 })
 export class LoadDataComponent implements OnInit {
+	activeTab: number;
 
 	uploadedFiles: any[] = [];
 
@@ -26,19 +30,19 @@ export class LoadDataComponent implements OnInit {
 
 	loadUrl(event) {
 		if (this.pasteUrlControl.valid) {
-
 		}
 	}
 
 	pasteData(event) {
 		if (this.pasteDataControl.valid) {
-
 		}
 	}
 
-	constructor() { }
-
-	ngOnInit() {
+	onChange(event) {
+		this.activeTab = event.index;
 	}
 
+	constructor() {}
+
+	ngOnInit() {}
 }
