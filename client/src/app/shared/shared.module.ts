@@ -5,6 +5,7 @@ import { ActionButtonComponent } from '@app/shared/components/button/action-butt
 import { HeaderModule } from '@app/shared/components/header/header.module';
 import { MainBlockComponent } from './components/main-block/main-block.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LinkComponent } from '@app/shared/components/link/link.component';
 
 @NgModule({
 	imports: [
@@ -18,8 +19,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 		FormFieldModule,
 		HeaderModule,
 		UIKitModule,
-		MainBlockComponent
+		MainBlockComponent,
+		LinkComponent
 	],
-	declarations: [ActionButtonComponent, MainBlockComponent]
+	declarations: [ActionButtonComponent, MainBlockComponent, LinkComponent]
 })
 export class SharedModule {}
