@@ -115,8 +115,12 @@ const parseData = (data, headers) => {
 		}
 		temporaryRowPayload.push(temporaryArr);
 	}
+	let IDs = [];
 	// set data types for each column
 	for (let c = 0; c < headers.length; c += 1) {
+		// create IDs array
+		IDs.push(uuidv4());
+		// todo: if front want, its possible to return index of empty column
 		if (countNull[headers[c]] === dataInColumns[headers[c]].data.length) {
 			dataInColumns[headers[c]].type = 'null';
 		} else if (
@@ -132,14 +136,9 @@ const parseData = (data, headers) => {
 		columns: [],
 		data: temporaryRowPayload
 	};
-	let IDs = [];
-	// create IDs array
-	for (let c = 0; c < headers.length; c += 1) {
-		IDs.push(uuidv4());
-	}
 	// check if there any duplicates
 	IDs = renameFiles(IDs);
-	// set column types
+	// set IDs and column types
 	for (let c = 0; c < headers.length; c += 1) {
 		payload.columns.push({
 			title: headers[c],
