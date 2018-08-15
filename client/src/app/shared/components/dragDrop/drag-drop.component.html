@@ -10,7 +10,7 @@
               <div [dragula]="DIMENSIONS" [(dragulaModel)]='el.value' class="dropContainer">
                   {{el.variable}}
                   <div class="draggble" *ngFor='let x of el.value'>{{x.variable}}
-                    <i class="fas fa-times removeIcon" (click)="remove(x, el.value)"></i>
+                    <i class="fas fa-times removeIcon" (click)="remove(x, el.value, $event)"></i>
                   </div>
               </div>
             </div>

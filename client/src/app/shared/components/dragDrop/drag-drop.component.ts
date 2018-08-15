@@ -137,7 +137,16 @@ export class DragDropComponent implements OnInit {
 		return length !== array.length;
 	}
 
-	remove(x, values) {
+	remove(x, values, event) {
+		if (
+			event.srcElement.parentElement.parentElement.parentElement.classList.contains(
+				'single'
+			)
+		) {
+			event.srcElement.parentElement.parentElement.parentElement.classList.remove(
+				'single'
+			);
+		}
 		values.splice(values.indexOf(x), 1);
 	}
 
