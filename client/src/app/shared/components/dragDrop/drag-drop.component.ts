@@ -47,20 +47,22 @@ export class DragDropComponent implements OnInit {
 			type: ['string', 'number'],
 			description:
 				'Can accept both number and strings. A color will be defined for each unique value found in the list.',
-			value: []
+			value: [{ variable: 'Box office', type: 'number' }]
 		}
 	];
 
+	public test = ['Movie', 'Genre'];
+
 	public columns = [
 		{ variable: 'Movie', type: 'string' },
-		{ variable: 'Genre', type: 'number' }
+		{ variable: 'Genre', type: 'number' },
+		{ variable: 'Box office', type: 'number' }
 	];
 	public dimensions = [];
-	public single = false;
-	public dragged: any;
+
 	subs = new Subscription();
-	constructor(private dragulaService: DragulaService) {
-		dragulaService.createGroup(this.DIMENSIONS, {
+	constructor(private _dragulaService: DragulaService) {
+		_dragulaService.createGroup(this.DIMENSIONS, {
 			copy: (el, source) => {
 				return source.id === 'columns';
 			},
@@ -68,21 +70,19 @@ export class DragDropComponent implements OnInit {
 				return new Column(column.variable, column.type);
 			},
 			accepts: (el, target, source, sibling) => {
-				if (target.classList.contains('single')) {
+				if (target.parentElement.classList.contains('single')) {
 					return false;
 				}
-				if (target.classList.contains('multiple')) {
-					if (target.contains(el)) {
-						return false;
-					}
+				if (target.parentElement.classList.contains('multiple')) {
 					return true;
 				}
 				return target.id !== 'columns';
-			}
+			},
+			removeOnSpill: true
 		});
 
 		this.subs.add(
-			this.dragulaService
+			this._dragulaService
 				.dropModel(this.DIMENSIONS)
 				.subscribe(
 					({
@@ -93,62 +93,39 @@ export class DragDropComponent implements OnInit {
 						targetModel,
 						item
 					}) => {
-						if (this.hasDuplicates(targetModel)) {
-							target.appendChild(el);
-						} else {
-							targetModel.splice(targetModel.indexOf(item), 1);
-						}
 						if (source.children.length === 0) {
-							source.classList.remove('single');
+							source.parentElement.classList.remove('single');
 						}
-						if (!target.classList.contains('multiple')) {
-							target.classList.add('single');
+						if (
+							!target.parentElement.classList.contains('multiple')
+						) {
+							target.parentElement.classList.add('single');
+						}
+						if (this.hasDuplicates(targetModel)) {
+							targetModel.splice(targetModel.indexOf(item), 1);
 						}
 					}
 				)
 		);
 
 		this.subs.add(
-			this.dragulaService
+			this._dragulaService
 				.removeModel(this.DIMENSIONS)
-				.subscribe(({ el, source, sourceModel, item }) => {})
-		);
-
-		this.subs.add(
-			this.dragulaService
-				.drag(this.DIMENSIONS)
-				.subscribe(({ el, source }) => {})
+				.subscribe(({ el, source, sourceModel, item }) => {
+					if (source.parentElement.children.length <= 2) {
+						source.parentElement.classList.remove('single');
+					}
+				})
 		);
 	}
 
-	ngOnInit() {
-		this.dragulaService
-			.drag(this.DIMENSIONS)
-			.subscribe(({ name, el, source }) => {
-				/* console.log(name);
-            console.log(el);
-            console.log(source);*/
-				this.dragged = el;
-			});
-		this.dragulaService
-			.drop(this.DIMENSIONS)
-			.subscribe(({ el, target, source, sibling }) => {
-				/* console.log(el);
-            console.log(target);
-            console.log(source);
-            console.log(target.contains(el));*/
-				// console.log(this.dimensionsSettings[0].value);
-				// console.log(this.dimensionsSettings[1].value);
-				//  console.log(this.dimensionsSettings[2].value);
-				this.dragged = el;
-			});
-		this.dragulaService
-			.cancel(this.DIMENSIONS)
-			.subscribe(({ el, container, source }) => {});
-	}
+	ngOnInit() {}
 
-	getClasses(multiple) {
-		return { multiple: multiple };
+	getClasses(multiple, required) {
+		return {
+			multiple: multiple,
+			required: required
+		};
 	}
 
 	hasDuplicates(array) {
@@ -157,7 +134,11 @@ export class DragDropComponent implements OnInit {
 			(thing, index, self) =>
 				index === self.findIndex(t => t.variable === thing.variable)
 		);
-		return length === array.length;
+		return length !== array.length;
+	}
+
+	remove(x, values) {
+		values.splice(values.indexOf(x), 1);
 	}
 
 	ngOnDestroy() {

@@ -1,16 +1,21 @@
 <div>
     <div class="ui-g">
-      <div class="ui-g-2" [dragula]="DIMENSIONS" id="columns" [(dragulaModel)]='columns'>
+      <div class="ui-g-3 dragContainer" [dragula]="DIMENSIONS" id="columns" [(dragulaModel)]='columns'>
         <div class="draggble" *ngFor='let el of columns' id={{el.variable}}>{{el.variable}}</div>
       </div>
-      <div class="ui-g-8">
-            <div class="ui-g-3" 
-            class="draggble" 
-            *ngFor='let el of dimensionsSettings' 
-            [dragula]="DIMENSIONS" 
-            [(dragulaModel)]='el.value' 
-            [ngClass]="getClasses(el.multiple)"
-            [innerHtml]="el.variable"></div>
-        </div>
+      <div class="ui-g-9 ">
+            <div *ngFor='let el of dimensionsSettings' [ngClass]="getClasses(el.multiple, el.required)"  class="ui-g-4 dropArea">
+              <i *ngIf="el.required" class="fa fa-asterisk fa-xs requiredIcon"></i>
+              <i *ngIf="el.multiple" class="fa fa-tags fa-xs multipleIcon"></i>
+              <div [dragula]="DIMENSIONS" [(dragulaModel)]='el.value' class="dropContainer">
+                  {{el.variable}}
+                  <div class="draggble" *ngFor='let x of el.value'>{{x.variable}}
+                    <i class="fas fa-times removeIcon" (click)="remove(x, el.value)"></i>
+                  </div>
+              </div>
+            </div>
+      </div>
+      
     </div>
-  </div>
+
+</div>

@@ -3,10 +3,67 @@
 
 .dd-container
     
+.dropArea
+    position: relative
+   
+    text-align: center
+    font-size: 1.2rem
+    font-weight: 600
+    font-family: $fontFamily
+    color: $secondaryTextColor
+    margin: 10px
+    border-radius: 2px
+    min-height: 80px
+    background-color: white
+    transition: border .15s ease-in-out
+    box-shadow: $boxShadow
+
+.dropContainer
+    margin-top: 10px
+    min-height: 80px
 
 .draggble
+    position: relative
     cursor: grab
-    margin: 10px
+    color: white
+    font-weight: 600
+    margin: 5px
     padding: 10px
-    background-color: rgba(0, 0, 0, 0.2)
+    font-family: $fontFamily
+    font-size: 0.9rem
+    letter-spacing: 1px
+    line-height: 18px
+    border-radius: 2px
+    background-color: $activeColor
+    text-align: left
     transition: opacity 0.4s ease-in-out
+    box-shadow: $boxShadow
+
+.dropContainer .draggble 
+    margin-bottom: 0
+
+.multiple .dropContainer .draggble 
+    margin: 5px 
+
+.draggble:hover
+    opacity: 0.8
+    transition: opacity 0.4s ease-in-out
+
+.removeIcon
+    position: absolute
+    right: 10px
+    top: 11px
+    cursor: pointer
+
+.removeIcon:hover
+    color: $errorColor
+    transition: color 0.4s ease-in-out
+
+.requiredIcon
+    color: $activeColor
+    position: absolute
+    right: 10px
+
+.multipleIcon
+    position: absolute
+    left: 10px

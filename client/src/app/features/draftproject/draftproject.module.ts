@@ -9,9 +9,10 @@ import { CustomizeChartComponent } from '@app/features/draftproject/custom-chart
 import { ChartComponent } from '@app/features/draftproject/custom-chart/chart/chart.component';
 import { ExportComponent } from '@app/features/draftproject/export/export.component';
 import { ChartPreviewComponent } from '@app/features/draftproject/list-charts/chart-preview/chart-preview.component';
+import { SharedModule } from '@app/shared/shared.module';
 
 @NgModule({
-	imports: [],
+	imports: [SharedModule],
 	declarations: [
 		StepperComponent,
 		LoadDataComponent,
