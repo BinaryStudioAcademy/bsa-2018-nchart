@@ -1,6 +1,7 @@
 const XLSX = require('xlsx');
 const async = require('async');
 const fs = require('fs');
+const uuidv4 = require('uuid/v4');
 const FsService = require('../../middleware/file.middleware');
 
 function renameFiles(arr) {
@@ -114,8 +115,12 @@ const parseData = (data, headers) => {
 		}
 		temporaryRowPayload.push(temporaryArr);
 	}
+	let IDs = [];
 	// set data types for each column
 	for (let c = 0; c < headers.length; c += 1) {
+		// create IDs array
+		IDs.push(uuidv4());
+		// todo: if front want, its possible to return index of empty column
 		if (countNull[headers[c]] === dataInColumns[headers[c]].data.length) {
 			dataInColumns[headers[c]].type = 'null';
 		} else if (
@@ -131,11 +136,14 @@ const parseData = (data, headers) => {
 		columns: [],
 		data: temporaryRowPayload
 	};
-	// set column types
+	// check if there any duplicates
+	IDs = renameFiles(IDs);
+	// set IDs and column types
 	for (let c = 0; c < headers.length; c += 1) {
 		payload.columns.push({
 			title: headers[c],
-			type: dataInColumns[headers[c]].type
+			type: dataInColumns[headers[c]].type,
+			id: IDs[c]
 		});
 	}
 	return payload;
