@@ -3,7 +3,7 @@ import { CompaniesState } from './companies-store.model';
 import { ErrorHandlerState } from './error-store.model';
 import { ProjectsState } from './projects-store.model';
 import { ChartsState } from '@app/models/charts-store.model';
-import { LoadedDataState } from '@app/models/file-data.store';
+import { DataState } from '@app/models/file-data.store';
 
 export class AppAction<T = undefined> {
 	readonly type: string;
@@ -25,5 +25,6 @@ export interface AppState {
 	companies: CompaniesState;
 	projects: ProjectsState;
 	charts: ChartsState;
-	loadedData: LoadedDataState;
+	loadedData: DataState;
+	modifiedData: DataState;
 }

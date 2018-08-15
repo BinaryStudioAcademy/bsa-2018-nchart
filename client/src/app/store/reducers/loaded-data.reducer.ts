@@ -1,10 +1,10 @@
 import { Actions as LoadedDataActions } from '../actions/loaded-data/loaded-data.actions';
 import { FileData } from '@app/models';
 import { combineReducers } from '@ngrx/store';
-import { LoadedDataState } from '@app/models/file-data.store';
+import { DataState } from '@app/models/file-data.store';
 import { LoadedDataActionConstants } from '@app/store/actions/loaded-data/loaded-data.action-types';
 
-export const initialState: LoadedDataState = {
+export const initialState: DataState = {
 	data: {
 		columns: null,
 		data: null

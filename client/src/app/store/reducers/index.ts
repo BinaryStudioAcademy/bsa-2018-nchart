@@ -12,6 +12,11 @@ import {
 } from './charts.reducer';
 
 import {
+	modifiedDataReducer,
+	initialState as modifiedDataInitialState
+} from './modified-data.reducer';
+
+import {
 	loadedDataReducer,
 	initialState as loadedDataInitialState
 } from './loaded-data.reducer';
@@ -37,6 +42,7 @@ export const initialState: AppState = {
 	companies: companiesInitialState,
 	projects: projectsInitialState,
 	charts: chartsInitialState,
+	modifiedData: modifiedDataInitialState,
 	loadedData: loadedDataInitialState
 };
 
@@ -46,6 +52,7 @@ export const getReducers = () => ({
 	companies: companiesReducer,
 	projects: projectsReducer,
 	charts: chartsReducer,
+	modifiedData: modifiedDataReducer,
 	loadedData: loadedDataReducer
 });
 

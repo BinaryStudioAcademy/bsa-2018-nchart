@@ -5,6 +5,7 @@ import { CompaniesEffects } from '@app/store/effects/companies.effects';
 import { ProjectsEffects } from '@app/store/effects/projects.effects';
 import { ChartsEffects } from '@app/store/effects/charts.effects';
 import { LoadedDataEffects } from '@app/store/effects/loaded-data.effects';
+import { ModifiedDataEffects } from '@app/store/effects/modified-data.effects';
 
 @NgModule({
 	imports: [
@@ -13,6 +14,7 @@ import { LoadedDataEffects } from '@app/store/effects/loaded-data.effects';
 			CompaniesEffects,
 			ChartsEffects,
 			LoadedDataEffects,
+			ModifiedDataEffects,
 			ProjectsEffects
 		])
 	]
