@@ -1,5 +1,7 @@
-<div class="chart-preview">
-  <div class="chart-img"></div>
-  <p class="chart-label">Chart3</p>
-  <p class="chart-description">Switch between stacked and grouped layouts using sequenced transitions! Animations preserve object constancy and allow the user to follow the data across views.</p>
+<div class="chart-preview ui-main-block">
+  <div class="chart-img">
+	  <i [ngClass]="chartIconClass"></i>
+  </div>
+  <p class="chart-label">{{selectedChart.name}}</p>
+  <p class="chart-description">{{selectedChart.description}}</p>
 </div>
