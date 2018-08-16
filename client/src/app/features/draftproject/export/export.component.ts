@@ -16,26 +16,32 @@ export class ExportComponent implements OnInit {
 	file: string;
 
 	controlName = new FormControl('', [
-		patternValidator('Invalid filename', RegExp('^[a-zA-Zа-яА-Я0-9_()#`.@-]+$')),
+		patternValidator(
+			'Invalid filename',
+			RegExp('^[a-zA-Zа-яА-Я0-9_()#`.@-]+$')
+		),
 		requiredValidator('Filename can`t be empty')
 	]);
-	controlType = new FormControl('', [
-		requiredValidator('')
-	]);
+	controlType = new FormControl('', [requiredValidator('')]);
 
-	options = [{
-		label: '.pdf',
-		value: 'pdf'
-	}, {
-		label: '.svg',
-		value: 'svg'
-	}, {
-		label: '.jpg',
-		value: 'jpg'
-	}, {
-		label: '.png',
-		value: 'png'
-	}];
+	options = [
+		{
+			label: '.pdf',
+			value: 'pdf'
+		},
+		{
+			label: '.svg',
+			value: 'svg'
+		},
+		{
+			label: '.jpg',
+			value: 'jpg'
+		},
+		{
+			label: '.png',
+			value: 'png'
+		}
+	];
 
 	constructor() {}
 
