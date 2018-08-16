@@ -42,7 +42,7 @@ import { DragulaModule } from 'ng2-dragula';
 		ToolbarModule,
 		TabMenuModule,
 		TabViewModule,
-		ScrollToModule,
+		ScrollToModule.forRoot(),
 		DragulaModule.forRoot(),
 		FormsModule
 	],
