@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
 	selector: 'app-chart-preview',
@@ -6,6 +6,11 @@ import { Component, OnInit } from '@angular/core';
 	styleUrls: ['./chart-preview.component.sass']
 })
 export class ChartPreviewComponent implements OnInit {
+	@Input()
+	selectedChart: any;
+	@Input()
+	chartIconClass: string;
+
 	constructor() {}
 
 	ngOnInit() {}

@@ -11,6 +11,8 @@ export class SpinnerComponent implements OnInit {
 	@Input()
 	label: string;
 	@Input()
+	value: number;
+	@Input()
 	control?: FormControl;
 	@Input()
 	min: number;
