@@ -6,8 +6,10 @@ import { Component, OnInit, Input } from '@angular/core';
 	styleUrls: ['./chart-preview.component.sass']
 })
 export class ChartPreviewComponent implements OnInit {
-	@Input() selectedChart: any;
-	@Input() chartIconClass: string;
+	@Input()
+	selectedChart: any;
+	@Input()
+	chartIconClass: string;
 
 	constructor() {}
 
