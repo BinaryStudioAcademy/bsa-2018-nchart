@@ -1,0 +1,19 @@
+<div class="list-charts-container">
+  <div class="chart-selection ui-main-block">
+    <h2><i class="fas fa-chart-pie"></i>Choose a Chart</h2>
+    <ul>
+		<li 	*ngFor="let chart of chartList"
+				(click)="selectChart(chart.id)"
+				[ngClass]="getClasses(chart.id)"
+		>
+			<div class="chart-img">
+				<i [ngClass]="getIconClasses(chart.id)"></i>
+			</div>
+			<p>{{chart.name}}</p>
+		</li>
+    </ul>
+  </div>
+  <app-chart-preview 	[selectedChart]="selectedChart"
+  						[chartIconClass]="chartIconClass"
+  ></app-chart-preview>
+</div>
