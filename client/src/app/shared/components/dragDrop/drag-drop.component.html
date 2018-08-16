@@ -1,0 +1,22 @@
+
+    <div class="ui-g dd-container">
+      <div class="ui-g-4 dragContainer" [dragula]="DIMENSIONS" id="columns" [(dragulaModel)]='columns'>
+        <div class="draggble" *ngFor='let el of columns' id={{el.variable}}>{{el.variable}}<small style="margin-left: 10px">{{el.type}}</small></div>
+      </div>
+      <div class="ui-g-8 ">
+          <i class="fa fa-trash-alt removeAllIcon" (click)="removeAll()"></i>
+            <div *ngFor='let el of dimensionsSettings' [ngClass]="getClasses(el.multiple, el.required)"  class="dropArea">
+              <h4 class="dimensionHeader">{{el.variable}}</h4>
+              <i *ngIf="el.required" class="fa fa-asterisk fa-xs requiredIcon"></i>
+              <i *ngIf="el.multiple" class="fa fa-list fa-xs multipleIcon"></i>
+              <pre class="dimensionSubHeader">{{el.type}}</pre>
+              <div [dragula]="DIMENSIONS" [(dragulaModel)]='el.value' class="dropContainer">
+                  <div class="draggble" *ngFor='let x of el.value'>{{x.variable}}
+                      <small style="margin-left: 10px">{{x.type}}</small>
+                    <i class="fas fa-times removeIcon" (click)="remove(x, el.value)"></i>
+                  </div>
+              </div>
+            </div>
+      </div>
+      
+    </div>

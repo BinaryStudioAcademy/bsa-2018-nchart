@@ -4,7 +4,7 @@
 .ui-dropdown .ui-dropdown-label
 	height: 40px
 	padding: 12px
-	color: $secondaryTextColor
+	color: $stateActiveTextColor
 	min-width: 200px
 
 .ui-dropdown.ui-widget
@@ -17,13 +17,13 @@
 .ui-dropdown:not(.ui-state-disabled):hover
 	label.ui-dropdown-label,
 	.pi-caret-down:before
-		color: $stateDefaultTextColor
+		color: $stateActiveTextColor
 
 .ui-dropdown.ui-state-disabled
 	label.ui-dropdown-label,
 	.ui-dropdown-trigger
 		background-color: $disabledColor
-	color: $secondaryTextColor
+	color: $stateActiveTextColor
 	opacity: 1
 
 .ui-dropdown .ui-dropdown-trigger
