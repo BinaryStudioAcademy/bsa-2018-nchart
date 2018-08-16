@@ -1,7 +1,10 @@
 <a
     [ngClass]="getClasses()"
     [routerLink]="link"
+    [ngSwitch]="displayWith"
 >
     <span class="label">{{label}}</span>
-    <i *ngIf="icon" [ngClass]="getIconClasses()"></i>
+
+    <i *ngSwitchCase="'shape'" [ngClass]="getShapeClasses()"></i>
+    <i *ngSwitchCase="'icon'" [ngClass]="getIconClasses()"></i>
 </a>

@@ -6,6 +6,28 @@
     line-height: 1.6
     text-decoration: none
     outline: none
+    .icon,
+    .shape
+        vertical-align: middle
+        margin-left: 0.3em
+        font-size: $linkShapeFontSize
+    .icon
+        font-size: $linkIconFontSize
+        color: $linkIconColor
+
+.ui-link-primary,
+.ui-link-secondary,
+.ui-link-underline
+    &:link,
+    &:visited
+        .shape
+            visibility: hidden
+    &:focus,
+    &:hover,
+    &:active
+        .shape
+            visibility: visible
+
         
 .ui-link-primary
     &:link,
@@ -46,22 +68,5 @@
     &:active
         color: $linkUnderlineTextColor
         .label
-            border-bottom: $linkUnderlineFat solid $linkUnderlineTextColor
-
-.ui-link.ui-link-shape
-    color: $linkTextColor
-    .icon
-        margin-left: 0.4em
-        font-size: 0.9em
-        color: $linkTextColor
-        visibility: hidden
-    &:focus,
-    &:hover
-        .icon
-            visibility: visible    
-
-.ui-link
-    .icon
-        margin-left: 0.3em
-        font-size: $linkIconFontSize
-        color: $linkIconColor
+            border-bottom: $linkUnderlineFat solid $linkUnderlineTextColor  
+    
