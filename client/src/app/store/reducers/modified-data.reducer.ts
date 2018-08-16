@@ -1,8 +1,10 @@
 import { Actions as ModifiedDataActions } from '../actions/modified-data/modified-data.actions';
+import { Actions as LoadedDataActions } from '../actions/loaded-data/loaded-data.actions';
 import { FileData } from '@app/models';
 import { combineReducers } from '@ngrx/store';
 import { DataState } from '@app/models/file-data.store';
 import { ModifiedDataActionConstants } from '@app/store/actions/modified-data/modified-data.action-types';
+import {LoadedDataActionConstants} from '@app/store/actions/loaded-data/loaded-data.action-types';
 
 export const initialState: DataState = {
 	data: {
@@ -14,16 +16,16 @@ export const initialState: DataState = {
 
 export const data = (
 	state = initialState.data,
-	action: ModifiedDataActions
+	action: ModifiedDataActions | LoadedDataActions
 ): FileData => {
 	switch (action.type) {
-		case ModifiedDataActionConstants.MODIFIEDDATA_LOAD_DATA: {
+		case LoadedDataActionConstants.LOADEDDATA_LOAD_DATA: {
 			return {
 				columns: null,
 				data: null
 			};
 		}
-		case ModifiedDataActionConstants.MODIFIEDDATA_LOAD_DATA__COMPLETE: {
+		case LoadedDataActionConstants.LOADEDDATA_LOAD_DATA__COMPLETE: {
 			return {
 				...action.payload
 			};
@@ -57,14 +59,14 @@ export const data = (
 
 export const isLoading = (
 	state = initialState.isLoading,
-	action: ModifiedDataActions
+	action: ModifiedDataActions | LoadedDataActions
 ): boolean => {
 	switch (action.type) {
-		case ModifiedDataActionConstants.MODIFIEDDATA_LOAD_DATA: {
+		case LoadedDataActionConstants.LOADEDDATA_LOAD_DATA: {
 			return true;
 		}
-		case ModifiedDataActionConstants.MODIFIEDDATA_LOAD_DATA__COMPLETE:
-		case ModifiedDataActionConstants.MODIFIEDDATA_LOAD_DATA__FAILED: {
+		case LoadedDataActionConstants.LOADEDDATA_LOAD_DATA__COMPLETE:
+		case LoadedDataActionConstants.LOADEDDATA_LOAD_DATA__FAILED: {
 			return false;
 		}
 		default:
