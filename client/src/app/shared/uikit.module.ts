@@ -3,7 +3,9 @@ import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { TabMenuModule } from 'primeng/tabmenu';
+
 // Forms
+import { FormsModule } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { RadioButtonModule } from 'primeng/radiobutton';
@@ -17,6 +19,8 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TabViewModule } from 'primeng/tabview';
+// Drag&Drop
+import { DragulaModule } from 'ng2-dragula';
 
 @NgModule({
 	imports: [
@@ -36,7 +40,9 @@ import { TabViewModule } from 'primeng/tabview';
 		InputSwitchModule,
 		ToolbarModule,
 		TabMenuModule,
-		TabViewModule
+		TabViewModule,
+		DragulaModule.forRoot(),
+		FormsModule
 	],
 	exports: [
 		ButtonModule,
@@ -55,7 +61,9 @@ import { TabViewModule } from 'primeng/tabview';
 		InputSwitchModule,
 		ToolbarModule,
 		TabMenuModule,
-		TabViewModule
+		TabViewModule,
+		DragulaModule,
+		FormsModule
 	],
 	declarations: []
 })

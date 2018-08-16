@@ -4,11 +4,9 @@
 	"description": "",
 	"main": "/bin/www",
 	"scripts": {
-		"start": "node ./bin/www",
+		"start": "node --experimental-worker ./bin/www",
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"lint": "eslint -c ./.eslintrc.json ./**/*.js --fix",
-		"format:fix": "pretty-quick --staged  --config ./.prettierrc ./app/",
-		"precommit": "run-s format:fix lint"
+		"lint": "eslint -c ./.eslintrc.json ./**/*.js --fix"
 	},
 	"author": "",
 	"license": "ISC",
@@ -25,7 +23,6 @@
 		"express-fileupload": "^0.4.0",
 		"fast-csv": "^2.4.1",
 		"file-type": "^9.0.0",
-		"husky": "^1.0.0-rc.13",
 		"jsonwebtoken": "^8.3.0",
 		"morgan": "^1.9.0",
 		"multer": "^1.3.1",
@@ -46,8 +43,6 @@
 		"eslint-config-airbnb-base": "^13.0.0",
 		"eslint-plugin-import": "^2.13.0",
 		"eslint-plugin-jsx-a11y": "^6.1.1",
-		"eslint-plugin-react": "^7.10.0",
-		"npm-run-all": "^4.1.3",
-		"prettier": "^1.14.0"
+		"eslint-plugin-react": "^7.10.0"
 	}
 }

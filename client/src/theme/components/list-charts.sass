@@ -1,0 +1,66 @@
+@import ../colors
+@import ../variables
+	
+.list-charts-container
+	display: flex
+	justify-content: space-between
+
+.chart-selection
+	flex-grow: 2
+	margin-right: 20px
+
+	ul
+		padding: 0
+		margin: 0
+		margin-top: 20px
+		display: flex
+		flex-wrap: wrap
+		justify-items: center
+		  
+		li
+			list-style: none
+			margin: 8px
+			width: 125px
+		
+		li:not(.chart-selected):hover
+			.chart-img
+				border-color: $defaultButtonHover
+			i
+				color: $defaultButtonHover
+
+		li.chart-selected
+			.chart-img
+				border-color: $baseColor
+			i
+				color: $baseColor
+      
+		p
+			text-align: center
+
+.chart-img
+	width: 100px
+	height: 100px
+	border: 2px solid $disabledColor
+	border-radius: 50%
+	margin: 0 auto
+	display: flex
+	align-items: center
+	justify-content: center
+	transition: .2s ease-out
+	i
+		font-size: 3rem
+		color: $teriaryColor
+		transition: .2s ease-out
+
+app-chart-preview
+	width: 300px
+	align-self: flex-start
+	.chart-label
+		font-weight: 600
+		font-size: 1.2rem
+		text-align: center
+	.chart-img
+		border: 2px solid $baseColor
+		margin-top: 16px
+		i
+			color: $baseColor
