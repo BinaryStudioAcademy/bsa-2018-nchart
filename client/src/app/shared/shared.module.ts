@@ -7,6 +7,7 @@ import { VirtualScrollModule } from 'angular2-virtual-scroll';
 import { HeaderModule } from '@app/shared/components/header/header.module';
 import { MainBlockComponent } from './components/main-block/main-block.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DragDropComponent } from '../shared/components/dragDrop/drag-drop.component';
 
 @NgModule({
 	imports: [
@@ -27,7 +28,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 	declarations: [
 		ActionButtonComponent,
 		MainBlockComponent,
-		VirtualScrollTableComponent
+		VirtualScrollTableComponent,
+		DragDropComponent
 	]
 })
 export class SharedModule {}

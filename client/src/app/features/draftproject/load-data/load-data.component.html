@@ -12,7 +12,7 @@
 									[control]="pasteDataControl"
 									placeholder="Paste your data here"
 				></app-input-textarea>
-				<app-button (click)="pasteData($event)"
+				<app-button (onclick)="pasteData($event)"
 							label="Load Data"
 							class="ui-button-position-right"
 							[disabled]="pasteDataControl.invalid"
@@ -43,7 +43,7 @@
 									[control]="pasteUrlControl"
 									showStates="true"
 					></app-input-text>
-					<app-button (click)="loadUrl($event)"
+					<app-button (onclick)="loadUrl($event)"
 								label="Load Data"
 								class="ui-button-position-right"
 								[disabled]="pasteUrlControl.invalid"
