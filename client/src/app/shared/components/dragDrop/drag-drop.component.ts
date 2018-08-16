@@ -68,12 +68,6 @@ export class DragDropComponent implements OnInit, OnDestroy {
 				return new Column(column.variable, column.type);
 			},
 			accepts: (el, target, source, sibling) => {
-				if (target.parentElement.classList.contains('single')) {
-					return false;
-				}
-				if (target.parentElement.classList.contains('multiple')) {
-					return true;
-				}
 				return target.id !== 'columns';
 			}
 		});
@@ -82,19 +76,20 @@ export class DragDropComponent implements OnInit, OnDestroy {
 			this._dragulaService
 				.dropModel(this.DIMENSIONS)
 				.subscribe(({ target, source, targetModel, item }) => {
-					if (source.children.length === 0) {
-						source.parentElement.classList.remove('single');
-					}
-					if (!target.parentElement.classList.contains('multiple')) {
-						target.parentElement.classList.add('single');
-					}
 					if (
 						this.isValid(
 							target.parentElement.firstElementChild.innerHTML,
 							item
 						)
 					) {
-						target.parentElement.classList.remove('single');
+						targetModel.splice(targetModel.indexOf(item), 1);
+					}
+					if (
+						!this.hasPlace(
+							target.parentElement.firstElementChild.innerHTML,
+							item
+						)
+					) {
 						targetModel.splice(targetModel.indexOf(item), 1);
 					}
 					if (this.hasDuplicates(targetModel)) {
@@ -133,25 +128,31 @@ export class DragDropComponent implements OnInit, OnDestroy {
 	}
 
 	isValid(target: string, item: Column) {
-		const result = this.dimensionsSettings.filter(obj => {
+		const dimension = this.dimensionsSettings.filter(obj => {
 			return obj.variable === target;
 		});
 
-		const isValid = result[0].type.indexOf(item.type);
+		const isValid = dimension[0].type.indexOf(item.type);
 		return isValid === -1;
 	}
 
-	remove(x, values, event) {
-		if (
-			event.srcElement.parentElement.parentElement.parentElement.classList.contains(
-				'single'
-			)
-		) {
-			event.srcElement.parentElement.parentElement.parentElement.classList.remove(
-				'single'
-			);
-		}
+	hasPlace(target: string, item: Column) {
+		const dimension = this.dimensionsSettings.filter(obj => {
+			return obj.variable === target;
+		});
+		const isMultiple = dimension[0].multiple;
+		const hasPlace = dimension[0].value.length;
+		return isMultiple ? isMultiple : hasPlace === 0;
+	}
+
+	remove(x, values) {
 		values.splice(values.indexOf(x), 1);
+	}
+
+	removeAll() {
+		this.dimensionsSettings.forEach(element => {
+			element.value = [];
+		});
 	}
 
 	ngOnDestroy() {
