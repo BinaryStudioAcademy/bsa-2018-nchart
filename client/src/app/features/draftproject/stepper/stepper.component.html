@@ -1,4 +1,8 @@
 <div class="stepper-container ui-main-block">
+		<!--<button [scrollTo]="'#place1'" [scrollDuration]="1000" [scrollOffset]="-100">Place 1</button>
+		<button [scrollTo]="place2">Place 2</button>
+		<div id="place1"></div>
+		<div #place2></div>-->
 	<ul>
 		<li *ngFor="let step of stepsList" 
 		(click)="selectChart(step.id)"

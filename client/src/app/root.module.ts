@@ -9,7 +9,7 @@ import { CoreModule } from '@app/core/core.module';
 import { SharedModule } from '@app/shared/shared.module';
 import { EffectModule } from '@app/store/effects/effect.module';
 import { ReducerModule } from '@app/store/reducers/reducer.module';
-import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
+import { ScrollToModule } from 'ng2-scroll-to-el';
 
 @NgModule({
 	declarations: [RootComponent],
@@ -22,7 +22,7 @@ import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 		CoreModule,
 		EffectModule,
 		ReducerModule,
-		ScrollToModule
+		ScrollToModule.forRoot()
 	],
 	providers: [],
 	bootstrap: [RootComponent]
