@@ -83,7 +83,7 @@ export class DragDropComponent implements OnInit, OnDestroy {
 						)
 					) {
 						targetModel.splice(targetModel.indexOf(item), 1);
-					} else if  (
+					} else if (
 						!this.hasPlace(
 							target.parentElement.firstElementChild.innerHTML,
 							item
