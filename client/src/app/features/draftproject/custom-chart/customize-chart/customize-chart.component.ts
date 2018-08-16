@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
 	selector: 'app-customize-chart',
@@ -7,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CustomizeChartComponent implements OnInit {
 	constructor() {}
+
+	control = new FormControl({ value: '', disabled: false });
 
 	ngOnInit() {}
 }
