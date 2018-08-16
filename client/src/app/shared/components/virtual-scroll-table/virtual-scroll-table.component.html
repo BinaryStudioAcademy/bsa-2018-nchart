@@ -1,24 +1,27 @@
-<h3>Modify parsed data</h3>
-
-    <virtual-scroll
-      [items]="filteredList"
-      [childHeight]="60"
-      (update)="scrollItems = $event">
-      <table>
-        <tr class="headers">
-          <td>#</td>
-          <td>
-            <label class="container">
-              <input type="checkbox" id="checkAll">
-              <span class="checkmark"></span>
-            </label>
-          </td>
-          <td *ngFor="let index of payload.columns">{{index.title}}</td>
-        </tr>
-        <tr *ngFor="let item of scrollItems" (click)="editItem($event, item)" class="list">
-          <td class="elemNum">{{filteredList.indexOf(item) + 1}}</td>
-          <td><input type="checkbox" class="check"></td>
-          <td *ngFor="let elem of item">{{elem}}</td>
-        </tr>
-      </table>
-    </virtual-scroll>
+<virtual-scroll
+	[items]="filteredList"
+	(update)="scrollItems = $event">
+	<table (click)="turnoffDropdown($event)">
+		<tr class="headers">
+			<td>
+				<div class="dropdown">
+						<button class="dropbtn" (click)="toggleDropdown($event)">#
+							<i class="fas fa-caret-down"></i>
+						</button>
+						<div class="dropdown-content" id="Dropdown">
+							<a href="#">Delete selected</a>
+						</div>
+				</div> 
+			</td>
+			<td class="header-checkbox">
+				<p-checkbox (click)="isSelectAll()" id="selectAll"></p-checkbox>
+			</td>
+			<td *ngFor="let index of payload.columns">{{index.title.toUpperCase()}}</td>
+		</tr>
+		<tr *ngFor="let item of scrollItems" class="list">
+			<td class="elemNum">{{filteredList.indexOf(item) + 1}}</td>
+			<td><p-checkbox (click)="selectOne($event)"></p-checkbox></td>
+			<td *ngFor="let elem of item" (click)="editItem($event, item)">{{elem}}</td>
+		</tr>
+	</table>
+</virtual-scroll>

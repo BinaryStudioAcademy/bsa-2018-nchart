@@ -3,9 +3,9 @@
 
 =input()
 	padding: 12px
-	min-width: 240px
 	border-width: 2px
 	box-shadow: none
+	width: 100%
 
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button 
@@ -15,21 +15,45 @@ input[type=number]::-webkit-outer-spin-button
 
 .ui-inputtext
 	+input()
-	&:active,
-	&:enabled:hover
-		+input()
-		& ~ i
-			color: $stateActiveTextColor
 
 .input-label
 	display: block
 	padding: 5px 0
 
+.ui-input-wrp
+	position: relative
+	width: 100%
 
-.ui-widget.ui-inputtext,
-.ui-widget.ui-inputtext.ui-input-error,
-.ui-widget.ui-inputtext.ui-input-success
-	&.ng-dirty.ng-invalid
+	&:hover i,
+		color: $stateActiveTextColor
+
+	i
+		padding: 12px
+		color: $stateDefaultTextColor
+
+	i.ui-input-icon-left
+		position: absolute
+		left: 0
+		top: 2px
+		& ~ .ui-widget.ui-inputtext
+			padding-left: 38px
+
+	i.ui-input-icon-right
+		position: absolute
+		right: 0px
+		top: 2px
+
+.ui-widget.ui-inputtext
+	padding-right: 30px
+	&:focus
+		box-shadow: none
+
+	&.ng-dirty.ng-invalid:not(.ui-input-error)
+		border-bottom-color: $disabledColor
+		&:hover, &:focus
+			border-color: $activeColor
+
+	&.ui-input-error
 		border-bottom-color: $disabledColor
 		&:hover
 			border-color: $activeColor
@@ -38,23 +62,19 @@ input[type=number]::-webkit-outer-spin-button
 		&:focus
 			border-color: $stateErrorBorderColor
 	
-	&.ng-dirty.ng-valid
+	&.ui-input-success
 		&:focus
 			border-color: $successColor
 		& ~ i
 			color: $successColor
-	&:focus
-		box-shadow: none
-	& ~ i
-		position: relative
-		right: calc(1rem + 24px)
-		padding: 12px
-		color: $stateDefaultTextColor
 
 
 .input-label.input-label-error
 	color: $stateErrorBorderColor
+	min-height: 0.95rem
 	font-size: 0.7rem
+	padding: 0
+	margin-top: 0.25rem
 
 .ui-inputtext:disabled,
 .ui-dropdown.ui-widget.ui-state-disabled

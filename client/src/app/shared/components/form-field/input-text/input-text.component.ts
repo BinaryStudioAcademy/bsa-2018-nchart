@@ -11,13 +11,15 @@ export class InputTextComponent implements OnInit {
 	@Input()
 	label: string;
 	@Input()
-	placeholder: string;
+	placeholder = '';
 	@Input()
 	type: string;
 	@Input()
 	control: FormControl;
 	@Input()
 	icon: string;
+	@Input()
+	iconPosition: string;
 	@Input()
 	showStates: boolean;
 
@@ -45,6 +47,14 @@ export class InputTextComponent implements OnInit {
 						? 'error'
 						: ''
 			}`]: this.showStates
+		};
+	}
+
+	getIconClasses() {
+		return {
+			'ui-input-icon-right': this.icon && !this.iconPosition,
+			[`${this.icon}`]: this.icon,
+			[`ui-input-icon-${this.iconPosition}`]: this.icon
 		};
 	}
 }

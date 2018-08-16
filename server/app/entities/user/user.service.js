@@ -4,7 +4,6 @@ const UserRepository = require('./user.repository');
 const TokenService = require('../../common/services/token.service');
 const CompanyService = require('../company/company.service');
 const GroupService = require('../group/group.service');
-const ErrorService = require('../../common/services/error.service');
 
 class UserService {
 	constructor() {
@@ -25,7 +24,7 @@ class UserService {
 				}
 			})
 			.catch(err => {
-				throw ErrorService.createCustomDBError(err);
+				throw err;
 			});
 	}
 
@@ -123,7 +122,7 @@ class UserService {
 				(err, payload) => {
 					if (err) {
 						// console.log(err);
-						return reject(ErrorService.createCustomDBError(err));
+						return reject(err);
 					}
 					// console.log(payload);
 					return resolve({
@@ -175,7 +174,7 @@ class UserService {
 				],
 				(err, payload) => {
 					if (err) {
-						return reject(ErrorService.createCustomDBError(err));
+						return reject(err);
 					}
 					return resolve(payload);
 				}
@@ -205,7 +204,7 @@ class UserService {
 				],
 				(err, payload) => {
 					if (err) {
-						return reject(ErrorService.createCustomDBError(err));
+						return reject(err);
 					}
 					return resolve(this.createUserPayload(payload));
 				}
@@ -223,7 +222,7 @@ class UserService {
 				}
 			})
 			.catch(err => {
-				throw ErrorService.createCustomDBError(err);
+				throw err;
 			});
 	}
 
@@ -250,16 +249,16 @@ class UserService {
 								if (data === null || data[0] === 0) {
 									throw new Error('Object did not exist');
 								}
-								return callback(null, data);
+								return callback(null, null);
 							})
 							.catch(err => callback(err, null));
 					}
 				],
 				(err, payload) => {
 					if (err) {
-						return reject(ErrorService.createCustomDBError(err));
+						return reject(err);
 					}
-					return resolve(this.createUserPayload(payload));
+					return resolve(payload);
 				}
 			);
 		});

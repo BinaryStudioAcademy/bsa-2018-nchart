@@ -1,5 +1,3 @@
-h3
-	margin: 20px 30px 5px
 virtual-scroll
 	display: block
 	width: 100%
@@ -29,56 +27,45 @@ virtual-scroll
 	color: #999fae
 	border-bottom: 2px solid #f2f3f9
 
-// .container
-//     display: block
-//     position: relative
-// 	padding: 35px
-//     margin-bottom: 12px
-//     cursor: pointer
-//     font-size: 22px
-//     -webkit-user-select: none
-//     -moz-user-select: none
-//     -ms-user-select: none
-//     user-select: none
+.header-checkbox
+	padding-left: 2px
 
-// .container
-// 	input	
-// 		opacity: 0
-// 		position: absolute
-// 		cursor: pointer
+.dropdown
+    float: left
+    overflow: hidden
 
-// .checkmark
-//     position: absolute
-//     top: 0
-//     left: 0
-//     height: 15px
-//     width: 15px
-//     background-color: #eee
+.dropdown 
+	.dropbtn
+		cursor: pointer;
+		font-size: 16px;    
+		border: none;
+		outline: none;
+		color: #999fae;
+		padding: 14px 16px;
+		background-color: inherit;
+		font-family: inherit;
+		margin: 0;
 
-// .container:hover input ~ .checkmark
-//     background-color: #ccc
-// /* When the checkbox is checked, add a blue background */
-// .container input:checked ~ .checkmark
-//     background-color: #2196F3
+.dropdown-content
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
 
-// /* Create the checkmark/indicator (hidden when not checked) */
-// .checkmark:after
-//     content: ""
-//     position: absolute
-//     display: none
+.dropdown-content 
+	a
+		float: none;
+		color: black;
+		padding: 12px 16px;
+		text-decoration: none;
+		display: block;
+		text-align: left;
 
-// /* Show the checkmark when checked */
-// .container input:checked ~ .checkmark:after
-//     display: block
+.dropdown-content
+	a:hover
+    	background-color: #ddd;
 
-// /* Style the checkmark/indicator */
-// .container .checkmark:after
-//     left: 9px
-//     top: 5px
-//     width: 5px
-//     height: 10px
-//     border: solid white
-//     border-width: 0 3px 3px 0
-//     -webkit-transform: rotate(45deg)
-//     -ms-transform: rotate(45deg)
-//     transform: rotate(45deg)
+.show
+    display: block
