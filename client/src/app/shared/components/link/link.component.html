@@ -1,3 +1,7 @@
-<p>
-  link works!
-</p>
+<a
+    [ngClass]="getClasses()"
+    [routerLink]="link"
+>
+    <span class="label">{{label}}</span>
+    <i *ngIf="icon" [ngClass]="getIconClasses()"></i>
+</a>

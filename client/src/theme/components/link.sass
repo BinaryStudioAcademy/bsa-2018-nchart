@@ -1,0 +1,67 @@
+@import ../variables
+@import ../colors
+
+.ui-link
+    font-family: $fontFamily
+    line-height: 1.6
+    text-decoration: none
+    outline: none
+        
+.ui-link-primary
+    &:link,
+    &:visited
+        font-weight: bold
+        color: $linkTextColor
+    &:focus,
+    &:hover 
+        color: $linkHoverTextColor
+        .label
+            border-bottom: $linkUnderlineThin solid $linkHoverTextColor
+    &:active
+        color: $linkTextColor
+        .label
+            border-bottom: $linkUnderlineFat solid $linkTextColor
+
+.ui-link-secondary
+    &:link,
+    &:visited
+        color: $linkTextColor
+    &:focus,
+    &:hover
+        color: $linkHoverTextColor
+    &:active
+        color: $linkTextColor
+
+.ui-link-underline
+    &:link,
+    &:visited
+        color: $linkUnderlineTextColor
+        .label
+            border-bottom: $linkUnderlineThin solid $linkUnderlineTextColor
+    &:focus,
+    &:hover
+        color: $linkHoverTextColor
+        .label
+            border-bottom: $linkUnderlineThin solid $linkHoverTextColor
+    &:active
+        color: $linkUnderlineTextColor
+        .label
+            border-bottom: $linkUnderlineFat solid $linkUnderlineTextColor
+
+.ui-link.ui-link-shape
+    color: $linkTextColor
+    .icon
+        margin-left: 0.4em
+        font-size: 0.9em
+        color: $linkTextColor
+        visibility: hidden
+    &:focus,
+    &:hover
+        .icon
+            visibility: visible    
+
+.ui-link
+    .icon
+        margin-left: 0.3em
+        font-size: $linkIconFontSize
+        color: $linkIconColor
