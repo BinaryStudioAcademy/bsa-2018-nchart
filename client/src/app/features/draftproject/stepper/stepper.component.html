@@ -5,9 +5,8 @@
 		[ngClass]="getClasses(step.id)"
 		>
 		<div class="step-icon"
-				[scrollTo]="step.scrollTo" 
-				[scrollDuration]="500" 
-				[scrollOffset]="-100">
+				[ngx-scroll-to]="step.scrollTo" 
+			>
 			<i [ngClass]="getIconClasses(step.id)"></i>
 		</div>
 	</li>

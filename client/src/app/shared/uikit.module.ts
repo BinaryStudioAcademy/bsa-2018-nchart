@@ -19,7 +19,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TabViewModule } from 'primeng/tabview';
-import { ScrollToModule } from 'ng2-scroll-to-el';
+import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 // Drag&Drop
 import { DragulaModule } from 'ng2-dragula';
 
