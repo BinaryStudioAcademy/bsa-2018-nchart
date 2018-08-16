@@ -1,0 +1,25 @@
+@import ../variables
+@import ../colors
+	
+.step
+	list-style: none
+	margin: 20px auto
+	height: 45px
+	width: 45px
+	border-radius: 50%
+	border: 2px solid $backgroundGreyColor
+	text-align: center
+	line-height: 45px
+	vertical-align: middle
+	transition: .2s ease-out
+
+.step-selected
+	color: $baseColor
+	border-color: $baseColor
+
+.step:hover
+	color: $defaultButtonHover
+	border: 2px solid $defaultButtonHover
+
+.step-icon
+	padding-top: 5px 

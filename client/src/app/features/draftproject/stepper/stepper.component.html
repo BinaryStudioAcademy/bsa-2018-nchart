@@ -1,11 +1,12 @@
-<div class="stepper-container">
+<div class="stepper-container ui-main-block">
 	<ul>
-		<li>1</li>
-		<li>2</li>
-		<li>3</li>
-		<li>4</li>
-		<li>5</li>
-		<li>6</li>
+		<li *ngFor="let step of stepsList" 
+		(click)="selectChart(step.id)"
+		[ngClass]="getClasses(step.id)"
+		>
+		<div class="step-icon">
+			<i [ngClass]="getIconClasses(step.id)"></i>
+		</div>
+	</li>
 	</ul>
-	<button>Save</button>
 </div>
