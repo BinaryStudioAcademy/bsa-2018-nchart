@@ -1,6 +1,7 @@
 <virtual-scroll
 	[items]="filteredList"
-	(update)="scrollItems = $event">
+	(update)="scrollItems = $event"
+	(change)="addSelection($event)">
 	<table (click)="turnoffDropdown($event)">
 		<tr class="headers">
 			<td>
@@ -20,7 +21,7 @@
 		</tr>
 		<tr *ngFor="let item of scrollItems" class="list">
 			<td class="elemNum">{{filteredList.indexOf(item) + 1}}</td>
-			<td><p-checkbox (click)="selectOne($event)"></p-checkbox></td>
+			<td><p-checkbox (click)="selectOne($event, item)"></p-checkbox></td>
 			<td *ngFor="let elem of item" (click)="editItem($event, item)">{{elem}}</td>
 		</tr>
 	</table>

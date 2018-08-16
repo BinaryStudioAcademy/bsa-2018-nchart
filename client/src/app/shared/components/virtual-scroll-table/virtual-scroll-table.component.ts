@@ -1,4 +1,4 @@
-import { Component, OnChanges, Input } from '@angular/core';
+import { Component, OnChanges, Input, EventEmitter } from '@angular/core';
 
 @Component({
 	selector: 'app-virtual-scroll-table',
@@ -12,7 +12,44 @@ export class VirtualScrollTableComponent implements OnChanges {
 	scrollItems: Array<any>[];
 	filteredList: Array<any>[];
 	selectedList = [];
-	selectAll = false;
+
+	addSelection(event) {
+		const rows = document.getElementsByClassName('list');
+		for (let i = event.start; i <= event.end; i++) {
+			if (this.selectedList[i] === true) {
+				for (let j = 0; j < rows.length; j++) {
+					if (
+						+rows[j].getElementsByTagName('td')[0].innerText - 1 ===
+						i
+					) {
+						rows[j]
+							.getElementsByClassName('ui-chkbox-box')[0]
+							.classList.add('ui-state-active');
+						rows[j]
+							.getElementsByClassName('ui-chkbox-box')[0]
+							.getElementsByTagName('span')[0]
+							.classList.add('pi', 'pi-check');
+					}
+				}
+			} else {
+				for (let j = 0; j < rows.length; j++) {
+					if (
+						+rows[j].getElementsByTagName('td')[0].innerText - 1 ===
+						i
+					) {
+						rows[j]
+							.getElementsByClassName('ui-chkbox-box')[0]
+							.classList.remove('ui-state-active');
+						rows[j]
+							.getElementsByClassName('ui-chkbox-box')[0]
+							.getElementsByTagName('span')[0]
+							.classList.remove('pi', 'pi-check');
+					}
+				}
+			}
+		}
+	}
+
 	setToFullList() {
 		this.filteredList = (this.payload.data || []).slice();
 		this.selectedList.length = this.filteredList.length;
@@ -56,30 +93,26 @@ export class VirtualScrollTableComponent implements OnChanges {
 	}
 
 	isSelectAll() {
-		this.selectAll = document
+		const selectAll = document
 			.getElementById('selectAll')
 			.getElementsByClassName('ui-chkbox-box')[0]
 			.classList.contains('ui-state-active');
-		if (this.selectAll) {
+		this.selectedList.splice(0);
+		if (selectAll) {
 			for (let i = 0; i < this.filteredList.length; i++) {
-				this.selectedList.splice(0);
 				this.selectedList.push(true);
 			}
 		} else {
 			for (let i = 0; i < this.filteredList.length; i++) {
-				this.selectedList.splice(0);
 				this.selectedList.push(false);
 			}
 		}
+		EventEmitter.call(this.addSelection({ start: 0, end: 10 }));
 	}
 
-	selectOne(event) {
-		const isSelected = event.target.parentNode.classList.contains(
-			'ui-state-active'
-		);
-		const index =
-			event.target.parentNode.parentNode.parentNode.parentNode.firstChild
-				.innerText - 1;
-		this.selectedList.splice(index, 1, isSelected ? false : true);
+	selectOne(event, item) {
+		const isSelected = event.path[0].classList.contains('ui-state-active');
+		const index = this.filteredList.indexOf(item);
+		this.selectedList.splice(index, 1, isSelected);
 	}
 }
