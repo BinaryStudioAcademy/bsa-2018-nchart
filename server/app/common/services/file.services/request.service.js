@@ -1,7 +1,4 @@
-const LinkService = require('./link.service');
-const { readString, processFile } = require('./xlsx.service');
-
-function fileService(file, contents, link) {
+function validateRequest(file, contents, link) {
 	const pattern = {
 		// todo: test all formats
 		supportedExt: [
@@ -27,21 +24,21 @@ function fileService(file, contents, link) {
 		url: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w-]+)+[\w\-_~:/?#[\]@!&',;=.]+$/
 	};
 	if (contents !== '' && typeof contents === 'string') {
-		return readString(contents);
+		return true;
 	}
 	if (pattern.url.test(link)) {
-		return LinkService.processLink(link);
+		return true;
 	}
 	if (!file) {
 		throw new Error('No file were uploaded');
 	} else if (file) {
 		for (let i = 0; i < pattern.supportedExt.length; i += 1) {
 			if (pattern.supportedExt[i].test(file.fileKey.name)) {
-				return processFile(file.fileKey);
+				return true;
 			}
 		}
 	}
 	throw new Error('Incorrect file extension');
 }
 
-module.exports = fileService;
+module.exports = validateRequest;

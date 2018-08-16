@@ -18,15 +18,15 @@ export class ButtonComponent implements OnInit {
 	@Input()
 	type: 'default' | 'secondary' = 'default';
 	@Output()
-	click = new EventEmitter();
-
-	onClick() {
-		this.click.emit();
-	}
+	onclick: EventEmitter<any> = new EventEmitter();
 
 	constructor() {}
 
 	ngOnInit() {}
+
+	onClick(e) {
+		this.onclick.emit(e);
+	}
 
 	getClasses() {
 		return {
