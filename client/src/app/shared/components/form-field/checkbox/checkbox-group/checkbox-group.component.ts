@@ -4,7 +4,6 @@ import { FormControl } from '@angular/forms';
 interface Checks {
 	label: string;
 	value: any;
-	disabled: boolean;
 	control?: FormControl;
 }
 

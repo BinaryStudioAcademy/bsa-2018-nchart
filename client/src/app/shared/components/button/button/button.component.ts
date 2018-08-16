@@ -24,6 +24,10 @@ export class ButtonComponent implements OnInit {
 
 	ngOnInit() {}
 
+	onClick(e) {
+		this.onclick.emit(e);
+	}
+
 	getClasses() {
 		return {
 			'ui-button-default': true,
