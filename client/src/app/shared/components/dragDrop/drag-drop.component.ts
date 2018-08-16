@@ -11,7 +11,6 @@ class Column {
 	templateUrl: './drag-drop.component.html'
 })
 export class DragDropComponent implements OnInit, OnDestroy {
-	DIMENSIONS = 'DIMENSIONS';
 	public dimensionsSettings = [
 		{
 			variable: 'X-Axis',
@@ -60,7 +59,7 @@ export class DragDropComponent implements OnInit, OnDestroy {
 
 	subs = new Subscription();
 	constructor(private _dragulaService: DragulaService) {
-		_dragulaService.createGroup(this.DIMENSIONS, {
+		_dragulaService.createGroup('DIMENSIONS', {
 			copy: (el, source) => {
 				return source.id === 'columns';
 			},
@@ -74,7 +73,7 @@ export class DragDropComponent implements OnInit, OnDestroy {
 
 		this.subs.add(
 			this._dragulaService
-				.dropModel(this.DIMENSIONS)
+				.dropModel('DIMENSIONS')
 				.subscribe(({ target, source, targetModel, item }) => {
 					if (
 						this.isValid(
@@ -100,7 +99,7 @@ export class DragDropComponent implements OnInit, OnDestroy {
 
 		this.subs.add(
 			this._dragulaService
-				.removeModel(this.DIMENSIONS)
+				.removeModel('DIMENSIONS')
 				.subscribe(({ el, source, sourceModel, item }) => {
 					if (source.parentElement.children.length <= 2) {
 						source.parentElement.classList.remove('single');
