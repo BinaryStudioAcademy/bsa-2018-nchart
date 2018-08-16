@@ -14,7 +14,7 @@ export class DragDropComponent implements OnInit, OnDestroy {
 	DIMENSIONS = 'DIMENSIONS';
 	public dimensionsSettings = [
 		{
-			variable: 'X Axis',
+			variable: 'X-Axis',
 			multiple: false,
 			required: true,
 			type: ['string', 'number'],

@@ -13,22 +13,24 @@
     color: $secondaryTextColor
     margin: 5px
     border-radius: 2px
-    min-height: 160px
+    min-height: 120px
     min-width: 220px
+    width: 48%
+    float: left
     background-color: white
     transition: border .15s ease-in-out
     box-shadow: $boxShadow
 
 .dropContainer
     margin-top: 10px
-    min-height: 100px
+    min-height: 60px
 
 .draggble
     position: relative
     cursor: grab
     color: white
     font-weight: 600
-    margin: 5px 0
+    margin: 7px
     padding: 10px
     font-family: $fontFamily
     font-size: 0.9rem
@@ -39,13 +41,12 @@
     text-align: left
     transition: opacity 0.4s ease-in-out
     box-shadow: $boxShadow
-    max-width: 260px
 
-.dropContainer .draggble 
-    margin-bottom: 0
+.dimensionHeader
+    margin: 0
 
-.multiple .dropContainer .draggble 
-    margin: 5px 
+.dimensionSubHeader
+    margin: 0
 
 .draggble:hover
     opacity: 0.8
