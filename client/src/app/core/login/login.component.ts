@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+
+import { LoginService } from '@app/services/login.service';
 
 @Component({
 	selector: 'app-login',
@@ -6,7 +9,22 @@ import { Component, OnInit } from '@angular/core';
 	styleUrls: ['./login.component.sass']
 })
 export class LoginComponent implements OnInit {
-	constructor() {}
+	loginForm: FormGroup;
+	registerForm: FormGroup;
 
-	ngOnInit() {}
+	constructor(private loginService: LoginService) {}
+
+	ngOnInit() {
+		this.createForms();
+	}
+
+	private createForms() {
+		this.loginForm = this.loginService.createLoginForm();
+		this.registerForm = this.loginService.createRegisterForm();
+	}
+
+	resetForms() {
+		this.loginForm.reset();
+		this.registerForm.reset();
+	}
 }

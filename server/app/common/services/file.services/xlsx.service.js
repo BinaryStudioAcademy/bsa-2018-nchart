@@ -1,6 +1,7 @@
 const XLSX = require('xlsx');
 const async = require('async');
 const fs = require('fs');
+const uuidv4 = require('uuid/v4');
 const FsService = require('../../middleware/file.middleware');
 
 function renameFiles(arr) {
@@ -37,7 +38,7 @@ const parseHeaders = workbook => {
 	let buffer = [];
 	for (C = range.s.c; C <= range.e.c; C += 1) {
 		const cell = sheet[XLSX.utils.encode_cell({ c: C, r: R })];
-		let hdr = `UNKNOWN`; // <-- replace with your desired default
+		let hdr = 'UNKNOWN'; // <-- replace with your desired default
 		if (!cell) {
 			countBreak += 1;
 			/* if 3 cell in a row undefined - break */
@@ -114,13 +115,17 @@ const parseData = (data, headers) => {
 		}
 		temporaryRowPayload.push(temporaryArr);
 	}
+	let IDs = [];
 	// set data types for each column
 	for (let c = 0; c < headers.length; c += 1) {
+		// create IDs array
+		IDs.push(uuidv4());
+		// todo: if front want, its possible to return index of empty column
 		if (countNull[headers[c]] === dataInColumns[headers[c]].data.length) {
 			dataInColumns[headers[c]].type = 'null';
 		} else if (
-			countNumber[headers[c]] === dataInColumns[headers[c]].data.length &&
-			countNumber[headers[c]] !== countNull[headers[c]]
+			countNumber[headers[c]] === dataInColumns[headers[c]].data.length
+			&& countNumber[headers[c]] !== countNull[headers[c]]
 		) {
 			dataInColumns[headers[c]].type = 'number';
 		} else {
@@ -131,88 +136,77 @@ const parseData = (data, headers) => {
 		columns: [],
 		data: temporaryRowPayload
 	};
-	// set column types
+	// check if there any duplicates
+	IDs = renameFiles(IDs);
+	// set IDs and column types
 	for (let c = 0; c < headers.length; c += 1) {
 		payload.columns.push({
 			title: headers[c],
-			type: dataInColumns[headers[c]].type
+			type: dataInColumns[headers[c]].type,
+			id: IDs[c]
 		});
 	}
 	return payload;
 };
 
-const readFile = path =>
-	new Promise((resolve, reject) => {
-		const headers = getHeaders(path);
-		const file = fs.createReadStream(path);
-		const buffers = [];
-		file.on('data', data => {
-			buffers.push(data);
-		});
-		file.on('end', () => {
-			const buffer = Buffer.concat(buffers);
-			const workbook = XLSX.read(buffer); // works
-			const data = XLSX.utils.sheet_to_json(
-				workbook.Sheets[workbook.SheetNames[0]],
-				{ header: headers, range: 1, defval: null }
-			);
-			const payload = parseData(data, headers);
-			if (payload.length === 0) {
-				reject(new Error('Messed up file'));
-			}
-			resolve(payload);
-		});
+const readFile = path => new Promise((resolve, reject) => {
+	const headers = getHeaders(path);
+	const file = fs.createReadStream(path);
+	const buffers = [];
+	file.on('data', data => {
+		buffers.push(data);
 	});
-
-const processFile = file =>
-	new Promise((resolve, reject) => {
-		let globalPath = null;
-		async.waterfall(
-			[
-				callback => {
-					FsService.save(file)
-						.then(path => {
-							globalPath = path;
-							callback(null, path);
-						})
-						.catch(err => {
-							callback(err, null);
-						});
-				},
-				(path, callback) => {
-					readFile(path)
-						.then(data => {
-							callback(null, data);
-						})
-						.catch(err => {
-							callback(err, null);
-						});
-				}
-			],
-			(error, payload) => {
-				FsService.deleteFile(globalPath).catch(err => reject(err));
-				if (error) {
-					reject(error);
-				}
-				resolve(payload);
-			}
-		);
-	});
-
-const readString = content =>
-	new Promise((resolve, reject) => {
-		const headers = getHeaders(null, content);
-		const workbook = XLSX.read(content, { type: 'string' });
+	file.on('end', () => {
+		const buffer = Buffer.concat(buffers);
+		const workbook = XLSX.read(buffer); // works
 		const data = XLSX.utils.sheet_to_json(
 			workbook.Sheets[workbook.SheetNames[0]],
-			{ header: headers, range: 1 }
+			{ header: headers, range: 1, defval: null }
 		);
 		const payload = parseData(data, headers);
-		if (payload.data.length === 0) {
+		if (payload.length === 0) {
 			reject(new Error('Messed up file'));
 		}
 		resolve(payload);
 	});
+});
+
+const readString = content => new Promise((resolve, reject) => {
+	const headers = getHeaders(null, content);
+	const workbook = XLSX.read(content, { type: 'string' });
+	const data = XLSX.utils.sheet_to_json(
+		workbook.Sheets[workbook.SheetNames[0]],
+		{ header: headers, range: 1 }
+	);
+	const payload = parseData(data, headers);
+	if (payload.data.length === 0) {
+		reject(new Error('Messed up file'));
+	}
+	resolve(payload);
+});
+
+const processFile = path => new Promise((resolve, reject) => {
+	async.waterfall(
+		[
+			callback => {
+				readFile(path)
+					.then(data => {
+						callback(null, data);
+					})
+					.catch(err => {
+						callback(err, null);
+					});
+			}
+		],
+		(error, payload) => {
+			FsService.deleteFile(path).catch(err => reject(err));
+			if (error) {
+				reject(error);
+			}
+			resolve(payload);
+		}
+	);
+});
 
 module.exports = {
 	processFile,

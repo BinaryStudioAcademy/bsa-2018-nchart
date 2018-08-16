@@ -23,7 +23,10 @@ storiesOf('Checkbox', module)
 			props: {
 				label: 'I definetly want to choose it',
 				value: 'first',
-				control: new FormControl('', Validators.required)
+				control: new FormControl(
+					{ value: '', disabled: false },
+					Validators.required
+				)
 			}
 		}),
 		{
@@ -39,7 +42,10 @@ storiesOf('Checkbox', module)
 			props: {
 				label: 'I choose it!',
 				value: 'second',
-				control: new FormControl('', Validators.required)
+				control: new FormControl(
+					{ value: '', disabled: false },
+					Validators.required
+				)
 			}
 		}),
 		{
@@ -55,8 +61,10 @@ storiesOf('Checkbox', module)
 			props: {
 				label: 'I`m disabled (',
 				value: 'third',
-				disabled: true,
-				control: new FormControl(true)
+				control: new FormControl(
+					{ value: '', disabled: true },
+					Validators.required
+				)
 			}
 		}),
 		{
@@ -72,9 +80,11 @@ storiesOf('Checkbox', module)
 			props: {
 				label: 'I`m disabled too (',
 				value: 'fifth',
-				disabled: true,
 				selectedValues: ['fifth'],
-				control: new FormControl(true)
+				control: new FormControl(
+					{ value: '', disabled: true },
+					Validators.required
+				)
 			}
 		}),
 		{
@@ -92,20 +102,26 @@ storiesOf('Checkbox', module)
 					{
 						label: 'First item',
 						value: 'first',
-						disabled: false,
-						control: new FormControl()
+						control: new FormControl(
+							{ value: '', disabled: false },
+							Validators.required
+						)
 					},
 					{
 						label: 'Seventh item',
 						value: 'second',
-						disabled: false,
-						control: new FormControl()
+						control: new FormControl(
+							{ value: '', disabled: false },
+							Validators.required
+						)
 					},
 					{
 						label: 'Fifth item',
 						value: 'third',
-						disabled: true,
-						control: new FormControl()
+						control: new FormControl(
+							{ value: '', disabled: false },
+							Validators.required
+						)
 					}
 				],
 				selectedValues: ['second', 'third']

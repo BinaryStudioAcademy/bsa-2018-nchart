@@ -1,59 +1,59 @@
-<div class="ui-main-block load-data-container">
-		<h2><i class="fas fa-upload"></i>Load your data</h2>
-		<div class="load-data-tabs-wrap">
-			<p-tabView 	activeIndex="0"
-					(onChange)="{}"
-			>
-		
-				<p-tabPanel header="Paste">
-					<app-input-textarea class="load-data-paste"
-										[rows]="12"
-										autoResize="autoResize"
-										[control]="pasteDataControl"
-										placeholder="Paste your data here"
-					></app-input-textarea>
-					<app-button (click)="pasteData($event)"
+<app-animated-block [indicator]="activeTab">
+	<h2><i class="fas fa-upload"></i>Load your data</h2>
+	<div class="load-data-tabs-wrap">
+		<p-tabView 	activeIndex="0"
+				(onChange)="onChange($event)"
+		>
+	
+			<p-tabPanel header="Paste">
+				<app-input-textarea class="load-data-paste"
+									[rows]="12"
+									autoResize="autoResize"
+									[control]="pasteDataControl"
+									placeholder="Paste your data here"
+				></app-input-textarea>
+				<app-button (onclick)="pasteData($event)"
+							label="Load Data"
+							class="ui-button-position-right"
+							[disabled]="pasteDataControl.invalid"
+				></app-button>
+			</p-tabPanel>
+	
+			<p-tabPanel header="Upload file">
+				<p-fileUpload 	name="demo[]" 
+								url="" 
+								(onUpload)="onUpload($event)"
+								accept=".xls,.xlsx,.csv,.txt" 
+								maxFileSize="5242880"
+								auto="true"
+				>
+					<ng-template pTemplate="content">
+						<p class="upload-file-text">
+							<i class="fas fa-file-upload"></i>
+							Drop your file here (.csv, .txt, .xls, .xlsx)
+						</p>
+					</ng-template>
+				</p-fileUpload>
+			</p-tabPanel>
+	
+			<p-tabPanel header="From URL">
+				<div class="load-url-group">
+					<app-input-text class="load-data-url"
+									placeholder="http://"
+									[control]="pasteUrlControl"
+									showStates="true"
+					></app-input-text>
+					<app-button (onclick)="loadUrl($event)"
 								label="Load Data"
 								class="ui-button-position-right"
-								[disabled]="pasteDataControl.invalid"
+								[disabled]="pasteUrlControl.invalid"
 					></app-button>
-				</p-tabPanel>
-		
-				<p-tabPanel header="Upload file">
-					<p-fileUpload 	name="demo[]" 
-									url="" 
-									(onUpload)="onUpload($event)"
-									accept=".xls,.xlsx,.csv,.txt" 
-									maxFileSize="5242880"
-									auto="true"
-					>
-						<ng-template pTemplate="content">
-							<p class="upload-file-text">
-								<i class="fas fa-file-upload"></i>
-								Drop your file here (.csv, .txt, .xls, .xlsx)
-							</p>
-						</ng-template>
-					</p-fileUpload>
-				</p-tabPanel>
-		
-				<p-tabPanel header="From URL">
-					<div class="load-url-group">
-						<app-input-text class="load-data-url"
-										placeholder="http://"
-										[control]="pasteUrlControl"
-										showStates="true"
-						></app-input-text>
-						<app-button (click)="loadUrl($event)"
-									label="Load Data"
-									class="ui-button-position-right"
-									[disabled]="pasteUrlControl.invalid"
-						></app-button>
-					</div>
-				</p-tabPanel>
-		
-				<p-tabPanel header="Samples">
-				</p-tabPanel>
-		
-			</p-tabView>
-		</div>
-</div>
+				</div>
+			</p-tabPanel>
+	
+			<p-tabPanel header="Samples">
+			</p-tabPanel>
+	
+		</p-tabView>
+	</div>
+</app-animated-block>
