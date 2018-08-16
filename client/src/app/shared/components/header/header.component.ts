@@ -37,9 +37,9 @@ export class HeaderComponent implements OnInit {
 	}
 
 	onClick() {
-		this.isAuthorized = !this.isAuthorized;
+		/*this.isAuthorized = !this.isAuthorized;
 		this.isAuthorized
 			? this.items.push(...this.authItems)
-			: this.items.splice(1);
+			: this.items.splice(1);*/
 	}
 }

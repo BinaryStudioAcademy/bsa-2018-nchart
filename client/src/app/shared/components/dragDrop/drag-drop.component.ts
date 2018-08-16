@@ -83,8 +83,7 @@ export class DragDropComponent implements OnInit, OnDestroy {
 						)
 					) {
 						targetModel.splice(targetModel.indexOf(item), 1);
-					}
-					if (
+					} else if (
 						!this.hasPlace(
 							target.parentElement.firstElementChild.innerHTML,
 							item
@@ -94,16 +93,6 @@ export class DragDropComponent implements OnInit, OnDestroy {
 					}
 					if (this.hasDuplicates(targetModel)) {
 						targetModel.splice(targetModel.indexOf(item), 1);
-					}
-				})
-		);
-
-		this.subs.add(
-			this._dragulaService
-				.removeModel(this.DIMENSIONS)
-				.subscribe(({ el, source, sourceModel, item }) => {
-					if (source.parentElement.children.length <= 2) {
-						source.parentElement.classList.remove('single');
 					}
 				})
 		);
@@ -157,5 +146,6 @@ export class DragDropComponent implements OnInit, OnDestroy {
 
 	ngOnDestroy() {
 		this.subs.unsubscribe();
+		this._dragulaService.destroy(this.DIMENSIONS);
 	}
 }
