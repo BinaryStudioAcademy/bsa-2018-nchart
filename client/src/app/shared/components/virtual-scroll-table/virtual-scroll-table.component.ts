@@ -1,5 +1,4 @@
 import { Component, OnChanges, Input } from '@angular/core';
-import { MenuItem } from 'primeng/api';
 
 @Component({
 	selector: 'app-virtual-scroll-table',
@@ -24,9 +23,11 @@ export class VirtualScrollTableComponent implements OnChanges {
 	}
 
 	editItem(el, it) {
-		if (el.target.cellIndex === 0 || el.target.cellIndex === 1) return;
-		let target = el.target;
-		let input = document.createElement('input');
+		if (el.target.cellIndex === 0 || el.target.cellIndex === 1) {
+			return;
+		}
+		const target = el.target;
+		const input = document.createElement('input');
 		input.style.width = target.clientWidth + 'px';
 		input.style.height = 25 + 'px';
 		input.value = target.innerText;
@@ -47,7 +48,7 @@ export class VirtualScrollTableComponent implements OnChanges {
 	}
 	turnoffDropdown(e) {
 		if (!e.target.matches('.dropbtn')) {
-			let myDropdown = document.getElementById('Dropdown');
+			const myDropdown = document.getElementById('Dropdown');
 			if (myDropdown.classList.contains('show')) {
 				myDropdown.classList.remove('show');
 			}
@@ -73,13 +74,12 @@ export class VirtualScrollTableComponent implements OnChanges {
 	}
 
 	selectOne(event) {
-		let isSelected = event.target.parentNode.classList.contains(
-			'ui-chkbox-box'
+		const isSelected = event.target.parentNode.classList.contains(
+			'ui-state-active'
 		);
-		let index =
+		const index =
 			event.target.parentNode.parentNode.parentNode.parentNode.firstChild
 				.innerText - 1;
 		this.selectedList.splice(index, 1, isSelected ? false : true);
-		console.log(this.selectedList);
 	}
 }
