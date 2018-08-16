@@ -6,7 +6,17 @@ import { ChartsState } from '@app/models';
 export const initialState: ChartsState = {
 	byId: {},
 	all: [],
+	active: null,
 	isLoading: false
+};
+
+const active = (state = initialState.active, action: ChartsActions) => {
+	switch (action.type) {
+		case ChartsActionConstants.CHARTS_LOAD_DATA__COMPLETE:
+			return action.payload.charts.all[0];
+		default:
+			return state;
+	}
 };
 
 const all = (state = initialState.all, action: ChartsActions) => {
@@ -49,6 +59,7 @@ export const isLoading = (
 const reducers = {
 	all,
 	byId,
+	active,
 	isLoading
 };
 

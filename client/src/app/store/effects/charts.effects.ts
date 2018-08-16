@@ -24,6 +24,7 @@ export class ChartsEffects {
 					description: 'bar chbars with ent.',
 					dimension_settings: [
 						{
+							id: 1,
 							variable: 'X Axis',
 							multiple: false,
 							required: true,
@@ -31,6 +32,7 @@ export class ChartsEffects {
 							description: 'For d.'
 						},
 						{
+							id: 2,
 							variable: 'Group',
 							multiple: false,
 							required: false,
@@ -38,6 +40,7 @@ export class ChartsEffects {
 							description: 'For each reated.'
 						},
 						{
+							id: 3,
 							variable: 'Size',
 							multiple: false,
 							required: false,
@@ -45,6 +48,7 @@ export class ChartsEffects {
 							description: 'Acceptbar height.'
 						},
 						{
+							id: 4,
 							variable: 'Color',
 							multiple: false,
 							required: false,
@@ -54,36 +58,43 @@ export class ChartsEffects {
 					],
 					customize_settings: [
 						{
+							id: 5,
 							value: 800,
 							option: 'Width',
 							description: 'artboard width in pixels'
 						},
 						{
+							id: 6,
 							value: 600,
 							option: 'Height',
 							description: 'artboard height in pixels'
 						},
 						{
+							id: 7,
 							value: 40,
 							option: 'Left Margin',
 							description: 'margin fopixel'
 						},
 						{
+							id: 8,
 							value: 0,
 							option: 'Vertical Padding',
 							description: 'distharts, in pixel'
 						},
 						{
+							id: 9,
 							value: 0.1,
 							option: 'Horizontal Padding',
 							description: 'distance 0%, 1 = 100%)'
 						},
 						{
+							id: 10,
 							value: false,
 							option: 'Use Same Scale',
 							description: 'If set, every bcale'
 						},
 						{
+							id: 11,
 							value: [],
 							option: 'Colour Scale',
 							description: 'list and mose two values'
@@ -97,6 +108,7 @@ export class ChartsEffects {
 					description: 'Linear that they represent.',
 					dimension_settings: [
 						{
+							id: 1,
 							variable: 'X Axis',
 							multiple: false,
 							required: true,
@@ -104,6 +116,7 @@ export class ChartsEffects {
 							description: 'For each unique value ted.'
 						},
 						{
+							id: 2,
 							variable: 'Group',
 							multiple: false,
 							required: false,
@@ -111,6 +124,7 @@ export class ChartsEffects {
 							description: 'For reated.'
 						},
 						{
+							id: 3,
 							variable: 'Size',
 							multiple: false,
 							required: false,
@@ -118,6 +132,7 @@ export class ChartsEffects {
 							description: 'Accepts  height.'
 						},
 						{
+							id: 4,
 							variable: 'Color',
 							multiple: false,
 							required: false,
@@ -127,37 +142,44 @@ export class ChartsEffects {
 					],
 					customize_settings: [
 						{
+							id: 1,
 							value: 800,
 							option: 'Width',
 							description: 'artboard width in pixels'
 						},
 						{
+							id: 2,
 							value: 600,
 							option: 'Height',
 							description: 'artboard height in pixels'
 						},
 						{
+							id: 3,
 							value: 40,
 							option: 'Left Margin',
 							description:
 								'margin for left side of a bar chart, in pixel'
 						},
 						{
+							id: 4,
 							value: 0,
 							option: 'Vertical Padding',
 							description: 'distance among bar charts, in pixel'
 						},
 						{
+							id: 5,
 							value: 0.1,
 							option: 'Horizontal Padding',
 							description: 'distance between b 100%)'
 						},
 						{
+							id: 6,
 							value: false,
 							option: 'Use Same Scale',
 							description: 'If set, eveme scale'
 						},
 						{
+							id: 7,
 							value: [],
 							option: 'Colour Scale',
 							description: 'liong those two values'
@@ -171,6 +193,7 @@ export class ChartsEffects {
 					description: 'Other that they represent.',
 					dimension_settings: [
 						{
+							id: 1,
 							variable: 'X Axis',
 							multiple: false,
 							required: true,
@@ -178,6 +201,7 @@ export class ChartsEffects {
 							description: 'For ted.'
 						},
 						{
+							id: 2,
 							variable: 'Group',
 							multiple: false,
 							required: false,
@@ -185,6 +209,7 @@ export class ChartsEffects {
 							description: 'For eated.'
 						},
 						{
+							id: 3,
 							variable: 'Size',
 							multiple: false,
 							required: false,
@@ -192,6 +217,7 @@ export class ChartsEffects {
 							description: 'Accepts only column height.'
 						},
 						{
+							id: 4,
 							variable: 'Color',
 							multiple: false,
 							required: false,
@@ -201,36 +227,43 @@ export class ChartsEffects {
 					],
 					customize_settings: [
 						{
+							id: 1,
 							value: 800,
 							option: 'Width',
 							description: 'artboard width in pixels'
 						},
 						{
+							id: 2,
 							value: 600,
 							option: 'Height',
 							description: 'artboard height in pixels'
 						},
 						{
+							id: 3,
 							value: 40,
 							option: 'Left Margin',
 							description: 'marginpixel'
 						},
 						{
+							id: 4,
 							value: 0,
 							option: 'Vertical Padding',
 							description: 'dista, in pixel'
 						},
 						{
+							id: 5,
 							value: 0.1,
 							option: 'Horizontal Padding',
 							description: 'dis= 100%)'
 						},
 						{
+							id: 6,
 							value: false,
 							option: 'Use Same Scale',
 							description: 'If setthe same scale'
 						},
 						{
+							id: 7,
 							value: [],
 							option: 'Colour Scale',
 							description:

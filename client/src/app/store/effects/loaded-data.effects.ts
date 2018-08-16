@@ -2,72 +2,45 @@ import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { map, switchMap } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
-import { FileData } from '@app/models';
+import { of } from 'rxjs';
 import {
 	LoadDataFailed,
 	LoadDataComplete
 } from '@app/store/actions/loaded-data/loaded-data.actions';
 import { LoadedDataActionConstants } from '@app/store/actions/loaded-data/loaded-data.action-types';
+import { SourceService } from '@app/services/source.service';
 
 @Injectable()
 export class LoadedDataEffects {
-	api = {
-		loadData: (): Observable<FileData> => {
-			return of({
-				columns: [
-					{
-						title: 'Product name',
-						type: 'string'
-					},
-					{
-						title: 'Price',
-						type: 'number'
-					},
-					{
-						title: 'Quantity',
-						type: 'string'
-					},
-					{
-						title: 'Quantity(2)',
-						type: 'string'
-					}
-				],
-				data: [
-					[null, null, 'FFMollis consequat', 9],
-					['Tvoluptatem', 10.32, 1, null],
-					['Tvoluptatem', 10.32, 1, null],
-					['Broken', null, 1, null],
-					['Broken1', 1, null, null],
-					['Tvoluptatem', 10.32, 1, null],
-					['Scelerisque lacinia', null, 1, null],
-					['Consectetur adipiscing', 28.72, 10, null],
-					['Condimentum aliquet', 13.9, 1, 'wtf']
-				]
-			});
-		}
-	};
-
-	constructor(private action$: Actions) {}
+	constructor(
+		private action$: Actions,
+		private sourceService: SourceService
+	) {}
 
 	@Effect()
 	loadData$ = this.action$.pipe(
 		ofType(LoadedDataActionConstants.LOADEDDATA_LOAD_DATA),
 		switchMap((action: any) =>
-			this.api.loadData().pipe(
-				map((payload: FileData) => {
-					return new LoadDataComplete(payload);
-				}),
-				catchError(error => {
-					return of(
-						new LoadDataFailed({
-							action: action,
-							msg: 'test',
-							error
-						})
-					);
+			this.sourceService
+				.loadSource({
+					link: action.payload.link,
+					text: action.payload.text,
+					fileKey: action.payload.fileKey
 				})
-			)
+				.pipe(
+					map(({ payload }) => {
+						return new LoadDataComplete(payload);
+					}),
+					catchError(error => {
+						return of(
+							new LoadDataFailed({
+								action: action,
+								msg: 'test',
+								error
+							})
+						);
+					})
+				)
 		)
 	);
 }
