@@ -9,10 +9,12 @@ app-animated-block.project-name-wrp
 		padding: 0
 	h3
 		margin: 0
+		font-size: 1.1rem
 		i 
 			margin-left: 5px
 			cursor: pointer
-		i:hover
+	h3:hover
+		&, i
 			color: $baseColor
 
 .project-name
@@ -28,15 +30,16 @@ app-animated-block.project-name-wrp
 		display: none
 
 	.ui-inputtext,
-	.ui-inputtext:focus,
-	.ui-inputtext.ng-dirty.ng-invalid:not(.ui-input-error),
-	.ui-inputtext.ng-dirty.ng-invalid:not(.ui-input-error):focus
+	.ui-inputtext.ng-dirty.ng-invalid:not(.ui-input-error)
 		height: 21px
 		padding: 0
 		background-color: transparent
 		border-color: transparent
 		border-bottom-color: $teriaryColor
-		&:hover
+		font-weight: 600
+		font-size: 1.1rem
+		&:hover,
+		&:focus,
 			border-color: transparent
 			border-bottom-color: $activeColor
 	.ui-widget.ui-button
