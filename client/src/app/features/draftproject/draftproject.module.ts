@@ -11,6 +11,8 @@ import { ExportComponent } from '@app/features/draftproject/export/export.compon
 import { ChartPreviewComponent } from '@app/features/draftproject/list-charts/chart-preview/chart-preview.component';
 import { VirtualScrollModule } from 'angular2-virtual-scroll';
 import { CommonModule } from '@angular/common';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 import { SharedModule } from '@app/shared/shared.module';
 import { TabViewModule } from 'primeng/tabview';
 import { FileUploadModule } from 'primeng/fileupload';
@@ -21,7 +23,9 @@ import { FileUploadModule } from 'primeng/fileupload';
 		TabViewModule,
 		FileUploadModule,
 		VirtualScrollModule,
-		CommonModule
+		CommonModule,
+		BrowserModule,
+		FormsModule
 	],
 	declarations: [
 		StepperComponent,

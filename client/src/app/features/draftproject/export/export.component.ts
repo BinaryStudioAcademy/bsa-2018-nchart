@@ -48,15 +48,8 @@ export class ExportComponent implements OnInit {
 	ngOnInit() {}
 
 	exportData() {
-		this.setFileName();
-	}
-
-	setFileName() {
 		this.fileName = this.controlName.value.trim();
 		this.fileType = this.controlType.value || this.fileType;
-		this.controlName.setValue('');
-		this.controlName.markAsPristine();
-		this.controlType.setValue('pdf');
 		this.file = this.fileName + '.' + this.fileType;
 	}
 }

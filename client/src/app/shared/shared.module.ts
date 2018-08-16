@@ -23,7 +23,8 @@ import { DragDropComponent } from '../shared/components/dragDrop/drag-drop.compo
 		HeaderModule,
 		UIKitModule,
 		MainBlockComponent,
-		VirtualScrollTableComponent
+		VirtualScrollTableComponent,
+		DragDropComponent
 	],
 	declarations: [
 		ActionButtonComponent,
