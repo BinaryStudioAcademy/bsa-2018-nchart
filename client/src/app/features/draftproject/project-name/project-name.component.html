@@ -1,0 +1,24 @@
+<app-animated-block class="project-name-wrp">
+	<div class="project-name">
+
+		<h3 *ngIf="!isEditing" (click)="editProjectName()">
+			{{projectName}} 
+			<i class="fas fa-pen"></i>
+		</h3>
+
+		<div class="edit-project-name" *ngIf="isEditing">
+			<app-input-text [control]="nameControl"
+							[autofocus]="isEditing"
+							(keydown)="onEnterCloseEditing($event)"
+			></app-input-text>
+			<app-button [size]="small" 
+						icon="fas fa-save" 
+						iconPosition="right" 
+						label="Save" 
+						(onclick)="closeEditing()"
+						[disabled]="nameControl.invalid"
+			></app-button>
+		</div>
+
+	</div>
+</app-animated-block>

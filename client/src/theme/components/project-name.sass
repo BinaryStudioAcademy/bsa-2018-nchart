@@ -1,0 +1,50 @@
+@import ../colors
+@import ../variables
+
+app-animated-block.project-name-wrp
+	.ui-main-block
+		background-color: transparent
+		box-shadow: none
+		margin: 0
+		padding: 0
+	h3
+		margin: 0
+		i 
+			margin-left: 5px
+			cursor: pointer
+		i:hover
+			color: $baseColor
+
+.project-name
+	height: 21px
+
+.edit-project-name
+	display: flex
+	.ui-input-wrp
+		
+
+	label.input-label,
+	.input-label
+		display: none
+
+	.ui-inputtext,
+	.ui-inputtext:focus,
+	.ui-inputtext.ng-dirty.ng-invalid:not(.ui-input-error),
+	.ui-inputtext.ng-dirty.ng-invalid:not(.ui-input-error):focus
+		height: 21px
+		padding: 0
+		background-color: transparent
+		border-color: transparent
+		border-bottom-color: $teriaryColor
+		&:hover
+			border-color: transparent
+			border-bottom-color: $activeColor
+	.ui-widget.ui-button
+		min-height: 21px
+		min-width: 30px
+		border: none
+		padding: 0 5px
+		&:hover
+			border: none
+		.ui-button-icon-right
+			margin-left: 5px

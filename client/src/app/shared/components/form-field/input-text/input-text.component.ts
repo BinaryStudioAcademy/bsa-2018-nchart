@@ -22,6 +22,8 @@ export class InputTextComponent implements OnInit {
 	iconPosition: string;
 	@Input()
 	showStates: boolean;
+	@Input()
+	autofocus: boolean;
 
 	ngOnInit() {}
 
