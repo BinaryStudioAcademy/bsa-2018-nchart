@@ -3,26 +3,32 @@ import { Component, OnInit } from '@angular/core';
 export const steps = [
 	{
 		id: 1,
+		scrollTo: '#load',
 		name: 'Load data'
 	},
 	{
 		id: 2,
+		scrollTo: '#table',
 		name: 'Data table'
 	},
 	{
 		id: 3,
+		scrollTo: '#charts',
 		name: 'Choose Chart'
 	},
 	{
 		id: 4,
+		scrollTo: '#settings',
 		name: 'Map dimensions'
 	},
 	{
 		id: 5,
+		scrollTo: '#chart',
 		name: 'Customize'
 	},
 	{
 		id: 6,
+		scrollTo: '#export',
 		name: 'Export'
 	}
 ];
