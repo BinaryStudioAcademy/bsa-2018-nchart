@@ -4,7 +4,7 @@ export interface Stage {
 }
 
 export const data: Stage[] = [
-	{ stage: '0', count: 3300 },
+	{ stage: '0', count: 4000 },
 	{ stage: '1', count: 450 },
 	{ stage: '2', count: 190 },
 	{ stage: '3', count: 114 }

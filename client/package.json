@@ -23,6 +23,7 @@
 		"@angular/platform-browser-dynamic": "^6.1.0",
 		"@angular/router": "^6.1.0",
 		"core-js": "^2.5.4",
+		"d3": "^5.5.0",
 		"moment": "^2.22.2",
 		"primeng": "^6.1.0-rc.1",
 		"rxjs": "^6.0.0",
