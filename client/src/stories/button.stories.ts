@@ -98,7 +98,8 @@ storiesOf('Buttons', module)
 		}),
 		{
 			notes:
-				"tag=app-action-button\nlabel=\"Action\"\nitems=\"[{label: 'One', icon: 'fas fa-check'}, {label: 'Two']\""
+				`tag=app-action-button\nlabel=\"Action\"\ni
+					tems=\"[{label: 'One', icon: 'fas fa-check'}, {label: 'Two']\"`
 		}
 	)
 
@@ -150,4 +151,14 @@ storiesOf('Buttons', module)
 			}
 		}),
 		{ notes: 'tag=app-tool-button\nlabel="Small Button"\nsize="small"' }
-	);
+	)
+
+	.add(
+		'Icon Button',
+		() => ({
+			component: ButtonComponent,
+			props: {
+				type: 'icon',
+				icon: 'fas fa-cannabis'
+			}
+		}));

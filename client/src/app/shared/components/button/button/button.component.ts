@@ -16,7 +16,7 @@ export class ButtonComponent implements OnInit {
 	@Input()
 	size: 'small' | 'middle' | 'big' = 'middle';
 	@Input()
-	type: 'default' | 'secondary' = 'default';
+	type: 'default' | 'secondary' | 'icon' = 'default';
 	@Output()
 	onclick: EventEmitter<any> = new EventEmitter();
 
