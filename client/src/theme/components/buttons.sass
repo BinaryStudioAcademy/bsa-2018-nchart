@@ -6,6 +6,7 @@
 	transition: .4s ease
 	font-weight: 600
 	margin: 0
+	border: none
 	&:disabled,
 	&:disabled:hover
 		background-color: $disabledColor
@@ -57,6 +58,25 @@
 	&:enabled:focus
 		background-color: $activeButtonColor
 		border: 2px solid $activeButtonColor
+
+.ui-widget.ui-button-icon,
+.ui-button-icon
+	min-width: 15px
+	min-height: 15px
+	background-color: transparent
+	color: $stateActiveTextColor
+	&:enabled:hover
+		background-color: transparent
+		border: none
+		color: $secondaryTextColor
+		box-shadow: none
+	.ui-button-text
+		display: none
+	&:enabled:active,
+	&:enabled:focus
+		background-color: transparent
+		border: none
+		color: $stateActiveTextColor
 
 // Button Label
 .ui-button-text-only .ui-button-text,
