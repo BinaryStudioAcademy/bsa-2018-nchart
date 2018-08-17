@@ -14,7 +14,9 @@ class ChartTypeRepository extends Repository {
 	getById(id) {
 		return this.model.findById(id, {
 			attributes: [
+				'id',
 				'name',
+				'sys_name',
 				'description',
 				'dimension_settings',
 				'customize_settings'

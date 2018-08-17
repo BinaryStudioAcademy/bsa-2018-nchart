@@ -10,6 +10,10 @@ const ChartType = sequelize.define('chartType', {
 		type: Sequelize.STRING,
 		allowNull: false
 	},
+	sys_name: {
+		type: Sequelize.STRING,
+		allowNull: false
+	},
 	description: {
 		type: Sequelize.STRING,
 		allowNull: false
