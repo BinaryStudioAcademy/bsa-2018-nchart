@@ -4,7 +4,11 @@
         <div class="draggble" *ngFor='let el of columns' id={{el.variable}}>{{el.variable}}<small style="margin-left: 10px">{{el.type}}</small></div>
       </div>
       <div class="ui-g-8 ">
-          <i class="fa fa-trash-alt removeAllIcon" (click)="removeAll()"></i>
+		  	<app-button type="icon"
+						icon="fa fa-trash-alt"
+						class="removeAllIcon"
+						(onclick)="removeAll()"
+			></app-button>
             <div *ngFor='let el of dimensionsSettings' [ngClass]="getClasses(el.multiple, el.required)"  class="dropArea">
               <h4 class="dimensionHeader">{{el.variable}}</h4>
               <i *ngIf="el.required" class="fa fa-asterisk fa-xs requiredIcon"></i>
