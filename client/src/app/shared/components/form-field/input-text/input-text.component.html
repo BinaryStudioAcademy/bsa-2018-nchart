@@ -16,7 +16,10 @@
         [type]="type"
         [placeholder]="placeholder"
         [attr.disabled]="isDisabled()"
-        [ngClass]="getClasses()"
+		[ngClass]="getClasses()"
+		[pTooltip]="tooltip"
+		[escape]="tooltipEscape" 
+		[tooltipPosition]="tooltipPosition"
     >
     <i
         [ngClass]="getIconClasses()"

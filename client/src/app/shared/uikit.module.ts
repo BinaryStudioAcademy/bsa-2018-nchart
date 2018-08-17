@@ -21,6 +21,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { TabViewModule } from 'primeng/tabview';
 // Drag&Drop
 import { DragulaModule } from 'ng2-dragula';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
 	imports: [
@@ -42,7 +43,8 @@ import { DragulaModule } from 'ng2-dragula';
 		TabMenuModule,
 		TabViewModule,
 		DragulaModule.forRoot(),
-		FormsModule
+		FormsModule,
+		TooltipModule
 	],
 	exports: [
 		ButtonModule,
@@ -63,7 +65,8 @@ import { DragulaModule } from 'ng2-dragula';
 		TabMenuModule,
 		TabViewModule,
 		DragulaModule,
-		FormsModule
+		FormsModule,
+		TooltipModule
 	],
 	declarations: []
 })
