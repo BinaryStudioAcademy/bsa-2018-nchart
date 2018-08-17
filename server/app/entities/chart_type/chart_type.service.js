@@ -20,7 +20,7 @@ class ChartTypeService {
 				}
 			})
 			.catch(err => {
-				throw ErrorService.createCustomDBError(err);
+				throw err;
 			});
 	}
 
