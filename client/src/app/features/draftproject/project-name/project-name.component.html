@@ -2,8 +2,10 @@
 	<div class="project-name">
 
 		<h3 *ngIf="!isEditing" (click)="editProjectName()">
-			{{projectName}} 
-			<i class="fas fa-pen"></i>
+			<span class="project-name-text">{{projectName}}</span>
+			<app-button icon="fas fa-pen" 
+						type="icon"
+			></app-button>
 		</h3>
 
 		<div class="edit-project-name" *ngIf="isEditing">
@@ -11,10 +13,8 @@
 							[autofocus]="isEditing"
 							(keydown)="onEnterCloseEditing($event)"
 			></app-input-text>
-			<app-button [size]="small" 
-						icon="fas fa-save" 
-						iconPosition="right" 
-						label="Save" 
+			<app-button icon="fas fa-save" 
+						type="icon" 
 						(onclick)="closeEditing()"
 						[disabled]="nameControl.invalid"
 			></app-button>

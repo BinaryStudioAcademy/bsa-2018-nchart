@@ -10,20 +10,28 @@ app-animated-block.project-name-wrp
 	h3
 		margin: 0
 		font-size: 1.1rem
-		i 
+		transition: 0.4s ease
+		.project-name-text
+			max-width: calc(100% - 32px)
+			white-space: nowrap
+			overflow: hidden
+			text-overflow: ellipsis
+			display: inline-block
+			vertical-align: middle
+		.ui-widget.ui-button-icon .fas
+			transition: 0.4s ease
 			margin-left: 5px
 			cursor: pointer
 	h3:hover
-		&, i
-			color: $baseColor
+		.ui-widget.ui-button-icon .fas
+			color: $stateDefaultTextColor
 
 .project-name
-	height: 21px
+	min-height: 33px
+	width: 100%
 
 .edit-project-name
 	display: flex
-	.ui-input-wrp
-		
 
 	label.input-label,
 	.input-label
@@ -31,23 +39,9 @@ app-animated-block.project-name-wrp
 
 	.ui-inputtext,
 	.ui-inputtext.ng-dirty.ng-invalid:not(.ui-input-error)
-		height: 21px
-		padding: 0
-		background-color: transparent
-		border-color: transparent
-		border-bottom-color: $teriaryColor
+		padding: 5px
 		font-weight: 600
-		font-size: 1.1rem
-		&:hover,
-		&:focus,
-			border-color: transparent
-			border-bottom-color: $activeColor
-	.ui-widget.ui-button
-		min-height: 21px
-		min-width: 30px
-		border: none
-		padding: 0 5px
-		&:hover
-			border: none
-		.ui-button-icon-right
-			margin-left: 5px
+		font-size: 1rem
+
+	.ui-button-icon .fas, .fa
+		font-size: 1.2rem
