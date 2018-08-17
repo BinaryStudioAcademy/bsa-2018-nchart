@@ -29,6 +29,7 @@ export class HttpService {
 	}
 
 	makeRequest<T>(request: ServiceRequest): Observable<T> {
+		debugger;
 		let url = `${HttpService.baseURL}${request.url}`;
 		let headers = this.prepareHeaders(request.headers);
 
