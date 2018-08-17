@@ -4,11 +4,12 @@ const download = require('download-file');
 
 class FileMiddleware {
 	save(file) {
-		let path = `${process.env.FILE_STORAGE_DIR}${uuidv4()}${file.name}`;
+		let storagePath = process.env.FILE_STORAGE_DIR;
+		let path = `${storagePath}${uuidv4()}${file.name}`;
 		return new Promise((resolve, reject) => {
 			// rename file if exists, otherwise it will be overwritten
 			while (fs.existsSync(path)) {
-				path = `${process.env.FILE_STORAGE_DIR}${uuidv4()}${file.name}`;
+				path = `${storagePath}${uuidv4()}${file.name}`;
 			}
 			const stream = fs.createWriteStream(path);
 			return stream.once('open', () => {
@@ -28,9 +29,10 @@ class FileMiddleware {
 
 	saveFromLink(url) {
 		this.url = url;
+        let storagePath = process.env.FILE_STORAGE_DIR;
 		return new Promise((resolve, reject) => {
 			const options = {
-				directory: `${process.env.FILE_STORAGE_DIR}`,
+				directory: `${storagePath}`,
 				filename: `${uuidv4()}.file`
 			};
 			while (fs.existsSync(options.directory + options.filename)) {
