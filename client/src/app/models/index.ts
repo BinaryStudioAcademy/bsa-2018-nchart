@@ -7,3 +7,7 @@ export * from './user-store.model';
 export * from './companies-store.model';
 export * from './projects-store.model';
 export * from './fields-validators.model';
+export * from './register.model';
+export * from './login.model';
+export * from './response-scheme.model';
+export * from './user-domain.model';
