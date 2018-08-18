@@ -1,48 +1,38 @@
 const project = require('express').Router();
-const projectService = require('../../entities/project/project.service');
+const ProjectService = require('../../entities/project/project.service');
+const PayloadGeneratorService = require('../../common/services/payload-generator.service');
 
-project.get('/:id', (req, res) => {
-	projectService.findById(Number(req.params.id), (err, data) => {
-		if (!err) {
-			res.json(data);
-		} else {
-			res.status(400);
-			res.end();
-		}
-	});
+project.get('/', (req, res, next) => {
+	ProjectService.getAll()
+		.then(PayloadGeneratorService.nextWithData(next, res))
+		.catch(next);
 });
 
-project.post('/', (req, res) => {
-	projectService.save(req.body, (err, data) => {
-		if (!err) {
-			res.json(data);
-		} else {
-			res.status(400);
-			res.end();
+project.get('/test', (req, res) => {
+	const projects = [
+		{
+			id: '0',
+			name: 'test1',
+			datasets: [1, 2, 3],
+			charts: [3, 4, 5],
+			createdAt: 1,
+			isDraft: true
+		},
+		{
+			id: '1',
+			name: 'test2',
+			datasets: [1, 2, 3],
+			charts: [3, 4, 5],
+			createdAt: 1,
+			isDraft: true
 		}
-	});
-});
-
-project.put('/:id', (req, res) => {
-	projectService.update(Number(req.params.id), req.body, (err, data) => {
-		if (!err) {
-			res.json(data);
-		} else {
-			res.status(400);
-			res.end();
-		}
-	});
-});
-
-project.delete('/:id', (req, res) => {
-	projectService.removeById(Number(req.params.id), (err, data) => {
-		if (!err) {
-			res.json(data);
-		} else {
-			res.status(400);
-			res.end();
-		}
-	});
+	];
+	const payload = {
+		payload: projects,
+		isSuccess: true,
+		errors: []
+	};
+	res.json(payload);
 });
 
 module.exports = project;

@@ -3,7 +3,7 @@ import { Effect, Actions, ofType } from '@ngrx/effects';
 import { map, switchMap } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
-import {Project, ResponseScheme} from '@app/models';
+import { Project, ResponseScheme } from '@app/models';
 import { normalize } from 'normalizr';
 import { arrayOfCustomData } from '@app/schemes/custom.schema';
 import { ProjectsActionConstants } from '@app/store/actions/projects/projects.action-types';
@@ -29,7 +29,7 @@ export class ProjectsEffects {
 		ofType(ProjectsActionConstants.LOAD_PROJECTS),
 		switchMap((action: any) =>
 			this.api.loadProjects().pipe(
-				map((value) => {
+				map(value => {
 					const {
 						result: all,
 						entities: { byId }
