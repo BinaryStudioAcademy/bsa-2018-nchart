@@ -3,7 +3,7 @@
 		<p-checkbox name="groupname" 
 					[value]="check.value" 
 					[formControl]="check.control"
-					[(ngModel)]="checkedValues"
+					binary="true"
 		></p-checkbox>
 		<label class="ui-checkbox-label" [class.ui-input-label-disabled]="check.disabled">{{check.label}}</label>
 	</div>
