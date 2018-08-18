@@ -1,6 +1,6 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import '@storybook/addon-notes/register';
-import {TooltipModule} from 'primeng/tooltip';
+import { TooltipModule } from 'primeng/tooltip';
 
 // Forms
 import { FormsModule, MinLengthValidator } from '@angular/forms';
@@ -19,8 +19,13 @@ export function showList(): string {
 storiesOf('Tooltips', module)
 	.addDecorator(
 		moduleMetadata({
-			imports: [TooltipModule, InputTextModule, ReactiveFormsModule,
-				ButtonModule, FormsModule],
+			imports: [
+				TooltipModule,
+				InputTextModule,
+				ReactiveFormsModule,
+				ButtonModule,
+				FormsModule
+			],
 			declarations: [InputTextComponent, ButtonComponent]
 		})
 	)
