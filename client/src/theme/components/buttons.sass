@@ -59,16 +59,17 @@
 		background-color: $activeButtonColor
 		border: 2px solid $activeButtonColor
 
+// Icon Button
 .ui-widget.ui-button-icon,
 .ui-button-icon
 	min-width: 32px
 	min-height: 32px
 	background-color: transparent
-	color: $stateActiveTextColor
+	color: $stateDefaultTextColor
 	&:enabled:hover
 		background-color: transparent
 		border: none
-		color: $secondaryTextColor
+		color: $stateActiveTextColor
 		box-shadow: none
 	.ui-button-text
 		display: none
@@ -79,6 +80,8 @@
 		background-color: transparent
 		border: none
 		color: $stateActiveTextColor
+	&:disabled, &:disabled:hover
+		color: $activeButtonColor
 
 // Button Label
 .ui-button-text-only .ui-button-text,

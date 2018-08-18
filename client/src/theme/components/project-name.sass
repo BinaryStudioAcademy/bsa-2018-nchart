@@ -19,15 +19,14 @@ app-animated-block.project-name-wrp
 			text-overflow: ellipsis
 			display: inline-block
 			vertical-align: middle
+		
+		&:hover .project-name-text:hover
+			& ~ app-button .ui-widget.ui-button-icon
+				color: $stateActiveTextColor
 
 		.ui-widget.ui-button-icon .fas
-			transition: 0.4s ease
 			margin-left: 5px
 			cursor: pointer
-			
-	h3:hover
-		.ui-widget.ui-button-icon .fas
-			color: $stateDefaultTextColor
 
 .project-name
 	min-height: 33px

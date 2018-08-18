@@ -43,6 +43,9 @@ export class ProjectNameComponent implements OnInit {
 	onEnterCloseEditing(event) {
 		if (event.keyCode === 13 && this.nameControl.valid) {
 			this.closeEditing();
+		} else if (event.keyCode === 27) {
+			this.isEditing = false;
 		}
 	}
+
 }
