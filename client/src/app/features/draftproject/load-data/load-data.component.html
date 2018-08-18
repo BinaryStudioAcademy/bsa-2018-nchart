@@ -12,20 +12,20 @@
 									[control]="pasteDataControl"
 									placeholder="Paste your data here"
 				></app-input-textarea>
-				<app-button (onclick)="pasteData($event)"
+				<app-button (onclick)="pasteData()"
 							label="Load Data"
 							class="ui-button-position-right"
 							[disabled]="pasteDataControl.invalid"
 				></app-button>
 			</p-tabPanel>
-	
+
 			<p-tabPanel header="Upload file">
-				<p-fileUpload 	name="demo[]" 
-								url="" 
-								(onUpload)="onUpload($event)"
-								accept=".xls,.xlsx,.csv,.txt" 
-								maxFileSize="5242880"
-								auto="true"
+				<p-fileUpload name="demo[]"
+							  customUpload="true"
+							  (uploadHandler)="loadFile($event)"
+							  accept=".xls,.xlsx,.csv,.txt"
+							  maxFileSize="5242880"
+							  auto="true"
 				>
 					<ng-template pTemplate="content">
 						<p class="upload-file-text">
@@ -43,7 +43,7 @@
 									[control]="pasteUrlControl"
 									showStates="true"
 					></app-input-text>
-					<app-button (onclick)="loadUrl($event)"
+					<app-button (onclick)="loadUrl()"
 								label="Load Data"
 								class="ui-button-position-right"
 								[disabled]="pasteUrlControl.invalid"

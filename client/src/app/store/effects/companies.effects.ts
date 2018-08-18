@@ -10,7 +10,7 @@ import {
 	LoadDataFailed
 } from '@app/store/actions/companies/companies.actions';
 import { normalize } from 'normalizr';
-import { arrayOfCustomData } from '@app/models/custom.schema';
+import { arrayOfCustomData } from '@app/schemes/custom.schema';
 
 @Injectable()
 export class CompaniesEffects {
@@ -40,7 +40,7 @@ export class CompaniesEffects {
 
 	@Effect()
 	loadData$ = this.action$.pipe(
-		ofType(CompaniesActionConstants.COMPANIES_LOAD_DATA),
+		ofType(CompaniesActionConstants.LOAD_COMPANIES),
 		switchMap((action: any) =>
 			this.api.loadCompanies().pipe(
 				map((value: Array<Company>) => {
