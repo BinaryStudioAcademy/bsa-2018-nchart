@@ -45,7 +45,8 @@ storiesOf('Checkbox', module)
 				control: new FormControl(
 					{ value: '', disabled: false },
 					Validators.required
-				)
+				),
+				checkedValues: ['second']
 			}
 		}),
 		{
@@ -84,7 +85,8 @@ storiesOf('Checkbox', module)
 				control: new FormControl(
 					{ value: '', disabled: true },
 					Validators.required
-				)
+				),
+				checkedValues: ['fifth']
 			}
 		}),
 		{
@@ -119,12 +121,12 @@ storiesOf('Checkbox', module)
 						label: 'Fifth item',
 						value: 'third',
 						control: new FormControl(
-							{ value: '', disabled: false },
+							{ value: '', disabled: true },
 							Validators.required
 						)
 					}
 				],
-				selectedValues: ['second', 'third']
+				checkedValues: ['second', 'third']
 			}
 		}),
 		{
