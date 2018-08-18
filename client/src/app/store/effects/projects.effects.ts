@@ -11,12 +11,14 @@ import * as projectActions from '@app/store/actions/projects/projects.actions';
 // import { Observable, throwError } from 'rxjs/index';
 import { throwError } from 'rxjs/index';
 import { ProjectDomainService } from '@app/api/domains/project';
+import { ProjectService } from '../../services/project.service';
 
 @Injectable()
 export class ProjectsEffects {
 	constructor(
 		private action$: Actions,
-		private projectDomainService: ProjectDomainService
+		private projectDomainService: ProjectDomainService,
+		private projectService: ProjectService
 	) {}
 
 	@Effect()
@@ -52,23 +54,23 @@ export class ProjectsEffects {
 		)
 	);
 
-	// @Effect()
-	// createDraftProject$ = this.action$.pipe(
-	// 	ofType(ProjectsActionConstants.CREATE_DRAFT_PROJECT),
-	// 	switchMap((action: projectActions.CreateDraftProject) =>
-	// 		this.projectDomainService.save(action.payload).pipe(
-	// 			map(payload => {
-	// 				if(payload.isSuccess){
-	// 					return new projectActions.CreateDraftProjectComplete(payload);
-	// 				}
-	// 				return throwError(new Error('Can\'t post project'));
-	// 			}),
-	// 			catchError(error =>
-	// 				of(new projectActions.CreateDraftProjectFailed())
-	// 			)
-	// 		)
-	// 	)
-	// );
+	@Effect()
+	createDraftProject$ = this.action$.pipe(
+		ofType(ProjectsActionConstants.CREATE_DRAFT_PROJECT),
+		switchMap((action: projectActions.CreateDraftProject) =>
+			this.projectService.createDraftProject().pipe(
+				map(
+					project =>
+						new projectActions.CreateDraftProjectComplete({
+							project
+						})
+				),
+				catchError(error =>
+					of(new projectActions.CreateDraftProjectFailed())
+				)
+			)
+		)
+	);
 
 	@Effect()
 	loadOneProject$ = this.action$.pipe(
