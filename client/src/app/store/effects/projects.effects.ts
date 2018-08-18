@@ -74,17 +74,4 @@ export class ProjectsEffects {
 			)
 		)
 	);
-
-	// @Effect()
-	// changeProjectName$ = this.action$.pipe(
-	// 	ofType(ProjectsActionConstants.CHANGE_PROJECT_NAME),
-	// 	switchMap((action: projectActions.ChangeProjectName) =>
-	// 		this.projectService.changeProjectName().pipe(
-	// 			map(
-	// 				project =>
-	// 					new projectActions.ChangeProjectName({
-	// 						project
-	// 					})
-	// 			))
-	// ));
 }

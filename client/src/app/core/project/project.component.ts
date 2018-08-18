@@ -21,9 +21,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
 	routeParams$: Subscription;
 
 	projectName: string;
-	projectId: any;
+	projectId: SchemeID;
 
-	getProjectId: () => void;
 	disconnect: () => void;
 
 	constructor(
@@ -44,7 +43,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
 			}
 		);
 
-		this.getProjectId = this.storeService.connect([
+		this.storeService.connect([
 			{
 				subscriber: prj => {
 					this.projectId = prj.id;
@@ -53,7 +52,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
 				selector: project()
 			}
 		]);
-
 
 		this.disconnect = this.storeService.connect([
 			{

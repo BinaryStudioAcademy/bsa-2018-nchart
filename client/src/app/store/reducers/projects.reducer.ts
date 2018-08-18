@@ -3,7 +3,7 @@ import { combineReducers } from '@ngrx/store';
 import { ProjectsState } from '@app/models';
 import { ProjectsActionConstants as constants } from '@app/store/actions/projects/projects.action-types';
 import { SchemeID } from '@app/models/normalizr.model';
-import { project } from '@app/store/selectors/projects.selectors';
+// import { project } from '@app/store/selectors/projects.selectors';
 
 export const initialState: ProjectsState = {
 	byId: {},
@@ -39,7 +39,6 @@ const byId = (state = initialState.byId, action: ProjectsActions) => {
 		case constants.CHANGE_PROJECT_NAME:
 			return {
 				...state,
-				// [action.payload.project.id]: action.payload.project
 				[action.payload.id]: {
 					...state[action.payload.id],
 					name: action.payload.name
