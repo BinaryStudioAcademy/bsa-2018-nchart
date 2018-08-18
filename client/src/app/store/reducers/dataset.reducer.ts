@@ -2,7 +2,7 @@ import { DatasetState } from '@app/models';
 import { combineReducers } from '@ngrx/store';
 
 export const initialState: DatasetState = {
-	byId: {},
+	byId: {}
 };
 
 const byId = (state = initialState.byId, action) => {

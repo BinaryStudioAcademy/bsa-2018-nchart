@@ -1,4 +1,4 @@
-import { SchemeID, NormalizedScheme } from '@app/models/normalizr.model';
+import { SchemeID } from '@app/models/normalizr.model';
 import { NormalizedSchemeWithoutAll } from './normalizr.model';
 
 export type DatasetState = NormalizedSchemeWithoutAll<Dataset>;

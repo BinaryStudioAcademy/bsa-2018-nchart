@@ -4,8 +4,7 @@ import {
 	requiredValidator,
 	patternValidator
 } from '../../../shared/components/form-field/form-validators';
-import * as fromLoadedData from '@app/store/actions/loaded-data/loaded-data.actions';
-import { StoreService } from '@app/services/store.service';
+// import { StoreService } from '@app/services/store.service';
 
 @Component({
 	selector: 'app-load-data',
@@ -22,11 +21,11 @@ export class LoadDataComponent implements OnInit {
 		requiredValidator('URL can`t be empty')
 	]);
 
-	constructor(private storeService: StoreService) {}
+	constructor(/*private storeService: StoreService*/) {}
 
 	loadFile(event) {
-		const fileKey = event.files[0];
-		this.storeService.dispatch(new fromLoadedData.LoadData({ fileKey }));
+		// const fileKey = event.files[0];
+		// this.storeService.dispatch(new fromLoadedData.LoadData({ fileKey }));
 	}
 
 	onChange(e) {
@@ -37,15 +36,15 @@ export class LoadDataComponent implements OnInit {
 
 	loadUrl() {
 		if (this.pasteUrlControl.valid) {
-			const link = this.pasteUrlControl.value;
-			this.storeService.dispatch(new fromLoadedData.LoadData({ link }));
+			// const link = this.pasteUrlControl.value;
+			// this.storeService.dispatch(new fromLoadedData.LoadData({ link }));
 		}
 	}
 
 	pasteData() {
 		if (this.pasteDataControl.valid) {
-			const text = this.pasteDataControl.value;
-			this.storeService.dispatch(new fromLoadedData.LoadData({ text }));
+			// const text = this.pasteDataControl.value;
+			// this.storeService.dispatch(new fromLoadedData.LoadData({ text }));
 		}
 	}
 }

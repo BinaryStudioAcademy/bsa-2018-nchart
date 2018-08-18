@@ -106,7 +106,7 @@ export class ChartsEffects {
 					type: '2',
 					name: 'Linear chart',
 					description: 'Linear that they represent.',
-			dimensionSettings: [
+					dimensionSettings: [
 						{
 							id: 1,
 							variable: 'X Axis',
@@ -191,7 +191,7 @@ export class ChartsEffects {
 					type: '3',
 					name: 'Other chart',
 					description: 'Other that they represent.',
-			dimensionSettings: [
+					dimensionSettings: [
 						{
 							id: 1,
 							variable: 'X Axis',

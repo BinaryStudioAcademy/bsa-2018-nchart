@@ -18,7 +18,7 @@ export class ProjectsEffects {
 		},
 		createDraftProject: (): Observable<Project> => {
 			return of(null);
-		},
+		}
 	};
 
 	constructor(private action$: Actions) {}
@@ -57,13 +57,14 @@ export class ProjectsEffects {
 	createDraftProject$ = this.action$.pipe(
 		ofType(ProjectsActionConstants.CREATE_DRAFT_PROJECT),
 		switchMap((action: projectActions.CreateDraftProject) =>
-			this.api.createDraftProject()
-				.pipe(
-					map(value => {
-						return new projectActions.CreateDraftProjectComplete();
-					}),
-					catchError(error => of(new projectActions.CreateDraftProjectFailed()))
+			this.api.createDraftProject().pipe(
+				map(value => {
+					return new projectActions.CreateDraftProjectComplete();
+				}),
+				catchError(error =>
+					of(new projectActions.CreateDraftProjectFailed())
 				)
+			)
 		)
 	);
 }

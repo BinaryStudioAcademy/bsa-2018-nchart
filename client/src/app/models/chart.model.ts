@@ -4,7 +4,6 @@ import { NormalizedSchemeWithFetching } from './normalizr.model';
 
 export type ChartsState<R = undefined> = NormalizedSchemeWithFetching<Chart, R>;
 
-
 type Gen = number | boolean | string;
 type chartValue = Gen | Gen[];
 

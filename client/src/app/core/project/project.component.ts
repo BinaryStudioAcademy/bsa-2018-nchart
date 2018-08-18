@@ -24,7 +24,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
 					this.showTable = isReady;
 				},
 				selector: isProjectDataset()
-			},
+			}
 		]);
 		this.storeService.dispatch(new fromCharts.LoadData());
 		this.storeService.dispatch(new CreateDraftProject());

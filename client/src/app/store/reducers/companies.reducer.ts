@@ -11,9 +11,9 @@ export const initialState: CompaniesState = {
 
 const all = (state = initialState.all, action: CompaniesActions) => {
 	switch (action.type) {
-		case CompaniesActionConstants.COMPANIES_LOAD_DATA:
+		case CompaniesActionConstants.LOAD_COMPANIES:
 			return [];
-		case CompaniesActionConstants.COMPANIES_LOAD_DATA__COMPLETE:
+		case CompaniesActionConstants.LOAD_COMPANIES__COMPLETE:
 			return action.payload.companies.all;
 		default:
 			return state;
@@ -22,9 +22,9 @@ const all = (state = initialState.all, action: CompaniesActions) => {
 
 const byId = (state = initialState.byId, action: CompaniesActions) => {
 	switch (action.type) {
-		case CompaniesActionConstants.COMPANIES_LOAD_DATA:
+		case CompaniesActionConstants.LOAD_COMPANIES:
 			return {};
-		case CompaniesActionConstants.COMPANIES_LOAD_DATA__COMPLETE:
+		case CompaniesActionConstants.LOAD_COMPANIES__COMPLETE:
 			return action.payload.companies.byId;
 		default:
 			return state;
@@ -36,10 +36,10 @@ export const isLoading = (
 	action: CompaniesActions
 ): boolean => {
 	switch (action.type) {
-		case CompaniesActionConstants.COMPANIES_LOAD_DATA:
+		case CompaniesActionConstants.LOAD_COMPANIES:
 			return true;
-		case CompaniesActionConstants.COMPANIES_LOAD_DATA__COMPLETE:
-		case CompaniesActionConstants.COMPANIES_LOAD_DATA__FAILED:
+		case CompaniesActionConstants.LOAD_COMPANIES__COMPLETE:
+		case CompaniesActionConstants.LOAD_COMPANIES__FAILED:
 			return false;
 		default:
 			return state;

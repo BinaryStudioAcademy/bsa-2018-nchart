@@ -11,9 +11,9 @@ export const initialState: ChartsState = {
 
 const all = (state = initialState.all, action: ChartsActions) => {
 	switch (action.type) {
-		case ChartsActionConstants.CHARTS_LOAD_DATA:
+		case ChartsActionConstants.LOAD_CHARTS:
 			return [];
-		case ChartsActionConstants.CHARTS_LOAD_DATA__COMPLETE:
+		case ChartsActionConstants.LOAD_CHARTS__COMPLETE:
 			return action.payload.charts.all;
 		default:
 			return state;
@@ -22,9 +22,9 @@ const all = (state = initialState.all, action: ChartsActions) => {
 
 const byId = (state = initialState.byId, action: ChartsActions) => {
 	switch (action.type) {
-		case ChartsActionConstants.CHARTS_LOAD_DATA:
+		case ChartsActionConstants.LOAD_CHARTS:
 			return {};
-		case ChartsActionConstants.CHARTS_LOAD_DATA__COMPLETE:
+		case ChartsActionConstants.LOAD_CHARTS__COMPLETE:
 			return action.payload.charts.byId;
 		default:
 			return state;
@@ -36,10 +36,10 @@ export const isLoading = (
 	action: ChartsActions
 ): boolean => {
 	switch (action.type) {
-		case ChartsActionConstants.CHARTS_LOAD_DATA:
+		case ChartsActionConstants.LOAD_CHARTS:
 			return true;
-		case ChartsActionConstants.CHARTS_LOAD_DATA__COMPLETE:
-		case ChartsActionConstants.CHARTS_LOAD_DATA__FAILED:
+		case ChartsActionConstants.LOAD_CHARTS__COMPLETE:
+		case ChartsActionConstants.LOAD_CHARTS__FAILED:
 			return false;
 		default:
 			return state;

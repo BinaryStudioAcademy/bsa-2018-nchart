@@ -1,11 +1,15 @@
-import { SchemeID, NormalizedActiveEntity, NormalizedSchemeWithoutAll } from './normalizr.model';
+import {
+	SchemeID,
+	NormalizedActiveEntity,
+	NormalizedSchemeWithoutAll
+} from './normalizr.model';
 import { DimensionColumnMap } from './chart.model';
 import { CustomizeOption } from '@app/models/chart.model';
 
 export class UserChartsState<U = SchemeID, R = undefined>
 	extends NormalizedSchemeWithoutAll<UserCharts, R>
 	implements NormalizedActiveEntity<U, R> {
-		active = null;
+	active = null;
 }
 
 export interface UserCharts {

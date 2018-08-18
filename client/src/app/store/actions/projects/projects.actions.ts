@@ -32,9 +32,9 @@ export class CreateDraftProjectFailed extends FailedAction {
 }
 
 export type Actions =
-	LoadProjetcs |
-	LoadProjectsComplete |
-	LoadProjectsFailed |
-	CreateDraftProject |
-	CreateDraftProjectComplete |
-	CreateDraftProjectFailed;
+	| LoadProjetcs
+	| LoadProjectsComplete
+	| LoadProjectsFailed
+	| CreateDraftProject
+	| CreateDraftProjectComplete
+	| CreateDraftProjectFailed;
