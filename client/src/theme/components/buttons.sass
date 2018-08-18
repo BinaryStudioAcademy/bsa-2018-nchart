@@ -1,0 +1,200 @@
+@import ../variables
+@import ../colors
+
+.ui-widget.ui-button,
+.ui-button
+	transition: .4s ease
+	font-weight: 600
+	margin: 0
+	&:disabled,
+	&:disabled:hover
+		background-color: $disabledColor
+		border-color: $disabledColor
+		color: $stateDefaultTextColor
+		opacity: 1
+
+// Default Button
+.ui-widget.ui-button-default,
+.ui-button-default,
+.ui-widget.ui-button
+	background-color: $defaultButtonColor
+	border-color: $defaultButtonColor
+	&:enabled:hover
+		background-color: $defaultButtonHover
+		border-color: $defaultButtonHover
+		box-shadow: $boxShadow
+	&:enabled:focus,
+	&:enabled:active
+		color: $stateActiveBgColor
+		background-color: $defaultButtonColor
+		border-color: $defaultButtonColor
+
+// Secondary Button
+.ui-widget.ui-button-secondary,
+.ui-button-secondary
+	background-color: $secondaryButtonColor
+	border-color: $secondaryButtonColor
+	&:enabled:hover
+		background-color: $secondaryButtonHover
+		border-color: $secondaryButtonHover
+		box-shadow: $boxShadow
+	&:enabled:active,
+	&:enabled:focus
+		background-color: $secondaryButtonColor
+		border-color: $secondaryButtonColor
+
+// Tool Button
+.ui-widget.ui-button-tool,
+.ui-button-tool
+	background-color: $stateDefaultBgColor
+	border: 2px solid $disabledColor
+	color: $stateDefaultTextColor
+	&:enabled:hover
+		background-color: $defaultButtonHover
+		border: 2px solid $defaultButtonHover
+		box-shadow: $boxShadow
+	&:enabled:active,
+	&:enabled:focus
+		background-color: $activeButtonColor
+		border: 2px solid $activeButtonColor
+
+// Button Label
+.ui-button-text-only .ui-button-text,
+.ui-button .ui-button-text
+	padding: 0
+	display: inline-block
+
+.ui-button-text-icon-left .ui-button-icon-left
+	position: static
+	margin-right: 16px
+
+.ui-button-text-icon-right:disabled,
+.ui-button-text-icon-right:enabled
+	display: inline-flex
+	margin: 0
+	align-items: center
+	justify-content: center
+	.ui-button-icon-right
+		position: static
+		margin-top: 0
+		margin-left: 16px
+		order: 2
+
+// Action Button
+.ui-buttonset.ui-splitbutton 
+	box-shadow: $boxShadow
+	background-color: $stateDefaultBgColor
+	border-radius: $borderRadius
+	transition: 0.4s ease
+	cursor: pointer
+
+	.ui-widget.ui-button,
+	.ui-button
+		border: none
+		background-color: transparent
+		color: $stateDefaultTextColor
+		padding: 12px
+
+	.ui-widget.ui-button:not(.ui-splitbutton-menubutton),
+	.ui-button:not(.ui-splitbutton-menubutton)
+		min-width: 70px
+		.ui-button-icon-left
+			display: none
+
+	.ui-widget.ui-button:disabled,
+	.ui-button:disabled
+		background-color: #fff
+
+	.ui-splitbutton-menubutton
+		padding-left: 0
+		min-width: 40px
+		padding-left: 0
+		position: relative
+		.pi-caret-down:before
+			text-align: left
+			display: flex
+
+	& .ui-widget-content .ui-button.ui-splitbutton-menubutton:focus, 
+	& .ui-widget.ui-button.ui-splitbutton-menubutton:focus, 
+	& .ui-button.ui-splitbutton-menubutton:focus
+		border: none
+
+	&:hover
+		background-color: $defaultButtonHover
+		box-shadow: 0 1px 3px $teriaryColor
+		.ui-widget.ui-button,
+		.ui-button
+			color: $stateHoverBgColor
+			border: none
+			&:disabled
+				background-color: #fff
+				color: $stateDefaultTextColor
+
+	&:active,
+		.ui-splitbutton-menubutton:enabled,
+		.ui-widget.ui-button:enabled:not(.ui-splitbutton-menubutton),
+		.ui-button:enabled:not(.ui-splitbutton-menubutton)
+			color: #fff
+			background-color: $activeButtonColor
+			border: none
+		.ui-widget.ui-button:enabled,
+		.ui-button:enabled
+			background-color: $activeButtonColor
+
+// Action Button Menu
+.ui-menu
+	background: $stateDefaultBgColor
+	padding: 0
+	border-radius: 0
+	box-shadow: 0 1px 3px $teriaryColor
+	.ui-menuitem
+		border-radius: 0
+	.ui-menuitem > .ui-menuitem-link
+		color: $secondaryTextColor
+		border-radius: 0
+		padding-left: 20px
+	.ui-menuitem > .ui-menuitem-link:hover
+		background-color: $disabledColor
+		color: $stateDefaultTextColor
+
+// Sizes
+.ui-button-large
+	min-width: 158px
+	min-height: 50px
+
+.ui-button-big
+	min-width: 147px
+	min-height: 40px
+
+.ui-button-middle
+	min-width: 110px
+	min-height: 45px
+	&.ui-button-text-icon-left .ui-button-icon-left
+		margin-right: 10px
+		font-size: 0.8rem
+	&.ui-button-text-icon-right .ui-button-icon-right
+		margin-left: 10px
+		font-size: 0.8rem
+
+.ui-button-small
+	min-width: 85px
+	min-height: 24px
+	font-size: 0.8rem
+	&.ui-button-text-icon-left .ui-button-icon-left
+		margin-right: 6px
+		font-size: 0.8rem
+	&.ui-button-text-icon-right .ui-button-icon-right
+		margin-left: 6px
+		font-size: 0.8rem
+
+.ui-button-small.ui-widget.ui-button,
+.ui-button-small.ui-button
+	padding: 5px
+
+.ui-button-big.ui-widget.ui-button,
+.ui-button-big.ui-button
+	padding: 10px
+
+.ui-button-position-right
+	display: flex
+	justify-content: flex-end
