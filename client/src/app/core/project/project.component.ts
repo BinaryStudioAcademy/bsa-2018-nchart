@@ -18,20 +18,23 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
 	disconnect: () => void;
 
-	constructor(private storeService: StoreService, private route: ActivatedRoute) {}
+	constructor(
+		private storeService: StoreService,
+		private route: ActivatedRoute
+	) {}
 
 	ngOnInit() {
-		this.routeParams$ = this.route.params
-			.subscribe((params: { id?: number }) => {
+		this.routeParams$ = this.route.params.subscribe(
+			(params: { id?: number }) => {
 				const { id } = params;
 
 				if (id) {
-
 				} else {
 					this.storeService.dispatch(new LoadCharts());
 					this.storeService.dispatch(new CreateDraftProject());
 				}
-			});
+			}
+		);
 
 		this.disconnect = this.storeService.connect([
 			{

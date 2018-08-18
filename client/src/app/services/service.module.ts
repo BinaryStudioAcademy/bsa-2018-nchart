@@ -6,6 +6,12 @@ import { SourceService } from '@app/services/source.service';
 import { ProjectService } from './project.service';
 
 @NgModule({
-	providers: [StoreService, FormService, LoginService, SourceService, ProjectService]
+	providers: [
+		StoreService,
+		FormService,
+		LoginService,
+		SourceService,
+		ProjectService
+	]
 })
 export class ServiceModule {}

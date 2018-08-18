@@ -17,10 +17,7 @@ const all = (state = initialState.all, action: ProjectsActions) => {
 		case constants.LOAD_PROJECTS__COMPLETE:
 			return action.payload.projects.all;
 		case constants.CREATE_DRAFT_PROJECT__COMPLETE:
-			return [
-				...state,
-				action.payload.project.id
-			];
+			return [...state, action.payload.project.id];
 		default:
 			return state;
 	}

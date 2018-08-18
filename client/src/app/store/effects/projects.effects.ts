@@ -22,7 +22,10 @@ export class ProjectsEffects {
 		}
 	};
 
-	constructor(private action$: Actions, private projectService: ProjectService) {}
+	constructor(
+		private action$: Actions,
+		private projectService: ProjectService
+	) {}
 
 	@Effect()
 	loadData$ = this.action$.pipe(
@@ -59,9 +62,12 @@ export class ProjectsEffects {
 		ofType(ProjectsActionConstants.CREATE_DRAFT_PROJECT),
 		switchMap((action: projectActions.CreateDraftProject) =>
 			this.projectService.createDraftProject().pipe(
-				map(project => new projectActions.CreateDraftProjectComplete({
-						project
-				})),
+				map(
+					project =>
+						new projectActions.CreateDraftProjectComplete({
+							project
+						})
+				),
 				catchError(error =>
 					of(new projectActions.CreateDraftProjectFailed())
 				)
