@@ -7,11 +7,13 @@ export interface UserDomain {
 		user: Register;
 	}): Observable<ResponseScheme<UserAuthentication>>;
 	login(payload: Login): Observable<ResponseScheme<UserAuthentication>>;
-	update(payload: User): Observable<ResponseScheme<User>>;
+	update(
+		payload: { password: string } & User
+	): Observable<ResponseScheme<User>>;
 	delete(payload: { id: string }): Observable<ResponseScheme<null>>;
 	get(payload: { id: string }): Observable<ResponseScheme<User>>;
 	getAll(): Observable<ResponseScheme<User[]>>;
 	verifyToken(payload: {
 		token: string;
-	}): Observable<ResponseScheme<boolean>>;
+	}): Observable<ResponseScheme<{ token: string }>>;
 }
