@@ -1,5 +1,5 @@
 import { AppAction, FailedAction } from '@app/models';
-import { ProjectsActionConstants } from './projects.action-types';
+import { ProjectsActionConstants } from '@app/store/actions/projects/projects.action-types';
 import { Project } from '@app/models/project.model';
 
 export class LoadProjetcs extends AppAction<any> {

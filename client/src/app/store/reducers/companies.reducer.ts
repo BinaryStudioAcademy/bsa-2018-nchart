@@ -1,4 +1,4 @@
-import { Actions as CompaniesActions } from '../actions/companies/companies.actions';
+import { Actions as CompaniesActions } from '@app/store/actions/companies/companies.actions';
 import { CompaniesActionConstants } from '@app/store/actions/companies/companies.action-types';
 import { combineReducers } from '@ngrx/store';
 import { CompaniesState } from '@app/models/companies-store.model';

@@ -1,5 +1,5 @@
 import { AppAction, Chart, FailedAction } from '@app/models';
-import { ChartsActionConstants } from './charts.action-types';
+import { ChartsActionConstants } from '@app/store/actions/charts/charts.action-types';
 
 export class LoadData extends AppAction<any> {
 	readonly type = ChartsActionConstants.LOAD_CHARTS;

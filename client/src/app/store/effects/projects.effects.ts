@@ -8,7 +8,7 @@ import { normalize } from 'normalizr';
 import { arrayOfCustomData } from '@app/schemes/custom.schema';
 import { ProjectsActionConstants } from '@app/store/actions/projects/projects.action-types';
 import * as projectActions from '@app/store/actions/projects/projects.actions';
-import { Observable } from 'rxjs/index';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class ProjectsEffects {
