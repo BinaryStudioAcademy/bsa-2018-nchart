@@ -2,6 +2,7 @@ import { Component, Input, OnChanges } from '@angular/core';
 import * as d3 from 'd3';
 
 export type Datum = {name: string, value: number};
+
 @Component({
   selector: 'app-bar-chart',
   templateUrl: './bar-chart.component.html',

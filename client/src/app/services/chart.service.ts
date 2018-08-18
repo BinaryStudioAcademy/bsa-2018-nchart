@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 
-
 @Injectable()
 export class ChartService {
 
@@ -46,7 +45,7 @@ export class ChartService {
 		  "number"
 		],
 		"id": 4
-	  }]
+		}]
 
 	customizeSettings: [
 		  {
@@ -91,11 +90,80 @@ export class ChartService {
 			"option": "Colour Scale",
 			"id": 7
 		  }
-		]
+		]	
 
 
+		data : any;
 
-	constructor(
-	) {}
+		getXAxis(){
+			return this.data;
+		}
+		
+		getRange(){
+			return Math.max(...this.data.map(o => o.value));
+		}
+
+
+	constructor() {
+		this.data = compressArray([
+															'Jan', 'Feb', 'Mar', 
+															'Mar', 'Mar', 'Apr',
+															'May', 'Jun', 'Jul', 
+															'Aug', 'Sep', 'Oct', 
+															'Nov', 'Dec','Aug', 
+															'Sep', 'Oct', 'Nov', 
+															'Dec','Aug', 'Sep', 
+															'Oct', 'Nov', 'Dec',
+															'Nov', 'Dec','Aug', 
+															'Sep', 'Oct', 'Nov',
+															'Jan', 'Feb', 'Mar', 
+															'Mar', 'Mar', 'Apr',
+															'May', 'Jun', 'Jul', 
+															'Aug', 'Sep', 'Oct', 
+															'Nov', 'Dec','Aug', 
+															'Sep', 'Oct', 'Nov', 
+															'Dec','Aug', 'Sep', 
+															'Oct', 'Nov', 'Dec',
+															'Nov', 'Dec','Aug', 
+															'Sep', 'Oct', 'Nov',
+															'Jan', 'Feb', 'Mar', 
+															'Mar', 'Mar', 'Apr',
+															'May', 'Jun', 'Jul', 
+															'Aug', 'Sep', 'Oct', 
+															'Nov', 'Dec','Aug', 
+															'Sep', 'Oct', 'Nov', 
+															'Dec','Aug', 'Sep', 
+															'Oct', 'Nov', 'Dec',
+															'Nov', 'Dec','Aug', 
+															'Sep', 'Oct', 'Nov'
+														]);
+	}
 }
 
+export function compressArray(original) {
+ 
+	var compressed = [];
+	var copy = original.slice(0);
+	for (var i = 0; i < original.length; i++) {
+ 
+		var myCount = 0;	
+		for (var w = 0; w < copy.length; w++) {
+			if (original[i] === copy[w]) {
+				myCount++;
+				delete copy[w];
+			}
+		}
+ 
+		if (myCount > 0) {
+			let a = {
+				name:"",
+				value: 0
+			}
+			a.name = original[i];
+			a.value = myCount;
+			compressed.push(a);
+		}
+	}
+ 
+	return compressed;
+};
