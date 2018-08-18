@@ -10,23 +10,79 @@ project.get('/', (req, res, next) => {
 
 project.get('/test', (req, res) => {
 	const projects = [
-		{
-			id: '0',
-			name: 'test1',
-			datasets: [1, 2, 3],
-			charts: [3, 4, 5],
-			createdAt: 1,
-			isDraft: true
-		},
-		{
-			id: '1',
-			name: 'test2',
-			datasets: [1, 2, 3],
-			charts: [3, 4, 5],
-			createdAt: 1,
-			isDraft: true
-		}
-	];
+        {
+            id: '0',
+            name: 'test1',
+            datasets: [{
+                id: 1,
+                isDraft: true,
+                modified: {
+                    id: 1,
+                    columns: [{
+                        id: 1,
+                        title: 'col1',
+                        type: 'number'
+                    },
+                        {
+                            id: 2,
+                            title: 'col2',
+                            type: 'string'
+                        }],
+                    data: [[1, 2], ['text', 'text']],
+                },
+                source: {
+                    id: 1,
+                    columns: [{
+                        id: 1,
+                        title: 'col1',
+                        type: 'number'
+                    },
+                        {
+                            id: 2,
+                            title: 'col2',
+                            type: 'string'
+                        }],
+                    data: [[1, 2], ['text', 'text']],
+                },
+            }],
+            charts: [{
+                id: 1,
+                type: 'bar',
+                name: 'coolChart',
+                description: 'awesome description',
+                dimensionSettings: [{
+                    id: 1,
+                    variable: 'lol',
+                    multiple: true,
+                    required: true,
+                    type: ['number', 'string'],
+                    description: 'desc'
+                },
+                    {
+                        id: 2,
+                        variable: 'lol',
+                        multiple: true,
+                        required: true,
+                        type: ['number', 'string'],
+                        description: 'desc'
+                    }
+                ],
+                customizeSettings: [{
+                    id: 1,
+                    value: 123,
+                    option: 'lol',
+                    description: 'desc desc',
+                },{
+                    id: 2,
+                    value: 123,
+                    option: 'lol',
+                    description: 'desc desc',
+                }],
+            }],
+            createdAt: 1,
+            isDraft: true
+        }
+    ];
 	const payload = {
 		payload: projects,
 		isSuccess: true,
