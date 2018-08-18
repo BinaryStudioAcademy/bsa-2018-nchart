@@ -1,5 +1,4 @@
 const ChartTypeRepository = require('./chart_type.repository');
-const ErrorService = require('../../common/services/error.service');
 
 class ChartTypeService {
 	constructor() {

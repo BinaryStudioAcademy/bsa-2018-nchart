@@ -14,7 +14,24 @@ import { Observable } from 'rxjs/index';
 export class ProjectsEffects {
 	api = {
 		loadProjects: (): Observable<Project[]> => {
-			return of([]);
+			return of([
+				{
+					id: '0',
+					name: 'test1',
+					datasets: [1, 2, 3],
+					charts: [3, 4, 5],
+					createdAt: 1,
+					isDraft: true
+				},
+				{
+					id: '1',
+					name: 'test2',
+					datasets: [1, 2, 3],
+					charts: [3, 4, 5],
+					createdAt: 1,
+					isDraft: true
+				}
+			]);
 		},
 		createDraftProject: (): Observable<Project> => {
 			return of(null);
@@ -33,7 +50,7 @@ export class ProjectsEffects {
 						result: all,
 						entities: { byId }
 					} = normalize(value, arrayOfCustomData);
-					return new projectActions.LoadProjetcs({
+					return new projectActions.LoadProjectsComplete({
 						projects: {
 							all,
 							byId

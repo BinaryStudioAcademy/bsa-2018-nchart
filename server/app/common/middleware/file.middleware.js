@@ -4,7 +4,7 @@ const download = require('download-file');
 
 class FileMiddleware {
 	save(file) {
-		let storagePath = process.env.FILE_STORAGE_DIR;
+		const storagePath = process.env.FILE_STORAGE_DIR;
 		let path = `${storagePath}${uuidv4()}${file.name}`;
 		return new Promise((resolve, reject) => {
 			// rename file if exists, otherwise it will be overwritten
@@ -29,7 +29,7 @@ class FileMiddleware {
 
 	saveFromLink(url) {
 		this.url = url;
-        let storagePath = process.env.FILE_STORAGE_DIR;
+		const storagePath = process.env.FILE_STORAGE_DIR;
 		return new Promise((resolve, reject) => {
 			const options = {
 				directory: `${storagePath}`,
