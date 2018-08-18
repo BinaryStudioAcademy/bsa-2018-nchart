@@ -2,6 +2,7 @@ import { Actions as ProjectsActions } from '../actions/projects/projects.actions
 import { combineReducers } from '@ngrx/store';
 import { ProjectsState } from '@app/models';
 import { ProjectsActionConstants as constants } from '@app/store/actions/projects/projects.action-types';
+import { SchemeID } from '@app/models/normalizr.model';
 
 export const initialState: ProjectsState = {
 	byId: {},
@@ -54,10 +55,23 @@ export const isLoading = (
 	}
 };
 
+export const active = (
+	state = initialState.active,
+	action: ProjectsActions
+): SchemeID => {
+	switch (action.type) {
+		case constants.CREATE_DRAFT_PROJECT__COMPLETE:
+			return action.payload.project.id;
+		default:
+			return state;
+	}
+}
+
 const reducers = {
 	all,
 	byId,
-	isLoading
+	isLoading,
+	active
 };
 
 export const projectsReducer = combineReducers(reducers);
