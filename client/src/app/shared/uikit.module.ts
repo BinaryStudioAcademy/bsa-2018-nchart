@@ -19,6 +19,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TabViewModule } from 'primeng/tabview';
+
 // Drag&Drop
 import { DragulaModule } from 'ng2-dragula';
 import { TooltipModule } from 'primeng/tooltip';

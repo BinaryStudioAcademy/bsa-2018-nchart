@@ -23,11 +23,11 @@ export class InputTextComponent implements OnInit {
 	@Input()
 	showStates: boolean;
 	@Input()
-	tooltip: any;
+	tooltip?: any;
 	@Input()
-	tooltipEscape: boolean;
+	tooltipEscape?: boolean;
 	@Input()
-	tooltipPosition: string;
+	tooltipPosition?: string;
 
 	ngOnInit() {}
 

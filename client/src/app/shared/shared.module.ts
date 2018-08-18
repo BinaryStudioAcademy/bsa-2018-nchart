@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LinkComponent } from '@app/shared/components/link/link.component';
 import { DragDropComponent } from '../shared/components/dragDrop/drag-drop.component';
 
+
 @NgModule({
 	imports: [
 		UIKitModule,

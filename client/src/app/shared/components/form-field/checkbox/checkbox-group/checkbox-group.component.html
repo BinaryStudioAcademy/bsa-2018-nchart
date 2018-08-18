@@ -2,8 +2,9 @@
 	<div *ngFor="let check of checks" class="ui-g-12 ui-checkbox-wrp">
 		<p-checkbox name="groupname" 
 					[value]="check.value" 
-					[formControl]="check.control">
-		</p-checkbox>
+					[formControl]="check.control"
+					[(ngModel)]="checkedValues"
+		></p-checkbox>
 		<label class="ui-checkbox-label" [class.ui-input-label-disabled]="check.disabled">{{check.label}}</label>
 	</div>
 </div>
