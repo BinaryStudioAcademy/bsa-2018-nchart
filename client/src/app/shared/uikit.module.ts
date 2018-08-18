@@ -19,6 +19,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TabViewModule } from 'primeng/tabview';
+import { TableModule } from 'primeng/table';
 // Drag&Drop
 import { DragulaModule } from 'ng2-dragula';
 
@@ -42,7 +43,8 @@ import { DragulaModule } from 'ng2-dragula';
 		TabMenuModule,
 		TabViewModule,
 		DragulaModule.forRoot(),
-		FormsModule
+		FormsModule,
+		TableModule
 	],
 	exports: [
 		ButtonModule,
@@ -63,7 +65,8 @@ import { DragulaModule } from 'ng2-dragula';
 		TabMenuModule,
 		TabViewModule,
 		DragulaModule,
-		FormsModule
+		FormsModule,
+		TableModule
 	],
 	declarations: []
 })

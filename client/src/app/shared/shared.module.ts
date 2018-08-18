@@ -3,19 +3,17 @@ import { UIKitModule } from '@app/shared/uikit.module';
 import { FormFieldModule } from '@app/shared/components/form-field/form-field.module';
 import { ActionButtonComponent } from '@app/shared/components/button/action-button/action-button.component';
 import { VirtualScrollTableComponent } from '@app/shared/components/virtual-scroll-table/virtual-scroll-table.component';
-import { VirtualScrollModule } from 'angular2-virtual-scroll';
 import { HeaderModule } from '@app/shared/components/header/header.module';
 import { MainBlockComponent } from './components/main-block/main-block.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DragDropComponent } from '../shared/components/dragDrop/drag-drop.component';
+import { DragDropComponent } from '@app/shared/components/dragDrop/drag-drop.component';
 
 @NgModule({
 	imports: [
 		UIKitModule,
 		FormFieldModule,
 		HeaderModule,
-		BrowserAnimationsModule,
-		VirtualScrollModule
+		BrowserAnimationsModule
 	],
 	exports: [
 		ActionButtonComponent,
@@ -23,7 +21,8 @@ import { DragDropComponent } from '../shared/components/dragDrop/drag-drop.compo
 		HeaderModule,
 		UIKitModule,
 		MainBlockComponent,
-		VirtualScrollTableComponent
+		VirtualScrollTableComponent,
+		DragDropComponent
 	],
 	declarations: [
 		ActionButtonComponent,

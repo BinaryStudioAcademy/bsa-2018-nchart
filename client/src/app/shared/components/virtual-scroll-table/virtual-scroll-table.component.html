@@ -1,28 +1,66 @@
-<virtual-scroll
-	[items]="filteredList"
-	(update)="scrollItems = $event"
-	(change)="addSelection($event)">
-	<table (click)="turnoffDropdown($event)">
-		<tr class="headers">
-			<td>
+<p-table
+	[columns]="payload.columns"
+	[value]="virtualData"
+	[scrollable]="true"
+	[rows]="10"
+	scrollHeight="400px"
+	[virtualScroll]="true"
+	(onLazyLoad)="loadDataOnScroll($event)"
+	[lazy]="true"
+	[totalRecords]="totalRecords"
+	[virtualRowHeight]="60"
+	[loading]="loading"
+	[responsive]="true">
+	<ng-template pTemplate="colgroup" let-columns >
+			<colgroup >
+				<col [ngStyle]="{'width': '7%'}">
+				<col style="width: 5%">
+				<col *ngFor="let col of columns">
+			</colgroup>
+	</ng-template>
+	<ng-template pTemplate="header" let-columns >
+		<tr [ngStyle]="{'height': '40px'}">
+			<th pResizableColumn [ngStyle]="{'background-color': '#ffffff', 'border':'none', 'border-bottom': '2px solid #f2f3f9'}">
 				<div class="dropdown">
-						<button class="dropbtn" (click)="toggleDropdown($event)">#
-							<i class="fas fa-caret-down"></i>
-						</button>
-						<div class="dropdown-content" id="Dropdown">
-							<a href="#">Delete selected</a>
-						</div>
-				</div> 
-			</td>
-			<td class="header-checkbox">
-				<p-checkbox (click)="isSelectAll()" id="selectAll"></p-checkbox>
-			</td>
-			<td *ngFor="let index of payload.columns">{{index.title.toUpperCase()}}</td>
+					<button class="dropbtn" (click)="toggleDropdown($event)">#
+						<i class="fas fa-caret-down"></i>
+					</button>
+					<div class="dropdown-content" id="Dropdown">
+						<a href="#">Delete selected</a>
+					</div>
+				</div>
+			</th>
+			<th pResizableColumn [ngStyle]="{'background-color': '#ffffff', 'border':'none', 'border-bottom': '2px solid #f2f3f9'}">
+				<p-checkbox (click)="selectAll()"></p-checkbox>
+			</th>
+			<th *ngFor="let col of columns" pResizableColumn style="color: #999fae;" [ngStyle]="{'background-color': '#ffffff', 'border':'none', 'border-bottom': '2px solid #f2f3f9'}">
+				<div class="dropdown">
+					<button class="dropbtn" (click)="toggleDropdown($event)">
+						{{col.title.toUpperCase()}}
+						<i class="fas fa-caret-down"></i>
+					</button>
+					<div class="dropdown-content" id="Dropdown">
+						<a href="#">Delete selected</a>
+					</div>
+				</div>
+			</th>
 		</tr>
-		<tr *ngFor="let item of scrollItems" class="list">
-			<td class="elemNum">{{filteredList.indexOf(item) + 1}}</td>
-			<td><p-checkbox (click)="selectOne($event, item)"></p-checkbox></td>
-			<td *ngFor="let elem of item" (click)="editItem($event, item)">{{elem}}</td>
+	</ng-template>
+    <ng-template pTemplate="body" let-data>
+		<tr class="list">
+			<td [ngStyle]="{'padding': '5px','text-align': 'center', 'color': '#373737', 'background-color': '#ffffff', 'border':'none','border-bottom': '2px solid #f2f3f9', 'height': '40px'}">{{payload.data.indexOf(data) + 1}}</td>
+			<td [ngStyle]="{'padding': '5px','text-align': 'center', 'color': '#373737', 'background-color': '#ffffff', 'border':'none','border-bottom': '2px solid #f2f3f9', 'height': '40px'}"><p-checkbox (onChange)=toggleCheck($event) class=""></p-checkbox></td>
+			<!-- <td *ngFor="let elem of data" (click)="editItem($event, item)" [ngStyle]="{'padding': '5px','text-align': 'center', 'color': '#373737', 'background-color': '#ffffff', 'border':'none','border-bottom': '2px solid #f2f3f9', 'height': '60px'}">{{elem}}</td> -->
+			<td *ngFor="let elem of data"  [ngStyle]="{'padding': '5px','text-align': 'center', 'color': '#373737', 'background-color': '#ffffff', 'border':'none','border-bottom': '2px solid #f2f3f9', 'height': '40px', 'word-wrap': 'break-word'}" pEditableColumn>
+				<p-cellEditor>
+					<ng-template pTemplate="input">
+						<input type="text" [(ngModel)]="data[data.indexOf(elem)]">
+					</ng-template>
+					<ng-template pTemplate="output">
+						{{elem}}
+					</ng-template>
+				</p-cellEditor>
+			</td>
 		</tr>
-	</table>
-</virtual-scroll>
+    </ng-template>
+</p-table>
