@@ -1,7 +1,8 @@
 import { Project } from './project.model';
+import { NormalizedSchemeWithFetching, SchemeID, NormalizedActiveEntity } from './normalizr.model';
 
-export interface ProjectsState {
-	all: string[];
-	byId: { [id: string]: Project };
-	isLoading: boolean;
+export class ProjectsState<U = SchemeID, R = undefined>
+	extends NormalizedSchemeWithFetching<Project, R>
+	implements NormalizedActiveEntity<U, R> {
+		active = null;
 }

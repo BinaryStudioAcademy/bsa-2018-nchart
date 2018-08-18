@@ -12,19 +12,14 @@ import {
 } from './charts.reducer';
 
 import {
-	userChartReducer,
-	initialState as userChartInitialState
-} from './chart.reducer';
+	userChartsReducer,
+	initialState as userChartsInitialState
+} from './userCharts.reducer';
 
 import {
-	modifiedDataReducer,
-	initialState as modifiedDataInitialState
-} from './modified-data.reducer';
-
-import {
-	loadedDataReducer,
-	initialState as loadedDataInitialState
-} from './loaded-data.reducer';
+	datasetReducer,
+	initialState as datasetInitialState
+} from './dataset.reducer';
 
 import {
 	companiesReducer,
@@ -47,9 +42,8 @@ export const initialState: AppState = {
 	companies: companiesInitialState,
 	projects: projectsInitialState,
 	charts: chartsInitialState,
-	userChart: userChartInitialState,
-	modifiedData: modifiedDataInitialState,
-	loadedData: loadedDataInitialState
+	datasets: datasetInitialState,
+	userCharts: userChartsInitialState
 };
 
 export const getReducers = () => ({
@@ -58,9 +52,8 @@ export const getReducers = () => ({
 	companies: companiesReducer,
 	projects: projectsReducer,
 	charts: chartsReducer,
-	userChart: userChartReducer,
-	modifiedData: modifiedDataReducer,
-	loadedData: loadedDataReducer
+	datasets: datasetReducer,
+	userCharts: userChartsReducer
 });
 
 export const reducersToken = new InjectionToken<ActionReducerMap<AppState>>(

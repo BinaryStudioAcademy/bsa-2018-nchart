@@ -5,6 +5,14 @@
 	"version": "0.2.0",
 	"configurations": [
         {
+			"type": "chrome",
+			"request": "attach",
+			"name": "Attach to client 4200",
+			"urlFilter": "http://localhost:4200/*",
+			"port": 9222,
+			"webRoot": "${workspaceFolder}"
+		},
+        {
             "type": "node",
             "request": "attach",
             "name": "Node: Nodemon",

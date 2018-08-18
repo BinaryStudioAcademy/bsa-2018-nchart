@@ -1,19 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { StoreService } from '@app/services/store.service';
-import { isChartsReady } from '@app/store/selectors/charts.selectors';
-import { isModifiedDataReady } from '@app/store/selectors/modified-data.selectors';
 import * as fromCharts from '@app/store/actions/charts/charts.actions';
+import { CreateDraftProject } from '@app/store/actions/projects/projects.actions';
+import { isProjectDataset } from '@app/store/selectors/projects.selectors';
 
 @Component({
 	selector: 'app-project',
 	templateUrl: './project.component.html',
 	styleUrls: ['./project.component.sass']
 })
-export class ProjectComponent implements OnInit {
+export class ProjectComponent implements OnInit, OnDestroy {
 	showCharts = false;
 	showTable = false;
 
-	disconnect;
+	disconnect: () => void;
 
 	constructor(private storeService: StoreService) {}
 
@@ -21,17 +21,16 @@ export class ProjectComponent implements OnInit {
 		this.disconnect = this.storeService.connect([
 			{
 				subscriber: isReady => {
-					this.showCharts = isReady;
-				},
-				selector: isChartsReady
-			},
-			{
-				subscriber: isReady => {
 					this.showTable = isReady;
 				},
-				selector: isModifiedDataReady
-			}
+				selector: isProjectDataset()
+			},
 		]);
 		this.storeService.dispatch(new fromCharts.LoadData());
+		this.storeService.dispatch(new CreateDraftProject());
+	}
+
+	ngOnDestroy() {
+		this.disconnect();
 	}
 }

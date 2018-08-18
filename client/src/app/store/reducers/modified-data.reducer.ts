@@ -1,4 +1,4 @@
-import { Actions as ModifiedDataActions } from '../actions/modified-data/modified-data.actions';
+/* import { Actions as ModifiedDataActions } from '../actions/modified-data/modified-data.actions';
 import { Actions as LoadedDataActions } from '../actions/loaded-data/loaded-data.actions';
 import { FileData } from '@app/models';
 import { combineReducers } from '@ngrx/store';
@@ -75,3 +75,4 @@ export const isLoading = (
 };
 
 export const modifiedDataReducer = combineReducers({ data, isLoading });
+ */

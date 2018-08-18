@@ -46,7 +46,7 @@ export const isLoading = (
 	}
 };
 
-const reducers = {
+const reducers: CompaniesState<CompaniesActions> = {
 	all,
 	byId,
 	isLoading

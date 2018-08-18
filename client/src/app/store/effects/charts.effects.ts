@@ -5,7 +5,7 @@ import { catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Chart } from '@app/models';
 import { normalize } from 'normalizr';
-import { arrayOfCustomData } from '@app/models/custom.schema';
+import { arrayOfCustomData } from '@app/schemes/custom.schema';
 import { ChartsActionConstants } from '@app/store/actions/charts/charts.action-types';
 import {
 	LoadDataComplete,
@@ -22,7 +22,7 @@ export class ChartsEffects {
 					type: '1',
 					name: 'Bar chart',
 					description: 'bar chbars with ent.',
-					dimension_settings: [
+					dimensionSettings: [
 						{
 							id: 1,
 							variable: 'X Axis',
@@ -56,7 +56,7 @@ export class ChartsEffects {
 							description: 'Can  the list.'
 						}
 					],
-					customize_settings: [
+					customizeSettings: [
 						{
 							id: 5,
 							value: 800,
@@ -106,7 +106,7 @@ export class ChartsEffects {
 					type: '2',
 					name: 'Linear chart',
 					description: 'Linear that they represent.',
-					dimension_settings: [
+			dimensionSettings: [
 						{
 							id: 1,
 							variable: 'X Axis',
@@ -140,7 +140,7 @@ export class ChartsEffects {
 							description: 'Canin the list.'
 						}
 					],
-					customize_settings: [
+					customizeSettings: [
 						{
 							id: 1,
 							value: 800,
@@ -191,7 +191,7 @@ export class ChartsEffects {
 					type: '3',
 					name: 'Other chart',
 					description: 'Other that they represent.',
-					dimension_settings: [
+			dimensionSettings: [
 						{
 							id: 1,
 							variable: 'X Axis',
@@ -225,7 +225,7 @@ export class ChartsEffects {
 							description: 'C the list.'
 						}
 					],
-					customize_settings: [
+					customizeSettings: [
 						{
 							id: 1,
 							value: 800,
@@ -279,7 +279,7 @@ export class ChartsEffects {
 
 	@Effect()
 	loadData$ = this.action$.pipe(
-		ofType(ChartsActionConstants.CHARTS_LOAD_DATA),
+		ofType(ChartsActionConstants.LOAD_CHARTS),
 		switchMap((action: any) =>
 			this.api.loadCharts().pipe(
 				map((value: Array<Chart>) => {

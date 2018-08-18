@@ -1,7 +1,6 @@
-import { Actions as LoadedDataActions } from '../actions/loaded-data/loaded-data.actions';
-import { FileData } from '@app/models';
+/* import { Actions as LoadedDataActions } from '../actions/loaded-data/loaded-data.actions';
+// import { FileData } from '@app/models';
 import { combineReducers } from '@ngrx/store';
-import { DataState } from '@app/models/file-data.store';
 import { LoadedDataActionConstants } from '@app/store/actions/loaded-data/loaded-data.action-types';
 
 export const initialState: DataState = {
@@ -51,3 +50,4 @@ export const isLoading = (
 };
 
 export const loadedDataReducer = combineReducers({ data, isLoading });
+ */
