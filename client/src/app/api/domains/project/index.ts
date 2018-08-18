@@ -12,7 +12,7 @@ export class ProjectDomainService implements ProjectDomain {
 	constructor(private httpService: HttpService) {}
 
 	save(payload: { project: Project }): Observable<ResponseScheme<Project>> {
-		const s = this.httpService.makeRequest<ResponseScheme<Project>>(
+		return this.httpService.makeRequest<ResponseScheme<Project>>(
 			new ServiceRequest(
 				RequestType.POST,
 				this.projectPath,
@@ -20,11 +20,6 @@ export class ProjectDomainService implements ProjectDomain {
 				payload
 			)
 		);
-		s
-			.subscribe
-			// () => console.log('subscribe1'),
-			();
-		return s;
 	}
 
 	update(payload: { project: Project }): Observable<ResponseScheme<Project>> {

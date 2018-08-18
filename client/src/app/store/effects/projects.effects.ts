@@ -3,7 +3,7 @@ import { Effect, Actions, ofType } from '@ngrx/effects';
 import { map, switchMap } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { Project } from '@app/models';
+import {Project, ResponseScheme} from '@app/models';
 import { normalize } from 'normalizr';
 import { arrayOfCustomData } from '@app/schemes/custom.schema';
 import { ProjectsActionConstants } from '@app/store/actions/projects/projects.action-types';
@@ -13,25 +13,9 @@ import { Observable } from 'rxjs/index';
 @Injectable()
 export class ProjectsEffects {
 	api = {
-		loadProjects: (): Observable<Project[]> => {
-			return of([
-				{
-					id: '0',
-					name: 'test1',
-					datasets: [1, 2, 3],
-					charts: [3, 4, 5],
-					createdAt: 1,
-					isDraft: true
-				},
-				{
-					id: '1',
-					name: 'test2',
-					datasets: [1, 2, 3],
-					charts: [3, 4, 5],
-					createdAt: 1,
-					isDraft: true
-				}
-			]);
+		loadProjects: (): Observable<ResponseScheme<Project[]>> => {
+			// my payload with all projects
+			return of();
 		},
 		createDraftProject: (): Observable<Project> => {
 			return of(null);
@@ -45,11 +29,11 @@ export class ProjectsEffects {
 		ofType(ProjectsActionConstants.LOAD_PROJECTS),
 		switchMap((action: any) =>
 			this.api.loadProjects().pipe(
-				map((value: Project[]) => {
+				map((value) => {
 					const {
 						result: all,
 						entities: { byId }
-					} = normalize(value, arrayOfCustomData);
+					} = normalize(value.payload, arrayOfCustomData);
 					return new projectActions.LoadProjectsComplete({
 						projects: {
 							all,
