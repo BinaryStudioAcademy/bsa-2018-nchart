@@ -1,5 +1,5 @@
 const chartType = require('express').Router();
-const chartTypeService = require('./chart_type.service');
+const chartTypeService = require('./chartType.service');
 const PayloadGeneratorService = require('../../common/services/payload-generator.service');
 
 chartType.get('/', (req, res, next) => {
