@@ -65,7 +65,7 @@ export const active = (
 		default:
 			return state;
 	}
-}
+};
 
 const reducers = {
 	all,
