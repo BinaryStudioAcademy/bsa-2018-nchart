@@ -31,7 +31,6 @@
 	top: 32px
 	text-align: center
 	width: 100%
-
 	.ui-widget-header .ui-button, 
 	.ui-widget-content .ui-button, 
 	.ui-widget.ui-button, 
@@ -48,13 +47,13 @@
 			position: relative
 			bottom: -2px
 			left: 0
-
-.ui-fileupload-choose:not(.ui-state-disabled):hover,
-.ui-widget-header .ui-button:enabled:hover
-	background-color: $defaultButtonHover
-	border: 2px solid $defaultButtonHover
-	border: none
-	color: $stateActiveBgColor
+.ui-fileupload
+	.ui-fileupload-choose:not(.ui-state-disabled):hover,
+	.ui-widget-header .ui-button:enabled:hover
+		background-color: $defaultButtonHover
+		border: 2px solid $defaultButtonHover
+		border: none
+		color: $stateActiveBgColor
 
 .ui-messages .ui-messages-close:hover
 	color: $stateErrorTextColor

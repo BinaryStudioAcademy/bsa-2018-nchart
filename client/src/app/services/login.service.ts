@@ -23,10 +23,18 @@ export class LoginService {
 	constructor(
 		private formService: FormService,
 		private formBuilder: FormBuilder,
-		private userDomain: UserDomainService) {
-			debugger;
-			userDomain.register({user:new Register('Serhii', 'Bashtovyi', '', `${Math.random()}@mail`, 'password')});
-		}
+		private userDomain: UserDomainService
+	) {
+		this.userDomain.register({
+			user: new Register(
+				'Serhii',
+				'Bashtovyi',
+				'',
+				`${Math.random()}@mail`,
+				'password'
+			)
+		});
+	}
 
 	createLoginForm(): FormGroup {
 		const initialValues: OptionalType<Login> = new Login();
@@ -47,11 +55,8 @@ export class LoginService {
 		const initialValues: OptionalType<Register> = new Register();
 
 		const validators: fieldsValidators<Register> = {
-			firstName: [
-				
-			],
-			lastName: [
-			],
+			firstName: [],
+			lastName: [],
 			name: [
 				requiredValidator(),
 				patternValidator(

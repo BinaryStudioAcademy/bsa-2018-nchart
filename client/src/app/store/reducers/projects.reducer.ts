@@ -6,14 +6,15 @@ import { ProjectsActionConstants } from '@app/store/actions/projects/projects.ac
 export const initialState: ProjectsState = {
 	byId: {},
 	all: [],
+	active: null,
 	isLoading: false
 };
 
 const all = (state = initialState.all, action: ProjectsActions) => {
 	switch (action.type) {
-		case ProjectsActionConstants.PROJECTS_LOAD_DATA:
+		case ProjectsActionConstants.LOAD_PROJECTS:
 			return [];
-		case ProjectsActionConstants.PROJECTS_LOAD_DATA__COMPLETE:
+		case ProjectsActionConstants.LOAD_PROJECTS__COMPLETE:
 			return action.payload.projects.all;
 		default:
 			return state;
@@ -22,9 +23,9 @@ const all = (state = initialState.all, action: ProjectsActions) => {
 
 const byId = (state = initialState.byId, action: ProjectsActions) => {
 	switch (action.type) {
-		case ProjectsActionConstants.PROJECTS_LOAD_DATA:
+		case ProjectsActionConstants.LOAD_PROJECTS:
 			return {};
-		case ProjectsActionConstants.PROJECTS_LOAD_DATA__COMPLETE:
+		case ProjectsActionConstants.LOAD_PROJECTS__COMPLETE:
 			return action.payload.projects.byId;
 		default:
 			return state;
@@ -36,10 +37,10 @@ export const isLoading = (
 	action: ProjectsActions
 ): boolean => {
 	switch (action.type) {
-		case ProjectsActionConstants.PROJECTS_LOAD_DATA:
+		case ProjectsActionConstants.LOAD_PROJECTS:
 			return true;
-		case ProjectsActionConstants.PROJECTS_LOAD_DATA__COMPLETE:
-		case ProjectsActionConstants.PROJECTS_LOAD_DATA__FAILED:
+		case ProjectsActionConstants.LOAD_PROJECTS__COMPLETE:
+		case ProjectsActionConstants.LOAD_PROJECTS__FAILED:
 			return false;
 		default:
 			return state;
