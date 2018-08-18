@@ -18,7 +18,7 @@ export const initialState: UserState = {
 
 export const info = (state = initialState.info, action: UserActions): User => {
 	switch (action.type) {
-		case UserActionConstants.USER_VERIFY_TOKEN__COMPLETE: {
+		case UserActionConstants.VERIFY_USER_TOKEN__COMPLETE: {
 			return {
 				...state,
 				...action.payload
@@ -34,11 +34,11 @@ export const isLoading = (
 	action: UserActions
 ): boolean => {
 	switch (action.type) {
-		case UserActionConstants.USER_VERIFY_TOKEN: {
+		case UserActionConstants.VERIFY_USER_TOKEN: {
 			return true;
 		}
-		case UserActionConstants.USER_VERIFY_TOKEN__COMPLETE:
-		case UserActionConstants.USER_VERIFY_TOKEN__FAILED: {
+		case UserActionConstants.VERIFY_USER_TOKEN__COMPLETE:
+		case UserActionConstants.VERIFY_USER_TOKEN__FAILED: {
 			return false;
 		}
 		default:

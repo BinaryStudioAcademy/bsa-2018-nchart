@@ -26,7 +26,7 @@ export class UserEffects {
 
 	@Effect()
 	verifyToken$ = this.action$.pipe(
-		ofType(UserActionConstants.USER_VERIFY_TOKEN),
+		ofType(UserActionConstants.VERIFY_USER_TOKEN),
 		switchMap((action: VerifyToken) =>
 			this.api.verifyToken(action.payload.token).pipe(
 				map((value: User) => new VerifyTokenComplete(value)),

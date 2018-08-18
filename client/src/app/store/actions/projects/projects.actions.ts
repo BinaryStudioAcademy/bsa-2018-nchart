@@ -2,21 +2,39 @@ import { AppAction, FailedAction } from '@app/models';
 import { ProjectsActionConstants } from './projects.action-types';
 import { Project } from '@app/models/project.model';
 
-export class LoadData extends AppAction<any> {
-	readonly type = ProjectsActionConstants.PROJECTS_LOAD_DATA;
+export class LoadProjetcs extends AppAction<any> {
+	readonly type = ProjectsActionConstants.LOAD_PROJECTS;
 }
 
-export class LoadDataComplete extends AppAction<{
+export class LoadProjectsComplete extends AppAction<{
 	projects: {
 		all: Array<string>;
 		byId: { [id: string]: Project };
 	};
 }> {
-	readonly type = ProjectsActionConstants.PROJECTS_LOAD_DATA__COMPLETE;
+	readonly type = ProjectsActionConstants.LOAD_PROJECTS__COMPLETE;
 }
 
-export class LoadDataFailed extends FailedAction {
-	readonly type = ProjectsActionConstants.PROJECTS_LOAD_DATA__FAILED;
+export class LoadProjectsFailed extends FailedAction {
+	readonly type = ProjectsActionConstants.LOAD_PROJECTS__FAILED;
 }
 
-export type Actions = LoadData | LoadDataComplete | LoadDataFailed;
+export class CreateDraftProject extends AppAction {
+	readonly type = ProjectsActionConstants.CREATE_DRAFT_PROJECT;
+}
+
+export class CreateDraftProjectComplete extends AppAction<any> {
+	readonly type = ProjectsActionConstants.CREATE_DRAFT_PROJECT__COMPLETE;
+}
+
+export class CreateDraftProjectFailed extends FailedAction {
+	readonly type = ProjectsActionConstants.CREATE_DRAFT_PROJECT__FAILED;
+}
+
+export type Actions =
+	| LoadProjetcs
+	| LoadProjectsComplete
+	| LoadProjectsFailed
+	| CreateDraftProject
+	| CreateDraftProjectComplete
+	| CreateDraftProjectFailed;
