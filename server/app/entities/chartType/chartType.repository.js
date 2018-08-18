@@ -1,5 +1,5 @@
 const Repository = require('../../common/repository/repository');
-const chartTypeModel = require('./chart_type.model');
+const chartTypeModel = require('./chartType.model');
 
 class ChartTypeRepository extends Repository {
 	constructor() {
@@ -16,10 +16,10 @@ class ChartTypeRepository extends Repository {
 			attributes: [
 				'id',
 				'name',
-				'sys_name',
+				'sysName',
 				'description',
-				'dimension_settings',
-				'customize_settings'
+				'dimensionSettings',
+				'customizeSettings'
 			]
 		});
 	}

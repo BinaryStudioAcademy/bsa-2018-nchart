@@ -10,7 +10,7 @@ const ChartType = sequelize.define('chartType', {
 		type: Sequelize.STRING,
 		allowNull: false
 	},
-	sys_name: {
+	sysName: {
 		type: Sequelize.STRING,
 		allowNull: false
 	},
@@ -18,11 +18,11 @@ const ChartType = sequelize.define('chartType', {
 		type: Sequelize.STRING,
 		allowNull: false
 	},
-	dimension_settings: {
+	dimensionSettings: {
 		type: Sequelize.JSON,
 		allowNull: false
 	},
-	customize_settings: {
+	customizeSettings: {
 		type: Sequelize.JSON,
 		allowNull: false
 	}

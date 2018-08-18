@@ -2,7 +2,7 @@ const userRouter = require('../entities/user/user.routes');
 const projectRouter = require('../entities/project/project.routes');
 const groupRouter = require('../entities/group/group.routes');
 const companyRouter = require('../entities/company/company.routes');
-const chartRouter = require('../entities/chart_type/chart_type.routes');
+const chartRouter = require('../entities/chartType/chartType.routes');
 const fileRouter = require('./file.routes');
 
 module.exports = app => {
