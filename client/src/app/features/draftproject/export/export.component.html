@@ -5,9 +5,9 @@
 
 			<p-tabPanel header="Download">
 				<app-input-text		[control]="controlName"
-									placeholder="File name"
-									[showStates]="true"
-									label="Enter file name"
+									   placeholder="File name"
+									   [showStates]="true"
+									   label="Enter file name"
 				></app-input-text>
 				<app-dropdown-simple 	[options]="options"
 										[control]="controlType"
@@ -24,9 +24,5 @@
 			</p-tabPanel>
 
 		</p-tabView>
-	</div>
-	<div>
-		<button (click)="dispatchGetAll()">getAll</button>
-		<button (click)="dispatchOne()">getOne</button>
 	</div>
 </div>

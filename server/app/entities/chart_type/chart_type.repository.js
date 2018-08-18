@@ -16,8 +16,8 @@ class ChartTypeRepository extends Repository {
 			attributes: [
 				'name',
 				'description',
-				'dimension_settings',
-				'customize_settings'
+				'dimensionSettings',
+				'customizeSettings'
 			]
 		});
 	}

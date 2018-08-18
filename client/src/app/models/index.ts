@@ -9,3 +9,7 @@ export * from './projects-store.model';
 export * from './fields-validators.model';
 export * from './response-scheme.model';
 export * from './project-domain.model';
+export * from './chart.model';
+export * from './chart.model';
+export * from './dataset.model';
+export * from './user-chart-store.model';
