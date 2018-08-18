@@ -7,9 +7,19 @@ import { RequestType } from '@app/models/requestType.model';
 
 @Injectable()
 export class ProjectDomainService implements ProjectDomain {
-	private projectPath = '/project';
+	private projectPath = '/api/project';
 
 	constructor(private httpService: HttpService) {}
+
+	getAll(): Observable<ResponseScheme<Project[]>> {
+		return this.httpService.makeRequest<ResponseScheme<Project[]>>(
+			new ServiceRequest(
+				RequestType.GET,
+				`${this.projectPath}/test`,
+				null
+			)
+		);
+	}
 
 	save(payload: { project: Project }): Observable<ResponseScheme<Project>> {
 		return this.httpService.makeRequest<ResponseScheme<Project>>(
@@ -47,20 +57,11 @@ export class ProjectDomainService implements ProjectDomain {
 	}
 
 	get(payload: { projectId: string }): Observable<ResponseScheme<Project>> {
-		const s = this.httpService.makeRequest<ResponseScheme<null>>(
+		return this.httpService.makeRequest<ResponseScheme<Project>>(
 			new ServiceRequest(
 				RequestType.GET,
-				`/${this.projectPath}/${payload.projectId}`,
-				null
+				`${this.projectPath}/${payload.projectId}`
 			)
 		);
-		return s;
-	}
-
-	getAll(): Observable<ResponseScheme<Project[]>> {
-		const s = this.httpService.makeRequest<ResponseScheme<Project[]>>(
-			new ServiceRequest(RequestType.GET, `/${this.projectPath}`, null)
-		);
-		return s;
 	}
 }

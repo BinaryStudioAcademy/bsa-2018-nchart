@@ -19,7 +19,7 @@ export class LoadProjectsFailed extends FailedAction {
 	readonly type = ProjectsActionConstants.LOAD_PROJECTS__FAILED;
 }
 
-export class CreateDraftProject extends AppAction {
+export class CreateDraftProject extends AppAction<{ projectId: string }> {
 	readonly type = ProjectsActionConstants.CREATE_DRAFT_PROJECT;
 }
 
@@ -31,10 +31,25 @@ export class CreateDraftProjectFailed extends FailedAction {
 	readonly type = ProjectsActionConstants.CREATE_DRAFT_PROJECT__FAILED;
 }
 
+export class LoadOneProject extends AppAction<{ projectId: string }> {
+	readonly type = ProjectsActionConstants.LOAD_ONE_PROJECT;
+}
+
+export class LoadOneProjectComplete extends AppAction<Project> {
+	readonly type = ProjectsActionConstants.LOAD_ONE_PROJECT__COMPLETE;
+}
+
+export class LoadOneProjectFailed extends FailedAction {
+	readonly type = ProjectsActionConstants.LOAD_ONE_PROJECT__FAILED;
+}
+
 export type Actions =
 	| LoadProjetcs
 	| LoadProjectsComplete
 	| LoadProjectsFailed
 	| CreateDraftProject
 	| CreateDraftProjectComplete
-	| CreateDraftProjectFailed;
+	| CreateDraftProjectFailed
+	| LoadOneProject
+	| LoadOneProjectComplete
+	| LoadOneProjectFailed;
