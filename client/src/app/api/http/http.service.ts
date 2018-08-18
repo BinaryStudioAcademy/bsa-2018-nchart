@@ -30,7 +30,7 @@ export class HttpService {
 
 	makeRequest<T>(request: ServiceRequest): Observable<T> {
 		let url = `${HttpService.baseURL}${request.url}`;
-		let headers = this.prepareHeaders(request.headers);
+		const headers = this.prepareHeaders(request.headers);
 
 		switch (request.type) {
 			case RequestType.GET:
@@ -41,8 +41,6 @@ export class HttpService {
 				return this.http[request.type]<T>(url, { headers });
 			case RequestType.POST:
 			case RequestType.PUT:
-				headers = headers.append('Content-Type', 'application/json');
-
 				return this.http[request.type]<T>(url, request.payload, {
 					headers
 				});
