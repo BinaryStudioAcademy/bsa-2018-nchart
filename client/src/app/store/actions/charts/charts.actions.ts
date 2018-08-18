@@ -1,11 +1,11 @@
 import { AppAction, Chart, FailedAction } from '@app/models';
 import { ChartsActionConstants } from './charts.action-types';
 
-export class LoadData extends AppAction<any> {
+export class LoadCharts extends AppAction<any> {
 	readonly type = ChartsActionConstants.LOAD_CHARTS;
 }
 
-export class LoadDataComplete extends AppAction<{
+export class LoadChartsComplete extends AppAction<{
 	charts: {
 		all: Array<string>;
 		byId: { [id: string]: Chart };
@@ -14,8 +14,8 @@ export class LoadDataComplete extends AppAction<{
 	readonly type = ChartsActionConstants.LOAD_CHARTS__COMPLETE;
 }
 
-export class LoadDataFailed extends FailedAction {
+export class LoadChartsFailed extends FailedAction {
 	readonly type = ChartsActionConstants.LOAD_CHARTS__FAILED;
 }
 
-export type Actions = LoadData | LoadDataComplete | LoadDataFailed;
+export type Actions = LoadCharts | LoadChartsComplete | LoadChartsFailed;

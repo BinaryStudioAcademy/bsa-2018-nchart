@@ -12,10 +12,10 @@ export class UserChartsState<U = SchemeID, R = undefined>
 	active = null;
 }
 
-export interface UserCharts {
-	id: SchemeID;
-	datasetId: SchemeID;
-	chartTypeId: SchemeID;
+export class UserCharts {
+	id: SchemeID = null;
+	datasetId: SchemeID = null;
+	chartTypeId: SchemeID = null;
 	dimensionSettings: {
 		[key: string]: DimensionColumnMap;
 	};
