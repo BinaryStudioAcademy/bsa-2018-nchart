@@ -14,8 +14,6 @@ interface Checks {
 export class CheckboxGroupComponent implements OnInit {
 	@Input()
 	checks: Checks[];
-	@Input()
-	checkedValues: string[];
 
 	constructor() {}
 
