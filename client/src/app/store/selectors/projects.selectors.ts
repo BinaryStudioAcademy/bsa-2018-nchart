@@ -20,3 +20,9 @@ export const isProjectDataset = (id?: SchemeID) => (
 
 	return false;
 };
+
+export const projectName = (id?: SchemeID) => (state: AppState): {} =>
+	state.projects.byId[id || state.projects.active]
+		? {name: state.projects.byId[id || state.projects.active].name,
+			id: state.projects.byId[id || state.projects.active].id}
+		: null;
