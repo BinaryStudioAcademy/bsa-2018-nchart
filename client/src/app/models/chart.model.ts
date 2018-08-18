@@ -1,5 +1,4 @@
 import { SchemeID } from './normalizr.model';
-import { Chart } from './chart.model';
 import { NormalizedSchemeWithFetching } from './normalizr.model';
 
 export type ChartsState<R = undefined> = NormalizedSchemeWithFetching<Chart, R>;
@@ -25,7 +24,7 @@ export interface CustomizeOption {
 
 export interface DimensionColumnMap {
 	columnId: SchemeID | SchemeID[];
-	dimensionId: SchemeID;
+	id: SchemeID;
 }
 
 export interface Chart {

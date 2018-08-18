@@ -24,6 +24,11 @@ import { DragDropComponent } from '../shared/components/dragDrop/drag-drop.compo
 		DragDropComponent,
 		LinkComponent
 	],
-	declarations: [ActionButtonComponent, DragDropComponent, MainBlockComponent, LinkComponent]
+	declarations: [
+		ActionButtonComponent,
+		DragDropComponent,
+		MainBlockComponent,
+		LinkComponent
+	]
 })
 export class SharedModule {}

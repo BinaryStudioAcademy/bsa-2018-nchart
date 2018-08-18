@@ -47,5 +47,4 @@ export class ProjectNameComponent implements OnInit {
 			this.isEditing = false;
 		}
 	}
-
 }
