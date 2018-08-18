@@ -1,4 +1,4 @@
-const ChartTypeRepository = require('./chart_type.repository');
+const ChartTypeRepository = require('./chartType.repository');
 
 class ChartTypeService {
 	constructor() {
