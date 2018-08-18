@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
-import { UserActionConstants } from '../actions/user/user.action-types';
+import { UserActionConstants } from '@app/store/actions/user/user.action-types';
 import {
 	VerifyToken,
 	VerifyTokenComplete,
 	VerifyTokenFailed
-} from '../actions/user/user.actions';
+} from '@app/store/actions/user/user.actions';
 import { map, switchMap } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';

@@ -1,7 +1,7 @@
-import { UserState } from './user-store.model';
-import { CompaniesState } from './companies-store.model';
-import { ErrorHandlerState } from './error-store.model';
-import { ProjectsState } from './projects-store.model';
+import { UserState } from '@app/models/user-store.model';
+import { CompaniesState } from '@app/models/companies-store.model';
+import { ErrorHandlerState } from '@app/models/error-store.model';
+import { ProjectsState } from '@app/models/projects-store.model';
 
 export class AppAction<T = undefined> {
 	readonly type: string;

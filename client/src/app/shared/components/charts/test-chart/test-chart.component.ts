@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 import { Component, OnInit } from '@angular/core';
-import { data } from './test-data';
+import { data } from '@app/shared/components/charts/test-chart/test-data';
 
 @Component({
 	selector: 'app-test-chart',

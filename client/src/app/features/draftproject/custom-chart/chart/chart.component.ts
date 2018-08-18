@@ -7,6 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChartComponent implements OnInit {
 	constructor() {}
-
-	ngOnInit() {}
+	data: any;
+	ngOnInit() {
+		this.data = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+		.map((month: string) => ({
+		  name: month,
+		  value: Math.random() * 200
+		}));
+	}
 }

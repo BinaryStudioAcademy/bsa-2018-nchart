@@ -1,4 +1,4 @@
-import { UserActionConstants } from './user.action-types';
+import { UserActionConstants } from '@app/store/actions/user/user.action-types';
 import { AppAction, FailedAction, User } from '@app/models';
 
 export class VerifyToken extends AppAction<{ token }> {

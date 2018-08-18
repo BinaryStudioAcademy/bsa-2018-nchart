@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TestChartComponent } from './test-chart.component';
+import { TestChartComponent } from '@app/shared/components/charts/test-chart/test-chart.component';
 
 describe('TestChartComponent', () => {
 	let component: TestChartComponent;

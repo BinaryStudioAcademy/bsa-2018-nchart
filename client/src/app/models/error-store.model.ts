@@ -1,4 +1,4 @@
-import { AppAction } from './store.model';
+import { AppAction } from '@app/models/store.model';
 
 export interface ErrorHandlerState {
 	action?: AppAction;

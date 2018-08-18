@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import {
 	requiredValidator,
 	patternValidator
-} from '../../../shared/components/form-field/form-validators';
+} from '@app/shared/components/form-field/form-validators';
 
 @Component({
 	selector: 'app-export',

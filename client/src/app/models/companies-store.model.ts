@@ -1,4 +1,4 @@
-import { Company } from './company.model';
+import { Company } from '@app/models/company.model';
 
 export interface CompaniesState {
 	all: string[];

@@ -1,4 +1,4 @@
-import { Actions as ProjectsActions } from '../actions/projects/projects.actions';
+import { Actions as ProjectsActions } from '@app/store/actions/projects/projects.actions';
 import { combineReducers } from '@ngrx/store';
 import { ProjectsState } from '@app/models';
 import { ProjectsActionConstants } from '@app/store/actions/projects/projects.action-types';

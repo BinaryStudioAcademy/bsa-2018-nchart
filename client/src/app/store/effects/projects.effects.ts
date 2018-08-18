@@ -11,7 +11,7 @@ import {
 	LoadDataComplete,
 	LoadDataFailed
 } from '@app/store/actions/projects/projects.actions';
-import { Observable } from 'rxjs/index';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class ProjectsEffects {

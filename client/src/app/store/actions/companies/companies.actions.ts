@@ -1,5 +1,5 @@
 import { AppAction, Company, FailedAction } from '@app/models';
-import { CompaniesActionConstants } from './companies.action-types';
+import { CompaniesActionConstants } from '@app/store/actions/companies/companies.action-types';
 
 export class LoadData extends AppAction<any> {
 	readonly type = CompaniesActionConstants.COMPANIES_LOAD_DATA;
