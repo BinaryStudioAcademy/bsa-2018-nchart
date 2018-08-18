@@ -4,7 +4,7 @@
 		<p-tabView 	activeIndex="0"
 				(onChange)="onChange($event)"
 		>
-	
+
 			<p-tabPanel header="Paste">
 				<app-input-textarea class="load-data-paste"
 									[rows]="12"
@@ -18,12 +18,12 @@
 							[disabled]="pasteDataControl.invalid"
 				></app-button>
 			</p-tabPanel>
-	
+
 			<p-tabPanel header="Upload file">
-				<p-fileUpload 	name="demo[]" 
-								url="" 
+				<p-fileUpload 	name="demo[]"
+								url=""
 								(onUpload)="onUpload($event)"
-								accept=".xls,.xlsx,.csv,.txt" 
+								accept=".xls,.xlsx,.csv,.txt"
 								maxFileSize="5242880"
 								auto="true"
 				>
@@ -35,7 +35,7 @@
 					</ng-template>
 				</p-fileUpload>
 			</p-tabPanel>
-	
+
 			<p-tabPanel header="From URL">
 				<div class="load-url-group">
 					<app-input-text class="load-data-url"
@@ -50,10 +50,10 @@
 					></app-button>
 				</div>
 			</p-tabPanel>
-	
+
 			<p-tabPanel header="Samples">
 			</p-tabPanel>
-	
+
 		</p-tabView>
 	</div>
 </app-animated-block>

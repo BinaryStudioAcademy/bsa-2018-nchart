@@ -23,19 +23,6 @@ export class ProjectDomainService implements ProjectDomain {
 		s
 			.subscribe
 			// () => console.log('subscribe1'),
-			// () => console.log('subscribeError')
-			();
-
-		s
-			.subscribe
-			// () => console.log('subscribe2'),
-			// () => console.log('subscribeError2')
-			();
-
-		s
-			.subscribe
-			// () => console.log('subscribe3'),
-			// () => console.log('subscribeError3')
 			();
 		return s;
 	}
