@@ -1,5 +1,5 @@
 const Repository = require('../../common/repository/repository');
-const chartTypeModel = require('./chart_type.model');
+const chartTypeModel = require('./chartType.model');
 
 class ChartTypeRepository extends Repository {
 	constructor() {
@@ -14,7 +14,9 @@ class ChartTypeRepository extends Repository {
 	getById(id) {
 		return this.model.findById(id, {
 			attributes: [
+				'id',
 				'name',
+				'sysName',
 				'description',
 				'dimensionSettings',
 				'customizeSettings'
