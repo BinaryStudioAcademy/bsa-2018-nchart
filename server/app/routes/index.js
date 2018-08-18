@@ -10,6 +10,6 @@ module.exports = app => {
 	app.use('/api/project', projectRouter);
 	app.use('/api/group', groupRouter);
 	app.use('/api/company', companyRouter);
-	app.use('/api/chartType', chartRouter);
+	app.use('/api/chart-type', chartRouter);
 	app.use('/api/data-set', fileRouter);
 };
