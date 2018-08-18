@@ -37,7 +37,7 @@ export class ProjectsEffects {
 							}
 						});
 					}
-					return throwError(new Error(`Can't get projects`));
+					return throwError(new Error('Cant get projects'));
 				}),
 				catchError(error => {
 					return of(
