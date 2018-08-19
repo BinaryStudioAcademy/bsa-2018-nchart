@@ -1,4 +1,4 @@
-import { User } from './user.model';
+import { User } from '@app/models/user.model';
 
 export interface UserState {
 	info: User;

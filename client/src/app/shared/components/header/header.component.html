@@ -1,0 +1,15 @@
+<div class="ui-g ui-widget-header header-container">
+    <div class="ui-lg-4 ui-md-2 header-component">
+            <img src="../../../../assets/nChartLogo.svg" class="header-logo">
+    </div>
+    <div class="ui-lg-4 ui-md-4 header-component">
+        <p-tabMenu [model]="items"></p-tabMenu>
+    </div>
+    <div class="ui-lg-4 ui-md-6 header-component">
+        <div class="header-profile-container">
+            <app-button label="New project" size="middle" type="default" routerLink='/app/projects/draft' icon="fas fa-plus" iconPosition="left" class="header-newProject-button"></app-button>
+            <app-button label="Sign in" size="middle" type="secondary" (onclick)="onClick($event)" *ngIf="!isAuthorized" routerLink="/login" ></app-button>
+            <app-header-profile label="User" *ngIf="isAuthorized" [items]="profileItems" image="../../../../assets/user.jpeg"></app-header-profile>
+        </div>
+    </div>
+</div>

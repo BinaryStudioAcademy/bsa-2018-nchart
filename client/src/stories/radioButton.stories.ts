@@ -1,6 +1,6 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import '@storybook/addon-notes/register';
-import { Component, OnInit, NgModule } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 // Forms
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';

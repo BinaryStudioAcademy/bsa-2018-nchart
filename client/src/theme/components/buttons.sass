@@ -5,6 +5,8 @@
 .ui-button
 	transition: .4s ease
 	font-weight: 600
+	margin: 0
+	border: none
 	&:disabled,
 	&:disabled:hover
 		background-color: $disabledColor
@@ -14,7 +16,8 @@
 
 // Default Button
 .ui-widget.ui-button-default,
-.ui-button-default
+.ui-button-default,
+.ui-widget.ui-button
 	background-color: $defaultButtonColor
 	border-color: $defaultButtonColor
 	&:enabled:hover
@@ -23,6 +26,7 @@
 		box-shadow: $boxShadow
 	&:enabled:focus,
 	&:enabled:active
+		color: $stateActiveBgColor
 		background-color: $defaultButtonColor
 		border-color: $defaultButtonColor
 
@@ -54,6 +58,30 @@
 	&:enabled:focus
 		background-color: $activeButtonColor
 		border: 2px solid $activeButtonColor
+
+// Icon Button
+.ui-widget.ui-button-icon,
+.ui-button-icon
+	min-width: 32px
+	min-height: 32px
+	background-color: transparent
+	color: $stateDefaultTextColor
+	&:enabled:hover
+		background-color: transparent
+		border: none
+		color: $stateActiveTextColor
+		box-shadow: none
+	.ui-button-text
+		display: none
+	.fas, .fa
+		font-size: 1.1rem
+	&:enabled:active,
+	&:enabled:focus
+		background-color: transparent
+		border: none
+		color: $stateActiveTextColor
+	&:disabled, &:disabled:hover
+		color: $activeButtonColor
 
 // Button Label
 .ui-button-text-only .ui-button-text,
@@ -122,6 +150,7 @@
 		.ui-widget.ui-button,
 		.ui-button
 			color: $stateHoverBgColor
+			border: none
 			&:disabled
 				background-color: #fff
 				color: $stateDefaultTextColor
@@ -190,3 +219,7 @@
 .ui-button-big.ui-widget.ui-button,
 .ui-button-big.ui-button
 	padding: 10px
+
+.ui-button-position-right
+	display: flex
+	justify-content: flex-end

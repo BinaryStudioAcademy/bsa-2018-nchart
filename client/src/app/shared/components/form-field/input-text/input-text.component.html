@@ -1,21 +1,41 @@
-<label class="input-label"
-	   [class.ui-input-label-disabled]="disabled"
->{{label}}</label>
+<label
+    class="input-label"
+    [class.ui-input-label-disabled]="disabled"
+>
+    {{label}}
+</label>
 
 <div class="ui-input-wrp">
-	<i [ngClass]="getIconClasses()" *ngIf="icon && iconPosition=='left'"></i>
-	<input 	pInputText 
-		[formControl]="control"
-		[type]="type" 
-		[placeholder]="placeholder"
-		[attr.disabled]="isDisabled()"
+    <i
+        [ngClass]="getIconClasses()"
+        *ngIf="icon && iconPosition=='left'"
+    ></i>
+    <input
+        pInputText
+        [formControl]="control"
+        [type]="type"
+        [placeholder]="placeholder"
+        [attr.disabled]="isDisabled()"
 		[ngClass]="getClasses()"
-	>
-	<i [ngClass]="getIconClasses()" *ngIf="icon && iconPosition!='left' && (!control.dirty || !showStates)"></i>
-	<i class="ui-input-icon-right fas fa-check success-icon" *ngIf="showStates && control.valid"></i>
-	<i class="ui-input-icon-right fas fa-exclamation error-icon" *ngIf="showStates && control.invalid && control.dirty"></i>
+		[pTooltip]="tooltip"
+		[escape]="tooltipEscape" 
+		[tooltipPosition]="tooltipPosition"
+		[autofocus]="autofocus"
+    >
+    <i
+        [ngClass]="getIconClasses()"
+        *ngIf="icon && iconPosition!='left' && (!control.dirty || !showStates)"
+    ></i>
+    <i
+        class="ui-input-icon-right fas fa-check success-icon"
+        *ngIf="showStates && control.valid"
+    ></i>
+    <i
+        class="ui-input-icon-right fas fa-exclamation error-icon"
+        *ngIf="showStates && control.invalid && control.dirty"
+    ></i>
 
-	<div class="input-label input-label-error"
-		*ngIf="showStates && control.invalid && control.dirty"
-	>{{getError()}}</div>
+    <div class="input-label input-label-error">
+        <span *ngIf="control.invalid && control.dirty">{{getError()}}</span>
+    </div>
 </div>
