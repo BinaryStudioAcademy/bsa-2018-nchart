@@ -1,4 +1,4 @@
-import { ProjectDomain, ResponseScheme, Project } from '@app/models';
+import { ProjectDomain, ResponseScheme, OriginProject } from '@app/models';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpService } from '@app/api/http/http.service';
@@ -11,8 +11,8 @@ export class ProjectDomainService implements ProjectDomain {
 
 	constructor(private httpService: HttpService) {}
 
-	getAll(): Observable<ResponseScheme<Project[]>> {
-		return this.httpService.makeRequest<ResponseScheme<Project[]>>(
+	getAll(): Observable<ResponseScheme<OriginProject[]>> {
+		return this.httpService.makeRequest<ResponseScheme<OriginProject[]>>(
 			new ServiceRequest(
 				RequestType.GET,
 				`${this.projectPath}/test`,
@@ -21,8 +21,10 @@ export class ProjectDomainService implements ProjectDomain {
 		);
 	}
 
-	save(payload: { project: Project }): Observable<ResponseScheme<Project>> {
-		return this.httpService.makeRequest<ResponseScheme<Project>>(
+	save(payload: {
+		project: OriginProject;
+	}): Observable<ResponseScheme<OriginProject>> {
+		return this.httpService.makeRequest<ResponseScheme<OriginProject>>(
 			new ServiceRequest(
 				RequestType.POST,
 				this.projectPath,
@@ -32,8 +34,10 @@ export class ProjectDomainService implements ProjectDomain {
 		);
 	}
 
-	update(payload: { project: Project }): Observable<ResponseScheme<Project>> {
-		const s = this.httpService.makeRequest<ResponseScheme<Project>>(
+	update(payload: {
+		project: OriginProject;
+	}): Observable<ResponseScheme<OriginProject>> {
+		const s = this.httpService.makeRequest<ResponseScheme<OriginProject>>(
 			new ServiceRequest(
 				RequestType.PUT,
 				`/${this.projectPath}/${payload.project.id}`,
@@ -56,8 +60,10 @@ export class ProjectDomainService implements ProjectDomain {
 		return s;
 	}
 
-	get(payload: { projectId: string }): Observable<ResponseScheme<Project>> {
-		return this.httpService.makeRequest<ResponseScheme<Project>>(
+	get(payload: {
+		projectId: string;
+	}): Observable<ResponseScheme<OriginProject>> {
+		return this.httpService.makeRequest<ResponseScheme<OriginProject>>(
 			new ServiceRequest(
 				RequestType.GET,
 				`${this.projectPath}/${payload.projectId}`

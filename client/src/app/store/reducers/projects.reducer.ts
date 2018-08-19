@@ -19,6 +19,8 @@ const all = (state = initialState.all, action: ProjectsActions) => {
 			return action.payload.projects.all;
 		case constants.CREATE_DRAFT_PROJECT__COMPLETE:
 			return [...state, action.payload.project.id];
+		case constants.LOAD_ONE_PROJECT__COMPLETE:
+			return [...state, action.payload.projectId];
 		default:
 			return state;
 	}
@@ -34,6 +36,11 @@ const byId = (state = initialState.byId, action: ProjectsActions) => {
 			return {
 				...state,
 				[action.payload.project.id]: action.payload.project
+			};
+		case constants.LOAD_ONE_PROJECT__COMPLETE:
+			return {
+				...state,
+				...action.payload.entities.project
 			};
 		default:
 			return state;
@@ -65,6 +72,8 @@ export const active = (
 	switch (action.type) {
 		case constants.CREATE_DRAFT_PROJECT__COMPLETE:
 			return action.payload.project.id;
+		case constants.LOAD_ONE_PROJECT__COMPLETE:
+			return action.payload.projectId;
 		default:
 			return state;
 	}

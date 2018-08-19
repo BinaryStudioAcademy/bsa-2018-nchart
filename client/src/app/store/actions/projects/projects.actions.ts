@@ -1,6 +1,7 @@
 import { AppAction, FailedAction } from '@app/models';
 import { ProjectsActionConstants } from './projects.action-types';
-import { Project } from '@app/models/project.model';
+import { Project, ProjectEntities } from '@app/models/project.model';
+import { SchemeID } from '@app/models/normalizr.model';
 
 export class LoadProjetcs extends AppAction<any> {
 	readonly type = ProjectsActionConstants.LOAD_PROJECTS;
@@ -38,10 +39,8 @@ export class LoadOneProject extends AppAction<{ projectId: string }> {
 }
 
 export class LoadOneProjectComplete extends AppAction<{
-	projects: {
-		all: Array<string>;
-		byId: { [id: string]: Project };
-	};
+	projectId: SchemeID;
+	entities: ProjectEntities;
 }> {
 	readonly type = ProjectsActionConstants.LOAD_ONE_PROJECT__COMPLETE;
 }

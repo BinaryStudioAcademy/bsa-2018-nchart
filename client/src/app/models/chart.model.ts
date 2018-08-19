@@ -1,4 +1,4 @@
-import { SchemeID } from './normalizr.model';
+import { SchemeID, NormalizedSchemeField } from './normalizr.model';
 import { NormalizedSchemeWithFetching } from './normalizr.model';
 
 export type ChartsState<R = undefined> = NormalizedSchemeWithFetching<Chart, R>;
@@ -34,4 +34,12 @@ export interface Chart<D = DimensionOption[], C = CustomizeOption[]> {
 	description: string;
 	dimensionSettings: D;
 	customizeSettings: C;
+}
+
+export type CustomizeSettingsState = NormalizedSchemeField<CustomizeOption>;
+export type DimensionSettingsState = NormalizedSchemeField<DimensionColumnMap>;
+
+export interface UserChartSettingsState {
+	dimensionSettings: DimensionSettingsState;
+	customizeSettings: CustomizeSettingsState;
 }

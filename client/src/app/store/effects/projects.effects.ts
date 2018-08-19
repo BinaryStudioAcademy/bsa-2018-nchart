@@ -11,13 +11,15 @@ import { throwError } from 'rxjs/index';
 import { ProjectDomainService } from '@app/api/domains/project/project-domain.service';
 import { ProjectService } from '@app/services/project.service';
 import { projectScheme } from '@app/schemes/project.scheme';
+import { DatasetService } from '../../services/dataset.service';
 
 @Injectable()
 export class ProjectsEffects {
 	constructor(
 		private action$: Actions,
 		private projectDomainService: ProjectDomainService,
-		private projectService: ProjectService
+		private projectService: ProjectService,
+		private datasetService: DatasetService
 	) {}
 
 	@Effect()
@@ -78,15 +80,19 @@ export class ProjectsEffects {
 			this.projectDomainService.get(action.payload).pipe(
 				map(value => {
 					if (value.isSuccess) {
-						const {
-							result: all,
-							entities: { byId }
-						} = normalize(value.payload, projectScheme);
+						const { result: projectId, entities } = normalize(
+							{
+								...value.payload,
+								datasets: this.datasetService.normalizeDatasets(
+									value.payload.datasets
+								)
+							},
+							projectScheme
+						);
+
 						return new projectActions.LoadOneProjectComplete({
-							projects: {
-								all,
-								byId
-							}
+							entities,
+							projectId
 						});
 					}
 					return throwError(new Error(`Can't get one project`));
