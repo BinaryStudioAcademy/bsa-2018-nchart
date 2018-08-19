@@ -20,12 +20,13 @@ export class RegisterFormComponent implements OnInit {
 	initForm() {}
 
 	onClickCreateProfile() {
-		const register = new Register(
-			this.registerForm.controls['name'].value,
-			this.registerForm.controls['email'].value,
-			this.registerForm.controls['password'].value
-		);
+		const {
+			name,
+			password,
+			email
+		} = this.registerForm.getRawValue() as Register;
+		const user = new Register(name, email, password);
 
-		this.storeService.dispatch(new RegisterAction(register));
+		this.storeService.dispatch(new RegisterAction({ user }));
 	}
 }

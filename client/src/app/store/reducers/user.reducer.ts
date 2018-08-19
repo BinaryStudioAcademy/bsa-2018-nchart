@@ -7,18 +7,19 @@ export const initialState: UserState = {
 	info: {
 		id: null,
 		name: null,
-		email: null,
-		token: null
+		email: null
 	},
 	isLoading: null
 };
 
 export const info = (state = initialState.info, action: UserActions): User => {
 	switch (action.type) {
-		case UserActionConstants.VERIFY_USER_TOKEN__COMPLETE: {
+		case UserActionConstants.VERIFY_USER_TOKEN__COMPLETE:
+		case UserActionConstants.LOGIN__COMPLETE:
+		case UserActionConstants.REGISTER__COMPLETE: {
 			return {
 				...state,
-				...action.payload
+				...action.payload.user
 			};
 		}
 		default:

@@ -11,7 +11,7 @@ export class VerifyToken extends AppAction<{ token }> {
 	readonly type = UserActionConstants.VERIFY_USER_TOKEN;
 }
 
-export class VerifyTokenComplete extends AppAction<User> {
+export class VerifyTokenComplete extends AppAction<{ user: User }> {
 	readonly type = UserActionConstants.VERIFY_USER_TOKEN__COMPLETE;
 }
 
@@ -19,11 +19,11 @@ export class VerifyTokenFailed extends FailedAction {
 	readonly type = UserActionConstants.VERIFY_USER_TOKEN__FAILED;
 }
 
-export class Login extends AppAction<LoginModel> {
+export class Login extends AppAction<{ user: LoginModel }> {
 	readonly type = UserActionConstants.LOGIN;
 }
 
-export class LoginComplete extends AppAction<User> {
+export class LoginComplete extends AppAction<{ user: User }> {
 	readonly type = UserActionConstants.LOGIN__COMPLETE;
 }
 
@@ -31,11 +31,11 @@ export class LoginFailed extends FailedAction {
 	readonly type = UserActionConstants.LOGIN__FAILED;
 }
 
-export class Register extends AppAction<RegisterModel> {
+export class Register extends AppAction<{ user: RegisterModel }> {
 	readonly type = UserActionConstants.REGISTER;
 }
 
-export class RegisterComplete extends AppAction<User> {
+export class RegisterComplete extends AppAction<{ user: User }> {
 	readonly type = UserActionConstants.REGISTER__COMPLETE;
 }
 

@@ -93,7 +93,7 @@ export function passwordValidator(
 	customPattern?: string | RegExp
 ): ValidatorFn {
 	return (control: AbstractControl): ValidationMessage => {
-		const defaultPattern = /^(?=.*[a-zа-яэіїє])(?=.*[A-ZА-ЯЭІЇЄ])(?=.*\d)(?=.*[#$^+=!*()@%&]).+$/;
+		const defaultPattern = /^(?=.*[a-zа-яэіїє])(?=.*[A-ZА-ЯЭІЇЄ])(?=.*\d).+$/;
 
 		const validationErrors = customPattern
 			? validatePattern(customPattern, control)
@@ -103,7 +103,7 @@ export function passwordValidator(
 			return {
 				passwordPattern:
 					msg ||
-					'Password should contain alphabetic, numeric and special characters'
+					'Password should contain alphabetic and numeric characters'
 			};
 		}
 		return null;

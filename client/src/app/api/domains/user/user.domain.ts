@@ -1,22 +1,32 @@
-import { UserDomain, ResponseScheme, Register, Login, User } from '@app/models';
+import {
+	UserDomain,
+	ResponseScheme,
+	Register,
+	Login,
+	User,
+	AuthenticatedUser
+} from '@app/models';
 import { Observable } from 'rxjs';
-import { UserAuthentication } from '@app/models/user-authentication.model';
 import { Injectable } from '@angular/core';
 import { HttpService } from '@app/api/http/http.service';
 import { ServiceRequest } from '@app/models/serviceRequest.model';
 import { RequestType } from '@app/models/requestType.model';
 import { tap } from 'rxjs/operators';
+import { TokenService } from '@app/services/token.service';
 
 @Injectable()
 export class UserDomainService implements UserDomain {
 	private userPath = '/api/user';
-	constructor(private httpService: HttpService) {}
+	constructor(
+		private httpService: HttpService,
+		private tokenService: TokenService
+	) {}
 
 	register(payload: {
 		user: Register;
-	}): Observable<ResponseScheme<UserAuthentication>> {
+	}): Observable<ResponseScheme<AuthenticatedUser>> {
 		return this.httpService
-			.makeRequest<ResponseScheme<UserAuthentication>>(
+			.makeRequest<ResponseScheme<AuthenticatedUser>>(
 				new ServiceRequest(
 					RequestType.POST,
 					`${this.userPath}/register`,
@@ -25,16 +35,16 @@ export class UserDomainService implements UserDomain {
 				)
 			)
 			.pipe(
-				tap(
-					response =>
-						(this.httpService.authHeader = response.payload.token)
-				)
+				tap(response => {
+					this.httpService.authHeader = response.payload.token;
+					this.tokenService.setToken(response.payload.token);
+				})
 			);
 	}
 
-	login(payload: Login): Observable<ResponseScheme<UserAuthentication>> {
+	login(payload: Login): Observable<ResponseScheme<AuthenticatedUser>> {
 		return this.httpService
-			.makeRequest<ResponseScheme<UserAuthentication>>(
+			.makeRequest<ResponseScheme<AuthenticatedUser>>(
 				new ServiceRequest(
 					RequestType.POST,
 					`${this.userPath}/login`,
@@ -43,10 +53,10 @@ export class UserDomainService implements UserDomain {
 				)
 			)
 			.pipe(
-				tap(
-					response =>
-						(this.httpService.authHeader = response.payload.token)
-				)
+				tap(response => {
+					this.httpService.authHeader = response.payload.token;
+					this.tokenService.setToken(response.payload.token);
+				})
 			);
 	}
 
@@ -89,16 +99,21 @@ export class UserDomainService implements UserDomain {
 		);
 	}
 
-	verifyToken(payload: {
-		token: string;
-	}): Observable<ResponseScheme<{ token: string }>> {
-		return this.httpService.makeRequest<ResponseScheme<{ token: string }>>(
-			new ServiceRequest(
-				RequestType.POST,
-				`${this.userPath}/verifyToken`,
-				null,
-				payload
+	verifyToken(payload: { token: string }): Observable<ResponseScheme<User>> {
+		return this.httpService
+			.makeRequest<ResponseScheme<User>>(
+				new ServiceRequest(
+					RequestType.POST,
+					`${this.userPath}/verifyToken`,
+					null,
+					payload
+				)
 			)
-		);
+			.pipe(
+				tap(() => {
+					this.httpService.authHeader = payload.token;
+					this.tokenService.setToken(payload.token);
+				})
+			);
 	}
 }
