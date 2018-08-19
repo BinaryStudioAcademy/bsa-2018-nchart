@@ -1,19 +1,10 @@
 import { DatasetState } from '@app/models';
-import { combineReducers } from '@ngrx/store';
 
-export const initialState: DatasetState = {
-	byId: {}
-};
+export const initialState: DatasetState = {};
 
-const byId = (state = initialState.byId, action) => {
+export const datasetReducer = (state = initialState, action) => {
 	switch (action.type) {
 		default:
 			return state;
 	}
 };
-
-const reducers = {
-	byId
-};
-
-export const datasetReducer = combineReducers(reducers);

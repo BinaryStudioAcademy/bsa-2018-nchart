@@ -1,7 +1,6 @@
-import { SchemeID } from '@app/models/normalizr.model';
-import { NormalizedSchemeWithoutAll } from './normalizr.model';
+import { SchemeID, NormalizedSchemeField } from '@app/models/normalizr.model';
 
-export type DatasetState = NormalizedSchemeWithoutAll<Dataset>;
+export type DatasetState = NormalizedSchemeField<Dataset>;
 
 export class Dataset<C = SchemeID[], D = SchemeID[][]> {
 	id: SchemeID = null;
@@ -27,6 +26,6 @@ export interface DatasetData {
 	value: any;
 }
 
-export type DatasetColumnState = NormalizedSchemeWithoutAll<DatasetColumn>;
+export type DatasetColumnState = NormalizedSchemeField<DatasetColumn>;
 
-export type DatasetDataState = NormalizedSchemeWithoutAll<DatasetData>;
+export type DatasetDataState = NormalizedSchemeField<DatasetData>;
