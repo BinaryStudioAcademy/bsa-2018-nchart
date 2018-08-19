@@ -1,23 +1,28 @@
 const Repository = require('../../common/repository/repository');
-const datasetModel = require('./dataset.model');
+const chartModel = require('./chart.model');
 const sequelize = require('../../config/index');
 
-class DatasetRepository extends Repository {
+class ChartRepository extends Repository {
 	constructor() {
 		super();
-		this.model = datasetModel;
+		this.model = chartModel;
 	}
 
 	update(obj) {
 		// todo: "Cannot read property 'model' of undefined"
-		this.model = datasetModel;
+		this.model = chartModel;
 		return sequelize.transaction(t => {
 			const promises = [];
 			for (let i = 0; i < obj.length; i += 1) {
-				const newPromise = datasetModel.update(
+				const newPromise = chartModel.update(
 					{
 						id: obj[i].id,
-						data: { columns: obj[i].columns, data: obj[i].data }
+						typeId: obj[i].chartTypeId,
+						datasetId: obj[i].datasetId,
+						userSettings: {
+							dimensionSettings: obj[i].dimensionSettings,
+							customizeSettings: obj[i].customizeSettings
+						}
 					},
 					{ where: { id: obj[i].id } },
 					{ transaction: t }
@@ -30,12 +35,19 @@ class DatasetRepository extends Repository {
 
 	save(obj) {
 		// todo: "Cannot read property 'model' of undefined"
-		this.model = datasetModel;
+		this.model = chartModel;
 		return sequelize.transaction(t => {
 			const promises = [];
 			for (let i = 0; i < obj.length; i += 1) {
-				const newPromise = datasetModel.create(
-					{ data: { columns: obj[i].columns, data: obj[i].data } },
+				const newPromise = chartModel.create(
+					{
+						typeId: obj[i].chartTypeId,
+						datasetId: obj[i].datasetId,
+						userSettings: {
+							dimensionSettings: obj[i].dimensionSettings,
+							customizeSettings: obj[i].customizeSettings
+						}
+					},
 					{ transaction: t }
 				);
 				promises.push(newPromise);
@@ -45,4 +57,4 @@ class DatasetRepository extends Repository {
 	}
 }
 
-module.exports = new DatasetRepository();
+module.exports = new ChartRepository();

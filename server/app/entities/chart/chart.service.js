@@ -1,17 +1,17 @@
 const async = require('async');
-const DatasetRepository = require('./dataset.repository');
+const ChartRepository = require('./chart.repository');
 
-class DatasetService {
+class ChartService {
 	constructor() {
-		this.DatasetRepository = DatasetRepository;
+		this.ChartRepository = ChartRepository;
 	}
 
 	getAll() {
-		return this.DatasetRepository.getAll();
+		return this.ChartRepository.getAll();
 	}
 
 	getById(id) {
-		return this.DatasetRepository.getById(id);
+		return this.ChartRepository.getById(id);
 	}
 
 	handleDataset(obj) {
@@ -26,7 +26,7 @@ class DatasetService {
 			async.waterfall(
 				[
 					callback => {
-						this.DatasetRepository.save(objsToCreate)
+						this.ChartRepository.save(objsToCreate)
 							.then(data => {
 								callback(null, {
 									saved: data
@@ -35,7 +35,7 @@ class DatasetService {
 							.catch(err => callback(err, null));
 					},
 					(payload, callback) => {
-						this.DatasetRepository.update(objToUpdate).then(
+						this.ChartRepository.update(objToUpdate).then(
 							data => {
 								callback(
 									null,
@@ -58,4 +58,4 @@ class DatasetService {
 	}
 }
 
-module.exports = new DatasetService();
+module.exports = new ChartService();
