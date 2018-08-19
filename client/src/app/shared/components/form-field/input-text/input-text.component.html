@@ -5,12 +5,12 @@
     {{label}}
 </label>
 
-<div class="ui-input-wrp">
+<div class="ui-input-wrp" id="input_wrp">
     <i
         [ngClass]="getIconClasses()"
         *ngIf="icon && iconPosition=='left'"
     ></i>
-    <input
+    <input #inputText
         pInputText
         [formControl]="control"
         [type]="type"
