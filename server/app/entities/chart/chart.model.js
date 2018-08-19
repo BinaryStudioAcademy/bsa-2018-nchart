@@ -5,15 +5,15 @@ const ProjectChart = require('../project/project.models/project_chart');
 const Chart = sequelize.define('chart', {
 	typeId: {
 		type: Sequelize.INTEGER,
-        allowNull: false
+		allowNull: false
 	},
 	userSettings: {
 		type: Sequelize.JSON,
-        allowNull: false
+		allowNull: false
 	},
 	datasetId: {
 		type: Sequelize.INTEGER,
-        allowNull: false
+		allowNull: false
 	}
 });
 

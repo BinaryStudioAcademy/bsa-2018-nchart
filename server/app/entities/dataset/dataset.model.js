@@ -5,7 +5,7 @@ const Chart = require('../chart/chart.model');
 const Dataset = sequelize.define('dataset', {
 	data: {
 		type: Sequelize.JSON,
-        allowNull: false
+		allowNull: false
 	}
 });
 

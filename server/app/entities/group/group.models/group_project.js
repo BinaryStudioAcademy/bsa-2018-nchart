@@ -4,15 +4,15 @@ const sequelize = require('../../../config/index');
 const GroupProject = sequelize.define('groupProject', {
 	groupId: {
 		type: Sequelize.INTEGER,
-        allowNull: false
+		allowNull: false
 	},
 	projectId: {
 		type: Sequelize.INTEGER,
-        allowNull: false
+		allowNull: false
 	},
 	accessLevelId: {
 		type: Sequelize.INTEGER,
-        allowNull: false
+		allowNull: false
 	}
 });
 

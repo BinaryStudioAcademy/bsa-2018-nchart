@@ -6,7 +6,7 @@ const GroupProject = require('../../group/group.models/group_project');
 const Project = sequelize.define('project', {
 	name: {
 		type: Sequelize.STRING,
-        allowNull: false
+		allowNull: false
 	}
 });
 

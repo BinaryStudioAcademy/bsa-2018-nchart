@@ -5,7 +5,7 @@ const GroupGpoject = require('../group/group.models/group_project');
 const AccessType = sequelize.define('accessType', {
 	accessLevel: {
 		type: Sequelize.STRING,
-        allowNull: false
+		allowNull: false
 	}
 });
 
