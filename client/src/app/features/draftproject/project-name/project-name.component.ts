@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, OnChanges, Input, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { requiredValidator } from '../../../shared/components/form-field/form-validators';
+import { requiredValidator, maxLengthValidator } from '../../../shared/components/form-field/form-validators';
 
 @Component({
 	selector: 'app-project-name',
@@ -14,7 +14,10 @@ export class ProjectNameComponent implements OnInit, OnChanges {
 	@Output()
 	setProjectName: EventEmitter<any> = new EventEmitter();
 
-	nameControl = new FormControl('', [requiredValidator('')]);
+	nameControl = new FormControl({focus: true}, [
+		requiredValidator(''),
+		maxLengthValidator('Project name can`t be more than 40 symbols', 40)
+	]);
 
 	constructor() {}
 

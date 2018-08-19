@@ -1,11 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, ElementRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
 	selector: 'app-input-text',
 	templateUrl: './input-text.component.html'
 })
-export class InputTextComponent implements OnInit {
+export class InputTextComponent implements OnInit, AfterViewInit {
 	@Input()
 	disabled: boolean;
 	@Input()
@@ -32,6 +32,14 @@ export class InputTextComponent implements OnInit {
 	autofocus: boolean;
 
 	ngOnInit() {}
+
+	constructor(private el: ElementRef) {}
+
+	ngAfterViewInit() {
+		if (this.autofocus) {
+			this.el.nativeElement.children[1].children[0].focus();
+		}
+	}
 
 	isDisabled() {
 		if (this.disabled) {
