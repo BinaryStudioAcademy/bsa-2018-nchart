@@ -54,7 +54,7 @@ export class LoginService {
 			email: [requiredValidator(), emailValidator()],
 			password: [
 				requiredValidator(),
-				minLengthValidator('Minimum length of password is', 8),
+				minLengthValidator('Minimum length of password is', 5),
 				passwordValidator()
 			],
 			confirmPassword: []

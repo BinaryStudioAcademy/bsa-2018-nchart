@@ -1,5 +1,5 @@
 import { SchemeID } from '@app/models/normalizr.model';
-import { NormalizedSchemeWithoutAll } from './normalizr.model';
+import { NormalizedSchemeWithoutAll } from '@app/models/normalizr.model';
 
 export type DatasetState = NormalizedSchemeWithoutAll<Dataset>;
 

@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Register } from '@app/models';
 
 @Component({
 	selector: 'app-register-form',
@@ -10,11 +11,24 @@ export class RegisterFormComponent implements OnInit {
 	@Input()
 	registerForm: FormGroup;
 
+	@Output()
+	registerClick = new EventEmitter<Register>();
+
 	constructor() {}
 
 	ngOnInit() {}
 
 	initForm() {}
 
-	onClickCreateProfile() {}
+	onClickCreateProfile() {
+		const {
+			name,
+			password,
+			email
+		} = this.registerForm.getRawValue() as Register;
+
+		const user = new Register(name, email, password);
+
+		this.registerClick.emit(user);
+	}
 }

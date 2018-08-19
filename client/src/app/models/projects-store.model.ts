@@ -1,9 +1,9 @@
-import { Project } from './project.model';
+import { Project } from '@app/models/project.model';
 import {
 	NormalizedSchemeWithFetching,
 	SchemeID,
 	NormalizedActiveEntity
-} from './normalizr.model';
+} from '@app/models/normalizr.model';
 
 export class ProjectsState<U = SchemeID, R = undefined>
 	extends NormalizedSchemeWithFetching<Project, R>

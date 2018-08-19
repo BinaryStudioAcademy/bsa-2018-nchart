@@ -9,13 +9,13 @@ class UserRepository extends Repository {
 
 	getAll() {
 		return this.model.findAll({
-			attributes: ['id', 'firstName', 'lastName', 'email']
+			attributes: ['id', 'name', 'email']
 		});
 	}
 
 	getById(id) {
 		return this.model.findById(id, {
-			attributes: ['id', 'firstName', 'lastName', 'email']
+			attributes: ['id', 'name', 'email']
 		});
 	}
 

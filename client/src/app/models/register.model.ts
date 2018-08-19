@@ -3,6 +3,6 @@ export class Register {
 		public name: string = null,
 		public email: string = null,
 		public password: string = null,
-		public confirmPassword: string = null
+		public confirmPassword?: string
 	) {}
 }
