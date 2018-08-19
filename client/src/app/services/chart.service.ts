@@ -22,6 +22,20 @@ export class ChartService {
 			'Jan', 'Mar', 'Apr',
 			'Jan', 'Jun', 'Jul'
 		]
+
+		testData = [
+			'1', '2', '3', 
+			'7', '8', '5',
+			'1', '2', '3', 
+			'4', '5', '6',
+			'7', '5', '9',
+			'3', '2', '3', 
+			'4', '5', '6',
+			'5', '2', '3', 
+			'4', '5', '5',
+			'7', '8', '9'
+		]
+
 		originalValues = [
 			1, 2, 3,
 			4, 5, 6,
@@ -61,6 +75,15 @@ export class ChartService {
 			this._barChartCustomizeSettings.next(this.barChartCustomizeSettings);
 		}
 
+		setLeftMargin(leftMargin: number){
+			this.barChartCustomizeSettings.leftMargin = leftMargin;
+			this._barChartCustomizeSettings.next(this.barChartCustomizeSettings);
+		}
+		setHorizontalPadding(horizontalPadding: number){
+			this.barChartCustomizeSettings.horizontalPadding = horizontalPadding;
+			this._barChartCustomizeSettings.next(this.barChartCustomizeSettings);
+		}
+
 		setRange(){
 			this._range.next(this.getRange());
 		}
@@ -69,10 +92,16 @@ export class ChartService {
 			return Math.max(...this.data.map(o => o.value));
 		}
 
+		initData(variable:string){
+				this.originalData = this.testData;
+				this.data = compressArray(mapData(this.originalData));
+				this.setData(this.data);
+				this.setRange();
+		}
+
 	constructor() {
-		this.data = this.originalData;
 		this.values = this.originalValues;
-		this.data = compressArray(mapData(this.data));
+		this.data = compressArray(mapData(this.originalData));
 		this.setData(this.data);
 		this.setRange();
 		console.log(this.barChartCustomizeSettings);

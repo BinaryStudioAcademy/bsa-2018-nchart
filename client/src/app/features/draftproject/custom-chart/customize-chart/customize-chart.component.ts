@@ -10,8 +10,10 @@ import { Subscription } from 'rxjs';
 })
 export class CustomizeChartComponent implements OnInit {
 	constructor(private _chartService: ChartService) {}
-	width: number;
-	height: number;
+	width: number = 500;
+	height: number = 500;
+	leftMargin:number = 40;
+	horizontalPadding: number = 0.1;
 	barChartCustomizeSettings: BarChartCustomizeSettings;
 	subs = new Subscription();
 	ngOnInit() {
@@ -22,6 +24,12 @@ export class CustomizeChartComponent implements OnInit {
 	}
 	setHeight(){
 		this._chartService.setHeight(this.height)
+	}
+	setLeftMargin(){
+		this._chartService.setLeftMargin(this.leftMargin)
+	}
+	setHorizontalPadding(){
+		this._chartService.setHorizontalPadding(this.horizontalPadding)
 	}
 	ngOnDestroy(){
 		this.subs.unsubscribe;

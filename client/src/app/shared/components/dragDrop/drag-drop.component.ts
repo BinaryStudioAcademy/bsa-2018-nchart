@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DragulaService } from 'ng2-dragula';
 import { Subscription } from 'rxjs';
+import { ChartService } from '@app/services/chart.service';
 
 class Column {
 	constructor(public variable: string, public type: string) {}
@@ -58,7 +59,7 @@ export class DragDropComponent implements OnInit, OnDestroy {
 	public dimensions = [];
 
 	subs = new Subscription();
-	constructor(private _dragulaService: DragulaService) {
+	constructor(private _dragulaService: DragulaService, private _chartService: ChartService) {
 		_dragulaService.createGroup(this.DIMENSIONS, {
 			copy: (el, source) => {
 				return source.id === 'columns';
@@ -74,7 +75,7 @@ export class DragDropComponent implements OnInit, OnDestroy {
 		this.subs.add(
 			this._dragulaService
 				.dropModel(this.DIMENSIONS)
-				.subscribe(({ target, source, targetModel, item }) => {
+				.subscribe(({ name, el, target, source, sibling, sourceModel, targetModel, item  }) => {
 					if (
 						!this.isValid(
 							target.parentElement.firstElementChild.innerHTML,
@@ -93,6 +94,8 @@ export class DragDropComponent implements OnInit, OnDestroy {
 					if (this.hasDuplicates(targetModel)) {
 						targetModel.splice(targetModel.indexOf(item), 1);
 					}
+					console.log(this.dimensionsSettings[0].value.length);
+					_chartService.initData(item.variable);
 				})
 		);
 	}

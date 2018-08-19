@@ -5,9 +5,9 @@
 	<h3>Height</h3>
 	<p-spinner size="30" [(ngModel)]="height" [min]="0" [max]="2000" (onChange)="setHeight()"></p-spinner>
 	<h3>Left Margin</h3>
-	<p-spinner size="30" [(ngModel)]="leftMargin" [min]="0" [max]="100"></p-spinner>
+	<p-spinner size="30" [(ngModel)]="leftMargin" [min]="0" [max]="100" (onChange)="setLeftMargin()"></p-spinner>
 	<h3>Vertical Padding</h3>
 	<p-spinner size="30" [(ngModel)]="verticalPadding" [min]="0" [max]="20" ></p-spinner>
 	<h3>Horizontal Padding</h3>
-	<p-spinner size="30" [(ngModel)]="horizontalPadding" [min]="0" [max]="5" [step]="0.1" ></p-spinner>
+	<p-spinner size="30" [(ngModel)]="horizontalPadding" [min]="0" [max]="5" [step]="0.1" (onChange)="setHorizontalPadding()"></p-spinner>
 </div>

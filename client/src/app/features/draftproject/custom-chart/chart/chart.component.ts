@@ -26,18 +26,6 @@ export class ChartComponent implements OnInit {
 		this.subs.add(this._chartService.barChartCustomizeSettingsObs.subscribe(data => {
 			this.barChartCustomizeSettings = data;
 		}));
-
-		setTimeout(() => {
-			this._chartService.setWidth(500)
-		}, 5000);
-
-		setTimeout(() => {
-			this._chartService.setHeight(400)
-		}, 8000);
-
-		setTimeout(() => {
-			this._chartService.setValues()
-		}, 10000);
 	  
 	}
 	ngOnDestroy(){
