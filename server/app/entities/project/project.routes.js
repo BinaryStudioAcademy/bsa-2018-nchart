@@ -8,4 +8,9 @@ project.get('/', (req, res, next) => {
 		.catch(next);
 });
 
+// project.post('/', (req, res) => {
+// console.log(req.body);
+// res.json('ok');
+// });
+
 module.exports = project;
