@@ -3,11 +3,15 @@ const sequelize = require('../../config/index');
 const ProjectChart = require('../project/project.models/project_chart');
 
 const Chart = sequelize.define('chart', {
-	typeId: {
+	chartTypeId: {
 		type: Sequelize.INTEGER,
 		allowNull: false
 	},
-	userSettings: {
+	dimensionSettings: {
+		type: Sequelize.JSON,
+		allowNull: false
+	},
+	customizeSettings: {
 		type: Sequelize.JSON,
 		allowNull: false
 	},
@@ -19,12 +23,12 @@ const Chart = sequelize.define('chart', {
 
 Chart.sync().then(() => {
 	ProjectChart.sync().then(() => Chart.hasMany(ProjectChart, {
-		foreignKey: 'chartId',
+		foreignKey: 'chartTypeId',
 		sourceKey: 'id',
 		onDelete: 'CASCADE',
 		constraints: false
 	}));
-	ProjectChart.belongsTo(Chart, { foreignKey: 'chartId' });
+	ProjectChart.belongsTo(Chart, { foreignKey: 'chartTypeId' });
 });
 
 module.exports = Chart;

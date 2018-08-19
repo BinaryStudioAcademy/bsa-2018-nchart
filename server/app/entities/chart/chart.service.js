@@ -35,16 +35,14 @@ class ChartService {
 							.catch(err => callback(err, null));
 					},
 					(payload, callback) => {
-						this.ChartRepository.update(objToUpdate).then(
-							data => {
-								callback(
-									null,
-									Object.assign({}, payload, {
-										updated: data
-									})
-								);
-							}
-						);
+						this.ChartRepository.update(objToUpdate).then(data => {
+							callback(
+								null,
+								Object.assign({}, payload, {
+									updated: data
+								})
+							);
+						});
 					}
 				],
 				(err, payload) => {

@@ -8,6 +8,12 @@ class ChartRepository extends Repository {
 		this.model = chartModel;
 	}
 
+	getAll() {
+		return this.model.findAll({
+			attributes: ['id', 'chartTypeId', 'dimensionSettings', 'customizeSettings', 'datasetId', 'createdAt']
+		});
+	}
+
 	update(obj) {
 		// todo: "Cannot read property 'model' of undefined"
 		this.model = chartModel;
@@ -17,12 +23,10 @@ class ChartRepository extends Repository {
 				const newPromise = chartModel.update(
 					{
 						id: obj[i].id,
-						typeId: obj[i].chartTypeId,
+						chartTypeId: obj[i].chartTypeId,
 						datasetId: obj[i].datasetId,
-						userSettings: {
-							dimensionSettings: obj[i].dimensionSettings,
-							customizeSettings: obj[i].customizeSettings
-						}
+						dimensionSettings: obj[i].dimensionSettings,
+						customizeSettings: obj[i].customizeSettings
 					},
 					{ where: { id: obj[i].id } },
 					{ transaction: t }
@@ -41,12 +45,10 @@ class ChartRepository extends Repository {
 			for (let i = 0; i < obj.length; i += 1) {
 				const newPromise = chartModel.create(
 					{
-						typeId: obj[i].chartTypeId,
+						chartTypeId: obj[i].chartTypeId,
 						datasetId: obj[i].datasetId,
-						userSettings: {
-							dimensionSettings: obj[i].dimensionSettings,
-							customizeSettings: obj[i].customizeSettings
-						}
+						dimensionSettings: obj[i].dimensionSettings,
+						customizeSettings: obj[i].customizeSettings
 					},
 					{ transaction: t }
 				);
