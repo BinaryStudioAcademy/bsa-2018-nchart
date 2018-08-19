@@ -21,6 +21,10 @@ import { FileUploadModule } from 'primeng/fileupload';
 		SharedModule,
 		TabViewModule,
 		FileUploadModule,
+<<<<<<< HEAD
+=======
+		VirtualScrollModule,
+>>>>>>> b85abc64e4911652bcaf65953fcb62e096cb1cf6
 		CommonModule,
 		BrowserModule,
 		FormsModule
