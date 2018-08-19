@@ -20,8 +20,8 @@ export class ProjectNameComponent implements OnInit, OnChanges {
 
 	ngOnInit() {}
 
-	ngOnChanges() {
-		this.nameControl.setValue(this.projectName);
+	ngOnChanges(changes) {
+		this.nameControl.setValue(changes.projectName.currentValue);
 	}
 
 	editProjectName() {
