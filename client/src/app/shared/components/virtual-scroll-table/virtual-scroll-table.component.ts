@@ -1,8 +1,4 @@
-import {
-	Component,
-	Input,
-	OnInit
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { LazyLoadEvent } from 'primeng/api';
 
 @Component({
@@ -27,16 +23,10 @@ export class VirtualScrollTableComponent implements OnInit {
 		this.loading = true;
 		this.flag = false;
 		this.selectedState = [];
-		this.columnTypes = [
-			"String",
-			"Number",
-			"Boolean",
-			"Date"
-		]
+		this.columnTypes = ['String', 'Number', 'Boolean', 'Date'];
 	}
 
-	addSelection(event: LazyLoadEvent, data) {
-	}
+	addSelection(event: LazyLoadEvent, data) {}
 
 	editItem(e) {
 		// if (el.target.cellIndex === 0 || el.target.cellIndex === 1) {
@@ -56,58 +46,57 @@ export class VirtualScrollTableComponent implements OnInit {
 		// });
 	}
 
-	changeType(event, type, colType){
+	changeType(event, type, colType) {
 		event.stopPropagation();
-		let index = event.path[1].id[event.path[1].id.length-1];
+		const index = event.path[1].id[event.path[1].id.length - 1];
 		this.payload.columns[index].type = type;
 		document.getElementById('Dropdown' + index).classList.toggle('show');
 	}
 
-	removeColumn(event){
+	removeColumn(event) {
 		event.stopPropagation();
-		let index = +event.path[1].id[event.path[1].id.length-1];
-		let temp = this.payload.columns.slice(index+1);
-		this.payload.columns = this.payload.columns.slice(0, index).concat(temp);
+		const index = +event.path[1].id[event.path[1].id.length - 1];
+		const temp = this.payload.columns.slice(index + 1);
+		this.payload.columns = this.payload.columns
+			.slice(0, index)
+			.concat(temp);
 		this.removeDataColumn(index);
 		document.getElementById('Dropdown' + index).classList.toggle('show');
 	}
 
-	removeRows(event){
+	removeRows(event) {
 		event.stopPropagation();
-		console.log(this.payload.data.length);
-		this.payload.data = this.payload.data.slice(1,5);
-		console.log(this.payload.data.length);
+		this.payload.data = this.payload.data.slice(1, 5);
 	}
 
-	removeDataColumn(index){
+	removeDataColumn(index) {
 		this.payload.data.forEach((el, i) => {
 			// console.log(el.slice(index+1));
 			// console.log(el.slice(0, index));
-			el = el.slice(0, index).concat(el.slice(index+1));
+			el = el.slice(0, index).concat(el.slice(index + 1));
 			this.payload.data[i] = new Array(el);
-			console.log(this.payload);
 		});
 	}
 
 	toggleDropdown(e) {
 		e.stopPropagation();
 		let id = -1;
-		if (e.target.id){
+		if (e.target.id) {
 			id = e.target.id;
 		} else {
-			id = e.target.parentNode.id
+			id = e.target.parentNode.id;
 		}
 		document.getElementById('Dropdown' + id).classList.toggle('show');
 	}
 	turnoffDropdown(e) {
 		if (!e.target.matches('.dropbtn')) {
-			for(let i = 0; i < this.payload.columns.length; i++){
-				let myDropdown = document.getElementById('Dropdown' + i);
-				if (myDropdown.classList.contains('show')) {
-					myDropdown.classList.remove('show');
+			for (let i = 0; i < this.payload.columns.length; i++) {
+				const dropdown = document.getElementById('Dropdown' + i);
+				if (dropdown.classList.contains('show')) {
+					dropdown.classList.remove('show');
 				}
 			}
-			let myDropdown = document.getElementById('Dropdown');
+			const myDropdown = document.getElementById('Dropdown');
 			if (myDropdown.classList.contains('show')) {
 				myDropdown.classList.remove('show');
 			}
@@ -116,11 +105,11 @@ export class VirtualScrollTableComponent implements OnInit {
 
 	isSelectAll() {
 		this.flag = !this.flag;
-		if(this.flag){
-			for(let i = 0; i < this.payload.data.length; i++){
+		if (this.flag) {
+			for (let i = 0; i < this.payload.data.length; i++) {
 				this.selectedState.push(i);
 			}
-		} else{
+		} else {
 			this.selectedState = new Array<number>();
 		}
 	}
