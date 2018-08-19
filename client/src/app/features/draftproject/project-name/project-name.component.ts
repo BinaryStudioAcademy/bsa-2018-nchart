@@ -14,7 +14,7 @@ export class ProjectNameComponent implements OnInit, OnChanges {
 	@Output()
 	setProjectName: EventEmitter<any> = new EventEmitter();
 
-	nameControl = new FormControl(this.projectName, [requiredValidator('')]);
+	nameControl = new FormControl('', [requiredValidator('')]);
 
 	constructor() {}
 
