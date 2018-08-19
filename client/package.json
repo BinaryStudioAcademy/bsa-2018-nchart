@@ -27,6 +27,7 @@
 		"@ngrx/store": "^6.1.0",
 		"@ngrx/store-devtools": "^6.1.0",
 		"@types/query-string": "^6.1.0",
+		"angular-resize-event": "^0.4.4",
 		"core-js": "^2.5.4",
 		"fast-deep-equal": "^2.0.1",
 		"lodash": "^4.17.10",

@@ -1,0 +1,64 @@
+$animation-speed: 1s
+  
+@keyframes lds-double-ring 
+  0% 
+    -webkit-transform: rotate(0)
+    transform: rotate(0)  
+  100% 
+    -webkit-transform: rotate(360deg)
+    transform: rotate(360deg)
+
+
+
+@keyframes lds-double-ring_reverse 
+  0% 
+    -webkit-transform: rotate(0)
+    transform: rotate(0)
+  100% 
+    -webkit-transform: rotate(-360deg)
+    transform: rotate(-360deg)
+  
+.with-spiner
+  position: relative
+
+.spiner-container
+  position: absolute
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+
+.lds-double-ring
+  width: 100%
+  height: 100%
+
+.ring-container
+  width: 50%
+  height: 50%
+
+.ring-container,
+.lds-double-ring,
+.outer-section,
+.inner-section
+  position: absolute
+  margin: auto
+  top: 0
+  bottom: 0
+  left: 0
+  right: 0
+
+  .outer-section,
+  .inner-section
+    border-style: solid
+    border-radius: 50% 
+
+  .outer-section
+    width: 80%
+    height: 80%
+    animation: lds-double-ring $animation-speed linear infinite
+
+  .inner-section
+    width: 60%
+    height: 60%
+
+  

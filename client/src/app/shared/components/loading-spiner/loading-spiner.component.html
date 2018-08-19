@@ -1,0 +1,28 @@
+<ng-content></ng-content>
+
+<div
+    *ngIf="loadingSp"
+    class="spiner-container"
+    [style.background-color]="backgoundColor"
+>
+    <div
+        class="ring-container"
+      
+        (resized)="onRingResized($event)"
+    >
+        <div
+            class="lds-double-ring"
+            [ngStyle]="getDoubleRingStyle()"
+            
+        >
+            <div
+                class="outer-section"
+                [ngStyle]="getOuterSectionStyle()"
+            ></div>
+            <div
+                class="inner-section"
+                [ngStyle]="getInnerSectionStyle()"
+            ></div>
+        </div>
+    </div>
+</div>

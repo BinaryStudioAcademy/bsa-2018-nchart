@@ -7,13 +7,16 @@ import { MainBlockComponent } from '@app/shared/components/main-block/main-block
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LinkComponent } from '@app/shared/components/link/link.component';
 import { DragDropComponent } from '@app/shared/components/dragDrop/drag-drop.component';
+import { LoadingSpinerComponent } from '@app/shared/components/loading-spiner/loading-spiner.component';
+import { AngularResizedEventModule } from 'angular-resize-event';
 
 @NgModule({
 	imports: [
 		UIKitModule,
 		FormFieldModule,
 		HeaderModule,
-		BrowserAnimationsModule
+		BrowserAnimationsModule,
+		AngularResizedEventModule
 	],
 	exports: [
 		ActionButtonComponent,
@@ -22,13 +25,15 @@ import { DragDropComponent } from '@app/shared/components/dragDrop/drag-drop.com
 		UIKitModule,
 		MainBlockComponent,
 		DragDropComponent,
-		LinkComponent
+		LinkComponent,
+		LoadingSpinerComponent
 	],
 	declarations: [
 		ActionButtonComponent,
 		DragDropComponent,
 		MainBlockComponent,
-		LinkComponent
+		LinkComponent,
+		LoadingSpiner
 	]
 })
 export class SharedModule {}
