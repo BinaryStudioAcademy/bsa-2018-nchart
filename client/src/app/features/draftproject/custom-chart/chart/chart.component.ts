@@ -1,32 +1,51 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartService } from '@app/services/chart.service';
-
+import { Subscription } from 'rxjs';
+import { BarChartCustomizeSettings } from '@app/shared/components/charts/bar-chart/bar-chart'
 @Component({
 	selector: 'app-chart',
 	templateUrl: './chart.component.html',
 	styleUrls: ['./chart.component.sass']
 })
 
-
-
 export class ChartComponent implements OnInit {
 	constructor(private _chartService: ChartService) {}
-	data: any;
+	barChartCustomizeSettings: BarChartCustomizeSettings;
+	data: Array<any>;
 	range: number;
+	subs = new Subscription();
 	ngOnInit() {
-		this.data = this._chartService.getXAxis();
-		this.range = this._chartService.getRange();
-		console.log(this.data);
+		this.subs.add(this._chartService.dataObs.subscribe(data => {
+			this.data = data;
+		}))
 
+		this.subs.add(this._chartService.rangeObs.subscribe(data => {
+			this.range = data;
+		}))
 
-		/*this.data = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec','May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec','May', 'Jun', 'Jul', 'Aug']
-		.map((month: string) => (
-			{
-		  name: month,
-		  value: Math.random() * 200
-		  }
-	));*/
+		this.subs.add(this._chartService.barChartCustomizeSettingsObs.subscribe(data => {
+			this.barChartCustomizeSettings = data;
+		}));
+
+		setTimeout(() => {
+			this._chartService.setWidth(500)
+		}, 5000);
+
+		setTimeout(() => {
+			this._chartService.setHeight(400)
+		}, 8000);
+
+		setTimeout(() => {
+			this._chartService.setValues()
+		}, 10000);
+	  
 	}
+	ngOnDestroy(){
+		this.subs.unsubscribe;
+	}
+
+
+
 }
 
 

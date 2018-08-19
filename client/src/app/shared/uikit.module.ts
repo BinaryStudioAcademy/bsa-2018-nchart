@@ -21,7 +21,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { TabViewModule } from 'primeng/tabview';
 // Drag&Drop
 import { DragulaModule } from 'ng2-dragula';
-
+import { SpinnerModule } from 'primeng/spinner';
 @NgModule({
 	imports: [
 		ButtonModule,
@@ -42,7 +42,8 @@ import { DragulaModule } from 'ng2-dragula';
 		TabMenuModule,
 		TabViewModule,
 		DragulaModule.forRoot(),
-		FormsModule
+		FormsModule,
+		SpinnerModule
 	],
 	exports: [
 		ButtonModule,
@@ -63,7 +64,8 @@ import { DragulaModule } from 'ng2-dragula';
 		TabMenuModule,
 		TabViewModule,
 		DragulaModule,
-		FormsModule
+		FormsModule,
+		SpinnerModule
 	],
 	declarations: []
 })

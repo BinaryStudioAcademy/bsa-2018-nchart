@@ -47,14 +47,13 @@ export class DragDropComponent implements OnInit, OnDestroy {
 			type: ['string', 'number'],
 			description:
 				'Can accept both number and strings. A color will be defined for each unique value found in the list.',
-			value: [{ variable: 'Box office', type: 'number' }]
+			value: []
 		}
 	];
 
 	public columns = [
-		{ variable: 'Movie', type: 'string' },
-		{ variable: 'Genre', type: 'number' },
-		{ variable: 'Box office', type: 'number' }
+		{ variable: 'Month', type: 'string' },
+		{ variable: 'Days', type: 'number' }
 	];
 	public dimensions = [];
 
@@ -77,7 +76,7 @@ export class DragDropComponent implements OnInit, OnDestroy {
 				.dropModel(this.DIMENSIONS)
 				.subscribe(({ target, source, targetModel, item }) => {
 					if (
-						this.isValid(
+						!this.isValid(
 							target.parentElement.firstElementChild.innerHTML,
 							item
 						)
@@ -122,7 +121,7 @@ export class DragDropComponent implements OnInit, OnDestroy {
 		});
 
 		const isValid = dimension[0].type.indexOf(item.type);
-		return isValid === -1;
+		return isValid !== -1;
 	}
 
 	hasPlace(target: string, item: Column) {

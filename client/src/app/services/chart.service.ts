@@ -1,169 +1,146 @@
 import { Injectable } from '@angular/core';
+import { Observable, of, BehaviorSubject } from 'rxjs';
+import { BarChartCustomizeSettings } from '@app/shared/components/charts/bar-chart/bar-chart';
 
 @Injectable()
 export class ChartService {
 
-	dimensionSettings = [ {
-		"multiple": false,
-		"description": "For each unique value found in the column, a group (a new bar chart) is created.",
-		"required": true,
-		"variable": "X Axis",
-		"type": [
-		  "string",
-		  "number"
-		],
-		"id": 1
-	  },
-	  {
-		"multiple": false,
-		"description": "For each unique value found in the column, a bar is created.",
-		"required": false,
-		"variable": "Group",
-		"type": [
-		  "string",
-		  "number"
-		],
-		"id": 2
-	  },
-	  {
-		"multiple": false,
-		"description": "Accepts only columns containing numbers. The value will define the bar height.",
-		"required": false,
-		"variable": "Size",
-		"type": [
-		  "number"
-		],
-		"id": 3
-	  },
-	  {
-		"multiple": false,
-		"description": "Can accept both number and strings. A color will be defined for each unique value found in the list.",
-		"required": false,
-		"variable": "Color",
-		"type": [
-		  "string",
-		  "number"
-		],
-		"id": 4
-		}]
+	barChartCustomizeSettings: BarChartCustomizeSettings =  {
+			width:800, 
+			height:600,
+			leftMargin:40,
+			verticalPadding:17,
+			horizontalPadding:0.2,
+			isSameScaling:false
+		};
+		
+		data : Array<any>
+		values : Array<number>
 
-	customizeSettings: [
-		  {
-			"defaultValue": 800,
-			"description": "Artboard width in pixels.",
-			"option": "Width",
-			"id": 1
-		  },
-		  {
-			"defaultValue": 600,
-			"description": "Artboard height in pixels.",
-			"option": "Height",
-			"id": 2
-		  },
-		  {
-			"defaultValue": 40,
-			"description": "Margin for left side of a bar chart, in pixel.",
-			"option": "Left Margin",
-			"id": 3
-		  },
-		  {
-			"defaultValue": 0,
-			"description": "Distance among bar charts, in pixel.",
-			"option": "Vertical Padding",
-			"id": 4
-		  },
-		  {
-			"defaultValue": 0.1,
-			"description": "Distance between bars, in percentage of the size of the bar (0 = 0%, 1 = 100%).",
-			"option": "Horizontal Padding",
-			"id": 5
-		  },
-		  {
-			"defaultValue": false,
-			"description": "If set, every barchart element will have the same scale.",
-			"option": "Use Same Scale",
-			"id": 6
-		  },
-		  {
-			"defaultValue": [{}],
-			"description": "List of uniques values in the dimension mapped as “color”. If set to ordinal, you can set a color for each value. If set to linear, the app will try to find the minimum and maximum value contained in the dimension, and then creating a gradient among those two values.",
-			"option": "Colour Scale",
-			"id": 7
-		  }
-		]	
+		originalData = [
+			'Jan', 'Feb', 'Mar', 
+			'Jan', 'Mar', 'Apr',
+			'Jan', 'Jun', 'Jul'
+		]
+		originalValues = [
+			1, 2, 3,
+			4, 5, 6,
+			7, 8, 9
+		]
+	
+		private _barChartCustomizeSettings = new BehaviorSubject<BarChartCustomizeSettings>(this.barChartCustomizeSettings)
+		barChartCustomizeSettingsObs = this._barChartCustomizeSettings.asObservable();
+
+		private _data = new BehaviorSubject<Array<any>>(this.data);
+		dataObs = this._data.asObservable();
+
+		private _values = new BehaviorSubject<Array<number>>(this.values);
+		valuesObs = this._values.asObservable();
+
+		private _range = new BehaviorSubject<number>(0);
+		rangeObs = this._range.asObservable();
 
 
-		data : any;
+		setData(data: Array<any>){
+			this._data.next(data);
+		}
 
-		getXAxis(){
-			return this.data;
+		setValues(){
+			this.data = compressArray(mapValues(mapData(this.originalData), this.originalValues));
+			this.setRange();
+			this._data.next(this.data);
+		}
+
+		setWidth(width: number){
+			this.barChartCustomizeSettings.width = width;
+			this._barChartCustomizeSettings.next(this.barChartCustomizeSettings);
+		}
+
+		setHeight(height: number){
+			this.barChartCustomizeSettings.height = height;
+			this._barChartCustomizeSettings.next(this.barChartCustomizeSettings);
+		}
+
+		setRange(){
+			this._range.next(this.getRange());
 		}
 		
 		getRange(){
 			return Math.max(...this.data.map(o => o.value));
 		}
 
-
 	constructor() {
-		this.data = compressArray([
-															'Jan', 'Feb', 'Mar', 
-															'Mar', 'Mar', 'Apr',
-															'May', 'Jun', 'Jul', 
-															'Aug', 'Sep', 'Oct', 
-															'Nov', 'Dec','Aug', 
-															'Sep', 'Oct', 'Nov', 
-															'Dec','Aug', 'Sep', 
-															'Oct', 'Nov', 'Dec',
-															'Nov', 'Dec','Aug', 
-															'Sep', 'Oct', 'Nov',
-															'Jan', 'Feb', 'Mar', 
-															'Mar', 'Mar', 'Apr',
-															'May', 'Jun', 'Jul', 
-															'Aug', 'Sep', 'Oct', 
-															'Nov', 'Dec','Aug', 
-															'Sep', 'Oct', 'Nov', 
-															'Dec','Aug', 'Sep', 
-															'Oct', 'Nov', 'Dec',
-															'Nov', 'Dec','Aug', 
-															'Sep', 'Oct', 'Nov',
-															'Jan', 'Feb', 'Mar', 
-															'Mar', 'Mar', 'Apr',
-															'May', 'Jun', 'Jul', 
-															'Aug', 'Sep', 'Oct', 
-															'Nov', 'Dec','Aug', 
-															'Sep', 'Oct', 'Nov', 
-															'Dec','Aug', 'Sep', 
-															'Oct', 'Nov', 'Dec',
-															'Nov', 'Dec','Aug', 
-															'Sep', 'Oct', 'Nov'
-														]);
+		this.data = this.originalData;
+		this.values = this.originalValues;
+		this.data = compressArray(mapData(this.data));
+		this.setData(this.data);
+		this.setRange();
+		console.log(this.barChartCustomizeSettings);
 	}
+	
+}
+				
+
+
+export function mapData(original : Array<any>) {
+	return original.map((name: string | number) => (
+			{
+		  name: name,
+			value: 1,
+			color: "#1785FC"
+			}
+		))
+}
+
+export function mapValues(original : Array<any>, values : Array <number>){
+	return original.map((obj) => (
+				{
+					name: obj.name,
+					value: values[original.indexOf(obj)],
+					color: obj.color
+				}
+			))
+}
+
+export function mapColors(original : Array<any>){
+	return original.map((obj) => (
+		{
+			name: obj.name,
+			value: obj.value,
+			color: '#'+Math.random().toString(16).substr(2,6)
+		}
+	))
 }
 
 export function compressArray(original) {
- 
-	var compressed = [];
-	var copy = original.slice(0);
-	for (var i = 0; i < original.length; i++) {
- 
-		var myCount = 0;	
-		for (var w = 0; w < copy.length; w++) {
-			if (original[i] === copy[w]) {
-				myCount++;
-				delete copy[w];
+	let compressed = [];
+	let copy = original.slice(0);
+	for (let i = 0; i < original.length; i++) {
+		let myCount = 0;	
+		for (let w = 0; w < copy.length; w++) {
+			if (original[i].name === copy[w].name) {
+				myCount+=original[i].value;
+				let a = {
+					name:"",
+					value: 0,
+					color: ""
+				}
+				copy[w] = a;
 			}
 		}
  
 		if (myCount > 0) {
 			let a = {
 				name:"",
-				value: 0
+				value: 0,
+				color: ""
 			}
-			a.name = original[i];
+			a.name = original[i].name;
 			a.value = myCount;
+			a.color = original[i].color;
 			compressed.push(a);
 		}
 	}
- 
+  
 	return compressed;
 };
