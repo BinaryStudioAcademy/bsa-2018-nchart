@@ -1,18 +1,8 @@
-import { combineReducers } from '@ngrx/store';
+export const initialState: any = { };
 
-export const initialState: any = {
-	byId: {}
-};
-
-const byId = (state = initialState.byId, action) => {
+export const userChartSettingsReducer = (state = initialState, action) => {
 	switch (action.type) {
 		default:
 			return state;
 	}
 };
-
-const reducers = {
-	byId
-};
-
-export const userChartSettingsReducer = combineReducers(reducers);
