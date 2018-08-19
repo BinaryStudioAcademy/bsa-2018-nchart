@@ -103,7 +103,7 @@ export function passwordValidator(
 			return {
 				passwordPattern:
 					msg ||
-					'Password should contain alphabetic and numeric characters'
+					'Password should contain uppercase, lowercase characters and number'
 			};
 		}
 		return null;

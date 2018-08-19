@@ -46,7 +46,7 @@ export class LoginService {
 			name: [
 				requiredValidator(),
 				patternValidator(
-					'Name should contain uppercase, lowercase characters and number',
+					'Name should contain only alphabetic characters',
 					/^[a-zа-яэіїє]+$/i
 				),
 				maxLengthValidator('Maximum length of name is', 100)
