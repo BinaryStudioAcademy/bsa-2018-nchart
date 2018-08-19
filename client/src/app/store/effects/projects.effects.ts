@@ -5,11 +5,11 @@ import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Project } from '@app/models';
 import { normalize } from 'normalizr';
-import { arrayOfCustomData } from '@app/schemes/custom.schema';
+import { arrayOfCommonScheme } from '@app/schemes/common.schema';
 import { ProjectsActionConstants } from '@app/store/actions/projects/projects.action-types';
 import * as projectActions from '@app/store/actions/projects/projects.actions';
 import { Observable } from 'rxjs/index';
-import { ProjectService } from '../../services/project.service';
+import { ProjectService } from '@app/services/project.service';
 
 @Injectable()
 export class ProjectsEffects {
@@ -36,7 +36,7 @@ export class ProjectsEffects {
 					const {
 						result: all,
 						entities: { byId }
-					} = normalize(value, arrayOfCustomData);
+					} = normalize(value, arrayOfCommonScheme);
 					return new projectActions.LoadProjectsComplete({
 						projects: {
 							all,

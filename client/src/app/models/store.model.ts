@@ -30,4 +30,8 @@ export interface AppState {
 	charts: ChartsState;
 	datasets: DatasetState;
 	userCharts: UserChartsState;
+	datasetColumns: any;
+	datasetData: any;
+	defaultChartSettings: any;
+	userChartSettings: any;
 }

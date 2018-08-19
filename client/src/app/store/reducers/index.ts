@@ -36,6 +36,26 @@ import {
 	initialState as projectsInitialState
 } from './projects.reducer';
 
+import {
+	userChartSettingsReducer,
+	initialState as userChartSettingsInitialState
+} from './user-chart-settings.reducer';
+
+import {
+	defaultChartSettingsReducer,
+	initialState as defaultChartSettingsInitialState
+} from './default-chart-settings.reducer';
+
+import {
+	datasetColumnsReducer,
+	initialState as datasetColumnsInitialState
+} from './dataset-columns.reducer';
+
+import {
+	datasetDataReducer,
+	initialState as datasetDataInitialState
+} from './dataset-data.reducer';
+
 export const initialState: AppState = {
 	user: userInitialState,
 	errorHandler: errorHandlerInitialState,
@@ -43,7 +63,11 @@ export const initialState: AppState = {
 	projects: projectsInitialState,
 	charts: chartsInitialState,
 	datasets: datasetInitialState,
-	userCharts: userChartsInitialState
+	userCharts: userChartsInitialState,
+	datasetColumns: datasetColumnsInitialState,
+	datasetData: datasetDataInitialState,
+	defaultChartSettings: defaultChartSettingsInitialState,
+	userChartSettings: userChartSettingsInitialState
 };
 
 export const getReducers = () => ({
@@ -53,7 +77,11 @@ export const getReducers = () => ({
 	projects: projectsReducer,
 	charts: chartsReducer,
 	datasets: datasetReducer,
-	userCharts: userChartsReducer
+	userCharts: userChartsReducer,
+	userChartSettings: userChartSettingsReducer,
+	defaultChartSettings: defaultChartSettingsReducer,
+	datasetColumns: datasetColumnsReducer,
+	datasetData: datasetDataReducer
 });
 
 export const reducersToken = new InjectionToken<ActionReducerMap<AppState>>(

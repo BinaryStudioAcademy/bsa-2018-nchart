@@ -27,11 +27,11 @@ export interface DimensionColumnMap {
 	id: SchemeID;
 }
 
-export interface Chart {
+export interface Chart<D = DimensionOption[], C = CustomizeOption[]> {
 	id: SchemeID;
 	type: string;
 	name: string;
 	description: string;
-	dimensionSettings: DimensionOption[];
-	customizeSettings: CustomizeOption[];
+	dimensionSettings: D;
+	customizeSettings: C;
 }

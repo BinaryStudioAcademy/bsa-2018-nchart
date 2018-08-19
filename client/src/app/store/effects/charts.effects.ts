@@ -5,7 +5,7 @@ import { catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Chart } from '@app/models';
 import { normalize } from 'normalizr';
-import { arrayOfCustomData } from '@app/schemes/custom.schema';
+import { arrayOfCommonScheme } from '@app/schemes/common.schema';
 import { ChartsActionConstants } from '@app/store/actions/charts/charts.action-types';
 import * as chartActions from '@app/store/actions/charts/charts.actions';
 
@@ -283,7 +283,7 @@ export class ChartsEffects {
 					const {
 						result: all,
 						entities: { byId }
-					} = normalize(value, arrayOfCustomData);
+					} = normalize(value, arrayOfCommonScheme);
 					return new chartActions.LoadChartsComplete({
 						charts: {
 							all,
