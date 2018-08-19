@@ -11,4 +11,8 @@ export * from '@app/models/chart.model';
 export * from '@app/models/chart.model';
 export * from '@app/models/dataset.model';
 export * from '@app/models/user-chart-store.model';
+export * from '@app/models/register.model';
+export * from '@app/models/login.model';
+export * from '@app/models/response-scheme.model';
+export * from '@app/models/user-domain.model';
 export * from '@app/models/router-state-url.model';

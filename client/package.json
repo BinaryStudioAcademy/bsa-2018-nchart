@@ -29,6 +29,7 @@
 		"@types/query-string": "^6.1.0",
 		"core-js": "^2.5.4",
 		"fast-deep-equal": "^2.0.1",
+		"lodash": "^4.17.10",
 		"moment": "^2.22.2",
 		"ng2-dragula": "^2.0.2",
 		"normalizr": "^3.2.4",

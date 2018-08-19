@@ -258,8 +258,7 @@ class UserService {
 	createUserPayload(data) {
 		this.payload = {
 			id: data.id,
-			firstName: data.firstName,
-			lastName: data.lastName,
+			name: data.name,
 			email: data.email
 		};
 		return this.payload;

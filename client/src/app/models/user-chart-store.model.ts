@@ -2,8 +2,8 @@ import {
 	SchemeID,
 	NormalizedActiveEntity,
 	NormalizedSchemeWithoutAll
-} from './normalizr.model';
-import { DimensionColumnMap } from './chart.model';
+} from '@app/models/normalizr.model';
+import { DimensionColumnMap } from '@app/models/chart.model';
 import { CustomizeOption } from '@app/models/chart.model';
 
 export class UserChartsState<U = SchemeID, R = undefined>
