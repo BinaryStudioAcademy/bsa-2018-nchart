@@ -40,7 +40,13 @@ export class UserEffects {
 				}),
 				catchError(error => {
 					this.tokenService.removeToken();
-					return of(new VerifyTokenFailed(error));
+					return of(new VerifyTokenFailed(
+						{
+							action,
+							msg: error.message,
+							error
+						}
+					));
 				})
 			)
 		)
@@ -60,7 +66,13 @@ export class UserEffects {
 
 					return throwError(new Error(`Can't login`));
 				}),
-				catchError(error => of(new LoginFailed(error)))
+				catchError(error => of(new LoginFailed(
+					{
+						action,
+						msg: error.message,
+						error
+					}
+				)))
 			)
 		)
 	);
@@ -79,7 +91,13 @@ export class UserEffects {
 
 					return throwError(new Error(`Can't register`));
 				}),
-				catchError(error => of(new RegisterFailed(error)))
+				catchError(error => of(new RegisterFailed(
+					{
+						action,
+						msg: error.message,
+						error
+					}
+				)))
 			)
 		)
 	);

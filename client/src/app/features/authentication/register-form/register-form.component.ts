@@ -1,8 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { StoreService } from '@app/services/store.service';
 import { Register } from '@app/models';
-import { Register as RegisterAction } from '@app/store/actions/user/user.actions';
 
 @Component({
 	selector: 'app-register-form',
@@ -13,7 +11,10 @@ export class RegisterFormComponent implements OnInit {
 	@Input()
 	registerForm: FormGroup;
 
-	constructor(private storeService: StoreService) {}
+	@Output()
+	registerClick = new EventEmitter<Register>()
+
+	constructor() {}
 
 	ngOnInit() {}
 
@@ -25,8 +26,9 @@ export class RegisterFormComponent implements OnInit {
 			password,
 			email
 		} = this.registerForm.getRawValue() as Register;
-		const user = new Register(name, email, password);
 
-		this.storeService.dispatch(new RegisterAction({ user }));
+		const user = new Register(name, email, password);
+		
+		this.registerClick.emit(user);	
 	}
 }
