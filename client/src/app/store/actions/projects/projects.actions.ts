@@ -37,7 +37,12 @@ export class LoadOneProject extends AppAction<{ projectId: string }> {
 	readonly type = ProjectsActionConstants.LOAD_ONE_PROJECT;
 }
 
-export class LoadOneProjectComplete extends AppAction<Project> {
+export class LoadOneProjectComplete extends AppAction<{
+	projects: {
+		all: Array<string>;
+		byId: { [id: string]: Project };
+	};
+}> {
 	readonly type = ProjectsActionConstants.LOAD_ONE_PROJECT__COMPLETE;
 }
 

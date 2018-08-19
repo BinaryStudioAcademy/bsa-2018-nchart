@@ -10,7 +10,7 @@ import { ProjectsActionConstants } from '@app/store/actions/projects/projects.ac
 import * as projectActions from '@app/store/actions/projects/projects.actions';
 // import { Observable, throwError } from 'rxjs/index';
 import { throwError } from 'rxjs/index';
-import { ProjectDomainService } from '@app/api/domains/project';
+import { ProjectDomainService } from '@app/api/domains/project/project-domain.service';
 import { ProjectService } from '../../services/project.service';
 
 @Injectable()
@@ -77,11 +77,18 @@ export class ProjectsEffects {
 		ofType(ProjectsActionConstants.LOAD_ONE_PROJECT),
 		switchMap((action: projectActions.LoadOneProject) =>
 			this.projectDomainService.get(action.payload).pipe(
-				map(payload => {
-					if (payload.isSuccess) {
-						return new projectActions.LoadOneProjectComplete(
-							payload.payload
-						);
+				map(value => {
+					if (value.isSuccess) {
+						const {
+							result: all,
+							entities: { byId }
+						} = normalize(value.payload, arrayOfCustomData);
+						return new projectActions.LoadOneProjectComplete({
+							projects: {
+								all,
+								byId
+							}
+						});
 					}
 					return throwError(new Error(`Can't get one project`));
 				}),
