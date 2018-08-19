@@ -46,8 +46,11 @@ export const isLoading = (
 ): boolean => {
 	switch (action.type) {
 		case constants.LOAD_PROJECTS:
+		case constants.LOAD_ONE_PROJECT:
 			return true;
 		case constants.LOAD_PROJECTS__COMPLETE:
+		case constants.LOAD_ONE_PROJECT__COMPLETE:
+		case constants.LOAD_ONE_PROJECT__FAILED:
 		case constants.LOAD_PROJECTS__FAILED:
 			return false;
 		default:

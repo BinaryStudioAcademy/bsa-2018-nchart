@@ -7,6 +7,8 @@ export * from './user-store.model';
 export * from './companies-store.model';
 export * from './projects-store.model';
 export * from './fields-validators.model';
+export * from './response-scheme.model';
+export * from './project-domain.model';
 export * from './chart.model';
 export * from './chart.model';
 export * from './dataset.model';

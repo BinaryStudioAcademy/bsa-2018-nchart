@@ -3,46 +3,42 @@ import { Effect, Actions, ofType } from '@ngrx/effects';
 import { map, switchMap } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { Project } from '@app/models';
 import { normalize } from 'normalizr';
 import { arrayOfCommonScheme } from '@app/schemes/common.schema';
 import { ProjectsActionConstants } from '@app/store/actions/projects/projects.action-types';
 import * as projectActions from '@app/store/actions/projects/projects.actions';
-import { Observable } from 'rxjs/index';
+import { throwError } from 'rxjs/index';
+import { ProjectDomainService } from '@app/api/domains/project/project-domain.service';
 import { ProjectService } from '@app/services/project.service';
+import { projectScheme } from '@app/schemes/project.scheme';
 
 @Injectable()
 export class ProjectsEffects {
-	api = {
-		loadProjects: (): Observable<Project[]> => {
-			return of([]);
-		},
-		createDraftProject: (): Observable<Project> => {
-			return of(null);
-		}
-	};
-
 	constructor(
 		private action$: Actions,
+		private projectDomainService: ProjectDomainService,
 		private projectService: ProjectService
 	) {}
 
 	@Effect()
 	loadData$ = this.action$.pipe(
 		ofType(ProjectsActionConstants.LOAD_PROJECTS),
-		switchMap((action: any) =>
-			this.api.loadProjects().pipe(
-				map((value: Project[]) => {
-					const {
-						result: all,
-						entities: { byId }
-					} = normalize(value, arrayOfCommonScheme);
-					return new projectActions.LoadProjectsComplete({
-						projects: {
-							all,
-							byId
-						}
-					});
+		switchMap((action: projectActions.LoadProjetcs) =>
+			this.projectDomainService.getAll().pipe(
+				map(value => {
+					if (value.isSuccess) {
+						const {
+							result: all,
+							entities: { byId }
+						} = normalize(value.payload, arrayOfCommonScheme);
+						return new projectActions.LoadProjectsComplete({
+							projects: {
+								all,
+								byId
+							}
+						});
+					}
+					return throwError(new Error('Cant get projects'));
 				}),
 				catchError(error => {
 					return of(
@@ -70,6 +66,33 @@ export class ProjectsEffects {
 				),
 				catchError(error =>
 					of(new projectActions.CreateDraftProjectFailed())
+				)
+			)
+		)
+	);
+
+	@Effect()
+	loadOneProject$ = this.action$.pipe(
+		ofType(ProjectsActionConstants.LOAD_ONE_PROJECT),
+		switchMap((action: projectActions.LoadOneProject) =>
+			this.projectDomainService.get(action.payload).pipe(
+				map(value => {
+					if (value.isSuccess) {
+						const {
+							result: all,
+							entities: { byId }
+						} = normalize(value.payload, projectScheme);
+						return new projectActions.LoadOneProjectComplete({
+							projects: {
+								all,
+								byId
+							}
+						});
+					}
+					return throwError(new Error(`Can't get one project`));
+				}),
+				catchError(error =>
+					of(new projectActions.LoadOneProjectFailed())
 				)
 			)
 		)
