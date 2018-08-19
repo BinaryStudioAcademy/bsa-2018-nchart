@@ -1,7 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Login } from '@app/models';
-
 
 @Component({
 	selector: 'app-login-form',
@@ -13,8 +12,8 @@ export class LoginFormComponent implements OnInit {
 	loginForm: FormGroup;
 
 	@Output()
-	loginClick = new EventEmitter<Login>()
-	
+	loginClick = new EventEmitter<Login>();
+
 	constructor() {}
 
 	ngOnInit() {}

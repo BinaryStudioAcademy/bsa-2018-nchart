@@ -4,7 +4,11 @@ import { FormGroup } from '@angular/forms';
 import { LoginService } from '@app/services/login.service';
 import { StoreService } from '@app/services/store.service';
 import { TokenService } from '@app/services/token.service';
-import { VerifyToken, Login as LoginAction, Register as RegisterAction } from '@app/store/actions/user/user.actions';
+import {
+	VerifyToken,
+	Login as LoginAction,
+	Register as RegisterAction
+} from '@app/store/actions/user/user.actions';
 import { Login as LoginModel, Register as RegisterModel } from '@app/models';
 
 @Component({
@@ -41,11 +45,11 @@ export class LoginComponent implements OnInit {
 		this.registerForm.reset();
 	}
 
-	onLogin(user: LoginModel){
-		this.storeService.dispatch(new LoginAction({ user }))
+	onLogin(user: LoginModel) {
+		this.storeService.dispatch(new LoginAction({ user }));
 	}
 
-	onRegister(user: RegisterModel){
-		this.storeService.dispatch(new RegisterAction({ user }))
+	onRegister(user: RegisterModel) {
+		this.storeService.dispatch(new RegisterAction({ user }));
 	}
 }

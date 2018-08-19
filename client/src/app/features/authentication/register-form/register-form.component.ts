@@ -12,7 +12,7 @@ export class RegisterFormComponent implements OnInit {
 	registerForm: FormGroup;
 
 	@Output()
-	registerClick = new EventEmitter<Register>()
+	registerClick = new EventEmitter<Register>();
 
 	constructor() {}
 
@@ -28,7 +28,7 @@ export class RegisterFormComponent implements OnInit {
 		} = this.registerForm.getRawValue() as Register;
 
 		const user = new Register(name, email, password);
-		
-		this.registerClick.emit(user);	
+
+		this.registerClick.emit(user);
 	}
 }
