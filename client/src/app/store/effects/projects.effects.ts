@@ -6,6 +6,7 @@ import { of } from 'rxjs';
 // import { Project, ResponseScheme } from '@app/models';
 import { normalize } from 'normalizr';
 import { arrayOfCustomData } from '@app/schemes/custom.schema';
+import {projectCustomeSchema} from '@app/schemes/project.schema';
 import { ProjectsActionConstants } from '@app/store/actions/projects/projects.action-types';
 import * as projectActions from '@app/store/actions/projects/projects.actions';
 // import { Observable, throwError } from 'rxjs/index';
@@ -82,7 +83,7 @@ export class ProjectsEffects {
 						const {
 							result: all,
 							entities: { byId }
-						} = normalize(value.payload, arrayOfCustomData);
+						} = normalize(value.payload, projectCustomeSchema);
 						return new projectActions.LoadOneProjectComplete({
 							projects: {
 								all,

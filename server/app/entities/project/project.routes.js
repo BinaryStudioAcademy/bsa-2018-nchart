@@ -137,7 +137,7 @@ project.get('/test', (req, res) => {
 
 project.get('/:id', (req, res) => {
 	// console.log(req.params.id);
-	const projectTest = [
+	const projectTest =
 		{
 			id: '0',
 			name: 'test0',
@@ -193,7 +193,7 @@ project.get('/:id', (req, res) => {
 			createdAt: 1,
 			isDraft: true
 		}
-	];
+	;
 	const payload = {
 		payload: projectTest,
 		isSuccess: true,
