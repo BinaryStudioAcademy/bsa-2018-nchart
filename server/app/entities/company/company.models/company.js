@@ -30,15 +30,15 @@ Company.sync().then(() => {
 		});
 	});
 	Group.belongsTo(Company, { foreignKey: 'companyId' });
-    CompanyChartType.sync().then(() => {
-        Company.hasMany(CompanyChartType, {
-            foreignKey: 'companyId',
-            sourceKey: 'id',
-            onDelete: 'CASCADE',
-            constraints: false
-        });
-    });
-    CompanyChartType.belongsTo(Company, { foreignKey: 'companyId' });
+	CompanyChartType.sync().then(() => {
+		Company.hasMany(CompanyChartType, {
+			foreignKey: 'companyId',
+			sourceKey: 'id',
+			onDelete: 'CASCADE',
+			constraints: false
+		});
+	});
+	CompanyChartType.belongsTo(Company, { foreignKey: 'companyId' });
 });
 
 module.exports = Company;
