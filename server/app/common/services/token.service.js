@@ -1,12 +1,12 @@
-require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
 class TokenService {
 	constructor() {
-		this.tokenSecret = process.env.TOKEN;
+		this.tokenSecret = null;
 	}
 
 	createToken(data) {
+		this.tokenSecret = process.env.TOKEN;
 		const tokenPayload = {
 			id: data.id,
 			firstName: data.firstName,
@@ -14,11 +14,12 @@ class TokenService {
 			email: data.email
 		};
 		return jwt.sign(tokenPayload, this.tokenSecret, {
-			expiresIn: 60 * 60
+			expiresIn: process.env.TOKEN_TIME_EXP
 		});
 	}
 
 	verifyToken(token) {
+		this.tokenSecret = process.env.TOKEN;
 		return new Promise((resolve, reject) => {
 			jwt.verify(token, this.tokenSecret, (err, decoded) => {
 				if (err) {

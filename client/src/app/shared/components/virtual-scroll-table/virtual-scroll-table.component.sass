@@ -1,6 +1,9 @@
 .dropdown
     overflow: hidden
 
+.dropdown
+	padding-left: 5px
+
 .dropdown 
 	.dropbtn
 		cursor: pointer;
@@ -15,21 +18,28 @@
     display: none;
     position: absolute;
     background-color: #f9f9f9;
-    min-width: 160px;
+    min-width: 120px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 100;
 
+.dropdown-content
+	margin: 0
+	padding: 5px 5px
+
 .dropdown-content 
-	a
-		float: none;
+	li
+		list-style: none;
 		color: #373737;
-		padding: 12px 16px;
+		padding: 3px 0;
 		text-decoration: none;
 		display: block;
 		text-align: left;
-
+.types
+	li
+		&:last-child
+			border-top: 2px solid #373737
 .dropdown-content
-	a:hover
+	li:hover
     	background-color: #ddd;
 
 .show

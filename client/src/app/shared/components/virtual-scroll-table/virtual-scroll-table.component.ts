@@ -1,11 +1,8 @@
 import {
 	Component,
 	Input,
-	ViewChildren,
-	QueryList,
 	OnInit
 } from '@angular/core';
-import { Checkbox } from 'primeng/checkbox';
 import { LazyLoadEvent } from 'primeng/api';
 
 @Component({
@@ -18,58 +15,30 @@ export class VirtualScrollTableComponent implements OnInit {
 	payload;
 
 	virtualData: any[][];
-	selectedList = [];
 	totalRecords: number;
+	selectedList: any[];
+	selectedState: number[];
+	columnTypes: any[];
 	loading: boolean;
 	flag: boolean;
-
-	@ViewChildren(Checkbox)
-	chkbox: QueryList<Checkbox>;
 
 	ngOnInit() {
 		this.totalRecords = this.payload.data.length;
 		this.loading = true;
 		this.flag = false;
+		this.selectedState = [];
+		this.columnTypes = [
+			"String",
+			"Number",
+			"Boolean",
+			"Date"
+		]
 	}
 
-	addSelection(event) {
-		const rows = document.getElementsByClassName('list');
-		for (let i = event.start; i <= event.end; i++) {
-			if (this.selectedList[i] === true) {
-				for (let j = 0; j < rows.length; j++) {
-					if (
-						+rows[j].getElementsByTagName('td')[0].innerText - 1 ===
-						i
-					) {
-						rows[j]
-							.getElementsByClassName('ui-chkbox-box')[0]
-							.classList.add('ui-state-active');
-						rows[j]
-							.getElementsByClassName('ui-chkbox-box')[0]
-							.getElementsByTagName('span')[0]
-							.classList.add('pi', 'pi-check');
-					}
-				}
-			} else {
-				for (let j = 0; j < rows.length; j++) {
-					if (
-						+rows[j].getElementsByTagName('td')[0].innerText - 1 ===
-						i
-					) {
-						rows[j]
-							.getElementsByClassName('ui-chkbox-box')[0]
-							.classList.remove('ui-state-active');
-						rows[j]
-							.getElementsByClassName('ui-chkbox-box')[0]
-							.getElementsByTagName('span')[0]
-							.classList.remove('pi', 'pi-check');
-					}
-				}
-			}
-		}
+	addSelection(event: LazyLoadEvent, data) {
 	}
 
-	editItem(el, it) {
+	editItem(e) {
 		// if (el.target.cellIndex === 0 || el.target.cellIndex === 1) {
 		// 	return;
 		// }
@@ -87,38 +56,73 @@ export class VirtualScrollTableComponent implements OnInit {
 		// });
 	}
 
+	changeType(event, type, colType){
+		event.stopPropagation();
+		let index = event.path[1].id[event.path[1].id.length-1];
+		this.payload.columns[index].type = type;
+		document.getElementById('Dropdown' + index).classList.toggle('show');
+	}
+
+	removeColumn(event){
+		event.stopPropagation();
+		let index = +event.path[1].id[event.path[1].id.length-1];
+		let temp = this.payload.columns.slice(index+1);
+		this.payload.columns = this.payload.columns.slice(0, index).concat(temp);
+		this.removeDataColumn(index);
+		document.getElementById('Dropdown' + index).classList.toggle('show');
+	}
+
+	removeRows(event){
+		event.stopPropagation();
+		console.log(this.payload.data.length);
+		this.payload.data = this.payload.data.slice(1,5);
+		console.log(this.payload.data.length);
+	}
+
+	removeDataColumn(index){
+		this.payload.data.forEach((el, i) => {
+			// console.log(el.slice(index+1));
+			// console.log(el.slice(0, index));
+			el = el.slice(0, index).concat(el.slice(index+1));
+			this.payload.data[i] = new Array(el);
+			console.log(this.payload);
+		});
+	}
+
 	toggleDropdown(e) {
 		e.stopPropagation();
-		document.getElementById('Dropdown').classList.toggle('show');
+		let id = -1;
+		if (e.target.id){
+			id = e.target.id;
+		} else {
+			id = e.target.parentNode.id
+		}
+		document.getElementById('Dropdown' + id).classList.toggle('show');
 	}
 	turnoffDropdown(e) {
 		if (!e.target.matches('.dropbtn')) {
-			const myDropdown = document.getElementById('Dropdown');
+			for(let i = 0; i < this.payload.columns.length; i++){
+				let myDropdown = document.getElementById('Dropdown' + i);
+				if (myDropdown.classList.contains('show')) {
+					myDropdown.classList.remove('show');
+				}
+			}
+			let myDropdown = document.getElementById('Dropdown');
 			if (myDropdown.classList.contains('show')) {
 				myDropdown.classList.remove('show');
 			}
 		}
 	}
 
-	selectAll() {
-		// this.flag = !this.flag;
-		// const selectAll = document
-		// 	.getElementById('selectAll')
-		// 	.getElementsByClassName('ui-chkbox-box')[0]
-		// 	.classList.contains('ui-state-active');
-		// this.selectedList.splice(0);
-		// if (selectAll) {
-		// 	for (let i = 0; i < this.filteredList.length; i++) {
-		// 		this.selectedList.push(true);
-		// 	}
-		// } else {
-		// 	for (let i = 0; i < this.filteredList.length; i++) {
-		// 		this.selectedList.push(false);
-		// 	}
-		// }
-		this.chkbox.toArray().forEach(el => {
-			el.checked = true;
-		});
+	isSelectAll() {
+		this.flag = !this.flag;
+		if(this.flag){
+			for(let i = 0; i < this.payload.data.length; i++){
+				this.selectedState.push(i);
+			}
+		} else{
+			this.selectedState = new Array<number>();
+		}
 	}
 
 	selectOne(event, item) {
@@ -129,15 +133,8 @@ export class VirtualScrollTableComponent implements OnInit {
 		// console.log((this.chkbox.toArray()[10].checked = true));
 	}
 
-	toggleCheck(event) {
-		// console.log(event);
-	}
-
 	loadDataOnScroll(event: LazyLoadEvent) {
 		this.loading = true;
-		if (this.flag) {
-			this.selectAll();
-		}
 		setTimeout(() => {
 			this.virtualData = this.payload.data.slice(
 				event.first,

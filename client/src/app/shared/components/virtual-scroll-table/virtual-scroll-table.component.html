@@ -10,51 +10,64 @@
 	[totalRecords]="totalRecords"
 	[virtualRowHeight]="60"
 	[loading]="loading"
-	[responsive]="true">
+	[responsive]="true"
+	[(selection)]="selectedList"
+	(click)="turnoffDropdown($event)">
 	<ng-template pTemplate="colgroup" let-columns >
-			<colgroup >
-				<col [ngStyle]="{'width': '7%'}">
-				<col style="width: 5%">
-				<col *ngFor="let col of columns">
-			</colgroup>
+		<colgroup >
+			<col [ngStyle]="{'width': '60px'}">
+			<col style="width: 5%">
+			<col *ngFor="let col of columns">
+		</colgroup>
 	</ng-template>
 	<ng-template pTemplate="header" let-columns >
 		<tr [ngStyle]="{'height': '40px'}">
-			<th pResizableColumn [ngStyle]="{'background-color': '#ffffff', 'border':'none', 'border-bottom': '2px solid #f2f3f9'}">
+			<th [ngStyle]="{'background-color': '#ffffff', 'border':'none', 'border-bottom': '2px solid #f2f3f9'}">
 				<div class="dropdown">
 					<button class="dropbtn" (click)="toggleDropdown($event)">#
 						<i class="fas fa-caret-down"></i>
 					</button>
-					<div class="dropdown-content" id="Dropdown">
-						<a href="#">Delete selected</a>
-					</div>
+					<ul class="dropdown-content" id="Dropdown">
+						<li (click) = "removeRows($event)">Delete selected</li>
+					</ul>
 				</div>
 			</th>
-			<th pResizableColumn [ngStyle]="{'background-color': '#ffffff', 'border':'none', 'border-bottom': '2px solid #f2f3f9'}">
-				<p-checkbox (click)="selectAll()"></p-checkbox>
+			<th [ngStyle]="{'background-color': '#ffffff', 'border':'none', 'border-bottom': '2px solid #f2f3f9'}">
+				<p-tableHeaderCheckbox (click)="isSelectAll($event)"></p-tableHeaderCheckbox>
 			</th>
-			<th *ngFor="let col of columns" pResizableColumn style="color: #999fae;" [ngStyle]="{'background-color': '#ffffff', 'border':'none', 'border-bottom': '2px solid #f2f3f9'}">
+			<th *ngFor="let col of columns; let i = index" style="color: #999fae;" [ngStyle]="{'background-color': '#ffffff', 'border':'none', 'border-bottom': '2px solid #f2f3f9'}" pEditableColumn>
 				<div class="dropdown">
-					<button class="dropbtn" (click)="toggleDropdown($event)">
-						{{col.title.toUpperCase()}}
+					<p-cellEditor>
+							<ng-template pTemplate="input">
+								<input type="text" [(ngModel)]="columns[columns.indexOf(col)].title">
+							</ng-template>
+							<ng-template pTemplate="output">
+								{{col.title.toUpperCase()}}
+							</ng-template>
+					</p-cellEditor>
+					<button class="dropbtn" id="{{i}}" (click)="toggleDropdown($event)">
 						<i class="fas fa-caret-down"></i>
 					</button>
-					<div class="dropdown-content" id="Dropdown">
-						<a href="#">Delete selected</a>
-					</div>
-				</div>
+					<div>({{col.type.toLowerCase()}})</div>
+					<ul class="dropdown-content types" id="Dropdown{{i}}">
+						<li *ngFor="let type of columnTypes" (click)="changeType($event, type, col.type)">Type {{type}}</li>
+						<li (click) = "removeColumn($event)">Delete column</li>
+					</ul>
+				</div>	
 			</th>
 		</tr>
 	</ng-template>
     <ng-template pTemplate="body" let-data>
-		<tr class="list">
-			<td [ngStyle]="{'padding': '5px','text-align': 'center', 'color': '#373737', 'background-color': '#ffffff', 'border':'none','border-bottom': '2px solid #f2f3f9', 'height': '40px'}">{{payload.data.indexOf(data) + 1}}</td>
-			<td [ngStyle]="{'padding': '5px','text-align': 'center', 'color': '#373737', 'background-color': '#ffffff', 'border':'none','border-bottom': '2px solid #f2f3f9', 'height': '40px'}"><p-checkbox (onChange)=toggleCheck($event) class=""></p-checkbox></td>
+		<tr class="list" [pSelectableRow]="data" id="{{payload.data.indexOf(data) + 1}}">
+			<td [ngStyle]="{'padding': '5px','text-align': 'center', 'color': '#999fae', 'background-color': '#ffffff', 'border':'none','border-bottom': '2px solid #f2f3f9', 'height': '20px'}">{{payload.data.indexOf(data) + 1}}</td>
+			<td [ngStyle]="{'padding': '5px','text-align': 'center', 'color': '#373737', 'background-color': '#ffffff', 'border':'none','border-bottom': '2px solid #f2f3f9', 'height': '20px'}">
+				<p-tableCheckbox [value]="data" (click)="addSelection($event, data)"></p-tableCheckbox>
+			</td>
 			<!-- <td *ngFor="let elem of data" (click)="editItem($event, item)" [ngStyle]="{'padding': '5px','text-align': 'center', 'color': '#373737', 'background-color': '#ffffff', 'border':'none','border-bottom': '2px solid #f2f3f9', 'height': '60px'}">{{elem}}</td> -->
-			<td *ngFor="let elem of data"  [ngStyle]="{'padding': '5px','text-align': 'center', 'color': '#373737', 'background-color': '#ffffff', 'border':'none','border-bottom': '2px solid #f2f3f9', 'height': '40px', 'word-wrap': 'break-word'}" pEditableColumn>
+			<td *ngFor="let elem of data"  [ngStyle]="{'padding': '5px','text-align': 'center', 'color': '#373737', 'background-color': '#ffffff', 'border':'none','border-bottom': '2px solid #f2f3f9', 'height': '20px', 'word-wrap': 'break-word'}" pEditableColumn>
 				<p-cellEditor>
 					<ng-template pTemplate="input">
-						<input type="text" [(ngModel)]="data[data.indexOf(elem)]">
+						<input type="text" [(ngModel)]="payload.data[payload.data.indexOf(data)][data.indexOf(elem)]">
 					</ng-template>
 					<ng-template pTemplate="output">
 						{{elem}}

@@ -8,8 +8,10 @@
 # dependencies
 /client/node_modules/
 /server/node_modules/
+/node_modules/
 /server/.env
 /client/package-lock.json
+/client/dist
 /server/package-lock.json
 
 # IDEs and editors

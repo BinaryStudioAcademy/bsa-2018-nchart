@@ -1,7 +1,6 @@
 const remote = require('remote-file-size');
 const async = require('async');
 const FsService = require('../../middleware/file.middleware');
-const { readFile } = require('./xlsx.service');
 
 class LinkService {
 	checkSize(url) {
@@ -21,7 +20,6 @@ class LinkService {
 
 	processLink(url) {
 		return new Promise((resolve, reject) => {
-			let globalPath = null;
 			async.waterfall(
 				[
 					callback => {
@@ -34,23 +32,12 @@ class LinkService {
 					(data, callback) => {
 						FsService.saveFromLink(url)
 							.then(path => {
-								globalPath = path;
 								callback(null, path);
 							})
 							.catch(err => callback(err, null));
-					},
-					(path, callback) => {
-						readFile(path)
-							.then(data => {
-								callback(null, data);
-							})
-							.catch(err => {
-								callback(err, null);
-							});
 					}
 				],
 				(error, payload) => {
-					FsService.deleteFile(globalPath).catch(err => reject(err));
 					if (error) {
 						// todo: create some error, if file is messed up shit
 						reject(error);
