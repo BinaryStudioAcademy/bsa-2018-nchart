@@ -10,7 +10,7 @@
         [ngClass]="getIconClasses()"
         *ngIf="icon && iconPosition=='left'"
     ></i>
-    <input
+    <input #inputText
         pInputText
         [formControl]="control"
         [type]="type"
