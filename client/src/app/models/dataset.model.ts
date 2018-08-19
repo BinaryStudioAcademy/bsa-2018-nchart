@@ -3,11 +3,11 @@ import { NormalizedSchemeWithoutAll } from '@app/models/normalizr.model';
 
 export type DatasetState = NormalizedSchemeWithoutAll<Dataset>;
 
-export interface Dataset {
-	id: SchemeID;
-	isDraft: boolean;
-	modified: DatasetTable;
-	source: DatasetTable;
+export class Dataset {
+	id: SchemeID = null;
+	isDraft: boolean = null;
+	modified: DatasetTable = null;
+	source: DatasetTable = null;
 }
 
 interface Column {

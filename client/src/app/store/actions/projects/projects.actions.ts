@@ -23,7 +23,9 @@ export class CreateDraftProject extends AppAction {
 	readonly type = ProjectsActionConstants.CREATE_DRAFT_PROJECT;
 }
 
-export class CreateDraftProjectComplete extends AppAction<any> {
+export class CreateDraftProjectComplete extends AppAction<{
+	project: Project;
+}> {
 	readonly type = ProjectsActionConstants.CREATE_DRAFT_PROJECT__COMPLETE;
 }
 

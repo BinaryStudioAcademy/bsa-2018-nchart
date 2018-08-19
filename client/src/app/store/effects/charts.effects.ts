@@ -7,10 +7,7 @@ import { Chart } from '@app/models';
 import { normalize } from 'normalizr';
 import { arrayOfCustomData } from '@app/schemes/custom.schema';
 import { ChartsActionConstants } from '@app/store/actions/charts/charts.action-types';
-import {
-	LoadDataComplete,
-	LoadDataFailed
-} from '@app/store/actions/charts/charts.actions';
+import * as chartActions from '@app/store/actions/charts/charts.actions';
 
 @Injectable()
 export class ChartsEffects {
@@ -287,7 +284,7 @@ export class ChartsEffects {
 						result: all,
 						entities: { byId }
 					} = normalize(value, arrayOfCustomData);
-					return new LoadDataComplete({
+					return new chartActions.LoadChartsComplete({
 						charts: {
 							all,
 							byId
@@ -296,7 +293,7 @@ export class ChartsEffects {
 				}),
 				catchError(error => {
 					return of(
-						new LoadDataFailed({
+						new chartActions.LoadChartsFailed({
 							action: action,
 							msg: 'test',
 							error

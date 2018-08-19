@@ -8,7 +8,8 @@ import { normalize } from 'normalizr';
 import { arrayOfCustomData } from '@app/schemes/custom.schema';
 import { ProjectsActionConstants } from '@app/store/actions/projects/projects.action-types';
 import * as projectActions from '@app/store/actions/projects/projects.actions';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/index';
+import { ProjectService } from '../../services/project.service';
 
 @Injectable()
 export class ProjectsEffects {
@@ -21,7 +22,10 @@ export class ProjectsEffects {
 		}
 	};
 
-	constructor(private action$: Actions) {}
+	constructor(
+		private action$: Actions,
+		private projectService: ProjectService
+	) {}
 
 	@Effect()
 	loadData$ = this.action$.pipe(
@@ -33,7 +37,7 @@ export class ProjectsEffects {
 						result: all,
 						entities: { byId }
 					} = normalize(value, arrayOfCustomData);
-					return new projectActions.LoadProjetcs({
+					return new projectActions.LoadProjectsComplete({
 						projects: {
 							all,
 							byId
@@ -57,10 +61,13 @@ export class ProjectsEffects {
 	createDraftProject$ = this.action$.pipe(
 		ofType(ProjectsActionConstants.CREATE_DRAFT_PROJECT),
 		switchMap((action: projectActions.CreateDraftProject) =>
-			this.api.createDraftProject().pipe(
-				map(value => {
-					return new projectActions.CreateDraftProjectComplete();
-				}),
+			this.projectService.createDraftProject().pipe(
+				map(
+					project =>
+						new projectActions.CreateDraftProjectComplete({
+							project
+						})
+				),
 				catchError(error =>
 					of(new projectActions.CreateDraftProjectFailed())
 				)
