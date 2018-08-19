@@ -1,5 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../../config/index');
+const CompanyChartType = require('../company/company.models/company_chart_type');
+const Chart = require('../chart/chart.model');
 
 const ChartType = sequelize.define('chartType', {
 	type: {
@@ -27,7 +29,24 @@ const ChartType = sequelize.define('chartType', {
 		allowNull: false
 	}
 });
-// this method creates table if it doesn't exit
-ChartType.sync();
+
+ChartType.sync().then(() => {
+    CompanyChartType.sync().then(() => ChartType.hasMany(CompanyChartType, {
+        foreignKey: 'chartTypeId',
+        sourceKey: 'id',
+        onDelete: 'CASCADE',
+        constraints: false
+    }));
+    CompanyChartType.belongsTo(ChartType, { foreignKey: 'chartTypeId' });
+    Chart.sync().then(() => {
+        ChartType.hasMany(Chart, {
+            foreignKey: 'typeId',
+            sourceKey: 'id',
+            onDelete: 'CASCADE',
+            constraints: false
+        });
+    });
+    Chart.belongsTo(ChartType, { foreignKey: 'typeId' });
+});
 
 module.exports = ChartType;

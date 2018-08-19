@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../../../config/index');
 const CompanyUser = require('./company_user');
+const CompanyChartType = require('./company_chart_type');
 const Group = require('../../group/group.models/group');
 
 const Company = sequelize.define('company', {
@@ -29,6 +30,15 @@ Company.sync().then(() => {
 		});
 	});
 	Group.belongsTo(Company, { foreignKey: 'companyId' });
+    CompanyChartType.sync().then(() => {
+        Company.hasMany(CompanyChartType, {
+            foreignKey: 'companyId',
+            sourceKey: 'id',
+            onDelete: 'CASCADE',
+            constraints: false
+        });
+    });
+    CompanyChartType.belongsTo(Company, { foreignKey: 'companyId' });
 });
 
 module.exports = Company;
