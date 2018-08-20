@@ -85,18 +85,38 @@
 .header-profile .ui-buttonset.ui-splitbutton .ui-widget.ui-button, .ui-buttonset.ui-splitbutton .ui-button
     padding-left: 0
 .header-profile .ui-buttonset.ui-splitbutton:hover .ui-widget.ui-button, .ui-buttonset.ui-splitbutton:hover .ui-button 
-    color: $textColorDark
-.header-profile .ui-button .ui-button-text 
-    font-size: 1rem
-    float: left
+	color: $textColorDark
+	& ~ .header-profile-image
+		background: red
+		&.user-image
+			border: 2px solid $stateDefaultTextColor
+.header-profile .ui-button .ui-button-text
+	font-size: 1rem
+	float: left
+	padding-right: 45px
+
+p-splitButton:hover
+	& ~ .header-profile-image.user-image
+		color: $stateActiveTextColor
+		border: 2px solid $stateActiveTextColor
 
 .header-profile-image
-    position: absolute
-    right: 40px
-    cursor: pointer
-    max-width: 45px
-    max-height: 45px
-    border-radius: 50%
+	position: absolute
+	right: 40px
+	cursor: pointer
+	width: 45px
+	height: 45px
+	border-radius: 50%
+	top: 0
+	&.user-image
+		border: 2px solid $stateDefaultTextColor
+		display: flex
+		align-items: center
+		justify-content: center
+		font-size: 1.6rem
+		color: $stateDefaultTextColor
+
+
 
 .header-newProject-button .ui-widget.ui-button-default, .ui-button-default 
     margin-right: 20px 
