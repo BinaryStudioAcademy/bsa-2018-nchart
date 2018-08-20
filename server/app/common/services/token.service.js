@@ -8,13 +8,7 @@ class TokenService {
 
 	createToken(data) {
 		this.tokenSecret = process.env.TOKEN;
-		const tokenPayload = {
-			id: data.id,
-			name: data.name,
-			email: data.email,
-			groupId: data.groupId
-		};
-		return jwt.sign(tokenPayload, this.tokenSecret, {
+		return jwt.sign(data, this.tokenSecret, {
 			expiresIn: process.env.TOKEN_TIME_EXP
 		});
 	}
