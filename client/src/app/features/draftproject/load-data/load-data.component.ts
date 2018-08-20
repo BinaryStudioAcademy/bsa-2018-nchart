@@ -4,6 +4,8 @@ import {
 	requiredValidator,
 	patternValidator
 } from '../../../shared/components/form-field/form-validators';
+import {StoreService} from '@app/services/store.service';
+import {ParseByText} from '@app/store/actions/datasets/datasets.actions';
 // import { StoreService } from '@app/services/store.service';
 
 @Component({
@@ -21,7 +23,9 @@ export class LoadDataComponent implements OnInit {
 		requiredValidator('URL can`t be empty')
 	]);
 
-	constructor(/*private storeService: StoreService*/) {}
+	constructor(
+		private storeService: StoreService
+	) {}
 
 	loadFile(event) {
 		// const fileKey = event.files[0];
@@ -43,7 +47,8 @@ export class LoadDataComponent implements OnInit {
 
 	pasteData() {
 		if (this.pasteDataControl.valid) {
-			// const text = this.pasteDataControl.value;
+			const text = this.pasteDataControl.value;
+			this.storeService.dispatch(new ParseByText({text}));
 			// this.storeService.dispatch(new fromLoadedData.LoadData({ text }));
 		}
 	}

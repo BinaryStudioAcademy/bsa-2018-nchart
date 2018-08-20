@@ -4,11 +4,13 @@ import {
 	Dataset,
 	DatasetColumn,
 	DatasetData
-} from '@app/models/dataset.model';
+} from '@app/models';
+import {Observable, of} from 'rxjs/index';
+import { v4 } from 'uuid';
 
 @Injectable()
 export class DatasetService {
-	normalizeDatasets(
+	transformDatasets(
 		datasets: DatasetTable[] = [],
 		isDraft: boolean = true
 	): Dataset<DatasetColumn[], DatasetData[][]>[] {
@@ -32,5 +34,15 @@ export class DatasetService {
 					isDraft
 				} as Dataset<DatasetColumn[], DatasetData[][]>)
 		);
+	}
+
+	createDataset(columns: DatasetColumn[], data: any[][]): Observable<DatasetTable> {
+		const id = v4();
+		const dataset = {
+			id: v4(),
+			columns,
+			data
+		};
+		return of(dataset);
 	}
 }

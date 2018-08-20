@@ -83,7 +83,7 @@ export class ProjectsEffects {
 						const { result: projectId, entities } = normalize(
 							{
 								...value.payload,
-								datasets: this.datasetService.normalizeDatasets(
+								datasets: this.datasetService.transformDatasets(
 									value.payload.datasets
 								)
 							},

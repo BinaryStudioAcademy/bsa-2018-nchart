@@ -13,3 +13,4 @@ export * from './chart.model';
 export * from './chart.model';
 export * from './dataset.model';
 export * from './user-chart-store.model';
+export * from './dataset-domain.model';
