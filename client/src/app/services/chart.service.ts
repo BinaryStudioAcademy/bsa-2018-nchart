@@ -87,8 +87,10 @@ export class ChartService {
 	constructor() {
 		this.values = this.originalValues;
 		this.data = compressArray(mapData(this.originalData));
+		this.data = mapColors(this.data);
+		console.log(this.data);
 		this.setData(this.data);
-		this.setRange();
+		this.setRange();	
 		console.log(this.barChartCustomizeSettings);
 	}
 	

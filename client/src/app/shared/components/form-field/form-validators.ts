@@ -4,6 +4,7 @@ import {
 	Validators,
 	ValidationErrors
 } from '@angular/forms';
+import { isNumber } from 'util';
 
 interface ValidationMessage {
 	[key: string]: any;
@@ -42,6 +43,16 @@ export function minLengthValidator(
 		);
 
 		return validationErrors ? { minLength: `${msg} ${minLength}` } : null;
+	};
+}
+
+export function minValidator(
+	msg?: string,
+	min?: number
+): ValidatorFn {
+	return (control: AbstractControl): ValidationMessage => {
+		const validationErrors = control.value !== undefined && (isNaN(control.value)) || (!isNumber(control.value)) || control.value < min
+		return validationErrors ? { min: `${msg} ${min}` } : null;
 	};
 }
 

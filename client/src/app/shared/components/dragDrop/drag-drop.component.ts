@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DragulaService } from 'ng2-dragula';
 import { Subscription } from 'rxjs';
-import { ChartService } from '@app/services/chart.service';
+import { ChartService } from '../../../services/chart.service';
 
 class Column {
 	constructor(public variable: string, public type: string) {}

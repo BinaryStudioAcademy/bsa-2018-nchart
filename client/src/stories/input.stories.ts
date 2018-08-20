@@ -9,21 +9,24 @@ import { FormControl, Validators } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // Buttons
 import { ButtonModule } from 'primeng/button';
-import { ButtonComponent } from '@app/shared/components/button/button/button.component';
+import { ButtonComponent } from '../app/shared/components/button/button/button.component';
 // Inputs
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 // Toggle
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { TooltipModule } from 'primeng/tooltip';
+import { SpinnerModule } from 'primeng/spinner';
 // Autocomplete
 import { AutoCompleteModule } from 'primeng/autocomplete';
-import { InputTextComponent } from '@app/shared/components/form-field/input-text/input-text.component';
-import { AutocompleteComponent } from '@app/shared/components/form-field/autocomplete/autocomplete.component';
-import { ToggleComponent } from '@app/shared/components/form-field/toggle/toggle.component';
-import { requiredValidator } from '@app/shared/components/form-field/form-validators';
-import { minLengthValidator } from '@app/shared/components/form-field/form-validators';
-import { InputTextareaComponent } from '@app/shared/components/form-field/input-textarea/input-textarea.component';
+import { InputTextComponent } from '../app/shared/components/form-field/input-text/input-text.component';
+import { AutocompleteComponent } from '../app/shared/components/form-field/autocomplete/autocomplete.component';
+import { ToggleComponent } from '../app/shared/components/form-field/toggle/toggle.component';
+import { requiredValidator, minValidator } from '../app/shared/components/form-field/form-validators';
+import { minLengthValidator } from '../app/shared/components/form-field/form-validators';
+import { InputTextareaComponent } from '../app/shared/components/form-field/input-textarea/input-textarea.component';
+import { SpinnerComponent } from '../app/shared/components/form-field/spinner/spinner.component';
+
 
 export const control2 = new FormControl('', [
 	requiredValidator('Password is required'),
@@ -34,6 +37,8 @@ export const control1 = new FormControl('', [
 	requiredValidator('Name is required'),
 	minLengthValidator('Min length', 3)
 ]);
+
+export const minControl = new FormControl('',[minValidator('Min value',0)])
 
 addDecorator(withNotes);
 
@@ -61,7 +66,8 @@ storiesOf('Input fields', module)
 				BrowserAnimationsModule,
 				ButtonModule,
 				InputSwitchModule,
-				TooltipModule
+				TooltipModule,
+				SpinnerModule
 			],
 			declarations: [
 				InputTextComponent,
@@ -200,5 +206,13 @@ storiesOf('Input fields', module)
 		props: {
 			disabled: true,
 			control: new FormControl()
+		}
+	}))
+	.add('Spinner', () => ({
+		component: SpinnerComponent,
+		props: {
+			control: minControl,
+			step: 1,
+			min: 0
 		}
 	}));

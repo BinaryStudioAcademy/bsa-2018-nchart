@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartService } from '@app/services/chart.service';
-import { BarChartCustomizeSettings } from '@app/shared/components/charts/bar-chart/bar-chart.model';
-import { Subscription } from 'rxjs';
-import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
-
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { minValidator } from '@app/shared/components/form-field/form-validators';
 @Component({
 	selector: 'app-customize-chart',
 	templateUrl: './customize-chart.component.html',
@@ -33,10 +31,10 @@ export class CustomizeChartComponent implements OnInit {
 
 		for(const prop of Object.keys(this.customizeSettings)){	
 			if(this.isNumber(this.customizeSettings[prop].value)){
-				formDataObj[prop] = new FormControl(this.customizeSettings[prop].value);
+				formDataObj[prop] = new FormControl(this.customizeSettings[prop].value, [minValidator('Minimum value is',0)]);
 				let numberProp = {
 					option:this.customizeSettings[prop].option,
-					control:prop,
+					control:formDataObj[prop],
 					step: this.customizeSettings[prop].value > 5 ? 1 : 0.1
 				}
 				this.customizeNumberProps.push(numberProp);
@@ -79,7 +77,12 @@ export class CustomizeChartComponent implements OnInit {
 	
 	onChanges(){
 		this.form.valueChanges.subscribe(val => {
+			console.log(this.form.valid)
+			console.log(this.form)
+			console.log(val)
+			if(this.form.valid){
 			this._chartService.setCustomizeSettings(val)
+			}
 		  });
 	}
 }
