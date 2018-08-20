@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartService } from '@app/services/chart.service';
-import { BarChartCustomizeSettings } from '@app/shared/components/charts/bar-chart/bar-chart';
+import { BarChartCustomizeSettings } from 'app/shared/components/charts/bar-chart/bar-chart';
 import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 
@@ -39,43 +39,47 @@ export class CustomizeChartComponent implements OnInit {
 	form: FormGroup;
 	customizeSettings = {
 		width: 800,
-		boolean:true,
 		height: 600,
 		leftMargin: 40,
 		verticalPadding:0,
 		horizontalPadding:0,
-		useSameScale:false,
-		//colorScale:[],
-		sortBarsBy: "sortBarsBy"
+		useSameScale:{ option:"Use the same scale", defaultValue:true },
+		sortBarsBy: [{ label: 'Sort by bar', value: null }, { label: 'By bar (ascending)', value: "asc" }, { label: 'By bar (descending)', value: "desc" }]
 	}
 
 	customizeNumberProps = []
 	customizeBooleanProps = []
 	customizeArrayProps = []
 
-	options = [{label: "1"},{label: "1"}]
-	formControl = new FormControl()
-
-	constructor() {}
+	constructor(private _chartService: ChartService) {}
 
 	ngOnInit() {
 		const formDataObj = {};
 
-		for(const prop of Object.keys(this.customizeSettings)){
-			formDataObj[prop] = new FormControl(this.customizeSettings[prop]);
+		for(const prop of Object.keys(this.customizeSettings)){	
 			if(this.isNumber(this.customizeSettings[prop])){
+				formDataObj[prop] = new FormControl(this.customizeSettings[prop]);
 				this.customizeNumberProps.push(prop);
 			}
-			if(this.isBoolean(this.customizeSettings[prop])){
-				this.customizeBooleanProps.push(prop);
+			if(this.isBoolean(this.customizeSettings[prop].defaultValue)){
+				formDataObj[prop] = new FormControl(this.customizeSettings[prop].defaultValue);
+				let booleanProp = {
+					option:this.customizeSettings[prop].option,
+					control:formDataObj[prop]
+				}
+				this.customizeBooleanProps.push(booleanProp);
 			}
-			if(prop==="sortBarsBy"){
-				this.customizeArrayProps.push(prop);	
+			if(this.isArray(this.customizeSettings[prop])){
+				formDataObj[prop] = new FormControl(this.customizeSettings[prop][0].value);
+				let arrayProp = {
+					control:prop,
+					options:this.customizeSettings[prop]
+				}
+				this.customizeArrayProps.push(arrayProp);	
 			}
 		}
 		this.form = new FormGroup(formDataObj);
-		console.log(this.form.controls["sortBarsBy"]);
-		console.log(this.customizeArrayProps);
+		this.onChanges();
 	}
 
 	isString (value) {
@@ -92,7 +96,15 @@ export class CustomizeChartComponent implements OnInit {
 	isBoolean (value) {
 		return typeof value === 'boolean';
 	}
-		
+	
+	onChanges(){
+		/*this.form.valueChanges.subscribe(val => {
+			this._chartService.setWidth(val.)
+		  });*/
+		this.form.get('width').valueChanges.subscribe(val => {
+			this._chartService.setWidth(val)
+		  });
+	}
 }
 
 

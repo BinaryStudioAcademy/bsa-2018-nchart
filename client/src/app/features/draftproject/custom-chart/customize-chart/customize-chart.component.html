@@ -16,14 +16,14 @@
 		<div *ngFor="let prop of customizeNumberProps">
 		 <p-spinner [formControlName]="prop" [min]="0" size="26"></p-spinner>
 		</div>
-		<div *ngFor="let prop of customizeBooleanProps">
-			<p-checkbox [formControlName]="prop" binary="true"></p-checkbox>
+		<div *ngFor="let prop of customizeBooleanProps; let i = index">
+			<label>{{prop.option}}</label>
+			<app-checkbox [control]="customizeBooleanProps[i].control" binary="true"></app-checkbox>
 		</div>
 		<div *ngFor="let prop of customizeArrayProps">
-			
+			<p-dropdown [options]="prop.options" [formControlName]="prop.control"></p-dropdown>
 		</div>
-		<app-dropdown-simple [options]="options" formControl="formControl"></app-dropdown-simple>
-		<p-dropdown [options]="options" formControl="formControl"></p-dropdown>
+		
 	</form>
 	<pre>{{form.value | json}}</pre>
 </div>
