@@ -1,6 +1,6 @@
 const Repository = require('../../common/repository/repository');
 const chartModel = require('./chart.model');
-const TransactionService = require('../../common/services/db.transaction.service');
+const TransactionService = require('../../common/services/db-transaction.service');
 
 class ChartRepository extends Repository {
 	constructor() {

@@ -1,4 +1,5 @@
 const async = require('async');
+const _ = require('lodash');
 const ChartRepository = require('./chart.repository');
 
 class ChartService {
@@ -19,9 +20,7 @@ class ChartService {
 		const objToUpdate = [];
 		obj.forEach(element => {
 			if (element.id === null) {
-				const correctObj = Object.assign({}, element);
-				delete correctObj.id;
-				objsToCreate.push(correctObj);
+				objsToCreate.push(_.omit(element, 'id'));
 			} else objToUpdate.push(element);
 		});
 		return new Promise((resolve, reject) => {

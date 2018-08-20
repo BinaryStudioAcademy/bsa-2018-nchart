@@ -1,5 +1,6 @@
 const async = require('async');
 const DatasetRepository = require('./dataset.repository');
+const _ = require('lodash');
 
 class DatasetService {
 	constructor() {
@@ -19,9 +20,7 @@ class DatasetService {
 		const objToUpdate = [];
 		obj.forEach(element => {
 			if (element.id === null) {
-				const correctObj = Object.assign({}, element);
-				delete correctObj.id;
-				objsToCreate.push(correctObj);
+				objsToCreate.push(_.omit(element, 'id'));
 			} else objToUpdate.push(element);
 		});
 		return new Promise((resolve, reject) => {
