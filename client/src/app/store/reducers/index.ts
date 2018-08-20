@@ -36,6 +36,10 @@ import {
 	initialState as projectsInitialState
 } from '@app/store/reducers/projects.reducer';
 
+import { routerReducer, RouterStateSerializer } from '@ngrx/router-store';
+import { RouterStateUrl } from '@app/models';
+import { RouterStateSnapshot } from '@angular/router';
+
 export const initialState: AppState = {
 	user: userInitialState,
 	errorHandler: errorHandlerInitialState,
@@ -53,7 +57,8 @@ export const getReducers = () => ({
 	projects: projectsReducer,
 	charts: chartsReducer,
 	datasets: datasetReducer,
-	userCharts: userChartsReducer
+	userCharts: userChartsReducer,
+	router: routerReducer
 });
 
 export const reducersToken = new InjectionToken<ActionReducerMap<AppState>>(
@@ -66,3 +71,22 @@ export const reducersProvider: Provider[] = [
 		useFactory: getReducers
 	}
 ];
+
+export class CustomRouterStateSerializer
+	implements RouterStateSerializer<RouterStateUrl> {
+	serialize(routerState: RouterStateSnapshot): RouterStateUrl {
+		let route = routerState.root;
+
+		while (route.firstChild) {
+			route = route.firstChild;
+		}
+
+		const {
+			url,
+			root: { queryParams }
+		} = routerState;
+		const { params } = route;
+
+		return { url, params, queryParams };
+	}
+}
