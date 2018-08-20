@@ -13,12 +13,13 @@
 	<p-spinner size="30" [(ngModel)]="horizontalPadding" [min]="0" [max]="5" [step]="0.1" (onChange)="setHorizontalPadding()"></p-spinner>-->
 	
 	<form [formGroup]="form">
-		<div *ngFor="let prop of customizeNumberProps">
-		 <p-spinner [formControlName]="prop" [min]="0" size="26"></p-spinner>
+		<div *ngFor="let prop of customizeNumberProps; let i = index">
+			<label>{{prop.option}}</label>
+		 	<p-spinner [formControlName]="prop.control" [min]="0" size="26" [step] = "prop.step"></p-spinner>
 		</div>
 		<div *ngFor="let prop of customizeBooleanProps; let i = index">
 			<label>{{prop.option}}</label>
-			<app-checkbox [control]="customizeBooleanProps[i].control" binary="true"></app-checkbox>
+			<app-checkbox [control]="prop.control" binary="true"></app-checkbox>
 		</div>
 		<div *ngFor="let prop of customizeArrayProps">
 			<p-dropdown [options]="prop.options" [formControlName]="prop.control"></p-dropdown>

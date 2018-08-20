@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartService } from '@app/services/chart.service';
-import { BarChartCustomizeSettings } from 'app/shared/components/charts/bar-chart/bar-chart';
+import { BarChartCustomizeSettings } from '@app/shared/components/charts/bar-chart/bar-chart.model';
 import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 
@@ -10,42 +10,17 @@ import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 	styleUrls: ['./customize-chart.component.sass']
 })
 export class CustomizeChartComponent implements OnInit {
-	/*constructor(private _chartService: ChartService) {}
-	width: number = 500;
-	height: number = 500;
-	leftMargin:number = 40;
-	horizontalPadding: number = 0.1;
-	barChartCustomizeSettings: BarChartCustomizeSettings;
-	subs = new Subscription();
-	ngOnInit() {
-		
-	}
-	setWidth(){
-		this._chartService.setWidth(this.width)
-	}
-	setHeight(){
-		this._chartService.setHeight(this.height)
-	}
-	setLeftMargin(){
-		this._chartService.setLeftMargin(this.leftMargin)
-	}
-	setHorizontalPadding(){
-		this._chartService.setHorizontalPadding(this.horizontalPadding)
-	}
-	ngOnDestroy(){
-		this.subs.unsubscribe;
-	}*/
 
 	form: FormGroup;
+
 	customizeSettings = {
-		width: 800,
-		height: 600,
-		leftMargin: 40,
-		verticalPadding:0,
-		horizontalPadding:0,
-		useSameScale:{ option:"Use the same scale", defaultValue:true },
-		sortBarsBy: [{ label: 'Sort by bar', value: null }, { label: 'By bar (ascending)', value: "asc" }, { label: 'By bar (descending)', value: "desc" }]
-	}
+		width: {option: "Width", value: 800},
+		height: {option: "Height", value: 600},
+		leftMargin: {option: "Left margin", value: 40},
+		verticalPadding: {option: "Vertical padding", value: 17},
+		horizontalPadding: {option: "Horizontal padding", value: 0.2},
+		isSameScaling: {option: "Use same Scaling", value: true}
+	} 
 
 	customizeNumberProps = []
 	customizeBooleanProps = []
@@ -57,12 +32,17 @@ export class CustomizeChartComponent implements OnInit {
 		const formDataObj = {};
 
 		for(const prop of Object.keys(this.customizeSettings)){	
-			if(this.isNumber(this.customizeSettings[prop])){
-				formDataObj[prop] = new FormControl(this.customizeSettings[prop]);
-				this.customizeNumberProps.push(prop);
+			if(this.isNumber(this.customizeSettings[prop].value)){
+				formDataObj[prop] = new FormControl(this.customizeSettings[prop].value);
+				let numberProp = {
+					option:this.customizeSettings[prop].option,
+					control:prop,
+					step: this.customizeSettings[prop].value > 5 ? 1 : 0.1
+				}
+				this.customizeNumberProps.push(numberProp);
 			}
-			if(this.isBoolean(this.customizeSettings[prop].defaultValue)){
-				formDataObj[prop] = new FormControl(this.customizeSettings[prop].defaultValue);
+			if(this.isBoolean(this.customizeSettings[prop].value)){
+				formDataObj[prop] = new FormControl(this.customizeSettings[prop].value);
 				let booleanProp = {
 					option:this.customizeSettings[prop].option,
 					control:formDataObj[prop]
@@ -98,11 +78,8 @@ export class CustomizeChartComponent implements OnInit {
 	}
 	
 	onChanges(){
-		/*this.form.valueChanges.subscribe(val => {
-			this._chartService.setWidth(val.)
-		  });*/
-		this.form.get('width').valueChanges.subscribe(val => {
-			this._chartService.setWidth(val)
+		this.form.valueChanges.subscribe(val => {
+			this._chartService.setCustomizeSettings(val)
 		  });
 	}
 }

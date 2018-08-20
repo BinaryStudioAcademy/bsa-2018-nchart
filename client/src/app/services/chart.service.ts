@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
-import { BarChartCustomizeSettings } from '@app/shared/components/charts/bar-chart/bar-chart';
+import { BarChartCustomizeSettings } from '@app/shared/components/charts/bar-chart/bar-chart.model';
 
 @Injectable()
 export class ChartService {
@@ -65,23 +65,8 @@ export class ChartService {
 			this._data.next(this.data);
 		}
 
-		setWidth(width: number){
-			this.barChartCustomizeSettings.width = width;
-			this._barChartCustomizeSettings.next(this.barChartCustomizeSettings);
-		}
-
-		setHeight(height: number){
-			this.barChartCustomizeSettings.height = height;
-			this._barChartCustomizeSettings.next(this.barChartCustomizeSettings);
-		}
-
-		setLeftMargin(leftMargin: number){
-			this.barChartCustomizeSettings.leftMargin = leftMargin;
-			this._barChartCustomizeSettings.next(this.barChartCustomizeSettings);
-		}
-		setHorizontalPadding(horizontalPadding: number){
-			this.barChartCustomizeSettings.horizontalPadding = horizontalPadding;
-			this._barChartCustomizeSettings.next(this.barChartCustomizeSettings);
+		setCustomizeSettings(settings : BarChartCustomizeSettings){
+			this._barChartCustomizeSettings.next(settings);
 		}
 
 		setRange(){
