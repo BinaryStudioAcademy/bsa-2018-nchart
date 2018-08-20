@@ -8,9 +8,10 @@ project.get('/', (req, res, next) => {
 		.catch(next);
 });
 
-// project.post('/', (req, res) => {
-// console.log(req.body);
-// res.json('ok');
-// });
+project.post('/', (req, res, next) => {
+	ProjectService.handleProject(req.body)
+		.then(PayloadGeneratorService.nextWithData(next, res))
+		.catch(next);
+});
 
 module.exports = project;
