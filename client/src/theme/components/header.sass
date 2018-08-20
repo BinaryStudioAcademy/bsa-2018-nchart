@@ -79,26 +79,20 @@
     border: none
 
 .header-profile .ui-menu 
-    width: 9.7em
+	width: 9.7em
+	margin-top: 10px
 .header-profile .ui-buttonset.ui-splitbutton .ui-widget.ui-button:not(.ui-splitbutton-menubutton), .ui-buttonset.ui-splitbutton .ui-button:not(.ui-splitbutton-menubutton) 
     min-width: 100px
 .header-profile .ui-buttonset.ui-splitbutton .ui-widget.ui-button, .ui-buttonset.ui-splitbutton .ui-button
-    padding-left: 0
+	padding-left: 0
+	color: $textColorDark
 .header-profile .ui-buttonset.ui-splitbutton:hover .ui-widget.ui-button, .ui-buttonset.ui-splitbutton:hover .ui-button 
 	color: $textColorDark
-	& ~ .header-profile-image
-		background: red
-		&.user-image
-			border: 2px solid $stateDefaultTextColor
 .header-profile .ui-button .ui-button-text
 	font-size: 1rem
 	float: left
 	padding-right: 45px
 
-p-splitButton:hover
-	& ~ .header-profile-image.user-image
-		color: $stateActiveTextColor
-		border: 2px solid $stateActiveTextColor
 
 .header-profile-image
 	position: absolute
