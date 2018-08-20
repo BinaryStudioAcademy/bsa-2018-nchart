@@ -1,6 +1,7 @@
 <div class="customize-chart-container">
 	<h3>Customize</h3>
-	<h3>Width</h3>
+	
+	<!--<h3>Width</h3>
 	<p-spinner size="30" [(ngModel)]="width" [min]="0" [max]="2000" (onChange)="setWidth()"></p-spinner>
 	<h3>Height</h3>
 	<p-spinner size="30" [(ngModel)]="height" [min]="0" [max]="2000" (onChange)="setHeight()"></p-spinner>
@@ -9,5 +10,20 @@
 	<h3>Vertical Padding</h3>
 	<p-spinner size="30" [(ngModel)]="verticalPadding" [min]="0" [max]="20" ></p-spinner>
 	<h3>Horizontal Padding</h3>
-	<p-spinner size="30" [(ngModel)]="horizontalPadding" [min]="0" [max]="5" [step]="0.1" (onChange)="setHorizontalPadding()"></p-spinner>
+	<p-spinner size="30" [(ngModel)]="horizontalPadding" [min]="0" [max]="5" [step]="0.1" (onChange)="setHorizontalPadding()"></p-spinner>-->
+	
+	<form [formGroup]="form">
+		<div *ngFor="let prop of customizeNumberProps">
+		 <p-spinner [formControlName]="prop" [min]="0" size="26"></p-spinner>
+		</div>
+		<div *ngFor="let prop of customizeBooleanProps">
+			<p-checkbox [formControlName]="prop" binary="true"></p-checkbox>
+		</div>
+		<div *ngFor="let prop of customizeArrayProps">
+			
+		</div>
+		<app-dropdown-simple [options]="options" formControl="formControl"></app-dropdown-simple>
+		<p-dropdown [options]="options" formControl="formControl"></p-dropdown>
+	</form>
+	<pre>{{form.value | json}}</pre>
 </div>

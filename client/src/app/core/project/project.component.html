@@ -7,7 +7,7 @@
     <app-data-table *ngIf="showTable"></app-data-table>
     <app-list-charts *ngIf="showCharts" ></app-list-charts>
     <app-custom-settings *ngIf="showTable"></app-custom-settings>
-    <app-custom-chart *ngIf="showTable"></app-custom-chart>
+    <app-custom-chart *ngIf="!showTable"></app-custom-chart>
     <app-export *ngIf="showTable"></app-export>
   </div>
 </div>
