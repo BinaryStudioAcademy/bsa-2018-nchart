@@ -13,74 +13,10 @@ class ProjectService {
 		return this.ProjectRepository.getAll();
 	}
 
-	handleProject(obj, res) {
-		if (obj.project && !(obj.groupId)) {
-			return new Promise((resolve, reject) => {
-				async.waterfall(
-					[
-						callback => {
-							this.ProjectRepository.handleProjectReq(obj.project)
-								.then(data => {
-									if (obj.project.id && data[0] === 1) {
-										return callback(null, {
-											project: {
-												id: obj.project.id,
-												name: obj.project.name
-											}
-										});
-									}
-									if (data[0] === 0) {
-										throw new Error('Object did not exist');
-									} else {
-										const payload = this.createProjectPayload(data);
-										return callback(null, payload);
-									}
-								})
-								.catch(err => callback(err, null));
-						},
-						(payload, callback) => {
-							DatasetService.handleDataset(obj.project.datasets)
-								.then(data => {
-									callback(null, Object.assign(payload.project, {
-										datasets: data
-									}));
-								})
-								.catch(err => callback(err, null));
-						},
-						(payload, callback) => {
-							ChartService.handleCharts(obj.project.charts)
-								.then(data => {
-									callback(null, Object.assign({}, payload, {
-										charts: data
-									}));
-								})
-								.catch(err => callback(err, null));
-						}
-					],
-					(err, payload) => {
-						if (err) {
-							return reject(err);
-						}
-						return resolve(payload);
-					}
-				);
-			});
-		}
-		// obj.groupId, res.locals.user
+	createProject(obj) {
 		return new Promise((resolve, reject) => {
 			async.waterfall(
 				[
-					callback => {
-						GroupService.findOneByQuery({ groupId: obj.groupId, userId: res.locals.user.id })
-							.then(data => {
-								if (data !== null) {
-									return callback(null);
-								}
-								throw new Error('Group with such user does not exist');
-							}).catch(err => {
-								callback(err, null);
-							});
-					},
 					callback => {
 						this.ProjectRepository.handleProjectReq(obj.project)
 							.then(data => {
@@ -118,6 +54,41 @@ class ProjectService {
 								}));
 							})
 							.catch(err => callback(err, null));
+					}
+				],
+				(err, payload) => {
+					if (err) {
+						return reject(err);
+					}
+					return resolve(payload);
+				}
+			);
+		});
+	}
+
+	handleProject(obj, res) {
+		if (obj.project && !(obj.groupId)) {
+			return this.createProject(obj);
+		}
+		// obj.groupId, res.locals.user
+		return new Promise((resolve, reject) => {
+			async.waterfall(
+				[
+					callback => {
+						GroupService.findOneByQuery({ groupId: obj.groupId, userId: res.locals.user.id })
+							.then(data => {
+								if (data !== null) {
+									return callback(null);
+								}
+								throw new Error('Group with such user does not exist');
+							}).catch(err => {
+								callback(err, null);
+							});
+					},
+					callback => {
+						this.createProject(obj).then(data => {
+							callback(null, data);
+						}).carch(err => callback(err, null));
 					},
 					(payload, callback) => {
 						GroupService.saveGroupProject({
@@ -127,7 +98,7 @@ class ProjectService {
 						})
 							.then(() => {
 								callback(null, payload);
-							}).catch(err => callback(err, null));
+							}).catch(() => callback(null, payload));
 					}
 				],
 				(err, payload) => {
