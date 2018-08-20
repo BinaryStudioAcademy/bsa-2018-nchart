@@ -19,14 +19,16 @@ class DatasetService {
 		const objToUpdate = [];
 		obj.forEach(element => {
 			if (element.id === null) {
-				objsToCreate.push(element);
+				const correctObj = Object.assign({}, element);
+				delete correctObj.id;
+				objsToCreate.push(correctObj);
 			} else objToUpdate.push(element);
 		});
 		return new Promise((resolve, reject) => {
 			async.waterfall(
 				[
 					callback => {
-						this.DatasetRepository.save(objsToCreate)
+						this.DatasetRepository.saveMult(objsToCreate)
 							.then(data => {
 								callback(null, {
 									saved: data
@@ -35,7 +37,7 @@ class DatasetService {
 							.catch(err => callback(err, null));
 					},
 					(payload, callback) => {
-						this.DatasetRepository.update(objToUpdate).then(
+						this.DatasetRepository.updateMult(objToUpdate).then(
 							data => {
 								callback(
 									null,

@@ -14,34 +14,40 @@ class ChartService {
 		return this.ChartRepository.getById(id);
 	}
 
-	handleDataset(obj) {
+	handleCharts(obj) {
 		const objsToCreate = [];
 		const objToUpdate = [];
 		obj.forEach(element => {
 			if (element.id === null) {
-				objsToCreate.push(element);
+				const correctObj = Object.assign({}, element);
+				delete correctObj.id;
+				objsToCreate.push(correctObj);
 			} else objToUpdate.push(element);
 		});
 		return new Promise((resolve, reject) => {
 			async.waterfall(
 				[
 					callback => {
-						this.ChartRepository.save(objsToCreate)
+						this.ChartRepository.saveMult(objsToCreate)
 							.then(data => {
 								callback(null, {
 									saved: data
 								});
 							})
-							.catch(err => callback(err, null));
+							.catch(err => {
+								callback(err, null);
+							});
 					},
 					(payload, callback) => {
-						this.ChartRepository.update(objToUpdate).then(data => {
+						this.ChartRepository.updateMult(objToUpdate).then(data => {
 							callback(
 								null,
 								Object.assign({}, payload, {
 									updated: data
 								})
 							);
+						}).catch(err => {
+							callback(err, null);
 						});
 					}
 				],
@@ -54,6 +60,17 @@ class ChartService {
 			);
 		});
 	}
+
+	/*
+	createMult(arr){
+        const promises = [];
+		for(let i = 0;i<arr.length;i++){
+            const newPromise = this.ChartRepository.createMult(arr[i]);
+            promises.push(newPromise);
+		}
+		return Promise.all(promises);
+	}
+	 */
 }
 
 module.exports = new ChartService();

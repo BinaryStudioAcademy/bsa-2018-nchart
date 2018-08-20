@@ -18,7 +18,7 @@ chart.get('/:id', (req, res, next) => {
 
 chart.post('/', (req, res, next) => {
 	chartService
-		.handleDataset(req.body.charts)
+		.handleCharts(req.body.charts)
 		.then(PayloadGeneratorService.nextWithData(next, res))
 		.catch(next);
 });

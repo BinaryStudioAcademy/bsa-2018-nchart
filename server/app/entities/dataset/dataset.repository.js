@@ -1,6 +1,6 @@
 const Repository = require('../../common/repository/repository');
 const datasetModel = require('./dataset.model');
-const sequelize = require('../../config/index');
+const TransactionService = require('../../common/services/db.transaction.service');
 
 class DatasetRepository extends Repository {
 	constructor() {
@@ -8,40 +8,14 @@ class DatasetRepository extends Repository {
 		this.model = datasetModel;
 	}
 
-	update(obj) {
-		// todo: "Cannot read property 'model' of undefined"
+	updateMult(obj) {
 		this.model = datasetModel;
-		return sequelize.transaction(t => {
-			const promises = [];
-			for (let i = 0; i < obj.length; i += 1) {
-				const newPromise = datasetModel.update(
-					{
-						id: obj[i].id,
-						data: { columns: obj[i].columns, data: obj[i].data }
-					},
-					{ where: { id: obj[i].id } },
-					{ transaction: t }
-				);
-				promises.push(newPromise);
-			}
-			return Promise.all(promises);
-		});
+		return TransactionService(obj, this.model, 'update');
 	}
 
-	save(obj) {
-		// todo: "Cannot read property 'model' of undefined"
+	saveMult(obj) {
 		this.model = datasetModel;
-		return sequelize.transaction(t => {
-			const promises = [];
-			for (let i = 0; i < obj.length; i += 1) {
-				const newPromise = datasetModel.create(
-					{ data: { columns: obj[i].columns, data: obj[i].data } },
-					{ transaction: t }
-				);
-				promises.push(newPromise);
-			}
-			return Promise.all(promises);
-		});
+		return TransactionService(obj, this.model, 'save');
 	}
 }
 

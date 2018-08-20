@@ -1,6 +1,6 @@
 const Repository = require('../../common/repository/repository');
 const chartModel = require('./chart.model');
-const sequelize = require('../../config/index');
+const TransactionService = require('../../common/services/db.transaction.service');
 
 class ChartRepository extends Repository {
 	constructor() {
@@ -10,52 +10,29 @@ class ChartRepository extends Repository {
 
 	getAll() {
 		return this.model.findAll({
-			attributes: ['id', 'chartTypeId', 'dimensionSettings', 'customizeSettings', 'datasetId', 'createdAt']
+			attributes: [
+				'id',
+				'chartTypeId',
+				'dimensionSettings',
+				'customizeSettings',
+				'datasetId',
+				'createdAt'
+			]
 		});
 	}
 
-	update(obj) {
-		// todo: "Cannot read property 'model' of undefined"
+	updateMult(obj) {
 		this.model = chartModel;
-		return sequelize.transaction(t => {
-			const promises = [];
-			for (let i = 0; i < obj.length; i += 1) {
-				const newPromise = chartModel.update(
-					{
-						id: obj[i].id,
-						chartTypeId: obj[i].chartTypeId,
-						datasetId: obj[i].datasetId,
-						dimensionSettings: obj[i].dimensionSettings,
-						customizeSettings: obj[i].customizeSettings
-					},
-					{ where: { id: obj[i].id } },
-					{ transaction: t }
-				);
-				promises.push(newPromise);
-			}
-			return Promise.all(promises);
-		});
+		return TransactionService(obj, this.model, 'update');
 	}
 
-	save(obj) {
-		// todo: "Cannot read property 'model' of undefined"
+	saveMult(obj) {
 		this.model = chartModel;
-		return sequelize.transaction(t => {
-			const promises = [];
-			for (let i = 0; i < obj.length; i += 1) {
-				const newPromise = chartModel.create(
-					{
-						chartTypeId: obj[i].chartTypeId,
-						datasetId: obj[i].datasetId,
-						dimensionSettings: obj[i].dimensionSettings,
-						customizeSettings: obj[i].customizeSettings
-					},
-					{ transaction: t }
-				);
-				promises.push(newPromise);
-			}
-			return Promise.all(promises);
-		});
+		return TransactionService(obj, this.model, 'save');
+	}
+
+	create(obj) {
+		return this.model.create(obj);
 	}
 }
 
