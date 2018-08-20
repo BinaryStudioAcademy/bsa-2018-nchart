@@ -5,7 +5,7 @@ import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import * as constants from '../actions/datasets/datasets.actions'
 import {DatasetActions} from '@app/store/actions/datasets/datasets.action-types';
-import {ParseByLink, ParseByText} from '@app/store/actions/datasets/datasets.actions';
+import {ParseByFile, ParseByLink, ParseByText} from '@app/store/actions/datasets/datasets.actions';
 import {DatasetDomainService} from '@app/api/domains/source/dataset-domain.service';
 import {DatasetService} from '@app/services/dataset.service';
 import {AppState } from '@app/models';
@@ -63,8 +63,20 @@ export class DatasetEffects {
 		ofType(DatasetActions.PARSE_FROM_URL),
 		switchMap((action: ParseByLink) =>
 			this.datasetDomService.loadByUrl({link: action.payload.link }).pipe(
-				map((value: any) => {
-					return new constants.ParseComplete();
+				switchMap(({payload}) => {
+					return this.datasetService.createDataset(payload.columns, payload.data);
+				}),
+				withLatestFrom(this.store$.pipe(select(getActive))),
+				map(([dataset, projectId]) => {
+					const { result: [datasetId], entities } = normalize(
+						this.datasetService.transformDatasets([dataset]),
+						[datasetScheme]
+					);
+					return new constants.ParseComplete({
+						entities,
+						datasetId,
+						projectId
+					});
 				}),
 				catchError(error => {
 					return of(
@@ -76,6 +88,40 @@ export class DatasetEffects {
 					);
 				})
 			)
+		)
+	);
+
+	@Effect()
+	parseByFile$ = this.action$.pipe(
+		ofType(DatasetActions.PARSE_FROM_FILE),
+		switchMap((action: ParseByFile) => {
+			return this.datasetDomService.loadByFile({file: action.payload.file }).pipe(
+					switchMap(({payload}) => {
+						return this.datasetService.createDataset(payload.columns, payload.data);
+					}),
+					withLatestFrom(this.store$.pipe(select(getActive))),
+					map(([dataset, projectId]) => {
+						const { result: [datasetId], entities } = normalize(
+							this.datasetService.transformDatasets([dataset]),
+							[datasetScheme]
+						);
+						return new constants.ParseComplete({
+							entities,
+							datasetId,
+							projectId
+						});
+					}),
+					catchError(error => {
+						return of(
+							new constants.ParseFailed({
+								action: action,
+								msg: 'test',
+								error
+							})
+						);
+					})
+				)
+			}
 		)
 	);
 }

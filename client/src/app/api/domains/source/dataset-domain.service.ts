@@ -19,6 +19,7 @@ export class DatasetDomainService implements DatasetDomain {
 			}
 		});
 	}
+
 	loadByUrl({link}): Observable<any> {
 		return this.httpService.makeRequest({
 			type: RequestType.POST,
@@ -28,6 +29,7 @@ export class DatasetDomainService implements DatasetDomain {
 			}
 		});
 	}
+
 	loadByFile({file}): Observable<any> {
 		const fd = new FormData();
 		fd.append('fileKey', file);

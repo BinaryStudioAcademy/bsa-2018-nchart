@@ -5,7 +5,7 @@ import {
 	patternValidator
 } from '../../../shared/components/form-field/form-validators';
 import {StoreService} from '@app/services/store.service';
-import {ParseByText} from '@app/store/actions/datasets/datasets.actions';
+import {ParseByFile, ParseByLink, ParseByText} from '@app/store/actions/datasets/datasets.actions';
 // import { StoreService } from '@app/services/store.service';
 
 @Component({
@@ -28,8 +28,8 @@ export class LoadDataComponent implements OnInit {
 	) {}
 
 	loadFile(event) {
-		// const fileKey = event.files[0];
-		// this.storeService.dispatch(new fromLoadedData.LoadData({ fileKey }));
+		const file = event.files[0];
+		this.storeService.dispatch(new ParseByFile({file}));
 	}
 
 	onChange(e) {
@@ -40,8 +40,8 @@ export class LoadDataComponent implements OnInit {
 
 	loadUrl() {
 		if (this.pasteUrlControl.valid) {
-			// const link = this.pasteUrlControl.value;
-			// this.storeService.dispatch(new fromLoadedData.LoadData({ link }));
+			const link = this.pasteUrlControl.value;
+			this.storeService.dispatch(new ParseByLink({link}));
 		}
 	}
 
@@ -49,7 +49,6 @@ export class LoadDataComponent implements OnInit {
 		if (this.pasteDataControl.valid) {
 			const text = this.pasteDataControl.value;
 			this.storeService.dispatch(new ParseByText({text}));
-			// this.storeService.dispatch(new fromLoadedData.LoadData({ text }));
 		}
 	}
 }
