@@ -16,7 +16,7 @@ RUN npm i -g @angular/cli \
 
 WORKDIR $APP_ROOT
 
-COPY client/dist $APP_ROOT/client/dist
+COPY ./client/dist $APP_ROOT/client/dist
 
 RUN npm i
 
