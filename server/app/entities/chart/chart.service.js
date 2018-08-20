@@ -30,21 +30,23 @@ class ChartService {
 					callback => {
 						this.ChartRepository.saveMult(objsToCreate)
 							.then(data => {
-								callback(null, {
-									saved: data
+								const payload = [];
+								data.forEach(el => {
+									const payloadEl = this.createChartPayload(el);
+									payload.push(payloadEl);
 								});
+								callback(null, payload);
 							})
 							.catch(err => {
 								callback(err, null);
 							});
 					},
-					(payload, callback) => {
-						this.ChartRepository.updateMult(objToUpdate).then(data => {
+					(saved, callback) => {
+						this.ChartRepository.updateMult(objToUpdate).then(() => {
+							const payload = saved.concat(objToUpdate);
 							callback(
 								null,
-								Object.assign({}, payload, {
-									updated: data
-								})
+								payload
 							);
 						}).catch(err => {
 							callback(err, null);
@@ -61,16 +63,16 @@ class ChartService {
 		});
 	}
 
-	/*
-	createMult(arr){
-        const promises = [];
-		for(let i = 0;i<arr.length;i++){
-            const newPromise = this.ChartRepository.createMult(arr[i]);
-            promises.push(newPromise);
-		}
-		return Promise.all(promises);
+	createChartPayload(data) {
+		this.payload = {
+			id: data.id,
+			chartTypeId: data.chartTypeId,
+			dimensionSettings: data.dimensionSettings,
+			customizeSettings: data.customizeSettings,
+			datasetId: data.datasetId
+		};
+		return this.payload;
 	}
-	 */
 }
 
 module.exports = new ChartService();

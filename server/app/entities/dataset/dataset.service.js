@@ -42,7 +42,7 @@ class DatasetService {
 					(saved, callback) => {
 						this.DatasetRepository.updateMult(objToUpdate).then(
 							() => {
-								const payload = saved.concat(objsToCreate);
+								const payload = saved.concat(objToUpdate);
 								callback(
 									null,
 									payload
