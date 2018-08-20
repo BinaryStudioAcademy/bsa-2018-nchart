@@ -55,9 +55,7 @@ export class HeaderComponent implements OnInit {
 			{
 				subscriber: usr => {
 					this.userName = usr.name || 'Username';
-					if (usr.id) {
-						this.isAuthorized = !!usr.id;
-					}
+					this.isAuthorized = !!usr.id;
 				},
 				selector: user()
 			}
