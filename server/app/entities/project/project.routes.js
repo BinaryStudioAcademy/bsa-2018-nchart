@@ -12,7 +12,7 @@ project.get('/', (req, res, next) => {
 project.post('/', (req, res, next) => {
 	// get user from token, and set it into res.locals.user
 	TokenMiddleWare.getUserFromToken(req.headers.authorization, res);
-	ProjectService.handleProject(req.body, req.headers.authorization)
+	ProjectService.handleProject(req.body, res)
 		.then(PayloadGeneratorService.nextWithData(next, res))
 		.catch(next);
 });

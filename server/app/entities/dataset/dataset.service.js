@@ -1,6 +1,6 @@
 const async = require('async');
-const DatasetRepository = require('./dataset.repository');
 const _ = require('lodash');
+const DatasetRepository = require('./dataset.repository');
 
 class DatasetService {
 	constructor() {
