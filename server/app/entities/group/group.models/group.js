@@ -17,6 +17,7 @@ const Group = sequelize.define('group', {
 
 Group.sync().then(() => {
 	// todo: error on first start, table doesn't exist
+	// todo: should be tested, error seem to be mysteriously solved
 	User.sync().then(() => {
 		Group.hasMany(User, {
 			foreignKey: 'defaultGroupId',

@@ -75,7 +75,7 @@ class UserService {
 							.then(data => {
 								const userPayload = this.createUserPayload(data.dataValues);
 								callback(null, Object.assign({}, payload, {
-									userPayload,
+									user: userPayload,
 									tokenSecret: TokenService.createToken(
 										userPayload
 									)
@@ -150,12 +150,11 @@ class UserService {
 							.compare(obj.password, data.dataValues.password)
 							.then(res => {
 								if (res === true) {
+                                    const userPayload = this.createUserPayload(data.dataValues);
 									callback(null, {
+                                        user: userPayload,
 										token: TokenService.createToken(
-											data.dataValues
-										),
-										user: this.createUserPayload(
-											data.dataValues
+                                            userPayload
 										)
 									});
 								} else {
@@ -186,8 +185,8 @@ class UserService {
 							.then(data => callback(null, data))
 							.catch(err => callback(err, null));
 					},
-					(email, callback) => {
-						this.UserRepository.findByEmail(email)
+					(decoded, callback) => {
+						this.UserRepository.findByEmail(decoded.email)
 							.then(data => {
 								if (data === null) {
 									throw new Error('Object did not exist');
