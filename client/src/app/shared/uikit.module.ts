@@ -21,9 +21,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TabViewModule } from 'primeng/tabview';
 import { SpinnerModule } from 'primeng/spinner';
-// Drag&Drop
 import { DragulaModule } from 'ng2-dragula';
-import { SpinnerModule } from 'primeng/spinner';
 import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
@@ -47,14 +45,9 @@ import { TooltipModule } from 'primeng/tooltip';
 		TabViewModule,
 		DragulaModule.forRoot(),
 		FormsModule,
-<<<<<<< HEAD
-		SpinnerModule,
-		TooltipModule
-=======
 		ReactiveFormsModule,
 		TooltipModule,
 		SpinnerModule
->>>>>>> NC-13
 	],
 	exports: [
 		ButtonModule,

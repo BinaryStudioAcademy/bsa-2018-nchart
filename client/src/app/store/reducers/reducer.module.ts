@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-<<<<<<< HEAD
-import { initialState, reducersToken, reducersProvider } from '@app/store/reducers';
-=======
 import {
 	initialState,
 	reducersToken,
@@ -14,7 +11,6 @@ import {
 	RouterStateSerializer,
 	StoreRouterConnectingModule
 } from '@ngrx/router-store';
->>>>>>> develop
 
 @NgModule({
 	imports: [
