@@ -22,9 +22,19 @@ class ProjectService {
 						callback => {
 							this.ProjectRepository.handleProjectReq(obj.project)
 								.then(data => {
-									callback(null, {
-										project: data
-									});
+									if (obj.project.id && data[0] === 1) {
+										return callback(null, {
+											project: {
+												id: obj.project.id,
+												name: obj.project.name
+											}
+										});
+									} if (data[0] === 0) {
+										throw new Error('Object did not exist');
+									} else {
+										const payload = this.createProjectPayload(data);
+										return callback(null, payload);
+									}
 								})
 								.catch(err => callback(err, null));
 						},
@@ -56,6 +66,14 @@ class ProjectService {
 				);
 			});
 		} return false;
+	}
+
+	createProjectPayload(data) {
+		this.payload = {
+			id: data.id,
+			name: data.name
+		};
+		return this.payload;
 	}
 }
 
