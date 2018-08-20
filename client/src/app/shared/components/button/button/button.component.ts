@@ -16,13 +16,17 @@ export class ButtonComponent implements OnInit {
 	@Input()
 	size: 'small' | 'middle' | 'big' = 'middle';
 	@Input()
-	type: 'default' | 'secondary' = 'default';
+	type: 'default' | 'secondary' | 'icon' = 'default';
 	@Output()
-	click: EventEmitter<any> = new EventEmitter();
+	onclick: EventEmitter<any> = new EventEmitter();
 
 	constructor() {}
 
 	ngOnInit() {}
+
+	onClick(e) {
+		this.onclick.emit(e);
+	}
 
 	getClasses() {
 		return {

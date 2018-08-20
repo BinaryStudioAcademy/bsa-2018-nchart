@@ -4,7 +4,6 @@ import { FormControl } from '@angular/forms';
 interface Checks {
 	label: string;
 	value: any;
-	disabled: boolean;
 	control?: FormControl;
 }
 
@@ -15,6 +14,8 @@ interface Checks {
 export class CheckboxGroupComponent implements OnInit {
 	@Input()
 	checks: Checks[];
+	@Input()
+	checkedValues: string[];
 
 	constructor() {}
 

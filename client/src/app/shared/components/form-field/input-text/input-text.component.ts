@@ -1,17 +1,17 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
 	selector: 'app-input-text',
 	templateUrl: './input-text.component.html'
 })
-export class InputTextComponent implements OnInit {
+export class InputTextComponent implements OnInit, AfterViewInit {
 	@Input()
 	disabled: boolean;
 	@Input()
 	label: string;
 	@Input()
-	placeholder: string;
+	placeholder = '';
 	@Input()
 	type: string;
 	@Input()
@@ -22,8 +22,26 @@ export class InputTextComponent implements OnInit {
 	iconPosition: string;
 	@Input()
 	showStates: boolean;
+	@Input()
+	tooltip?: any;
+	@Input()
+	tooltipEscape?: boolean;
+	@Input()
+	tooltipPosition?: string;
+	@Input()
+	autofocus: boolean;
+
+	@ViewChild('inputText') inputText;
 
 	ngOnInit() {}
+
+	constructor() {}
+
+	ngAfterViewInit() {
+		if (this.autofocus) {
+			this.inputText.nativeElement.focus();
+		}
+	}
 
 	isDisabled() {
 		if (this.disabled) {

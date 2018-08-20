@@ -4,18 +4,11 @@ const CompanyUser = require('../company/company.models/company_user');
 const GroupUser = require('../group/group.models/group_user');
 
 const User = sequelize.define('users', {
-	firstName: {
+	name: {
 		type: Sequelize.STRING,
 		allowNull: false,
 		validate: {
-			is: { args: /^[a-zA-Z ]+$/, msg: 'Not valid name' }
-		}
-	},
-	lastName: {
-		type: Sequelize.STRING,
-		allowNull: false,
-		validate: {
-			is: { args: /^[a-zA-Z ]+$/, msg: 'Not valid surname' }
+			is: { args: /^[a-zа-яэіїє]+$/i, msg: 'Not valid name' }
 		}
 	},
 	email: {
@@ -34,14 +27,12 @@ const User = sequelize.define('users', {
 
 // this method creates table if it doesn't exit
 User.sync().then(() => {
-	CompanyUser.sync().then(() =>
-		User.hasMany(CompanyUser, {
-			foreignKey: 'userId',
-			sourceKey: 'id',
-			onDelete: 'CASCADE',
-			constraints: false
-		})
-	);
+	CompanyUser.sync().then(() => User.hasMany(CompanyUser, {
+		foreignKey: 'userId',
+		sourceKey: 'id',
+		onDelete: 'CASCADE',
+		constraints: false
+	}));
 	CompanyUser.belongsTo(User, { foreignKey: 'userId' });
 	GroupUser.sync().then(() => {
 		User.hasMany(GroupUser, {
