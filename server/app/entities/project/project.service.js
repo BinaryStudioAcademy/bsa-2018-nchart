@@ -2,6 +2,7 @@ const async = require('async');
 const ProjectRepository = require('./project.repository');
 const DatasetService = require('../dataset/dataset.service');
 const ChartService = require('../chart/chart.service');
+const TokenService = require('../../common/services/token.service');
 
 class ProjectService {
 	constructor() {
@@ -12,7 +13,8 @@ class ProjectService {
 		return this.ProjectRepository.getAll();
 	}
 
-	handleProject(obj) {
+	handleProject(obj, token) {
+		TokenService.verifyToken(token).then(data => data);
 		if (obj.project && !(obj.groupId)) {
 			return new Promise((resolve, reject) => {
 				async.waterfall(

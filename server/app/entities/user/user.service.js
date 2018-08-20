@@ -150,11 +150,11 @@ class UserService {
 							.compare(obj.password, data.dataValues.password)
 							.then(res => {
 								if (res === true) {
-                                    const userPayload = this.createUserPayload(data.dataValues);
+									const userPayload = this.createUserPayload(data.dataValues);
 									callback(null, {
-                                        user: userPayload,
+										user: userPayload,
 										token: TokenService.createToken(
-                                            userPayload
+											userPayload
 										)
 									});
 								} else {

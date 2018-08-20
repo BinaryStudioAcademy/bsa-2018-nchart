@@ -30,20 +30,22 @@ class DatasetService {
 					callback => {
 						this.DatasetRepository.saveMult(objsToCreate)
 							.then(data => {
-								callback(null, {
-									saved: data
+								const payload = [];
+								data.forEach(el => {
+									const payloadEl = this.createDatasetPayload(el);
+									payload.push(payloadEl);
 								});
+								callback(null, payload);
 							})
 							.catch(err => callback(err, null));
 					},
-					(payload, callback) => {
+					(saved, callback) => {
 						this.DatasetRepository.updateMult(objToUpdate).then(
-							data => {
+							() => {
+								const payload = saved.concat(objsToCreate);
 								callback(
 									null,
-									Object.assign({}, payload, {
-										updated: data
-									})
+									payload
 								);
 							}
 						);
@@ -57,6 +59,15 @@ class DatasetService {
 				}
 			);
 		});
+	}
+
+	createDatasetPayload(data) {
+		this.payload = {
+			id: data.id,
+			columns: data.columns,
+			data: data.data
+		};
+		return this.payload;
 	}
 }
 

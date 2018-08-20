@@ -6,7 +6,7 @@ class TokenService {
 		this.tokenSecret = null;
 	}
 
-    /**
+	/**
      * @param tokenPayload user payload object
      * @return token string
      */
@@ -17,7 +17,7 @@ class TokenService {
 		});
 	}
 
-    /**
+	/**
      * @param tokenPayload user payload object
 	 * @return Object: id,name,email,defaultGroupId,iat,exp
      */

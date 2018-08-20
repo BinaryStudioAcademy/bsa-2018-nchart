@@ -9,7 +9,7 @@ project.get('/', (req, res, next) => {
 });
 
 project.post('/', (req, res, next) => {
-	ProjectService.handleProject(req.body)
+	ProjectService.handleProject(req.body, req.headers.authorization)
 		.then(PayloadGeneratorService.nextWithData(next, res))
 		.catch(next);
 });
