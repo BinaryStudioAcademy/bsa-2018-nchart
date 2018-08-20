@@ -7,6 +7,7 @@ import { ProjectsComponent } from '@app/core/projects/projects.component';
 import { CompaniesComponent } from '@app/core/companies/companies.component';
 import { CompanyComponent } from '@app/core/company/company.component';
 import { AppComponent } from '@app/core/app/app.component';
+import { ExportPdfComponent } from '@app/features/export-pdf/export-pdf.component';
 
 const appRoutes: Routes = [
 	{
@@ -35,6 +36,10 @@ const appRoutes: Routes = [
 			{
 				path: 'project/:id',
 				component: ProjectComponent
+			},
+			{
+				path: 'project/:id/pdf_preview',
+				component: ExportPdfComponent
 			},
 			{
 				path: 'projects',
