@@ -14,6 +14,12 @@ RUN npm i -g @angular/cli \
     && npm i \
     && npm run build
 
+RUN ls
+
+WORKDIR $APP_ROOT/client/dist
+
+RUN ls
+
 COPY client/dist $APP_ROOT/client/dist
 
 WORKDIR $APP_ROOT
