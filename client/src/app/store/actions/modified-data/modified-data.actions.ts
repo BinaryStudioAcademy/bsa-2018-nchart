@@ -1,5 +1,5 @@
 import { AppAction } from '@app/models';
-import { ModifiedDataActionConstants } from './modified-data.action-types';
+import { ModifiedDataActionConstants } from '@app/store/actions/modified-data/modified-data.action-types';
 
 export class ChangeContent extends AppAction<{
 	content: string;

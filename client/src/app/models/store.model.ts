@@ -1,5 +1,5 @@
-import { UserState } from './user-store.model';
-import { ErrorHandlerState } from './error-store.model';
+import { UserState } from '@app/models/user-store.model';
+import { ErrorHandlerState } from '@app/models/error-store.model';
 import {
 	ChartsState,
 	UserChartsState,

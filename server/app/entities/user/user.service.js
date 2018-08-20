@@ -48,7 +48,6 @@ class UserService {
 					(user, callback) => {
 						this.UserRepository.save(user)
 							.then(data => callback(null, {
-								tokenSecret: TokenService.createToken(data),
 								user: this.createUserPayload(
 									data.dataValues
 								)
@@ -75,6 +74,11 @@ class UserService {
 							.then(data => callback(
 								null,
 								Object.assign({}, payload, {
+									tokenSecret: TokenService.createToken(
+										Object.assign({}, payload.user, {
+											groupId: data.dataValues.id
+										})
+									),
 									companyUser: data.dataValues
 								})
 							))
@@ -117,7 +121,8 @@ class UserService {
 					// console.log(payload);
 					return resolve({
 						token: payload.tokenSecret,
-						user: payload.user
+						user: payload.user,
+						groupId: payload.group.id
 					});
 				}
 			);
@@ -258,8 +263,7 @@ class UserService {
 	createUserPayload(data) {
 		this.payload = {
 			id: data.id,
-			firstName: data.firstName,
-			lastName: data.lastName,
+			name: data.name,
 			email: data.email
 		};
 		return this.payload;
