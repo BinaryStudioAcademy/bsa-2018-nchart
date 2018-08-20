@@ -19,9 +19,12 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TabViewModule } from 'primeng/tabview';
+
 // Drag&Drop
 import { DragulaModule } from 'ng2-dragula';
 import { SpinnerModule } from 'primeng/spinner';
+import { TooltipModule } from 'primeng/tooltip';
+
 @NgModule({
 	imports: [
 		ButtonModule,
@@ -43,7 +46,8 @@ import { SpinnerModule } from 'primeng/spinner';
 		TabViewModule,
 		DragulaModule.forRoot(),
 		FormsModule,
-		SpinnerModule
+		SpinnerModule,
+		TooltipModule
 	],
 	exports: [
 		ButtonModule,
@@ -65,7 +69,8 @@ import { SpinnerModule } from 'primeng/spinner';
 		TabViewModule,
 		DragulaModule,
 		FormsModule,
-		SpinnerModule
+		SpinnerModule,
+		TooltipModule
 	],
 	declarations: []
 })

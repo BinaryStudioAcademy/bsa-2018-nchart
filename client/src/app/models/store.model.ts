@@ -1,7 +1,12 @@
 import { UserState } from '@app/models/user-store.model';
-import { CompaniesState } from '@app/models/companies-store.model';
 import { ErrorHandlerState } from '@app/models/error-store.model';
-import { ProjectsState } from '@app/models/projects-store.model';
+import {
+	ChartsState,
+	UserChartsState,
+	DatasetState,
+	ProjectsState,
+	CompaniesState
+} from '@app/models';
 
 export class AppAction<T = undefined> {
 	readonly type: string;
@@ -9,9 +14,9 @@ export class AppAction<T = undefined> {
 }
 
 export class FailedActionPayload {
-	msg?: string;
-	action?: any;
-	error?: Error;
+	msg: string;
+	action: any;
+	error: Error;
 	serverMessages?: string[];
 }
 
@@ -22,4 +27,7 @@ export interface AppState {
 	errorHandler: ErrorHandlerState;
 	companies: CompaniesState;
 	projects: ProjectsState;
+	charts: ChartsState;
+	datasets: DatasetState;
+	userCharts: UserChartsState;
 }

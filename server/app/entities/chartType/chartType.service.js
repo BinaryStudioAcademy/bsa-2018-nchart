@@ -1,5 +1,4 @@
-const ChartTypeRepository = require('./chart_type.repository');
-const ErrorService = require('../../common/services/error.service');
+const ChartTypeRepository = require('./chartType.repository');
 
 class ChartTypeService {
 	constructor() {
@@ -20,7 +19,7 @@ class ChartTypeService {
 				}
 			})
 			.catch(err => {
-				throw ErrorService.createCustomDBError(err);
+				throw err;
 			});
 	}
 

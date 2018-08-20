@@ -2,7 +2,7 @@ import { AppAction, Company, FailedAction } from '@app/models';
 import { CompaniesActionConstants } from '@app/store/actions/companies/companies.action-types';
 
 export class LoadData extends AppAction<any> {
-	readonly type = CompaniesActionConstants.COMPANIES_LOAD_DATA;
+	readonly type = CompaniesActionConstants.LOAD_COMPANIES;
 }
 
 export class LoadDataComplete extends AppAction<{
@@ -11,11 +11,11 @@ export class LoadDataComplete extends AppAction<{
 		byId: { [id: string]: Company };
 	};
 }> {
-	readonly type = CompaniesActionConstants.COMPANIES_LOAD_DATA__COMPLETE;
+	readonly type = CompaniesActionConstants.LOAD_COMPANIES__COMPLETE;
 }
 
 export class LoadDataFailed extends FailedAction {
-	readonly type = CompaniesActionConstants.COMPANIES_LOAD_DATA__FAILED;
+	readonly type = CompaniesActionConstants.LOAD_COMPANIES__FAILED;
 }
 
 export type Actions = LoadData | LoadDataComplete | LoadDataFailed;

@@ -5,18 +5,22 @@
     {{label}}
 </label>
 
-<div class="ui-input-wrp">
+<div class="ui-input-wrp" id="input_wrp">
     <i
         [ngClass]="getIconClasses()"
         *ngIf="icon && iconPosition=='left'"
     ></i>
-    <input
+    <input #inputText
         pInputText
         [formControl]="control"
         [type]="type"
         [placeholder]="placeholder"
         [attr.disabled]="isDisabled()"
-        [ngClass]="getClasses()"
+		[ngClass]="getClasses()"
+		[pTooltip]="tooltip"
+		[escape]="tooltipEscape" 
+		[tooltipPosition]="tooltipPosition"
+		[autofocus]="autofocus"
     >
     <i
         [ngClass]="getIconClasses()"

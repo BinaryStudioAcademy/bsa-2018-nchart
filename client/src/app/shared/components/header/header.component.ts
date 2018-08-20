@@ -1,29 +1,34 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { StoreService } from '@app/services/store.service';
+import { project } from '@app/store/selectors/projects.selectors';
+
+
 @Component({
 	selector: 'app-header',
 	templateUrl: './header.component.html'
 })
 export class HeaderComponent implements OnInit {
 	@Input()
-	projectName = 'Project name';
-	@Input()
 	isAuthorized = false;
+	getName: () => void;
 
 	items: MenuItem[];
 	authItems: MenuItem[];
 	profileItems: MenuItem[];
 
+	constructor(
+		private storeService: StoreService
+	) {}
+
 	ngOnInit() {
+		this.items = [{
+				label: null,
+				routerLink: ['/app/projects/draft']
+		}];
 		this.authItems = [
 			{ label: 'Projects', routerLink: ['/app/projects'] },
 			{ label: 'Companies', routerLink: ['/app/companies'] }
-		];
-		this.items = [
-			{
-				label: this.projectName,
-				routerLink: ['/app/projects/draft']
-			}
 		];
 		this.profileItems = [
 			{
@@ -34,6 +39,15 @@ export class HeaderComponent implements OnInit {
 				}
 			}
 		];
+
+		this.storeService.connect([{
+				subscriber: prj => {
+					if (prj) {
+						this.items[0].label = prj.name;
+					}
+				},
+				selector: project()
+		}]);
 	}
 
 	onClick() {

@@ -1,16 +1,55 @@
 import { UserActionConstants } from '@app/store/actions/user/user.action-types';
-import { AppAction, FailedAction, User } from '@app/models';
+import {
+	AppAction,
+	FailedAction,
+	User,
+	Login as LoginModel,
+	Register as RegisterModel
+} from '@app/models';
 
 export class VerifyToken extends AppAction<{ token }> {
-	readonly type = UserActionConstants.USER_VERIFY_TOKEN;
+	readonly type = UserActionConstants.VERIFY_USER_TOKEN;
 }
 
-export class VerifyTokenComplete extends AppAction<User> {
-	readonly type = UserActionConstants.USER_VERIFY_TOKEN__COMPLETE;
+export class VerifyTokenComplete extends AppAction<{ user: User }> {
+	readonly type = UserActionConstants.VERIFY_USER_TOKEN__COMPLETE;
 }
 
 export class VerifyTokenFailed extends FailedAction {
-	readonly type = UserActionConstants.USER_VERIFY_TOKEN__FAILED;
+	readonly type = UserActionConstants.VERIFY_USER_TOKEN__FAILED;
 }
 
-export type Actions = VerifyToken | VerifyTokenComplete | VerifyTokenFailed;
+export class Login extends AppAction<{ user: LoginModel }> {
+	readonly type = UserActionConstants.LOGIN;
+}
+
+export class LoginComplete extends AppAction<{ user: User }> {
+	readonly type = UserActionConstants.LOGIN__COMPLETE;
+}
+
+export class LoginFailed extends FailedAction {
+	readonly type = UserActionConstants.LOGIN__FAILED;
+}
+
+export class Register extends AppAction<{ user: RegisterModel }> {
+	readonly type = UserActionConstants.REGISTER;
+}
+
+export class RegisterComplete extends AppAction<{ user: User }> {
+	readonly type = UserActionConstants.REGISTER__COMPLETE;
+}
+
+export class RegisterFailed extends FailedAction {
+	readonly type = UserActionConstants.REGISTER__FAILED;
+}
+
+export type Actions =
+	| VerifyToken
+	| VerifyTokenComplete
+	| VerifyTokenFailed
+	| Login
+	| LoginComplete
+	| LoginFailed
+	| Register
+	| RegisterComplete
+	| RegisterFailed;

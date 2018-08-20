@@ -7,6 +7,21 @@ import {
 } from '@app/store/reducers/user.reducer';
 
 import {
+	chartsReducer,
+	initialState as chartsInitialState
+} from '@app/store/reducers/charts.reducer';
+
+import {
+	userChartsReducer,
+	initialState as userChartsInitialState
+} from '@app/store/reducers/userCharts.reducer';
+
+import {
+	datasetReducer,
+	initialState as datasetInitialState
+} from '@app/store/reducers/dataset.reducer';
+
+import {
 	companiesReducer,
 	initialState as companiesInitialState
 } from '@app/store/reducers/companies.reducer';
@@ -20,19 +35,33 @@ import {
 	projectsReducer,
 	initialState as projectsInitialState
 } from '@app/store/reducers/projects.reducer';
+<<<<<<< HEAD
+=======
+
+import { routerReducer, RouterStateSerializer } from '@ngrx/router-store';
+import { RouterStateUrl } from '@app/models';
+import { RouterStateSnapshot } from '@angular/router';
+>>>>>>> develop
 
 export const initialState: AppState = {
 	user: userInitialState,
 	errorHandler: errorHandlerInitialState,
 	companies: companiesInitialState,
-	projects: projectsInitialState
+	projects: projectsInitialState,
+	charts: chartsInitialState,
+	datasets: datasetInitialState,
+	userCharts: userChartsInitialState
 };
 
 export const getReducers = () => ({
 	user: userReducer,
 	errorHandler: errorHandlerReducer,
 	companies: companiesReducer,
-	projects: projectsReducer
+	projects: projectsReducer,
+	charts: chartsReducer,
+	datasets: datasetReducer,
+	userCharts: userChartsReducer,
+	router: routerReducer
 });
 
 export const reducersToken = new InjectionToken<ActionReducerMap<AppState>>(
@@ -45,3 +74,22 @@ export const reducersProvider: Provider[] = [
 		useFactory: getReducers
 	}
 ];
+
+export class CustomRouterStateSerializer
+	implements RouterStateSerializer<RouterStateUrl> {
+	serialize(routerState: RouterStateSnapshot): RouterStateUrl {
+		let route = routerState.root;
+
+		while (route.firstChild) {
+			route = route.firstChild;
+		}
+
+		const {
+			url,
+			root: { queryParams }
+		} = routerState;
+		const { params } = route;
+
+		return { url, params, queryParams };
+	}
+}

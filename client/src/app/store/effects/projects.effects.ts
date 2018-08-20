@@ -5,43 +5,31 @@ import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Project } from '@app/models';
 import { normalize } from 'normalizr';
-import { arrayOfCustomData } from '@app/models/custom.schema';
+import { arrayOfCustomData } from '@app/schemes/custom.schema';
 import { ProjectsActionConstants } from '@app/store/actions/projects/projects.action-types';
-import {
-	LoadDataComplete,
-	LoadDataFailed
-} from '@app/store/actions/projects/projects.actions';
-import { Observable } from 'rxjs';
+import * as projectActions from '@app/store/actions/projects/projects.actions';
+import { Observable } from 'rxjs/index';
+import { ProjectService } from '../../services/project.service';
 
 @Injectable()
 export class ProjectsEffects {
 	api = {
 		loadProjects: (): Observable<Project[]> => {
-			return of([
-				{
-					id: 'q1',
-					name: 'proj binary',
-					createdAt: '12345678'
-				},
-				{
-					id: 'q2',
-					name: 'proj macpaw',
-					createdAt: '995678'
-				},
-				{
-					id: 'q3',
-					name: 'proj kpi',
-					createdAt: '1'
-				}
-			]);
+			return of([]);
+		},
+		createDraftProject: (): Observable<Project> => {
+			return of(null);
 		}
 	};
 
-	constructor(private action$: Actions) {}
+	constructor(
+		private action$: Actions,
+		private projectService: ProjectService
+	) {}
 
 	@Effect()
 	loadData$ = this.action$.pipe(
-		ofType(ProjectsActionConstants.PROJECTS_LOAD_DATA),
+		ofType(ProjectsActionConstants.LOAD_PROJECTS),
 		switchMap((action: any) =>
 			this.api.loadProjects().pipe(
 				map((value: Project[]) => {
@@ -49,7 +37,7 @@ export class ProjectsEffects {
 						result: all,
 						entities: { byId }
 					} = normalize(value, arrayOfCustomData);
-					return new LoadDataComplete({
+					return new projectActions.LoadProjectsComplete({
 						projects: {
 							all,
 							byId
@@ -58,13 +46,31 @@ export class ProjectsEffects {
 				}),
 				catchError(error => {
 					return of(
-						new LoadDataFailed({
+						new projectActions.LoadProjectsFailed({
 							action: action,
 							msg: 'test',
 							error: null
 						})
 					);
 				})
+			)
+		)
+	);
+
+	@Effect()
+	createDraftProject$ = this.action$.pipe(
+		ofType(ProjectsActionConstants.CREATE_DRAFT_PROJECT),
+		switchMap((action: projectActions.CreateDraftProject) =>
+			this.projectService.createDraftProject().pipe(
+				map(
+					project =>
+						new projectActions.CreateDraftProjectComplete({
+							project
+						})
+				),
+				catchError(error =>
+					of(new projectActions.CreateDraftProjectFailed())
+				)
 			)
 		)
 	);

@@ -15,6 +15,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 // Toggle
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { TooltipModule } from 'primeng/tooltip';
 // Autocomplete
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { InputTextComponent } from '@app/shared/components/form-field/input-text/input-text.component';
@@ -59,7 +60,8 @@ storiesOf('Input fields', module)
 				AutoCompleteModule,
 				BrowserAnimationsModule,
 				ButtonModule,
-				InputSwitchModule
+				InputSwitchModule,
+				TooltipModule
 			],
 			declarations: [
 				InputTextComponent,

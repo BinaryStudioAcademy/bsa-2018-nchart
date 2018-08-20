@@ -1,7 +1,7 @@
 import { Company } from '@app/models/company.model';
+import { NormalizedSchemeWithFetching } from '@app/models/normalizr.model';
 
-export interface CompaniesState {
-	all: string[];
-	byId: { [id: string]: Company };
-	isLoading: boolean;
-}
+export type CompaniesState<R = undefined> = NormalizedSchemeWithFetching<
+	Company,
+	R
+>;

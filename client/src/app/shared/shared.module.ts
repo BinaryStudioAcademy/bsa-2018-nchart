@@ -27,6 +27,11 @@ import { ChartsModule } from '@app/shared/components/charts/charts.module';
 		DragDropComponent,
 		LinkComponent
 	],
-	declarations: [ActionButtonComponent, DragDropComponent, MainBlockComponent, LinkComponent]
+	declarations: [
+		ActionButtonComponent,
+		DragDropComponent,
+		MainBlockComponent,
+		LinkComponent
+	]
 })
 export class SharedModule {}
