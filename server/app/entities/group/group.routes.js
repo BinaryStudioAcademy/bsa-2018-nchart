@@ -31,7 +31,8 @@ group.post('/user', (req, res) => {
 
 // test route
 group.post('/findOne', (req, res) => {
-	groupService.findOneByQuery(req.body)
+	groupService
+		.findOneByQuery(req.body)
 		.then(data => {
 			res.json(data);
 		})

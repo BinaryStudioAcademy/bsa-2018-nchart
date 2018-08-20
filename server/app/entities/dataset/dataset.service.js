@@ -31,7 +31,9 @@ class DatasetService {
 							.then(data => {
 								const payload = [];
 								data.forEach(el => {
-									const payloadEl = this.createDatasetPayload(el);
+									const payloadEl = this.createDatasetPayload(
+										el
+									);
 									payload.push(payloadEl);
 								});
 								callback(null, payload);
@@ -42,10 +44,7 @@ class DatasetService {
 						this.DatasetRepository.updateMult(objToUpdate).then(
 							() => {
 								const payload = saved.concat(objToUpdate);
-								callback(
-									null,
-									payload
-								);
+								callback(null, payload);
 							}
 						);
 					}

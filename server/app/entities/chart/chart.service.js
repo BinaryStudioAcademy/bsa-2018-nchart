@@ -31,7 +31,9 @@ class ChartService {
 							.then(data => {
 								const payload = [];
 								data.forEach(el => {
-									const payloadEl = this.createChartPayload(el);
+									const payloadEl = this.createChartPayload(
+										el
+									);
 									payload.push(payloadEl);
 								});
 								callback(null, payload);
@@ -41,15 +43,14 @@ class ChartService {
 							});
 					},
 					(saved, callback) => {
-						this.ChartRepository.updateMult(objToUpdate).then(() => {
-							const payload = saved.concat(objToUpdate);
-							callback(
-								null,
-								payload
-							);
-						}).catch(err => {
-							callback(err, null);
-						});
+						this.ChartRepository.updateMult(objToUpdate)
+							.then(() => {
+								const payload = saved.concat(objToUpdate);
+								callback(null, payload);
+							})
+							.catch(err => {
+								callback(err, null);
+							});
 					}
 				],
 				(err, payload) => {

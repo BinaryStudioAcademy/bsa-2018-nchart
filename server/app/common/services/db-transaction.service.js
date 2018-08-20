@@ -6,15 +6,15 @@ function TransactionService(objs, model, method) {
 			return sequelize.transaction(t => {
 				const promises = [];
 				for (let i = 0; i < objs.length; i += 1) {
-					const newPromise = model.create(
-						objs[i],
-						{ transaction: t }
-					);
+					const newPromise = model.create(objs[i], {
+						transaction: t
+					});
 					promises.push(newPromise);
 				}
 				return Promise.all(promises);
 			});
-		} if (method === 'update') {
+		}
+		if (method === 'update') {
 			return sequelize.transaction(t => {
 				const promises = [];
 				for (let i = 0; i < objs.length; i += 1) {

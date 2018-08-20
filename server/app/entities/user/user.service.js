@@ -34,10 +34,7 @@ class UserService {
 				[
 					callback => {
 						CompanyService.saveCompany('General')
-							.then(data => callback(
-								null,
-								{ company: data.dataValues }
-							))
+							.then(data => callback(null, { company: data.dataValues }))
 							.catch(err => {
 								callback(err, null);
 							});
@@ -73,13 +70,18 @@ class UserService {
 					(payload, user, callback) => {
 						this.UserRepository.save(user)
 							.then(data => {
-								const userPayload = this.createUserPayload(data.dataValues);
-								callback(null, Object.assign({}, payload, {
-									user: userPayload,
-									tokenSecret: TokenService.createToken(
-										userPayload
-									)
-								}));
+								const userPayload = this.createUserPayload(
+									data.dataValues
+								);
+								callback(
+									null,
+									Object.assign({}, payload, {
+										user: userPayload,
+										tokenSecret: TokenService.createToken(
+											userPayload
+										)
+									})
+								);
 							})
 							.catch(err => callback(err, null));
 					},
@@ -150,7 +152,9 @@ class UserService {
 							.compare(obj.password, data.dataValues.password)
 							.then(res => {
 								if (res === true) {
-									const userPayload = this.createUserPayload(data.dataValues);
+									const userPayload = this.createUserPayload(
+										data.dataValues
+									);
 									callback(null, {
 										user: userPayload,
 										token: TokenService.createToken(

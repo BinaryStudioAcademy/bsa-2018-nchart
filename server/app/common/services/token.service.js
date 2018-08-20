@@ -7,9 +7,9 @@ class TokenService {
 	}
 
 	/**
-     * @param tokenPayload user payload object
-     * @return token string
-     */
+	 * @param tokenPayload user payload object
+	 * @return token string
+	 */
 	createToken(tokenPayload) {
 		this.tokenSecret = process.env.TOKEN;
 		return jwt.sign(tokenPayload, this.tokenSecret, {
@@ -18,9 +18,9 @@ class TokenService {
 	}
 
 	/**
-     * @param tokenPayload user payload object
+	 * @param tokenPayload user payload object
 	 * @return Object: id,name,email,defaultGroupId,iat,exp
-     */
+	 */
 	verifyToken(tokenPayload) {
 		this.tokenSecret = process.env.TOKEN;
 		return new Promise((resolve, reject) => {

@@ -17,11 +17,14 @@ class ProjectRepository extends Repository {
 
 	handleProjectReq(obj) {
 		if (obj.id) {
-			return this.model.update({ name: obj.name }, {
-				where: {
-					id: obj.id
+			return this.model.update(
+				{ name: obj.name },
+				{
+					where: {
+						id: obj.id
+					}
 				}
-			});
+			);
 		}
 		return this.model.create({ name: obj.name });
 	}
