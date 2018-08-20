@@ -2,7 +2,6 @@
 	<div *ngFor="let check of checks" class="ui-g-12 ui-checkbox-wrp">
 		<p-checkbox name="groupname" 
 					[value]="check.value" 
-					[(ngModel)]="selectedValues"
 					[formControl]="check.control"
 					[disabled]="check.disabled">
 		</p-checkbox>

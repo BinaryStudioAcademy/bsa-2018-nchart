@@ -18,11 +18,7 @@ export class ButtonComponent implements OnInit {
 	@Input()
 	type: 'default' | 'secondary' = 'default';
 	@Output()
-	click = new EventEmitter();
-
-	onClick() {
-		this.click.emit();
-	}
+	click: EventEmitter<any> = new EventEmitter();
 
 	constructor() {}
 

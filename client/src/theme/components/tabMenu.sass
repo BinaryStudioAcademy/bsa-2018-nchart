@@ -1,0 +1,43 @@
+@import ../variables
+@import ../colors
+
+.ui-tabmenu
+
+	background-color: $stateDefaultBgColor
+
+	&.ui-tabmenu-top>.ui-tabmenu-nav
+		padding: 18px 0
+
+	.ui-tabmenu-nav
+		border: none
+		background-color: $stateDefaultBgColor
+    
+
+	.ui-tabmenu-nav li
+		margin-right: 24px
+		padding-bottom: 3px
+
+		& a
+			padding: 0
+
+		&.ui-state-active,
+		&.ui-state-default
+			border: none
+			background-color: $stateDefaultBgColor
+
+
+.ui-tabmenu .ui-tabmenu-nav > li:not(.ui-state-active):not(.ui-state-disabled):hover 
+    background: $stateDefaultBgColor
+    border-bottom: 3px solid $baseColor
+    
+.ui-tabmenu .ui-tabmenu-nav > li.ui-state-active
+    background-color: $stateDefaultBgColor   
+    font-weight: bold
+    color: $textColorDark
+    border-bottom: 3px solid $baseColor
+            
+    
+.project-name
+    margin-right: 100px
+
+    
