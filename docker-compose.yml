@@ -16,7 +16,7 @@ services:
         build:
             context: ./client
         ports:
-            - '4200:4200'
+            - '8080:4200'
             - '49153:49153'
         volumes:
             - ./client/:/app
