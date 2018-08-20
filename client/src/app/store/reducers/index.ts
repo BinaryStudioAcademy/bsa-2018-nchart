@@ -35,13 +35,10 @@ import {
 	projectsReducer,
 	initialState as projectsInitialState
 } from '@app/store/reducers/projects.reducer';
-<<<<<<< HEAD
-=======
 
 import { routerReducer, RouterStateSerializer } from '@ngrx/router-store';
 import { RouterStateUrl } from '@app/models';
 import { RouterStateSnapshot } from '@angular/router';
->>>>>>> develop
 
 export const initialState: AppState = {
 	user: userInitialState,
