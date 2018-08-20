@@ -22,6 +22,6 @@ WORKDIR $APP_ROOT
 
 RUN npm i
 
-EXPOSE $PORT
+EXPOSE 8080
 
 CMD ["node", "bin/www"]
