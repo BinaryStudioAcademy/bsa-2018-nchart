@@ -13,10 +13,18 @@ export const datasetColumnsReducer = (
 	switch (action.type) {
 		case ProjectsActionConstants.LOAD_ONE_PROJECT__COMPLETE:
 			return action.payload.entities.datasetColumn;
-		case DatasetActions.PARSE_DATA__COMPLETE: {
+		case DatasetActions.PARSE_DATA__COMPLETE:
 			return {
 				...state,
 				...action.payload.entities.datasetColumn
+			};
+		case DatasetActions.CHANGE_HEADER_TITLE: {
+			return {
+				...state,
+				[action.payload.id]: {
+					...state[action.payload.id],
+					title: action.payload.title
+				}
 			}
 		}
 		default:

@@ -18,6 +18,14 @@ export const datasetDataReducer = (
 				...state,
 				...action.payload.entities.datasetData
 			};
+		case DatasetActions.CHANGE_CONTENT:
+			return {
+				...state,
+				[action.payload.id]: {
+					...state[action.payload.id],
+					value: action.payload.value
+				}
+			};
 		default:
 			return state;
 	}

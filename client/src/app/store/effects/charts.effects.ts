@@ -3,287 +3,416 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { map, switchMap } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import { Chart } from '@app/models';
 import { normalize } from 'normalizr';
 import { arrayOfCommonScheme } from '@app/schemes/common.schema';
 import { ChartsActionConstants } from '@app/store/actions/charts/charts.action-types';
 import * as chartActions from '@app/store/actions/charts/charts.actions';
+import {StoreService} from '@app/services/store.service';
+import {getFirstChart} from '@app/store/selectors/charts.selectors';
+import {CreateChart, CreateChartComplete} from '@app/store/actions/charts/charts.actions';
+import {chartScheme} from '@app/schemes/chart.schema';
 
 @Injectable()
 export class ChartsEffects {
 	api = {
-		loadCharts: (): Observable<Chart[]> => {
-			return of([
-				{
-					id: 1,
-					type: '1',
-					name: 'Bar chart',
-					description: 'bar chbars with ent.',
-					dimensionSettings: [
-						{
-							id: 1,
-							variable: 'X Axis',
-							multiple: false,
-							required: true,
-							type: ['string', 'number'],
-							description: 'For d.'
-						},
-						{
-							id: 2,
-							variable: 'Group',
-							multiple: false,
-							required: false,
-							type: ['string', 'number'],
-							description: 'For each reated.'
-						},
-						{
-							id: 3,
-							variable: 'Size',
-							multiple: false,
-							required: false,
-							type: ['number'],
-							description: 'Acceptbar height.'
-						},
-						{
-							id: 4,
-							variable: 'Color',
-							multiple: false,
-							required: false,
-							type: ['string', 'number'],
-							description: 'Can  the list.'
-						}
-					],
-					customizeSettings: [
-						{
-							id: 5,
-							value: 800,
-							option: 'Width',
-							description: 'artboard width in pixels'
-						},
-						{
-							id: 6,
-							value: 600,
-							option: 'Height',
-							description: 'artboard height in pixels'
-						},
-						{
-							id: 7,
-							value: 40,
-							option: 'Left Margin',
-							description: 'margin fopixel'
-						},
-						{
-							id: 8,
-							value: 0,
-							option: 'Vertical Padding',
-							description: 'distharts, in pixel'
-						},
-						{
-							id: 9,
-							value: 0.1,
-							option: 'Horizontal Padding',
-							description: 'distance 0%, 1 = 100%)'
-						},
-						{
-							id: 10,
-							value: false,
-							option: 'Use Same Scale',
-							description: 'If set, every bcale'
-						},
-						{
-							id: 11,
-							value: [],
-							option: 'Colour Scale',
-							description: 'list and mose two values'
-						}
-					]
-				},
-				{
-					id: 2,
-					type: '2',
-					name: 'Linear chart',
-					description: 'Linear that they represent.',
-					dimensionSettings: [
-						{
-							id: 1,
-							variable: 'X Axis',
-							multiple: false,
-							required: true,
-							type: ['string', 'number'],
-							description: 'For each unique value ted.'
-						},
-						{
-							id: 2,
-							variable: 'Group',
-							multiple: false,
-							required: false,
-							type: ['string', 'number'],
-							description: 'For reated.'
-						},
-						{
-							id: 3,
-							variable: 'Size',
-							multiple: false,
-							required: false,
-							type: ['number'],
-							description: 'Accepts  height.'
-						},
-						{
-							id: 4,
-							variable: 'Color',
-							multiple: false,
-							required: false,
-							type: ['string', 'number'],
-							description: 'Canin the list.'
-						}
-					],
-					customizeSettings: [
-						{
-							id: 1,
-							value: 800,
-							option: 'Width',
-							description: 'artboard width in pixels'
-						},
-						{
-							id: 2,
-							value: 600,
-							option: 'Height',
-							description: 'artboard height in pixels'
-						},
-						{
-							id: 3,
-							value: 40,
-							option: 'Left Margin',
-							description:
-								'margin for left side of a bar chart, in pixel'
-						},
-						{
-							id: 4,
-							value: 0,
-							option: 'Vertical Padding',
-							description: 'distance among bar charts, in pixel'
-						},
-						{
-							id: 5,
-							value: 0.1,
-							option: 'Horizontal Padding',
-							description: 'distance between b 100%)'
-						},
-						{
-							id: 6,
-							value: false,
-							option: 'Use Same Scale',
-							description: 'If set, eveme scale'
-						},
-						{
-							id: 7,
-							value: [],
-							option: 'Colour Scale',
-							description: 'liong those two values'
-						}
-					]
-				},
-				{
-					id: 3,
-					type: '3',
-					name: 'Other chart',
-					description: 'Other that they represent.',
-					dimensionSettings: [
-						{
-							id: 1,
-							variable: 'X Axis',
-							multiple: false,
-							required: true,
-							type: ['string', 'number'],
-							description: 'For ted.'
-						},
-						{
-							id: 2,
-							variable: 'Group',
-							multiple: false,
-							required: false,
-							type: ['string', 'number'],
-							description: 'For eated.'
-						},
-						{
-							id: 3,
-							variable: 'Size',
-							multiple: false,
-							required: false,
-							type: ['number'],
-							description: 'Accepts only column height.'
-						},
-						{
-							id: 4,
-							variable: 'Color',
-							multiple: false,
-							required: false,
-							type: ['string', 'number'],
-							description: 'C the list.'
-						}
-					],
-					customizeSettings: [
-						{
-							id: 1,
-							value: 800,
-							option: 'Width',
-							description: 'artboard width in pixels'
-						},
-						{
-							id: 2,
-							value: 600,
-							option: 'Height',
-							description: 'artboard height in pixels'
-						},
-						{
-							id: 3,
-							value: 40,
-							option: 'Left Margin',
-							description: 'marginpixel'
-						},
-						{
-							id: 4,
-							value: 0,
-							option: 'Vertical Padding',
-							description: 'dista, in pixel'
-						},
-						{
-							id: 5,
-							value: 0.1,
-							option: 'Horizontal Padding',
-							description: 'dis= 100%)'
-						},
-						{
-							id: 6,
-							value: false,
-							option: 'Use Same Scale',
-							description: 'If setthe same scale'
-						},
-						{
-							id: 7,
-							value: [],
-							option: 'Colour Scale',
-							description:
-								'list o a gradient among those two values'
-						}
-					]
-				}
-			]);
+		loadCharts: (): Observable<any> => {
+			return of({
+				"payload": [
+					{
+						"id": 2,
+						"type": "Other",
+						"name": "Pie Chart",
+						"sysName": "pieChart",
+						"description": "A pie chart (or a circle chart) is a circular statistical graphic which is divided into slices to illustrate numerical proportion.",
+						"dimensionSettings": [
+							{
+								"multiple": false,
+								"description": "The values in the dimension will be used as labels.",
+								"required": false,
+								"variable": "Label",
+								"type": [
+									"string",
+									"number",
+									"date"
+								],
+								"id": 5
+							},
+							{
+								"multiple": true,
+								"description": "The field accept multiple dimensions. Each dimension added to this field will generate an arc for each pie chart.",
+								"required": true,
+								"variable": "Arcs",
+								"type": [
+									"number"
+								],
+								"id": 6
+							}
+						],
+						"customizeSettings": [
+							{
+								"defaultValue": 800,
+								"description": "width in pixels",
+								"option": "Width",
+								"id": 8
+							},
+							{
+								"defaultValue": 4,
+								"description": "Pie chart will be disposed on a grid. This option allows to define how many pie charts must be drawn for each line. The number of lines is calculated according to this option.",
+								"option": "Columns",
+								"id": 9
+							},
+							{
+								"defaultValue": 10,
+								"description": "The vertical and horizontal padding between pie charts, in pixels.",
+								"option": "Padding",
+								"id": 10
+							},
+							{
+								"defaultValue": false,
+								"description": "If selected, pie charts will be drawn ad donut chart. The size is defined by the Thickness option (see below).",
+								"option": "Donut chart",
+								"id": 11
+							},
+							{
+								"defaultValue": 10,
+								"description": "If Donut chart option is selects, this value will be used to defines its thickness.",
+								"option": "Thickness",
+								"id": 12
+							},
+							{
+								"defaultValue": false,
+								"description": "If selected, the absolute value of each value will be displayed with a label.",
+								"option": "Show Values",
+								"id": 13
+							},
+							{
+								"defaultValue": [
+									"size",
+									"name"
+								],
+								"description": "Order of the pie chart. Can be ‘size’ (from the biggest to the smallest), ‘name’ (alphabetical order).",
+								"option": "Sort charts by",
+								"id": 14
+							},
+							{
+								"defaultValue": [
+									"size",
+									"name"
+								],
+								"description": "Order of the arcs inside each pie chart. Can be ‘automatic’ (same order in each pie chart), ‘size’ (from biggest to smallest in each pie chart) or ‘name’ (alphabetical order).",
+								"option": "Sort arcs by",
+								"id": 15
+							},
+							{
+								"defaultValue": [
+
+								],
+								"description": "List of dimensions headers dragged as ‘Arcs’. If set to ordinal, you can set a color for each value. If set to linear, the app will try to find the minimum and maximum value contained in the dimension, and then creating a gradient among those two values.",
+								"option": "Color scale",
+								"id": 16
+							}
+						],
+						"createdAt": "2018-08-16T21:00:00.000Z",
+						"updatedAt": "2018-08-16T21:00:00.000Z"
+					},
+					{
+						"id": 1,
+						"type": "Other",
+						"name": "Bar chart",
+						"sysName": "barChart",
+						"description": "A bar chart or bar graph is a chart or graph that presents grouped data with rectangular bars with heights proportional to the values that they represent.",
+						"dimensionSettings": [
+							{
+								"multiple": false,
+								"description": "For each unique value found in the column, a group (a new bar chart) is created.",
+								"required": true,
+								"variable": "X Axis",
+								"type": [
+									"string",
+									"number"
+								],
+								"id": 1
+							},
+							{
+								"multiple": false,
+								"description": "For each unique value found in the column, a bar is created.",
+								"required": false,
+								"variable": "Group",
+								"type": [
+									"string",
+									"number"
+								],
+								"id": 2
+							},
+							{
+								"multiple": false,
+								"description": "Accepts only columns containing numbers. The value will define the bar height.",
+								"required": false,
+								"variable": "Size",
+								"type": [
+									"number"
+								],
+								"id": 3
+							},
+							{
+								"multiple": false,
+								"description": "Can accept both number and strings. A color will be defined for each unique value found in the list.",
+								"required": false,
+								"variable": "Color",
+								"type": [
+									"string",
+									"number"
+								],
+								"id": 4
+							}
+						],
+						"customizeSettings": [
+							{
+								"id": 1,
+								"defaultValue": 800,
+								"description": "Artboard width in pixels.",
+								"option": "Width"
+							},
+							{
+								"id": 2,
+								"defaultValue": 600,
+								"description": "Artboard height in pixels.",
+								"option": "Height"
+							},
+							{
+								"id": 3,
+								"defaultValue": 40,
+								"description": "Margin for left side of a bar chart, in pixel.",
+								"option": "Left Margin"
+							},
+							{
+								"id": 4,
+								"defaultValue": 0,
+								"description": "Distance among bar charts, in pixel.",
+								"option": "Vertical Padding"
+							},
+							{
+								"id": 5,
+								"defaultValue": 0.1,
+								"description": "Distance between bars, in percentage of the size of the bar (0 = 0%, 1 = 100%).",
+								"option": "Horizontal Padding"
+							},
+							{
+								"id": 6,
+								"defaultValue": false,
+								"description": "If set, every barchart element will have the same scale.",
+								"option": "Use Same Scale"
+							},
+							{
+								"id": 7,
+								"defaultValue": [
+
+								],
+								"description": "List of uniques values in the dimension mapped as “color”. If set to ordinal, you can set a color for each value. If set to linear, the app will try to find the minimum and maximum value contained in the dimension, and then creating a gradient among those two values.",
+								"option": "Colour Scale"
+							}
+						],
+						"createdAt": "2018-08-16T21:00:00.000Z",
+						"updatedAt": "2018-08-16T21:00:00.000Z"
+					},
+					{
+						"id": 4,
+						"type": "Time chunks",
+						"name": "Gantt Chart",
+						"sysName": "ganttChart",
+						"description": "A Gantt chart is a type of bar chart, developed by Henry Gantt in the 1910s, that illustrates a project schedule. Gantt charts illustrate the start and finish dates of the terminal elements and summary elements of a project.",
+						"dimensionSettings": [
+							{
+								"multiple": false,
+								"description": "For each unique value found in the column, a group (an horizontal series of bars) is created.",
+								"required": true,
+								"variable": "Group",
+								"type": [
+									"string",
+									"number",
+									"date"
+								],
+								"id": 9
+							},
+							{
+								"multiple": false,
+								"description": "Starting point of the bar. RAWGraphs requires dates in a specific format.",
+								"required": true,
+								"variable": "Start date",
+								"type": [
+									"date"
+								],
+								"id": 10
+							},
+							{
+								"multiple": false,
+								"description": "Ending point of the bar. RAWGraphs requires dates in a specific format.",
+								"required": true,
+								"variable": "End date",
+								"type": [
+									"date"
+								],
+								"id": 11
+							},
+							{
+								"multiple": false,
+								"description": "Can accept both number and strings. A color will be defined for each unique value found in the list.",
+								"required": false,
+								"variable": "Color",
+								"type": [
+									"string"
+								],
+								"id": 12
+							}
+						],
+						"customizeSettings": [
+							{
+								"defaultValue": 900,
+								"description": "Artboard width in pixels",
+								"option": "Width",
+								"id": 23
+							},
+							{
+								"defaultValue": 600,
+								"description": "Artboard height in pixels",
+								"option": "Height",
+								"id": 24
+							},
+							{
+								"defaultValue": 80,
+								"description": "Artboard height in pixels",
+								"option": "Left Margin",
+								"id": 25
+							},
+							{
+								"defaultValue": 80,
+								"description": "Artboard height in pixels",
+								"option": "Align Labels To Bar",
+								"id": 26
+							},
+							{
+								"defaultValue": [
+									"Start date (ascending)",
+									"Start date (descending)",
+									"name"
+								],
+								"description": "Order of the bars series. Could be alphabetical or by date (both ascending and descending)",
+								"option": "Sort By",
+								"id": 27
+							},
+							{
+								"defaultValue": [
+
+								],
+								"description": "If set to ordinal, you can set a color for each value; it lists all the unique values in the dimension mapped as “color”. If set to linear, the app will try to find the minimum and maximum value contained in the dimension, and then it creates a gradient among those two values",
+								"option": "Color scale",
+								"id": 28
+							}
+						],
+						"createdAt": "2018-08-16T21:00:00.000Z",
+						"updatedAt": "2018-08-16T21:00:00.000Z"
+					},
+					{
+						"id": 3,
+						"type": "Multi categorical",
+						"name": "Alluvial Diagram",
+						"sysName": "alluvialDiagram",
+						"description": "Alluvial diagrams allow to represent flows and to see correlations between categorical dimensions, visually linking to the number of elements sharing the same categories. It is useful to see the evolution of cluster (such as the number of people belonging",
+						"dimensionSettings": [
+							{
+								"multiple": true,
+								"description": "It accept multiple values, at least two column must be selected. Each dragged column will define a step (a vertical group of nodes). The dragging order is also the visualization order. For each unique value found in each column a node will be created.",
+								"required": true,
+								"variable": "Steps",
+								"type": [
+									"string",
+									"number",
+									"date"
+								],
+								"id": 7
+							},
+							{
+								"multiple": false,
+								"description": "Defines the weight of each line of the dataset. If not defined, all the lines will have the same weight.",
+								"required": false,
+								"variable": "Size",
+								"type": [
+									"number"
+								],
+								"id": 8
+							}
+						],
+						"customizeSettings": [
+							{
+								"defaultValue": 847,
+								"description": "Artboard width in pixels.",
+								"option": "Width",
+								"id": 17
+							},
+							{
+								"defaultValue": 500,
+								"description": "Artboard height in pixels.",
+								"option": "Height",
+								"id": 18
+							},
+							{
+								"defaultValue": 5,
+								"description": "Width of black bars representing nodes, in pixels.",
+								"option": "Nodes Width",
+								"id": 19
+							},
+							{
+								"defaultValue": 0.4,
+								"description": "Opacity of nodes.",
+								"option": "Links Opacity",
+								"id": 20
+							},
+							{
+								"defaultValue": [
+									"size",
+									"name",
+									"automatic"
+								],
+								"description": "Sorting of nodes inside each step. It can be ‘automatic’ (trying to reduce the number of overlappings among flows), ‘size’ (nodes ordered from the biggest to the smallest), and ‘alphabetical’.",
+								"option": "Sort By",
+								"id": 21
+							},
+							{
+								"defaultValue": [
+
+								],
+								"description": "The color of flows. The color is defined by the source node. For each unique value found in the dimension dragged as ‘steps’ a color is defined.",
+								"option": "Color scale",
+								"id": 22
+							}
+						],
+						"createdAt": "2018-08-16T21:00:00.000Z",
+						"updatedAt": "2018-08-16T21:00:00.000Z"
+					}
+				],
+				"isSuccess": true,
+				"errors": [
+
+				]
+			});
 		}
 	};
 
-	constructor(private action$: Actions) {}
+	constructor(
+		private action$: Actions,
+		private storeService: StoreService,
+	) {}
 
 	@Effect()
 	loadData$ = this.action$.pipe(
 		ofType(ChartsActionConstants.LOAD_CHARTS),
 		switchMap((action: any) =>
 			this.api.loadCharts().pipe(
-				map((value: Array<Chart>) => {
+				map(({payload}) => {
 					const {
 						result: all,
 						entities: { byId }
-					} = normalize(value, arrayOfCommonScheme);
+					} = normalize(payload, arrayOfCommonScheme);
 					return new chartActions.LoadChartsComplete({
 						charts: {
 							all,
@@ -302,5 +431,33 @@ export class ChartsEffects {
 				})
 			)
 		)
+	);
+
+	@Effect()
+	createChart$ = this.action$.pipe(
+		ofType(ChartsActionConstants.CREATE_CHART),
+		switchMap((action: CreateChart) => {
+		console.log(action);
+			return this.storeService.createSubscription(getFirstChart).pipe(
+				map(fchart => {
+					const chart = {
+						id: 'uuid',
+						chartTypeId: fchart.type,
+						datasetId: action.payload.datatsetId,
+						customizeSettings: [...fchart.customizeSettings],
+						dimensionSettings: [...fchart.dimensionSettings]
+					};
+
+					const { entities }= normalize(
+						chart,
+						chartScheme
+					);
+
+					return new CreateChartComplete({
+						entities
+					})
+				})
+			)
+		})
 	);
 }

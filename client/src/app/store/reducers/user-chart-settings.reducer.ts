@@ -1,7 +1,9 @@
 import { ProjectsActionConstants } from '@app/store/actions/projects/projects.action-types';
 import { Actions as projectActions } from '@app/store/actions/projects/projects.actions';
+import { Actions as chartActions } from '@app/store/actions/charts/charts.actions';
 import { UserChartSettingsState } from '@app/models/chart.model';
 import { combineReducers } from '@ngrx/store';
+import {ChartsActionConstants} from '@app/store/actions/charts/charts.action-types';
 
 export const initialState: UserChartSettingsState = {
 	dimensionSettings: {},
@@ -10,11 +12,16 @@ export const initialState: UserChartSettingsState = {
 
 const dimensionSettings = (
 	state = initialState.dimensionSettings,
-	action: projectActions
+	action: projectActions | chartActions
 ) => {
 	switch (action.type) {
 		case ProjectsActionConstants.LOAD_ONE_PROJECT__COMPLETE:
 			return action.payload.entities.dimensionSetting;
+		case ChartsActionConstants.CREATE_CHART__COMPLETE:
+			return {
+				...state,
+				...action.payload.entities.dimensionSetting
+			};
 		default:
 			return state;
 	}
@@ -22,11 +29,16 @@ const dimensionSettings = (
 
 const customizeSettings = (
 	state = initialState.customizeSettings,
-	action: projectActions
+	action: projectActions | chartActions
 ) => {
 	switch (action.type) {
 		case ProjectsActionConstants.LOAD_ONE_PROJECT__COMPLETE:
 			return action.payload.entities.customizeSetting;
+		case ChartsActionConstants.CREATE_CHART__COMPLETE:
+			return {
+				...state,
+				...action.payload.entities.customizeSetting
+			};
 		default:
 			return state;
 	}

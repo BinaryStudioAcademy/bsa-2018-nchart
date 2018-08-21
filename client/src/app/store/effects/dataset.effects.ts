@@ -8,12 +8,12 @@ import {DatasetActions} from '@app/store/actions/datasets/datasets.action-types'
 import {ParseByFile, ParseByLink, ParseByText} from '@app/store/actions/datasets/datasets.actions';
 import {DatasetDomainService} from '@app/api/domains/source/dataset-domain.service';
 import {DatasetService} from '@app/services/dataset.service';
-import {AppState } from '@app/models';
 import {datasetScheme} from '@app/schemes/dataset.schema';
 import {normalize} from 'normalizr';
-import {select, Store} from '@ngrx/store';
 import {withLatestFrom} from 'rxjs/internal/operators';
 import {getActive} from '@app/store/selectors/projects.selectors';
+import {CreateChart} from '@app/store/actions/charts/charts.actions';
+import {StoreService} from '@app/services/store.service';
 
 @Injectable()
 export class DatasetEffects {
@@ -22,7 +22,7 @@ export class DatasetEffects {
 		private action$: Actions,
 		private datasetDomService: DatasetDomainService,
 		private datasetService: DatasetService,
-		private store$: Store<AppState>
+		private storeService: StoreService,
 	) {}
 
 	@Effect()
@@ -33,17 +33,22 @@ export class DatasetEffects {
 				switchMap(({payload}) => {
 					return this.datasetService.createDataset(payload.columns, payload.data);
 				}),
-				withLatestFrom(this.store$.pipe(select(getActive))),
-				map(([dataset, projectId]) => {
+				withLatestFrom(this.storeService.createSubscription(getActive)),
+				switchMap(([dataset, projectId]) => {
 					const { result: [datasetId], entities } = normalize(
 						this.datasetService.transformDatasets([dataset]),
 						[datasetScheme]
 					);
-					return new constants.ParseComplete({
-						entities,
-						datasetId,
-						projectId
-					});
+					return	[
+						new constants.ParseComplete({
+							entities,
+							datasetId,
+							projectId
+						}),
+						new CreateChart({
+							datatsetId:  datasetId
+						})
+					]
 				}),
 				catchError(error => {
 					return of(
@@ -66,7 +71,7 @@ export class DatasetEffects {
 				switchMap(({payload}) => {
 					return this.datasetService.createDataset(payload.columns, payload.data);
 				}),
-				withLatestFrom(this.store$.pipe(select(getActive))),
+				withLatestFrom(this.storeService.createSubscription(getActive)),
 				map(([dataset, projectId]) => {
 					const { result: [datasetId], entities } = normalize(
 						this.datasetService.transformDatasets([dataset]),
@@ -99,7 +104,7 @@ export class DatasetEffects {
 					switchMap(({payload}) => {
 						return this.datasetService.createDataset(payload.columns, payload.data);
 					}),
-					withLatestFrom(this.store$.pipe(select(getActive))),
+					withLatestFrom(this.storeService.createSubscription(getActive)),
 					map(([dataset, projectId]) => {
 						const { result: [datasetId], entities } = normalize(
 							this.datasetService.transformDatasets([dataset]),

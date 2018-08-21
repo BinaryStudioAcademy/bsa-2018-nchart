@@ -18,4 +18,22 @@ export class LoadChartsFailed extends FailedAction {
 	readonly type = ChartsActionConstants.LOAD_CHARTS__FAILED;
 }
 
-export type Actions = LoadCharts | LoadChartsComplete | LoadChartsFailed;
+export class SelectChart extends AppAction<any> {
+	readonly type = ChartsActionConstants.SELECT_CHART;
+}
+
+export class CreateChart extends AppAction<{
+	datatsetId: string | number
+}> {
+	readonly type = ChartsActionConstants.CREATE_CHART;
+}
+
+export class CreateChartComplete extends AppAction<any> {
+	readonly type = ChartsActionConstants.CREATE_CHART__COMPLETE;
+}
+
+export class SelectChartComplete extends AppAction<any> {
+	readonly type = ChartsActionConstants.SELECT_CHART__COMPLETE;
+}
+
+export type Actions = LoadCharts | LoadChartsComplete | LoadChartsFailed | SelectChart | SelectChartComplete | CreateChartComplete | CreateChart;

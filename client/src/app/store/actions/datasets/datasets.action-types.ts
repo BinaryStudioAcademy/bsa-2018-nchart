@@ -4,4 +4,9 @@ export enum DatasetActions {
 	PARSE_FROM_FILE = 'Dataset: PARSE_FROM_FILE',
 	PARSE_DATA__COMPLETE = 'Dataset: PARSE_DATA__COMPLETE',
 	PARSE_DATA__FAILED = 'Dataset: PARSE_DATA__COMPLETE',
+
+	CHANGE_CONTENT = 'Dataset data: CHANGE_CONTENT',
+	CHANGE_HEADER_TITLE = 'Dataset data: CHANGE_HEADER_TITLE',
+	DELETE_COLUMN = 'Dataset data: DELETE_COLUMN',
+	DELETE_ROW = 'Dataset data: DELETE_ROW'
 }

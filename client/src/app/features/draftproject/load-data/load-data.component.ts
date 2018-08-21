@@ -5,7 +5,10 @@ import {
 	patternValidator
 } from '../../../shared/components/form-field/form-validators';
 import {StoreService} from '@app/services/store.service';
-import {ParseByFile, ParseByLink, ParseByText} from '@app/store/actions/datasets/datasets.actions';
+import {
+	ChangeContent, ChangeHeaderTitle, ParseByFile, ParseByLink,
+	ParseByText
+} from '@app/store/actions/datasets/datasets.actions';
 // import { StoreService } from '@app/services/store.service';
 
 @Component({
@@ -50,5 +53,19 @@ export class LoadDataComponent implements OnInit {
 			const text = this.pasteDataControl.value;
 			this.storeService.dispatch(new ParseByText({text}));
 		}
+	}
+
+	edit() {
+		this.storeService.dispatch(new ChangeHeaderTitle({
+			id: 1,
+			title: 'This is new title'
+		}))
+	}
+
+	editC() {
+		this.storeService.dispatch(new ChangeContent({
+			id: '0-0-1',
+			value: 'This is new content'
+		}))
 	}
 }
