@@ -1,4 +1,10 @@
-$animation-speed: 1s
+$animation-speed: 2s
+
+$small: 20px
+$middle: 40px
+$big: 100px
+
+
   
 @keyframes lds-double-ring 
   0% 
@@ -18,17 +24,13 @@ $animation-speed: 1s
     -webkit-transform: rotate(-360deg)
     transform: rotate(-360deg)
   
-.with-spiner
+.with-spinner
   position: relative
 
-.spiner-container
+.spinner-container
   position: absolute
   top: 0
   left: 0
-  width: 100%
-  height: 100%
-
-.lds-double-ring
   width: 100%
   height: 100%
 
@@ -57,4 +59,24 @@ $animation-speed: 1s
     width: 60%
     height: 60%
 
-  
+.lds-double-ring.big
+  width: $big
+  height: $big
+  .inner-section,
+  .outer-section
+    border-width: $big*0.077
+
+.lds-double-ring.middle
+  width: $middle
+  height: $middle
+  .inner-section,
+  .outer-section
+    border-width: $middle*0.077
+
+.lds-double-ring.small  
+  @extend  .lds-double-ring.middle
+  transform: scale($small/$middle)
+
+
+
+
