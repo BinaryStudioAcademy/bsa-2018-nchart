@@ -12,7 +12,7 @@ WORKDIR $APP_ROOT/client
 RUN npm i -g @angular/cli \
     && npm i -g typescript \
     && npm i \
-    && npm run build
+    && npm run build-prod
 
 WORKDIR $APP_ROOT/client/dist/client
 
@@ -24,4 +24,4 @@ RUN npm i
 
 EXPOSE 8080
 
-CMD ["node", "bin/www"]
+CMD ["node", "--experimental-worker ", "bin/www"]
