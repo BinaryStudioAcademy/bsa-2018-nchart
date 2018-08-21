@@ -11,12 +11,16 @@ project.get('/', (req, res, next) => {
 
 project.get('/:id/export', (req, res) => {
 	PdfService.createPdf(req.params.id).then(result => {
-		res.writeHead(200, {
-			'Content-Disposition': 'inline',
-			'Content-Length': result.length,
-			'Content-Type': 'application/pdf'
-		});
-		res.end(result);
+		if (result) {
+			res.writeHead(200, {
+				'Content-Disposition': 'inline',
+				'Content-Length': result.length,
+				'Content-Type': 'application/pdf'
+			});
+			res.end(result);
+		} else {
+			res.send(400);
+		}
 	});
 });
 
