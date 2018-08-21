@@ -25,9 +25,7 @@
 							"node_modules/primeng/resources/primeng.min.css",
 							"src/styles.sass"
 						],
-						"scripts": [
-							"./node_modules/particles.js/particles.js"
-						]
+						"scripts": ["./node_modules/particles.js/particles.js"]
 					},
 					"configurations": {
 						"production": {

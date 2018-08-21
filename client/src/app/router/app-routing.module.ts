@@ -31,7 +31,7 @@ const appRoutes: Routes = [
 			// },
 			{
 				path: '',
-				component: LandingPageComponent,
+				component: LandingPageComponent
 			},
 			{
 				path: 'project/draft',
