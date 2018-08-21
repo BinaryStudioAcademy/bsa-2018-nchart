@@ -204,8 +204,7 @@ storiesOf('Input fields', module)
 	.add('ToggleDisabled', () => ({
 		component: ToggleComponent,
 		props: {
-			disabled: true,
-			control: new FormControl()
+			control: new FormControl({value:"", disabled:true})
 		}
 	}))
 	.add('Spinner', () => ({
