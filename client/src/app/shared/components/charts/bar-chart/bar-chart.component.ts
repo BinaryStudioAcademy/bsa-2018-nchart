@@ -15,10 +15,14 @@ export class BarChartComponent implements OnChanges {
   @Input() range = 200;
   @Input() leftMargin = 20;
   @Input() verticalPadding = 30;
-  @Input() horizontalPadding = 0.1;
+  @Input() innerPadding = 0.1;
+  @Input() outerPadding = 0.1;
   
+  outerWidth = this.width + 10;
+
   xScale: d3.ScaleBand<string> = null;
   yScale: d3.ScaleLinear<number, number> = null;
+
   transform = '';
   axisBottomTransform = '';
   axisLeftTransform = ''
@@ -30,13 +34,16 @@ export class BarChartComponent implements OnChanges {
   xCoordinates: number[] = [];
   
   ngOnChanges() {
-    console.log(this.data);
-  
+    if(this.data != undefined){
+    this.outerWidth = this.width + 10;
     this.chartWidth = this.width - this.leftMargin;
     this.chartHeight = this.height - this.verticalPadding;
     this.xScale = d3.scaleBand()
-      .domain(this.data.map((item: Datum)=>item.name)).range([0, this.chartWidth])
-      .paddingInner(this.horizontalPadding);
+      .domain(this.data.map((item: Datum)=>item.name))
+      .range([0, this.chartWidth])
+      .paddingInner(this.innerPadding)
+      .paddingOuter(this.outerPadding);
+
     this.yScale = d3.scaleLinear()
       .domain([0, this.range])
       .range([this.chartHeight, 0]);
@@ -46,10 +53,11 @@ export class BarChartComponent implements OnChanges {
     
     
 
-    this.transform = `scale(1, -1) translate(${this.leftMargin}, ${- this.chartHeight})`;
-    this.axisBottomTransform = `translate(${this.leftMargin}, ${this.chartHeight})`;
-    this.axisLeftTransform = `translate(${this.leftMargin}, 0)`;
+    this.transform = `scale(1, -1) translate(${this.leftMargin}, ${- this.chartHeight - 5})`;
+    this.axisBottomTransform = `translate(${this.leftMargin}, ${this.chartHeight + 5})`;
+    this.axisLeftTransform = `translate(${this.leftMargin}, 5)`;
   }
+}
 
   clampHeight(value: number) {
     if (value < 0) {

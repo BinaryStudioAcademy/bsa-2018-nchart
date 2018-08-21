@@ -3,6 +3,7 @@ export interface BarChartCustomizeSettings {
     height:number,
     leftMargin:number,
     verticalPadding: number,
-    horizontalPadding: number,
+    innerPadding: number,
+    outerPadding: number,
     isSameScaling: boolean
 }

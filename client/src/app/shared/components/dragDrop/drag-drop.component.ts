@@ -2,9 +2,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DragulaService } from 'ng2-dragula';
 import { Subscription } from 'rxjs';
 import { ChartService } from '../../../services/chart.service';
+import { data } from '@app/shared/components/charts/test-chart/test-data';
 
 class Column {
-	constructor(public variable: string, public type: string) {}
+	constructor(public variable: string, public type: string, public data: Array<any>) {}
 }
 
 @Component({
@@ -53,8 +54,16 @@ export class DragDropComponent implements OnInit, OnDestroy {
 	];
 
 	public columns = [
-		{ variable: 'Month', type: 'string' },
-		{ variable: 'Days', type: 'number' }
+		{ variable: 'Month', type: 'string' , data:[
+			'Jan', 'Feb', 'Mar', 
+			'Jan', 'Mar', 'Apr',
+			'Jan', 'Jun', 'Jul'
+		]},
+		{ variable: 'Days', type: 'number', data:[
+			'1', '2', '3', 
+			'3', '3', '3',
+			'1', '2', '5'
+		] }
 	];
 	public dimensions = [];
 
@@ -65,7 +74,7 @@ export class DragDropComponent implements OnInit, OnDestroy {
 				return source.id === 'columns';
 			},
 			copyItem: (column: Column) => {
-				return new Column(column.variable, column.type);
+				return new Column(column.variable, column.type, column.data);
 			},
 			accepts: (el, target, source, sibling) => {
 				return target.id !== 'columns';
@@ -94,8 +103,8 @@ export class DragDropComponent implements OnInit, OnDestroy {
 					if (this.hasDuplicates(targetModel)) {
 						targetModel.splice(targetModel.indexOf(item), 1);
 					}
-					console.log(this.dimensionsSettings[0].value.length);
-					_chartService.initData(item.variable);
+					console.log(item.data);
+					_chartService.initData(item.data);
 				})
 		);
 	}

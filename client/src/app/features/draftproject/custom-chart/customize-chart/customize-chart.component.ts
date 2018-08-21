@@ -16,7 +16,8 @@ export class CustomizeChartComponent implements OnInit {
 		height: {option: "Height", value: 600},
 		leftMargin: {option: "Left margin", value: 40},
 		verticalPadding: {option: "Vertical padding", value: 17},
-		horizontalPadding: {option: "Horizontal padding", value: 0.2},
+		innerPadding: {option: "Inner padding", value: 0.2},
+		outerPadding: {option: "Outer padding", value: 0.2},
 		isSameScaling: {option: "Use same Scaling", value: true}
 	} 
 

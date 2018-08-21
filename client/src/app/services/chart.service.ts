@@ -9,8 +9,9 @@ export class ChartService {
 			width:800, 
 			height:600,
 			leftMargin:40,
-			verticalPadding:17,
-			horizontalPadding:0.2,
+			verticalPadding:20,
+			innerPadding:0.2,
+			outerPadding:0.2,
 			isSameScaling:false
 		};
 		
@@ -77,21 +78,20 @@ export class ChartService {
 			return Math.max(...this.data.map(o => o.value));
 		}
 
-		initData(variable:string){
-				this.originalData = this.testData;
+		initData(data:Array<any>){
+				this.originalData = data;
 				this.data = compressArray(mapData(this.originalData));
+				this.data = mapColors(this.data);
 				this.setData(this.data);
 				this.setRange();
 		}
 
 	constructor() {
-		this.values = this.originalValues;
+		/*this.values = this.originalValues;
 		this.data = compressArray(mapData(this.originalData));
 		this.data = mapColors(this.data);
-		console.log(this.data);
 		this.setData(this.data);
-		this.setRange();	
-		console.log(this.barChartCustomizeSettings);
+		this.setRange();	*/
 	}
 	
 }
