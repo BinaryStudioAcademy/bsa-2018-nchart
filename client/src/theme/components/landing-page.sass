@@ -1,0 +1,47 @@
+@import ../variables
+@import ../colors
+
+.landing-header
+	background-color: transparent
+	padding: 160px 5.2rem 73px 5.2em
+	position: relative
+	box-sizing: border-box
+	display: flex
+	align-items: center
+	justify-content: space-between
+	overflow: hidden
+
+	.landing-text
+		width: 45%
+		min-width: 320px
+	
+	.description
+		font-size: 1.8rem
+		font-weight: 500
+		font-family: $fontFamily
+		&.label
+			font-size: 1.3rem
+			font-weight: 300
+			padding: 0.5rem 0
+
+	.landing-header-button
+		display: flex
+		padding-top: 1.2rem
+
+	.landing-image
+		height: 500px
+		width: 40rem
+		background-color: $secondaryTextColor
+		position: relative
+		transform: translateX(200px)
+		box-shadow: 0 2px 8px $teriaryColor
+		img
+			height: 100%
+			
+#particles-js 
+	position: absolute
+	top: 80px
+	left: 0
+	width: 100%
+	height: calc(100% - 80px)
+	z-index: -1
