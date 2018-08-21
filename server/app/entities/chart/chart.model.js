@@ -2,8 +2,8 @@ const Sequelize = require('sequelize');
 const sequelize = require('../../config/index');
 const ProjectChart = require('../project/project.models/project_chart');
 
-const Chart = sequelize.define('chart', {
-	typeId: {
+const Chart = sequelize.define('charts', {
+	chartTypeId: {
 		type: Sequelize.INTEGER,
 		allowNull: false
 	},

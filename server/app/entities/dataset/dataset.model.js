@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const sequelize = require('../../config/index');
 const Chart = require('../chart/chart.model');
 
-const Dataset = sequelize.define('dataset', {
+const Dataset = sequelize.define('datasets', {
 	data: {
 		type: Sequelize.JSON,
 		allowNull: false

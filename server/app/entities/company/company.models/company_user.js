@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../../../config/index');
 
-const CompanyUser = sequelize.define('companyUser', {
+const CompanyUser = sequelize.define('companyUsers', {
 	userId: {
 		type: Sequelize.INTEGER,
 		allowNull: false

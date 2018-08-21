@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../../../config/index');
 
-const GroupProject = sequelize.define('groupProject', {
+const GroupProject = sequelize.define('groupProjects', {
 	groupId: {
 		type: Sequelize.INTEGER,
 		allowNull: false

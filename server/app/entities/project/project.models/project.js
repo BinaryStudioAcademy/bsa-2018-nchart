@@ -3,7 +3,7 @@ const sequelize = require('../../../config/index');
 const ProjectChart = require('./project_chart');
 const GroupProject = require('../../group/group.models/group_project');
 
-const Project = sequelize.define('project', {
+const Project = sequelize.define('projects', {
 	name: {
 		type: Sequelize.STRING,
 		allowNull: false

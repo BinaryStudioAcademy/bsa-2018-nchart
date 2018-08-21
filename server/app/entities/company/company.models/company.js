@@ -4,7 +4,7 @@ const CompanyUser = require('./company_user');
 const CompanyChartType = require('./company_chart_type');
 const Group = require('../../group/group.models/group');
 
-const Company = sequelize.define('company', {
+const Company = sequelize.define('companies', {
 	name: {
 		type: Sequelize.STRING,
 		allowNull: false

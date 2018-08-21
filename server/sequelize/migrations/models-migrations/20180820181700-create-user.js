@@ -28,7 +28,7 @@ module.exports = {
 				type: Sequelize.STRING,
 				allowNull: false
 			},
-			defaultGroup: {
+			defaultGroupId: {
 				type: Sequelize.INTEGER,
 				allowNull: false
 			},

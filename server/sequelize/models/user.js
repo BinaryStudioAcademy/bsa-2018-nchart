@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
 			name: DataTypes.STRING,
 			email: DataTypes.STRING,
 			password: DataTypes.STRING,
-			defaultGroup: DataTypes.INTEGER
+			defaultGroupId: DataTypes.INTEGER
 		},
 		{}
 	);

@@ -3,7 +3,7 @@ const sequelize = require('../../../config/index');
 const GroupUser = require('./group_user');
 const GroupProject = require('./group_project');
 
-const Group = sequelize.define('group', {
+const Group = sequelize.define('groups', {
 	name: {
 		type: Sequelize.STRING,
 		allowNull: false
