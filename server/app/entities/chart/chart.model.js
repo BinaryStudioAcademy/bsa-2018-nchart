@@ -7,7 +7,11 @@ const Chart = sequelize.define('charts', {
 		type: Sequelize.INTEGER,
 		allowNull: false
 	},
-	userSettings: {
+	dimensionSettings: {
+		type: Sequelize.JSON,
+		allowNull: false
+	},
+	customizeSettings: {
 		type: Sequelize.JSON,
 		allowNull: false
 	},
@@ -19,12 +23,12 @@ const Chart = sequelize.define('charts', {
 
 Chart.sync().then(() => {
 	ProjectChart.sync().then(() => Chart.hasMany(ProjectChart, {
-		foreignKey: 'chartId',
+		foreignKey: 'chartTypeId',
 		sourceKey: 'id',
 		onDelete: 'CASCADE',
 		constraints: false
 	}));
-	ProjectChart.belongsTo(Chart, { foreignKey: 'chartId' });
+	ProjectChart.belongsTo(Chart, { foreignKey: 'chartTypeId' });
 });
 
 module.exports = Chart;

@@ -132,6 +132,9 @@ module.exports = {
 							primaryKey: true,
 							type: Sequelize.INTEGER
 						},
+						columns: {
+							type: Sequelize.JSON
+						},
 						data: {
 							type: Sequelize.JSON
 						},
@@ -287,7 +290,10 @@ module.exports = {
 							type: Sequelize.INTEGER,
 							references: { model: 'chartTypes', key: 'id' }
 						},
-						userSettings: {
+						dimensionSettings: {
+							type: Sequelize.JSON
+						},
+						customizeSettings: {
 							type: Sequelize.JSON
 						},
 						datasetId: {

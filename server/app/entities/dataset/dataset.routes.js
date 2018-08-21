@@ -1,26 +1,26 @@
-const chartType = require('express').Router();
-const chartTypeService = require('./chartType.service');
+const dataset = require('express').Router();
+const datasetService = require('./dataset.service');
 const PayloadGeneratorService = require('../../common/services/payload-generator.service');
 
-chartType.get('/', (req, res, next) => {
-	chartTypeService
+dataset.get('/', (req, res, next) => {
+	datasetService
 		.getAll()
 		.then(PayloadGeneratorService.nextWithData(next, res))
 		.catch(next);
 });
 
-chartType.get('/:id', (req, res, next) => {
-	chartTypeService
+dataset.get('/:id', (req, res, next) => {
+	datasetService
 		.getById(Number(req.params.id))
 		.then(PayloadGeneratorService.nextWithData(next, res))
 		.catch(next);
 });
 
-chartType.post('/', (req, res, next) => {
-	chartTypeService
-		.save(req.body)
+dataset.post('/', (req, res, next) => {
+	datasetService
+		.handleDataset(req.body.datasets)
 		.then(PayloadGeneratorService.nextWithData(next, res))
 		.catch(next);
 });
 
-module.exports = chartType;
+module.exports = dataset;

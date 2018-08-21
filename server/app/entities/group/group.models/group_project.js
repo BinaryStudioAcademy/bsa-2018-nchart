@@ -4,11 +4,13 @@ const sequelize = require('../../../config/index');
 const GroupProject = sequelize.define('groupProjects', {
 	groupId: {
 		type: Sequelize.INTEGER,
-		allowNull: false
+		allowNull: false,
+		primaryKey: true
 	},
 	projectId: {
 		type: Sequelize.INTEGER,
-		allowNull: false
+		allowNull: false,
+		primaryKey: true
 	},
 	accessLevelId: {
 		type: Sequelize.INTEGER,
@@ -16,7 +18,6 @@ const GroupProject = sequelize.define('groupProjects', {
 	}
 });
 
-// this method creates table if it doesn't exit
 GroupProject.sync();
 
 module.exports = GroupProject;
