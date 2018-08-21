@@ -33,7 +33,7 @@ import { AngularResizedEventModule } from 'angular-resize-event';
 		DragDropComponent,
 		MainBlockComponent,
 		LinkComponent,
-		LoadingSpiner
+		LoadingSpinerComponent
 	]
 })
 export class SharedModule {}

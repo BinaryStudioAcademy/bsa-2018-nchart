@@ -7,13 +7,12 @@
 >
     <div
         class="ring-container"
-      
         (resized)="onRingResized($event)"
+        [ngStyle]="getRingContainerStyle()"
     >
         <div
             class="lds-double-ring"
             [ngStyle]="getDoubleRingStyle()"
-            
         >
             <div
                 class="outer-section"

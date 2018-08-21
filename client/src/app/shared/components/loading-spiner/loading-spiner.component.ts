@@ -26,6 +26,9 @@ export class LoadingSpinerComponent implements OnInit {
 		return this.loadingSp;
 	}
 
+	@Input()
+	size = '50%';
+
 	private doubleRingSize: number;
 
 	constructor() {}
@@ -52,6 +55,16 @@ export class LoadingSpinerComponent implements OnInit {
 			['height']: `${this.doubleRingSize}px`
 		};
 	}
+
+	getRingContainerStyle() {
+		return {
+			['width']: this.size,
+			['height']: this.size,
+			['max-width']: '100%',
+			['max-height']: '100%'
+		};
+	}
+
 	private get sectionSize() {
 		return this.doubleRingSize * LoadingSpinerComponent.borderSizeRatio;
 	}
