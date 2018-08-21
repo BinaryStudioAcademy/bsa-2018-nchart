@@ -25,7 +25,7 @@ const byId = (state = initialState.byId, action: ChartsActions) => {
 		case ChartsActionConstants.LOAD_CHARTS:
 			return {};
 		case ChartsActionConstants.LOAD_CHARTS__COMPLETE:
-			return action.payload.charts.byId;
+			return action.payload.charts.entities.chart;
 		default:
 			return state;
 	}

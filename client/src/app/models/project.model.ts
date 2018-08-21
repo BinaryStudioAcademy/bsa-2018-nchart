@@ -6,6 +6,7 @@ import {
 	DatasetColumnState
 } from '@app/models/dataset.model';
 import {
+	UserChart,
 	Chart,
 	CustomizeSettingsState,
 	DimensionSettingsState
@@ -30,7 +31,7 @@ export class OriginProject {
 }
 
 export interface ProjectEntities {
-	chart: NormalizedSchemeField<Chart<SchemeID[], SchemeID>>;
+	chart: NormalizedSchemeField<UserChart>;
 	customizeSetting: CustomizeSettingsState;
 	dimensionSetting: DimensionSettingsState;
 	dataset: DatasetState;

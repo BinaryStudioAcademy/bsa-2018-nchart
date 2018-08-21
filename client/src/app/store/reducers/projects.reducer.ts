@@ -3,8 +3,8 @@ import { combineReducers } from '@ngrx/store';
 import { ProjectsState } from '@app/models';
 import { ProjectsActionConstants as constants } from '@app/store/actions/projects/projects.action-types';
 import { SchemeID } from '@app/models/normalizr.model';
-import {DatasetActions} from '@app/store/actions/datasets/datasets.action-types';
-import {Actions as datasetsActions} from '@app/store/actions/datasets/datasets.actions';
+import { DatasetActions } from '@app/store/actions/datasets/datasets.action-types';
+import { Actions as datasetsActions } from '@app/store/actions/datasets/datasets.actions';
 
 export const initialState: ProjectsState = {
 	byId: {},
@@ -28,7 +28,10 @@ const all = (state = initialState.all, action: ProjectsActions) => {
 	}
 };
 
-const byId = (state = initialState.byId, action: ProjectsActions | datasetsActions) => {
+const byId = (
+	state = initialState.byId,
+	action: ProjectsActions | datasetsActions
+) => {
 	switch (action.type) {
 		case constants.LOAD_PROJECTS:
 			return {};
@@ -49,7 +52,10 @@ const byId = (state = initialState.byId, action: ProjectsActions | datasetsActio
 				...state,
 				[action.payload.projectId]: {
 					...state[action.payload.projectId],
-					datasets: [...state[action.payload.projectId].datasets, action.payload.datasetId]
+					datasets: [
+						...state[action.payload.projectId].datasets,
+						action.payload.datasetId
+					]
 				}
 			};
 		default:

@@ -1,6 +1,14 @@
 import { UserState } from './user-store.model';
 import { ErrorHandlerState } from './error-store.model';
 import {
+	DefaultChartSettingsState,
+	UserChartSettingsState
+} from '@app/models/chart.model';
+import {
+	DatasetColumnState,
+	DatasetDataState
+} from '@app/models/dataset.model';
+import {
 	ChartsState,
 	UserChartsState,
 	DatasetState,
@@ -30,8 +38,8 @@ export interface AppState {
 	charts: ChartsState;
 	datasets: DatasetState;
 	userCharts: UserChartsState;
-	datasetColumns: any;
-	datasetData: any;
-	defaultChartSettings: any;
-	userChartSettings: any;
+	datasetColumns: DatasetColumnState;
+	datasetData: DatasetDataState;
+	defaultChartSettings: DefaultChartSettingsState;
+	userChartSettings: UserChartSettingsState;
 }

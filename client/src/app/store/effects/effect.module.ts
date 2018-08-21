@@ -4,7 +4,7 @@ import { UserEffects } from '@app/store/effects/user.effects';
 import { CompaniesEffects } from '@app/store/effects/companies.effects';
 import { ProjectsEffects } from '@app/store/effects/projects.effects';
 import { ChartsEffects } from '@app/store/effects/charts.effects';
-import {DatasetEffects} from '@app/store/effects/dataset.effects';
+import { DatasetEffects } from '@app/store/effects/dataset.effects';
 
 @NgModule({
 	imports: [

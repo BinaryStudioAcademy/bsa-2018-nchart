@@ -1,8 +1,8 @@
 import { DatasetState } from '@app/models';
 import { ProjectsActionConstants } from '@app/store/actions/projects/projects.action-types';
 import { Actions as projectActions } from '@app/store/actions/projects/projects.actions';
-import {DatasetActions} from '@app/store/actions/datasets/datasets.action-types';
-import {Actions as datasetsActions } from '@app/store/actions/datasets/datasets.actions';
+import { DatasetActions } from '@app/store/actions/datasets/datasets.action-types';
+import { Actions as datasetsActions } from '@app/store/actions/datasets/datasets.actions';
 
 export const initialState: DatasetState = {};
 
@@ -22,4 +22,3 @@ export const datasetReducer = (
 			return state;
 	}
 };
-

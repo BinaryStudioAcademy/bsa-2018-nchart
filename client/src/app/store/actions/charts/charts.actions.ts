@@ -1,5 +1,9 @@
 import { AppAction, Chart, FailedAction } from '@app/models';
 import { ChartsActionConstants } from './charts.action-types';
+import { NormalizedSchemeField, SchemeID } from '@app/models/normalizr.model';
+import { DimensionOption, CustomizeOption } from '@app/models/chart.model';
+import { DimensionColumnMap } from '@app/models/chart.model';
+import { UserChart } from '@app/models/user-chart-store.model';
 
 export class LoadCharts extends AppAction<any> {
 	readonly type = ChartsActionConstants.LOAD_CHARTS;
@@ -7,8 +11,12 @@ export class LoadCharts extends AppAction<any> {
 
 export class LoadChartsComplete extends AppAction<{
 	charts: {
-		all: Array<string>;
-		byId: { [id: string]: Chart };
+		all: SchemeID[];
+		entities: {
+			dimensionSetting: NormalizedSchemeField<DimensionOption>;
+			customizeSetting: NormalizedSchemeField<CustomizeOption>;
+			chart: NormalizedSchemeField<Chart<SchemeID[], SchemeID[]>>;
+		};
 	};
 }> {
 	readonly type = ChartsActionConstants.LOAD_CHARTS__COMPLETE;
@@ -23,12 +31,21 @@ export class SelectChart extends AppAction<any> {
 }
 
 export class CreateChart extends AppAction<{
-	datatsetId: string | number
+	datatsetId: SchemeID;
 }> {
 	readonly type = ChartsActionConstants.CREATE_CHART;
 }
 
-export class CreateChartComplete extends AppAction<any> {
+export class CreateChartComplete extends AppAction<{
+	chart: {
+		chartId: SchemeID;
+		entities: {
+			chart: NormalizedSchemeField<UserChart>;
+			dimensionSetting: NormalizedSchemeField<DimensionColumnMap>;
+			customizeSetting: NormalizedSchemeField<CustomizeOption>;
+		};
+	};
+}> {
 	readonly type = ChartsActionConstants.CREATE_CHART__COMPLETE;
 }
 
@@ -36,4 +53,11 @@ export class SelectChartComplete extends AppAction<any> {
 	readonly type = ChartsActionConstants.SELECT_CHART__COMPLETE;
 }
 
-export type Actions = LoadCharts | LoadChartsComplete | LoadChartsFailed | SelectChart | SelectChartComplete | CreateChartComplete | CreateChart;
+export type Actions =
+	| LoadCharts
+	| LoadChartsComplete
+	| LoadChartsFailed
+	| SelectChart
+	| SelectChartComplete
+	| CreateChartComplete
+	| CreateChart;

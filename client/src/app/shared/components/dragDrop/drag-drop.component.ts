@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { DragulaService } from 'ng2-dragula';
 import { Subscription } from 'rxjs';
 
@@ -12,50 +12,12 @@ class Column {
 })
 export class DragDropComponent implements OnInit, OnDestroy {
 	DIMENSIONS = 'DIMENSIONS';
-	public dimensionsSettings = [
-		{
-			variable: 'X-Axis',
-			multiple: false,
-			required: true,
-			type: ['string', 'number'],
-			description:
-				'For each unique value found in the column, a group (a new bar chart) is created.',
-			value: []
-		},
-		{
-			variable: 'Group',
-			multiple: false,
-			required: false,
-			type: ['string', 'number'],
-			description:
-				'For each unique value found in the column, a bar is created.',
-			value: []
-		},
-		{
-			variable: 'Size',
-			multiple: false,
-			required: false,
-			type: ['number'],
-			description:
-				'Accepts only columns containing numbers. The value will define the bar height.',
-			value: []
-		},
-		{
-			variable: 'Color',
-			multiple: true,
-			required: false,
-			type: ['string', 'number'],
-			description:
-				'Can accept both number and strings. A color will be defined for each unique value found in the list.',
-			value: [{ variable: 'Box office', type: 'number' }]
-		}
-	];
 
-	public columns = [
-		{ variable: 'Movie', type: 'string' },
-		{ variable: 'Genre', type: 'number' },
-		{ variable: 'Box office', type: 'number' }
-	];
+	@Input()
+	dimensionsSettings = [];
+
+	@Input()
+	columns = [];
 	public dimensions = [];
 
 	subs = new Subscription();

@@ -5,6 +5,7 @@ import { LoginService } from '@app/services/login.service';
 import { SourceService } from '@app/services/source.service';
 import { ProjectService } from './project.service';
 import { DatasetService } from './dataset.service';
+import { ChartService } from './chart.service';
 
 @NgModule({
 	providers: [
@@ -13,7 +14,8 @@ import { DatasetService } from './dataset.service';
 		LoginService,
 		SourceService,
 		ProjectService,
-		DatasetService
+		DatasetService,
+		ChartService
 	]
 })
 export class ServiceModule {}

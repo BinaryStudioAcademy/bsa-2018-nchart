@@ -1,7 +1,10 @@
 import { SchemeID, NormalizedSchemeField } from './normalizr.model';
 import { NormalizedSchemeWithFetching } from './normalizr.model';
 
-export type ChartsState<R = undefined> = NormalizedSchemeWithFetching<Chart, R>;
+export type ChartsState<R = undefined> = NormalizedSchemeWithFetching<
+	Chart<SchemeID[], SchemeID[]>,
+	R
+>;
 
 type Gen = number | boolean | string;
 type chartValue = Gen | Gen[];
@@ -42,4 +45,9 @@ export type DimensionSettingsState = NormalizedSchemeField<DimensionColumnMap>;
 export interface UserChartSettingsState {
 	dimensionSettings: DimensionSettingsState;
 	customizeSettings: CustomizeSettingsState;
+}
+
+export interface DefaultChartSettingsState {
+	dimensionSettings: NormalizedSchemeField<DimensionOption>;
+	customizeSettings: NormalizedSchemeField<CustomizeOption>;
 }

@@ -1,11 +1,6 @@
 import { Injectable } from '@angular/core';
-import {
-	DatasetTable,
-	Dataset,
-	DatasetColumn,
-	DatasetData
-} from '@app/models';
-import {Observable, of} from 'rxjs/index';
+import { DatasetTable, Dataset, DatasetColumn, DatasetData } from '@app/models';
+import { Observable, of } from 'rxjs/index';
 import { v4 } from 'uuid';
 
 @Injectable()
@@ -36,8 +31,10 @@ export class DatasetService {
 		);
 	}
 
-	createDataset(columns: DatasetColumn[], data: any[][]): Observable<DatasetTable> {
-		const id = v4();
+	createDataset(
+		columns: DatasetColumn[],
+		data: any[][]
+	): Observable<DatasetTable> {
 		const dataset = {
 			id: v4(),
 			columns,

@@ -3,7 +3,7 @@ import { Actions as projectActions } from '@app/store/actions/projects/projects.
 import { Actions as chartActions } from '@app/store/actions/charts/charts.actions';
 import { UserChartSettingsState } from '@app/models/chart.model';
 import { combineReducers } from '@ngrx/store';
-import {ChartsActionConstants} from '@app/store/actions/charts/charts.action-types';
+import { ChartsActionConstants } from '@app/store/actions/charts/charts.action-types';
 
 export const initialState: UserChartSettingsState = {
 	dimensionSettings: {},
@@ -20,7 +20,7 @@ const dimensionSettings = (
 		case ChartsActionConstants.CREATE_CHART__COMPLETE:
 			return {
 				...state,
-				...action.payload.entities.dimensionSetting
+				...action.payload.chart.entities.dimensionSetting
 			};
 		default:
 			return state;
@@ -37,7 +37,7 @@ const customizeSettings = (
 		case ChartsActionConstants.CREATE_CHART__COMPLETE:
 			return {
 				...state,
-				...action.payload.entities.customizeSetting
+				...action.payload.chart.entities.customizeSetting
 			};
 		default:
 			return state;

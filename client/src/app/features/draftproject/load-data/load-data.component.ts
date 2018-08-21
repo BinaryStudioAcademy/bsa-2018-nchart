@@ -4,9 +4,12 @@ import {
 	requiredValidator,
 	patternValidator
 } from '../../../shared/components/form-field/form-validators';
-import {StoreService} from '@app/services/store.service';
+import { StoreService } from '@app/services/store.service';
 import {
-	ChangeContent, ChangeHeaderTitle, ParseByFile, ParseByLink,
+	ChangeContent,
+	ChangeHeaderTitle,
+	ParseByFile,
+	ParseByLink,
 	ParseByText
 } from '@app/store/actions/datasets/datasets.actions';
 // import { StoreService } from '@app/services/store.service';
@@ -26,13 +29,11 @@ export class LoadDataComponent implements OnInit {
 		requiredValidator('URL can`t be empty')
 	]);
 
-	constructor(
-		private storeService: StoreService
-	) {}
+	constructor(private storeService: StoreService) {}
 
 	loadFile(event) {
 		const file = event.files[0];
-		this.storeService.dispatch(new ParseByFile({file}));
+		this.storeService.dispatch(new ParseByFile({ file }));
 	}
 
 	onChange(e) {
@@ -44,28 +45,32 @@ export class LoadDataComponent implements OnInit {
 	loadUrl() {
 		if (this.pasteUrlControl.valid) {
 			const link = this.pasteUrlControl.value;
-			this.storeService.dispatch(new ParseByLink({link}));
+			this.storeService.dispatch(new ParseByLink({ link }));
 		}
 	}
 
 	pasteData() {
 		if (this.pasteDataControl.valid) {
 			const text = this.pasteDataControl.value;
-			this.storeService.dispatch(new ParseByText({text}));
+			this.storeService.dispatch(new ParseByText({ text }));
 		}
 	}
 
 	edit() {
-		this.storeService.dispatch(new ChangeHeaderTitle({
-			id: 1,
-			title: 'This is new title'
-		}))
+		this.storeService.dispatch(
+			new ChangeHeaderTitle({
+				id: 1,
+				title: 'This is new title'
+			})
+		);
 	}
 
 	editC() {
-		this.storeService.dispatch(new ChangeContent({
-			id: '0-0-1',
-			value: 'This is new content'
-		}))
+		this.storeService.dispatch(
+			new ChangeContent({
+				id: '0-0-1',
+				value: 'This is new content'
+			})
+		);
 	}
 }
