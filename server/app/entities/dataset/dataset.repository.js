@@ -8,14 +8,9 @@ class DatasetRepository extends Repository {
 		this.model = datasetModel;
 	}
 
-	updateMult(obj) {
+	upsertMulti(obj) {
 		this.model = datasetModel;
-		return TransactionService(obj, this.model, 'update');
-	}
-
-	saveMult(obj) {
-		this.model = datasetModel;
-		return TransactionService(obj, this.model, 'save');
+		return TransactionService(obj, this.model, 'upsert');
 	}
 }
 

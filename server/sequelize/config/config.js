@@ -1,4 +1,4 @@
-{
+module.exports = {
 	"development": {
 		"username": "postgres",
 		"password": "admin",
@@ -20,4 +20,4 @@
 		"host": "localhost",
 		"dialect": "postgres"
 	}
-}
+};

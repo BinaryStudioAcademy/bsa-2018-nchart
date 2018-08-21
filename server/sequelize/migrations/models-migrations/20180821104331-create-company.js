@@ -1,4 +1,3 @@
-
 module.exports = {
 	up: (queryInterface, Sequelize) => queryInterface.createTable('companies', {
 		id: {
@@ -19,5 +18,5 @@ module.exports = {
 			type: Sequelize.DATE
 		}
 	}),
-	down: (queryInterface) => queryInterface.dropTable('companies')
+	down: queryInterface => queryInterface.dropTable('companies')
 };

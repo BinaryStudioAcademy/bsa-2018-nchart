@@ -21,14 +21,9 @@ class ChartRepository extends Repository {
 		});
 	}
 
-	updateMult(obj) {
+	upsert(obj) {
 		this.model = chartModel;
-		return TransactionService(obj, this.model, 'update');
-	}
-
-	saveMult(obj) {
-		this.model = chartModel;
-		return TransactionService(obj, this.model, 'save');
+		return TransactionService(obj, this.model, 'upsert');
 	}
 
 	create(obj) {

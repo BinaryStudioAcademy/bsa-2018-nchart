@@ -1,4 +1,3 @@
-
 module.exports = {
 	up: (queryInterface, Sequelize) => Promise.all([
 		queryInterface.dropTable('users'),
@@ -43,5 +42,5 @@ module.exports = {
 		})
 	]),
 	// down: (queryInterface, Sequelize) => queryInterface.dropTable('users')
-	down: (queryInterface) => queryInterface.dropTable('users')
+	down: queryInterface => queryInterface.dropTable('users')
 };

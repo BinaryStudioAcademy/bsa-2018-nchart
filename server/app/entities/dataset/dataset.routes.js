@@ -18,7 +18,7 @@ dataset.get('/:id', (req, res, next) => {
 
 dataset.post('/', (req, res, next) => {
 	datasetService
-		.handleDataset(req.body.datasets)
+		.upsert(req.body.datasets)
 		.then(PayloadGeneratorService.nextWithData(next, res))
 		.catch(next);
 });

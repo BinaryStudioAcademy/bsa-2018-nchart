@@ -28,6 +28,19 @@ function TransactionService(objs, model, method) {
 				return Promise.all(promises);
 			});
 		}
+		if (method === 'upsert') {
+			return sequelize.transaction(t => {
+				const promises = [];
+				for (let i = 0; i < objs.length; i += 1) {
+					const newPromise = model.upsert(
+						objs[i],
+						{ transaction: t }
+					);
+					promises.push(newPromise);
+				}
+				return Promise.all(promises);
+			});
+		}
 	} else {
 		throw new Error('Incorrect usage of method');
 	}

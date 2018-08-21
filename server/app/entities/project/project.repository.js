@@ -7,26 +7,10 @@ class ProjectRepository extends Repository {
 		this.model = projectModel;
 	}
 
-	update(obj) {
-		return this.model.update(obj, {
-			where: {
-				id: obj.id
-			}
-		});
-	}
-
-	handleProjectReq(obj) {
-		if (obj.id) {
-			return this.model.update(
-				{ name: obj.name },
-				{
-					where: {
-						id: obj.id
-					}
-				}
-			);
-		}
-		return this.model.create({ name: obj.name });
+	upsert(obj) {
+		return this.model.upsert(
+			{ id: obj.id, name: obj.name }
+		);
 	}
 }
 

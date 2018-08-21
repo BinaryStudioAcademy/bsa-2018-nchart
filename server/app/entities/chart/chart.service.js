@@ -1,5 +1,4 @@
 const async = require('async');
-const _ = require('lodash');
 const ChartRepository = require('./chart.repository');
 
 class ChartService {
@@ -15,38 +14,14 @@ class ChartService {
 		return this.ChartRepository.getById(id);
 	}
 
-	handleCharts(obj) {
-		const objsToCreate = [];
-		const objToUpdate = [];
-		obj.forEach(element => {
-			if (element.id === null) {
-				objsToCreate.push(_.omit(element, 'id'));
-			} else objToUpdate.push(element);
-		});
+	upsert(obj) {
 		return new Promise((resolve, reject) => {
 			async.waterfall(
 				[
 					callback => {
-						this.ChartRepository.saveMult(objsToCreate)
-							.then(data => {
-								const payload = [];
-								data.forEach(el => {
-									const payloadEl = this.createChartPayload(
-										el
-									);
-									payload.push(payloadEl);
-								});
-								callback(null, payload);
-							})
-							.catch(err => {
-								callback(err, null);
-							});
-					},
-					(saved, callback) => {
-						this.ChartRepository.updateMult(objToUpdate)
+						this.ChartRepository.upsert(obj)
 							.then(() => {
-								const payload = saved.concat(objToUpdate);
-								callback(null, payload);
+								callback(null, obj);
 							})
 							.catch(err => {
 								callback(err, null);
@@ -61,17 +36,6 @@ class ChartService {
 				}
 			);
 		});
-	}
-
-	createChartPayload(data) {
-		this.payload = {
-			id: data.id,
-			chartTypeId: data.chartTypeId,
-			dimensionSettings: data.dimensionSettings,
-			customizeSettings: data.customizeSettings,
-			datasetId: data.datasetId
-		};
-		return this.payload;
 	}
 }
 

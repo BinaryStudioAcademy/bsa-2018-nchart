@@ -18,34 +18,17 @@ class ProjectService {
 			async.waterfall(
 				[
 					callback => {
-						this.ProjectRepository.handleProjectReq(obj.project)
-							.then(data => {
-								if (obj.project.id && data[0] === 1) {
-									return callback(null, {
-										project: {
-											id: obj.project.id,
-											name: obj.project.name
-										}
-									});
+						this.ProjectRepository.upsert(obj.project)
+							.then(() => callback(null, {
+								project: {
+									id: obj.project.id,
+									name: obj.project.name
 								}
-								if (data[0] === 0) {
-									throw new Error('Object did not exist');
-								} else {
-									const payload = this.createProjectPayload(
-										data
-									);
-									return callback(null, {
-										project: {
-											id: payload.id,
-											name: payload.name
-										}
-									});
-								}
-							})
+							}))
 							.catch(err => callback(err, null));
 					},
 					(payload, callback) => {
-						DatasetService.handleDataset(obj.project.datasets)
+						DatasetService.upsert(obj.project.datasets)
 							.then(data => {
 								callback(
 									null,
@@ -57,7 +40,7 @@ class ProjectService {
 							.catch(err => callback(err, null));
 					},
 					(payload, callback) => {
-						ChartService.handleCharts(obj.project.charts)
+						ChartService.upsert(obj.project.charts)
 							.then(data => {
 								callback(
 									null,
@@ -88,6 +71,7 @@ class ProjectService {
 			async.waterfall(
 				[
 					callback => {
+					// todo: ask if this correct way to check
 						GroupService.findOneByQuery({
 							groupId: obj.groupId,
 							userId: res.locals.user.id
@@ -115,6 +99,7 @@ class ProjectService {
 						GroupService.saveGroupProject({
 							groupId: obj.groupId,
 							projectId: payload.id,
+							// todo: where does this come from
 							accessLevelId: 1
 						})
 							.then(() => {
@@ -131,14 +116,6 @@ class ProjectService {
 				}
 			);
 		});
-	}
-
-	createProjectPayload(data) {
-		this.payload = {
-			id: data.id,
-			name: data.name
-		};
-		return this.payload;
 	}
 }
 

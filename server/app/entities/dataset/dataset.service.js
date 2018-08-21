@@ -1,5 +1,4 @@
 const async = require('async');
-const _ = require('lodash');
 const DatasetRepository = require('./dataset.repository');
 
 class DatasetService {
@@ -15,38 +14,19 @@ class DatasetService {
 		return this.DatasetRepository.getById(id);
 	}
 
-	handleDataset(obj) {
-		const objsToCreate = [];
-		const objToUpdate = [];
-		obj.forEach(element => {
-			if (element.id === null) {
-				objsToCreate.push(_.omit(element, 'id'));
-			} else objToUpdate.push(element);
-		});
+	upsert(obj) {
+		// todo: remove waterfall model
 		return new Promise((resolve, reject) => {
 			async.waterfall(
 				[
 					callback => {
-						this.DatasetRepository.saveMult(objsToCreate)
-							.then(data => {
-								const payload = [];
-								data.forEach(el => {
-									const payloadEl = this.createDatasetPayload(
-										el
-									);
-									payload.push(payloadEl);
-								});
-								callback(null, payload);
+						this.DatasetRepository.upsertMulti(obj)
+							.then(() => {
+								// todo: seems to be always success, add schema error handling
+								// return [[true][false]]
+								callback(null, obj);
 							})
 							.catch(err => callback(err, null));
-					},
-					(saved, callback) => {
-						this.DatasetRepository.updateMult(objToUpdate).then(
-							() => {
-								const payload = saved.concat(objToUpdate);
-								callback(null, payload);
-							}
-						);
 					}
 				],
 				(err, payload) => {
@@ -57,15 +37,6 @@ class DatasetService {
 				}
 			);
 		});
-	}
-
-	createDatasetPayload(data) {
-		this.payload = {
-			id: data.id,
-			columns: data.columns,
-			data: data.data
-		};
-		return this.payload;
 	}
 }
 
