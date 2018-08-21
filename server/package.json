@@ -32,6 +32,7 @@
 		"pretty-quick": "^1.6.0",
 		"remote-file-size": "^3.0.4",
 		"sequelize": "^4.38.0",
+		"sequelize-cli": "^4.1.0",
 		"tempfile": "^2.0.0",
 		"uuid": "^3.3.2",
 		"xlsx": "^0.13.3"
