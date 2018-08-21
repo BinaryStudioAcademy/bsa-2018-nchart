@@ -24,4 +24,4 @@ RUN npm i
 
 EXPOSE 8080
 
-CMD ["node", "--experimental-worker ", "bin/www"]
+CMD ["npm", "start"]
