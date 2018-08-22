@@ -24,9 +24,9 @@ jobs:
     - stage: build docker image
       script:
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-      # - docker build -t nchart .
-      # - docker tag nchart $DOCKER_USERNAME/nchart:$TRAVIS_BUILD_NUMBER
-      # - docker push $DOCKER_USERNAME/nchart
+      - docker build -t nchart .
+      - docker tag nchart $DOCKER_USERNAME/nchart:$TRAVIS_BUILD_NUMBER
+      - docker push $DOCKER_USERNAME/nchart
 
 deploy:
   - provider: script
