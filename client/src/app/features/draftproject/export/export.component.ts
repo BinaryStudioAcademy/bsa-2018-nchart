@@ -18,28 +18,34 @@ export class ExportComponent implements OnInit {
 	file: string;
 
 	controlName = new FormControl('', [
-		patternValidator('Invalid filename', RegExp('^[a-zA-Zа-яА-Я0-9_()#`.@-]+$')),
+		patternValidator(
+			'Invalid filename',
+			RegExp('^[a-zA-Zа-яА-Я0-9_()#`.@-]+$')
+		),
 		requiredValidator('Filename can`t be empty')
 	]);
-	controlType = new FormControl('', [
-		requiredValidator('')
-	]);
+	controlType = new FormControl('', [requiredValidator('')]);
 
-	options = [{
-		label: '.pdf',
-		value: 'pdf'
-	}, {
-		label: '.svg',
-		value: 'svg'
-	}, {
-		label: '.jpg',
-		value: 'jpg'
-	}, {
-		label: '.png',
-		value: 'png'
-	}];
+	options = [
+		{
+			label: '.pdf',
+			value: 'pdf'
+		},
+		{
+			label: '.svg',
+			value: 'svg'
+		},
+		{
+			label: '.jpg',
+			value: 'jpg'
+		},
+		{
+			label: '.png',
+			value: 'png'
+		}
+	];
 
-	configUrl: string = 'http://localhost:9000/api/project/1/export';
+	configUrl = 'http://localhost:9000/api/project/1/export';
 	constructor(private http: Http) {}
 
 	ngOnInit() {}
@@ -49,31 +55,39 @@ export class ExportComponent implements OnInit {
 		this.fileType = this.controlType.value || this.fileType;
 		this.file = this.fileName + '.' + this.fileType;
 
-		return this.http.get(this.configUrl, {
-			responseType: ResponseContentType.Blob
-		}).pipe(
-			map(res => {
-				return {
-					filename: 'filename.pdf',
-					data: res.blob()
-				};
-			})
-		)
-		.subscribe(res => {
-			const url = window.URL.createObjectURL(res.data);
-			const a = document.createElement('a');
-			document.body.appendChild(a);
-			a.setAttribute('style', 'display: none');
-			a.href = url;
-			a.download = res.filename;
-			a.target = "_blank"
-			a.click();
-			window.URL.revokeObjectURL(url);
-			a.remove();
-		}, error => {
-			console.log('download error:', JSON.stringify(error));
-		}, () => {
-			console.log('Completed file download.')
-		});
+		if (this.fileType === 'pdf') {
+			return this.http
+				.get(this.configUrl, {
+					responseType: ResponseContentType.Blob
+				})
+				.pipe(
+					map(res => {
+						return {
+							filename: `${this.fileName}.pdf`,
+							data: res.blob()
+						};
+					})
+				)
+				.subscribe(
+					res => {
+						const url = window.URL.createObjectURL(res.data);
+						const a = document.createElement('a');
+						document.body.appendChild(a);
+						a.setAttribute('style', 'display: none');
+						a.href = url;
+						a.download = res.filename;
+						a.target = '_blank';
+						a.click();
+						window.URL.revokeObjectURL(url);
+						a.remove();
+					},
+					error => {
+						// console.log('download error:', JSON.stringify(error));
+					},
+					() => {
+						// console.log('Completed file download.');
+					}
+				);
+		}
 	}
 }
