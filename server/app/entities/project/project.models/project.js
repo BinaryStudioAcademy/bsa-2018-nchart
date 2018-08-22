@@ -11,14 +11,12 @@ const Project = sequelize.define('project', {
 });
 
 Project.sync().then(() => {
-	ProjectChart.sync().then(() =>
-		Project.hasMany(ProjectChart, {
-			foreignKey: 'projectId',
-			sourceKey: 'id',
-			onDelete: 'CASCADE',
-			constraints: false
-		})
-	);
+	ProjectChart.sync().then(() => Project.hasMany(ProjectChart, {
+		foreignKey: 'projectId',
+		sourceKey: 'id',
+		onDelete: 'CASCADE',
+		constraints: false
+	}));
 	ProjectChart.belongsTo(Project, { foreignKey: 'projectId' });
 	GroupProject.sync().then(() => {
 		Project.hasMany(GroupProject, {

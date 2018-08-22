@@ -10,14 +10,12 @@ const Dataset = sequelize.define('dataset', {
 });
 
 Dataset.sync().then(() => {
-	Chart.sync().then(() =>
-		Dataset.hasMany(Chart, {
-			foreignKey: 'datasetId',
-			sourceKey: 'id',
-			onDelete: 'CASCADE',
-			constraints: false
-		})
-	);
+	Chart.sync().then(() => Dataset.hasMany(Chart, {
+		foreignKey: 'datasetId',
+		sourceKey: 'id',
+		onDelete: 'CASCADE',
+		constraints: false
+	}));
 	Chart.belongsTo(Dataset, { foreignKey: 'datasetId' });
 });
 

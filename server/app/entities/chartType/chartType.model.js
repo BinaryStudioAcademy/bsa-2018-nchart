@@ -31,14 +31,12 @@ const ChartType = sequelize.define('chartType', {
 });
 
 ChartType.sync().then(() => {
-	CompanyChartType.sync().then(() =>
-		ChartType.hasMany(CompanyChartType, {
-			foreignKey: 'chartTypeId',
-			sourceKey: 'id',
-			onDelete: 'CASCADE',
-			constraints: false
-		})
-	);
+	CompanyChartType.sync().then(() => ChartType.hasMany(CompanyChartType, {
+		foreignKey: 'chartTypeId',
+		sourceKey: 'id',
+		onDelete: 'CASCADE',
+		constraints: false
+	}));
 	CompanyChartType.belongsTo(ChartType, { foreignKey: 'chartTypeId' });
 	Chart.sync().then(() => {
 		ChartType.hasMany(Chart, {
