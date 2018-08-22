@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const sequelize = require('../../config/index');
+const sequelize = require('../../../config/index');
 const ProjectChart = require('../project/project.models/project_chart');
 
 const Chart = sequelize.define('charts', {
@@ -22,14 +22,12 @@ const Chart = sequelize.define('charts', {
 });
 
 Chart.sync().then(() => {
-	ProjectChart.sync().then(() =>
-		Chart.hasMany(ProjectChart, {
-			foreignKey: 'chartTypeId',
-			sourceKey: 'id',
-			onDelete: 'CASCADE',
-			constraints: false
-		})
-	);
+	ProjectChart.sync().then(() => Chart.hasMany(ProjectChart, {
+		foreignKey: 'chartTypeId',
+		sourceKey: 'id',
+		onDelete: 'CASCADE',
+		constraints: false
+	}));
 	ProjectChart.belongsTo(Chart, { foreignKey: 'chartTypeId' });
 });
 

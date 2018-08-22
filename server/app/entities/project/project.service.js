@@ -19,14 +19,12 @@ class ProjectService {
 				[
 					callback => {
 						this.ProjectRepository.upsert(obj.project)
-							.then(() =>
-								callback(null, {
-									project: {
-										id: obj.project.id,
-										name: obj.project.name
-									}
-								})
-							)
+							.then(() => callback(null, {
+								project: {
+									id: obj.project.id,
+									name: obj.project.name
+								}
+							}))
 							.catch(err => callback(err, null));
 					},
 					(payload, callback) => {

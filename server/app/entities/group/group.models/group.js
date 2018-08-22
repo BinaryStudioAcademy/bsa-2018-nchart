@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const sequelize = require('../../../config/index');
+const sequelize = require('../../../../config/index');
 const GroupUser = require('./group_user');
 const GroupProject = require('./group_project');
 const User = require('../../user/user.model');

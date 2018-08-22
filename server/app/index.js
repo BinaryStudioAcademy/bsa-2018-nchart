@@ -3,7 +3,7 @@ const cors = require('cors');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const initializeAPIRoutes = require('./routes');
-const dbConnect = require('./db/dbconnect');
+const dbConnect = require('../db/dbconnect');
 const {
 	successOrEmptyPayload,
 	errorPayload

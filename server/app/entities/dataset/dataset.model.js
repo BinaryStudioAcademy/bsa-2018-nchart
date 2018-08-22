@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const sequelize = require('../../config/index');
+const sequelize = require('../../../config/index');
 const Chart = require('../chart/chart.model');
 
 const Dataset = sequelize.define('datasets', {
@@ -14,14 +14,12 @@ const Dataset = sequelize.define('datasets', {
 });
 
 Dataset.sync().then(() => {
-	Chart.sync().then(() =>
-		Dataset.hasMany(Chart, {
-			foreignKey: 'datasetId',
-			sourceKey: 'id',
-			onDelete: 'CASCADE',
-			constraints: false
-		})
-	);
+	Chart.sync().then(() => Dataset.hasMany(Chart, {
+		foreignKey: 'datasetId',
+		sourceKey: 'id',
+		onDelete: 'CASCADE',
+		constraints: false
+	}));
 	Chart.belongsTo(Dataset, { foreignKey: 'datasetId' });
 });
 
