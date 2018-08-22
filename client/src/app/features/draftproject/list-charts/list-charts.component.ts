@@ -1,7 +1,7 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {StoreService} from '@app/services/store.service';
-import {getListChart} from '@app/store/selectors/charts.selectors';
-import {SelectChart} from '@app/store/actions/charts/charts.actions';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { StoreService } from '@app/services/store.service';
+import { getListChart } from '@app/store/selectors/charts.selectors';
+import { SelectChart } from '@app/store/actions/charts/charts.actions';
 
 export const charts = [
 	{
@@ -46,32 +46,33 @@ export const charts = [
 	styleUrls: ['./list-charts.component.sass']
 })
 export class ListChartsComponent implements OnInit, OnDestroy {
-
 	chartList;
 	selectedChart;
 	chartIconClass;
 	disconnect: () => void;
 
-	constructor(
-		private storeService: StoreService,
-	) {}
+	constructor(private storeService: StoreService) {}
 
 	ngOnInit() {
 		this.disconnect = this.storeService.connect([
 			{
 				selector: getListChart(),
-				subscriber: (list) => {
-					if (!list) return;
+				subscriber: list => {
+					if (!list) {
+						return;
+					}
 					this.chartList = list;
 					this.selectedChart = this.chartList[0];
-					this.chartIconClass = this.getIconClasses(this.selectedChart.id);
+					this.chartIconClass = this.getIconClasses(
+						this.selectedChart.id
+					);
 				}
 			}
-		])
+		]);
 	}
 
 	selectChart(id): void {
-		this.storeService.dispatch(new SelectChart({id}))
+		this.storeService.dispatch(new SelectChart({ id }));
 	}
 
 	getIconClasses(id) {

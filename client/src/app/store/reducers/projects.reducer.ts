@@ -5,8 +5,8 @@ import { ProjectsActionConstants as constants } from '@app/store/actions/project
 import { SchemeID } from '@app/models/normalizr.model';
 import { DatasetActions } from '@app/store/actions/datasets/datasets.action-types';
 import { Actions as datasetsActions } from '@app/store/actions/datasets/datasets.actions';
-import {Actions as chartActions} from '@app/store/actions/charts/charts.actions';
-import {ChartsActionConstants} from '@app/store/actions/charts/charts.action-types';
+import { Actions as chartActions } from '@app/store/actions/charts/charts.actions';
+import { ChartsActionConstants } from '@app/store/actions/charts/charts.action-types';
 
 export const initialState: ProjectsState = {
 	byId: {},

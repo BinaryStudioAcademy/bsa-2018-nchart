@@ -11,13 +11,13 @@ export const getAllCharts = () => (state: AppState) =>
 
 export const getListChart = () => (state: AppState) =>
 	state.charts.all.map(id => {
-		const chart = state.charts.byId[id];
-		return ({
-			id: chart.id,
-			name: chart.name,
-			type: chart.type,
-			description: chart.description,
-		})
+		const c = state.charts.byId[id];
+		return {
+			id: c.id,
+			name: c.name,
+			type: c.type,
+			description: c.description
+		};
 	});
 
 export const chart = (id?: SchemeID) => (state: AppState): UserChart =>
@@ -25,20 +25,21 @@ export const chart = (id?: SchemeID) => (state: AppState): UserChart =>
 		? state.userCharts.byId[id || state.userCharts.active]
 		: null;
 
-export const getChart = (id) => (state: AppState) => {
-	const chart = state.charts.byId[id];
+export const getChart = id => (state: AppState) => {
+	const c = state.charts.byId[id];
 	return {
 		...chart,
-		dimensionSettings: chart.dimensionSettings.map(
-			id => state.defaultChartSettings.dimensionSettings[id]
+		dimensionSettings: c.dimensionSettings.map(
+			i => state.defaultChartSettings.dimensionSettings[i]
 		),
-		customizeSettings: chart.customizeSettings.map(
-			id => state.defaultChartSettings.customizeSettings[id]
+		customizeSettings: c.customizeSettings.map(
+			i => state.defaultChartSettings.customizeSettings[i]
 		)
-	}
+	};
 };
 
-export const getActiveChartId = () => (state: AppState) => state.userCharts.active;
+export const getActiveChartId = () => (state: AppState) =>
+	state.userCharts.active;
 
 export const getFirstChart = () => (state: AppState): Chart => {
 	const fChart: Chart<SchemeID[], SchemeID[]> =
@@ -85,13 +86,10 @@ export const mappingDimensions = () => (state: AppState): any => {
 	const c: UserChart = chart()(state);
 
 	if (c) {
-		return c.dimensionSettings.map(
-			id =>
-				({
-					value: [],//todo
-					...state.defaultChartSettings.dimensionSettings[id],
-				})
-		);
+		return c.dimensionSettings.map(id => ({
+			value: [], // todo
+			...state.defaultChartSettings.dimensionSettings[id]
+		}));
 	}
 
 	return [];

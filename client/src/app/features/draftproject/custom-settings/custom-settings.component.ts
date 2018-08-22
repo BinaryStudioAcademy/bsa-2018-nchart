@@ -1,6 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { StoreService } from '@app/services/store.service';
-import {mappingColumns, mappingDimensions} from '@app/store/selectors/charts.selectors';
+import {
+	mappingColumns,
+	mappingDimensions
+} from '@app/store/selectors/charts.selectors';
 import { UserMappingColumn } from '@app/models/user-chart-store.model';
 
 @Component({
@@ -25,7 +28,7 @@ export class CustomSettingsComponent implements OnInit, OnDestroy {
 			},
 			{
 				selector: mappingDimensions(),
-				subscriber: (d) => {
+				subscriber: d => {
 					this.dimensionsSettings = d;
 				}
 			}

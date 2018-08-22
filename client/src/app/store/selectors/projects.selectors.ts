@@ -21,4 +21,5 @@ export const isProjectDataset = (id?: SchemeID) => (
 	return false;
 };
 
-export const getActiveProject = () => (state: AppState) => state.projects.active;
+export const getActiveProject = () => (state: AppState) =>
+	state.projects.active;

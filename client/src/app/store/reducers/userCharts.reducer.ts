@@ -34,7 +34,7 @@ const byId = (
 					...state[action.payload.chart.chartId],
 					...action.payload.chart.entities.chart[
 						action.payload.chart.chartId
-						]
+					]
 				}
 			};
 		default:
