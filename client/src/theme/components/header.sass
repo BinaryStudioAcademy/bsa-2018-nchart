@@ -28,8 +28,13 @@
 		display: flex
 		align-items: center
 		border-bottom: 4px solid transparent!important
+	
 		&:hover
 			border-bottom: 4px solid $baseColor!important
+
+		&:first-child
+			margin-right: 40px
+
 	.ui-tabmenu .ui-tabmenu-nav
 		position: absolute
 		width: 100%
@@ -41,10 +46,13 @@
 		background-color: transparent
     
 .header-logo
-    position: absolute
-    top: 12px
-    left: 1.5rem
-    height: 50px
+	position: absolute
+	top: 12px
+	left: 1.5rem
+	z-index: 20
+	cursor: pointer
+	img
+		height: 50px
 
 .ui-tabmenu
 	display: flex
@@ -52,9 +60,6 @@
 	align-items: center
 
 
-.ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem:first-child
-	margin: 0
-    margin-right: 40px
 
 .ui-tabmenu .ui-tabmenu-nav > li:not(.ui-state-active):not(.ui-state-disabled):hover,
 .ui-tabmenu .ui-tabmenu-nav > li
