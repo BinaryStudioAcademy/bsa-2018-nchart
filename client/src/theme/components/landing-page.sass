@@ -13,7 +13,9 @@
 
 	.landing-text
 		width: 45%
-		min-width: 320px
+		max-width: 546px
+		min-width: calc(320px - 2rem)
+		position: relative
 	
 	.description
 		font-size: 1.8rem
@@ -45,3 +47,32 @@
 	width: 100%
 	height: calc(100% - 80px)
 	z-index: -1
+
+
+@media screen and(max-width: 1000px)
+	.landing-header
+		.landing-image
+			transform: translateX(20px)
+
+@media screen and(max-width: 800px)
+	.landing-header
+		flex-wrap: wrap
+		padding: 160px 3rem 0 3em
+		.landing-text
+			width: 90%
+			margin: 0 auto
+		.landing-image
+			width: 100%
+			transform: translateX(0)
+			transform: translateY(60px)
+			height: auto
+			img 
+				width: 100%
+				height: auto
+
+@media screen and(max-width: 530px)
+	.landing-header
+		height: 100%
+		padding: 80px 1rem 0 1em
+		.landing-image
+			display: none

@@ -1,6 +1,8 @@
 <div class="ui-widget-header header-container">
     <div class="header-component">
-            <img src="../../../../assets/nChartLogo.svg" class="header-logo">
+		<a [routerLink]="['/app']" class="header-logo">
+			<img src="../../../../assets/nChartLogo.svg">
+		</a>
     </div>
     <div class="header-component">
         <p-tabMenu [model]="items"></p-tabMenu>
