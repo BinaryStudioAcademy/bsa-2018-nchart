@@ -19,7 +19,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TabViewModule } from 'primeng/tabview';
-
+import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 // Drag&Drop
 import { DragulaModule } from 'ng2-dragula';
 import { TooltipModule } from 'primeng/tooltip';
@@ -43,6 +43,7 @@ import { TooltipModule } from 'primeng/tooltip';
 		ToolbarModule,
 		TabMenuModule,
 		TabViewModule,
+		ScrollToModule.forRoot(),
 		DragulaModule.forRoot(),
 		FormsModule,
 		TooltipModule
@@ -65,6 +66,7 @@ import { TooltipModule } from 'primeng/tooltip';
 		ToolbarModule,
 		TabMenuModule,
 		TabViewModule,
+		ScrollToModule,
 		DragulaModule,
 		FormsModule,
 		TooltipModule

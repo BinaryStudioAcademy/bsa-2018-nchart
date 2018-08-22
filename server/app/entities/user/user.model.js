@@ -27,12 +27,14 @@ const User = sequelize.define('users', {
 
 // this method creates table if it doesn't exit
 User.sync().then(() => {
-	CompanyUser.sync().then(() => User.hasMany(CompanyUser, {
-		foreignKey: 'userId',
-		sourceKey: 'id',
-		onDelete: 'CASCADE',
-		constraints: false
-	}));
+	CompanyUser.sync().then(() =>
+		User.hasMany(CompanyUser, {
+			foreignKey: 'userId',
+			sourceKey: 'id',
+			onDelete: 'CASCADE',
+			constraints: false
+		})
+	);
 	CompanyUser.belongsTo(User, { foreignKey: 'userId' });
 	GroupUser.sync().then(() => {
 		User.hasMany(GroupUser, {

@@ -3,11 +3,11 @@
   <div class="main-content">
 	<app-project-name [projectName]="projectName" (setProjectName)="changeProjectName($event)">
 	</app-project-name>
-    <app-load-data></app-load-data>
-    <app-data-table *ngIf="showTable"></app-data-table>
-    <app-list-charts *ngIf="showCharts" ></app-list-charts>
-    <app-custom-settings *ngIf="showTable"></app-custom-settings>
-    <app-custom-chart *ngIf="showTable"></app-custom-chart>
-    <app-export *ngIf="showTable"></app-export>
+    <app-load-data id="load"></app-load-data>
+    <app-data-table *ngIf="showTable" id="table"></app-data-table>
+    <app-list-charts *ngIf="showCharts" id="charts" ></app-list-charts>
+    <app-custom-settings *ngIf="showTable" id="settings"></app-custom-settings>
+    <app-custom-chart *ngIf="showTable" id="chart"></app-custom-chart>
+    <app-export *ngIf="showTable" id="export"></app-export>
   </div>
 </div>
