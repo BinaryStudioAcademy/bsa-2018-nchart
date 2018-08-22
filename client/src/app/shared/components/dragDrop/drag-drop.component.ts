@@ -1,9 +1,11 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { DragulaService } from 'ng2-dragula';
 import { Subscription } from 'rxjs';
+import { UserMappingColumn } from '@app/models';
+import { SchemeID } from '@app/models/normalizr.model';
 
-class Column {
-	constructor(public variable: string, public type: string) {}
+class Column implements UserMappingColumn {
+	constructor(public id: SchemeID, public variable: string, public type: string) {}
 }
 
 @Component({
@@ -17,7 +19,7 @@ export class DragDropComponent implements OnInit, OnDestroy {
 	dimensionsSettings = [];
 
 	@Input()
-	columns = [];
+	columns: UserMappingColumn[] = [];
 	public dimensions = [];
 
 	subs = new Subscription();
@@ -27,7 +29,7 @@ export class DragDropComponent implements OnInit, OnDestroy {
 				return source.id === 'columns';
 			},
 			copyItem: (column: Column) => {
-				return new Column(column.variable, column.type);
+				return new Column(column.id, column.variable, column.type);
 			},
 			accepts: (el, target, source, sibling) => {
 				return target.id !== 'columns';
