@@ -3,6 +3,11 @@ const sequelize = require('../../../config/index');
 const Chart = require('../chart/chart.model');
 
 const Dataset = sequelize.define('datasets', {
+	id: {
+		type: Sequelize.STRING,
+		allowNull: false,
+		primaryKey: true
+	},
 	data: {
 		type: Sequelize.JSON,
 		allowNull: false

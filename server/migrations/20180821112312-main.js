@@ -143,9 +143,8 @@ module.exports = {
 						.createTable('datasets', {
 							id: {
 								allowNull: false,
-								autoIncrement: true,
 								primaryKey: true,
-								type: Sequelize.INTEGER
+								type: Sequelize.STRING
 							},
 							columns: {
 								type: Sequelize.JSON
@@ -339,7 +338,7 @@ module.exports = {
 								type: Sequelize.JSON
 							},
 							datasetId: {
-								type: Sequelize.INTEGER,
+								type: Sequelize.STRING,
 								references: { model: 'datasets', key: 'id' }
 							},
 							createdAt: {

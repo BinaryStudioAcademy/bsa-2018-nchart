@@ -3,6 +3,7 @@ const ProjectRepository = require('./project.repository');
 const DatasetService = require('../dataset/dataset.service');
 const ChartService = require('../chart/chart.service');
 const GroupService = require('../group/group.service');
+const projectValidationService = require('../../common/services/validation.services/project-validation.service');
 
 class ProjectService {
 	constructor() {
@@ -14,6 +15,10 @@ class ProjectService {
 	}
 
 	createProject(obj) {
+		const errors = projectValidationService(obj.project);
+		if (errors.length > 0) {
+			throw errors;
+		}
 		return new Promise((resolve, reject) => {
 			async.waterfall(
 				[

@@ -1,5 +1,7 @@
 const async = require('async');
 const ChartRepository = require('./chart.repository');
+const validator = require('../../common/services/schema-validation.service');
+const chartSchema = require('./chart.schema');
 
 class ChartService {
 	constructor() {
@@ -15,6 +17,17 @@ class ChartService {
 	}
 
 	upsert(obj) {
+		// todo: remove waterfall model
+		const errors = [];
+		obj.forEach(el => {
+			const response = validator(el, chartSchema);
+			if (response !== null) {
+				response.forEach(err => errors.push(err));
+			}
+		});
+		if (errors.length > 0) {
+			throw errors;
+		}
 		return new Promise((resolve, reject) => {
 			async.waterfall(
 				[

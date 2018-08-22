@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
 			chartTypeId: DataTypes.INTEGER,
 			dimensionSettings: DataTypes.JSON,
 			customizeSettings: DataTypes.JSON,
-			datasetId: DataTypes.INTEGER
+			datasetId: DataTypes.STRING
 		},
 		{}
 	);

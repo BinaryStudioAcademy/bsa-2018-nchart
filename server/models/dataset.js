@@ -2,7 +2,8 @@ module.exports = (sequelize, DataTypes) => {
 	const Dataset = sequelize.define(
 		'Dataset',
 		{
-			data: DataTypes.JSON
+			data: DataTypes.JSON,
+			columns: DataTypes.JSON
 		},
 		{}
 	);

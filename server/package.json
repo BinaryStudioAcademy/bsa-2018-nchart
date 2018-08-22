@@ -11,6 +11,7 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"ajv": "^6.5.3",
 		"async": "^2.6.1",
 		"bcrypt": "^3.0.0",
 		"body-parser": "^1.18.3",

@@ -16,7 +16,7 @@ const Chart = sequelize.define('charts', {
 		allowNull: false
 	},
 	datasetId: {
-		type: Sequelize.INTEGER,
+		type: Sequelize.STRING,
 		allowNull: false
 	}
 });
