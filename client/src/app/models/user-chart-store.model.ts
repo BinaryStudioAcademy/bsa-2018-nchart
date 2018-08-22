@@ -2,7 +2,7 @@ import {
 	SchemeID,
 	NormalizedActiveEntity,
 	NormalizedSchemeWithoutAll
-} from './normalizr.model';
+} from '@app/models/normalizr.model';
 
 export class UserChartsState<U = SchemeID, R = undefined>
 	extends NormalizedSchemeWithoutAll<UserChart, R>

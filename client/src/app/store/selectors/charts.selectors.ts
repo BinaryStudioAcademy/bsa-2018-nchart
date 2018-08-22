@@ -1,10 +1,11 @@
-import { AppState, Chart } from '@app/models';
 import { SchemeID } from '@app/models/normalizr.model';
 import {
 	UserChart,
 	UserMappingColumn
-} from '../../models/user-chart-store.model';
+} from '@app/models/user-chart-store.model';
 import { dataset } from './dataset.selectors';
+import { AppState } from '@app/models/store.model';
+import { Chart } from '@app/models/chart.model';
 
 export const getAllCharts = () => (state: AppState) =>
 	state.charts.all.map(id => state.charts.byId[id]);

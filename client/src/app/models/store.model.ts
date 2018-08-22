@@ -1,20 +1,18 @@
-import { UserState } from './user-store.model';
-import { ErrorHandlerState } from './error-store.model';
+import { UserState } from '@app/models/user-store.model';
+import { ErrorHandlerState } from '@app/models/error-store.model';
 import {
 	DefaultChartSettingsState,
-	UserChartSettingsState
+	UserChartSettingsState,
+	ChartsState
 } from '@app/models/chart.model';
 import {
 	DatasetColumnState,
-	DatasetDataState
+	DatasetDataState,
+	DatasetState
 } from '@app/models/dataset.model';
-import {
-	ChartsState,
-	UserChartsState,
-	DatasetState,
-	ProjectsState,
-	CompaniesState
-} from '@app/models';
+import { CompaniesState } from '@app/models/companies-store.model';
+import { ProjectsState } from '@app/models/projects-store.model';
+import { UserChartsState } from '@app/models/user-chart-store.model';
 
 export class AppAction<T = undefined> {
 	readonly type: string;

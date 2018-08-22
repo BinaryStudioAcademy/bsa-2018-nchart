@@ -1,7 +1,7 @@
-import { AppAction, FailedAction } from '@app/models';
-import { ProjectsActionConstants } from './projects.action-types';
+import { ProjectsActionConstants } from '@app/store/actions/projects/projects.action-types';
 import { Project, ProjectEntities } from '@app/models/project.model';
 import { SchemeID } from '@app/models/normalizr.model';
+import { AppAction, FailedAction } from '@app/models/store.model';
 
 export class LoadProjetcs extends AppAction<any> {
 	readonly type = ProjectsActionConstants.LOAD_PROJECTS;
@@ -49,6 +49,13 @@ export class LoadOneProjectFailed extends FailedAction {
 	readonly type = ProjectsActionConstants.LOAD_ONE_PROJECT__FAILED;
 }
 
+export class ChangeProjectName extends AppAction<{
+	id: SchemeID;
+	name: string;
+}> {
+	readonly type = ProjectsActionConstants.CHANGE_PROJECT_NAME;
+}
+
 export type Actions =
 	| LoadProjetcs
 	| LoadProjectsComplete
@@ -58,4 +65,5 @@ export type Actions =
 	| CreateDraftProjectFailed
 	| LoadOneProject
 	| LoadOneProjectComplete
-	| LoadOneProjectFailed;
+	| LoadOneProjectFailed
+	| ChangeProjectName;

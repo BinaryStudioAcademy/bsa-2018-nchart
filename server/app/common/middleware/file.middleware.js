@@ -4,6 +4,7 @@ const download = require('download-file');
 
 class FileMiddleware {
 	save(file) {
+		this.createStorageFolder();
 		const storagePath = process.env.FILE_STORAGE_DIR;
 		let path = `${storagePath}${uuidv4()}${file.name}`;
 		return new Promise((resolve, reject) => {
@@ -28,7 +29,7 @@ class FileMiddleware {
 	}
 
 	saveFromLink(url) {
-		this.url = url;
+		this.createStorageFolder();
 		const storagePath = process.env.FILE_STORAGE_DIR;
 		return new Promise((resolve, reject) => {
 			const options = {
@@ -38,7 +39,7 @@ class FileMiddleware {
 			while (fs.existsSync(options.directory + options.filename)) {
 				options.filename = `${uuidv4()}.file`;
 			}
-			download(this.url, options, err => {
+			download(url, options, err => {
 				if (err) return reject(err);
 				return resolve(options.directory + options.filename);
 			});
@@ -57,6 +58,13 @@ class FileMiddleware {
 				resolve("File already doesn't exist");
 			}
 		});
+	}
+
+	createStorageFolder() {
+		this.path = process.env.FILE_STORAGE_DIR;
+		if (!fs.existsSync(this.path)) {
+			fs.mkdirSync(this.path);
+		}
 	}
 }
 module.exports = new FileMiddleware();

@@ -13,9 +13,12 @@ import {
 	passwordMatchValidator
 } from '@app/shared/components/form-field/form-validators';
 
-import { OptionalType, fieldsValidators } from '@app/models';
 import { Login } from '@app/models/login.model';
 import { Register } from '@app/models/register.model';
+import {
+	OptionalType,
+	fieldsValidators
+} from '@app/models/fields-validators.model';
 
 @Injectable()
 export class LoginService {
@@ -54,7 +57,7 @@ export class LoginService {
 			email: [requiredValidator(), emailValidator()],
 			password: [
 				requiredValidator(),
-				minLengthValidator('Minimum length of password is', 8),
+				minLengthValidator('Minimum length of password is', 5),
 				passwordValidator()
 			],
 			confirmPassword: []

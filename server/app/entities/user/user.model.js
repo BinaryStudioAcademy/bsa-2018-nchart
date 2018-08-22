@@ -4,18 +4,11 @@ const CompanyUser = require('../company/company.models/company_user');
 const GroupUser = require('../group/group.models/group_user');
 
 const User = sequelize.define('users', {
-	firstName: {
+	name: {
 		type: Sequelize.STRING,
 		allowNull: false,
 		validate: {
-			is: { args: /^[a-zA-Z ]+$/, msg: 'Not valid name' }
-		}
-	},
-	lastName: {
-		type: Sequelize.STRING,
-		allowNull: false,
-		validate: {
-			is: { args: /^[a-zA-Z ]+$/, msg: 'Not valid surname' }
+			is: { args: /^[a-zа-яэіїє]+$/i, msg: 'Not valid name' }
 		}
 	},
 	email: {

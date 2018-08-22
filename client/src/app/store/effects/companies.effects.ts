@@ -4,13 +4,13 @@ import { map, switchMap } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { CompaniesActionConstants } from '@app/store/actions/companies/companies.action-types';
-import { Company } from '@app/models';
 import {
 	LoadDataComplete,
 	LoadDataFailed
 } from '@app/store/actions/companies/companies.actions';
 import { normalize } from 'normalizr';
 import { arrayOfCommonScheme } from '@app/schemes/common.schema';
+import { Company } from '@app/models/company.model';
 
 @Injectable()
 export class CompaniesEffects {

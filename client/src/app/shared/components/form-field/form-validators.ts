@@ -4,6 +4,7 @@ import {
 	Validators,
 	ValidationErrors
 } from '@angular/forms';
+import { isNumber } from 'util';
 
 interface ValidationMessage {
 	[key: string]: any;
@@ -42,6 +43,16 @@ export function minLengthValidator(
 		);
 
 		return validationErrors ? { minLength: `${msg} ${minLength}` } : null;
+	};
+}
+
+export function minValidator(msg?: string, min?: number): ValidatorFn {
+	return (control: AbstractControl): ValidationMessage => {
+		const validationErrors =
+			(control.value !== undefined && isNaN(control.value)) ||
+			!isNumber(control.value) ||
+			control.value < min;
+		return validationErrors ? { min: `${msg} ${min}` } : null;
 	};
 }
 
@@ -93,7 +104,7 @@ export function passwordValidator(
 	customPattern?: string | RegExp
 ): ValidatorFn {
 	return (control: AbstractControl): ValidationMessage => {
-		const defaultPattern = /^(?=.*[a-zа-яэіїє])(?=.*[A-ZА-ЯЭІЇЄ])(?=.*\d)(?=.*[#$^+=!*()@%&]).+$/;
+		const defaultPattern = /^(?=.*[a-zа-яэіїє])(?=.*[A-ZА-ЯЭІЇЄ])(?=.*\d).+$/;
 
 		const validationErrors = customPattern
 			? validatePattern(customPattern, control)
@@ -103,7 +114,7 @@ export function passwordValidator(
 			return {
 				passwordPattern:
 					msg ||
-					'Password should contain alphabetic, numeric and special characters'
+					'Password should contain uppercase, lowercase characters and number'
 			};
 		}
 		return null;

@@ -1,5 +1,8 @@
-import { SchemeID, NormalizedSchemeField } from './normalizr.model';
-import { NormalizedSchemeWithFetching } from './normalizr.model';
+import { SchemeID } from '@app/models/normalizr.model';
+import {
+	NormalizedSchemeWithFetching,
+	NormalizedSchemeField
+} from '@app/models/normalizr.model';
 
 export type ChartsState<R = undefined> = NormalizedSchemeWithFetching<
 	Chart<SchemeID[], SchemeID[]>,

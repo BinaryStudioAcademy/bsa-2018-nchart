@@ -11,7 +11,7 @@ import { throwError } from 'rxjs/index';
 import { ProjectDomainService } from '@app/api/domains/project/project-domain.service';
 import { ProjectService } from '@app/services/project.service';
 import { projectScheme } from '@app/schemes/project.scheme';
-import { DatasetService } from '../../services/dataset.service';
+import { DatasetService } from '@app/services/dataset.service';
 
 @Injectable()
 export class ProjectsEffects {

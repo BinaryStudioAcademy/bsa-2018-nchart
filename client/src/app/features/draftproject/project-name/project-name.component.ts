@@ -1,43 +1,49 @@
-import { Component, OnInit } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	Output,
+	OnChanges,
+	Input,
+	EventEmitter
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { requiredValidator } from '../../../shared/components/form-field/form-validators';
+import {
+	requiredValidator,
+	maxLengthValidator
+} from '@app/shared/components/form-field/form-validators';
 
 @Component({
 	selector: 'app-project-name',
 	templateUrl: './project-name.component.html',
 	styleUrls: ['./project-name.component.sass']
 })
-export class ProjectNameComponent implements OnInit {
-	projectName: string;
+export class ProjectNameComponent implements OnInit, OnChanges {
 	isEditing = false;
+	@Input()
+	projectName: string;
+	@Output()
+	setProjectName: EventEmitter<any> = new EventEmitter();
 
-	nameControl = new FormControl('', [requiredValidator('')]);
+	nameControl = new FormControl('', [
+		requiredValidator(''),
+		maxLengthValidator('Project name can`t be more than 40 symbols', 40)
+	]);
 
-	constructor() {
-		this.getProjectName();
-	}
+	constructor() {}
 
 	ngOnInit() {}
 
-	getProjectName(): void {
-		// ... //
-		this.projectName = 'Draft Project';
-	}
-
-	setProjectName() {
-		// ... //
+	ngOnChanges(changes) {
+		this.nameControl.setValue(changes.projectName.currentValue);
 	}
 
 	editProjectName() {
 		this.isEditing = true;
-		this.nameControl.setValue(this.projectName);
 	}
 
 	closeEditing() {
 		this.isEditing = false;
-		this.projectName = this.nameControl.value;
-
-		this.setProjectName();
+		this.setProjectName.emit(this.nameControl.value);
 	}
 
 	onEnterCloseEditing(event) {

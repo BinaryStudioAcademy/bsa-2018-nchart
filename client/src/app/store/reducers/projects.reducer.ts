@@ -1,12 +1,12 @@
-import { Actions as ProjectsActions } from '../actions/projects/projects.actions';
+import { Actions as ProjectsActions } from '@app/store/actions/projects/projects.actions';
 import { combineReducers } from '@ngrx/store';
-import { ProjectsState } from '@app/models';
 import { ProjectsActionConstants as constants } from '@app/store/actions/projects/projects.action-types';
 import { SchemeID } from '@app/models/normalizr.model';
 import { DatasetActions } from '@app/store/actions/datasets/datasets.action-types';
 import { Actions as datasetsActions } from '@app/store/actions/datasets/datasets.actions';
 import { Actions as chartActions } from '@app/store/actions/charts/charts.actions';
 import { ChartsActionConstants } from '@app/store/actions/charts/charts.action-types';
+import { ProjectsState } from '@app/models/projects-store.model';
 
 export const initialState: ProjectsState = {
 	byId: {},
@@ -69,6 +69,14 @@ const byId = (
 						...state[action.payload.projectId].datasets,
 						action.payload.datasetId
 					]
+				}
+			};
+		case constants.CHANGE_PROJECT_NAME:
+			return {
+				...state,
+				[action.payload.id]: {
+					...state[action.payload.id],
+					name: action.payload.name
 				}
 			};
 		default:

@@ -9,5 +9,6 @@ export enum ProjectsActionConstants {
 
 	LOAD_ONE_PROJECT = 'Projects: LOAD_ONE',
 	LOAD_ONE_PROJECT__COMPLETE = 'Projects: LOAD_ONE__COMPLETE',
-	LOAD_ONE_PROJECT__FAILED = 'Projects: LOAD_ONE__FAILED'
+	LOAD_ONE_PROJECT__FAILED = 'Projects: LOAD_ONE__FAILED',
+	CHANGE_PROJECT_NAME = 'Project: CHANGE_NAME'
 }

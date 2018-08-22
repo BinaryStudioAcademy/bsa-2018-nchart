@@ -1,12 +1,13 @@
 <div class="project-container">
-  <app-stepper></app-stepper>
-  <div class="main-content">
-	<app-project-name></app-project-name>
-    <app-load-data></app-load-data>
-    <app-data-table *ngIf="showTable"></app-data-table>
-    <app-list-charts></app-list-charts>
-    <app-custom-settings *ngIf="showTable"></app-custom-settings>
-    <app-custom-chart *ngIf="showTable"></app-custom-chart>
-    <app-export *ngIf="showTable"></app-export>
-  </div>
+	<app-stepper></app-stepper>
+	<div class="main-content">
+	<app-project-name [projectName]="projectName" (setProjectName)="changeProjectName($event)">
+	</app-project-name>
+		<app-load-data></app-load-data>
+		<app-data-table></app-data-table>
+		<app-list-charts></app-list-charts>
+		<app-custom-settings ></app-custom-settings>
+		<app-custom-chart></app-custom-chart>
+		<app-export></app-export>
+	</div>
 </div>

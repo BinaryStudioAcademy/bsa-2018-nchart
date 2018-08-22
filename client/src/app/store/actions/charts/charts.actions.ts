@@ -1,9 +1,13 @@
-import { AppAction, Chart, FailedAction } from '@app/models';
 import { ChartsActionConstants } from './charts.action-types';
 import { NormalizedSchemeField, SchemeID } from '@app/models/normalizr.model';
-import { DimensionOption, CustomizeOption } from '@app/models/chart.model';
+import {
+	DimensionOption,
+	CustomizeOption,
+	Chart
+} from '@app/models/chart.model';
 import { DimensionColumnMap } from '@app/models/chart.model';
 import { UserChart } from '@app/models/user-chart-store.model';
+import { AppAction, FailedAction } from '@app/models/store.model';
 
 export class LoadCharts extends AppAction<any> {
 	readonly type = ChartsActionConstants.LOAD_CHARTS;

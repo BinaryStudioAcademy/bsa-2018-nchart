@@ -4,7 +4,10 @@ import {
 	AbstractControlOptions,
 	AbstractControl
 } from '@angular/forms';
-import { fieldsValidators, OptionalType } from '@app/models';
+import {
+	OptionalType,
+	fieldsValidators
+} from '@app/models/fields-validators.model';
 
 @Injectable()
 export class FormService {

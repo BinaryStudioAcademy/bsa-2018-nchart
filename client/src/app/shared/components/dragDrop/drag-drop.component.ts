@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { DragulaService } from 'ng2-dragula';
 import { Subscription } from 'rxjs';
-import { UserMappingColumn } from '@app/models';
 import { SchemeID } from '@app/models/normalizr.model';
+import { UserMappingColumn } from '@app/models/user-chart-store.model';
 
 class Column implements UserMappingColumn {
 	constructor(
@@ -43,26 +43,40 @@ export class DragDropComponent implements OnInit, OnDestroy {
 		this.subs.add(
 			this._dragulaService
 				.dropModel(this.DIMENSIONS)
-				.subscribe(({ target, source, targetModel, item }) => {
-					if (
-						this.isValid(
-							target.parentElement.firstElementChild.innerHTML,
-							item
-						)
-					) {
-						targetModel.splice(targetModel.indexOf(item), 1);
-					} else if (
-						!this.hasPlace(
-							target.parentElement.firstElementChild.innerHTML,
-							item
-						)
-					) {
-						targetModel.splice(targetModel.indexOf(item), 1);
+				.subscribe(
+					({
+						name,
+						el,
+						target,
+						source,
+						sibling,
+						sourceModel,
+						targetModel,
+						item
+					}) => {
+						if (
+							!this.isValid(
+								target.parentElement.firstElementChild
+									.innerHTML,
+								item
+							)
+						) {
+							targetModel.splice(targetModel.indexOf(item), 1);
+						} else if (
+							!this.hasPlace(
+								target.parentElement.firstElementChild
+									.innerHTML,
+								item
+							)
+						) {
+							targetModel.splice(targetModel.indexOf(item), 1);
+						} else if (this.hasDuplicates(targetModel)) {
+							targetModel.splice(targetModel.indexOf(item), 1);
+						} else {
+							// TODO: send action to set columns
+						}
 					}
-					if (this.hasDuplicates(targetModel)) {
-						targetModel.splice(targetModel.indexOf(item), 1);
-					}
-				})
+				)
 		);
 	}
 
@@ -90,7 +104,7 @@ export class DragDropComponent implements OnInit, OnDestroy {
 		});
 
 		const isValid = dimension[0].type.indexOf(item.type);
-		return isValid === -1;
+		return isValid !== -1;
 	}
 
 	hasPlace(target: string, item: Column) {

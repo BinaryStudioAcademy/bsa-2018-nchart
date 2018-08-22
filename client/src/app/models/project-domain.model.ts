@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs';
-import { ResponseScheme, OriginProject } from '@app/models';
+import { OriginProject } from '@app/models/project.model';
+import { ResponseScheme } from '@app/models/response-scheme.model';
 
 export interface ProjectDomain {
 	save(payload: {

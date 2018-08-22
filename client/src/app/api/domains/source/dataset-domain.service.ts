@@ -1,8 +1,8 @@
-import { DatasetDomain } from '@app/models';
 import { HttpService } from '@app/api/http/http.service';
 import { Observable } from 'rxjs/index';
 import { RequestType } from '@app/models/requestType.model';
 import { Injectable } from '@angular/core';
+import { DatasetDomain } from '@app/models/dataset-domain.model';
 
 @Injectable()
 export class DatasetDomainService implements DatasetDomain {

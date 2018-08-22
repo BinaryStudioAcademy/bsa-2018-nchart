@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
-import { DatasetTable, Dataset, DatasetColumn, DatasetData } from '@app/models';
 import { Observable, of } from 'rxjs/index';
 import { v4 } from 'uuid';
+import {
+	DatasetTable,
+	Dataset,
+	DatasetColumn,
+	DatasetData
+} from '@app/models/dataset.model';
 
 @Injectable()
 export class DatasetService {

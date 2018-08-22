@@ -1,10 +1,9 @@
-import { UserChartsState } from '@app/models';
 import { combineReducers } from '@ngrx/store';
 import { ProjectsActionConstants } from '@app/store/actions/projects/projects.action-types';
 import { Actions as projectActions } from '@app/store/actions/projects/projects.actions';
 import { Actions as chartActions } from '@app/store/actions/charts/charts.actions';
 import { ChartsActionConstants } from '@app/store/actions/charts/charts.action-types';
-import { UserChart } from '../../models/user-chart-store.model';
+import { UserChart, UserChartsState } from '@app/models/user-chart-store.model';
 import { NormalizedSchemeField } from '@app/models/normalizr.model';
 
 export const initialState: UserChartsState = {

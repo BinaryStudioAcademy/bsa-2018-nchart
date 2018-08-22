@@ -6,11 +6,11 @@ import {
 	DatasetColumnState
 } from '@app/models/dataset.model';
 import {
-	UserChart,
 	Chart,
 	CustomizeSettingsState,
 	DimensionSettingsState
-} from '@app/models';
+} from '@app/models/chart.model';
+import { UserChart } from '@app/models/user-chart-store.model';
 
 export class Project {
 	id: string = null;

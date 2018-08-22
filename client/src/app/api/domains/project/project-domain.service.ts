@@ -1,9 +1,11 @@
-import { ProjectDomain, ResponseScheme, OriginProject } from '@app/models';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpService } from '@app/api/http/http.service';
 import { ServiceRequest } from '@app/models/serviceRequest.model';
 import { RequestType } from '@app/models/requestType.model';
+import { ProjectDomain } from '@app/models/project-domain.model';
+import { OriginProject } from '@app/models/project.model';
+import { ResponseScheme } from '@app/models/response-scheme.model';
 
 @Injectable()
 export class ProjectDomainService implements ProjectDomain {

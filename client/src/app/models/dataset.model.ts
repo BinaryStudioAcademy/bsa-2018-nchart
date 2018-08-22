@@ -1,4 +1,5 @@
-import { SchemeID, NormalizedSchemeField } from '@app/models/normalizr.model';
+import { SchemeID } from '@app/models/normalizr.model';
+import { NormalizedSchemeField } from '@app/models/normalizr.model';
 
 export type DatasetState = NormalizedSchemeField<Dataset>;
 

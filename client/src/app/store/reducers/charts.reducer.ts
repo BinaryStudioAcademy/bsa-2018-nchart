@@ -1,7 +1,7 @@
-import { Actions as ChartsActions } from '../actions/charts/charts.actions';
-import { ChartsActionConstants } from '../actions/charts/charts.action-types';
+import { Actions as ChartsActions } from '@app/store/actions/charts/charts.actions';
+import { ChartsActionConstants } from '@app/store/actions/charts/charts.action-types';
 import { combineReducers } from '@ngrx/store';
-import { ChartsState } from '@app/models';
+import { ChartsState } from '@app/models/chart.model';
 
 export const initialState: ChartsState = {
 	byId: {},

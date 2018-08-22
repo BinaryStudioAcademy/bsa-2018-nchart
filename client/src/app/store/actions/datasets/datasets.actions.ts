@@ -1,5 +1,5 @@
 import { DatasetActions } from '@app/store/actions/datasets/datasets.action-types';
-import { AppAction, FailedAction } from '@app/models';
+import { AppAction, FailedAction } from '@app/models/store.model';
 
 export class ParseByText extends AppAction<{ text: string }> {
 	readonly type = DatasetActions.PARSE_PLAIN_TEXT;

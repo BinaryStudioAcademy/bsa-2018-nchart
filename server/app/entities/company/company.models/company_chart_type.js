@@ -3,10 +3,12 @@ const sequelize = require('../../../config/index');
 
 const CompanyChartType = sequelize.define('companyChartType', {
 	companyId: {
-		type: Sequelize.INTEGER
+		type: Sequelize.INTEGER,
+		allowNull: false
 	},
 	chartTypeId: {
-		type: Sequelize.INTEGER
+		type: Sequelize.INTEGER,
+		allowNull: false
 	}
 });
 

@@ -9,7 +9,6 @@ import { CoreModule } from '@app/core/core.module';
 import { SharedModule } from '@app/shared/shared.module';
 import { EffectModule } from '@app/store/effects/effect.module';
 import { ReducerModule } from '@app/store/reducers/reducer.module';
-
 @NgModule({
 	declarations: [RootComponent],
 	imports: [

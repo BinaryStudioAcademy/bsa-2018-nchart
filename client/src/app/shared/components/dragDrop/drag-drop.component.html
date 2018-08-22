@@ -14,7 +14,7 @@
               <i *ngIf="el.required" class="fa fa-asterisk fa-xs requiredIcon"></i>
               <i *ngIf="el.multiple" class="fa fa-list fa-xs multipleIcon"></i>
               <pre class="dimensionSubHeader">{{el.type}}</pre>
-              <div [dragula]="DIMENSIONS" [(dragulaModel)]='el.value' class="dropContainer">
+              <div [dragula]="DIMENSIONS" [(dragulaModel)]='el.value' class="dropContainer" [attr.data-dimensionId]="el.id">
                   <div class="draggble" *ngFor='let x of el.value'>{{x.variable}}
                       <small style="margin-left: 10px">{{x.type}}</small>
                     <i class="fas fa-times removeIcon" (click)="remove(x, el.value)"></i>
