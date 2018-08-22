@@ -7,7 +7,6 @@ import { MainBlockComponent } from '@app/shared/components/main-block/main-block
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LinkComponent } from '@app/shared/components/link/link.component';
 import { DragDropComponent } from '@app/shared/components/dragDrop/drag-drop.component';
-import { LoadingSpinnerComponent } from '@app/shared/components/loading-spinner/loading-spinner.component';
 
 @NgModule({
 	imports: [
@@ -23,15 +22,13 @@ import { LoadingSpinnerComponent } from '@app/shared/components/loading-spinner/
 		UIKitModule,
 		MainBlockComponent,
 		DragDropComponent,
-		LinkComponent,
-		LoadingSpinnerComponent
+		LinkComponent
 	],
 	declarations: [
 		ActionButtonComponent,
 		DragDropComponent,
 		MainBlockComponent,
-		LinkComponent,
-		LoadingSpinnerComponent
+		LinkComponent
 	]
 })
 export class SharedModule {}

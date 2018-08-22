@@ -1,4 +1,4 @@
-$animation-speed: 2s
+$animation-speed: 1s
 
 $small: 20px
 $middle: 40px
@@ -64,18 +64,18 @@ $big: 100px
   height: $big
   .inner-section,
   .outer-section
-    border-width: $big*0.077
+    border-width: $big*0.07
 
 .lds-double-ring.middle
   width: $middle
   height: $middle
   .inner-section,
   .outer-section
-    border-width: $middle*0.077
+    border-width: $middle*0.07
 
 .lds-double-ring.small  
   @extend  .lds-double-ring.middle
-  transform: scale($small/$middle)
+  transform: scale($small*1.5/$middle)
 
 
 

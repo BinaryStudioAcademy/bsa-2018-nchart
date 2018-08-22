@@ -48,7 +48,7 @@ storiesOf('Loading spinner', module)
                             text-align: center;
                             vertical-align: middle;' 
                     class="ui-main-block" 
-                    [loading-sp]="true" [spinnerSize]="'middle'"
+                    [loading-sp]="true" [spinnerSize]="'big'"
                     >
                         Big spinner 
                     </div>`,
