@@ -34,7 +34,10 @@ export class CreateDraftProjectFailed extends FailedAction {
 	readonly type = ProjectsActionConstants.CREATE_DRAFT_PROJECT__FAILED;
 }
 
-export class ChangeProjectName extends AppAction<{id: SchemeID, name: string}> {
+export class ChangeProjectName extends AppAction<{
+	id: SchemeID;
+	name: string;
+}> {
 	readonly type = ProjectsActionConstants.CHANGE_PROJECT_NAME;
 }
 

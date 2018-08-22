@@ -1,4 +1,10 @@
-import { Component, OnInit, Input, AfterViewInit, ViewChild } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	Input,
+	AfterViewInit,
+	ViewChild
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -31,7 +37,8 @@ export class InputTextComponent implements OnInit, AfterViewInit {
 	@Input()
 	autofocus: boolean;
 
-	@ViewChild('inputText') inputText;
+	@ViewChild('inputText')
+	inputText;
 
 	ngOnInit() {}
 
