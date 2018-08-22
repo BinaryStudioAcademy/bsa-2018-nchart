@@ -22,8 +22,8 @@
 // import 'core-js/es6/symbol';
 // import 'core-js/es6/object';
 // import 'core-js/es6/function';
-// import 'core-js/es6/parse-int';
-// import 'core-js/es6/parse-float';
+// import 'core-js/es6/processFile-int';
+// import 'core-js/es6/processFile-float';
 // import 'core-js/es6/number';
 // import 'core-js/es6/math';
 // import 'core-js/es6/string';
@@ -65,7 +65,7 @@ import 'core-js/es7/reflect';
  * with the following flag, it will bypass `zone.js` patch for IE/Edge
  */
 // (window as any).__Zone_enable_cross_context_check = true;
-
+(window as any).global = window;
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
  */

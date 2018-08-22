@@ -1,0 +1,82 @@
+$animation-speed: 1s
+
+$small: 20px
+$middle: 40px
+$big: 100px
+
+
+  
+@keyframes lds-double-ring 
+  0% 
+    -webkit-transform: rotate(0)
+    transform: rotate(0)  
+  100% 
+    -webkit-transform: rotate(360deg)
+    transform: rotate(360deg)
+
+
+
+@keyframes lds-double-ring_reverse 
+  0% 
+    -webkit-transform: rotate(0)
+    transform: rotate(0)
+  100% 
+    -webkit-transform: rotate(-360deg)
+    transform: rotate(-360deg)
+  
+.with-spinner
+  position: relative
+
+.spinner-container
+  position: absolute
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+
+.ring-container,
+.lds-double-ring,
+.outer-section,
+.inner-section
+  position: absolute
+  margin: auto
+  top: 0
+  bottom: 0
+  left: 0
+  right: 0
+
+  .outer-section,
+  .inner-section
+    border-style: solid
+    border-radius: 50% 
+
+  .outer-section
+    width: 80%
+    height: 80%
+    animation: lds-double-ring $animation-speed linear infinite
+
+  .inner-section
+    width: 60%
+    height: 60%
+
+.lds-double-ring.big
+  width: $big
+  height: $big
+  .inner-section,
+  .outer-section
+    border-width: $big*0.07
+
+.lds-double-ring.middle
+  width: $middle
+  height: $middle
+  .inner-section,
+  .outer-section
+    border-width: $middle*0.07
+
+.lds-double-ring.small  
+  @extend  .lds-double-ring.middle
+  transform: scale($small*1.5/$middle)
+
+
+
+

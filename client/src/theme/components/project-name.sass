@@ -1,0 +1,50 @@
+@import ../colors
+@import ../variables
+
+app-animated-block.project-name-wrp
+	.ui-main-block
+		background-color: transparent
+		box-shadow: none
+		margin: 0
+		padding: 0
+	h3
+		margin: 0
+		font-size: 1.1rem
+		transition: 0.4s ease
+		display: inline-block
+
+		.project-name-text
+			max-width: calc(100% - 32px)
+			white-space: nowrap
+			overflow: hidden
+			text-overflow: ellipsis
+			display: inline-block
+			vertical-align: middle
+		
+		&:hover .project-name-text:hover
+			& ~ app-button .ui-widget.ui-button-icon
+				color: $stateActiveTextColor
+
+		.ui-widget.ui-button-icon .fas
+			margin-left: 5px
+			cursor: pointer
+
+.project-name
+	min-height: 33px
+	width: 100%
+
+.edit-project-name
+	display: flex
+
+	label.input-label,
+	.input-label
+		display: none
+
+	.ui-inputtext,
+	.ui-inputtext.ng-dirty.ng-invalid:not(.ui-input-error)
+		padding: 5px
+		font-weight: 600
+		font-size: 1rem
+
+	.ui-button-icon .fas, .fa
+		font-size: 1.2rem
