@@ -19,7 +19,9 @@ export class LoginFormComponent implements OnInit {
 	ngOnInit() {}
 
 	onClickLogin() {
-		const user = this.loginForm.getRawValue() as Login;
-		this.loginClick.emit(user);
+		const { email, password } = this.loginForm.getRawValue() as Login;
+		const login = new Login(email.trim(), password.trim());
+
+		this.loginClick.emit(login);
 	}
 }

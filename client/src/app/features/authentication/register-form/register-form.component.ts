@@ -27,7 +27,7 @@ export class RegisterFormComponent implements OnInit {
 			email
 		} = this.registerForm.getRawValue() as Register;
 
-		const user = new Register(name, email, password);
+		const user = new Register(name.trim(), email.trim(), password.trim());
 
 		this.registerClick.emit(user);
 	}
