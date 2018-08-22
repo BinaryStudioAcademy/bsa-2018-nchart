@@ -5,13 +5,13 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class BarChartService {
 	barChartCustomizeSettings: BarChartCustomizeSettings = {
-		width: 800,
-		height: 600,
-		leftMargin: 40,
-		verticalPadding: 20,
-		innerPadding: 0.2,
-		outerPadding: 0.2,
-		isSameScaling: false
+		set1: 800,
+		set2: 600,
+		set3: 40,
+		set4: 20,
+		set5: 0.2,
+		set6: 0.2,
+		set7: false
 	};
 
 	data: Array<any>;
@@ -29,37 +29,23 @@ export class BarChartService {
 		'Jul'
 	];
 
-	testData = [
-		'1',
-		'2',
-		'3',
-		'7',
-		'8',
-		'5',
-		'1',
-		'2',
-		'3',
-		'4',
-		'5',
-		'6',
-		'7',
-		'5',
-		'9',
-		'3',
-		'2',
-		'3',
-		'4',
-		'5',
-		'6',
-		'5',
-		'2',
-		'3',
-		'4',
-		'5',
-		'5',
-		'7',
-		'8',
-		'9'
+	ngrx = [
+		{
+			name: 'X Axis',
+			values: ['one', 'two', 'three']
+		},
+		{
+			name: 'Group',
+			values: []
+		},
+		{
+			name: 'Size',
+			values: ['1', '2', '3']
+		},
+		{
+			name: 'Color',
+			values: []
+		}
 	];
 
 	originalValues = [1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -111,11 +97,10 @@ export class BarChartService {
 	}
 
 	constructor() {
-		/*this.values = this.originalValues;
-		this.data = compressArray(mapData(this.originalData));
+		this.data = compressArray(mapData(this.ngrx[0].values));
 		this.data = mapColors(this.data);
 		this.setData(this.data);
-		this.setRange();	*/
+		this.setRange();
 	}
 }
 

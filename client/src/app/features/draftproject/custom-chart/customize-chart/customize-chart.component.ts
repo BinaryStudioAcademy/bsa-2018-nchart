@@ -11,13 +11,13 @@ export class CustomizeChartComponent implements OnInit {
 	form: FormGroup;
 
 	customizeSettings = {
-		width: { option: 'Width', value: 800 },
-		height: { option: 'Height', value: 600 },
-		leftMargin: { option: 'Left margin', value: 40 },
-		verticalPadding: { option: 'Vertical padding', value: 17 },
-		innerPadding: { option: 'Inner padding', value: 0.2 },
-		outerPadding: { option: 'Outer padding', value: 0.2 },
-		isSameScaling: { option: 'Use same Scaling', value: true }
+		set1: { option: 'Width', value: 800 },
+		set2: { option: 'Height', value: 600 },
+		set3: { option: 'Left margin', value: 40 },
+		set4: { option: 'Vertical padding', value: 17 },
+		set5: { option: 'Inner padding', value: 0.2 },
+		set6: { option: 'Outer padding', value: 0.2 },
+		set7: { option: 'Use same Scaling', value: true }
 	};
 
 	customizeNumberProps = [];

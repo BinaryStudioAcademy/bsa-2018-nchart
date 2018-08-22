@@ -1,9 +1,9 @@
 export interface BarChartCustomizeSettings {
-	width: number;
-	height: number;
-	leftMargin: number;
-	verticalPadding: number;
-	innerPadding: number;
-	outerPadding: number;
-	isSameScaling: boolean;
+	set1: number;
+	set2: number;
+	set3: number;
+	set4: number;
+	set5: number;
+	set6: number;
+	set7: boolean;
 }
