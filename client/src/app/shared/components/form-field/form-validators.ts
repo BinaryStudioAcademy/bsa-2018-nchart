@@ -17,7 +17,6 @@ function validatePattern(
 	return Validators.pattern(pattern).call(null, control);
 }
 
-
 const trimControl = (control: AbstractControl) =>
 	control.value ? new FormControl(control.value.trim()) : control;
 
@@ -135,4 +134,3 @@ export function passwordMatchValidator(
 			: null;
 	};
 }
-

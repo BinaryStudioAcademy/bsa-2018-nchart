@@ -45,11 +45,21 @@ export class LoginComponent implements OnInit {
 		this.registerForm.reset();
 	}
 
-	onLogin(user: LoginModel) {
+	onLogin(loginModel: LoginModel) {
+		const user = this.trimStringFields(loginModel) as LoginModel;
 		this.storeService.dispatch(new LoginAction({ user }));
 	}
 
-	onRegister(user: RegisterModel) {
+	onRegister(registerModel: RegisterModel) {
+		const user = this.trimStringFields(registerModel) as RegisterModel;
 		this.storeService.dispatch(new RegisterAction({ user }));
+	}
+
+	private trimStringFields(obj: Object): Object {
+		return Object.keys(obj).reduce((trimmedObj, key) => {
+			const isString = typeof obj[key] === 'string';
+			trimmedObj[key] = isString ? obj[key].trim() : obj[key];
+			return trimmedObj;
+		}, {});
 	}
 }

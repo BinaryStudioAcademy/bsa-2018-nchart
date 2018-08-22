@@ -20,7 +20,7 @@ export class LoginFormComponent implements OnInit {
 
 	onClickLogin() {
 		const { email, password } = this.loginForm.getRawValue() as Login;
-		const login = new Login(email.trim(), password.trim());
+		const login = new Login(email, password);
 
 		this.loginClick.emit(login);
 	}
