@@ -8,9 +8,7 @@ class ProjectRepository extends Repository {
 	}
 
 	upsert(obj) {
-		return this.model.upsert(
-			{ id: obj.id, name: obj.name }
-		);
+		return this.model.upsert({ id: obj.id, name: obj.name });
 	}
 }
 

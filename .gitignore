@@ -10,6 +10,7 @@
 /server/node_modules/
 /node_modules/
 /server/.env
+/server/app/.env
 /client/package-lock.json
 /client/dist
 /server/package-lock.json

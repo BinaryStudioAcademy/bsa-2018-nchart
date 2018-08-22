@@ -32,10 +32,9 @@ function TransactionService(objs, model, method) {
 			return sequelize.transaction(t => {
 				const promises = [];
 				for (let i = 0; i < objs.length; i += 1) {
-					const newPromise = model.upsert(
-						objs[i],
-						{ transaction: t }
-					);
+					const newPromise = model.upsert(objs[i], {
+						transaction: t
+					});
 					promises.push(newPromise);
 				}
 				return Promise.all(promises);
