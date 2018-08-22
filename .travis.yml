@@ -9,6 +9,7 @@ env:
   - CLOUDSDK_CORE_DISABLE_PROMPTS=1
   - INSTANCE=bsa-2018-nchart
   - ZONE=europe-west3-b	
+  - PROJECT=nchart-bsa-2018"
   - DOCKER_IMAGE_NAME=oleksandrkovalov/nchart
 before_install:
 - if [ ! -d $HOME/google-cloud-sdk/bin ]; then
