@@ -27,6 +27,16 @@ const byId = (
 						action.payload.chart.chartId
 					]
 			};
+		case ChartsActionConstants.SELECT_CHART__COMPLETE:
+			return {
+				...state,
+				[action.payload.chart.chartId]: {
+					...state[action.payload.chart.chartId],
+					...action.payload.chart.entities.chart[
+						action.payload.chart.chartId
+						]
+				}
+			};
 		default:
 			return state;
 	}

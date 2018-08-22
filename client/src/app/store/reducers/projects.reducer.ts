@@ -5,6 +5,8 @@ import { ProjectsActionConstants as constants } from '@app/store/actions/project
 import { SchemeID } from '@app/models/normalizr.model';
 import { DatasetActions } from '@app/store/actions/datasets/datasets.action-types';
 import { Actions as datasetsActions } from '@app/store/actions/datasets/datasets.actions';
+import {Actions as chartActions} from '@app/store/actions/charts/charts.actions';
+import {ChartsActionConstants} from '@app/store/actions/charts/charts.action-types';
 
 export const initialState: ProjectsState = {
 	byId: {},
@@ -30,7 +32,7 @@ const all = (state = initialState.all, action: ProjectsActions) => {
 
 const byId = (
 	state = initialState.byId,
-	action: ProjectsActions | datasetsActions
+	action: ProjectsActions | datasetsActions | chartActions
 ) => {
 	switch (action.type) {
 		case constants.LOAD_PROJECTS:
@@ -46,6 +48,17 @@ const byId = (
 			return {
 				...state,
 				...action.payload.entities.project
+			};
+		case ChartsActionConstants.CREATE_CHART__COMPLETE:
+			return {
+				...state,
+				[action.payload.projectId]: {
+					...state[action.payload.projectId],
+					charts: [
+						...state[action.payload.projectId].charts,
+						action.payload.chart.chartId
+					]
+				}
 			};
 		case DatasetActions.PARSE_DATA__COMPLETE:
 			return {

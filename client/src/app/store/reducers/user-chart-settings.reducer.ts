@@ -22,6 +22,10 @@ const dimensionSettings = (
 				...state,
 				...action.payload.chart.entities.dimensionSetting
 			};
+		case ChartsActionConstants.SELECT_CHART__COMPLETE:
+			return {
+				...action.payload.chart.entities.dimensionSetting
+			};
 		default:
 			return state;
 	}
@@ -37,6 +41,10 @@ const customizeSettings = (
 		case ChartsActionConstants.CREATE_CHART__COMPLETE:
 			return {
 				...state,
+				...action.payload.chart.entities.customizeSetting
+			};
+		case ChartsActionConstants.SELECT_CHART__COMPLETE:
+			return {
 				...action.payload.chart.entities.customizeSetting
 			};
 		default:
