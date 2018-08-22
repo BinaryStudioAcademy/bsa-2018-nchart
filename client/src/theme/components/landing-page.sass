@@ -13,10 +13,10 @@
 	overflow: hidden
 
 	.landing-text
-		width: 45%
-		max-width: 546px
-		min-width: calc(320px - 2rem)
+		// width: 45%
+		// max-width: 546px
 		position: relative
+		min-width: 640px
 	
 	.description
 		font-size: 2rem
@@ -50,18 +50,23 @@
 	z-index: -1
 
 
-@media screen and(max-width: 1000px)
+@media screen and(max-width: 1200px)
 	.landing-header
 		.landing-image
 			transform: translateX(20px)
 
-@media screen and(max-width: 800px)
+@media screen and(max-width: 1000px)
 	.landing-header
 		flex-wrap: wrap
 		padding: 160px 3rem 0 3em
 		.landing-text
 			width: 90%
 			margin: 0 auto
+			min-width: 520px
+			.description
+				font-size: 1.6rem
+				&.label
+					font-size: 1rem
 		.landing-image
 			width: 100%
 			transform: translateX(0)
@@ -71,9 +76,15 @@
 				width: 100%
 				height: auto
 
-@media screen and(max-width: 530px)
+@media screen and(max-width: 640px)
 	.landing-header
 		height: 100%
 		padding: 80px 1rem 0 1em
+		.landing-text
+			min-width: calc(320px - 2rem)
+			.description
+				font-size: 1.5rem
+				&.label
+					font-size: 1rem
 		.landing-image
 			display: none
