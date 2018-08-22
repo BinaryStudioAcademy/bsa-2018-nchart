@@ -25,7 +25,7 @@ jobs:
       script:
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       - docker build -t nchart .
-      - docker tag nchart $DOCKER_USERNAME/nchart:$TRAVIS_BUILD_NUMBER
+      - docker tag nchart $DOCKER_USERNAME/nchart
       - docker push $DOCKER_USERNAME/nchart
 
 deploy:
