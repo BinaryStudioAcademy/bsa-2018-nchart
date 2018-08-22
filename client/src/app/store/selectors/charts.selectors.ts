@@ -9,10 +9,36 @@ import { dataset } from './dataset.selectors';
 export const getAllCharts = () => (state: AppState) =>
 	state.charts.all.map(id => state.charts.byId[id]);
 
+export const getListChart = () => (state: AppState) =>
+	state.charts.all.map(id => {
+		const chart = state.charts.byId[id];
+		return ({
+			id: chart.id,
+			name: chart.name,
+			type: chart.type,
+			description: chart.description,
+		})
+	});
+
 export const chart = (id?: SchemeID) => (state: AppState): UserChart =>
 	state.userCharts.byId[id || state.userCharts.active]
 		? state.userCharts.byId[id || state.userCharts.active]
 		: null;
+
+export const getChart = (id) => (state: AppState) => {
+	const chart = state.charts.byId[id];
+	return {
+		...chart,
+		dimensionSettings: chart.dimensionSettings.map(
+			id => state.defaultChartSettings.dimensionSettings[id]
+		),
+		customizeSettings: chart.customizeSettings.map(
+			id => state.defaultChartSettings.customizeSettings[id]
+		)
+	}
+};
+
+export const getActiveChartId = () => (state: AppState) => state.userCharts.active;
 
 export const getFirstChart = () => (state: AppState): Chart => {
 	const fChart: Chart<SchemeID[], SchemeID[]> =
@@ -50,6 +76,22 @@ export const mappingColumns = () => (state: AppState): UserMappingColumn[] => {
 		}
 
 		return [];
+	}
+
+	return [];
+};
+
+export const mappingDimensions = () => (state: AppState): any => {
+	const c: UserChart = chart()(state);
+
+	if (c) {
+		return c.dimensionSettings.map(
+			id =>
+				({
+					value: [],//todo
+					...state.defaultChartSettings.dimensionSettings[id],
+				})
+		);
 	}
 
 	return [];

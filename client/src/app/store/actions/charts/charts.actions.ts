@@ -37,6 +37,7 @@ export class CreateChart extends AppAction<{
 }
 
 export class CreateChartComplete extends AppAction<{
+	projectId: SchemeID;
 	chart: {
 		chartId: SchemeID;
 		entities: {

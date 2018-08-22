@@ -15,7 +15,7 @@ import { DatasetService } from '@app/services/dataset.service';
 import { datasetScheme } from '@app/schemes/dataset.schema';
 import { normalize } from 'normalizr';
 import { withLatestFrom } from 'rxjs/internal/operators';
-import { getActive } from '@app/store/selectors/projects.selectors';
+import { getActiveProject} from '@app/store/selectors/projects.selectors';
 import { CreateChart } from '@app/store/actions/charts/charts.actions';
 import { StoreService } from '@app/services/store.service';
 
@@ -42,7 +42,7 @@ export class DatasetEffects {
 						);
 					}),
 					withLatestFrom(
-						this.storeService.createSubscription(getActive)
+						this.storeService.createSubscription(getActiveProject())
 					),
 					switchMap(([dataset, projectId]) => {
 						const {
@@ -90,7 +90,7 @@ export class DatasetEffects {
 						);
 					}),
 					withLatestFrom(
-						this.storeService.createSubscription(getActive)
+						this.storeService.createSubscription(getActiveProject())
 					),
 					map(([dataset, projectId]) => {
 						const {
@@ -133,7 +133,7 @@ export class DatasetEffects {
 						);
 					}),
 					withLatestFrom(
-						this.storeService.createSubscription(getActive)
+						this.storeService.createSubscription(getActiveProject())
 					),
 					map(([dataset, projectId]) => {
 						const {
