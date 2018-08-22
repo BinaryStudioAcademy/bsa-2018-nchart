@@ -6,14 +6,15 @@ cache:
   - $HOME/google-cloud-sdk
 env:
   global:
-  - CLOUDSDK_CORE_DISABLE_PROMPTS=1 
+  - CLOUDSDK_CORE_DISABLE_PROMPTS=1
+  - INSTANCE=bsa-2018-nchart
+  - DOCKER_IMAGE_NAME=oleksandrkovalov/nchart
 before_install:
 - if [ ! -d $HOME/google-cloud-sdk/bin ]; then
     rm -rf $HOME/google-cloud-sdk;
     curl https://sdk.cloud.google.com | bash > /dev/null;
   fi
 - source $HOME/google-cloud-sdk/path.bash.inc
-- gcloud components update kubectl
 - gcloud version
 
 jobs:
@@ -23,5 +24,10 @@ jobs:
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       - docker build -t nchart .
       - docker images
-      - docker tag nchart $DOCKER_USERNAME/nchart
+      - docker tag nchart $DOCKER_USERNAME/nchart:$TRAVIS_COMMIT
       - docker push $DOCKER_USERNAME/nchart
+
+deploy:
+  - provider: script
+    script: bash ./deploy.sh
+    skip_cleanup: true

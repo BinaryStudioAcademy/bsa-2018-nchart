@@ -46,3 +46,5 @@ Thumbs.db
 
 /data/postgres
 /data/pgadmin
+*.env
+credentials.json
