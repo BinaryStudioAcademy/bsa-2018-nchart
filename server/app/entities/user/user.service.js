@@ -5,7 +5,7 @@ const TokenService = require('../../common/services/token.service');
 const CompanyService = require('../company/company.service');
 const GroupService = require('../group/group.service');
 const schemaValidationService = require('../../common/services/schema-validation.service');
-const userSaveSchema = require('./user.schema');
+const usersSchemas = require('./user.schema');
 
 class UserService {
 	constructor() {
@@ -31,7 +31,7 @@ class UserService {
 	}
 
 	save(obj) {
-		const errors = schemaValidationService(obj.user, userSaveSchema);
+		const errors = schemaValidationService(obj.user, usersSchemas.saveSchema);
 		if (errors !== null) {
 			throw errors;
 		}
@@ -150,6 +150,10 @@ class UserService {
 	}
 
 	login(obj) {
+        const errors = schemaValidationService(obj, usersSchemas.loginSchema);
+        if (errors !== null) {
+            throw errors;
+        }
 		return new Promise((resolve, reject) => {
 			async.waterfall(
 				[
@@ -228,6 +232,7 @@ class UserService {
 		});
 	}
 
+    // todo: discuss what's gonna be deleted with user
 	removeById(id) {
 		return this.UserRepository.removeById(id)
 			.then(data => {
@@ -243,6 +248,10 @@ class UserService {
 	}
 
 	updateUser(id, obj) {
+        const errors = schemaValidationService(obj, usersSchemas.updateSchema);
+        if (errors !== null) {
+            throw errors;
+        }
 		return new Promise((resolve, reject) => {
 			async.waterfall(
 				[

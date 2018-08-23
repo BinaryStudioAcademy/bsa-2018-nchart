@@ -4,6 +4,61 @@ module.exports = {
 	up: (queryInterface, Sequelize) => new Promise((resolve, reject) => {
 		async.waterfall(
 			[
+                callback => {
+                    queryInterface
+                        .createTable('companies', {
+                            id: {
+                                allowNull: false,
+                                autoIncrement: true,
+                                primaryKey: true,
+                                type: Sequelize.INTEGER
+                            },
+                            name: {
+                                type: Sequelize.STRING
+                            },
+                            createdAt: {
+                                allowNull: false,
+                                type: Sequelize.DATE
+                            },
+                            updatedAt: {
+                                allowNull: false,
+                                type: Sequelize.DATE
+                            }
+                        })
+                        .then(() => callback(null))
+                        .catch(err => callback(err, null));
+                },
+                callback => {
+                    queryInterface
+                        .createTable('groups', {
+                            id: {
+                                allowNull: false,
+                                autoIncrement: true,
+                                primaryKey: true,
+                                type: Sequelize.INTEGER
+                            },
+                            name: {
+                                type: Sequelize.STRING
+                            },
+                            companyId: {
+                                type: Sequelize.INTEGER,
+                                references: {
+                                    model: 'companies',
+                                    key: 'id'
+                                }
+                            },
+                            createdAt: {
+                                allowNull: false,
+                                type: Sequelize.DATE
+                            },
+                            updatedAt: {
+                                allowNull: false,
+                                type: Sequelize.DATE
+                            }
+                        })
+                        .then(() => callback(null))
+                        .catch(err => callback(err, null));
+                },
 				callback => {
 					queryInterface
 						.createTable('users', {
@@ -37,31 +92,8 @@ module.exports = {
 							},
 							defaultGroupId: {
 								type: Sequelize.INTEGER,
-								allowNull: false
-							},
-							createdAt: {
 								allowNull: false,
-								type: Sequelize.DATE
-							},
-							updatedAt: {
-								allowNull: false,
-								type: Sequelize.DATE
-							}
-						})
-						.then(() => callback(null))
-						.catch(err => callback(err, null));
-				},
-				callback => {
-					queryInterface
-						.createTable('companies', {
-							id: {
-								allowNull: false,
-								autoIncrement: true,
-								primaryKey: true,
-								type: Sequelize.INTEGER
-							},
-							name: {
-								type: Sequelize.STRING
+                                references: { model: 'groups', key: 'id' }
 							},
 							createdAt: {
 								allowNull: false,
@@ -210,37 +242,6 @@ module.exports = {
 							},
 							isAdmin: {
 								type: Sequelize.BOOLEAN
-							},
-							createdAt: {
-								allowNull: false,
-								type: Sequelize.DATE
-							},
-							updatedAt: {
-								allowNull: false,
-								type: Sequelize.DATE
-							}
-						})
-						.then(() => callback(null))
-						.catch(err => callback(err, null));
-				},
-				callback => {
-					queryInterface
-						.createTable('groups', {
-							id: {
-								allowNull: false,
-								autoIncrement: true,
-								primaryKey: true,
-								type: Sequelize.INTEGER
-							},
-							name: {
-								type: Sequelize.STRING
-							},
-							companyId: {
-								type: Sequelize.INTEGER,
-								references: {
-									model: 'companies',
-									key: 'id'
-								}
 							},
 							createdAt: {
 								allowNull: false,
@@ -460,39 +461,45 @@ module.exports = {
 						.then(() => callback(null))
 						.catch(err => callback(err, null));
 				},
+                callback => {
+                    queryInterface
+                        .dropTable('companyUsers')
+                        .then(() => callback(null))
+                        .catch(err => callback(err, null));
+                },
+                callback => {
+                    queryInterface
+                        .dropTable('accessTypes')
+                        .then(() => callback(null))
+                        .catch(err => callback(err, null));
+                },
+                callback => {
+                    queryInterface
+                        .dropTable('datasets')
+                        .then(() => callback(null))
+                        .catch(err => callback(err, null));
+                },
+                callback => {
+                    queryInterface
+                        .dropTable('chartTypes')
+                        .then(() => callback(null))
+                        .catch(err => callback(err, null));
+                },
+                callback => {
+                    queryInterface
+                        .dropTable('projects')
+                        .then(() => callback(null))
+                        .catch(err => callback(err, null));
+                },
+                callback => {
+                    queryInterface
+                        .dropTable('users')
+                        .then(() => callback(null))
+                        .catch(err => callback(err, null));
+                },
 				callback => {
 					queryInterface
 						.dropTable('groups')
-						.then(() => callback(null))
-						.catch(err => callback(err, null));
-				},
-				callback => {
-					queryInterface
-						.dropTable('companyUsers')
-						.then(() => callback(null))
-						.catch(err => callback(err, null));
-				},
-				callback => {
-					queryInterface
-						.dropTable('accessTypes')
-						.then(() => callback(null))
-						.catch(err => callback(err, null));
-				},
-				callback => {
-					queryInterface
-						.dropTable('datasets')
-						.then(() => callback(null))
-						.catch(err => callback(err, null));
-				},
-				callback => {
-					queryInterface
-						.dropTable('chartTypes')
-						.then(() => callback(null))
-						.catch(err => callback(err, null));
-				},
-				callback => {
-					queryInterface
-						.dropTable('projects')
 						.then(() => callback(null))
 						.catch(err => callback(err, null));
 				},
@@ -502,12 +509,7 @@ module.exports = {
 						.then(() => callback(null))
 						.catch(err => callback(err, null));
 				},
-				callback => {
-					queryInterface
-						.dropTable('users')
-						.then(() => callback(null))
-						.catch(err => callback(err, null));
-				}
+
 			],
 			(err, payload) => {
 				if (err) {
