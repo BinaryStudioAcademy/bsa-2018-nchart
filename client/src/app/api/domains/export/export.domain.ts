@@ -11,16 +11,17 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class ExportDomainService implements ExportDomain {
 	private projectPath = '/api/project';
-	constructor(
-		private httpService: HttpService
-	) {}
+	constructor(private httpService: HttpService) {}
 
-	exportProject(payload: { id: SchemeID, type: ExportType }):	Observable<{
-		filename: string,
-		data: any
-	}>{
+	exportProject(payload: {
+		id: SchemeID;
+		type: ExportType;
+	}): Observable<{
+		filename: string;
+		data: Blob;
+	}> {
 		return this.httpService
-			.makeRequest<any>(
+			.makeFileRequest(
 				new ServiceRequest(
 					RequestType.GET,
 					`${this.projectPath}/${payload.id}/export`,
@@ -32,9 +33,9 @@ export class ExportDomainService implements ExportDomain {
 				map(res => {
 					return {
 						filename: `${payload.id}.${payload.type}`,
-						data: res.blob()
+						data: res
 					};
 				})
-			)
+			);
 	}
 }

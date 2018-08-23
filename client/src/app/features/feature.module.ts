@@ -5,11 +5,7 @@ import { ExportPdfComponent } from '@app/features/export-pdf/export-pdf.componen
 
 @NgModule({
 	imports: [DraftprojectModule, AuthenticationModule],
-	exports: [
-		DraftprojectModule,
-		AuthenticationModule,
-		ExportPdfComponent
-	],
+	exports: [DraftprojectModule, AuthenticationModule, ExportPdfComponent],
 	declarations: [ExportPdfComponent]
 })
 export class FeatureModule {}
