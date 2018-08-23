@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { LoginService } from '@app/services/login.service';
@@ -10,15 +10,20 @@ import {
 	Register as RegisterAction
 } from '@app/store/actions/user/user.actions';
 import { Login as LoginModel, Register as RegisterModel } from '@app/models';
+import { isUserLoading } from '@app/store/selectors/user.selectors';
 
 @Component({
 	selector: 'app-login',
 	templateUrl: './login.component.html',
 	styleUrls: ['./login.component.sass']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 	loginForm: FormGroup;
 	registerForm: FormGroup;
+
+	isLoading = false;
+
+	private storeDisconnect: () => void;
 
 	constructor(
 		private loginService: LoginService,
@@ -33,6 +38,15 @@ export class LoginComponent implements OnInit {
 		if (token) {
 			this.storeService.dispatch(new VerifyToken({ token }));
 		}
+
+		this.storeDisconnect = this.storeService.connect([
+			{
+				subscriber: isLoading => {
+					this.isLoading = isLoading;
+				},
+				selector: isUserLoading()
+			}
+		]);
 	}
 
 	private createForms() {
@@ -64,5 +78,9 @@ export class LoginComponent implements OnInit {
 			},
 			{} as T
 		);
+	}
+
+	ngOnDestroy(): void {
+		this.storeDisconnect();
 	}
 }
