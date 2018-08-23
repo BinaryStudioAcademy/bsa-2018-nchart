@@ -9,7 +9,6 @@ import * as ProjectsActions from '@app/store/actions/projects/projects.actions';
 import { project } from '@app/store/selectors/projects.selectors';
 import { SchemeID } from '@app/models/normalizr.model';
 
-
 @Component({
 	selector: 'app-project',
 	templateUrl: './project.component.html',
@@ -68,9 +67,11 @@ export class ProjectComponent implements OnInit, OnDestroy {
 	}
 
 	changeProjectName(name) {
-		this.storeService.dispatch(new ProjectsActions.ChangeProjectName({
-			id: this.projectId,
-			name: name
-		}));
+		this.storeService.dispatch(
+			new ProjectsActions.ChangeProjectName({
+				id: this.projectId,
+				name: name
+			})
+		);
 	}
 }

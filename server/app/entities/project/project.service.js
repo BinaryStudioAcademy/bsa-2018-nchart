@@ -18,10 +18,6 @@ class ProjectService {
 	}
 
 	createProject(obj) {
-		const errors = schemaValidationService(obj.project, fullProjectSchema);
-		if (errors !== null) {
-			throw errors;
-		}
 		return new Promise((resolve, reject) => {
 			async.waterfall(
 				[
@@ -71,6 +67,10 @@ class ProjectService {
 	}
 
 	handleProject(obj, res) {
+        const errors = schemaValidationService(obj.project, fullProjectSchema);
+        if (errors !== null) {
+            throw errors;
+        }
 		if (obj.project && !obj.groupId) {
 			return this.createProject(obj);
 		}
@@ -101,7 +101,7 @@ class ProjectService {
 							.then(data => {
 								callback(null, data);
 							})
-							.carch(err => callback(err, null));
+							.catch(err => callback(err, null));
 					},
 					(payload, callback) => {
 						GroupService.saveGroupProject({

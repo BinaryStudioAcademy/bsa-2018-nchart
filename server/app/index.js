@@ -4,6 +4,8 @@ const logger = require('morgan');
 const bodyParser = require('body-parser');
 const initializeAPIRoutes = require('./routes');
 const dbConnect = require('../db/dbconnect');
+const path = require('path');
+
 const {
 	successOrEmptyPayload,
 	errorPayload
@@ -25,6 +27,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 initializeAPIRoutes(app);
+
+const staticPath = path.resolve(`${__dirname}/../client/dist/client`);
+app.use(express.static(staticPath));
 
 // pre-sending middleware
 app.use(successOrEmptyPayload);
