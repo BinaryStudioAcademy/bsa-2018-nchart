@@ -1,8 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
 import { BarChartCustomizeSettings } from '@app/shared/components/charts/bar-chart/bar-chart.model';
 import { Injectable } from '@angular/core';
-import { StoreService } from '@app/services/store.service';
-import { getData } from '@app/store/selectors/charts.selectors';
 @Injectable()
 export class BarChartService {
 	barChartCustomizeSettings: BarChartCustomizeSettings = {
@@ -98,8 +96,8 @@ export class BarChartService {
 		this.setRange();
 	}
 
-	constructor(private storeService: StoreService) {
-		this.data = compressArray(mapData(this.originalData));
+	constructor() {
+		/*this.data = compressArray(mapData(this.originalData));
 		this.data = mapColors(this.data);
 		this.setData(this.data);
 		this.setRange();
@@ -118,7 +116,7 @@ export class BarChartService {
 					}
 				}
 			}
-		]);
+		]);*/
 	}
 }
 

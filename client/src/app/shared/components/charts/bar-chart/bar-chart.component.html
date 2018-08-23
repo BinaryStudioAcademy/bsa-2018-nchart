@@ -1,18 +1,3 @@
-<svg [attr.height]="height" [attr.width]="outerWidth">
-  <g [attr.transform]="transform">
-    <rect 
-        *ngFor="let item of data; let i=index" 
-        [attr.height]="barHeights[i]" 
-        [attr.width]="barWidth" 
-        [attr.x]="xCoordinates[i]" 
-        [attr.y]="0" 
-        [attr.fill]="data[i].color">
-      </rect>
-  </g>
-  <g class="axis"
-    [attr.transform]="axisBottomTransform" 
-    appAxis orientation="horizontal" [scale]="xScale"></g>
-  <g class="axis"
-    [attr.transform]="axisLeftTransform"
-    appAxis orientation="vertical" [scale]="yScale"></g>
-</svg>
+<div class="bar-chart" >
+
+</div>
