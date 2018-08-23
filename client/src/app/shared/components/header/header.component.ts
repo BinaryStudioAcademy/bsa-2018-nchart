@@ -4,7 +4,7 @@ import { StoreService } from '@app/services/store.service';
 import { project } from '@app/store/selectors/projects.selectors';
 import { user } from '@app/store/selectors/user.selectors';
 import { Logout } from '@app/store/actions/user/user.actions';
-import { Go } from '@app/store/actions/router/router.actions';
+
 
 @Component({
 	selector: 'app-header',
@@ -39,7 +39,7 @@ export class HeaderComponent implements OnInit {
 			{
 				label: 'Sign out',
 				command: () => {
-					this.onClick();
+					this.logout()
 				}
 			}
 		];
@@ -63,9 +63,7 @@ export class HeaderComponent implements OnInit {
 		]);
 	}
 
-	onClick() {
-		this.isAuthorized
-			? this.storeService.dispatch(new Logout())
-			: this.storeService.dispatch(new Go({ path: ['/login'] }));
+	logout() {
+		this.storeService.dispatch(new Logout());
 	}
 }
