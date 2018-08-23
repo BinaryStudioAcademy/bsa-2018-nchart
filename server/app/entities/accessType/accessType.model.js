@@ -10,14 +10,12 @@ const AccessType = sequelize.define('accessTypes', {
 });
 
 AccessType.sync().then(() => {
-	GroupGpoject.sync().then(() =>
-		AccessType.hasMany(GroupGpoject, {
-			foreignKey: 'accessLevelId',
-			sourceKey: 'id',
-			onDelete: 'CASCADE',
-			constraints: false
-		})
-	);
+	GroupGpoject.sync().then(() => AccessType.hasMany(GroupGpoject, {
+		foreignKey: 'accessLevelId',
+		sourceKey: 'id',
+		onDelete: 'CASCADE',
+		constraints: false
+	}));
 	GroupGpoject.belongsTo(AccessType, { foreignKey: 'accessLevelId' });
 });
 

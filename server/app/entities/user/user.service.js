@@ -4,6 +4,8 @@ const UserRepository = require('./user.repository');
 const TokenService = require('../../common/services/token.service');
 const CompanyService = require('../company/company.service');
 const GroupService = require('../group/group.service');
+const schemaValidationService = require('../../common/services/schema-validation.service');
+const userSaveSchema = require('./user.schema');
 
 class UserService {
 	constructor() {
@@ -29,14 +31,28 @@ class UserService {
 	}
 
 	save(obj) {
+		const errors = schemaValidationService(obj.user, userSaveSchema);
+		if (errors !== null) {
+			throw errors;
+		}
 		return new Promise((resolve, reject) => {
 			async.waterfall(
 				[
 					callback => {
+						UserRepository.findByEmail(obj.user.email)
+							.then(data => {
+								if (data === null) {
+									callback(null);
+								}
+								throw new Error('email must be unique');
+							})
+							.catch(err => {
+								callback(err, null);
+							});
+					},
+					callback => {
 						CompanyService.saveCompany('General')
-							.then(data =>
-								callback(null, { company: data.dataValues })
-							)
+							.then(data => callback(null, { company: data.dataValues }))
 							.catch(err => {
 								callback(err, null);
 							});
@@ -46,14 +62,12 @@ class UserService {
 							name: 'General',
 							companyId: payload.company.id
 						})
-							.then(data =>
-								callback(
-									null,
-									Object.assign({}, payload, {
-										group: data.dataValues
-									})
-								)
-							)
+							.then(data => callback(
+								null,
+								Object.assign({}, payload, {
+									group: data.dataValues
+								})
+							))
 							.catch(err => callback(err, null));
 					},
 					(payload, callback) => {
@@ -95,14 +109,12 @@ class UserService {
 							payload.user.id,
 							payload.company.id
 						)
-							.then(data =>
-								callback(
-									null,
-									Object.assign({}, payload, {
-										companyUser: data.dataValues
-									})
-								)
-							)
+							.then(data => callback(
+								null,
+								Object.assign({}, payload, {
+									companyUser: data.dataValues
+								})
+							))
 							.catch(err => {
 								callback(err, null);
 							});
@@ -113,14 +125,12 @@ class UserService {
 							payload.user.id,
 							payload.group.id
 						)
-							.then(data =>
-								callback(
-									null,
-									Object.assign({}, payload, {
-										groupUser: data.dataValues
-									})
-								)
-							)
+							.then(data => callback(
+								null,
+								Object.assign({}, payload, {
+									groupUser: data.dataValues
+								})
+							))
 							.catch(err => callback(err, null));
 					}
 				],
