@@ -11,6 +11,9 @@ export class LoginFormComponent implements OnInit {
 	@Input()
 	loginForm: FormGroup;
 
+	@Input()
+	isLoading = false;
+
 	@Output()
 	loginClick = new EventEmitter<Login>();
 

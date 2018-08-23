@@ -11,6 +11,9 @@ export class RegisterFormComponent implements OnInit {
 	@Input()
 	registerForm: FormGroup;
 
+	@Input()
+	isLoading = false;
+
 	@Output()
 	registerClick = new EventEmitter<Register>();
 
