@@ -149,14 +149,15 @@ export const getData = () => (state: AppState) => {
 
 	const acc = [];
 	for (const dimenId in dimens) {
-		acc.push(
-			getRow({
-				id: dimenId,
-				columnId: dimens[dimenId].columnId
-			})
-		);
+		if (dimens.hasOwnProperty(dimenId)) {
+			acc.push(
+				getRow({
+					id: dimenId,
+					columnId: dimens[dimenId].columnId
+				})
+			);
+		}
 	}
-
 	return acc;
 };
 

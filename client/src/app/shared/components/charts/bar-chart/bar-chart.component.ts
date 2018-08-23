@@ -53,8 +53,8 @@ export class BarChartComponent implements OnChanges {
 				.scaleBand()
 				.domain(this.data.map((item: Datum) => item.name))
 				.range([0, this.chartWidth])
-				.paddingInner(this.innerPadding)
-				.paddingOuter(this.outerPadding);
+				.paddingInner(this.innerPadding);
+			// .paddingOuter(this.outerPadding);
 
 			this.yScale = d3
 				.scaleLinear()
