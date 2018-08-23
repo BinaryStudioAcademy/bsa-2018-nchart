@@ -59,13 +59,13 @@ export class ChartsEffects {
 						],
 						customizeSettings: [
 							{
-								defaultValue: 800,
+								value: 800,
 								description: 'width in pixels',
 								option: 'Width',
 								id: 8
 							},
 							{
-								defaultValue: 4,
+								value: 4,
 								description: `Pie chart will be disposed on a grid.
 								 This option allows to define how many pie charts must be drawn for each line.
 								  The number of lines is calculated according to this option.`,
@@ -73,42 +73,42 @@ export class ChartsEffects {
 								id: 9
 							},
 							{
-								defaultValue: 10,
+								value: 10,
 								description:
 									'The vertical and horizontal padding between pie charts, in pixels.',
 								option: 'Padding',
 								id: 10
 							},
 							{
-								defaultValue: false,
+								value: false,
 								description:
 									'If selected, pie charts will be drawn ad donut chart. The size is defined by the Thickness option (see below).',
 								option: 'Donut chart',
 								id: 11
 							},
 							{
-								defaultValue: 10,
+								value: 10,
 								description:
 									'If Donut chart option is selects, this value will be used to defines its thickness.',
 								option: 'Thickness',
 								id: 12
 							},
 							{
-								defaultValue: false,
+								value: false,
 								description:
 									'If selected, the absolute value of each value will be displayed with a label.',
 								option: 'Show Values',
 								id: 13
 							},
 							{
-								defaultValue: ['size', 'name'],
+								value: ['size', 'name'],
 								description:
 									'Order of the pie chart. Can be ‘size’ (from the biggest to the smallest), ‘name’ (alphabetical order).',
 								option: 'Sort charts by',
 								id: 14
 							},
 							{
-								defaultValue: ['size', 'name'],
+								value: ['size', 'name'],
 								description: `Order of the arcs inside each pie chart.
 								 Can be ‘automatic’ (same order in each pie chart), ‘size’ (from biggest to smallest in each pie chart)
 								  or ‘name’ (alphabetical order).`,
@@ -116,7 +116,7 @@ export class ChartsEffects {
 								id: 15
 							},
 							{
-								defaultValue: [],
+								value: [],
 								description: `List of dimensions headers dragged as ‘Arcs’.
 								 If set to ordinal, you can set a color for each value.
 								  If set to linear, the app will try to find the minimum and maximum
@@ -176,47 +176,47 @@ export class ChartsEffects {
 						customizeSettings: [
 							{
 								id: 1,
-								defaultValue: 800,
+								value: 800,
 								description: 'Artboard width in pixels.',
 								option: 'Width'
 							},
 							{
 								id: 2,
-								defaultValue: 600,
+								value: 600,
 								description: 'Artboard height in pixels.',
 								option: 'Height'
 							},
 							{
 								id: 3,
-								defaultValue: 40,
+								value: 40,
 								description:
 									'Margin for left side of a bar chart, in pixel.',
 								option: 'Left Margin'
 							},
 							{
 								id: 4,
-								defaultValue: 0,
+								value: 0,
 								description:
 									'Distance among bar charts, in pixel.',
 								option: 'Vertical Padding'
 							},
 							{
 								id: 5,
-								defaultValue: 0.1,
+								value: 0.1,
 								description:
 									'Distance between bars, in percentage of the size of the bar (0 = 0%, 1 = 100%).',
 								option: 'Horizontal Padding'
 							},
 							{
 								id: 6,
-								defaultValue: false,
+								value: false,
 								description:
 									'If set, every barchart element will have the same scale.',
 								option: 'Use Same Scale'
 							},
 							{
 								id: 7,
-								defaultValue: [],
+								value: [],
 								description: `List of uniques values in the dimension mapped as “color”.
 								 If set to ordinal, you can set a color for each value.
 								  If set to linear, the app will try to find the minimum
@@ -275,31 +275,31 @@ export class ChartsEffects {
 						],
 						customizeSettings: [
 							{
-								defaultValue: 900,
+								value: 900,
 								description: 'Artboard width in pixels',
 								option: 'Width',
 								id: 23
 							},
 							{
-								defaultValue: 600,
+								value: 600,
 								description: 'Artboard height in pixels',
 								option: 'Height',
 								id: 24
 							},
 							{
-								defaultValue: 80,
+								value: 80,
 								description: 'Artboard height in pixels',
 								option: 'Left Margin',
 								id: 25
 							},
 							{
-								defaultValue: 80,
+								value: 80,
 								description: 'Artboard height in pixels',
 								option: 'Align Labels To Bar',
 								id: 26
 							},
 							{
-								defaultValue: [
+								value: [
 									'Start date (ascending)',
 									'Start date (descending)',
 									'name'
@@ -310,7 +310,7 @@ export class ChartsEffects {
 								id: 27
 							},
 							{
-								defaultValue: [],
+								value: [],
 								description: 'If set to ordinal',
 								option: 'Color scale',
 								id: 28
@@ -346,38 +346,38 @@ export class ChartsEffects {
 						],
 						customizeSettings: [
 							{
-								defaultValue: 847,
+								value: 847,
 								description: 'Artboard width in pixels.',
 								option: 'Width',
 								id: 17
 							},
 							{
-								defaultValue: 500,
+								value: 500,
 								description: 'Artboard height in pixels.',
 								option: 'Height',
 								id: 18
 							},
 							{
-								defaultValue: 5,
+								value: 5,
 								description:
 									'Width of black bars representing nodes, in pixels.',
 								option: 'Nodes Width',
 								id: 19
 							},
 							{
-								defaultValue: 0.4,
+								value: 0.4,
 								description: 'Opacity of nodes.',
 								option: 'Links Opacity',
 								id: 20
 							},
 							{
-								defaultValue: ['size', 'name', 'automatic'],
+								value: ['size', 'name', 'automatic'],
 								description: 'Sorting of nodes inside ',
 								option: 'Sort By',
 								id: 21
 							},
 							{
-								defaultValue: [],
+								value: [],
 								description: 'The color of flows. The color ',
 								option: 'Color scale',
 								id: 22

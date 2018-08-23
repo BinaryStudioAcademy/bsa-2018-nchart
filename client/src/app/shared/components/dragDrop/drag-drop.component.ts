@@ -3,6 +3,9 @@ import { DragulaService } from 'ng2-dragula';
 import { Subscription } from 'rxjs';
 import { SchemeID } from '@app/models/normalizr.model';
 import { UserMappingColumn } from '@app/models/user-chart-store.model';
+import { SelectDimension } from '@app/store/actions/charts/charts.actions';
+import { StoreService } from '@app/services/store.service';
+import { getData } from '@app/store/selectors/charts.selectors';
 
 class Column implements UserMappingColumn {
 	constructor(
@@ -26,8 +29,13 @@ export class DragDropComponent implements OnInit, OnDestroy {
 	columns: UserMappingColumn[] = [];
 	public dimensions = [];
 
+	data;
+
 	subs = new Subscription();
-	constructor(private _dragulaService: DragulaService) {
+	constructor(
+		private _dragulaService: DragulaService,
+		private storeService: StoreService
+	) {
 		_dragulaService.createGroup(this.DIMENSIONS, {
 			copy: (el, source) => {
 				return source.id === 'columns';
@@ -73,6 +81,12 @@ export class DragDropComponent implements OnInit, OnDestroy {
 						} else if (this.hasDuplicates(targetModel)) {
 							targetModel.splice(targetModel.indexOf(item), 1);
 						} else {
+							this.storeService.dispatch(
+								new SelectDimension({
+									dimensionId: target['dataset'].dimensionid,
+									columnId: item.id
+								})
+							);
 							// TODO: send action to set columns
 						}
 					}
@@ -80,7 +94,16 @@ export class DragDropComponent implements OnInit, OnDestroy {
 		);
 	}
 
-	ngOnInit() {}
+	ngOnInit() {
+		this.storeService.connect([
+			{
+				selector: getData(),
+				subscriber: data => {
+					this.data = data;
+				}
+			}
+		]);
+	}
 
 	getClasses(multiple, required) {
 		return {
@@ -117,6 +140,7 @@ export class DragDropComponent implements OnInit, OnDestroy {
 	}
 
 	remove(x, values) {
+		// todo action delete column id from store
 		values.splice(values.indexOf(x), 1);
 	}
 

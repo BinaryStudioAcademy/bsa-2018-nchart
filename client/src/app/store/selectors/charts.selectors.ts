@@ -87,13 +87,77 @@ export const mappingDimensions = () => (state: AppState): any => {
 	const c: UserChart = chart()(state);
 
 	if (c) {
-		return c.dimensionSettings.map(id => ({
-			value: [], // todo
-			...state.defaultChartSettings.dimensionSettings[id]
-		}));
+		return c.dimensionSettings.map(id => {
+			const columnId =
+				state.userChartSettings.dimensionSettings[id].columnId;
+			const column = state.datasetColumns[columnId as SchemeID];
+			const value = [];
+			if (columnId !== null) {
+				value.push({
+					variable: column.title,
+					type: column.type,
+					id: column.id
+				});
+			}
+			return {
+				value: value,
+				...state.defaultChartSettings.dimensionSettings[id]
+			};
+		});
 	}
 
 	return [];
+};
+
+export const getCustomizeSettings = () => (state: AppState) => {
+	const aChart = chart()(state);
+	if (aChart) {
+		return aChart.customizeSettings.reduce((obj, id) => {
+			const option = state.defaultChartSettings.customizeSettings[id];
+			obj[`set${id}`] = { ...option };
+			return obj;
+		}, {});
+	}
+	return [];
+};
+
+export const getIndexCol = colId => (state: AppState) => {
+	const datasetId = state.userCharts.byId[state.userCharts.active].datasetId;
+	return state.datasets[datasetId].modified.columns.indexOf(colId);
+};
+
+export const getData = () => (state: AppState) => {
+	const getRow = ({ id, columnId }) => {
+		const name = state.defaultChartSettings.dimensionSettings[id].variable;
+		let values = [];
+		if (columnId !== null) {
+			const indexCol = getIndexCol(columnId)(state);
+			const datasetId =
+				state.userCharts.byId[state.userCharts.active].datasetId;
+
+			values = state.datasets[datasetId].modified.data.map(arrId => {
+				return state.datasetData[arrId[indexCol]].value;
+			});
+
+			return { name, values };
+		} else {
+			return { name, values };
+		}
+	};
+
+	const dimens = state.userChartSettings.dimensionSettings;
+
+	const acc = [];
+	for (const dimenId in dimens) {
+		acc.push(
+			getRow({
+				id: dimenId,
+				columnId: dimens[dimenId].columnId
+			})
+		);
+	}
+
+	return acc;
 };
 
 export const isChartsReady = () => (state: AppState) => state.charts.all.length;
