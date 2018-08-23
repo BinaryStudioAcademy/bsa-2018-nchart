@@ -267,10 +267,10 @@ module.exports = {
 								type: Sequelize.INTEGER,
 								references: { model: 'users', key: 'id' }
 							},
-                            defaultGroup: {
-                                type: Sequelize.BOOLEAN,
-                                allowNull: false
-                            },
+							defaultGroup: {
+								type: Sequelize.BOOLEAN,
+								allowNull: false
+							},
 							createdAt: {
 								allowNull: false,
 								type: Sequelize.DATE
@@ -295,12 +295,12 @@ module.exports = {
 							groupId: {
 								type: Sequelize.INTEGER,
 								references: { model: 'groups', key: 'id' },
-                                primaryKey: true
+								primaryKey: true
 							},
 							projectId: {
 								type: Sequelize.INTEGER,
 								references: { model: 'projects', key: 'id' },
-                                primaryKey: true
+								primaryKey: true
 							},
 							accessLevelId: {
 								type: Sequelize.INTEGER

@@ -3,10 +3,6 @@ const ProjectRepository = require('./project.repository');
 const DatasetService = require('../dataset/dataset.service');
 const ChartService = require('../chart/chart.service');
 const GroupService = require('../group/group.service');
-const schemaValidationService = require('../../common/services/schema-validation.service');
-const {
-	fullProjectSchema
-} = require('../project/project.schemas/projects.schema');
 
 class ProjectService {
 	constructor() {
@@ -67,10 +63,6 @@ class ProjectService {
 	}
 
 	handleProject(obj, res) {
-		const errors = schemaValidationService(obj.project, fullProjectSchema);
-		if (errors !== null) {
-			throw errors;
-		}
 		if (obj.project && !obj.groupId) {
 			return this.createProject(obj);
 		}

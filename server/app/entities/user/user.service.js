@@ -33,7 +33,7 @@ class UserService {
 	save(obj) {
 		const errors = schemaValidationService(
 			obj.user,
-			usersSchemas.saveSchema
+			usersSchemas.userSchema
 		);
 		if (errors !== null) {
 			throw errors;
@@ -125,8 +125,8 @@ class UserService {
 					(payload, callback) => {
 						GroupService.saveGroupUser(
 							{
-								userId:payload.user.id,
-								groupId:payload.group.id,
+								userId: payload.user.id,
+								groupId: payload.group.id,
 								defaultGroup: true
 							}
 						)
@@ -253,7 +253,7 @@ class UserService {
 	}
 
 	updateUser(id, obj) {
-		const errors = schemaValidationService(obj, usersSchemas.updateSchema);
+		const errors = schemaValidationService(obj, usersSchemas.userSchema);
 		if (errors !== null) {
 			throw errors;
 		}

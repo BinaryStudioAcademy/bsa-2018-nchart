@@ -4,7 +4,7 @@ const emailPattern = /^((([a-z]|\d|[!#$%&'*+\-/=?^_`{|}~]|[\u00A0-\uD7FF\uF900-\
 const namePattern = /^[a-zа-яэіїє]{1,100}$/;
 const passwordPattern = /^(?=.*[a-zа-яэіїє])(?=.*[A-ZА-ЯЭІЇЄ])(?=.*\d).{5,}$/;
 
-const saveSchema = {
+const userSchema = {
 	type: 'object',
 	additionalProperties: true,
 	required: ['name', 'email', 'password'],
@@ -33,20 +33,4 @@ const loginSchema = {
 	}
 };
 
-const updateSchema = {
-	type: 'object',
-	additionalProperties: true,
-	required: ['name', 'email', 'password', 'defaultGroupId'],
-	properties: {
-		name: { type: 'string', maxLength: 100, pattern: namePattern.source },
-		email: { type: 'string', pattern: emailPattern.source },
-		password: {
-			type: 'string',
-			minLength: 5,
-			pattern: passwordPattern.source
-		},
-		defaultGroupId: { type: 'number' }
-	}
-};
-
-module.exports = { saveSchema, loginSchema, updateSchema };
+module.exports = { userSchema, loginSchema };

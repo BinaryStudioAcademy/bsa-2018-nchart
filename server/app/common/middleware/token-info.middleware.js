@@ -2,17 +2,16 @@ const jwt = require('jsonwebtoken');
 const _ = require('lodash');
 require('dotenv').config();
 
-class TokenMiddleWare {
-	constructor() {
-		this.tokenSecret = null;
-	}
-
-	getUserFromToken(tokenPayload, res) {
-		this.tokenSecret = process.env.TOKEN;
-		const decoded = jwt.decode(tokenPayload, this.tokenSecret);
+// req.headers.authorization
+const getUserFromToken = (req, res, next) => {
+	if (req.headers.authorization) {
+		const tokenSecret = process.env.TOKEN;
+		const tokenPayload = req.headers.authorization;
+		const decoded = jwt.decode(tokenPayload, tokenSecret);
 		res.locals.user = _.omit(decoded, 'iat', 'exp');
+		next();
 		return res.locals.user;
-	}
-}
+	} return next();
+};
 
-module.exports = new TokenMiddleWare();
+module.exports = getUserFromToken;

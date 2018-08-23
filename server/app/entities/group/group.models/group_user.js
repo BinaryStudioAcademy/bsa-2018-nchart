@@ -10,10 +10,10 @@ const GroupUser = sequelize.define('groupUsers', {
 		type: Sequelize.INTEGER,
 		allowNull: false
 	},
-    defaultGroup: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false
-    }
+	defaultGroup: {
+		type: Sequelize.BOOLEAN,
+		allowNull: false
+	}
 });
 
 GroupUser.sync();

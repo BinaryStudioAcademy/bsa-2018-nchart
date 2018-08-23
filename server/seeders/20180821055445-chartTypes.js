@@ -11,7 +11,7 @@ module.exports = {
 				sysName: 'alluvialDiagram',
 				description:
 						'Alluvial diagrams allow to represent flows and to see correlations between categorical dimensions, visually linking to the number of elements sharing the same categories. It is useful to see the evolution of cluster (such as the number of people belonging',
-				dimensionSettings: {arr:1},
+				dimensionSettings: { arr: 1 },
 				customizeSettings: [
 					{
 						defaultValue: 847,
