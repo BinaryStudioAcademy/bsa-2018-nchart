@@ -3,6 +3,7 @@ import { MenuItem } from 'primeng/api';
 import { StoreService } from '@app/services/store.service';
 import { project } from '@app/store/selectors/projects.selectors';
 import { user } from '@app/store/selectors/user.selectors';
+import { Logout } from '@app/store/actions/user/user.actions';
 
 @Component({
 	selector: 'app-header',
@@ -36,9 +37,8 @@ export class HeaderComponent implements OnInit {
 		this.profileItems = [
 			{
 				label: 'Sign out',
-				routerLink: ['/'],
 				command: () => {
-					this.onClick();
+					this.logout();
 				}
 			}
 		];
@@ -62,10 +62,7 @@ export class HeaderComponent implements OnInit {
 		]);
 	}
 
-	onClick() {
-		/*this.isAuthorized = !this.isAuthorized;
-		this.isAuthorized
-			? this.items.push(...this.authItems)
-			: this.items.splice(1);*/
+	logout() {
+		this.storeService.dispatch(new Logout());
 	}
 }

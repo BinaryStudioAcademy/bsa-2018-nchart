@@ -1,17 +1,39 @@
 <div class="ui-widget-header header-container">
     <div class="header-component">
-		<a [routerLink]="['/app']" class="header-logo">
-			<img src="../../../../assets/nChartLogo.svg">
-		</a>
+        <a
+            [routerLink]="['/app']"
+            class="header-logo"
+        >
+            <img src="../../../../assets/nChartLogo.svg">
+        </a>
     </div>
     <div class="header-component">
         <p-tabMenu [model]="items"></p-tabMenu>
     </div>
     <div class="header-component">
         <div class="header-profile-container">
-            <app-button label="New project" size="middle" type="default" routerLink='/app/projects/draft' icon="fas fa-plus" iconPosition="left" class="header-newProject-button"></app-button>
-            <app-button label="Sign in" size="middle" type="secondary" (onclick)="onClick($event)" *ngIf="!isAuthorized" routerLink="/login" ></app-button>
-            <app-header-profile [label]="userName" *ngIf="isAuthorized" [items]="profileItems" [image]="userImage"></app-header-profile>
+            <app-button
+                label="New project"
+                size="middle"
+                type="default"
+                routerLink="/app/projects/draft"
+                icon="fas fa-plus"
+                iconPosition="left"
+                class="header-newProject-button"
+            ></app-button>
+            <app-button
+                label="Sign in"
+                size="middle"
+                type="secondary"
+                *ngIf="!isAuthorized"
+                routerLink="/login"
+            ></app-button>
+            <app-header-profile
+                [label]="userName"
+                *ngIf="isAuthorized"
+                [items]="profileItems"
+                [image]="userImage"
+            ></app-header-profile>
         </div>
     </div>
 </div>
