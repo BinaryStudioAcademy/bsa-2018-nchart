@@ -59,12 +59,25 @@ export class LoginComponent implements OnInit, OnDestroy {
 		this.registerForm.reset();
 	}
 
-	onLogin(user: LoginModel) {
+	onLogin(loginModel: LoginModel) {
+		const user = this.trimStringFields<LoginModel>(loginModel);
 		this.storeService.dispatch(new LoginAction({ user }));
 	}
 
-	onRegister(user: RegisterModel) {
+	onRegister(registerModel: RegisterModel) {
+		const user = this.trimStringFields<RegisterModel>(registerModel);
 		this.storeService.dispatch(new RegisterAction({ user }));
+	}
+
+	private trimStringFields<T>(obj: T): T {
+		return Object.keys(obj).reduce(
+			(trimmedObj, key) => {
+				const isString = typeof obj[key] === 'string';
+				trimmedObj[key] = isString ? obj[key].trim() : obj[key];
+				return trimmedObj;
+			},
+			{} as T
+		);
 	}
 
 	ngOnDestroy(): void {
