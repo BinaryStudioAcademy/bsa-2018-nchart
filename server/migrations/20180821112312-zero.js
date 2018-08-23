@@ -299,7 +299,10 @@ module.exports = {
 							},
 							projectId: {
 								type: Sequelize.INTEGER,
-								references: { model: 'projects', key: 'id' },
+								references: {
+									model: 'projects',
+									key: 'id'
+								},
 								primaryKey: true
 							},
 							accessLevelId: {

@@ -11,7 +11,8 @@ const getUserFromToken = (req, res, next) => {
 		res.locals.user = _.omit(decoded, 'iat', 'exp');
 		next();
 		return res.locals.user;
-	} return next();
+	}
+	return next();
 };
 
 module.exports = getUserFromToken;

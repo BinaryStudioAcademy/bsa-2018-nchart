@@ -1,6 +1,9 @@
 const user = require('express').Router();
 const userService = require('../../entities/user/user.service');
 const PayloadGeneratorService = require('../../common/services/payload-generator.service');
+const validationMiddleware = require('../../common/middleware/validation.middleware');
+
+user.use(validationMiddleware);
 
 user.get('/', (req, res, next) => {
 	userService

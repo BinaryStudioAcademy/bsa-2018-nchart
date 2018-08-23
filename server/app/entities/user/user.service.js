@@ -4,8 +4,6 @@ const UserRepository = require('./user.repository');
 const TokenService = require('../../common/services/token.service');
 const CompanyService = require('../company/company.service');
 const GroupService = require('../group/group.service');
-const schemaValidationService = require('../../common/services/schema-validation.service');
-const usersSchemas = require('./user.schema');
 
 class UserService {
 	constructor() {
@@ -31,13 +29,6 @@ class UserService {
 	}
 
 	save(obj) {
-		const errors = schemaValidationService(
-			obj.user,
-			usersSchemas.userSchema
-		);
-		if (errors !== null) {
-			throw errors;
-		}
 		return new Promise((resolve, reject) => {
 			async.waterfall(
 				[
@@ -45,13 +36,11 @@ class UserService {
 						UserRepository.findByEmail(obj.user.email)
 							.then(data => {
 								if (data === null) {
-									callback(null);
+									return callback(null);
 								}
 								throw new Error('email must be unique');
 							})
-							.catch(err => {
-								callback(err, null);
-							});
+							.catch(err => callback(err, null));
 					},
 					callback => {
 						CompanyService.saveCompany('General')
@@ -106,7 +95,6 @@ class UserService {
 							})
 							.catch(err => callback(err, null));
 					},
-
 					(payload, callback) => {
 						CompanyService.saveCompanyUser(
 							payload.user.id,
@@ -123,13 +111,11 @@ class UserService {
 							});
 					},
 					(payload, callback) => {
-						GroupService.saveGroupUser(
-							{
-								userId: payload.user.id,
-								groupId: payload.group.id,
-								defaultGroup: true
-							}
-						)
+						GroupService.saveGroupUser({
+							userId: payload.user.id,
+							groupId: payload.group.id,
+							defaultGroup: true
+						})
 							.then(data => callback(
 								null,
 								Object.assign({}, payload, {
@@ -155,10 +141,6 @@ class UserService {
 	}
 
 	login(obj) {
-		const errors = schemaValidationService(obj, usersSchemas.loginSchema);
-		if (errors !== null) {
-			throw errors;
-		}
 		return new Promise((resolve, reject) => {
 			async.waterfall(
 				[
@@ -253,10 +235,6 @@ class UserService {
 	}
 
 	updateUser(id, obj) {
-		const errors = schemaValidationService(obj, usersSchemas.userSchema);
-		if (errors !== null) {
-			throw errors;
-		}
 		return new Promise((resolve, reject) => {
 			async.waterfall(
 				[

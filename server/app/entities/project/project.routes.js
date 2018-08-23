@@ -1,11 +1,11 @@
 const project = require('express').Router();
 const ProjectService = require('../../entities/project/project.service');
 const PayloadGeneratorService = require('../../common/services/payload-generator.service');
-const getUserFromToken = require('../../common/middleware/token-info.middleware');
-const validate = require('../../common/middleware/validation.middleware');
+const tokenInfoMiddleware = require('../../common/middleware/token-info.middleware');
+const validationMiddleware = require('../../common/middleware/validation.middleware');
 
-project.use(getUserFromToken);
-project.use(validate);
+project.use(tokenInfoMiddleware);
+project.use(validationMiddleware);
 
 project.get('/', (req, res, next) => {
 	ProjectService.getAll()
