@@ -46,20 +46,23 @@ export class LoginComponent implements OnInit {
 	}
 
 	onLogin(loginModel: LoginModel) {
-		const user = this.trimStringFields(loginModel) as LoginModel;
+		const user = this.trimStringFields<LoginModel>(loginModel);
 		this.storeService.dispatch(new LoginAction({ user }));
 	}
 
 	onRegister(registerModel: RegisterModel) {
-		const user = this.trimStringFields(registerModel) as RegisterModel;
+		const user = this.trimStringFields<RegisterModel>(registerModel);
 		this.storeService.dispatch(new RegisterAction({ user }));
 	}
 
-	private trimStringFields(obj: Object): Object {
-		return Object.keys(obj).reduce((trimmedObj, key) => {
-			const isString = typeof obj[key] === 'string';
-			trimmedObj[key] = isString ? obj[key].trim() : obj[key];
-			return trimmedObj;
-		}, {});
+	private trimStringFields<T>(obj: T): T {
+		return Object.keys(obj).reduce(
+			(trimmedObj, key) => {
+				const isString = typeof obj[key] === 'string';
+				trimmedObj[key] = isString ? obj[key].trim() : obj[key];
+				return trimmedObj;
+			},
+			{} as T
+		);
 	}
 }
