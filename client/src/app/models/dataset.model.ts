@@ -10,7 +10,7 @@ export class Dataset {
 	source: DatasetTable = null;
 }
 
-interface Column {
+export interface Column {
 	id: SchemeID;
 	title: string;
 	type: string;

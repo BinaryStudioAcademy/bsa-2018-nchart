@@ -7,6 +7,7 @@ import { MainBlockComponent } from '@app/shared/components/main-block/main-block
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LinkComponent } from '@app/shared/components/link/link.component';
 import { DragDropComponent } from '@app/shared/components/dragDrop/drag-drop.component';
+import { TableComponent } from '@app/shared/components/table/table.component';
 
 @NgModule({
 	imports: [
@@ -22,13 +23,15 @@ import { DragDropComponent } from '@app/shared/components/dragDrop/drag-drop.com
 		UIKitModule,
 		MainBlockComponent,
 		DragDropComponent,
-		LinkComponent
+		LinkComponent,
+		TableComponent
 	],
 	declarations: [
 		ActionButtonComponent,
 		DragDropComponent,
 		MainBlockComponent,
-		LinkComponent
+		LinkComponent,
+		TableComponent
 	]
 })
 export class SharedModule {}

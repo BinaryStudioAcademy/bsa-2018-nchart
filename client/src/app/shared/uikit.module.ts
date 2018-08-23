@@ -23,6 +23,7 @@ import { TabViewModule } from 'primeng/tabview';
 // Drag&Drop
 import { DragulaModule } from 'ng2-dragula';
 import { TooltipModule } from 'primeng/tooltip';
+import { TableModule } from 'primeng/table';
 
 @NgModule({
 	imports: [
@@ -45,7 +46,8 @@ import { TooltipModule } from 'primeng/tooltip';
 		TabViewModule,
 		DragulaModule.forRoot(),
 		FormsModule,
-		TooltipModule
+		TooltipModule,
+		TableModule
 	],
 	exports: [
 		ButtonModule,
@@ -67,8 +69,8 @@ import { TooltipModule } from 'primeng/tooltip';
 		TabViewModule,
 		DragulaModule,
 		FormsModule,
-		TooltipModule
-	],
-	declarations: []
+		TooltipModule,
+		TableModule
+	]
 })
 export class UIKitModule {}
