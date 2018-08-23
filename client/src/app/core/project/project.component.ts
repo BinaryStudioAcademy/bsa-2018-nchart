@@ -1,4 +1,13 @@
-import { Component, OnInit, OnDestroy, ElementRef, QueryList, HostListener, AfterViewInit, ViewChildren } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	OnDestroy,
+	ElementRef,
+	QueryList,
+	HostListener,
+	AfterViewInit,
+	ViewChildren
+} from '@angular/core';
 import { StoreService } from '@app/services/store.service';
 import { LoadCharts } from '@app/store/actions/charts/charts.actions';
 import { CreateDraftProject } from '@app/store/actions/projects/projects.actions';
@@ -35,16 +44,21 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 	stepperSteps: StepperStep[];
 	stepperErrors = [2, 1];
 
-	@ViewChildren('viewItem', {read: ElementRef}) viewItems: QueryList<any>;
+	@ViewChildren('viewItem', { read: ElementRef })
+	viewItems: QueryList<any>;
 	viewItemsList: ElementRef[];
 
-	@HostListener('window:scroll', ['$event']) onScrollEvent() {
+	@HostListener('window:scroll', ['$event'])
+	onScrollEvent() {
 		const scrollPosition = window.pageYOffset;
 		for (const i in this.viewItemsList) {
 			if (this.viewItemsList[i]) {
-				const position = this.viewItemsList[i].nativeElement.offsetTop - 300;
+				const position =
+					this.viewItemsList[i].nativeElement.offsetTop - 300;
 				if (scrollPosition >= position) {
-					this.selectedStep = this.stepperSteps.find(el => el.id === +(i) + 1);
+					this.selectedStep = this.stepperSteps.find(
+						el => el.id === +i + 1
+					);
 				}
 			}
 		}

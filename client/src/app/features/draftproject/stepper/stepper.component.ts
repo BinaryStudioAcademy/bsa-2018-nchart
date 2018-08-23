@@ -1,6 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { StoreService } from '@app/services/store.service';
-import { isProjectDataset, isProjectCharts } from '@app/store/selectors/projects.selectors';
+import {
+	isProjectDataset,
+	isProjectCharts
+} from '@app/store/selectors/projects.selectors';
 // import * as ProjectsActions from '@app/store/actions/projects/projects.actions';
 // import { project } from '@app/store/selectors/projects.selectors';
 
