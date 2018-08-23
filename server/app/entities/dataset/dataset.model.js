@@ -6,6 +6,10 @@ const Dataset = sequelize.define('dataset', {
 	data: {
 		type: Sequelize.JSON,
 		allowNull: false
+	},
+	columns: {
+		type: Sequelize.JSON,
+		allowNull: false
 	}
 });
 
