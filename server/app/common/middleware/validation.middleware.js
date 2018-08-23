@@ -15,19 +15,13 @@ const validationMiddleware = (req, res, next) => {
 		}
 	}
 	if (req.body.user) {
-		const errors = schemaValidationService(
-			req.body.user,
-			userSchema
-		);
+		const errors = schemaValidationService(req.body.user, userSchema);
 		if (errors !== null) {
 			next(errors);
 		}
 	}
 	if (req.body.email && req.body.password) {
-		const errors = schemaValidationService(
-			req.body,
-			loginSchema
-		);
+		const errors = schemaValidationService(req.body, loginSchema);
 		if (errors !== null) {
 			next(errors);
 		}
