@@ -28,9 +28,13 @@ jobs:
       - docker tag nchart $DOCKER_USERNAME/nchart
       - docker push $DOCKER_USERNAME/nchart
 
+branches:
+  only:
+  - develop
+
 deploy:
   - provider: script
     script: bash ./deploy.sh
     skip_cleanup: true
     on:
-      branch: docker-test
+      branch: develop
