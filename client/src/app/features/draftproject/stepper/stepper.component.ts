@@ -6,6 +6,12 @@ import {
 } from '@app/store/selectors/projects.selectors';
 // import * as ProjectsActions from '@app/store/actions/projects/projects.actions';
 // import { project } from '@app/store/selectors/projects.selectors';
+import {
+	trigger,
+	style,
+	animate,
+	transition
+} from '@angular/animations';
 
 export const steps = [
 	{
@@ -46,10 +52,22 @@ interface StepperStep {
 	name: string;
 }
 
+
 @Component({
 	selector: 'app-stepper',
 	templateUrl: './stepper.component.html',
-	styleUrls: ['./stepper.component.sass']
+	styleUrls: ['./stepper.component.sass'],
+	animations: [
+		trigger('toggleStepper', [
+			transition('void => *', [
+				style({transform: 'translateX(-100%)'}),
+				animate(200)
+			]),
+			transition('* => void', [
+				animate(200, style({transform: 'translateX(-100%)'}))
+			])
+		])
+	]
 })
 export class StepperComponent implements OnInit {
 	@Input()
@@ -116,7 +134,7 @@ export class StepperComponent implements OnInit {
 			// 					id: this.projectId,
 			// 					name: 'name',
 			// 					datasets: ['fsadag', 'efsd'],
-			// 					charts: [],
+			// 					charts: [''],
 			// 					createdAt: '435',
 			// 					isDraft: true
 			// 				}

@@ -5,6 +5,7 @@ import { withNotes } from '@storybook/addon-notes';
 import { FormsModule, MinLengthValidator } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormControl, Validators } from '@angular/forms';
+import { LoadingSpinnerComponent } from '../app/shared/components/loading-spinner/loading-spinner.component';
 // Modules
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // Buttons
@@ -67,7 +68,8 @@ storiesOf('Input fields', module)
 				InputTextComponent,
 				InputTextareaComponent,
 				ButtonComponent,
-				AutocompleteComponent
+				AutocompleteComponent,
+				LoadingSpinnerComponent
 			]
 		})
 	)

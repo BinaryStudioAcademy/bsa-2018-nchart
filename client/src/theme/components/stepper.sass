@@ -3,11 +3,21 @@
 
 .stepper-container
 	padding-top: 2.2rem
+	max-width: 75px
+	position: fixed
+	top: 120px
+	left: 0px
+	&.show-stepper
+		max-width: 50px
 	ul
 		margin: 0
 	.ui-widget.ui-button
 		margin-top: 15px
 		min-width: 50px
+		padding: 0
+		min-height: 24px
+		&:enabled:hover
+			min-height: 24px!important
 	.stepper-tools
 		display: flex
 		justify-content: space-between
@@ -34,7 +44,7 @@
 	flex-wrap: wrap
 	position: relative
 	.step-connection
-		border-left: 1px dashed $secondaryTextColor
+		border-left: 1px dashed $teriaryColor
 		height: 25px
 		width: 50%
 		position: relative
