@@ -10,7 +10,9 @@ import {
 	LoginFailed,
 	Register,
 	RegisterComplete,
-	RegisterFailed
+	RegisterFailed,
+	Logout,
+	LogoutComplete
 } from '@app/store/actions/user/user.actions';
 import { map, switchMap, mergeMap } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
@@ -111,5 +113,14 @@ export class UserEffects {
 				)
 			)
 		)
+	);
+
+	@Effect()
+	logout$ = this.action$.pipe(
+		ofType(UserActionConstants.LOGOUT),
+		mergeMap((action: Logout) => {
+			this.tokenService.removeToken();
+			return [new LogoutComplete(), new Go({ path: ['/app'] })];
+		})
 	);
 }
