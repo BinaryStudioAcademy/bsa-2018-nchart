@@ -19,10 +19,6 @@ const User = sequelize.define('users', {
 			isEmail: { msg: 'Not valid email' }
 		}
 	},
-	defaultGroupId: {
-		type: Sequelize.INTEGER,
-		allowNull: false
-	},
 	password: {
 		type: Sequelize.STRING,
 		allowNull: false

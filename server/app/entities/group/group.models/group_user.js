@@ -9,7 +9,11 @@ const GroupUser = sequelize.define('groupUsers', {
 	userId: {
 		type: Sequelize.INTEGER,
 		allowNull: false
-	}
+	},
+    defaultGroup: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false
+    }
 });
 
 GroupUser.sync();

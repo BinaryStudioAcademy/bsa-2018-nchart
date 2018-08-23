@@ -2,9 +2,9 @@ const express = require('express');
 const cors = require('cors');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
+const path = require('path');
 const initializeAPIRoutes = require('./routes');
 const dbConnect = require('../db/dbconnect');
-const path = require('path');
 
 const {
 	successOrEmptyPayload,

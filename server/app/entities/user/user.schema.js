@@ -20,33 +20,33 @@ const saveSchema = {
 };
 
 const loginSchema = {
-    type: 'object',
-    additionalProperties: true,
-    required: ['email', 'password'],
-    properties: {
-        email: { type: 'string', pattern: emailPattern.source },
-        password: {
-            type: 'string',
-            minLength: 5,
-            pattern: passwordPattern.source
-        }
-    }
+	type: 'object',
+	additionalProperties: true,
+	required: ['email', 'password'],
+	properties: {
+		email: { type: 'string', pattern: emailPattern.source },
+		password: {
+			type: 'string',
+			minLength: 5,
+			pattern: passwordPattern.source
+		}
+	}
 };
 
 const updateSchema = {
-    type: 'object',
-    additionalProperties: true,
-    required: ['name','email', 'password','defaultGroupId'],
-    properties: {
-        name: { type: 'string', maxLength: 100, pattern: namePattern.source },
-        email: { type: 'string', pattern: emailPattern.source },
-        password: {
-            type: 'string',
-            minLength: 5,
-            pattern: passwordPattern.source
-        },
-        defaultGroupId: {type: 'number'}
-    }
+	type: 'object',
+	additionalProperties: true,
+	required: ['name', 'email', 'password', 'defaultGroupId'],
+	properties: {
+		name: { type: 'string', maxLength: 100, pattern: namePattern.source },
+		email: { type: 'string', pattern: emailPattern.source },
+		password: {
+			type: 'string',
+			minLength: 5,
+			pattern: passwordPattern.source
+		},
+		defaultGroupId: { type: 'number' }
+	}
 };
 
-module.exports = {saveSchema,loginSchema,updateSchema};
+module.exports = { saveSchema, loginSchema, updateSchema };

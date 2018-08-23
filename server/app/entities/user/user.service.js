@@ -31,7 +31,10 @@ class UserService {
 	}
 
 	save(obj) {
-		const errors = schemaValidationService(obj.user, usersSchemas.saveSchema);
+		const errors = schemaValidationService(
+			obj.user,
+			usersSchemas.saveSchema
+		);
 		if (errors !== null) {
 			throw errors;
 		}
@@ -119,11 +122,13 @@ class UserService {
 								callback(err, null);
 							});
 					},
-
 					(payload, callback) => {
 						GroupService.saveGroupUser(
-							payload.user.id,
-							payload.group.id
+							{
+								userId:payload.user.id,
+								groupId:payload.group.id,
+								defaultGroup: true
+							}
 						)
 							.then(data => callback(
 								null,
@@ -150,10 +155,10 @@ class UserService {
 	}
 
 	login(obj) {
-        const errors = schemaValidationService(obj, usersSchemas.loginSchema);
-        if (errors !== null) {
-            throw errors;
-        }
+		const errors = schemaValidationService(obj, usersSchemas.loginSchema);
+		if (errors !== null) {
+			throw errors;
+		}
 		return new Promise((resolve, reject) => {
 			async.waterfall(
 				[
@@ -232,7 +237,7 @@ class UserService {
 		});
 	}
 
-    // todo: discuss what's gonna be deleted with user
+	// todo: discuss what's gonna be deleted with user
 	removeById(id) {
 		return this.UserRepository.removeById(id)
 			.then(data => {
@@ -248,10 +253,10 @@ class UserService {
 	}
 
 	updateUser(id, obj) {
-        const errors = schemaValidationService(obj, usersSchemas.updateSchema);
-        if (errors !== null) {
-            throw errors;
-        }
+		const errors = schemaValidationService(obj, usersSchemas.updateSchema);
+		if (errors !== null) {
+			throw errors;
+		}
 		return new Promise((resolve, reject) => {
 			async.waterfall(
 				[

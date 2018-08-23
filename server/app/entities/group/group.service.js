@@ -9,8 +9,8 @@ class GroupService {
 		return this.GroupRepository.saveGroup(obj);
 	}
 
-	saveGroupUser(userId, groupId) {
-		return this.GroupRepository.saveGroupUser(userId, groupId);
+	saveGroupUser(obj) {
+		return this.GroupRepository.saveGroupUser(obj);
 	}
 
 	saveGroupProject(obj) {

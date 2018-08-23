@@ -15,12 +15,8 @@ class GroupRepository extends Repository {
 		return this.groupModel.create(obj);
 	}
 
-	saveGroupUser(userId, groupId) {
-		return this.groupUserModel.create({
-			userId,
-			groupId,
-			isAdmin: true
-		});
+	saveGroupUser(obj) {
+		return this.groupUserModel.create(obj);
 	}
 
 	saveGroupProject(obj) {

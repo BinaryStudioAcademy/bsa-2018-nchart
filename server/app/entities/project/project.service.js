@@ -67,10 +67,10 @@ class ProjectService {
 	}
 
 	handleProject(obj, res) {
-        const errors = schemaValidationService(obj.project, fullProjectSchema);
-        if (errors !== null) {
-            throw errors;
-        }
+		const errors = schemaValidationService(obj.project, fullProjectSchema);
+		if (errors !== null) {
+			throw errors;
+		}
 		if (obj.project && !obj.groupId) {
 			return this.createProject(obj);
 		}
