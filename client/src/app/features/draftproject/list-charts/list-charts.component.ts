@@ -1,6 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { StoreService } from '@app/services/store.service';
-import { getListChart } from '@app/store/selectors/charts.selectors';
+import {
+	getCustomizeSettings,
+	getListChart
+} from '@app/store/selectors/charts.selectors';
 import { SelectChart } from '@app/store/actions/charts/charts.actions';
 
 export const charts = [
@@ -52,7 +55,7 @@ export class ListChartsComponent implements OnInit, OnDestroy {
 	disconnect: () => void;
 
 	constructor(private storeService: StoreService) {}
-
+	customize;
 	ngOnInit() {
 		this.disconnect = this.storeService.connect([
 			{
@@ -66,6 +69,12 @@ export class ListChartsComponent implements OnInit, OnDestroy {
 					this.chartIconClass = this.getIconClasses(
 						this.selectedChart.id
 					);
+				}
+			},
+			{
+				selector: getCustomizeSettings(),
+				subscriber: t => {
+					this.customize = t;
 				}
 			}
 		]);

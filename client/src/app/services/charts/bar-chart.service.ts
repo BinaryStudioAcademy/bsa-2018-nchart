@@ -1,7 +1,8 @@
 import { BehaviorSubject } from 'rxjs';
 import { BarChartCustomizeSettings } from '@app/shared/components/charts/bar-chart/bar-chart.model';
 import { Injectable } from '@angular/core';
-
+import { StoreService } from '@app/services/store.service';
+import { getData } from '@app/store/selectors/charts.selectors';
 @Injectable()
 export class BarChartService {
 	barChartCustomizeSettings: BarChartCustomizeSettings = {
@@ -10,12 +11,13 @@ export class BarChartService {
 		set3: 40,
 		set4: 20,
 		set5: 0.2,
-		set6: 0.2,
-		set7: false
+		set6: false
 	};
 
 	data: Array<any>;
 	values: Array<number>;
+
+	ngrxData = { name: '', values: [] };
 
 	originalData = [
 		'Jan',
@@ -96,11 +98,27 @@ export class BarChartService {
 		this.setRange();
 	}
 
-	constructor() {
-		this.data = compressArray(mapData(this.ngrx[0].values));
+	constructor(private storeService: StoreService) {
+		this.data = compressArray(mapData(this.originalData));
 		this.data = mapColors(this.data);
 		this.setData(this.data);
 		this.setRange();
+		this.storeService.connect([
+			{
+				selector: getData(),
+				subscriber: data => {
+					if (data[0] !== undefined) {
+						this.ngrxData = data[0];
+						this.data = compressArray(
+							mapData(this.ngrxData.values)
+						);
+						this.data = mapColors(this.data);
+						this.setData(this.data);
+						this.setRange();
+					}
+				}
+			}
+		]);
 	}
 }
 

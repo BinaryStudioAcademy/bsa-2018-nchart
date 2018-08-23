@@ -26,6 +26,14 @@ const dimensionSettings = (
 			return {
 				...action.payload.chart.entities.dimensionSetting
 			};
+		case ChartsActionConstants.SELECT_DIMENSION:
+			return {
+				...state,
+				[action.payload.dimensionId]: {
+					...state[action.payload.dimensionId],
+					columnId: action.payload.columnId
+				}
+			};
 		default:
 			return state;
 	}
