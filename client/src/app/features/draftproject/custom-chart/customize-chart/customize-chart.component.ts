@@ -85,9 +85,6 @@ export class CustomizeChartComponent implements OnInit {
 	}
 
 	onChanges() {
-
-			
-
 		this.form.valueChanges.subscribe(val => {
 			if (this.form.valid) {
 				this.barChartService.setCustomizeSettings(val);
