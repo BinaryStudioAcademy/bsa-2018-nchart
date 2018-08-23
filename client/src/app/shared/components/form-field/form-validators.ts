@@ -2,7 +2,8 @@ import {
 	AbstractControl,
 	ValidatorFn,
 	Validators,
-	ValidationErrors
+	ValidationErrors,
+	FormControl
 } from '@angular/forms';
 
 interface ValidationMessage {
@@ -13,8 +14,11 @@ function validatePattern(
 	pattern: string | RegExp,
 	control: AbstractControl
 ): ValidationErrors {
-	return Validators.pattern(pattern).call(null, control);
+	return Validators.pattern(pattern)(control);
 }
+
+const trimControl = (control: AbstractControl) =>
+	control.value ? new FormControl(control.value.trim()) : control;
 
 export function requiredValidator(msg?: string): ValidatorFn {
 	return (control: AbstractControl): ValidationMessage => {
@@ -36,10 +40,7 @@ export function minLengthValidator(
 	minLength?: number
 ): ValidatorFn {
 	return (control: AbstractControl): ValidationMessage => {
-		const validationErrors = Validators.minLength(minLength).call(
-			null,
-			control
-		);
+		const validationErrors = Validators.minLength(minLength)(control);
 
 		return validationErrors ? { minLength: `${msg} ${minLength}` } : null;
 	};
@@ -50,9 +51,8 @@ export function maxLengthValidator(
 	maxLength?: number
 ): ValidatorFn {
 	return (control: AbstractControl): ValidationMessage => {
-		const validationErrors = Validators.maxLength(maxLength).call(
-			null,
-			control
+		const validationErrors = Validators.maxLength(maxLength)(
+			trimControl(control)
 		);
 
 		return validationErrors ? { maxLength: `${msg} ${maxLength}` } : null;
@@ -67,9 +67,11 @@ export function emailValidator(
 		/* tslint:disable-next-line */
 		const defaultPattern = /^((([a-z]|\d|[!#$%&'*+\-/=?^_`{|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#$%&'*+\-/=?^_`{|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))$/i;
 
+		const trimmedControl = trimControl(control);
+
 		const validationErrors = emailPattern
-			? validatePattern(emailPattern, control)
-			: validatePattern(defaultPattern, control);
+			? validatePattern(emailPattern, trimmedControl)
+			: validatePattern(defaultPattern, trimmedControl);
 
 		return validationErrors ? { email: msg || 'Invalid email' } : null;
 	};
@@ -80,7 +82,10 @@ export function patternValidator(
 	patternExpression?: string | RegExp
 ): ValidatorFn {
 	return (control: AbstractControl): ValidationMessage => {
-		const validationErrors = validatePattern(patternExpression, control);
+		const validationErrors = validatePattern(
+			patternExpression,
+			trimControl(control)
+		);
 
 		return validationErrors
 			? { pattern: msg || 'Not match with pattern expression' }
@@ -95,9 +100,11 @@ export function passwordValidator(
 	return (control: AbstractControl): ValidationMessage => {
 		const defaultPattern = /^(?=.*[a-zа-яэіїє])(?=.*[A-ZА-ЯЭІЇЄ])(?=.*\d).+$/;
 
+		const trimmedControl = trimControl(control);
+
 		const validationErrors = customPattern
-			? validatePattern(customPattern, control)
-			: validatePattern(defaultPattern, control);
+			? validatePattern(customPattern, trimmedControl)
+			: validatePattern(defaultPattern, trimmedControl);
 
 		if (validationErrors) {
 			return {

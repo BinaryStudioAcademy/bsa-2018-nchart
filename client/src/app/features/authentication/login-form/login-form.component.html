@@ -1,6 +1,7 @@
 <form [formGroup]="loginForm">
     <div class="ui-fluid">
-        <app-input-text class="ui-fluid"
+        <app-input-text
+            class="ui-fluid"
             type="text"
             label="Email"
             [control]="loginForm.controls['email']"
@@ -19,6 +20,7 @@
                 type="secondary"
                 [disabled]="loginForm.invalid"
                 (onclick)="onClickLogin()"
+                [loading]="isLoading"
             ></app-button>
         </div>
     </div>

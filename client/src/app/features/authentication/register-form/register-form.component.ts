@@ -11,6 +11,9 @@ export class RegisterFormComponent implements OnInit {
 	@Input()
 	registerForm: FormGroup;
 
+	@Input()
+	isLoading = false;
+
 	@Output()
 	registerClick = new EventEmitter<Register>();
 
@@ -27,8 +30,6 @@ export class RegisterFormComponent implements OnInit {
 			email
 		} = this.registerForm.getRawValue() as Register;
 
-		const user = new Register(name, email, password);
-
-		this.registerClick.emit(user);
+		this.registerClick.emit({ name, password, email });
 	}
 }
