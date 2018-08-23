@@ -14,7 +14,7 @@ function validatePattern(
 	pattern: string | RegExp,
 	control: AbstractControl
 ): ValidationErrors {
-	return Validators.pattern(pattern).call(null, control);
+	return Validators.pattern(pattern)(control);
 }
 
 const trimControl = (control: AbstractControl) =>
@@ -40,10 +40,7 @@ export function minLengthValidator(
 	minLength?: number
 ): ValidatorFn {
 	return (control: AbstractControl): ValidationMessage => {
-		const validationErrors = Validators.minLength(minLength).call(
-			null,
-			trimControl(control)
-		);
+		const validationErrors = Validators.minLength(minLength)(control);
 
 		return validationErrors ? { minLength: `${msg} ${minLength}` } : null;
 	};
@@ -54,8 +51,7 @@ export function maxLengthValidator(
 	maxLength?: number
 ): ValidatorFn {
 	return (control: AbstractControl): ValidationMessage => {
-		const validationErrors = Validators.maxLength(maxLength).call(
-			null,
+		const validationErrors = Validators.maxLength(maxLength)(
 			trimControl(control)
 		);
 
