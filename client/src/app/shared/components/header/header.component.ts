@@ -1,14 +1,16 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { StoreService } from '@app/services/store.service';
-import { project } from '@app/store/selectors/projects.selectors';
-
+import {
+	project,
+	hasActiveProject
+} from '@app/store/selectors/projects.selectors';
 
 @Component({
 	selector: 'app-header',
 	templateUrl: './header.component.html'
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 	@Input()
 	isAuthorized = false;
 	getName: () => void;
@@ -17,15 +19,11 @@ export class HeaderComponent implements OnInit {
 	authItems: MenuItem[];
 	profileItems: MenuItem[];
 
-	constructor(
-		private storeService: StoreService
-	) {}
+	private disconnectStore = null;
+
+	constructor(private storeService: StoreService) {}
 
 	ngOnInit() {
-		this.items = [{
-				label: null,
-				routerLink: ['/app/projects/draft']
-		}];
 		this.authItems = [
 			{ label: 'Projects', routerLink: ['/app/projects'] },
 			{ label: 'Companies', routerLink: ['/app/companies'] }
@@ -40,14 +38,29 @@ export class HeaderComponent implements OnInit {
 			}
 		];
 
-		this.storeService.connect([{
+		this.disconnectStore = this.storeService.connect([
+			{
 				subscriber: prj => {
 					if (prj) {
-						this.items[0].label = prj.name;
+						this.items = [
+							{
+								label: prj.name,
+								routerLink: ['/app/projects/draft']
+							}
+						];
 					}
 				},
 				selector: project()
-		}]);
+			},
+			{
+				subscriber: hasActive => {
+					if (!hasActive) {
+						this.items = [];
+					}
+				},
+				selector: hasActiveProject()
+			}
+		]);
 	}
 
 	onClick() {
@@ -55,5 +68,9 @@ export class HeaderComponent implements OnInit {
 		this.isAuthorized
 			? this.items.push(...this.authItems)
 			: this.items.splice(1);*/
+	}
+
+	ngOnDestroy(): void {
+		this.disconnectStore();
 	}
 }
