@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 
 export const charts = [
 	{
@@ -47,7 +47,7 @@ export class ListChartsComponent implements OnInit {
 	selectedChart = this.chartList[0];
 	chartIconClass = this.getIconClasses(this.selectedChart.id);
 
-	constructor() {}
+	constructor(element: ElementRef) {}
 
 	ngOnInit() {}
 

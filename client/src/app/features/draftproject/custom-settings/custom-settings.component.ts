@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 
 @Component({
 	selector: 'app-custom-settings',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
 	styleUrls: ['./custom-settings.component.sass']
 })
 export class CustomSettingsComponent implements OnInit {
-	constructor() {}
+	constructor(element: ElementRef) {}
 
 	ngOnInit() {}
 }

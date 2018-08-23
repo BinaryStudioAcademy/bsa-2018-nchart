@@ -3,7 +3,6 @@ import { MenuItem } from 'primeng/api';
 import { StoreService } from '@app/services/store.service';
 import { project } from '@app/store/selectors/projects.selectors';
 
-
 @Component({
 	selector: 'app-header',
 	templateUrl: './header.component.html'
@@ -17,15 +16,15 @@ export class HeaderComponent implements OnInit {
 	authItems: MenuItem[];
 	profileItems: MenuItem[];
 
-	constructor(
-		private storeService: StoreService
-	) {}
+	constructor(private storeService: StoreService) {}
 
 	ngOnInit() {
-		this.items = [{
+		this.items = [
+			{
 				label: null,
 				routerLink: ['/app/projects/draft']
-		}];
+			}
+		];
 		this.authItems = [
 			{ label: 'Projects', routerLink: ['/app/projects'] },
 			{ label: 'Companies', routerLink: ['/app/companies'] }
@@ -40,14 +39,16 @@ export class HeaderComponent implements OnInit {
 			}
 		];
 
-		this.storeService.connect([{
+		this.storeService.connect([
+			{
 				subscriber: prj => {
 					if (prj) {
 						this.items[0].label = prj.name;
 					}
 				},
 				selector: project()
-		}]);
+			}
+		]);
 	}
 
 	onClick() {

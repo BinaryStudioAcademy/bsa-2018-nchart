@@ -1,13 +1,18 @@
 <div class="project-container">
-  <app-stepper></app-stepper>
-  <div class="main-content">
+  <app-stepper (steps)="getSteps($event)" [errors]="stepperErrors" [selectedStep]="selectedStep"></app-stepper>
+  <div class="main-content" (scroll)="onScroll($event)">
 	<app-project-name [projectName]="projectName" (setProjectName)="changeProjectName($event)">
 	</app-project-name>
-    <app-load-data id="load"></app-load-data>
-    <app-data-table *ngIf="showTable" id="table"></app-data-table>
+    <app-load-data id="load" #load></app-load-data>
+    <!-- <app-data-table *ngIf="showTable" id="table"></app-data-table>
     <app-list-charts *ngIf="showCharts" id="charts" ></app-list-charts>
     <app-custom-settings *ngIf="showTable" id="settings"></app-custom-settings>
     <app-custom-chart *ngIf="showTable" id="chart"></app-custom-chart>
-    <app-export *ngIf="showTable" id="export"></app-export>
+	<app-export *ngIf="showTable" id="export"></app-export> -->
+	<app-data-table id="table" #table></app-data-table>
+    <app-list-charts id="charts" #charts ></app-list-charts>
+    <app-custom-settings id="settings" #settings></app-custom-settings>
+    <app-custom-chart id="chart" #chart></app-custom-chart>
+    <app-export id="export" #export></app-export>
   </div>
 </div>

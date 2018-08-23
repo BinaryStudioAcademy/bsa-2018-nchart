@@ -1,16 +1,26 @@
-<div class="stepper-container ui-main-block">
+<div *ngIf="!isVisible" class="show-stepper stepper-container ui-main-block">
+	<app-button type="icon" icon="fas fa-arrow-right" (onclick)="toggleStepper()"></app-button>
+</div>
+
+<div *ngIf="isVisible" class="stepper-container ui-main-block">
+	<div class="stepper-tools">
+		<app-button type="icon" icon="fas fa-arrow-left" (onclick)="toggleStepper()"></app-button>
+		<i *ngIf="errors.length !== 0" class="fas fa-exclamation"></i>
+	</div>
 	<ul>
 		<li *ngFor="let step of stepsList" 
-		(click)="selectChart(step.id)"
-		[ngClass]="getClasses(step.id)"
+			(click)="selectChart(step.id)"
+			class="step"
 		>
-		<div class="step-icon"
+			<div *ngIf="step.id !== 1" class="step-connection"></div>
+			<div [ngClass]="getClasses(step.id)"
 				[ngx-scroll-to]="step.scrollTo"
 				[ngx-scroll-to-duration]="500" 
 				[ngx-scroll-to-offset]="-100"
 			>
-			<i [ngClass]="getIconClasses(step.id)"></i>
-		</div>
-	</li>
+				<i [ngClass]="getIconClasses(step.id)"></i>
+			</div>
+		</li>
 	</ul>
+	<app-button size="small" label="Save" type="secondary" [disabled]="disableSaveBtn"></app-button>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 
 @Component({
 	selector: 'app-data-table',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
 	styleUrls: ['./data-table.component.sass']
 })
 export class DataTableComponent implements OnInit {
-	constructor() {}
+	constructor(element: ElementRef) {}
 
 	ngOnInit() {}
 }

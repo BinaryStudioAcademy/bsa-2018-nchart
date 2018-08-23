@@ -20,3 +20,15 @@ export const isProjectDataset = (id?: SchemeID) => (
 
 	return false;
 };
+
+export const isProjectCharts = (id?: SchemeID) => (
+	state: AppState
+): boolean => {
+	const selectedProject = project(id)(state);
+
+	if (selectedProject) {
+		return !!selectedProject.charts.length;
+	}
+
+	return false;
+};
