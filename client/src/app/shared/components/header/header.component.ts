@@ -3,6 +3,8 @@ import { MenuItem } from 'primeng/api';
 import { StoreService } from '@app/services/store.service';
 import { project } from '@app/store/selectors/projects.selectors';
 
+import { user } from '@app/store/selectors/user.selectors';
+
 @Component({
 	selector: 'app-header',
 	templateUrl: './header.component.html'
@@ -16,6 +18,8 @@ export class HeaderComponent implements OnInit {
 	authItems: MenuItem[];
 	profileItems: MenuItem[];
 
+	userName: string;
+	userImage = 'fas fa-user-tie';
 	constructor(private storeService: StoreService) {}
 
 	ngOnInit() {
@@ -47,6 +51,13 @@ export class HeaderComponent implements OnInit {
 					}
 				},
 				selector: project()
+			},
+			{
+				subscriber: usr => {
+					this.userName = usr.name || 'Username';
+					this.isAuthorized = !!usr.id;
+				},
+				selector: user()
 			}
 		]);
 	}

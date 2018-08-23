@@ -1,4 +1,5 @@
 <div class="header-profile-container">
-    <img [src]="image" class="header-profile-image">
-    <p-splitButton [label]="label" [model]="items" [ngClass]="getClasses()"></p-splitButton>    
+	<div class="header-user-name">{{label}}</div>
+	<div class="header-profile-image user-image"><i class="{{image}}"></i></div>
+	<p-splitButton label="" [model]="items" [ngClass]="getClasses()"></p-splitButton>  
 </div>

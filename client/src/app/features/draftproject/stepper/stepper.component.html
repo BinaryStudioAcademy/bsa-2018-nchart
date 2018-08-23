@@ -5,13 +5,13 @@
 <div *ngIf="isVisible" class="stepper-container ui-main-block">
 	<div class="stepper-tools">
 		<app-button type="icon" icon="fas fa-arrow-left" (onclick)="toggleStepper()"></app-button>
-		<i *ngIf="errors.length !== 0" class="fas fa-exclamation"></i>
 	</div>
 	<ul>
 		<li *ngFor="let step of stepsList" 
 			(click)="selectChart(step.id)"
 			class="step"
 		>
+			<i *ngIf="checkError(step.id)" class="fas fa-exclamation"></i>
 			<div *ngIf="step.id !== 1" class="step-connection"></div>
 			<div [ngClass]="getClasses(step.id)"
 				[ngx-scroll-to]="step.scrollTo"

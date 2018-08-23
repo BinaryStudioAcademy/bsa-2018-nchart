@@ -20,9 +20,6 @@
 			min-width: 1.5rem
 			min-height: 1.5rem
 			cursor: pointer
-		.fa-exclamation
-			color: $stateErrorTextColor
-			padding: 0.3rem 0.3rem
 
 .ui-main-block.stepper-container.show-stepper
 	padding: 0.5rem 0
@@ -35,12 +32,21 @@
 	margin: 0 auto
 	display: flex
 	flex-wrap: wrap
+	position: relative
 	.step-connection
-		border-left: 2px dashed $teriaryColor
-		height: 20px
+		border-left: 2px dashed $secondaryTextColor
+		height: 25px
 		width: 50%
 		position: relative
 		left: calc(50% - 1px)
+	.fa-exclamation
+		position: absolute
+		color: $stateErrorTextColor
+		right: -0.2rem
+		top: 1.2rem
+	&:first-child
+		.fa-exclamation
+			top: -0.4rem
 
 
 .step-icon
@@ -48,18 +54,16 @@
 	width: 45px
 	margin: 0 auto
 	border-radius: 50%
-	border: 2px solid $backgroundGreyColor
+	border: 2px solid $secondaryTextColor
 	display: flex
 	align-items: center
 	justify-content: center
 	transition: .2s ease-out
 	cursor: pointer
+	color: $secondaryTextColor
 	&:hover
 		color: $defaultButtonHover
 		border: 2px solid $defaultButtonHover
 	&.step-selected
 		color: $baseColor
 		border: 2px solid $baseColor
-	&.step-error
-		color: $stateErrorTextColor
-		border: 2px solid $stateErrorTextColor

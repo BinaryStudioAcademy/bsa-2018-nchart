@@ -1,8 +1,8 @@
-import { Component, OnInit, HostListener, ElementRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { StoreService } from '@app/services/store.service';
-import { project } from '@app/store/selectors/projects.selectors';
 import { isProjectDataset, isProjectCharts } from '@app/store/selectors/projects.selectors';
-import * as ProjectsActions from '@app/store/actions/projects/projects.actions';
+// import * as ProjectsActions from '@app/store/actions/projects/projects.actions';
+// import { project } from '@app/store/selectors/projects.selectors';
 
 export const steps = [
 	{
@@ -37,6 +37,12 @@ export const steps = [
 	}
 ];
 
+interface StepperStep {
+	id: number;
+	scrollTo: string;
+	name: string;
+}
+
 @Component({
 	selector: 'app-stepper',
 	templateUrl: './stepper.component.html',
@@ -44,27 +50,29 @@ export const steps = [
 })
 export class StepperComponent implements OnInit {
 	@Input()
-	selectedStep: any;
+	selectedStep: StepperStep;
 	@Input()
-	errors: any[];
+	errors: number[];
 
-	projectId: any;
-	projectName: string;
+	// projectId: any;
 
 	stepsList = [steps[0]];
-	// selectedStep = this.stepsList.find(el => el.id === this.selectedStepId);
 	stepIconClass: any;
 	disableSaveBtn = true;
 
 	isVisible = true;
 
 	@Output()
-	steps: EventEmitter<any> = new EventEmitter();
+	steps: EventEmitter<StepperStep[]> = new EventEmitter();
 
 	constructor(private storeService: StoreService) {}
 
 	toggleStepper() {
 		this.isVisible = !this.isVisible;
+	}
+
+	checkError(id) {
+		return this.errors.find(el => el === id);
 	}
 
 	selectChart(id): void {
@@ -88,8 +96,7 @@ export class StepperComponent implements OnInit {
 	getClasses(id) {
 		return {
 			'step-icon': true,
-			'step-selected': id === this.selectedStep.id,
-			'step-error': id === this.errors.find(el => el === id)
+			'step-selected': id === this.selectedStep.id
 		};
 	}
 
@@ -98,24 +105,23 @@ export class StepperComponent implements OnInit {
 		this.selectedStep = this.stepsList[0];
 		this.stepIconClass = this.getIconClasses(this.selectedStep.id);
 		this.storeService.connect([
-			{
-				subscriber: prj => {
-					this.projectId = prj.id;
-					this.projectName = prj.name;
-					this.storeService.dispatch(
-						new ProjectsActions.CreateDraftProjectComplete({project: {
-								id: this.projectId,
-								name: 'name',
-								datasets: ['fsadag', 'efsd'],
-								charts: [],
-								createdAt: '435',
-								isDraft: true
-							}
-						})
-					);
-				},
-				selector: project()
-			},
+			// {
+			// 	subscriber: prj => {
+			// 		this.projectId = prj.id;
+			// 		this.storeService.dispatch(
+			// 			new ProjectsActions.CreateDraftProjectComplete({project: {
+			// 					id: this.projectId,
+			// 					name: 'name',
+			// 					datasets: ['fsadag', 'efsd'],
+			// 					charts: [],
+			// 					createdAt: '435',
+			// 					isDraft: true
+			// 				}
+			// 			})
+			// 		);
+			// 	},
+			// 	selector: project()
+			// },
 			{
 				subscriber: isReady => {
 					if (isReady) {
@@ -129,8 +135,8 @@ export class StepperComponent implements OnInit {
 			{
 				subscriber: isReady => {
 					if (isReady) {
-						this.stepsList.push(steps.find(el => el.name === 'Customize'));
-						this.stepsList.push(steps.find(el => el.name === 'Export'));
+						this.stepsList.push(steps[4]);
+						this.stepsList.push(steps[5]);
 						this.disableSaveBtn = false;
 					}
 				},

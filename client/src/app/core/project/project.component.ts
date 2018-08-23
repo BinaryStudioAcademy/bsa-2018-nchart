@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ElementRef, ViewChild, QueryList, HostListener, AfterViewInit, ViewChildren } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, QueryList, HostListener, AfterViewInit, ViewChildren } from '@angular/core';
 import { StoreService } from '@app/services/store.service';
 import { LoadCharts } from '@app/store/actions/charts/charts.actions';
 import { CreateDraftProject } from '@app/store/actions/projects/projects.actions';
@@ -9,6 +9,11 @@ import * as ProjectsActions from '@app/store/actions/projects/projects.actions';
 import { project } from '@app/store/selectors/projects.selectors';
 import { SchemeID } from '@app/models/normalizr.model';
 
+interface StepperStep {
+	id: number;
+	scrollTo: string;
+	name: string;
+}
 
 @Component({
 	selector: 'app-project',
@@ -23,27 +28,23 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 	projectName: string;
 	projectId: SchemeID;
 
-	selectedStep: any;
-	viewElements: ElementRef[];
-	stepperSteps: any;
-	stepperErrors = [2];
-
 	disconnect: () => void;
 
-	@ViewChild('table', {read: ElementRef}) table: any;
-	@ViewChild('charts', {read: ElementRef}) charts: any;
-	@ViewChild('settings', {read: ElementRef}) settings: any;
-	@ViewChild('chart', {read: ElementRef}) chart: any;
-	@ViewChild('export', {read: ElementRef}) export: any;
-	@ViewChild('load', {read: ElementRef}) load: any;
+	selectedStep: StepperStep;
+	viewElements: ElementRef[];
+	stepperSteps: StepperStep[];
+	stepperErrors = [2, 1];
 
-	@HostListener('window:scroll', ['$event']) onScrollEvent(evt) {
+	@ViewChildren('viewItem', {read: ElementRef}) viewItems: QueryList<any>;
+	viewItemsList: ElementRef[];
+
+	@HostListener('window:scroll', ['$event']) onScrollEvent() {
 		const scrollPosition = window.pageYOffset;
-		for (const i in this.viewElements) {
-			if (this.viewElements[i]) {
-				const position = this.viewElements[i].nativeElement.offsetTop - 300;
+		for (const i in this.viewItemsList) {
+			if (this.viewItemsList[i]) {
+				const position = this.viewItemsList[i].nativeElement.offsetTop - 300;
 				if (scrollPosition >= position) {
-					this.selectedStep = this.stepperSteps.find(el => el.scrollTo === ('#' + this.viewElements[i].nativeElement.id));
+					this.selectedStep = this.stepperSteps.find(el => el.id === +(i) + 1);
 				}
 			}
 		}
@@ -54,7 +55,7 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 	}
 
 	ngAfterViewInit() {
-		this.viewElements = [this.load, this.table, this.charts, this.settings, this.chart, this.export];
+		this.viewItemsList = this.viewItems.toArray();
 	}
 
 	constructor(
