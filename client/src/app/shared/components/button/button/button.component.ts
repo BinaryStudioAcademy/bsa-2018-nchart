@@ -19,6 +19,8 @@ export class ButtonComponent implements OnInit {
 	type: 'default' | 'secondary' | 'icon' = 'default';
 	@Output()
 	onclick: EventEmitter<any> = new EventEmitter();
+	@Input()
+	loading = false;
 
 	constructor() {}
 
@@ -34,5 +36,15 @@ export class ButtonComponent implements OnInit {
 			[`ui-button-${this.size}`]: true,
 			[`ui-button-${this.type}`]: true
 		};
+	}
+
+	get loadingBackgroundColor(): string {
+		const buttonTypeColors = {
+			['default']: '#29166F',
+			['secondary']: '#3ccc38',
+			['icon']: '#29166F'
+		};
+
+		return buttonTypeColors[this.type];
 	}
 }

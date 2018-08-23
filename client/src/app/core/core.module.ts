@@ -10,6 +10,7 @@ import { APIModule } from '@app/api/api.module';
 import { SharedModule } from '@app/shared/shared.module';
 import { FeatureModule } from '@app/features/feature.module';
 import { CommonModule } from '@angular/common';
+import { LandingPageComponent } from './landing-page/landing-page.component';
 
 @NgModule({
 	declarations: [
@@ -18,7 +19,8 @@ import { CommonModule } from '@angular/common';
 		CompanyComponent,
 		LoginComponent,
 		ProjectComponent,
-		ProjectsComponent
+		ProjectsComponent,
+		LandingPageComponent
 	],
 	imports: [
 		CommonModule,

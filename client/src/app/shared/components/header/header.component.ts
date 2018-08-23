@@ -5,6 +5,7 @@ import {
 	project,
 	hasActiveProject
 } from '@app/store/selectors/projects.selectors';
+import { user } from '@app/store/selectors/user.selectors';
 
 @Component({
 	selector: 'app-header',
@@ -20,6 +21,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 	profileItems: MenuItem[];
 
 	private disconnectStore = null;
+	userName: string;
+	userImage = 'fas fa-user-tie';
 
 	constructor(private storeService: StoreService) {}
 
@@ -59,6 +62,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
 					}
 				},
 				selector: hasActiveProject()
+		
+			},
+			{
+				subscriber: usr => {
+					this.userName = usr.name || 'Username';
+					this.isAuthorized = !!usr.id;
+				},
+				selector: user()
 			}
 		]);
 	}
