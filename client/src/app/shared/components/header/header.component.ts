@@ -5,7 +5,6 @@ import { project } from '@app/store/selectors/projects.selectors';
 import { user } from '@app/store/selectors/user.selectors';
 import { Logout } from '@app/store/actions/user/user.actions';
 
-
 @Component({
 	selector: 'app-header',
 	templateUrl: './header.component.html'
@@ -39,7 +38,7 @@ export class HeaderComponent implements OnInit {
 			{
 				label: 'Sign out',
 				command: () => {
-					this.logout()
+					this.logout();
 				}
 			}
 		];
