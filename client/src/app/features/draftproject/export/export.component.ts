@@ -4,8 +4,9 @@ import {
 	requiredValidator,
 	patternValidator
 } from '../../../shared/components/form-field/form-validators';
-import { Http, ResponseContentType } from '@angular/http';
-import { map } from 'rxjs/operators';
+import { StoreService } from '@app/services/store.service';
+import { ExportType } from '@app/models/export.model';
+import { ExportProject } from '@app/store/actions/export/export.actions';
 
 @Component({
 	selector: 'app-export',
@@ -29,24 +30,24 @@ export class ExportComponent implements OnInit {
 	options = [
 		{
 			label: '.pdf',
-			value: 'pdf'
+			value: ExportType.PDF
 		},
 		{
 			label: '.svg',
-			value: 'svg'
+			value: ExportType.SVG
 		},
-		{
-			label: '.jpg',
-			value: 'jpg'
-		},
+		// {
+		// 	label: '.jpg',
+		// 	value: 'jpg'
+		// },
 		{
 			label: '.png',
-			value: 'png'
+			value: ExportType.PNG
 		}
 	];
+	disconnect: () => void;
 
-	configUrl = 'http://localhost:9000/api/project/1/export';
-	constructor(private http: Http) {}
+	constructor(private storeService: StoreService) {}
 
 	ngOnInit() {}
 
@@ -55,39 +56,8 @@ export class ExportComponent implements OnInit {
 		this.fileType = this.controlType.value || this.fileType;
 		this.file = this.fileName + '.' + this.fileType;
 
-		if (this.fileType === 'pdf') {
-			return this.http
-				.get(this.configUrl, {
-					responseType: ResponseContentType.Blob
-				})
-				.pipe(
-					map(res => {
-						return {
-							filename: `${this.fileName}.pdf`,
-							data: res.blob()
-						};
-					})
-				)
-				.subscribe(
-					res => {
-						const url = window.URL.createObjectURL(res.data);
-						const a = document.createElement('a');
-						document.body.appendChild(a);
-						a.setAttribute('style', 'display: none');
-						a.href = url;
-						a.download = res.filename;
-						a.target = '_blank';
-						a.click();
-						window.URL.revokeObjectURL(url);
-						a.remove();
-					},
-					error => {
-						// console.log('download error:', JSON.stringify(error));
-					},
-					() => {
-						// console.log('Completed file download.');
-					}
-				);
-		}
+		this.storeService.dispatch(
+			new ExportProject({ id: 1, type: this.fileType as ExportType })
+		);
 	}
 }

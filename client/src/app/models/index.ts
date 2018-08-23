@@ -16,3 +16,4 @@ export * from '@app/models/login.model';
 export * from '@app/models/response-scheme.model';
 export * from '@app/models/user-domain.model';
 export * from '@app/models/router-state-url.model';
+export * from '@app/models/export-domain.model';
