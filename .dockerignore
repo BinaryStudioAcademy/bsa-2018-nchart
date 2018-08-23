@@ -1,0 +1,6 @@
+/client/node_modules/
+/server/node_modules/
+/data/postgres
+/data/pgadmin
+*.env
+credentials.json
