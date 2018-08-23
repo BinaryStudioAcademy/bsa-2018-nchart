@@ -1,7 +1,13 @@
-module.exports = {
+const chartSchema = {
 	type: 'object',
 	additionalProperties: true,
-	required: ['id', 'chartTypeId', 'datasetId', 'dimensionSettings', 'customizeSettings'],
+	required: [
+		'id',
+		'chartTypeId',
+		'datasetId',
+		'dimensionSettings',
+		'customizeSettings'
+	],
 	properties: {
 		id: { type: 'number' },
 		chartTypeId: { type: 'number' },
@@ -9,4 +15,14 @@ module.exports = {
 		dimensionSettings: { type: 'array' },
 		customizeSettings: { type: 'array' }
 	}
+};
+
+const chartsSchema = {
+	type: 'array',
+	items: chartSchema
+};
+
+module.exports = {
+	chartSchema,
+	chartsSchema
 };

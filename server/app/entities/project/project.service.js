@@ -3,7 +3,10 @@ const ProjectRepository = require('./project.repository');
 const DatasetService = require('../dataset/dataset.service');
 const ChartService = require('../chart/chart.service');
 const GroupService = require('../group/group.service');
-const projectValidationService = require('../../common/services/validation.services/project-validation.service');
+const schemaValidationService = require('../../common/services/schema-validation.service');
+const {
+	fullProjectSchema
+} = require('../project/project.schemas/projects.schema');
 
 class ProjectService {
 	constructor() {
@@ -15,8 +18,8 @@ class ProjectService {
 	}
 
 	createProject(obj) {
-		const errors = projectValidationService(obj.project);
-		if (errors.length > 0) {
+		const errors = schemaValidationService(obj.project, fullProjectSchema);
+		if (errors !== null) {
 			throw errors;
 		}
 		return new Promise((resolve, reject) => {
@@ -24,12 +27,14 @@ class ProjectService {
 				[
 					callback => {
 						this.ProjectRepository.upsert(obj.project)
-							.then(() => callback(null, {
-								project: {
-									id: obj.project.id,
-									name: obj.project.name
-								}
-							}))
+							.then(() =>
+								callback(null, {
+									project: {
+										id: obj.project.id,
+										name: obj.project.name
+									}
+								})
+							)
 							.catch(err => callback(err, null));
 					},
 					(payload, callback) => {
