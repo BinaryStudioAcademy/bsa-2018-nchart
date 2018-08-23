@@ -32,3 +32,7 @@ export const isProjectCharts = (id?: SchemeID) => (
 
 	return false;
 };
+
+export const hasActiveProject = () => (state: AppState): boolean => {
+	return !!state.projects.active;
+};
