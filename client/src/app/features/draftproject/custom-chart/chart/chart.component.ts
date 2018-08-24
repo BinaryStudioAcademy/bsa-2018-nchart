@@ -18,8 +18,8 @@ export class ChartComponent implements OnInit, OnDestroy {
 	disconnect: () => void;
 	barChartCustomizeSettings: BarChartCustomizeSettings;
 	data: Array<any>;
-	range: number;
 	subs = new Subscription();
+
 	ngOnInit() {
 		this.disconnect = this.storeService.connect([
 			{
@@ -29,18 +29,6 @@ export class ChartComponent implements OnInit, OnDestroy {
 				}
 			}
 		]);
-
-		this.subs.add(
-			this.barChartService.dataObs.subscribe(data => {
-				this.data = data;
-			})
-		);
-
-		this.subs.add(
-			this.barChartService.rangeObs.subscribe(data => {
-				this.range = data;
-			})
-		);
 
 		this.subs.add(
 			this.barChartService.barChartCustomizeSettingsObs.subscribe(

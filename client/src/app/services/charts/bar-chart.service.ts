@@ -41,19 +41,6 @@ export class BarChartService {
 	>(this.barChartCustomizeSettings);
 	barChartCustomizeSettingsObs = this._barChartCustomizeSettings.asObservable();
 
-	private _data = new BehaviorSubject<any[]>(this.data);
-	dataObs = this._data.asObservable();
-
-	private _values = new BehaviorSubject<any[]>(this.values);
-	valuesObs = this._values.asObservable();
-
-	private _range = new BehaviorSubject<number>(0);
-	rangeObs = this._range.asObservable();
-
-	setData(data: any[]) {
-		this._data.next(data);
-	}
-
 	setCustomizeSettings(settings: BarChartCustomizeSettings) {
 		this._barChartCustomizeSettings.next(settings);
 	}
