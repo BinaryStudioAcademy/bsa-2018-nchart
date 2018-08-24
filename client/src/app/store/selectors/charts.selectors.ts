@@ -29,7 +29,7 @@ export const chart = (id?: SchemeID) => (state: AppState): UserChart =>
 export const getChart = id => (state: AppState) => {
 	const c = state.charts.byId[id];
 	return {
-		...chart,
+		...c,
 		dimensionSettings: c.dimensionSettings.map(
 			i => state.defaultChartSettings.dimensionSettings[i]
 		),

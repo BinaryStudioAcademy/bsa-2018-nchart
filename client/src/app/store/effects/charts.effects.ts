@@ -435,7 +435,7 @@ export class ChartsEffects {
 			return this.storeService.createSubscription(getFirstChart()).pipe(
 				switchMap((fchart: Chart) => {
 					return this.chartService.createChart({
-						chartTypeId: fchart.type,
+						chartTypeId: fchart.id,
 						datasetId: action.payload.datatsetId,
 						customizeSettings: [...fchart.customizeSettings],
 						dimensionSettings: this.chartService.transformDimensions(
@@ -480,7 +480,7 @@ export class ChartsEffects {
 					map(([c, projectId, id]) => {
 						const currentChart = {
 							id: id,
-							chartTypeId: c.type,
+							chartTypeId: c.id,
 							customizeSettings: [...c.customizeSettings],
 							dimensionSettings: this.chartService.transformDimensions(
 								c.dimensionSettings
