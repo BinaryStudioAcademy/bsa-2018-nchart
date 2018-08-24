@@ -1,5 +1,6 @@
-import { AppState, Project } from '@app/models';
 import { SchemeID } from '@app/models/normalizr.model';
+import { AppState } from '@app/models/store.model';
+import { Project } from '@app/models/project.model';
 
 export const projects = () => (state: AppState) =>
 	state.projects.all.map(id => state.projects.byId[id]);
@@ -24,3 +25,6 @@ export const isProjectDataset = (id?: SchemeID) => (
 export const hasActiveProject = () => (state: AppState): boolean => {
 	return !!state.projects.active;
 };
+
+export const getActiveProject = () => (state: AppState) =>
+	state.projects.active;

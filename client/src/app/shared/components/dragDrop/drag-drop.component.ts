@@ -1,9 +1,18 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { DragulaService } from 'ng2-dragula';
 import { Subscription } from 'rxjs';
+import { SchemeID } from '@app/models/normalizr.model';
+import { UserMappingColumn } from '@app/models/user-chart-store.model';
+import { SelectDimension } from '@app/store/actions/charts/charts.actions';
+import { StoreService } from '@app/services/store.service';
+import { getData } from '@app/store/selectors/charts.selectors';
 
-class Column {
-	constructor(public variable: string, public type: string) {}
+class Column implements UserMappingColumn {
+	constructor(
+		public id: SchemeID,
+		public variable: string,
+		public type: string
+	) {}
 }
 
 @Component({
@@ -12,60 +21,27 @@ class Column {
 })
 export class DragDropComponent implements OnInit, OnDestroy {
 	DIMENSIONS = 'DIMENSIONS';
-	public dimensionsSettings = [
-		{
-			variable: 'X-Axis',
-			multiple: false,
-			required: true,
-			type: ['string', 'number'],
-			description:
-				'For each unique value found in the column, a group (a new bar chart) is created.',
-			value: []
-		},
-		{
-			variable: 'Group',
-			multiple: false,
-			required: false,
-			type: ['string', 'number'],
-			description:
-				'For each unique value found in the column, a bar is created.',
-			value: []
-		},
-		{
-			variable: 'Size',
-			multiple: false,
-			required: false,
-			type: ['number'],
-			description:
-				'Accepts only columns containing numbers. The value will define the bar height.',
-			value: []
-		},
-		{
-			variable: 'Color',
-			multiple: true,
-			required: false,
-			type: ['string', 'number'],
-			description:
-				'Can accept both number and strings. A color will be defined for each unique value found in the list.',
-			value: [{ variable: 'Box office', type: 'number' }]
-		}
-	];
 
-	public columns = [
-		{ variable: 'Movie', type: 'string' },
-		{ variable: 'Genre', type: 'number' },
-		{ variable: 'Box office', type: 'number' }
-	];
+	@Input()
+	dimensionsSettings = [];
+
+	@Input()
+	columns: UserMappingColumn[] = [];
 	public dimensions = [];
 
+	data;
+
 	subs = new Subscription();
-	constructor(private _dragulaService: DragulaService) {
+	constructor(
+		private _dragulaService: DragulaService,
+		private storeService: StoreService
+	) {
 		_dragulaService.createGroup(this.DIMENSIONS, {
 			copy: (el, source) => {
 				return source.id === 'columns';
 			},
 			copyItem: (column: Column) => {
-				return new Column(column.variable, column.type);
+				return new Column(column.id, column.variable, column.type);
 			},
 			accepts: (el, target, source, sibling) => {
 				return target.id !== 'columns';
@@ -75,30 +51,59 @@ export class DragDropComponent implements OnInit, OnDestroy {
 		this.subs.add(
 			this._dragulaService
 				.dropModel(this.DIMENSIONS)
-				.subscribe(({ target, source, targetModel, item }) => {
-					if (
-						this.isValid(
-							target.parentElement.firstElementChild.innerHTML,
-							item
-						)
-					) {
-						targetModel.splice(targetModel.indexOf(item), 1);
-					} else if (
-						!this.hasPlace(
-							target.parentElement.firstElementChild.innerHTML,
-							item
-						)
-					) {
-						targetModel.splice(targetModel.indexOf(item), 1);
+				.subscribe(
+					({
+						name,
+						el,
+						target,
+						source,
+						sibling,
+						sourceModel,
+						targetModel,
+						item
+					}) => {
+						if (
+							!this.isValid(
+								target.parentElement.firstElementChild
+									.innerHTML,
+								item
+							)
+						) {
+							targetModel.splice(targetModel.indexOf(item), 1);
+						} else if (
+							!this.hasPlace(
+								target.parentElement.firstElementChild
+									.innerHTML,
+								item
+							)
+						) {
+							targetModel.splice(targetModel.indexOf(item), 1);
+						} else if (this.hasDuplicates(targetModel)) {
+							targetModel.splice(targetModel.indexOf(item), 1);
+						} else {
+							this.storeService.dispatch(
+								new SelectDimension({
+									dimensionId: target['dataset'].dimensionid,
+									columnId: item.id
+								})
+							);
+							// TODO: send action to set columns
+						}
 					}
-					if (this.hasDuplicates(targetModel)) {
-						targetModel.splice(targetModel.indexOf(item), 1);
-					}
-				})
+				)
 		);
 	}
 
-	ngOnInit() {}
+	ngOnInit() {
+		this.storeService.connect([
+			{
+				selector: getData(),
+				subscriber: data => {
+					this.data = data;
+				}
+			}
+		]);
+	}
 
 	getClasses(multiple, required) {
 		return {
@@ -122,7 +127,7 @@ export class DragDropComponent implements OnInit, OnDestroy {
 		});
 
 		const isValid = dimension[0].type.indexOf(item.type);
-		return isValid === -1;
+		return isValid !== -1;
 	}
 
 	hasPlace(target: string, item: Column) {
@@ -135,6 +140,7 @@ export class DragDropComponent implements OnInit, OnDestroy {
 	}
 
 	remove(x, values) {
+		// todo action delete column id from store
 		values.splice(values.indexOf(x), 1);
 	}
 

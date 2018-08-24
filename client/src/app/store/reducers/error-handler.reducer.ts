@@ -1,4 +1,5 @@
-import { ErrorHandlerState, FailedAction } from '@app/models';
+import { ErrorHandlerState } from '@app/models/error-store.model';
+import { FailedAction } from '@app/models/store.model';
 
 export const initialState: ErrorHandlerState = {
 	action: null,

@@ -1,11 +1,8 @@
 import { UserActionConstants } from '@app/store/actions/user/user.action-types';
-import {
-	AppAction,
-	FailedAction,
-	User,
-	Login as LoginModel,
-	Register as RegisterModel
-} from '@app/models';
+import { AppAction, FailedAction } from '@app/models/store.model';
+import { User } from '@app/models/user.model';
+import { Login as LoginModel } from '@app/models/login.model';
+import { Register as RegisterModel } from '@app/models/register.model';
 
 export class VerifyToken extends AppAction<{ token }> {
 	readonly type = UserActionConstants.VERIFY_USER_TOKEN;

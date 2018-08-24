@@ -1,3 +1,11 @@
-<div class="chart-container">
-	Chart
+<div class="chart-container project-bar-chart">
+	<app-bar-chart 
+	[data]="data" 
+	[range]="range"
+	[width]="barChartCustomizeSettings.set1" 
+	[height]="barChartCustomizeSettings.set2"
+	[leftMargin] = "barChartCustomizeSettings.set3"
+	[verticalPadding] = "barChartCustomizeSettings.set4"
+	[innerPadding] = "barChartCustomizeSettings.set5"
+	></app-bar-chart>
 </div>
