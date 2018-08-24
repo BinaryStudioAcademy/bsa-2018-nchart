@@ -13,7 +13,6 @@ import {
 } from '@app/store/actions/user/user.actions';
 import { isUserLoading } from '@app/store/selectors/user.selectors';
 
-
 @Component({
 	selector: 'app-login',
 	templateUrl: './login.component.html',

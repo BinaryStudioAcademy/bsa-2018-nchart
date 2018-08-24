@@ -37,6 +37,7 @@ export interface Chart<D = DimensionOption[], C = CustomizeOption[]> {
 	id: SchemeID;
 	type: string;
 	name: string;
+	sysName: string;
 	description: string;
 	dimensionSettings: D;
 	customizeSettings: C;
