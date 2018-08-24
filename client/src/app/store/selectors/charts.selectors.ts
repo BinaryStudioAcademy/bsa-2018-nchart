@@ -136,7 +136,7 @@ export const getCustomizeSettings = () => (state: AppState) => {
 	const aChart = chart()(state);
 	if (aChart) {
 		return aChart.customizeSettings.reduce((obj, id) => {
-			const option = state.defaultChartSettings.customizeSettings[id];
+			const option = state.userChartSettings.customizeSettings[id];
 			obj[`set${id}`] = { ...option };
 			return obj;
 		}, {});

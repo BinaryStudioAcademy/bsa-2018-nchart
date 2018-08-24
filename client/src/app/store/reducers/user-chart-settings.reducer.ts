@@ -72,6 +72,20 @@ const customizeSettings = (
 			return {
 				...action.payload.chart.entities.customizeSetting
 			};
+		case ChartsActionConstants.CHANGE_CUSTOM_SETTINGS:
+			const newValues = action.payload;
+			const customValues = {};
+
+			for (const id in newValues) {
+				if (newValues.hasOwnProperty(id)) {
+					customValues[id] = { ...state[id] };
+					customValues[id].value = newValues[id];
+				}
+			}
+			return {
+				...state,
+				...customValues
+			};
 		default:
 			return state;
 	}
