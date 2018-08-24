@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Login } from '@app/models';
+import { Login } from '@app/models/login.model';
 
 @Component({
 	selector: 'app-login-form',

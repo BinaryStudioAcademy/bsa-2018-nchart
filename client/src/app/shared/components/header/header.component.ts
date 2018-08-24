@@ -8,6 +8,7 @@ import {
 import { user } from '@app/store/selectors/user.selectors';
 import { Logout } from '@app/store/actions/user/user.actions';
 
+
 @Component({
 	selector: 'app-header',
 	templateUrl: './header.component.html'
@@ -28,6 +29,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
 	constructor(private storeService: StoreService) {}
 
 	ngOnInit() {
+		this.items = [
+			{
+				label: null,
+				routerLink: ['/app/projects/draft']
+			}
+		];
 		this.authItems = [
 			{ label: 'Projects', routerLink: ['/app/projects'] },
 			{ label: 'Companies', routerLink: ['/app/companies'] }
@@ -62,7 +69,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 					}
 				},
 				selector: hasActiveProject()
-		
 			},
 			{
 				subscriber: usr => {

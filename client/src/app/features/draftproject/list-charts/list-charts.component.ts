@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { StoreService } from '@app/services/store.service';
+import {
+	getCustomizeSettings,
+	getListChart
+} from '@app/store/selectors/charts.selectors';
+import { SelectChart } from '@app/store/actions/charts/charts.actions';
 
 export const charts = [
 	{
@@ -42,29 +48,51 @@ export const charts = [
 	templateUrl: './list-charts.component.html',
 	styleUrls: ['./list-charts.component.sass']
 })
-export class ListChartsComponent implements OnInit {
-	chartList = charts;
-	selectedChart = this.chartList[0];
-	chartIconClass = this.getIconClasses(this.selectedChart.id);
+export class ListChartsComponent implements OnInit, OnDestroy {
+	chartList;
+	selectedChart;
+	chartIconClass;
+	disconnect: () => void;
 
-	constructor() {}
-
-	ngOnInit() {}
+	constructor(private storeService: StoreService) {}
+	customize;
+	ngOnInit() {
+		this.disconnect = this.storeService.connect([
+			{
+				selector: getListChart(),
+				subscriber: list => {
+					if (!list) {
+						return;
+					}
+					this.chartList = list;
+					this.selectedChart = this.chartList[0];
+					this.chartIconClass = this.getIconClasses(
+						this.selectedChart.id
+					);
+				}
+			},
+			{
+				selector: getCustomizeSettings(),
+				subscriber: t => {
+					this.customize = t;
+				}
+			}
+		]);
+	}
 
 	selectChart(id): void {
-		this.selectedChart = this.chartList.find(el => el.id === id);
-		this.chartIconClass = this.getIconClasses(id);
+		this.storeService.dispatch(new SelectChart({ id }));
 	}
 
 	getIconClasses(id) {
 		const chartById = this.chartList.find(el => el.id === id);
 		return {
 			fas: true,
-			'fa-chart-bar': 'Bar Chart' === chartById.name,
-			'fa-braille': 'Bubble Chart' === chartById.name,
-			'fa-ellipsis-h': 'Scatter Chart' === chartById.name,
-			'fa-chart-line': 'Line Chart' === chartById.name,
-			'fa-globe-americas': 'Map Chart' === chartById.name
+			'fa-chart-bar': 'Bar chart' === chartById.name,
+			'fa-braille': 'Bubble chart' === chartById.name,
+			'fa-ellipsis-h': 'Scatter chart' === chartById.name,
+			'fa-chart-line': 'Line chart' === chartById.name,
+			'fa-globe-americas': 'Map chart' === chartById.name
 		};
 	}
 
@@ -72,5 +100,9 @@ export class ListChartsComponent implements OnInit {
 		return {
 			'chart-selected': id === this.selectedChart.id
 		};
+	}
+
+	ngOnDestroy(): void {
+		this.disconnect();
 	}
 }
