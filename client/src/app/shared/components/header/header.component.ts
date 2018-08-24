@@ -8,7 +8,6 @@ import {
 import { user } from '@app/store/selectors/user.selectors';
 import { Logout } from '@app/store/actions/user/user.actions';
 
-
 @Component({
 	selector: 'app-header',
 	templateUrl: './header.component.html'

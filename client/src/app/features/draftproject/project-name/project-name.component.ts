@@ -12,7 +12,6 @@ import {
 	maxLengthValidator
 } from '@app/shared/components/form-field/form-validators';
 
-
 @Component({
 	selector: 'app-project-name',
 	templateUrl: './project-name.component.html',

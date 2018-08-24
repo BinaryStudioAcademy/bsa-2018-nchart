@@ -2,46 +2,48 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { StoreService } from '@app/services/store.service';
 import {
 	getCustomizeSettings,
-	getListChart
+	getListChart,
+	chart,
+	chartItem
 } from '@app/store/selectors/charts.selectors';
 import { SelectChart } from '@app/store/actions/charts/charts.actions';
 
-export const charts = [
-	{
-		id: 1,
-		name: 'Bar Chart',
-		type: 'Other',
-		description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-					Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.`
-	},
-	{
-		id: 2,
-		name: 'Bubble Chart',
-		type: 'Other',
-		description: `It is a long established fact that a reader will be
-		 distracted by the readable content of a page when looking at its layout.`
-	},
-	{
-		id: 3,
-		name: 'Scatter Chart',
-		type: 'Other',
-		description: `Printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.`
-	},
-	{
-		id: 4,
-		name: 'Line Chart',
-		type: 'Other',
-		description: `It is a long established fact that a reader will be at its layout.
-					Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.`
-	},
-	{
-		id: 5,
-		name: 'Map Chart',
-		type: 'Other',
-		description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-					It is a long established fact that readable content of looking at its layout.`
-	}
-];
+// export const charts = [
+// 	{
+// 		id: 1,
+// 		name: 'Bar Chart',
+// 		type: 'Other',
+// 		description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+// 					Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.`
+// 	},
+// 	{
+// 		id: 2,
+// 		name: 'Bubble Chart',
+// 		type: 'Other',
+// 		description: `It is a long established fact that a reader will be
+// 		 distracted by the readable content of a page when looking at its layout.`
+// 	},
+// 	{
+// 		id: 3,
+// 		name: 'Scatter Chart',
+// 		type: 'Other',
+// 		description: `Printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.`
+// 	},
+// 	{
+// 		id: 4,
+// 		name: 'Line Chart',
+// 		type: 'Other',
+// 		description: `It is a long established fact that a reader will be at its layout.
+// 					Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.`
+// 	},
+// 	{
+// 		id: 5,
+// 		name: 'Map Chart',
+// 		type: 'Other',
+// 		description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+// 					It is a long established fact that readable content of looking at its layout.`
+// 	}
+// ];
 
 @Component({
 	selector: 'app-list-charts',
@@ -82,17 +84,24 @@ export class ListChartsComponent implements OnInit, OnDestroy {
 
 	selectChart(id): void {
 		this.storeService.dispatch(new SelectChart({ id }));
+		this.storeService.connect([
+			{
+				selector: chartItem(id),
+				subscriber: selectedChart => {
+					this.selectedChart = selectedChart;
+				}
+			}
+		]);
 	}
 
 	getIconClasses(id) {
-		const chartById = this.chartList.find(el => el.id === id);
+		const chartSysname = this.chartList.find(el => el.id === id).sysname;
 		return {
 			fas: true,
-			'fa-chart-bar': 'Bar chart' === chartById.name,
-			'fa-braille': 'Bubble chart' === chartById.name,
-			'fa-ellipsis-h': 'Scatter chart' === chartById.name,
-			'fa-chart-line': 'Line chart' === chartById.name,
-			'fa-globe-americas': 'Map chart' === chartById.name
+			'fa-chart-bar': 'barChart' === chartSysname,
+			'fa-pie-chart': 'pieChart' === chartSysname,
+			'fa-ellipsis-h': 'alluvialDiagram' === chartSysname,
+			'fa-chart-line': 'ganttChart' === chartSysname
 		};
 	}
 
