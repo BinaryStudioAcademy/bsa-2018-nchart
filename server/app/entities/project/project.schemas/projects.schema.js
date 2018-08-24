@@ -6,7 +6,7 @@ const projectSchema = {
 	additionalProperties: true,
 	required: ['id', 'name'],
 	properties: {
-		id: { type: 'number' },
+		id: { type: ['number','null'] },
 		name: { type: 'string' }
 	}
 };
@@ -16,7 +16,7 @@ const fullProjectSchema = {
 	additionalProperties: true,
 	required: ['id', 'name', 'datasets', 'charts'],
 	properties: {
-		id: { type: 'number' },
+		id: { type: ['number', 'null'] },
 		name: { type: 'string' },
 		datasets: datasetsSchema,
 		charts: chartsSchema
