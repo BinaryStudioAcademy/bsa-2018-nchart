@@ -36,9 +36,16 @@ export class SelectChart extends AppAction<any> {
 
 export class SelectDimension extends AppAction<{
 	dimensionId: SchemeID;
-	columnId: SchemeID | SchemeID[];
+	columnId: SchemeID;
 }> {
 	readonly type = ChartsActionConstants.SELECT_DIMENSION;
+}
+
+export class RemoveDimension extends AppAction<{
+	dimensionId: SchemeID;
+	columnId: SchemeID;
+}> {
+	readonly type = ChartsActionConstants.REMOVE_DIMENSION;
 }
 
 export class CreateChart extends AppAction<{
@@ -70,6 +77,7 @@ export type Actions =
 	| LoadChartsComplete
 	| LoadChartsFailed
 	| SelectDimension
+	| RemoveDimension
 	| SelectChart
 	| SelectChartComplete
 	| CreateChartComplete

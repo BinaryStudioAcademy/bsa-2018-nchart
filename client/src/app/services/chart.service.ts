@@ -9,7 +9,7 @@ export class ChartService {
 	transformDimensions(dimensions: DimensionOption[]): DimensionColumnMap[] {
 		return dimensions.map(el => ({
 			id: el.id,
-			columnId: null
+			columnIds: []
 		}));
 	}
 

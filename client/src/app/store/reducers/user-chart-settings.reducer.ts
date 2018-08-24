@@ -31,9 +31,26 @@ const dimensionSettings = (
 				...state,
 				[action.payload.dimensionId]: {
 					...state[action.payload.dimensionId],
-					columnId: action.payload.columnId
+					columnIds: [
+						...state[action.payload.dimensionId].columnIds,
+						action.payload.columnId
+					]
 				}
 			};
+		case ChartsActionConstants.REMOVE_DIMENSION: {
+			const removedColumnId = action.payload.columnId;
+			const columnIds = [
+				...state[action.payload.dimensionId].columnIds
+			].filter(id => id !== removedColumnId);
+
+			return {
+				...state,
+				[action.payload.dimensionId]: {
+					...state[action.payload.dimensionId],
+					columnIds
+				}
+			};
+		}
 		default:
 			return state;
 	}

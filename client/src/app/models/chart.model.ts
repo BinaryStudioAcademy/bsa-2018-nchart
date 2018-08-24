@@ -29,7 +29,7 @@ export interface CustomizeOption {
 }
 
 export interface DimensionColumnMap {
-	columnId: SchemeID | SchemeID[];
+	columnIds: SchemeID[];
 	id: SchemeID;
 }
 

@@ -88,17 +88,22 @@ export const mappingDimensions = () => (state: AppState): any => {
 
 	if (c) {
 		return c.dimensionSettings.map(id => {
-			const columnId =
-				state.userChartSettings.dimensionSettings[id].columnId;
-			const column = state.datasetColumns[columnId as SchemeID];
+			const columnIds =
+				state.userChartSettings.dimensionSettings[id].columnIds;
+
 			const value = [];
-			if (columnId !== null) {
-				value.push({
-					variable: column.title,
-					type: column.type,
-					id: column.id
-				});
+			if (columnIds.length) {
+				columnIds.reduce((values, columnId) => {
+					const column = state.datasetColumns[columnId];
+					values.push({
+						variable: column.title,
+						type: column.type,
+						id: column.id
+					});
+					return values;
+				}, value);
 			}
+
 			return {
 				value: value,
 				...state.defaultChartSettings.dimensionSettings[id]
@@ -127,22 +132,28 @@ export const getIndexCol = colId => (state: AppState) => {
 };
 
 export const getData = () => (state: AppState) => {
-	const getRow = ({ id, columnId }) => {
+	const getRow = ({ id, columnIds }) => {
 		const name = state.defaultChartSettings.dimensionSettings[id].variable;
-		let values = [];
-		if (columnId !== null) {
-			const indexCol = getIndexCol(columnId)(state);
-			const datasetId =
-				state.userCharts.byId[state.userCharts.active].datasetId;
+		const datasetId =
+			state.userCharts.byId[state.userCharts.active].datasetId;
+		const values = [];
 
-			values = state.datasets[datasetId].modified.data.map(arrId => {
-				return state.datasetData[arrId[indexCol]].value;
+		if (columnIds.length) {
+			columnIds.map(columnId => {
+				const indexCol = getIndexCol(columnId)(state);
+				state.datasets[datasetId].modified.data.reduce(
+					(colValues, arrId) => {
+						colValues.push(
+							state.datasetData[arrId[indexCol]].value
+						);
+						return colValues;
+					},
+					values
+				);
 			});
-
-			return { name, values };
-		} else {
-			return { name, values };
 		}
+
+		return { name, values };
 	};
 
 	const dimens = state.userChartSettings.dimensionSettings;
@@ -153,7 +164,7 @@ export const getData = () => (state: AppState) => {
 			acc.push(
 				getRow({
 					id: dimenId,
-					columnId: dimens[dimenId].columnId
+					columnIds: dimens[dimenId].columnIds
 				})
 			);
 		}

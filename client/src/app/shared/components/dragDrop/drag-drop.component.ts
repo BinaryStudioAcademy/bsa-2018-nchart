@@ -3,7 +3,10 @@ import { DragulaService } from 'ng2-dragula';
 import { Subscription } from 'rxjs';
 import { SchemeID } from '@app/models/normalizr.model';
 import { UserMappingColumn } from '@app/models/user-chart-store.model';
-import { SelectDimension } from '@app/store/actions/charts/charts.actions';
+import {
+	RemoveDimension,
+	SelectDimension
+} from '@app/store/actions/charts/charts.actions';
 import { StoreService } from '@app/services/store.service';
 import { getData } from '@app/store/selectors/charts.selectors';
 
@@ -139,9 +142,13 @@ export class DragDropComponent implements OnInit, OnDestroy {
 		return isMultiple ? isMultiple : hasPlace === 0;
 	}
 
-	remove(x, values) {
-		// todo action delete column id from store
-		values.splice(values.indexOf(x), 1);
+	remove(item, { target }) {
+		this.storeService.dispatch(
+			new RemoveDimension({
+				dimensionId: target['dataset'].dimensionid,
+				columnId: item.id
+			})
+		);
 	}
 
 	removeAll() {
