@@ -40,6 +40,18 @@ export class RegisterFailed extends FailedAction {
 	readonly type = UserActionConstants.REGISTER__FAILED;
 }
 
+export class Logout extends AppAction {
+	readonly type = UserActionConstants.LOGOUT;
+}
+
+export class LogoutComplete extends AppAction {
+	readonly type = UserActionConstants.LOGOUT__COMPLETE;
+}
+
+export class LogoutFailed extends FailedAction {
+	readonly type = UserActionConstants.LOGOUT__FAILED;
+}
+
 export type Actions =
 	| VerifyToken
 	| VerifyTokenComplete
@@ -49,4 +61,7 @@ export type Actions =
 	| LoginFailed
 	| Register
 	| RegisterComplete
-	| RegisterFailed;
+	| RegisterFailed
+	| Logout
+	| LogoutComplete
+	| LogoutFailed;

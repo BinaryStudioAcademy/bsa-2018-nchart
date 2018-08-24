@@ -2,46 +2,19 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { StoreService } from '@app/services/store.service';
 import {
 	getCustomizeSettings,
-	getListChart
+	getListChart,
+	getActiveChart
 } from '@app/store/selectors/charts.selectors';
 import { SelectChart } from '@app/store/actions/charts/charts.actions';
+import { SchemeID } from '@app/models/normalizr.model';
 
-export const charts = [
-	{
-		id: 1,
-		name: 'Bar Chart',
-		type: 'Other',
-		description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-					Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.`
-	},
-	{
-		id: 2,
-		name: 'Bubble Chart',
-		type: 'Other',
-		description: `It is a long established fact that a reader will be
-		 distracted by the readable content of a page when looking at its layout.`
-	},
-	{
-		id: 3,
-		name: 'Scatter Chart',
-		type: 'Other',
-		description: `Printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.`
-	},
-	{
-		id: 4,
-		name: 'Line Chart',
-		type: 'Other',
-		description: `It is a long established fact that a reader will be at its layout.
-					Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.`
-	},
-	{
-		id: 5,
-		name: 'Map Chart',
-		type: 'Other',
-		description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-					It is a long established fact that readable content of looking at its layout.`
-	}
-];
+interface Chart {
+	id: SchemeID;
+	name: string;
+	sysName: string;
+	type: string;
+	desription: string;
+}
 
 @Component({
 	selector: 'app-list-charts',
@@ -49,32 +22,39 @@ export const charts = [
 	styleUrls: ['./list-charts.component.sass']
 })
 export class ListChartsComponent implements OnInit, OnDestroy {
-	chartList;
-	selectedChart;
-	chartIconClass;
+	chartList: Chart[];
+	selectedChart: Chart;
+	chartIconClass: any;
+	customize: any;
 	disconnect: () => void;
 
 	constructor(private storeService: StoreService) {}
-	customize;
+
 	ngOnInit() {
 		this.disconnect = this.storeService.connect([
 			{
 				selector: getListChart(),
 				subscriber: list => {
-					if (!list) {
-						return;
+					if (list) {
+						this.chartList = list;
 					}
-					this.chartList = list;
-					this.selectedChart = this.chartList[0];
-					this.chartIconClass = this.getIconClasses(
-						this.selectedChart.id
-					);
 				}
 			},
 			{
 				selector: getCustomizeSettings(),
 				subscriber: t => {
 					this.customize = t;
+				}
+			},
+			{
+				selector: getActiveChart(),
+				subscriber: selectedChart => {
+					if (selectedChart) {
+						this.selectedChart = selectedChart;
+						this.chartIconClass = this.getIconClasses(
+							this.selectedChart
+						);
+					}
 				}
 			}
 		]);
@@ -84,22 +64,22 @@ export class ListChartsComponent implements OnInit, OnDestroy {
 		this.storeService.dispatch(new SelectChart({ id }));
 	}
 
-	getIconClasses(id) {
-		const chartById = this.chartList.find(el => el.id === id);
+	getIconClasses(c) {
 		return {
 			fas: true,
-			'fa-chart-bar': 'Bar chart' === chartById.name,
-			'fa-braille': 'Bubble chart' === chartById.name,
-			'fa-ellipsis-h': 'Scatter chart' === chartById.name,
-			'fa-chart-line': 'Line chart' === chartById.name,
-			'fa-globe-americas': 'Map chart' === chartById.name
+			'fa-chart-bar': 'barChart' === c.sysName,
+			'fa-chart-pie': 'pieChart' === c.sysName,
+			'fa-random': 'alluvialDiagram' === c.sysName,
+			'fa-align-left': 'ganttChart' === c.sysName
 		};
 	}
 
 	getClasses(id) {
-		return {
-			'chart-selected': id === this.selectedChart.id
-		};
+		if (this.selectedChart) {
+			return {
+				'chart-selected': id === this.selectedChart.id
+			};
+		}
 	}
 
 	ngOnDestroy(): void {

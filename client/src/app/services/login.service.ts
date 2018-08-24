@@ -31,7 +31,11 @@ export class LoginService {
 		const initialValues: OptionalType<Login> = new Login();
 		const validators: fieldsValidators<Login> = {
 			email: [requiredValidator(), emailValidator()],
-			password: [requiredValidator()]
+			password: [
+				requiredValidator(),
+				minLengthValidator('Minimum length of password is', 5),
+				passwordValidator()
+			]
 		};
 
 		const controls = this.formService.createFormControls(

@@ -9,50 +9,71 @@
     
 
 .header-container
-    position: fixed
-    top: 0
-    width: 100%
-    height: 80px
-    padding: 1rem 1rem 0 1rem
-    box-shadow: -1px 1px 3px rgba(151, 155, 174, 0.1), 1px 1px 3px rgba(151, 155, 174, 0.1)
-    z-index: 1000
+	position: fixed
+	top: 0
+	width: 100%
+	height: 80px
+	padding: 1rem 1rem 0 1rem
+	box-shadow: -1px 1px 3px rgba(151, 155, 174, 0.1), 1px 1px 3px rgba(151, 155, 174, 0.1)
+	z-index: 1000
+	display: flex
+	justify-content: space-between
+	box-sizing: border-box
   
 
 .header-component
-    padding: 0
+	padding: 0
+	.ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem
+		height: 75px
+		display: flex
+		align-items: center
+		border-bottom: 4px solid transparent!important
+	
+		&:hover
+			border-bottom: 4px solid $baseColor!important
+
+		&:first-child
+			margin-right: 40px
+
+	.ui-tabmenu .ui-tabmenu-nav
+		position: absolute
+		width: 100%
+		height: 80px
+		left: 0
+		top: 0
+		display: flex
+		justify-content: center
+		background-color: transparent
     
 .header-logo
-    position: absolute
-    top: 12px
-    left: 1.5rem
-    height: 50px
-.header-profile-container
-    float: right 
- 
-.ui-tabmenu .ui-tabmenu-nav
-    text-align: center
+	position: absolute
+	top: 12px
+	left: 1.5rem
+	z-index: 20
+	cursor: pointer
+	img
+		height: 50px
 
-.ui-tabmenu .ui-tabmenu-nav
-    text-align: center    
+.ui-tabmenu
+	display: flex
+	justify-content: center
+	align-items: center
 
-.ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem
-    padding-bottom: 1.85rem
-    float: none
-    display: inline
 
-.ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem:first-child
-    margin-right: 40px
-   
-.ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem a 
-    float: none
-    display: inline-block
 
+.ui-tabmenu .ui-tabmenu-nav > li:not(.ui-state-active):not(.ui-state-disabled):hover,
+.ui-tabmenu .ui-tabmenu-nav > li
+	box-sizing: border-box
+	border-bottom: 5px solid red
     
 .header-profile
     border: 0
     
 .header-profile-container
-    position: relative
+	display: flex
+	align-items: center
+	position: relative
+	z-index: 60
 
 .header-profile .ui-buttonset.ui-splitbutton .ui-widget.ui-button, .ui-buttonset.ui-splitbutton .ui-button
     box-shadow: none
@@ -79,39 +100,60 @@
     border: none
 
 .header-profile .ui-menu 
-    width: 9.7em
-.header-profile .ui-buttonset.ui-splitbutton .ui-widget.ui-button:not(.ui-splitbutton-menubutton), .ui-buttonset.ui-splitbutton .ui-button:not(.ui-splitbutton-menubutton) 
-    min-width: 100px
-.header-profile .ui-buttonset.ui-splitbutton .ui-widget.ui-button, .ui-buttonset.ui-splitbutton .ui-button
-    padding-left: 0
-.header-profile .ui-buttonset.ui-splitbutton:hover .ui-widget.ui-button, .ui-buttonset.ui-splitbutton:hover .ui-button 
-    color: $textColorDark
-.header-profile .ui-button .ui-button-text 
-    font-size: 1rem
-    float: left
+	width: 9.7em
+	margin-top: 10px
+	.ui-menuitem
+		margin: 0
+
+.header-profile .ui-buttonset.ui-splitbutton .ui-widget.ui-button:not(.ui-splitbutton-menubutton),
+.ui-buttonset.ui-splitbutton .ui-button:not(.ui-splitbutton-menubutton) 
+    display: none
+
+.header-profile .ui-buttonset.ui-splitbutton .ui-widget.ui-button,
+.ui-buttonset.ui-splitbutton .ui-button
+	color: $textColorDark
+
+.header-profile .ui-buttonset.ui-splitbutton:hover .ui-widget.ui-button,
+.ui-buttonset.ui-splitbutton:hover .ui-button 
+	color: $textColorDark
+
+.header-user-name
+	font-weight: 600
+	font-family: $fontFamily
+	font-size: 1rem
+	padding: 0 12px
 
 .header-profile-image
-    position: absolute
-    right: 40px
-    cursor: pointer
-    max-width: 45px
-    max-height: 45px
-    border-radius: 50%
+	cursor: pointer
+	width: 45px
+	height: 45px
+	border-radius: 50%
+	&.user-image
+		border: 2px solid $stateDefaultTextColor
+		display: flex
+		align-items: center
+		justify-content: center
+		font-size: 1.6rem
+		color: $stateDefaultTextColor
 
-.header-new-project-button .ui-widget.ui-button-default, .ui-button-default 
-    margin-right: 20px 
-    border: none
-    font-size: 1rem
-    color: $secondaryTextColor
-    background-color: transparent
-    border-color: transparent
 
-.header-new-project-button .ui-widget.ui-button-default:enabled:hover, .ui-button-default:enabled:hover
-    color: $textColorDark
-    background-color: transparent
-    border-color: transparent
-    box-shadow: none
-    border: 0
+
+.header-newProject-button
+	.ui-widget.ui-button-default,
+	.ui-button-default,
+	.ui-widget.ui-button
+		margin-right: 20px 
+		border: none
+		font-size: 1rem
+		color: $secondaryTextColor
+		background-color: transparent
+		border-color: transparent
+		&:enabled:hover
+			color: $textColorDark
+			background-color: transparent
+			border-color: transparent
+			box-shadow: none
+			border: 0
 
 .header-new-project-button .ui-widget.ui-button-default:enabled:active, .ui-button-default:enabled:active
     color: $textColorDark

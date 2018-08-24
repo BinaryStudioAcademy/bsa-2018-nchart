@@ -23,6 +23,14 @@ export const info = (state = initialState.info, action: UserActions): User => {
 				...action.payload.user
 			};
 		}
+		case UserActionConstants.LOGOUT__COMPLETE: {
+			return {
+				...state,
+				id: null,
+				name: null,
+				email: null
+			};
+		}
 		default:
 			return state;
 	}
@@ -36,6 +44,7 @@ export const isLoading = (
 		case UserActionConstants.VERIFY_USER_TOKEN:
 		case UserActionConstants.LOGIN:
 		case UserActionConstants.REGISTER:
+		case UserActionConstants.LOGOUT:
 			return true;
 
 		case UserActionConstants.VERIFY_USER_TOKEN__COMPLETE:
@@ -44,6 +53,8 @@ export const isLoading = (
 		case UserActionConstants.LOGIN__FAILED:
 		case UserActionConstants.REGISTER__COMPLETE:
 		case UserActionConstants.REGISTER__FAILED:
+		case UserActionConstants.LOGOUT__COMPLETE:
+		case UserActionConstants.LOGOUT__FAILED:
 			return false;
 
 		default:

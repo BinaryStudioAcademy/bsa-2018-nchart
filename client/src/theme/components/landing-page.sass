@@ -1,0 +1,90 @@
+@import ../variables
+@import ../colors
+
+.landing-header
+	height: 100%
+	background-color: transparent
+	padding: 160px 5.2rem 73px 5.2em
+	position: relative
+	box-sizing: border-box
+	display: flex
+	align-items: center
+	justify-content: space-between
+	overflow: hidden
+
+	.landing-text
+		// width: 45%
+		// max-width: 546px
+		position: relative
+		min-width: 640px
+	
+	.description
+		font-size: 2rem
+		font-weight: 500
+		font-family: $fontFamily
+		&.label
+			font-size: 1.5rem
+			font-weight: 300
+			padding: 0.5rem 0
+
+	.landing-header-button
+		display: flex
+		padding-top: 1.2rem
+
+	.landing-image
+		height: 600px
+		width: 50rem
+		background-color: $secondaryTextColor
+		position: relative
+		transform: translateX(200px)
+		box-shadow: 0 2px 8px $teriaryColor
+		img
+			height: 100%
+			
+#particles-js 
+	position: absolute
+	top: 80px
+	left: 0
+	width: 100%
+	height: calc(100vh - 80px)
+	z-index: -1
+
+
+@media screen and(max-width: 1200px)
+	.landing-header
+		.landing-image
+			transform: translateX(20px)
+
+@media screen and(max-width: 1000px)
+	.landing-header
+		flex-wrap: wrap
+		padding: 160px 3rem 0 3em
+		.landing-text
+			width: 90%
+			margin: 0 auto
+			min-width: 520px
+			.description
+				font-size: 1.6rem
+				&.label
+					font-size: 1rem
+		.landing-image
+			width: 100%
+			transform: translateX(0)
+			transform: translateY(60px)
+			height: auto
+			img 
+				width: 100%
+				height: auto
+
+@media screen and(max-width: 640px)
+	.landing-header
+		height: 100%
+		padding: 80px 1rem 0 1em
+		.landing-text
+			min-width: calc(320px - 2rem)
+			.description
+				font-size: 1.5rem
+				&.label
+					font-size: 1rem
+		.landing-image
+			display: none
