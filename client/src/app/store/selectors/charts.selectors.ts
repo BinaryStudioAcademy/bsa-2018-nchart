@@ -31,6 +31,20 @@ export const chartItem = (id?: SchemeID) => (state: AppState): Chart<SchemeID[],
 	return state.charts.byId[id];
 };
 
+export const getActiveChart = () => (state: AppState) => {
+	const activeUserChart = chart()(state);
+	if (activeUserChart) {
+		const c = state.charts.byId[activeUserChart.chartTypeId || state.userCharts.active];
+		return {
+			id: c.id,
+			name: c.name,
+			sysName: c.sysName,
+			type: c.type,
+			description: c.description
+		};
+	}
+};
+
 export const getChart = id => (state: AppState) => {
 	const c = state.charts.byId[id];
 	return {
