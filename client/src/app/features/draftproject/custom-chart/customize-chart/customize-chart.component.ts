@@ -12,14 +12,8 @@ import { getCustomizeSettings } from '@app/store/selectors/charts.selectors';
 export class CustomizeChartComponent implements OnInit {
 	form: FormGroup;
 
-	customizeSettings = {
-		set1: { option: 'Width', value: 800 },
-		set2: { option: 'Height', value: 600 },
-		set3: { option: 'Left margin', value: 40 },
-		set4: { option: 'Vertical padding', value: 17 },
-		set5: { option: 'Inner padding', value: 0.2 },
-		set6: { option: 'Use same Scaling', value: true }
-	};
+	customizeSettings = {}
+	
 
 	disconnect: () => void;
 	customizeNumberProps = [];
@@ -47,13 +41,6 @@ export class CustomizeChartComponent implements OnInit {
 				}
 			}
 		]);
-
-		this.form = setFormGroup(
-			this.customizeSettings,
-			this.customizeNumberProps,
-			this.customizeBooleanProps,
-			this.customizeArrayProps
-		);
 		onChanges(this.form, this.barChartService);
 	}
 
