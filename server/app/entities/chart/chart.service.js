@@ -1,7 +1,6 @@
 const async = require('async');
+const _ = require('lodash');
 const ChartRepository = require('./chart.repository');
-const validator = require('../../common/services/schema-validation.service');
-const chartSchema = require('./chart.schema');
 
 class ChartService {
 	constructor() {
@@ -17,28 +16,35 @@ class ChartService {
 	}
 
 	upsert(obj) {
-		// todo: remove waterfall model
-		const errors = [];
-		obj.forEach(el => {
-			const response = validator(el, chartSchema);
-			if (response !== null) {
-				response.forEach(err => errors.push(err));
-			}
+		const objsToCreate = [];
+		const objToUpdate = [];
+		obj.forEach(element => {
+			if (element.id === null) {
+				objsToCreate.push(_.omit(element, 'id'));
+			} else objToUpdate.push(element);
 		});
-		if (errors.length > 0) {
-			throw errors;
-		}
 		return new Promise((resolve, reject) => {
 			async.waterfall(
 				[
 					callback => {
-						this.ChartRepository.upsert(obj)
-							.then(() => {
-								callback(null, obj);
+						this.ChartRepository.saveMult(objsToCreate)
+							.then(data => {
+								callback(null, this.createChartsPayload(data));
 							})
 							.catch(err => {
 								callback(err, null);
 							});
+					},
+					(data, callback) => {
+						const payload = data.concat(objToUpdate);
+						this.ChartRepository.upsertMult(objToUpdate).then(() => {
+							callback(
+								null,
+								payload
+							);
+						}).catch(err => {
+							callback(err, null);
+						});
 					}
 				],
 				(err, payload) => {
@@ -49,6 +55,20 @@ class ChartService {
 				}
 			);
 		});
+	}
+
+	createChartsPayload(objs) {
+		this.charts = [];
+		objs.forEach(el => {
+			this.charts.push({
+				id: el.id,
+				chartTypeId: el.chartTypeId,
+				datasetId: el.datasetId,
+				dimensionSettings: el.dimensionSettings,
+				customizeSettings: el.customizeSettings
+			});
+		});
+		return this.charts;
 	}
 }
 

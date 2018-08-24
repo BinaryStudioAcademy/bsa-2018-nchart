@@ -2,7 +2,7 @@ const sequelize = require('../../../config/index');
 
 function TransactionService(objs, model, method) {
 	if (objs && model && method) {
-		if (method === 'save') {
+		if (method === 'create') {
 			return sequelize.transaction(t => {
 				const promises = [];
 				for (let i = 0; i < objs.length; i += 1) {

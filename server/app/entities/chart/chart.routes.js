@@ -1,6 +1,9 @@
 const chart = require('express').Router();
 const chartService = require('./chart.service');
 const PayloadGeneratorService = require('../../common/services/payload-generator.service');
+const validationMiddleware = require('../../common/middleware/validation.middleware');
+
+chart.use(validationMiddleware);
 
 chart.get('/', (req, res, next) => {
 	chartService

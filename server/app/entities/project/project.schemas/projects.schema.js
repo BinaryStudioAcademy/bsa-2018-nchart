@@ -6,7 +6,7 @@ const projectSchema = {
 	additionalProperties: true,
 	required: ['id', 'name'],
 	properties: {
-		id: { type: ['number','null'] },
+		id: { type: ['number', 'null'] },
 		name: { type: 'string' }
 	}
 };

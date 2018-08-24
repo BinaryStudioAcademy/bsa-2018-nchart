@@ -21,13 +21,14 @@ class ChartRepository extends Repository {
 		});
 	}
 
-	upsert(obj) {
+	upsertMult(obj) {
 		this.model = chartModel;
 		return TransactionService(obj, this.model, 'upsert');
 	}
 
-	create(obj) {
-		return this.model.create(obj);
+	saveMult(obj) {
+		this.model = chartModel;
+		return TransactionService(obj, this.model, 'create');
 	}
 }
 

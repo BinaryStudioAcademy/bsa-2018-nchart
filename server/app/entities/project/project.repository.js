@@ -11,8 +11,8 @@ class ProjectRepository extends Repository {
 		return this.model.upsert({ id: obj.id, name: obj.name });
 	}
 
-	create(name){
-		return this.model.create({name:name});
+	create(name) {
+		return this.model.create({ name });
 	}
 }
 
