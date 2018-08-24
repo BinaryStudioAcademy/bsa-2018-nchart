@@ -38,16 +38,7 @@ export class BarChartComponent implements OnInit, OnChanges {
 			'#ff8c00'
 		]);
 
-	ngOnInit() {
-		this.data = [
-			{ name: 's', value: 1, group: 'June', id: '1' },
-			{ name: 'a', value: 2, group: 'June', id: '2' },
-			{ name: 'a', value: 3, group: 'June', id: '3' },
-			{ name: 'a', value: 4, group: 'July', id: '1' },
-			{ name: 'b', value: 3, group: 'July', id: '2' },
-			{ name: 'c', value: 5, group: 'July', id: '3' }
-		];
-	}
+	ngOnInit() {}
 
 	ngOnChanges() {
 		if (this.data !== undefined) {
@@ -55,14 +46,13 @@ export class BarChartComponent implements OnInit, OnChanges {
 				.attr('class', 'd3-tip')
 				.offset([-10, 0])
 				.html(function(d) {
-					return (
-						`<strong>Value:</strong> <span style='color:red'>` +
-						d +
-						`</span>`
-					);
+					return `<strong>${
+						d.name
+					} :</strong> <span style='color:red'> ${d.value} </span>`;
 				});
 
 			d3.select('svg').remove();
+			d3.select('.d3-tip').remove();
 			this.svg = d3
 				.select('.bar-chart')
 				.append('svg')
@@ -112,10 +102,10 @@ export class BarChartComponent implements OnInit, OnChanges {
 				)
 				.attr('fill', (d, i) => this.colors(d.id))
 				.on('mouseover', function(d) {
-					tip.show(d.value, this);
+					tip.show(d, this);
 				})
 				.on('mouseout', function(d) {
-					tip.hide(d.value, this);
+					tip.hide(d, this);
 				});
 
 			this.g
@@ -141,12 +131,6 @@ export class BarChartComponent implements OnInit, OnChanges {
 	clampHeight(value: number) {
 		if (value < 0) {
 			return 0;
-		}
-		if (innerHeight <= 0) {
-			return 0;
-		}
-		if (value > innerHeight) {
-			return innerHeight;
 		}
 		return value;
 	}
