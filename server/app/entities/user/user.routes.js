@@ -1,9 +1,7 @@
 const user = require('express').Router();
 const userService = require('../../entities/user/user.service');
 const PayloadGeneratorService = require('../../common/services/payload-generator.service');
-const validationMiddleware = require('../../common/middleware/validation.middleware');
-
-user.use(validationMiddleware);
+const UserPayloadValidator = require('../../common/middleware/validation/user.validator');
 
 user.get('/', (req, res, next) => {
 	userService
@@ -19,14 +17,14 @@ user.get('/:id', (req, res, next) => {
 		.catch(next);
 });
 
-user.post('/register', (req, res, next) => {
+user.post('/register', UserPayloadValidator.saveUser, (req, res, next) => {
 	userService
 		.save(req.body)
 		.then(PayloadGeneratorService.nextWithData(next, res))
 		.catch(next);
 });
 
-user.post('/login', (req, res, next) => {
+user.post('/login', UserPayloadValidator.loginUser, (req, res, next) => {
 	userService
 		.login(req.body)
 		.then(PayloadGeneratorService.nextWithData(next, res))

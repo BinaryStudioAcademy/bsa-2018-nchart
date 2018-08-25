@@ -1,9 +1,7 @@
 const chart = require('express').Router();
 const chartService = require('./chart.service');
 const PayloadGeneratorService = require('../../common/services/payload-generator.service');
-const validationMiddleware = require('../../common/middleware/validation.middleware');
-
-chart.use(validationMiddleware);
+const ChartPayloadValidator = require('../../common/middleware/validation/chart.validator');
 
 chart.get('/', (req, res, next) => {
 	chartService
@@ -19,7 +17,7 @@ chart.get('/:id', (req, res, next) => {
 		.catch(next);
 });
 
-chart.post('/', (req, res, next) => {
+chart.post('/', ChartPayloadValidator.chartsSet, (req, res, next) => {
 	chartService
 		.upsert(req.body.charts)
 		.then(PayloadGeneratorService.nextWithData(next, res))

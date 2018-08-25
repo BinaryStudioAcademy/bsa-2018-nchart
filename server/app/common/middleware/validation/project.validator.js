@@ -13,7 +13,6 @@ class ProjectPayloadValidator {
 		if (errors !== null) {
 			return next(errors);
 		}
-
 		return next();
 	}
 }
