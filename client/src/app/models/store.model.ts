@@ -5,7 +5,8 @@ import {
 	UserChartsState,
 	DatasetState,
 	ProjectsState,
-	CompaniesState
+	CompaniesState,
+	ExportProjectState 
 } from '@app/models';
 
 export class AppAction<T = undefined> {
@@ -30,4 +31,5 @@ export interface AppState {
 	charts: ChartsState;
 	datasets: DatasetState;
 	userCharts: UserChartsState;
+	exportProject: ExportProjectState
 }

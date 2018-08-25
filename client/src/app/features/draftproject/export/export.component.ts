@@ -55,10 +55,14 @@ export class ExportComponent implements OnInit {
 		this.fileName = this.controlName.value.trim();
 		this.fileType = this.controlType.value || this.fileType;
 		this.file = this.fileName + '.' + this.fileType;
-		
-		//Add service for getting id of current export project
+
+		// Add service for getting id of current export project
 		this.storeService.dispatch(
-			new ExportProject({ id: 1, type: this.fileType as ExportType, filename: this.fileName })
+			new ExportProject({
+				id: 1,
+				type: this.fileType as ExportType,
+				filename: this.fileName
+			})
 		);
 	}
 }

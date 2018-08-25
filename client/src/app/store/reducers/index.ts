@@ -36,6 +36,11 @@ import {
 	initialState as projectsInitialState
 } from '@app/store/reducers/projects.reducer';
 
+import {
+	exportProjectReducer,
+	initialState as exportInitialState
+} from '@app/store/reducers/export.reducer';
+
 import { routerReducer, RouterStateSerializer } from '@ngrx/router-store';
 import { RouterStateUrl } from '@app/models';
 import { RouterStateSnapshot } from '@angular/router';
@@ -47,7 +52,8 @@ export const initialState: AppState = {
 	projects: projectsInitialState,
 	charts: chartsInitialState,
 	datasets: datasetInitialState,
-	userCharts: userChartsInitialState
+	userCharts: userChartsInitialState,
+	exportProject: exportInitialState
 };
 
 export const getReducers = () => ({
@@ -58,7 +64,8 @@ export const getReducers = () => ({
 	charts: chartsReducer,
 	datasets: datasetReducer,
 	userCharts: userChartsReducer,
-	router: routerReducer
+	router: routerReducer,
+	exportProject: exportProjectReducer
 });
 
 export const reducersToken = new InjectionToken<ActionReducerMap<AppState>>(
