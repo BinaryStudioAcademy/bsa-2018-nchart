@@ -127,6 +127,7 @@ export const getData = () => (state: AppState) => {
 };
 
 export const getActiveChart = () => (state: AppState) => {
+	
 	const activeUserChart = userChart()(state);
 	if (activeUserChart) {
 		const c =
@@ -141,4 +142,15 @@ export const getActiveChart = () => (state: AppState) => {
 			description: c.description
 		};
 	}
+};
+
+export const isRequiredDimensionMatched = () => (state: AppState): boolean => {
+	for (const id in state.userChartSettings.dimensionSettings) {
+		if (state.userChartSettings.dimensionSettings.hasOwnProperty(id)) {
+			if(state.defaultChartSettings.dimensionSettings[id].required && state.userChartSettings.dimensionSettings[id].columnIds.length === 0){
+				return false
+			} 
+		}
+	}
+	return true;
 };

@@ -26,6 +26,7 @@ export class BarChartService {
 	}
 
 	getData(data: any) {
+		// todo
 		if (data.length === 4) {
 			if (data[0].values.length) {
 				this.data = compressArray(mapData(data[0].values));
