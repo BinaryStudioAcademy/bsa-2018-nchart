@@ -6,6 +6,7 @@ import { ExportType } from '@app/models/export.model';
 interface ProjectExportPayload {
 	id: SchemeID;
 	type: ExportType;
+	filename: string;
 }
 
 export class ExportProject extends AppAction<ProjectExportPayload> {

@@ -16,6 +16,7 @@ export class ExportDomainService implements ExportDomain {
 	exportProject(payload: {
 		id: SchemeID;
 		type: ExportType;
+		filename: string;
 	}): Observable<{
 		filename: string;
 		data: Blob;
@@ -32,7 +33,7 @@ export class ExportDomainService implements ExportDomain {
 			.pipe(
 				map(res => {
 					return {
-						filename: `${payload.id}.${payload.type}`,
+						filename: `${payload.filename}.${payload.type}`,
 						data: res
 					};
 				})

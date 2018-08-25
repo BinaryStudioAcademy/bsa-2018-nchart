@@ -1,10 +1,10 @@
 const ProjectRepository = require('./project.repository');
-const exportService = require('../../common/services/export.services/export.service');
+const ExportService = require('../../common/services/export.services/export.service');
 
 class ProjectService {
 	constructor() {
 		this.ProjectRepository = ProjectRepository;
-		this.exportService = exportService;
+		this.ExportService = ExportService;
 	}
 
 	getAll() {
@@ -12,7 +12,7 @@ class ProjectService {
 	}
 
 	export(id, type) {
-		return this.exportService.getFile(id, type);
+		return this.ExportService.getFile(id, type);
 	}
 }
 
