@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { minValidator } from '@app/shared/components/form-field/form-validators';
-import { BarChartService } from '@app/services/charts/bar-chart.service';
 import { StoreService } from '@app/services/store.service';
 import { getCustomizeSettings } from '@app/store/selectors/charts.selectors';
+import { ChangeCustomSettings } from '@app/store/actions/charts/charts.actions';
 @Component({
 	selector: 'app-customize-chart',
 	templateUrl: './customize-chart.component.html',
 	styleUrls: ['./customize-chart.component.sass']
 })
-export class CustomizeChartComponent implements OnInit {
+export class CustomizeChartComponent implements OnInit, OnDestroy {
 	form: FormGroup;
 
 	customizeSettings = {};
@@ -19,16 +19,14 @@ export class CustomizeChartComponent implements OnInit {
 	customizeBooleanProps = [];
 	customizeArrayProps = [];
 
-	constructor(
-		private barChartService: BarChartService,
-		private storeService: StoreService
-	) {}
+	constructor(private storeService: StoreService) {}
 
 	ngOnInit() {
 		this.disconnect = this.storeService.connect([
 			{
 				selector: getCustomizeSettings(),
 				subscriber: t => {
+
 					this.customizeSettings = t;
 					this.resetCustomizeProps();
 					this.form = setFormGroup(
@@ -37,16 +35,20 @@ export class CustomizeChartComponent implements OnInit {
 						this.customizeBooleanProps,
 						this.customizeArrayProps
 					);
+					// this.form.patchValue(this.form);
+					// onChanges(this.form, this.storeService)
 				}
 			}
 		]);
-		onChanges(this.form, this.barChartService);
 	}
 
 	resetCustomizeProps() {
 		this.customizeNumberProps = [];
 		this.customizeBooleanProps = [];
 		this.customizeArrayProps = [];
+	}
+	ngOnDestroy(): void {
+		this.disconnect();
 	}
 }
 
@@ -88,6 +90,7 @@ export function setFormGroup(
 			customizeArrayProps.push(arrayProp);
 		}
 	}
+
 	const form = new FormGroup(formDataObj);
 	return form;
 }
@@ -107,10 +110,14 @@ export function isBoolean(value) {
 	return typeof value === 'boolean';
 }
 
-export function onChanges(form: FormGroup, barChartService: BarChartService) {
+export function onChanges(form: FormGroup, storeService: StoreService) {
 	form.valueChanges.subscribe(val => {
 		if (form.valid) {
-			barChartService.setCustomizeSettings(val);
+			const newCustom = {};
+			/*for (const prop in val) {
+				newCustom[prop.replace('set', '')] = val[prop];
+			}*/
+			storeService.dispatch(new ChangeCustomSettings(newCustom));
 		}
 	});
 }

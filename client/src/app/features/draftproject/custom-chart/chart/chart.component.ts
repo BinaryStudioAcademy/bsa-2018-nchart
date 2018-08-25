@@ -1,9 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { BarChartCustomizeSettings } from '@app/shared/components/charts/bar-chart/bar-chart.model';
 import { BarChartService } from '@app/services/charts/bar-chart.service';
 import { StoreService } from '@app/services/store.service';
-import { getData } from '@app/store/selectors/charts.selectors';
+import {
+	getData,
+	getCustomizeSettings
+} from '@app/store/selectors/charts.selectors';
 @Component({
 	selector: 'app-chart',
 	templateUrl: './chart.component.html',
@@ -16,7 +18,7 @@ export class ChartComponent implements OnInit, OnDestroy {
 	) {}
 
 	disconnect: () => void;
-	barChartCustomizeSettings: BarChartCustomizeSettings;
+	barChartCustomizeSettings;
 	data: Array<any>;
 	subs = new Subscription();
 
@@ -27,16 +29,32 @@ export class ChartComponent implements OnInit, OnDestroy {
 				subscriber: data => {
 					this.data = this.barChartService.getData(data);
 				}
+			},
+			{
+				selector: getCustomizeSettings(),
+				subscriber: t => {
+					if (Object.keys(t).length !== 7) {
+						this.barChartCustomizeSettings = {
+							set1: 800,
+							set2: 600,
+							set3: 20,
+							set4: 30,
+							set5: false
+						};
+					} else {
+						this.barChartCustomizeSettings = t;
+					}
+				}
 			}
 		]);
 
-		this.subs.add(
+		/*this.subs.add(
 			this.barChartService.barChartCustomizeSettingsObs.subscribe(
 				data => {
 					this.barChartCustomizeSettings = data;
 				}
 			)
-		);
+		);*/
 	}
 
 	ngOnDestroy() {
