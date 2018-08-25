@@ -1,7 +1,12 @@
-import { SchemeID } from '@app/models/normalizr.model';
+import {
+	SchemeID,
+	NormalizedSchemeWithoutAll
+} from '@app/models/normalizr.model';
 import { NormalizedSchemeField } from '@app/models/normalizr.model';
 
-export type DatasetState = NormalizedSchemeField<Dataset>;
+export class DatasetState extends NormalizedSchemeWithoutAll<Dataset> {
+	isLoading = false;
+}
 
 export class Dataset<C = SchemeID[], D = SchemeID[][]> {
 	id: SchemeID = null;

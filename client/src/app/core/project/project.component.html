@@ -4,7 +4,7 @@
 	<app-project-name [projectName]="projectName" (setProjectName)="changeProjectName($event)">
 	</app-project-name>
     <app-load-data id="load" #viewItem></app-load-data>
-	<app-data-table *ngIf="showTable" id="table" #viewItem></app-data-table>
+	<app-data-table *ngIf="false" id="table" #viewItem></app-data-table>
     <app-list-charts *ngIf="showCharts" id="charts" #viewItem></app-list-charts>
     <app-custom-settings *ngIf="showTable" id="settings" #viewItem></app-custom-settings>
     <app-custom-chart *ngIf="showTable" id="chart" #viewItem></app-custom-chart>
