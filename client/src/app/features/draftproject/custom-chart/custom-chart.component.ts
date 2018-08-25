@@ -4,8 +4,7 @@ import { StoreService } from '@app/services/store.service';
 import {
 	getData,
 	getCustomizeSettings,
-	getActiveChart,
-	isRequiredDimensionMatched
+	getActiveChart
 } from '@app/store/selectors/userCharts';
 
 @Component({
@@ -23,7 +22,6 @@ export class CustomChartComponent implements OnInit, OnDestroy {
 	disconnect: () => void;
 	barChartCustomizeSettings;
 	switchCharts: string;
-	isRequiredDimensionMatched: boolean;
 
 	ngOnInit() {
 		this.disconnect = this.storeService.connect([
@@ -53,12 +51,6 @@ export class CustomChartComponent implements OnInit, OnDestroy {
 				selector: getActiveChart(),
 				subscriber: t => {
 					this.switchCharts = t.sysName;
-				}
-			},
-			{
-				selector: isRequiredDimensionMatched(),
-				subscriber: t => {
-					this.isRequiredDimensionMatched = t;
 				}
 			}
 		]);
