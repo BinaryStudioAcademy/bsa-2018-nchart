@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const sequelize = require('../../../../config/index');
+const sequelize = require('../../../../db/connection');
 const CompanyUser = require('./company_user');
 const CompanyChartType = require('./company_chart_type');
 const Group = require('../../group/group.models/group');

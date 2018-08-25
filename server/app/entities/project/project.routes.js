@@ -2,10 +2,9 @@ const project = require('express').Router();
 const ProjectService = require('../../entities/project/project.service');
 const PayloadGeneratorService = require('../../common/services/payload-generator.service');
 const tokenInfoMiddleware = require('../../common/middleware/token-info.middleware');
-const validationMiddleware = require('../../common/middleware/validation.middleware');
+const ProjectPayloadValidator = require('../../common/middleware/validation/project.validator');
 
 project.use(tokenInfoMiddleware);
-project.use(validationMiddleware);
 
 project.get('/', (req, res, next) => {
 	ProjectService.getAll()
@@ -13,7 +12,7 @@ project.get('/', (req, res, next) => {
 		.catch(next);
 });
 
-project.post('/', (req, res, next) => {
+project.post('/', ProjectPayloadValidator.fullSet, (req, res, next) => {
 	// get user from token, and set it into res.locals.user
 	ProjectService.handleProject(req.body, res)
 		.then(PayloadGeneratorService.nextWithData(next, res))

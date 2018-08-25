@@ -1,4 +1,4 @@
-const sequelize = require('../../../config/index');
+const sequelize = require('../../../db/connection');
 
 function TransactionService(objs, model, method) {
 	if (objs && model && method) {
