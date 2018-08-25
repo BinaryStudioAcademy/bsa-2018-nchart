@@ -62,7 +62,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 					}
 				},
 				selector: hasActiveProject()
-		
 			},
 			{
 				subscriber: usr => {
