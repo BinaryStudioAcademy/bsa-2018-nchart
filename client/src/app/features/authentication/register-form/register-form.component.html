@@ -27,8 +27,9 @@
                 class="ui-fluid"
                 label="Create profile"
                 type="secondary"
-                [disabled]="!registerForm.valid"
+                [disabled]="registerForm.invalid"
                 (onclick)="onClickCreateProfile()"
+                [loading]="isLoading"
             ></app-button>
         </div>
     </div>

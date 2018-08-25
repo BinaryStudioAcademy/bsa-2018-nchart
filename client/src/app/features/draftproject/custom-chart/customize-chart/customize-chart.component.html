@@ -1,15 +1,14 @@
 <div class="customize-chart-container">
-	<h3>Customize</h3>
-	<div>
-		<p>Label</p>
-		<input type="text">
-	</div>
-	<div>
-		<p>Label</p>
-		<input type="text">
-	</div>
-	<div>
-		<p>Label</p>
-		<input type="text">
-	</div>
+	<form [formGroup]="form" class="customize-settings-container">
+		<div *ngFor="let prop of customizeNumberProps; let i = index">
+		 	<app-spinner [label]="prop.option" [control]="prop.control" [min]="0" size="26" [step]="prop.step"></app-spinner>
+		</div>
+		<div *ngFor="let prop of customizeBooleanProps; let i = index">
+
+			<app-checkbox [label]="prop.option" [control]="prop.control" binary="true"></app-checkbox>
+		</div>
+		<div *ngFor="let prop of customizeArrayProps">
+			<p-dropdown [options]="prop.options" [formControlName]="prop.control"></p-dropdown>
+		</div>
+	</form>
 </div>

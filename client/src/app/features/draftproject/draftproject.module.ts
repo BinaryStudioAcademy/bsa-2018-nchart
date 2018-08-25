@@ -12,6 +12,7 @@ import { ChartPreviewComponent } from '@app/features/draftproject/list-charts/ch
 import { ProjectNameComponent } from '@app/features/draftproject/project-name/project-name.component';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '@app/shared/shared.module';
 import { TabViewModule } from 'primeng/tabview';
@@ -24,6 +25,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 		FileUploadModule,
 		CommonModule,
 		BrowserModule,
+		BrowserAnimationsModule,
 		FormsModule
 	],
 	declarations: [

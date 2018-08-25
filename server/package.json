@@ -6,7 +6,7 @@
 	"scripts": {
 		"start": "nodemon --experimental-worker ./bin/www",
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"lint": "eslint -c ./.eslintrc.json './**/*.js' --fix"
+		"lint": "eslint -c ./.eslintrc.json ./**/*.js --fix"
 	},
 	"author": "",
 	"license": "ISC",
@@ -25,6 +25,7 @@
 		"file-type": "^9.0.0",
 		"jsonwebtoken": "^8.3.0",
 		"morgan": "^1.9.0",
+		"path": "^0.12.7",
 		"multer": "^1.3.1",
 		"papaparse": "^4.6.0",
 		"pg": "^7.4.3",

@@ -1,6 +1,16 @@
-import { Component, OnInit, Output, OnChanges, Input, EventEmitter } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	Output,
+	OnChanges,
+	Input,
+	EventEmitter
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { requiredValidator, maxLengthValidator } from '../../../shared/components/form-field/form-validators';
+import {
+	requiredValidator,
+	maxLengthValidator
+} from '@app/shared/components/form-field/form-validators';
 
 @Component({
 	selector: 'app-project-name',

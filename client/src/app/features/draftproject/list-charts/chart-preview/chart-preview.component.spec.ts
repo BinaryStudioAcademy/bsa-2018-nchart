@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ChartPreviewComponent } from './chart-preview.component';
+import { ChartPreviewComponent } from '@app/features/draftproject/list-charts/chart-preview/chart-preview.component';
 
 describe('ChartPreviewComponent', () => {
 	let component: ChartPreviewComponent;

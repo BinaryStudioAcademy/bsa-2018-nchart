@@ -8,6 +8,7 @@ import { CompaniesComponent } from '@app/core/companies/companies.component';
 import { CompanyComponent } from '@app/core/company/company.component';
 import { AppComponent } from '@app/core/app/app.component';
 import { ExportPdfComponent } from '@app/features/export-pdf/export-pdf.component';
+import { LandingPageComponent } from '@app/core/landing-page/landing-page.component';
 
 const appRoutes: Routes = [
 	{
@@ -24,10 +25,14 @@ const appRoutes: Routes = [
 		path: 'app',
 		component: AppComponent,
 		children: [
+			// {
+			// 	path: '',
+			// 	redirectTo: 'project/draft',
+			// 	pathMatch: 'full'
+			// },
 			{
 				path: '',
-				redirectTo: 'project/draft',
-				pathMatch: 'full'
+				component: LandingPageComponent
 			},
 			{
 				path: 'project/draft',

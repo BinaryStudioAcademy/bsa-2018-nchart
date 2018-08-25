@@ -1,7 +1,7 @@
-import { AppAction, FailedAction } from '@app/models';
 import { ExportActionConstants } from '@app/store/actions/export/export.action-types';
 import { SchemeID } from '@app/models/normalizr.model';
 import { ExportType } from '@app/models/export.model';
+import { AppAction, FailedAction } from '@app/models/store.model';
 
 interface ProjectExportPayload {
 	id: SchemeID;
