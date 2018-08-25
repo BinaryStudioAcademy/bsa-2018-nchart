@@ -132,6 +132,7 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	ngOnDestroy() {
 		this.disconnect();
+		this.routeParams$.unsubscribe();
 	}
 
 	changeProjectName(name) {
