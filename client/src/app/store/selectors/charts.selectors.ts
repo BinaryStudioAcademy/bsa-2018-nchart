@@ -1,8 +1,4 @@
 import { SchemeID } from '@app/models/normalizr.model';
-import {
-	UserChart,
-	UserMappingColumn
-} from '@app/models/user-chart-store.model';
 import { AppState } from '@app/models/store.model';
 import { Chart } from '@app/models/chart.model';
 

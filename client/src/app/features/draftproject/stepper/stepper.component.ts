@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { StoreService } from '@app/services/store.service';
 import { isProjectDataset } from '@app/store/selectors/projects.selectors';
+import { isRequiredDimensionMatched } from '@app/store/selectors/userCharts';
 import { trigger, style, animate, transition } from '@angular/animations';
 
 export const steps = [
@@ -122,17 +123,16 @@ export class StepperComponent implements OnInit {
 					}
 				},
 				selector: isProjectDataset()
+			},
+			{
+				selector: isRequiredDimensionMatched(),
+				subscriber: isReady => {
+					if (isReady) {
+						this.stepsList.push(steps[4]);
+						this.stepsList.push(steps[5]);
+					}
+				}
 			}
-			// {
-			// 	subscriber: isReady => {
-			// 		if (isReady) {
-			// 			this.stepsList.push(steps[4]);
-			// 			this.stepsList.push(steps[5]);
-			// 			this.disableSaveBtn = false;
-			// 		}
-			// 	},
-			// 	selector: isProjectCharts()
-			// }
 		]);
 	}
 }
