@@ -54,6 +54,10 @@ export class RemoveDimension extends AppAction<{
 	readonly type = ChartsActionConstants.REMOVE_DIMENSION;
 }
 
+export class RemoveAllDimension extends AppAction<void> {
+	readonly type = ChartsActionConstants.REMOVE_ALL_DIMENSION;
+}
+
 export class CreateChart extends AppAction<{
 	datatsetId: SchemeID;
 }> {
@@ -85,6 +89,7 @@ export type Actions =
 	| ChangeCustomSettings
 	| SelectDimension
 	| RemoveDimension
+	| RemoveAllDimension
 	| SelectChart
 	| SelectChartComplete
 	| CreateChartComplete

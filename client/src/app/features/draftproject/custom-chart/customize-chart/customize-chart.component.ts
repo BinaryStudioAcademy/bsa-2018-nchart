@@ -12,8 +12,7 @@ import { getCustomizeSettings } from '@app/store/selectors/charts.selectors';
 export class CustomizeChartComponent implements OnInit {
 	form: FormGroup;
 
-	customizeSettings = {}
-	
+	customizeSettings = {};
 
 	disconnect: () => void;
 	customizeNumberProps = [];

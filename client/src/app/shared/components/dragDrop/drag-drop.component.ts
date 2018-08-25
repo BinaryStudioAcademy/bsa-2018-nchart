@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { SchemeID } from '@app/models/normalizr.model';
 import { UserMappingColumn } from '@app/models/user-chart-store.model';
 import {
+	RemoveAllDimension,
 	RemoveDimension,
 	SelectDimension
 } from '@app/store/actions/charts/charts.actions';
@@ -90,7 +91,6 @@ export class DragDropComponent implements OnInit, OnDestroy {
 									columnId: item.id
 								})
 							);
-							// TODO: send action to set columns
 						}
 					}
 				)
@@ -152,9 +152,7 @@ export class DragDropComponent implements OnInit, OnDestroy {
 	}
 
 	removeAll() {
-		this.dimensionsSettings.forEach(element => {
-			element.value = [];
-		});
+		this.storeService.dispatch(new RemoveAllDimension());
 	}
 
 	ngOnDestroy() {
