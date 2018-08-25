@@ -24,7 +24,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 	private disconnectStore = null;
 	userName: string;
 	userImage = 'fas fa-user-tie';
-
 	constructor(private storeService: StoreService) {}
 
 	ngOnInit() {

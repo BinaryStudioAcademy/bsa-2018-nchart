@@ -51,6 +51,20 @@ const dimensionSettings = (
 				}
 			};
 		}
+		case ChartsActionConstants.REMOVE_ALL_DIMENSION: {
+			const dimensions = {
+				...state
+			};
+			for (const id in dimensions) {
+				if (dimensions.hasOwnProperty(id)) {
+					dimensions[id].columnIds = [];
+				}
+			}
+
+			return {
+				...dimensions
+			};
+		}
 		default:
 			return state;
 	}

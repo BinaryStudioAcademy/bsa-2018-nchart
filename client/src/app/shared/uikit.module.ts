@@ -21,6 +21,8 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TabViewModule } from 'primeng/tabview';
 import { SpinnerModule } from 'primeng/spinner';
+import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
+// Drag&Drop
 import { DragulaModule } from 'ng2-dragula';
 import { TooltipModule } from 'primeng/tooltip';
 
@@ -43,6 +45,7 @@ import { TooltipModule } from 'primeng/tooltip';
 		ToolbarModule,
 		TabMenuModule,
 		TabViewModule,
+		ScrollToModule.forRoot(),
 		DragulaModule.forRoot(),
 		FormsModule,
 		ReactiveFormsModule,
@@ -67,6 +70,7 @@ import { TooltipModule } from 'primeng/tooltip';
 		ToolbarModule,
 		TabMenuModule,
 		TabViewModule,
+		ScrollToModule,
 		DragulaModule,
 		FormsModule,
 		ReactiveFormsModule,
