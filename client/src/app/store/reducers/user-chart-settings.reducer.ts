@@ -26,7 +26,7 @@ const dimensionSettings = (
 			return {
 				...action.payload.chart.entities.dimensionSetting
 			};
-		case ChartsActionConstants.SELECT_DIMENSION:
+		case ChartsActionConstants.SET_DIMENSION:
 			return {
 				...state,
 				[action.payload.dimensionId]: {

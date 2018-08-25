@@ -1,4 +1,11 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	OnDestroy,
+	Input,
+	Output,
+	EventEmitter
+} from '@angular/core';
 import { DragulaService } from 'ng2-dragula';
 import { Subscription } from 'rxjs';
 import { SchemeID } from '@app/models/normalizr.model';
@@ -6,10 +13,8 @@ import { UserMappingColumn } from '@app/models/user-chart-store.model';
 import {
 	RemoveAllDimension,
 	RemoveDimension,
-	SelectDimension
+	SetDimension
 } from '@app/store/actions/charts/charts.actions';
-import { StoreService } from '@app/services/store.service';
-import { getData } from '@app/store/selectors/charts.selectors';
 
 class Column implements UserMappingColumn {
 	constructor(
@@ -32,14 +37,17 @@ export class DragDropComponent implements OnInit, OnDestroy {
 	@Input()
 	columns: UserMappingColumn[] = [];
 	public dimensions = [];
-
+	@Input()
 	data;
+	@Output()
+	setDimension = new EventEmitter();
+	@Output()
+	removeDimension = new EventEmitter();
+	@Output()
+	removeAllDimension = new EventEmitter();
 
 	subs = new Subscription();
-	constructor(
-		private _dragulaService: DragulaService,
-		private storeService: StoreService
-	) {
+	constructor(private _dragulaService: DragulaService) {
 		_dragulaService.createGroup(this.DIMENSIONS, {
 			copy: (el, source) => {
 				return source.id === 'columns';
@@ -85,28 +93,17 @@ export class DragDropComponent implements OnInit, OnDestroy {
 						} else if (this.hasDuplicates(targetModel)) {
 							targetModel.splice(targetModel.indexOf(item), 1);
 						} else {
-							this.storeService.dispatch(
-								new SelectDimension({
-									dimensionId: target['dataset'].dimensionid,
-									columnId: item.id
-								})
-							);
+							this.setDimension.emit({
+								dimensionId: target['dataset'].dimensionid,
+								columnId: item.id
+							});
 						}
 					}
 				)
 		);
 	}
 
-	ngOnInit() {
-		this.storeService.connect([
-			{
-				selector: getData(),
-				subscriber: data => {
-					this.data = data;
-				}
-			}
-		]);
-	}
+	ngOnInit() {}
 
 	getClasses(multiple, required) {
 		return {
@@ -143,16 +140,14 @@ export class DragDropComponent implements OnInit, OnDestroy {
 	}
 
 	remove(item, { target }) {
-		this.storeService.dispatch(
-			new RemoveDimension({
-				dimensionId: target['dataset'].dimensionid,
-				columnId: item.id
-			})
-		);
+		this.removeDimension.emit({
+			dimensionId: target['dataset'].dimensionid,
+			columnId: item.id
+		});
 	}
 
 	removeAll() {
-		this.storeService.dispatch(new RemoveAllDimension());
+		this.removeAllDimension.emit();
 	}
 
 	ngOnDestroy() {

@@ -122,7 +122,7 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 					this.showTable = isReady;
 				},
 				selector: isProjectDataset()
-			},
+			}
 			// {
 			// 	subscriber: isReady => {
 			// 		this.showCharts = isReady;

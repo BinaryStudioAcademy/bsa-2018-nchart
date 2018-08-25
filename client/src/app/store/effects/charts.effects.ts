@@ -7,11 +7,7 @@ import { normalize } from 'normalizr';
 import { ChartsActionConstants } from '@app/store/actions/charts/charts.action-types';
 import * as chartActions from '@app/store/actions/charts/charts.actions';
 import { StoreService } from '@app/services/store.service';
-import {
-	getActiveChartId,
-	getChart,
-	getFirstChart
-} from '@app/store/selectors/charts.selectors';
+import { getChart, getFirstChart } from '@app/store/selectors/charts.selectors';
 import {
 	CreateChart,
 	CreateChartComplete,
@@ -23,6 +19,7 @@ import { ChartService } from '@app/services/chart.service';
 import { Chart } from '@app/models/chart.model';
 import { getActiveProject } from '@app/store/selectors/projects.selectors';
 import { withLatestFrom } from 'rxjs/internal/operators';
+import { getActiveChartId } from '@app/store/selectors/userCharts';
 
 @Injectable()
 export class ChartsEffects {

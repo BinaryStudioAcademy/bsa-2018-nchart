@@ -1,8 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { StoreService } from '@app/services/store.service';
-import {
-	isProjectDataset
-} from '@app/store/selectors/projects.selectors';
+import { isProjectDataset } from '@app/store/selectors/projects.selectors';
 import { trigger, style, animate, transition } from '@angular/animations';
 
 export const steps = [
@@ -124,7 +122,7 @@ export class StepperComponent implements OnInit {
 					}
 				},
 				selector: isProjectDataset()
-			},
+			}
 			// {
 			// 	subscriber: isReady => {
 			// 		if (isReady) {

@@ -3,11 +3,15 @@ import { Actions as projectActions } from '@app/store/actions/projects/projects.
 import { DatasetActions } from '@app/store/actions/datasets/datasets.action-types';
 import { Actions as datasetsActions } from '@app/store/actions/datasets/datasets.actions';
 import { DatasetState } from '@app/models/dataset.model';
+import { combineReducers } from '@ngrx/store';
 
-export const initialState: DatasetState = {};
+export const initialState: DatasetState = {
+	byId: {},
+	isLoading: false
+};
 
-export const datasetReducer = (
-	state = initialState,
+const byId = (
+	state = initialState.byId,
 	action: projectActions | datasetsActions
 ) => {
 	switch (action.type) {
@@ -22,3 +26,25 @@ export const datasetReducer = (
 			return state;
 	}
 };
+
+const isLoading = (
+	state = initialState.isLoading,
+	action: projectActions | datasetsActions
+) => {
+	switch (action.type) {
+		case DatasetActions.PARSE_FROM_FILE:
+		case DatasetActions.PARSE_FROM_URL:
+		case DatasetActions.PARSE_PLAIN_TEXT:
+			return true;
+		case DatasetActions.PARSE_DATA__COMPLETE:
+		case DatasetActions.PARSE_DATA__FAILED:
+			return false;
+		default:
+			return state;
+	}
+};
+
+export const datasetReducer = combineReducers({
+	byId,
+	isLoading
+});
