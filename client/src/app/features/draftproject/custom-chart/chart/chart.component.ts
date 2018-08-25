@@ -2,7 +2,11 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { BarChartService } from '@app/services/charts/bar-chart.service';
 import { StoreService } from '@app/services/store.service';
-import { getData, getCustomizeSettings } from '@app/store/selectors/userCharts';
+import {
+	getData,
+	getCustomizeSettings,
+	getActiveChart
+} from '@app/store/selectors/userCharts';
 @Component({
 	selector: 'app-chart',
 	templateUrl: './chart.component.html',
@@ -18,7 +22,7 @@ export class ChartComponent implements OnInit, OnDestroy {
 	barChartCustomizeSettings;
 	data: Array<any>;
 	subs = new Subscription();
-
+	switchCharts: string;
 	ngOnInit() {
 		this.disconnect = this.storeService.connect([
 			{
@@ -41,6 +45,12 @@ export class ChartComponent implements OnInit, OnDestroy {
 					} else {
 						this.barChartCustomizeSettings = t;
 					}
+				}
+			},
+			{
+				selector: getActiveChart(),
+				subscriber: t => {
+					this.switchCharts = t.sysName;
 				}
 			}
 		]);
