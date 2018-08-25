@@ -2,7 +2,7 @@
 	<app-button type="icon" icon="fas fa-arrow-right" (onclick)="toggleStepper()"></app-button>
 </div>
 
-<div *ngIf="isVisible" class="stepper-container ui-main-block" [@toggleStepper]="state">
+<div *ngIf="isVisible" class="stepper-container ui-main-block" [@toggleStepper]="isVisible">
 	<div class="stepper-tools">
 		<app-button type="icon" icon="fas fa-arrow-left" (onclick)="toggleStepper()"></app-button>
 	</div>

@@ -17,6 +17,7 @@ import { Subscription } from 'rxjs';
 import * as ProjectsActions from '@app/store/actions/projects/projects.actions';
 import { project } from '@app/store/selectors/projects.selectors';
 import { SchemeID } from '@app/models/normalizr.model';
+import { isRequiredDimensionMatched } from '@app/store/selectors/userCharts';
 
 interface StepperStep {
 	id: number;
@@ -64,6 +65,22 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 		}
 	}
 
+	updateViewChildren(): void {
+		if (this.viewItemsList) {
+			this.viewItemsList = this.viewItems.toArray();
+		}
+	}
+
+	isDataset(): boolean {
+		this.updateViewChildren();
+		return this.showTable;
+	}
+
+	isCharts(): boolean {
+		this.updateViewChildren();
+		return this.showCharts;
+	}
+
 	getSteps(data) {
 		this.stepperSteps = data;
 	}
@@ -90,28 +107,32 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 			}
 		);
 
-		this.storeService.connect([
+		this.disconnect = this.storeService.connect([
 			{
 				subscriber: prj => {
 					this.projectId = prj.id;
 					this.projectName = prj.name;
 				},
 				selector: project()
-			}
-		]);
-
-		this.disconnect = this.storeService.connect([
+			},
 			{
-				subscriber: isReady => {
-					this.showTable = isReady;
-				},
-				selector: isProjectDataset()
+				selector: isProjectDataset(),
+				subscriber: t => {
+					this.showTable = t;
+				}
+			},
+			{
+				selector: isRequiredDimensionMatched(),
+				subscriber: t => {
+					this.showCharts = t;
+				}
 			}
 		]);
 	}
 
 	ngOnDestroy() {
 		this.disconnect();
+		this.routeParams$.unsubscribe();
 	}
 
 	changeProjectName(name) {
