@@ -14,26 +14,6 @@ export class BarChartService {
 
 	values: number[];
 
-	ngrxData = { name: '', values: [] };
-
-	ngrx = [
-		{
-			name: 'X Axis',
-			values: ['one', 'two', 'three']
-		},
-		{
-			name: 'Group',
-			values: []
-		},
-		{
-			name: 'Size',
-			values: ['1', '2', '3']
-		},
-		{
-			name: 'Color',
-			values: []
-		}
-	];
 	data: any[];
 
 	private _barChartCustomizeSettings = new BehaviorSubject<
