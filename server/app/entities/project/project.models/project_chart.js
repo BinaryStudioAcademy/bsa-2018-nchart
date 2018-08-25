@@ -4,11 +4,13 @@ const sequelize = require('../../../../config/index');
 const ProjectChart = sequelize.define('projectCharts', {
 	chartId: {
 		type: Sequelize.INTEGER,
-		allowNull: false
+		allowNull: false,
+		primaryKey: true
 	},
 	projectId: {
 		type: Sequelize.INTEGER,
-		allowNull: false
+		allowNull: false,
+		primaryKey: true
 	}
 });
 

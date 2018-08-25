@@ -13,6 +13,10 @@ class ProjectService {
 		return this.ProjectRepository.getAll();
 	}
 
+	upsertProjectCharts(objs) {
+		return this.ProjectRepository.upsertProjectCharts(objs);
+	}
+
 	createProject(obj) {
 		return new Promise((resolve, reject) => {
 			async.waterfall(
@@ -60,6 +64,20 @@ class ProjectService {
 									Object.assign({}, payload, {
 										charts: data
 									})
+								);
+							})
+							.catch(err => callback(err, null));
+					},
+					(payload, callback) => {
+						const projectCharts = [];
+						payload.charts.forEach(el => {
+							projectCharts.push({ chartId: el.id, projectId: payload.id });
+						});
+						this.upsertProjectCharts(projectCharts)
+							.then(() => {
+								callback(
+									null,
+									payload
 								);
 							})
 							.catch(err => callback(err, null));

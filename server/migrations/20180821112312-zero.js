@@ -361,18 +361,14 @@ module.exports = {
 				callback => {
 					queryInterface
 						.createTable('projectCharts', {
-							id: {
-								allowNull: false,
-								autoIncrement: true,
-								primaryKey: true,
-								type: Sequelize.INTEGER
-							},
 							chartId: {
 								type: Sequelize.INTEGER,
+								primaryKey: true,
 								references: { model: 'charts', key: 'id' }
 							},
 							projectId: {
 								type: Sequelize.INTEGER,
+								primaryKey: true,
 								references: { model: 'projects', key: 'id' }
 							},
 							createdAt: {
