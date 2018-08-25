@@ -1,12 +1,12 @@
-const { userSchema, loginSchema } = require('../../../entities/user/user.schema');
+const {
+	userSchema,
+	loginSchema
+} = require('../../../entities/user/user.schema');
 const schemaValidationService = require('../../services/schema-validation.service');
 
 class UserPayloadValidator {
 	static saveUser(req, res, next) {
-		const errors = schemaValidationService(
-			req.body.user,
-			userSchema
-		);
+		const errors = schemaValidationService(req.body.user, userSchema);
 		if (errors !== null) {
 			return next(errors);
 		}
@@ -14,10 +14,7 @@ class UserPayloadValidator {
 	}
 
 	static loginUser(req, res, next) {
-		const errors = schemaValidationService(
-			req.body,
-			loginSchema
-		);
+		const errors = schemaValidationService(req.body, loginSchema);
 		if (errors !== null) {
 			return next(errors);
 		}
