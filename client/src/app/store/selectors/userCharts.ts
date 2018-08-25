@@ -5,6 +5,7 @@ import {
 	UserChart
 } from '@app/models/user-chart-store.model';
 import { dataset } from '@app/store/selectors/dataset.selectors';
+import { Chart } from '@app/models/chart.model';
 
 export const userChart = (id?: SchemeID) => (state: AppState): UserChart =>
 	state.userCharts.byId[id || state.userCharts.active]
@@ -82,7 +83,7 @@ export const getCustomizeSettings = () => (state: AppState) => {
 
 export const getIndexCol = colId => (state: AppState) => {
 	const datasetId = state.userCharts.byId[state.userCharts.active].datasetId;
-	return state.datasets[datasetId].modified.columns.indexOf(colId);
+	return state.datasets.byId[datasetId].modified.columns.indexOf(colId);
 };
 
 export const getData = () => (state: AppState) => {
@@ -95,7 +96,7 @@ export const getData = () => (state: AppState) => {
 		if (columnIds.length) {
 			columnIds.map(columnId => {
 				const indexCol = getIndexCol(columnId)(state);
-				state.datasets[datasetId].modified.data.reduce(
+				state.datasets.byId[datasetId].modified.data.reduce(
 					(colValues, arrId) => {
 						colValues.push(
 							state.datasetData[arrId[indexCol]].value
@@ -126,19 +127,35 @@ export const getData = () => (state: AppState) => {
 	return acc;
 };
 
-export const getActiveChart = () => (state: AppState) => {
+export const getActiveChart = () => (
+	state: AppState
+): Chart<SchemeID[], SchemeID[]> => {
 	const activeUserChart = userChart()(state);
 	if (activeUserChart) {
 		const c =
 			state.charts.byId[
 				activeUserChart.chartTypeId || state.userCharts.active
 			];
-		return {
-			id: c.id,
-			name: c.name,
-			sysName: c.sysName,
-			type: c.type,
-			description: c.description
-		};
+		return c;
 	}
+};
+
+export const isRequiredDimensionMatched = () => (state: AppState): boolean => {
+	const c = userChart()(state);
+
+	if (c) {
+		return c.dimensionSettings
+			.map(d => ({
+				...state.userChartSettings.dimensionSettings[d],
+				required: (
+					state.defaultChartSettings.dimensionSettings[d] || {
+						required: false
+					}
+				).required
+			}))
+			.filter(el => el.required)
+			.every(el => !!el.columnIds.length);
+	}
+
+	return false;
 };

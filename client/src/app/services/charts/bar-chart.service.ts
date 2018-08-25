@@ -14,26 +14,6 @@ export class BarChartService {
 
 	values: number[];
 
-	ngrxData = { name: '', values: [] };
-
-	ngrx = [
-		{
-			name: 'X Axis',
-			values: ['one', 'two', 'three']
-		},
-		{
-			name: 'Group',
-			values: []
-		},
-		{
-			name: 'Size',
-			values: ['1', '2', '3']
-		},
-		{
-			name: 'Color',
-			values: []
-		}
-	];
 	data: any[];
 
 	private _barChartCustomizeSettings = new BehaviorSubject<
@@ -46,6 +26,7 @@ export class BarChartService {
 	}
 
 	getData(data: any) {
+		// todo
 		if (data.length === 4) {
 			if (data[0].values.length) {
 				this.data = compressArray(mapData(data[0].values));
