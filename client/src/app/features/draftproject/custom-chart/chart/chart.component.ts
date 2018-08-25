@@ -1,4 +1,4 @@
-import { Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {
 	getData,
 	getCustomizeSettings,
@@ -10,19 +10,15 @@ import {
 	templateUrl: './chart.component.html',
 	styleUrls: ['./chart.component.sass']
 })
-export class ChartComponent implements OnInit{
-	
+export class ChartComponent implements OnInit {
 	@Input()
-	data: any[]
+	data: any[];
 	@Input()
-	switchCharts: string
+	switchCharts: string;
 	@Input()
-	barChartCustomizeSettings
+	barChartCustomizeSettings;
 
 	constructor() {}
 
-	ngOnInit() {
-	
-	}
-
+	ngOnInit() {}
 }

@@ -5,6 +5,7 @@ import {
 	UserChart
 } from '@app/models/user-chart-store.model';
 import { dataset } from '@app/store/selectors/dataset.selectors';
+import { Chart } from '@app/models/chart.model';
 
 export const userChart = (id?: SchemeID) => (state: AppState): UserChart =>
 	state.userCharts.byId[id || state.userCharts.active]
@@ -126,31 +127,35 @@ export const getData = () => (state: AppState) => {
 	return acc;
 };
 
-export const getActiveChart = () => (state: AppState) => {
-	
+export const getActiveChart = () => (
+	state: AppState
+): Chart<SchemeID[], SchemeID[]> => {
 	const activeUserChart = userChart()(state);
 	if (activeUserChart) {
 		const c =
 			state.charts.byId[
 				activeUserChart.chartTypeId || state.userCharts.active
 			];
-		return {
-			id: c.id,
-			name: c.name,
-			sysName: c.sysName,
-			type: c.type,
-			description: c.description
-		};
+		return c;
 	}
 };
 
 export const isRequiredDimensionMatched = () => (state: AppState): boolean => {
-	for (const id in state.userChartSettings.dimensionSettings) {
-		if (state.userChartSettings.dimensionSettings.hasOwnProperty(id)) {
-			if(state.defaultChartSettings.dimensionSettings[id].required && state.userChartSettings.dimensionSettings[id].columnIds.length === 0){
-				return false
-			} 
-		}
+	const c = userChart()(state);
+
+	if (c) {
+		return c.dimensionSettings
+			.map(d => ({
+				...state.userChartSettings.dimensionSettings[d],
+				required: (
+					state.defaultChartSettings.dimensionSettings[d] || {
+						required: false
+					}
+				).required
+			}))
+			.filter(el => el.required)
+			.every(el => !!el.columnIds.length);
 	}
-	return true;
+
+	return false;
 };
