@@ -1,14 +1,18 @@
 const ProjectRepository = require('./project.repository');
-const pdfService = require('../../common/services/pdf.service');
+const exportService = require('../../common/services/export.services/export.service');
 
 class ProjectService {
 	constructor() {
 		this.ProjectRepository = ProjectRepository;
-		this.pdfService = pdfService;
+		this.exportService = exportService;
 	}
 
 	getAll() {
 		return this.ProjectRepository.getAll();
+	}
+
+	export(id, type) {
+		return this.exportService.getFile(id, type);
 	}
 }
 

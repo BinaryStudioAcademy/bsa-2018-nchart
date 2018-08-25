@@ -1,7 +1,6 @@
 const project = require('express').Router();
 const ProjectService = require('../../entities/project/project.service');
 const PayloadGeneratorService = require('../../common/services/payload-generator.service');
-const PdfService = require('../../common/services/pdf.service');
 
 project.get('/', (req, res, next) => {
 	ProjectService.getAll()
@@ -10,12 +9,12 @@ project.get('/', (req, res, next) => {
 });
 
 project.get('/:id/export', (req, res) => {
-	PdfService.createPdf(req.params.id).then(result => {
+	ProjectService.export(req.params.id, req.query.type).then(result => {
 		if (result) {
 			res.writeHead(200, {
 				'Content-Disposition': 'inline',
 				'Content-Length': result.length,
-				'Content-Type': 'application/pdf'
+				'Content-Type': `application/${req.query.type}`
 			});
 			res.end(result);
 		} else {
