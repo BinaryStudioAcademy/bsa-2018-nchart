@@ -136,12 +136,11 @@
 		font-size: 1.6rem
 		color: $stateDefaultTextColor
 
-
-
 .header-newProject-button
 	.ui-widget.ui-button-default,
 	.ui-button-default,
-	.ui-widget.ui-button
+	.ui-widget.ui-button,
+	.ui-widget.ui-button:enabled:focus
 		margin-right: 20px 
 		border: none
 		font-size: 1rem
@@ -154,13 +153,3 @@
 			border-color: transparent
 			box-shadow: none
 			border: 0
-
-.header-new-project-button .ui-widget.ui-button-default:enabled:active, .ui-button-default:enabled:active
-    color: $textColorDark
-    background-color: transparent
-    border-color: transparent
-
-.header-new-project-button .ui-widget.ui-button-default:enabled:focus, .ui-button-default:enabled:focus
-    color: $textColorDark
-    background-color: transparent
-    border-color: transparent
