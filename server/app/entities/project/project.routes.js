@@ -8,6 +8,20 @@ project.get('/', (req, res, next) => {
 		.catch(next);
 });
 
+project.get('/:id/export', (req, res) => {
+	ProjectService.export(req.params.id, req.query.type).then(result => {
+		if (result) {
+			res.writeHead(200, {
+				'Content-Disposition': 'inline',
+				'Content-Length': result.length,
+				'Content-Type': `application/${req.query.type}`
+			});
+			res.end(result);
+		} else {
+			res.send(400);
+		}
+	});
+});
 project.post('/', (req, res) => {
 	// console.log(req.body);
 	res.status(200).json({ payload: null, isSuccess: true, errors: [] });
