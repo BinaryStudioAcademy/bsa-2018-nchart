@@ -148,6 +148,10 @@ class ProjectService {
 			);
 		});
 	}
+
+	queryTest(id) {
+		return this.ProjectRepository.queryTest(id);
+	}
 }
 
 module.exports = new ProjectService();

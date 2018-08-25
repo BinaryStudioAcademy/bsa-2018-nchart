@@ -20,4 +20,10 @@ project.post('/', (req, res, next) => {
 		.catch(next);
 });
 
+project.get('/test/:id', (req, res, next) => {
+	ProjectService.queryTest(Number(req.params.id))
+		.then(PayloadGeneratorService.nextWithData(next, res))
+		.catch(next);
+});
+
 module.exports = project;
