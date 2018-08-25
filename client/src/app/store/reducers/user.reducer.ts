@@ -8,7 +8,8 @@ export const initialState: UserState = {
 	info: {
 		id: null,
 		name: null,
-		email: null
+		email: null,
+		defaultGroupId: null
 	},
 	isLoading: null
 };
