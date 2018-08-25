@@ -130,6 +130,7 @@ export class StepperComponent implements OnInit {
 					if (isReady) {
 						this.stepsList.push(steps[4]);
 						this.stepsList.push(steps[5]);
+						this.disableSaveBtn = false;
 					}
 				}
 			}
