@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { StoreService } from '@app/services/store.service';
 import {
 	mappingColumns,
@@ -12,7 +12,7 @@ import { UserMappingColumn } from '@app/models/user-chart-store.model';
 	styleUrls: ['./custom-settings.component.sass']
 })
 export class CustomSettingsComponent implements OnInit, OnDestroy {
-	constructor(private storeService: StoreService) {
+	constructor(private storeService: StoreService, element: ElementRef) {
 		this.onMappingColumnsUpdate = this.onMappingColumnsUpdate.bind(this);
 	}
 

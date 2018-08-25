@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ElementRef } from '@angular/core';
 import { StoreService } from '@app/services/store.service';
 import {
 	getCustomizeSettings,
@@ -28,7 +28,7 @@ export class ListChartsComponent implements OnInit, OnDestroy {
 	customize: any;
 	disconnect: () => void;
 
-	constructor(private storeService: StoreService) {}
+	constructor(private storeService: StoreService, element: ElementRef) {}
 
 	ngOnInit() {
 		this.disconnect = this.storeService.connect([
