@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Register } from '@app/models';
+import { Register } from '@app/models/register.model';
 
 @Component({
 	selector: 'app-register-form',

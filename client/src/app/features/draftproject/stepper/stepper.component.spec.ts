@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StepperComponent } from './stepper.component';
+import { StepperComponent } from '@app/features/draftproject/stepper/stepper.component';
 
 describe('StepperComponent', () => {
 	let component: StepperComponent;

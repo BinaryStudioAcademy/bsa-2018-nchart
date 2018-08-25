@@ -1,7 +1,7 @@
-import { AppAction } from '@app/models';
 import { NavigationExtras } from '@angular/router';
 import { Action } from '@ngrx/store';
 import { RouterActionConstants } from '@app/store/actions/router/router.action-types';
+import { AppAction } from '@app/models/store.model';
 
 export class Go
 	extends AppAction<{

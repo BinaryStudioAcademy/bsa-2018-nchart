@@ -65,10 +65,6 @@
 .ui-tabmenu .ui-tabmenu-nav > li
 	box-sizing: border-box
 	border-bottom: 5px solid red
-   
-.ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem a 
-    // padding-top: 1.2rem
-
     
 .header-profile
     border: 0
@@ -142,26 +138,29 @@
 
 
 
-.header-newProject-button .ui-widget.ui-button-default, .ui-button-default 
-    margin-right: 20px 
-    border: none
-    font-size: 1rem
-    color: $secondaryTextColor
-    background-color: transparent
-    border-color: transparent
+.header-newProject-button
+	.ui-widget.ui-button-default,
+	.ui-button-default,
+	.ui-widget.ui-button
+		margin-right: 20px 
+		border: none
+		font-size: 1rem
+		color: $secondaryTextColor
+		background-color: transparent
+		border-color: transparent
+		&:enabled:hover
+			color: $textColorDark
+			background-color: transparent
+			border-color: transparent
+			box-shadow: none
+			border: 0
 
-.header-newProject-button .ui-widget.ui-button-default:enabled:hover, .ui-button-default:enabled:hover
+.header-new-project-button .ui-widget.ui-button-default:enabled:active, .ui-button-default:enabled:active
     color: $textColorDark
     background-color: transparent
     border-color: transparent
-    box-shadow: none
 
-.header-newProject-button .ui-widget.ui-button-default:enabled:active, .ui-button-default:enabled:active
-    color: $textColorDark
-    background-color: transparent
-    border-color: transparent
-
-.header-newProject-button .ui-widget.ui-button-default:enabled:focus, .ui-button-default:enabled:focus
+.header-new-project-button .ui-widget.ui-button-default:enabled:focus, .ui-button-default:enabled:focus
     color: $textColorDark
     background-color: transparent
     border-color: transparent
