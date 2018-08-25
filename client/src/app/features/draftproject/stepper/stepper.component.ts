@@ -1,11 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { StoreService } from '@app/services/store.service';
-import {
-	isProjectDataset,
-	isProjectCharts
-} from '@app/store/selectors/projects.selectors';
-// import * as ProjectsActions from '@app/store/actions/projects/projects.actions';
-// import { project } from '@app/store/selectors/projects.selectors';
+import { isProjectDataset } from '@app/store/selectors/projects.selectors';
+import { isRequiredDimensionMatched } from '@app/store/selectors/userCharts';
 import { trigger, style, animate, transition } from '@angular/animations';
 
 export const steps = [
@@ -55,7 +51,7 @@ interface StepperStep {
 		trigger('toggleStepper', [
 			transition('void => *', [
 				style({ transform: 'translateX(-100%)' }),
-				animate(200)
+				animate('.3s ease-out')
 			]),
 			transition('* => void', [
 				animate(200, style({ transform: 'translateX(-100%)' }))
@@ -68,8 +64,6 @@ export class StepperComponent implements OnInit {
 	selectedStep: StepperStep;
 	@Input()
 	errors: number[];
-
-	// projectId: any;
 
 	stepsList = [steps[0]];
 	stepIconClass: any;
@@ -120,23 +114,6 @@ export class StepperComponent implements OnInit {
 		this.selectedStep = this.stepsList[0];
 		this.stepIconClass = this.getIconClasses(this.selectedStep.id);
 		this.storeService.connect([
-			// {
-			// 	subscriber: prj => {
-			// 		this.projectId = prj.id;
-			// 		this.storeService.dispatch(
-			// 			new ProjectsActions.CreateDraftProjectComplete({project: {
-			// 					id: this.projectId,
-			// 					name: 'name',
-			// 					datasets: ['fsadag', 'efsd'],
-			// 					charts: [''],
-			// 					createdAt: '435',
-			// 					isDraft: true
-			// 				}
-			// 			})
-			// 		);
-			// 	},
-			// 	selector: project()
-			// },
 			{
 				subscriber: isReady => {
 					if (isReady) {
@@ -148,14 +125,14 @@ export class StepperComponent implements OnInit {
 				selector: isProjectDataset()
 			},
 			{
+				selector: isRequiredDimensionMatched(),
 				subscriber: isReady => {
 					if (isReady) {
 						this.stepsList.push(steps[4]);
 						this.stepsList.push(steps[5]);
 						this.disableSaveBtn = false;
 					}
-				},
-				selector: isProjectCharts()
+				}
 			}
 		]);
 	}

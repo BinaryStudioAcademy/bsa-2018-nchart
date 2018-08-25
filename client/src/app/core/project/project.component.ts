@@ -65,6 +65,22 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 		}
 	}
 
+	updateViewChildren(): void {
+		if (this.viewItemsList) {
+			this.viewItemsList = this.viewItems.toArray();
+		}
+	}
+
+	isDataset(): boolean {
+		this.updateViewChildren();
+		return this.showTable;
+	}
+
+	isCharts(): boolean {
+		this.updateViewChildren();
+		return this.showCharts;
+	}
+
 	getSteps(data) {
 		this.stepperSteps = data;
 	}
@@ -102,13 +118,13 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 			{
 				selector: isProjectDataset(),
 				subscriber: t => {
-					this.showCharts = t;
+					this.showTable = t;
 				}
 			},
 			{
 				selector: isRequiredDimensionMatched(),
 				subscriber: t => {
-					this.showTable = t;
+					this.showCharts = t;
 				}
 			}
 		]);
@@ -116,6 +132,7 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	ngOnDestroy() {
 		this.disconnect();
+		this.routeParams$.unsubscribe();
 	}
 
 	changeProjectName(name) {
