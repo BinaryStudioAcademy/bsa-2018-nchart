@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { minValidator } from '@app/shared/components/form-field/form-validators';
 import { StoreService } from '@app/services/store.service';
-import { getCustomizeSettings } from '@app/store/selectors/charts.selectors';
 import { ChangeCustomSettings } from '@app/store/actions/charts/charts.actions';
+import { getCustomizeSettings } from '@app/store/selectors/userCharts';
 @Component({
 	selector: 'app-customize-chart',
 	templateUrl: './customize-chart.component.html',
@@ -26,7 +26,6 @@ export class CustomizeChartComponent implements OnInit, OnDestroy {
 			{
 				selector: getCustomizeSettings(),
 				subscriber: t => {
-
 					this.customizeSettings = t;
 					this.resetCustomizeProps();
 					this.form = setFormGroup(

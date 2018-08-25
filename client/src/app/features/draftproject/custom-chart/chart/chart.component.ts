@@ -2,10 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { BarChartService } from '@app/services/charts/bar-chart.service';
 import { StoreService } from '@app/services/store.service';
-import {
-	getData,
-	getCustomizeSettings
-} from '@app/store/selectors/charts.selectors';
+import { getData, getCustomizeSettings } from '@app/store/selectors/userCharts';
 @Component({
 	selector: 'app-chart',
 	templateUrl: './chart.component.html',

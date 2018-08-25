@@ -40,11 +40,11 @@ export class ChangeCustomSettings extends AppAction<{
 	readonly type = ChartsActionConstants.CHANGE_CUSTOM_SETTINGS;
 }
 
-export class SelectDimension extends AppAction<{
+export class SetDimension extends AppAction<{
 	dimensionId: SchemeID;
 	columnId: SchemeID;
 }> {
-	readonly type = ChartsActionConstants.SELECT_DIMENSION;
+	readonly type = ChartsActionConstants.SET_DIMENSION;
 }
 
 export class RemoveDimension extends AppAction<{
@@ -87,7 +87,7 @@ export type Actions =
 	| LoadChartsComplete
 	| LoadChartsFailed
 	| ChangeCustomSettings
-	| SelectDimension
+	| SetDimension
 	| RemoveDimension
 	| RemoveAllDimension
 	| SelectChart

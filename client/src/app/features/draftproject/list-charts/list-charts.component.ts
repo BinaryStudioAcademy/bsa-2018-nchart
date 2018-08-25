@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit, ElementRef } from '@angular/core';
 import { StoreService } from '@app/services/store.service';
-import {
-	getCustomizeSettings,
-	getListChart,
-	getActiveChart
-} from '@app/store/selectors/charts.selectors';
+import { getListChart } from '@app/store/selectors/charts.selectors';
 import { SelectChart } from '@app/store/actions/charts/charts.actions';
 import { SchemeID } from '@app/models/normalizr.model';
+import {
+	getCustomizeSettings,
+	getActiveChart
+} from '@app/store/selectors/userCharts';
 
 interface Chart {
 	id: SchemeID;

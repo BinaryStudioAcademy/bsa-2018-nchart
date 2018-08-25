@@ -1,5 +1,12 @@
 <div class="setting-container ui-main-block">
   <h2><i class="fas fa-arrows-alt "></i>Map your dimensions</h2>
-  <app-drag-drop [dimensionsSettings]="dimensionsSettings" [columns]="columns" ></app-drag-drop>
+  <app-drag-drop
+    [dimensionsSettings]="dimensionsSettings"
+    [columns]="columns"
+    [data]="data"
+    (removeAllDimension)="onRemoveAllDimension()"
+    (removeDimension)="onRemoveDimension($event)"
+    (setDimension)="onSetDimension($event)"
+  ></app-drag-drop>
 </div>
 
