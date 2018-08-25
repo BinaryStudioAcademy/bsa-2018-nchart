@@ -1,21 +1,36 @@
-const remote = require('remote-file-size');
 const async = require('async');
+const http = require('http');
+const https = require('https');
 const FsService = require('../../middleware/file.middleware');
 
 class LinkService {
 	checkSize(url) {
 		this.url = url;
 		return new Promise((resolve, reject) => {
-			remote(this.url, (err, sizeBytes) => {
-				if (err) {
-					reject(err);
-				}
-				if (sizeBytes / 1000000 > 5) {
+			let fileLength;
+			const protocol = this.typeOfProtocol(this.url);
+			const request = protocol.request(this.url, response => {
+				fileLength = response.headers['content-length'];
+				if (!fileLength) {
+					reject(new Error('File size is undefined'));
+				} else if (fileLength / 1000000 > 5) {
 					reject(new Error('File is too big'));
-				}
-				resolve(true);
+				} else resolve(true);
 			});
+			request.on('error', err => {
+				reject(err);
+			});
+			request.end();
 		});
+	}
+
+	typeOfProtocol(url) {
+		this.url = url;
+		const httpPatt = /^(?:http?:\/\/)/;
+		if (httpPatt.test(this.url)) {
+			return http;
+		}
+		return https;
 	}
 
 	processLink(url) {
