@@ -65,9 +65,11 @@ export class StepperComponent implements OnInit {
 	@Input()
 	errors: number[];
 
-	stepsList = [steps[0]];
+	stepsList = steps;
 	stepIconClass: any;
 	disableSaveBtn = true;
+	stepsStageTwo = false;
+	stepsStageThree = false;
 
 	isVisible = true;
 
@@ -117,9 +119,7 @@ export class StepperComponent implements OnInit {
 			{
 				subscriber: isReady => {
 					if (isReady) {
-						this.stepsList.push(steps[1]);
-						this.stepsList.push(steps[2]);
-						this.stepsList.push(steps[3]);
+						this.stepsStageTwo = true;
 					}
 				},
 				selector: isProjectDataset()
@@ -128,12 +128,20 @@ export class StepperComponent implements OnInit {
 				selector: isRequiredDimensionMatched(),
 				subscriber: isReady => {
 					if (isReady) {
-						this.stepsList.push(steps[4]);
-						this.stepsList.push(steps[5]);
+						this.stepsStageThree = true;
 						this.disableSaveBtn = false;
 					}
 				}
 			}
 		]);
+	}
+
+	isStepVisible(id) {
+		if (id === 1) {
+			return true;
+		} else if (id === 2 || id === 3 || id === 4) {
+			return this.stepsStageTwo;
+		}
+		return this.stepsStageThree;
 	}
 }
