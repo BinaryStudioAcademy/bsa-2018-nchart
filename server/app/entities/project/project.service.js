@@ -71,14 +71,14 @@ class ProjectService {
 					(payload, callback) => {
 						const projectCharts = [];
 						payload.charts.forEach(el => {
-							projectCharts.push({ chartId: el.id, projectId: payload.id });
+							projectCharts.push({
+								chartId: el.id,
+								projectId: payload.id
+							});
 						});
 						this.upsertProjectCharts(projectCharts)
 							.then(() => {
-								callback(
-									null,
-									payload
-								);
+								callback(null, payload);
 							})
 							.catch(err => callback(err, null));
 					}
