@@ -82,7 +82,7 @@ export const getCustomizeSettings = () => (state: AppState) => {
 
 export const getIndexCol = colId => (state: AppState) => {
 	const datasetId = state.userCharts.byId[state.userCharts.active].datasetId;
-	return state.datasets[datasetId].modified.columns.indexOf(colId);
+	return state.datasets.byId[datasetId].modified.columns.indexOf(colId);
 };
 
 export const getData = () => (state: AppState) => {
@@ -95,7 +95,7 @@ export const getData = () => (state: AppState) => {
 		if (columnIds.length) {
 			columnIds.map(columnId => {
 				const indexCol = getIndexCol(columnId)(state);
-				state.datasets[datasetId].modified.data.reduce(
+				state.datasets.byId[datasetId].modified.data.reduce(
 					(colValues, arrId) => {
 						colValues.push(
 							state.datasetData[arrId[indexCol]].value
