@@ -1,6 +1,6 @@
 <app-animated-block [indicator]="activeTab" class="load-data-wrp">
-	<h2><i class="fas fa-upload"></i>Load your data</h2>
-	<div class="load-data-tabs-wrap">
+	<h2><i class="fas fa-upload" ></i>Load your data</h2>
+	<div class="load-data-tabs-wrap" [loading-sp]="isLoading" spBackgroundColor="#d8d8d8a1" >
 		<p-tabView 	activeIndex="0"
 					  (onChange)="onChange($event)"
 		>
@@ -16,7 +16,6 @@
 							label="Load Data"
 							class="ui-button-position-right"
 							[disabled]="pasteDataControl.invalid"
-							[loading]="isPasteLoading"
 				></app-button>
 			</p-tabPanel>
 
@@ -29,7 +28,7 @@
 							  auto="true"
 				>
 					<ng-template pTemplate="content">
-						<div *ngIf="isFileLoading" class="upload-data-spinner" [loading-sp]="isFileLoading"></div>
+						<div class="upload-data-spinner"></div>
 						<p class="upload-file-text">
 							<i class="fas fa-file-upload"></i>
 							Drop your file here (.csv, .txt, .xls, .xlsx)
@@ -49,7 +48,6 @@
 								label="Load Data"
 								class="ui-button-position-right"
 								[disabled]="pasteUrlControl.invalid"
-								[loading]="isUrlLoading"
 					></app-button>
 				</div>
 			</p-tabPanel>
