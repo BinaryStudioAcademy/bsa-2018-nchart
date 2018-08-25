@@ -9,14 +9,9 @@ class CompanyRepository extends Repository {
 		this.companyUserModel = companyUserModel;
 	}
 
-	saveCompany(obj) {
-		if (typeof obj.company === 'string' && obj.company.length >= 1) {
-			return this.companyModel.create({
-				name: obj.company
-			});
-		}
+	saveCompany(name) {
 		return this.companyModel.create({
-			name: `${obj.user.firstName} ${obj.user.lastName}`
+			name
 		});
 	}
 

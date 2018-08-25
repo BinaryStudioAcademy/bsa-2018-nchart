@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
-const sequelize = require('../../../config/index');
+const sequelize = require('../../../../db/connection');
 
-const CompanyChartType = sequelize.define('companyChartType', {
+const CompanyChartType = sequelize.define('companyChartTypes', {
 	companyId: {
 		type: Sequelize.INTEGER,
 		allowNull: false

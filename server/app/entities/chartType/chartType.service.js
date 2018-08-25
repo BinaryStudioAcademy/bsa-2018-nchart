@@ -23,8 +23,8 @@ class ChartTypeService {
 			});
 	}
 
-	save() {
-		return this.ChartTypeRepository.save();
+	save(obj) {
+		return this.ChartTypeRepository.save(obj);
 	}
 }
 
