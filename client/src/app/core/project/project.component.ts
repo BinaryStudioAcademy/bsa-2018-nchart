@@ -42,7 +42,7 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 	selectedStep: StepperStep;
 	viewElements: ElementRef[];
 	stepperSteps: StepperStep[];
-	stepperErrors = [2, 1];
+	stepperErrors = []; // [2, 1];
 
 	@ViewChildren('viewItem', { read: ElementRef })
 	viewItems: QueryList<any>;
