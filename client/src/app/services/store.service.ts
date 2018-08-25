@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Action, select, Store } from '@ngrx/store';
-import { AppState } from '../models';
 import { distinctUntilChanged } from 'rxjs/internal/operators';
 import * as equal from 'fast-deep-equal';
 import { Subscription } from 'rxjs';
+import { AppState } from '@app/models/store.model';
 
 interface Connection {
 	subscriber: any;
