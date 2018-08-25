@@ -1,13 +1,13 @@
 <div class="project-container">
   <app-stepper (steps)="getSteps($event)" [errors]="stepperErrors" [selectedStep]="selectedStep"></app-stepper>
-  <div class="main-content" (scroll)="onScroll($event)">
+  <div class="main-content">
 	<app-project-name [projectName]="projectName" (setProjectName)="changeProjectName($event)">
 	</app-project-name>
     <app-load-data id="load" #viewItem></app-load-data>
-	<app-data-table *ngIf="showTable" id="table" #viewItem></app-data-table>
-    <app-list-charts *ngIf="showCharts" id="charts" #viewItem></app-list-charts>
-    <app-custom-settings *ngIf="showTable" id="settings" #viewItem></app-custom-settings>
-    <app-custom-chart *ngIf="showTable" id="chart" #viewItem></app-custom-chart>
-    <app-export *ngIf="showTable" id="export" #viewItem></app-export>
+	<app-data-table *ngIf="isDataset()" id="table" #viewItem></app-data-table>
+    <app-list-charts *ngIf="isDataset()" id="charts" #viewItem></app-list-charts>
+    <app-custom-settings *ngIf="isDataset()" id="settings" #viewItem></app-custom-settings>
+    <app-custom-chart *ngIf="isCharts()" id="chart" #viewItem></app-custom-chart>
+    <app-export *ngIf="isCharts()" id="export" #viewItem></app-export>
   </div>
 </div>

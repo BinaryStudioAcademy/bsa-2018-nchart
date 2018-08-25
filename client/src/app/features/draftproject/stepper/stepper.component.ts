@@ -1,11 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { StoreService } from '@app/services/store.service';
 import {
-	isProjectDataset,
-	isProjectCharts
+	isProjectDataset
 } from '@app/store/selectors/projects.selectors';
-// import * as ProjectsActions from '@app/store/actions/projects/projects.actions';
-// import { project } from '@app/store/selectors/projects.selectors';
 import { trigger, style, animate, transition } from '@angular/animations';
 
 export const steps = [
@@ -69,8 +66,6 @@ export class StepperComponent implements OnInit {
 	@Input()
 	errors: number[];
 
-	// projectId: any;
-
 	stepsList = [steps[0]];
 	stepIconClass: any;
 	disableSaveBtn = true;
@@ -120,23 +115,6 @@ export class StepperComponent implements OnInit {
 		this.selectedStep = this.stepsList[0];
 		this.stepIconClass = this.getIconClasses(this.selectedStep.id);
 		this.storeService.connect([
-			// {
-			// 	subscriber: prj => {
-			// 		this.projectId = prj.id;
-			// 		this.storeService.dispatch(
-			// 			new ProjectsActions.CreateDraftProjectComplete({project: {
-			// 					id: this.projectId,
-			// 					name: 'name',
-			// 					datasets: ['fsadag', 'efsd'],
-			// 					charts: [''],
-			// 					createdAt: '435',
-			// 					isDraft: true
-			// 				}
-			// 			})
-			// 		);
-			// 	},
-			// 	selector: project()
-			// },
 			{
 				subscriber: isReady => {
 					if (isReady) {
@@ -147,16 +125,16 @@ export class StepperComponent implements OnInit {
 				},
 				selector: isProjectDataset()
 			},
-			{
-				subscriber: isReady => {
-					if (isReady) {
-						this.stepsList.push(steps[4]);
-						this.stepsList.push(steps[5]);
-						this.disableSaveBtn = false;
-					}
-				},
-				selector: isProjectCharts()
-			}
+			// {
+			// 	subscriber: isReady => {
+			// 		if (isReady) {
+			// 			this.stepsList.push(steps[4]);
+			// 			this.stepsList.push(steps[5]);
+			// 			this.disableSaveBtn = false;
+			// 		}
+			// 	},
+			// 	selector: isProjectCharts()
+			// }
 		]);
 	}
 }
