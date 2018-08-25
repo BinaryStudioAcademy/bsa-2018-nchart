@@ -10,6 +10,7 @@ import {
 	ParseByLink,
 	ParseByText
 } from '@app/store/actions/datasets/datasets.actions';
+import { isDatasetLoading } from '@app/store/selectors/dataset.selectors';
 
 @Component({
 	selector: 'app-load-data',
@@ -17,6 +18,11 @@ import {
 	styleUrls: ['./load-data.component.sass']
 })
 export class LoadDataComponent implements OnInit {
+	isLoading = false;
+	isPasteLoading = false;
+	isUrlLoading = false;
+	isFileLoading = false;
+
 	activeTab: number;
 
 	pasteDataControl = new FormControl('', Validators.required);
@@ -26,23 +32,39 @@ export class LoadDataComponent implements OnInit {
 		requiredValidator('URL can`t be empty')
 	]);
 
-	constructor(private storeService: StoreService) {}
+	disconnect: () => void;
 
-	loadFile(event) {
-		const file = event.files[0];
-		this.storeService.dispatch(new ParseByFile({ file }));
-	}
+	constructor(private storeService: StoreService) {}
 
 	onChange(e) {
 		this.activeTab = e.index;
 	}
 
-	ngOnInit() {}
+	ngOnInit() {
+		this.disconnect = this.storeService.connect([
+			{
+				subscriber: isLoading => {
+					this.isLoading = isLoading;
+					if (!isLoading) {
+						this.isPasteLoading = this.isUrlLoading = this.isFileLoading = false;
+					}
+				},
+				selector: isDatasetLoading()
+			}
+		]);
+	}
+
+	loadFile(event) {
+		const file = event.files[0];
+		this.storeService.dispatch(new ParseByFile({ file }));
+		this.isFileLoading = this.isLoading;
+	}
 
 	loadUrl() {
 		if (this.pasteUrlControl.valid) {
 			const link = this.pasteUrlControl.value;
 			this.storeService.dispatch(new ParseByLink({ link }));
+			this.isUrlLoading = this.isLoading;
 		}
 	}
 
@@ -50,6 +72,7 @@ export class LoadDataComponent implements OnInit {
 		if (this.pasteDataControl.valid) {
 			const text = this.pasteDataControl.value;
 			this.storeService.dispatch(new ParseByText({ text }));
+			this.isPasteLoading = this.isLoading;
 		}
 	}
 }

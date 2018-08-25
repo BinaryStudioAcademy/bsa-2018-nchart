@@ -14,3 +14,5 @@ export const chartDataset = (id?: SchemeID) => (state: AppState) => {
 
 	return null;
 };
+
+export const isDatasetLoading = () => (state: AppState) => state.datasets.isLoading;

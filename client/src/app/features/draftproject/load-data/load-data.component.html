@@ -16,6 +16,7 @@
 							label="Load Data"
 							class="ui-button-position-right"
 							[disabled]="pasteDataControl.invalid"
+							[loading]="isPasteLoading"
 				></app-button>
 			</p-tabPanel>
 
@@ -28,6 +29,7 @@
 							  auto="true"
 				>
 					<ng-template pTemplate="content">
+						<div *ngIf="isFileLoading" class="upload-data-spinner" [loading-sp]="isFileLoading"></div>
 						<p class="upload-file-text">
 							<i class="fas fa-file-upload"></i>
 							Drop your file here (.csv, .txt, .xls, .xlsx)
@@ -47,6 +49,7 @@
 								label="Load Data"
 								class="ui-button-position-right"
 								[disabled]="pasteUrlControl.invalid"
+								[loading]="isUrlLoading"
 					></app-button>
 				</div>
 			</p-tabPanel>
