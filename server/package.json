@@ -6,11 +6,15 @@
 	"scripts": {
 		"start": "nodemon --experimental-worker ./bin/www",
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"lint": "eslint -c ./.eslintrc.json ./**/*.js --fix"
+		"lint": "eslint -c ./.eslintrc.json ./**/*.js --fix",
+		"migrate": "node_modules/.bin/sequelize db:migrate",
+		"migrate:undo": "node_modules/.bin/sequelize db:migrate:undo",
+		"seed": "node_modules/.bin/sequelize db:seed:all"
 	},
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"ajv": "^6.5.3",
 		"async": "^2.6.1",
 		"bcrypt": "^3.0.0",
 		"body-parser": "^1.18.3",
@@ -24,6 +28,7 @@
 		"fast-csv": "^2.4.1",
 		"file-type": "^9.0.0",
 		"jsonwebtoken": "^8.3.0",
+		"lodash": "^4.17.10",
 		"morgan": "^1.9.0",
 		"path": "^0.12.7",
 		"multer": "^1.3.1",
@@ -31,8 +36,11 @@
 		"pg": "^7.4.3",
 		"pg-hstore": "^2.3.2",
 		"pretty-quick": "^1.6.0",
+		"puppeteer": "^1.7.0",
+		"puppeteer-core": "^1.7.0",
 		"remote-file-size": "^3.0.4",
 		"sequelize": "^4.38.0",
+		"sequelize-cli": "^4.1.0",
 		"tempfile": "^2.0.0",
 		"uuid": "^3.3.2",
 		"xlsx": "^0.13.3"

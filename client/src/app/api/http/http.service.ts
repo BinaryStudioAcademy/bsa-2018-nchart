@@ -47,6 +47,17 @@ export class HttpService {
 		}
 	}
 
+	makeFileRequest(request: ServiceRequest): Observable<Blob> {
+		let url = `${HttpService.baseURL}${request.url}`;
+		const headers = this.prepareHeaders(request.headers);
+
+		if (request.payload) {
+			url = `${url}?${queryString.stringify(request.payload)}`;
+		}
+
+		return this.http.get(url, { headers, responseType: 'blob' });
+	}
+
 	private prepareHeaders(requestHeaders) {
 		let headersConfig = {};
 

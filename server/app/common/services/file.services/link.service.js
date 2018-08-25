@@ -3,6 +3,8 @@ const async = require('async');
 const FsService = require('../../middleware/file.middleware');
 
 class LinkService {
+	// https://stackoverflow.com/questions/16194017/stop-downloading-the-data-in-nodejs-request
+	// todo: if file size undefined, crush app
 	checkSize(url) {
 		this.url = url;
 		return new Promise((resolve, reject) => {
