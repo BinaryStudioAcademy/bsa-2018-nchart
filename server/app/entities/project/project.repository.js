@@ -86,7 +86,11 @@ class ProjectRepository extends Repository {
 											include: [
 												{
 													model: datasetModel,
-													attributes: ['id', 'data', 'columns']
+													attributes: [
+														'id',
+														'data',
+														'columns'
+													]
 												}
 											]
 										}

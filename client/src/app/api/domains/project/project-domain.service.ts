@@ -17,7 +17,7 @@ export class ProjectDomainService implements ProjectDomain {
 		return this.httpService.makeRequest<ResponseScheme<OriginProject[]>>(
 			new ServiceRequest(
 				RequestType.GET,
-				`${this.projectPath}/test`,
+				`${this.projectPath}`,
 				null
 			)
 		);

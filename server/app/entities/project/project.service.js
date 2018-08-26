@@ -162,7 +162,9 @@ class ProjectService {
 					callback => {
 						this.ProjectRepository.fullProjectById(id)
 							.then(data => {
-								const project = this.getProjectFromPayload(data.dataValues);
+								const project = ProjectService.getProjectFromPayload(
+									data.dataValues
+								);
 								callback(null, project);
 							})
 							.catch(err => callback(err, null));
@@ -179,33 +181,28 @@ class ProjectService {
 	}
 
 	fullProjectsByGroupId(id) {
-		return this.ProjectRepository.fullProjectsByGroupId(id)
-			.then(data => {
-				const projects = [];
-				data.dataValues.groupProjects.forEach(el => {
-					projects.push(el.project.dataValues);
-				});
-				const payload = {
-					projects: []
-				};
-				projects.forEach(el => {
-					const project = ProjectService.getProjectFromPayload(el);
-					payload.projects.push(project);
-				});
-				return payload;
+		return this.ProjectRepository.fullProjectsByGroupId(id).then(data => {
+			const projects = [];
+			data.dataValues.groupProjects.forEach(el => {
+				projects.push(el.project.dataValues);
 			});
+			const payload = {
+				projects: []
+			};
+			projects.forEach(el => {
+				const project = ProjectService.getProjectFromPayload(el);
+				payload.projects.push(project);
+			});
+			return payload;
+		});
 	}
 
 	static getProjectFromPayload(rawProject) {
 		const charts = [];
 		const datasets = [];
 		rawProject.projectCharts.forEach(el => {
-			charts.push(
-				_.omit(el.chart.dataValues, 'dataset')
-			);
-			datasets.push(
-				el.chart.dataValues.dataset.dataValues
-			);
+			charts.push(_.omit(el.chart.dataValues, 'dataset'));
+			datasets.push(el.chart.dataValues.dataset.dataValues);
 		});
 		return {
 			id: rawProject.id,
