@@ -47,7 +47,7 @@ export class ProjectsEffects {
 						new projectActions.LoadProjectsFailed({
 							action: action,
 							msg: 'test',
-							error: null
+							error: error
 						})
 					);
 				})
