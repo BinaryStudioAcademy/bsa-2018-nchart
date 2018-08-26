@@ -52,47 +52,54 @@ module.exports = {
 						id: 1,
 						defaultValue: 800,
 						description: 'Artboard width in pixels.',
-						option: 'Width'
+						option: 'Width',
+						sysName: 'width'
 					},
 					{
 						id: 2,
 						defaultValue: 600,
 						description: 'Artboard height in pixels.',
-						option: 'Height'
+						option: 'Height',
+						sysName: 'height'
 					},
 					{
 						id: 3,
 						defaultValue: 40,
 						description:
 								'Margin for left side of a bar chart, in pixel.',
-						option: 'Left Margin'
+						option: 'Left Margin',
+						sysName: 'leftMargin'
 					},
 					{
 						id: 4,
 						defaultValue: 0,
 						description: 'Distance among bar charts, in pixel.',
-						option: 'Vertical Padding'
+						option: 'Vertical Padding',
+						sysName: 'verticalPadding'
 					},
 					{
 						id: 5,
 						defaultValue: 0.1,
 						description:
 								'Distance between bars, in percentage of the size of the bar (0 = 0%, 1 = 100%).',
-						option: 'Horizontal Padding'
+						option: 'Horizontal Padding',
+						sysName: 'horizontalPadding'
 					},
 					{
 						id: 6,
 						defaultValue: false,
 						description:
 								'If set, every barchart element will have the same scale.',
-						option: 'Use Same Scale'
+						option: 'Use Same Scale',
+						sysName: 'useSameScale'
 					},
 					{
 						id: 7,
 						defaultValue: [],
 						description:
 								'List of uniques values in the dimension mapped as “color”. If set to ordinal, you can set a color for each value. If set to linear, the app will try to find the minimum and maximum value contained in the dimension, and then creating a gradient among those two values.',
-						option: 'Colour Scale'
+						option: 'Colour Scale',
+						sysName: 'colourScale'
 					}
 				]),
 				createdAt: '2018-08-16T21:00:00.000Z',
@@ -130,63 +137,72 @@ module.exports = {
 						defaultValue: 800,
 						description: 'width in pixels',
 						option: 'Width',
-						id: 8
+						id: 8,
+						sysName: 'width'
 					},
 					{
 						defaultValue: 4,
 						description:
 								'Pie chart will be disposed on a grid. This option allows to define how many pie charts must be drawn for each line. The number of lines is calculated according to this option.',
 						option: 'Columns',
-						id: 9
+						id: 9,
+						sysName: 'columns'
 					},
 					{
 						defaultValue: 10,
 						description:
 								'The vertical and horizontal padding between pie charts, in pixels.',
 						option: 'Padding',
-						id: 10
+						id: 10,
+						sysName: 'padding'
 					},
 					{
 						defaultValue: false,
 						description:
 								'If selected, pie charts will be drawn ad donut chart. The size is defined by the Thickness option (see below).',
 						option: 'Donut chart',
-						id: 11
+						id: 11,
+						sysName: 'donutChart'
 					},
 					{
 						defaultValue: 10,
 						description:
 								'If Donut chart option is selects, this value will be used to defines its thickness.',
 						option: 'Thickness',
-						id: 12
+						id: 12,
+						sysName: 'thickness'
 					},
 					{
 						defaultValue: false,
 						description:
 								'If selected, the absolute value of each value will be displayed with a label.',
 						option: 'Show Values',
-						id: 13
+						id: 13,
+						sysName: 'showValues'
 					},
 					{
 						defaultValue: ['size', 'name'],
 						description:
 								'Order of the pie chart. Can be ‘size’ (from the biggest to the smallest), ‘name’ (alphabetical order).',
 						option: 'Sort charts by',
-						id: 14
+						id: 14,
+						sysName: 'sortChartsBy'
 					},
 					{
 						defaultValue: ['size', 'name'],
 						description:
 								'Order of the arcs inside each pie chart. Can be ‘automatic’ (same order in each pie chart), ‘size’ (from biggest to smallest in each pie chart) or ‘name’ (alphabetical order).',
 						option: 'Sort arcs by',
-						id: 15
+						id: 15,
+						sysName: 'sortArcsBy'
 					},
 					{
 						defaultValue: [],
 						description:
 								'List of dimensions headers dragged as ‘Arcs’. If set to ordinal, you can set a color for each value. If set to linear, the app will try to find the minimum and maximum value contained in the dimension, and then creating a gradient among those two values.',
-						option: 'Color scale',
-						id: 16
+						option: 'Colour scale',
+						id: 16,
+						sysName: 'colourScale'
 					}
 				]),
 				createdAt: '2018-08-16T21:00:00.000Z',
@@ -224,40 +240,46 @@ module.exports = {
 						defaultValue: 847,
 						description: 'Artboard width in pixels.',
 						option: 'Width',
-						id: 17
+						id: 17,
+						sysName: 'width'
 					},
 					{
 						defaultValue: 500,
 						description: 'Artboard height in pixels.',
 						option: 'Height',
-						id: 18
+						id: 18,
+						sysName: 'height'
 					},
 					{
 						defaultValue: 5,
 						description:
 								'Width of black bars representing nodes, in pixels.',
 						option: 'Nodes Width',
-						id: 19
+						id: 19,
+						sysName: 'nodesWidth'
 					},
 					{
 						defaultValue: 0.4,
 						description: 'Opacity of nodes.',
 						option: 'Links Opacity',
-						id: 20
+						id: 20,
+						sysName: 'linksOpacity'
 					},
 					{
 						defaultValue: ['size', 'name', 'automatic'],
 						description:
 								'Sorting of nodes inside each step. It can be ‘automatic’ (trying to reduce the number of overlappings among flows), ‘size’ (nodes ordered from the biggest to the smallest), and ‘alphabetical’.',
 						option: 'Sort By',
-						id: 21
+						id: 21,
+						sysName: 'sortBy'
 					},
 					{
 						defaultValue: [],
 						description:
 								'The color of flows. The color is defined by the source node. For each unique value found in the dimension dragged as ‘steps’ a color is defined.',
-						option: 'Color scale',
-						id: 22
+						option: 'Colour scale',
+						id: 22,
+						sysName: 'colourScale'
 					}
 				]),
 				createdAt: '2018-08-16T21:00:00.000Z',
@@ -313,25 +335,29 @@ module.exports = {
 						defaultValue: 900,
 						description: 'Artboard width in pixels',
 						option: 'Width',
-						id: 23
+						id: 23,
+						sysName: 'width'
 					},
 					{
 						defaultValue: 600,
 						description: 'Artboard height in pixels',
 						option: 'Height',
-						id: 24
+						id: 24,
+						sysName: 'height'
 					},
 					{
 						defaultValue: 80,
 						description: 'Artboard height in pixels',
 						option: 'Left Margin',
-						id: 25
+						id: 25,
+						sysName: 'leftMargin'
 					},
 					{
 						defaultValue: 80,
 						description: 'Artboard height in pixels',
 						option: 'Align Labels To Bar',
-						id: 26
+						id: 26,
+						sysName: 'alignLabesToBar'
 					},
 					{
 						defaultValue: [
@@ -342,14 +368,16 @@ module.exports = {
 						description:
 								'Order of the bars series. Could be alphabetical or by date (both ascending and descending)',
 						option: 'Sort By',
-						id: 27
+						id: 27,
+						sysName: 'sortBy'
 					},
 					{
 						defaultValue: [],
 						description:
 								'If set to ordinal, you can set a color for each value; it lists all the unique values in the dimension mapped as “color”. If set to linear, the app will try to find the minimum and maximum value contained in the dimension, and then it creates a gradient among those two values',
-						option: 'Color scale',
-						id: 28
+						option: 'Colour scale',
+						id: 28,
+						sysName: 'colourScale'
 					}
 				]),
 				createdAt: '2018-08-16T21:00:00.000Z',
