@@ -5,6 +5,7 @@ const DatasetService = require('../dataset/dataset.service');
 const ChartService = require('../chart/chart.service');
 const GroupService = require('../group/group.service');
 const ExportService = require('../../common/services/export.services/export.service');
+
 // todo: wrong
 
 class ProjectService {
@@ -153,150 +154,16 @@ class ProjectService {
 		});
 	}
 
-	/*
-
-        "id": 1,
-        "name": "test4",
-        "projectCharts": [
-            {
-                "chartId": 1,
-                "chart": {
-                    "id": 1,
-                    "chartTypeId": 1,
-                    "datasetId": "1",
-                    "dimensionSettings": [
-                        {
-                            "id": 1,
-                            "columnId": 1
-                        },
-                        {
-                            "id": 2,
-                            "columnId": 2
-                        }
-                    ],
-                    "customizeSettings": [
-                        {
-                            "id": 1,
-                            "value": 123,
-                            "option": "lol",
-                            "description": "desc desc"
-                        },
-                        {
-                            "id": 2,
-                            "value": 123,
-                            "option": "lol",
-                            "description": "desc desc"
-                        }
-                    ],
-                    "dataset": {
-                        "id": "1",
-                        "data": [
-                            [
-                                1,
-                                2
-                            ],
-                            [
-                                "text",
-                                "text"
-                            ]
-                        ],
-                        "columns": [
-                            {
-                                "id": 1,
-                                "title": "col1",
-                                "type": "number"
-                            },
-                            {
-                                "id": 2,
-                                "title": "col2",
-                                "type": "string"
-                            }
-                        ]
-                    }
-                }
-            },
-            {
-                "chartId": 2,
-                "chart": {
-                    "id": 2,
-                    "chartTypeId": 2,
-                    "datasetId": "2",
-                    "dimensionSettings": [
-                        {
-                            "id": 1,
-                            "columnId": 1
-                        },
-                        {
-                            "id": 2,
-                            "columnId": 2
-                        }
-                    ],
-                    "customizeSettings": [
-                        {
-                            "id": 1,
-                            "value": 123,
-                            "option": "lol",
-                            "description": "desc desc"
-                        },
-                        {
-                            "id": 2,
-                            "value": 123,
-                            "option": "lol",
-                            "description": "desc desc"
-                        }
-                    ],
-                    "dataset": {
-                        "id": "2",
-                        "data": [
-                            [
-                                1,
-                                2
-                            ],
-                            [
-                                "t11",
-                                "t11"
-                            ]
-                        ],
-                        "columns": [
-                            {
-                                "id": 1,
-                                "title": "col1",
-                                "type": "number"
-                            },
-                            {
-                                "id": 2,
-                                "title": "col2",
-                                "type": "string"
-                            }
-                        ]
-                    }
-                }
-            }
-        ]
-
-	 */
-
-	getFullProject(id) {
+	fullProjectById(id) {
+		// todo: remove waterfall
 		return new Promise((resolve, reject) => {
 			async.waterfall(
 				[
 					callback => {
-						this.ProjectRepository.getProjectAndCharts(id)
+						this.ProjectRepository.fullProjectById(id)
 							.then(data => {
-								const projectData = data.dataValues;
-								const charts = [];
-								const datasets = [];
-								projectData.projectCharts.forEach(el => {
-									charts.push(_.omit(el.chart.dataValues, 'dataset'));
-									datasets.push(el.chart.dataValues.dataset.dataValues);
-								});
-								const payload = {
-									id: projectData.id,
-									name: projectData.name,
-									charts,
-									datasets
-								};
-								callback(null, payload);
+								const project = this.getProjectFromPayload(data.dataValues);
+								callback(null, project);
 							})
 							.catch(err => callback(err, null));
 					}
@@ -311,12 +178,45 @@ class ProjectService {
 		});
 	}
 
-	export(id, type) {
-		return this.ExportService.getFile(id, type);
+	fullProjectsByGroupId(id) {
+		return this.ProjectRepository.fullProjectsByGroupId(id)
+			.then(data => {
+				const projects = [];
+				data.dataValues.groupProjects.forEach(el => {
+					projects.push(el.project.dataValues);
+				});
+				const payload = {
+					projects: []
+				};
+				projects.forEach(el => {
+					const project = ProjectService.getProjectFromPayload(el);
+					payload.projects.push(project);
+				});
+				return payload;
+			});
 	}
 
-	queryTest(id) {
-		return this.ProjectRepository.queryTest(id);
+	static getProjectFromPayload(rawProject) {
+		const charts = [];
+		const datasets = [];
+		rawProject.projectCharts.forEach(el => {
+			charts.push(
+				_.omit(el.chart.dataValues, 'dataset')
+			);
+			datasets.push(
+				el.chart.dataValues.dataset.dataValues
+			);
+		});
+		return {
+			id: rawProject.id,
+			name: rawProject.name,
+			charts,
+			datasets
+		};
+	}
+
+	export(id, type) {
+		return this.ExportService.getFile(id, type);
 	}
 }
 

@@ -20,13 +20,14 @@ project.post('/', ProjectPayloadValidator.fullSet, (req, res, next) => {
 });
 
 project.get('/:id', (req, res, next) => {
-	ProjectService.getFullProject(Number(req.params.id))
+	ProjectService.fullProjectById(Number(req.params.id))
 		.then(PayloadGeneratorService.nextWithData(next, res))
 		.catch(next);
 });
 
-project.get('/test/:id', (req, res, next) => {
-	ProjectService.queryTest(Number(req.params.id))
+// todo: what do with rout names?
+project.get('/group/:id', (req, res, next) => {
+	ProjectService.fullProjectsByGroupId(Number(req.params.id))
 		.then(PayloadGeneratorService.nextWithData(next, res))
 		.catch(next);
 });
