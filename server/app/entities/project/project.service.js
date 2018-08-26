@@ -207,6 +207,7 @@ class ProjectService {
 		return {
 			id: rawProject.id,
 			name: rawProject.name,
+			createdAt: rawProject.createdAt,
 			charts,
 			datasets
 		};

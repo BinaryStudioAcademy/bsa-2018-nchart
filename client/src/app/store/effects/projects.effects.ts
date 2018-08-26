@@ -128,9 +128,7 @@ export class ProjectsEffects {
 					}
 					return throwError(new Error(`Can't save project`));
 				}),
-				catchError(error =>
-					of(new projectActions.SaveProjectFailed())
-				)
+				catchError(error => of(new projectActions.SaveProjectFailed()))
 			)
 		)
 	);

@@ -29,7 +29,7 @@ class ProjectRepository extends Repository {
 	fullProjectById(id) {
 		return this.projectModel.findOne({
 			where: { id },
-			attributes: ['id', 'name'],
+			attributes: ['id', 'name', 'createdAt'],
 			include: [
 				{
 					model: projectChartModel,
@@ -68,7 +68,7 @@ class ProjectRepository extends Repository {
 					include: [
 						{
 							model: this.projectModel,
-							attributes: ['id', 'name'],
+							attributes: ['id', 'name', 'createdAt'],
 							include: [
 								{
 									model: projectChartModel,
