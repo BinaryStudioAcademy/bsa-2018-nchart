@@ -117,31 +117,29 @@ export class StepperComponent implements OnInit {
 		this.stepIconClass = this.getIconClasses(this.selectedStep.id);
 		this.storeService.connect([
 			{
+				selector: isProjectDataset(),
 				subscriber: isReady => {
-					if (isReady) {
-						this.stepsStageTwo = true;
-					}
-				},
-				selector: isProjectDataset()
+					this.stepsStageTwo = isReady;
+				}
 			},
 			{
 				selector: isRequiredDimensionMatched(),
 				subscriber: isReady => {
-					if (isReady) {
-						this.stepsStageThree = true;
-						this.disableSaveBtn = false;
-					}
+					this.stepsStageThree = isReady;
+					this.disableSaveBtn = !isReady;
 				}
 			}
 		]);
 	}
 
 	isStepVisible(id) {
-		if (id === 1) {
-			return true;
-		} else if (id === 2 || id === 3 || id === 4) {
-			return this.stepsStageTwo;
+		switch (id) {
+			case 1:
+				return true;
+			case 2: case 3: case 4:
+				return this.stepsStageTwo;
+			case 5: case 6:
+				return this.stepsStageThree;
 		}
-		return this.stepsStageThree;
 	}
 }
