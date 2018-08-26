@@ -3,6 +3,7 @@ const projectModel = require('./project.models/project');
 const projectChartModel = require('./project.models/project_chart');
 const TransactionService = require('../../common/services/db-transaction.service');
 const chartModel = require('../chart/chart.model');
+const datasetModel = require('../dataset/dataset.model');
 
 class ProjectRepository extends Repository {
 	constructor() {
@@ -24,13 +25,45 @@ class ProjectRepository extends Repository {
 	}
 
 	getProjectAndCharts(id) {
+		return this.projectModel.findOne(
+			{
+				where: { id },
+				attributes: ['id', 'name'],
+				include: [
+					{
+						model: projectChartModel,
+						attributes: ['chartId'],
+						include: [{
+							model: chartModel,
+							attributes: ['id', 'chartTypeId', 'datasetId', 'dimensionSettings', 'customizeSettings'],
+							include: [
+								{
+									model: datasetModel,
+									attributes: ['id', 'data', 'columns']
+								}
+							]
+						}]
+					}
+				]
+			}
+		);
+	}
+
+	queryTest(id) {
 		return this.projectChartModel.findAll(
 			{
 				where: { projectId: id },
 				attributes: ['projectId', 'chartId'],
-				include: [chartModel, projectModel]
-			},
-			{ exclude: ['id'] }
+				include: [
+					{
+						model: chartModel,
+						include: [{
+							model: datasetModel
+						}]
+					},
+					projectModel
+				]
+			}
 		);
 	}
 }
