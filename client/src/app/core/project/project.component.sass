@@ -1,12 +1,7 @@
 .project-container
 	width: 100%
 	margin: 0 auto
-
-app-stepper
-	position: fixed
-	top: 120px
-	left: 0px
-	background-color: #ffffff
+	padding-bottom: 80px
 
 .main-content
 	margin: 120px auto 20px
@@ -19,3 +14,10 @@ app-load-data
 app-data-table
 	display: block
 	margin: 20px 0  
+
+@media screen and(max-width: 1000px)
+	.main-content
+		margin: 120px auto 20px
+		width: 90%
+	app-stepper
+		display: none

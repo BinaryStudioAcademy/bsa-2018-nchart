@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import {
 	requiredValidator,
 	patternValidator
-} from '../../../shared/components/form-field/form-validators';
+} from '@app/shared/components/form-field/form-validators';
 import { StoreService } from '@app/services/store.service';
 import { ExportType } from '@app/models/export.model';
 import { ExportProject } from '@app/store/actions/export/export.actions';
@@ -18,10 +18,6 @@ export class ExportComponent implements OnInit, OnDestroy {
 	@Input()
 	isLoading = false;
 
-	fileName: string;
-	fileType = 'pdf';
-	file: string;
-
 	controlName = new FormControl('', [
 		patternValidator(
 			'Invalid filename',
@@ -29,7 +25,7 @@ export class ExportComponent implements OnInit, OnDestroy {
 		),
 		requiredValidator('Filename can`t be empty')
 	]);
-	controlType = new FormControl('', [requiredValidator('')]);
+	controlType = new FormControl(ExportType.PDF, [requiredValidator('')]);
 
 	options = [
 		{
@@ -57,29 +53,23 @@ export class ExportComponent implements OnInit, OnDestroy {
 		this.disconnect = this.storeService.connect([
 			{
 				subscriber: isExporting => {
-					this.isLoading = isExporting
+					this.isLoading = isExporting;
 				},
 				selector: isProjectExporting()
 			}
 		]);
 	}
 
-	ngOnDestroy(){
+	ngOnDestroy() {
 		this.disconnect();
 	}
 
 	exportData() {
-		this.fileName = this.controlName.value.trim();
-		this.fileType = this.controlType.value || this.fileType;
-		this.file = this.fileName + '.' + this.fileType;
+		const filename = this.controlName.value.trim();
+		const type = this.controlType.value as ExportType;
 
-		// Add service for getting id of current export project
 		this.storeService.dispatch(
-			new ExportProject({
-				id: 1,
-				type: this.fileType as ExportType,
-				filename: this.fileName
-			})
+			new ExportProject({ id: 1, type, filename })
 		);
 	}
 }

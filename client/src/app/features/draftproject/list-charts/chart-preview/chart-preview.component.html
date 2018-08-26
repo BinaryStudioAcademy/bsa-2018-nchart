@@ -1,7 +1,9 @@
-<app-animated-block [indicator]="selectedChart">
+<div *ngIf="selectedChart">
+<app-animated-block [indicator]="selectedChart || null">
   <div class="chart-img">
 	  <i [ngClass]="chartIconClass"></i>
   </div>
   <p class="chart-label">{{selectedChart.name}}</p>
   <p class="chart-description">{{selectedChart.description}}</p>
 </app-animated-block>
+</div>

@@ -4,13 +4,13 @@ import { map, switchMap } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { CompaniesActionConstants } from '@app/store/actions/companies/companies.action-types';
-import { Company } from '@app/models';
 import {
 	LoadDataComplete,
 	LoadDataFailed
 } from '@app/store/actions/companies/companies.actions';
 import { normalize } from 'normalizr';
-import { arrayOfCustomData } from '@app/schemes/custom.schema';
+import { arrayOfCommonScheme } from '@app/schemes/common.schema';
+import { Company } from '@app/models/company.model';
 
 @Injectable()
 export class CompaniesEffects {
@@ -47,7 +47,7 @@ export class CompaniesEffects {
 					const {
 						result: all,
 						entities: { byId }
-					} = normalize(value, arrayOfCustomData);
+					} = normalize(value, arrayOfCommonScheme);
 					return new LoadDataComplete({
 						companies: {
 							all,

@@ -16,4 +16,11 @@ chartType.get('/:id', (req, res, next) => {
 		.catch(next);
 });
 
+chartType.post('/', (req, res, next) => {
+	chartTypeService
+		.save(req.body)
+		.then(PayloadGeneratorService.nextWithData(next, res))
+		.catch(next);
+});
+
 module.exports = chartType;

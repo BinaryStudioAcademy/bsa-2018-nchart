@@ -1,7 +1,7 @@
-import { AppAction, FailedAction } from '@app/models';
 import { ProjectsActionConstants } from '@app/store/actions/projects/projects.action-types';
-import { Project } from '@app/models/project.model';
+import { Project, ProjectEntities } from '@app/models/project.model';
 import { SchemeID } from '@app/models/normalizr.model';
+import { AppAction, FailedAction } from '@app/models/store.model';
 
 export class LoadProjetcs extends AppAction<any> {
 	readonly type = ProjectsActionConstants.LOAD_PROJECTS;
@@ -20,7 +20,7 @@ export class LoadProjectsFailed extends FailedAction {
 	readonly type = ProjectsActionConstants.LOAD_PROJECTS__FAILED;
 }
 
-export class CreateDraftProject extends AppAction {
+export class CreateDraftProject extends AppAction<{ projectId: string }> {
 	readonly type = ProjectsActionConstants.CREATE_DRAFT_PROJECT;
 }
 
@@ -34,7 +34,25 @@ export class CreateDraftProjectFailed extends FailedAction {
 	readonly type = ProjectsActionConstants.CREATE_DRAFT_PROJECT__FAILED;
 }
 
-export class ChangeProjectName extends AppAction<{id: SchemeID, name: string}> {
+export class LoadOneProject extends AppAction<{ projectId: string }> {
+	readonly type = ProjectsActionConstants.LOAD_ONE_PROJECT;
+}
+
+export class LoadOneProjectComplete extends AppAction<{
+	projectId: SchemeID;
+	entities: ProjectEntities;
+}> {
+	readonly type = ProjectsActionConstants.LOAD_ONE_PROJECT__COMPLETE;
+}
+
+export class LoadOneProjectFailed extends FailedAction {
+	readonly type = ProjectsActionConstants.LOAD_ONE_PROJECT__FAILED;
+}
+
+export class ChangeProjectName extends AppAction<{
+	id: SchemeID;
+	name: string;
+}> {
 	readonly type = ProjectsActionConstants.CHANGE_PROJECT_NAME;
 }
 
@@ -45,4 +63,7 @@ export type Actions =
 	| CreateDraftProject
 	| CreateDraftProjectComplete
 	| CreateDraftProjectFailed
+	| LoadOneProject
+	| LoadOneProjectComplete
+	| LoadOneProjectFailed
 	| ChangeProjectName;
