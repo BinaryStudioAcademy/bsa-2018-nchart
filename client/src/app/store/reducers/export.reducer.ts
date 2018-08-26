@@ -2,13 +2,12 @@ import { combineReducers } from '@ngrx/store';
 import { Actions as ExportActions } from '@app/store/actions/export/export.actions';
 import { ExportActionConstants } from '@app/store/actions/export/export.action-types';
 
-
 export const initialState = {
 	isExporting: false
 };
 
 export const isExporting = (
-	state = initialState.isExporting, 
+	state = initialState.isExporting,
 	action: ExportActions
 ): boolean => {
 	switch (action.type) {
@@ -20,6 +19,6 @@ export const isExporting = (
 		default:
 			return state;
 	}
-}
+};
 
 export const exportProjectReducer = combineReducers({ isExporting });
