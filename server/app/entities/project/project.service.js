@@ -1,9 +1,11 @@
 const async = require('async');
+const _ = require('lodash');
 const ProjectRepository = require('./project.repository');
 const DatasetService = require('../dataset/dataset.service');
 const ChartService = require('../chart/chart.service');
 const GroupService = require('../group/group.service');
 const ExportService = require('../../common/services/export.services/export.service');
+// todo: wrong
 
 class ProjectService {
 	constructor() {
@@ -151,8 +153,51 @@ class ProjectService {
 		});
 	}
 
-	queryTest(id) {
-		return this.ProjectRepository.queryTest(id);
+	getFullProject(id) {
+		return new Promise((resolve, reject) => {
+			async.waterfall(
+				[
+					callback => {
+						this.ProjectRepository.getProjectAndCharts(id)
+							.then(data => {
+								// todo: handle error here
+								callback(null, data);
+							})
+							.catch(err => callback(err, null));
+					},
+					(data, callback) => {
+						const datasetIds = [];
+						const charts = [];
+						data.forEach(el => {
+							// todo: do it in sequelize // don't no how
+							charts.push(_.omit(el.chart.dataValues, ['createdAt', 'updatedAt']));
+							datasetIds.push(el.chart.datasetId);
+						});
+						DatasetService.getAllById(datasetIds)
+							.then(datasets => {
+								const datasetsPayload = [];
+								datasets.forEach(el => {
+									// todo: do it in sequelize // don't no how
+									datasetsPayload.push(_.omit(el.dataValues, ['createdAt', 'updatedAt']));
+								});
+								return callback(null, {
+									id: data[0].project.id,
+									name: data[0].project.name,
+									charts,
+									datasets: datasetsPayload
+								});
+							})
+							.catch(err => callback(err, null));
+					}
+				],
+				(err, payload) => {
+					if (err) {
+						reject(err);
+					}
+					resolve(payload);
+				}
+			);
+		});
 	}
 
 	export(id, type) {
