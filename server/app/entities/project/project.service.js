@@ -3,10 +3,12 @@ const ProjectRepository = require('./project.repository');
 const DatasetService = require('../dataset/dataset.service');
 const ChartService = require('../chart/chart.service');
 const GroupService = require('../group/group.service');
+const ExportService = require('../../common/services/export.services/export.service');
 
 class ProjectService {
 	constructor() {
 		this.ProjectRepository = ProjectRepository;
+		this.ExportService = ExportService;
 	}
 
 	getAll() {
@@ -71,14 +73,14 @@ class ProjectService {
 					(payload, callback) => {
 						const projectCharts = [];
 						payload.charts.forEach(el => {
-							projectCharts.push({ chartId: el.id, projectId: payload.id });
+							projectCharts.push({
+								chartId: el.id,
+								projectId: payload.id
+							});
 						});
 						this.upsertProjectCharts(projectCharts)
 							.then(() => {
-								callback(
-									null,
-									payload
-								);
+								callback(null, payload);
 							})
 							.catch(err => callback(err, null));
 					}
@@ -151,6 +153,10 @@ class ProjectService {
 
 	queryTest(id) {
 		return this.ProjectRepository.queryTest(id);
+	}
+
+	export(id, type) {
+		return this.ExportService.getFile(id, type);
 	}
 }
 

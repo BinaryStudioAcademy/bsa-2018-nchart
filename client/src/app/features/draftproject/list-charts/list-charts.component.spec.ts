@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ListChartsComponent } from './list-charts.component';
+import { ListChartsComponent } from '@app/features/draftproject/list-charts/list-charts.component';
 
 describe('ListChartsComponent', () => {
 	let component: ListChartsComponent;

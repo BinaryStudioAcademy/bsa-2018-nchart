@@ -37,14 +37,13 @@ class ChartService {
 					},
 					(data, callback) => {
 						const payload = data.concat(objToUpdate);
-						this.ChartRepository.upsertMult(objToUpdate).then(() => {
-							callback(
-								null,
-								payload
-							);
-						}).catch(err => {
-							callback(err, null);
-						});
+						this.ChartRepository.upsertMult(objToUpdate)
+							.then(() => {
+								callback(null, payload);
+							})
+							.catch(err => {
+								callback(err, null);
+							});
 					}
 				],
 				(err, payload) => {

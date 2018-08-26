@@ -26,13 +26,12 @@ class ProjectRepository extends Repository {
 
 	// hardcode gettion project
 	queryTest(id) {
-		return this.projectChartModel.findAll(
-			{
+		return this.projectChartModel
+			.findAll({
 				where: { projectId: id },
 				attributes: ['projectId', 'chartId'],
 				include: [chartModel, projectModel]
-			}
-		)
+			})
 			.then(data => {
 				const datasetIds = [];
 				const charts = [];
@@ -40,18 +39,20 @@ class ProjectRepository extends Repository {
 					charts.push(el.chart.dataValues);
 					datasetIds.push(el.chart.datasetId);
 				});
-				return datasetModel.findAll({ where: { id: datasetIds } }).then(datasets => {
-					const datasetsPayload = [];
-					datasets.forEach(el => {
-						datasetsPayload.push(el.dataValues);
+				return datasetModel
+					.findAll({ where: { id: datasetIds } })
+					.then(datasets => {
+						const datasetsPayload = [];
+						datasets.forEach(el => {
+							datasetsPayload.push(el.dataValues);
+						});
+						return {
+							id: data[0].project.id,
+							name: data[0].project.name,
+							charts,
+							datasets: datasetsPayload
+						};
 					});
-					return {
-						id: data[0].project.id,
-						name: data[0].project.name,
-						charts,
-						datasets: datasetsPayload
-					};
-				});
 			});
 	}
 }

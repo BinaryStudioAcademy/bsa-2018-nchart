@@ -1,7 +1,7 @@
 import { Actions as ChartsActions } from '@app/store/actions/charts/charts.actions';
 import { ChartsActionConstants } from '@app/store/actions/charts/charts.action-types';
 import { combineReducers } from '@ngrx/store';
-import { ChartsState } from '@app/models';
+import { ChartsState } from '@app/models/chart.model';
 
 export const initialState: ChartsState = {
 	byId: {},
@@ -25,7 +25,7 @@ const byId = (state = initialState.byId, action: ChartsActions) => {
 		case ChartsActionConstants.LOAD_CHARTS:
 			return {};
 		case ChartsActionConstants.LOAD_CHARTS__COMPLETE:
-			return action.payload.charts.byId;
+			return action.payload.charts.entities.chart;
 		default:
 			return state;
 	}

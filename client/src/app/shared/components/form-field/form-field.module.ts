@@ -12,6 +12,7 @@ import { RadioButtonComponent } from '@app/shared/components/form-field/checkbox
 import { InputTextareaComponent } from '@app/shared/components/form-field/input-textarea/input-textarea.component';
 import { UIKitModule } from '@app/shared/uikit.module';
 import { LoadingSpinnerComponent } from '@app/shared/components/loading-spinner/loading-spinner.component';
+import { SpinnerComponent } from '@app/shared/components/form-field/spinner/spinner.component';
 
 const formFieldComponents = [
 	ButtonComponent,
@@ -23,7 +24,8 @@ const formFieldComponents = [
 	ToggleComponent,
 	DropdownSimpleComponent,
 	RadioButtonComponent,
-	LoadingSpinnerComponent
+	LoadingSpinnerComponent,
+	SpinnerComponent
 ];
 
 @NgModule({

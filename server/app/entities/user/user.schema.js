@@ -9,7 +9,11 @@ const userSchema = {
 	additionalProperties: true,
 	required: ['name', 'email', 'password'],
 	properties: {
-		name: { type: 'string', maxLength: 100, pattern: namePattern.source },
+		name: {
+			type: 'string',
+			maxLength: 100,
+			regex: { pattern: namePattern.source, flags: 'i' }
+		},
 		email: { type: 'string', pattern: emailPattern.source },
 		password: {
 			type: 'string',
