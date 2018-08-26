@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import {
 	requiredValidator,
@@ -7,13 +7,17 @@ import {
 import { StoreService } from '@app/services/store.service';
 import { ExportType } from '@app/models/export.model';
 import { ExportProject } from '@app/store/actions/export/export.actions';
+import { isProjectExporting } from '@app/store/selectors/export.selectors';
 
 @Component({
 	selector: 'app-export',
 	templateUrl: './export.component.html',
 	styleUrls: ['./export.component.sass']
 })
-export class ExportComponent implements OnInit {
+export class ExportComponent implements OnInit, OnDestroy {
+	@Input()
+	isLoading = false;
+
 	fileName: string;
 	fileType = 'pdf';
 	file: string;
@@ -49,7 +53,20 @@ export class ExportComponent implements OnInit {
 
 	constructor(private storeService: StoreService) {}
 
-	ngOnInit() {}
+	ngOnInit() {
+		this.disconnect = this.storeService.connect([
+			{
+				subscriber: isExporting => {
+					this.isLoading = isExporting
+				},
+				selector: isProjectExporting()
+			}
+		]);
+	}
+
+	ngOnDestroy(){
+		this.disconnect();
+	}
 
 	exportData() {
 		this.fileName = this.controlName.value.trim();
