@@ -26,7 +26,7 @@ export class ProjectsEffects {
 	loadData$ = this.action$.pipe(
 		ofType(ProjectsActionConstants.LOAD_PROJECTS),
 		switchMap((action: projectActions.LoadProjetcs) =>
-			this.projectDomainService.getAll().pipe(
+			this.projectDomainService.getByGroupId(action.payload).pipe(
 				map(value => {
 					if (value.isSuccess) {
 						const {
@@ -40,7 +40,7 @@ export class ProjectsEffects {
 							}
 						});
 					}
-					return throwError(new Error('Cant get projects'));
+					return throwError(new Error('Cant getByGroupId'));
 				}),
 				catchError(error => {
 					return of(
@@ -77,7 +77,7 @@ export class ProjectsEffects {
 	loadOneProject$ = this.action$.pipe(
 		ofType(ProjectsActionConstants.LOAD_ONE_PROJECT),
 		switchMap((action: projectActions.LoadOneProject) =>
-			this.projectDomainService.get(action.payload).pipe(
+			this.projectDomainService.getByProjectId(action.payload).pipe(
 				map(value => {
 					if (value.isSuccess) {
 						const { result: projectId, entities } = normalize(
@@ -99,6 +99,37 @@ export class ProjectsEffects {
 				}),
 				catchError(error =>
 					of(new projectActions.LoadOneProjectFailed())
+				)
+			)
+		)
+	);
+
+	@Effect()
+	saveProject = this.action$.pipe(
+		ofType(ProjectsActionConstants.SAVE_PROJECT),
+		switchMap((action: projectActions.SaveProject) =>
+			this.projectDomainService.save(action.payload).pipe(
+				map(value => {
+					if (value.isSuccess) {
+						const { result: projectId, entities } = normalize(
+							{
+								...value.payload,
+								datasets: this.datasetService.transformDatasets(
+									value.payload.datasets
+								)
+							},
+							projectScheme
+						);
+
+						return new projectActions.SaveProjectComplete({
+							entities,
+							projectId
+						});
+					}
+					return throwError(new Error(`Can't save project`));
+				}),
+				catchError(error =>
+					of(new projectActions.SaveProjectFailed())
 				)
 			)
 		)
