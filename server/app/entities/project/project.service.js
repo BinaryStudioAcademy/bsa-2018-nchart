@@ -154,6 +154,10 @@ class ProjectService {
 	export(id, type) {
 		return this.ExportService.getFile(id, type);
 	}
+
+	screenshot(id) {
+		return this.ExportService.getScreenshot(id);
+	}
 }
 
 module.exports = new ProjectService();

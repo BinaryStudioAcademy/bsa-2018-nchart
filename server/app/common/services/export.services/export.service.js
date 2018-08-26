@@ -1,8 +1,10 @@
 const PdfService = require('../export.services/pdf.service');
+const ScreenshotService = require('../export.services/screenshot.service');
 
 class ExportService {
 	constructor() {
 		this.PdfService = PdfService;
+		this.ScreenshotService = ScreenshotService;
 	}
 
 	getFile(id, type) {
@@ -16,6 +18,10 @@ class ExportService {
 		default:
 			return '';
 		}
+	}
+
+	getScreenshot(id) {
+		return this.ScreenshotService.createScreenshot(id);
 	}
 }
 

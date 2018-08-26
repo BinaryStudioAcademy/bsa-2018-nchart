@@ -34,4 +34,19 @@ project.get('/:id/export', (req, res) => {
 	});
 });
 
+project.get('/:id/screenshot', (req, res) => {
+	ProjectService.screenshot(req.params.id).then(result => {
+		if (result) {
+			res.writeHead(200, {
+				'Content-Disposition': 'attachment',
+				'Content-Length': result.length,
+				'Content-Type': 'application/png'
+			});
+			res.end(result);
+		} else {
+			res.send(400);
+		}
+	});
+});
+
 module.exports = project;
