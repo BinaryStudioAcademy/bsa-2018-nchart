@@ -19,7 +19,7 @@ project.post('/', ProjectPayloadValidator.fullSet, (req, res, next) => {
 		.catch(next);
 });
 
-project.get('/test2/:id', (req, res, next) => {
+project.get('/:id', (req, res, next) => {
 	ProjectService.getFullProject(Number(req.params.id))
 		.then(PayloadGeneratorService.nextWithData(next, res))
 		.catch(next);

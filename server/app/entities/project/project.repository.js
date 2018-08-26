@@ -24,12 +24,14 @@ class ProjectRepository extends Repository {
 	}
 
 	getProjectAndCharts(id) {
-		return this.projectChartModel
-			.findAll({
+		return this.projectChartModel.findAll(
+			{
 				where: { projectId: id },
 				attributes: ['projectId', 'chartId'],
 				include: [chartModel, projectModel]
-			}, { exclude: ['id'] });
+			},
+			{ exclude: ['id'] }
+		);
 	}
 }
 

@@ -170,7 +170,12 @@ class ProjectService {
 						const charts = [];
 						data.forEach(el => {
 							// todo: do it in sequelize // don't no how
-							charts.push(_.omit(el.chart.dataValues, ['createdAt', 'updatedAt']));
+							charts.push(
+								_.omit(el.chart.dataValues, [
+									'createdAt',
+									'updatedAt'
+								])
+							);
 							datasetIds.push(el.chart.datasetId);
 						});
 						DatasetService.getAllById(datasetIds)
@@ -178,7 +183,12 @@ class ProjectService {
 								const datasetsPayload = [];
 								datasets.forEach(el => {
 									// todo: do it in sequelize // don't no how
-									datasetsPayload.push(_.omit(el.dataValues, ['createdAt', 'updatedAt']));
+									datasetsPayload.push(
+										_.omit(el.dataValues, [
+											'createdAt',
+											'updatedAt'
+										])
+									);
 								});
 								return callback(null, {
 									id: data[0].project.id,
