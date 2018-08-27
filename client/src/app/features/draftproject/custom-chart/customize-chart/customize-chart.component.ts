@@ -34,8 +34,7 @@ export class CustomizeChartComponent implements OnInit, OnDestroy {
 						this.customizeBooleanProps,
 						this.customizeArrayProps
 					);
-					// this.form.patchValue(this.form);
-					onChanges(this.form, this.storeService);
+					// onChanges(this.form, this.storeService);
 				}
 			}
 		]);
