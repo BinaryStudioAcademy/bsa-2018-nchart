@@ -22,7 +22,8 @@ export const info = (state = initialState.info, action: UserActions): User => {
 				...action.payload.user
 			};
 		}
-		case UserActionConstants.LOGOUT__COMPLETE: {
+		case UserActionConstants.LOGOUT__COMPLETE:
+		case UserActionConstants.VERIFY_USER_TOKEN__FAILED: {
 			return {
 				...state,
 				id: null,

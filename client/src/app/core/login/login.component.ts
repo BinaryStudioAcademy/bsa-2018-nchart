@@ -3,9 +3,7 @@ import { FormGroup } from '@angular/forms';
 
 import { LoginService } from '@app/services/login.service';
 import { StoreService } from '@app/services/store.service';
-import { TokenService } from '@app/services/token.service';
 import {
-	VerifyToken,
 	Login as LoginAction,
 	Register as RegisterAction
 } from '@app/store/actions/user/user.actions';
@@ -27,17 +25,11 @@ export class LoginComponent implements OnInit, OnDestroy {
 
 	constructor(
 		private loginService: LoginService,
-		private storeService: StoreService,
-		private tokenService: TokenService
+		private storeService: StoreService
 	) {}
 
 	ngOnInit() {
 		this.createForms();
-
-		const token = this.tokenService.getToken();
-		if (token) {
-			this.storeService.dispatch(new VerifyToken({ token }));
-		}
 
 		this.storeDisconnect = this.storeService.connect([
 			{
