@@ -34,7 +34,12 @@ export class CustomizeChartComponent implements OnInit, OnDestroy {
 						this.customizeBooleanProps,
 						this.customizeArrayProps
 					);
-					onChanges(this.form, this.storeService);
+
+					onChanges(
+						this.form,
+						this.storeService,
+						this.customizeSettings
+					);
 				}
 			}
 		]);
@@ -111,16 +116,23 @@ export function isBoolean(value) {
 	return typeof value === 'boolean';
 }
 
-export function onChanges(form: FormGroup, storeService: StoreService) {
+export function onChanges(
+	form: FormGroup,
+	storeService: StoreService,
+	customizeSettings
+) {
+	const ids = [];
+	for (const setting in customizeSettings) {
+		if (customizeSettings.hasOwnProperty(setting)) {
+			ids.push(customizeSettings[setting].id);
+		}
+	}
 	form.valueChanges.subscribe(val => {
 		if (form.valid) {
 			const newCustom = {};
-			// TODO ATTENTION REWRITE HARDCODE !!!
-			let i = 1;
 			for (const prop in val) {
 				if (val.hasOwnProperty(prop)) {
-					newCustom[i] = val[prop];
-					i++;
+					newCustom[ids.shift()] = val[prop];
 				}
 			}
 			storeService.dispatch(new ChangeCustomSettings(newCustom));
