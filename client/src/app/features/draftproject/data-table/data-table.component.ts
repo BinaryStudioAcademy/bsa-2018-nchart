@@ -15,10 +15,7 @@ export class DataTableComponent implements OnInit {
 	data = [];
 	dataId;
 
-	constructor(
-		element: ElementRef,
-		private storeService: StoreService
-	) {}
+	constructor(element: ElementRef, private storeService: StoreService) {}
 
 	// columns: DatasetColumn[] = [
 	// 	{
