@@ -9,7 +9,7 @@ exports.createScreenshot = async () => {
 	});
 
 	const rect = await page.evaluate((selector = '#chart') => {
-		const element = document.querySelector(selector);
+		const element = this.document.querySelector(selector);
 		if (!element) {
 			return null;
 		}

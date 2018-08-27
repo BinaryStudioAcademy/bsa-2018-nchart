@@ -6,7 +6,7 @@
 	"scripts": {
 		"start": "nodemon --experimental-worker ./bin/www",
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"lint": "eslint -c ./.eslintrc.json ./**/*.js --fix",
+		"lint": "eslint -c ./.eslintrc.json './**/*.js' --fix",
 		"migrate": "node_modules/.bin/sequelize db:migrate",
 		"migrate:undo": "node_modules/.bin/sequelize db:migrate:undo",
 		"seed": "node_modules/.bin/sequelize db:seed:all"

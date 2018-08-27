@@ -38,7 +38,7 @@ project.get('/:id/screenshot', (req, res) => {
 	ProjectService.screenshot(req.params.id).then(result => {
 		if (result) {
 			res.writeHead(200, {
-				'Content-Disposition': 'attachment',
+				'Content-Disposition': 'attachment; filename="screenshot.png"',
 				'Content-Length': result.length,
 				'Content-Type': 'application/png'
 			});
