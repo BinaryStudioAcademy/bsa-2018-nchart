@@ -5,7 +5,7 @@ import { ProjectDomainService } from '@app/api/domains/project/project-domain.se
 import { DatasetDomainService } from '@app/api/domains/source/dataset-domain.service';
 import { UserDomainService } from '@app/api/domains/user/user.domain';
 import { ExportDomainService } from '@app/api/domains/export/export.domain';
-import {ChartTypeDomainService} from '@app/api/domains/chart/chart.domain';
+import { ChartTypeDomainService } from '@app/api/domains/chart/chart.domain';
 
 @NgModule({
 	imports: [HttpClientModule],

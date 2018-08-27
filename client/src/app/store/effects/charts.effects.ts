@@ -20,11 +20,10 @@ import { Chart } from '@app/models/chart.model';
 import { getActiveProject } from '@app/store/selectors/projects.selectors';
 import { withLatestFrom } from 'rxjs/internal/operators';
 import { getActiveChartId } from '@app/store/selectors/userCharts';
-import {ChartTypeDomainService} from '@app/api/domains/chart/chart.domain';
+import { ChartTypeDomainService } from '@app/api/domains/chart/chart.domain';
 
 @Injectable()
 export class ChartsEffects {
-
 	constructor(
 		private action$: Actions,
 		private storeService: StoreService,
