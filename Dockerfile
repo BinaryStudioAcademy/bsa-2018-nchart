@@ -11,7 +11,8 @@ WORKDIR $APP_ROOT/client
 
 RUN npm i -g @angular/cli \
     && npm i -g typescript \
-    && npm i sequelize sequelize-cli pg -g \
+    && npm i -g sequelize sequelize-cli pg \
+    && npm i -g dotenv \
     && npm i \
     && npm run build-prod
 
