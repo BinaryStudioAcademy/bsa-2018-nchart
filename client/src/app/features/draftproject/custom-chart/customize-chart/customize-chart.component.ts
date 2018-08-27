@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { minValidator } from '@app/shared/components/form-field/form-validators';
 import { StoreService } from '@app/services/store.service';
-import { ChangeCustomSettings } from '@app/store/actions/charts/charts.actions';
 import { getCustomizeSettings } from '@app/store/selectors/userCharts';
+import { ChangeCustomSettings } from '@app/store/actions/charts/charts.actions';
 @Component({
 	selector: 'app-customize-chart',
 	templateUrl: './customize-chart.component.html',
@@ -115,9 +115,12 @@ export function onChanges(form: FormGroup, storeService: StoreService) {
 	form.valueChanges.subscribe(val => {
 		if (form.valid) {
 			const newCustom = {};
+			// TODO ATTENTION REWRITE HARDCODE !!!
+			let i = 1;
 			for (const prop in val) {
 				if (val.hasOwnProperty(prop)) {
-					newCustom[prop.replace('set', '')] = val[prop];
+					newCustom[i] = val[prop];
+					i++;
 				}
 			}
 			storeService.dispatch(new ChangeCustomSettings(newCustom));

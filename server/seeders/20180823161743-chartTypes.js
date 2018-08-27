@@ -15,7 +15,7 @@ module.exports = {
 						description:
 								'For each unique value found in the column, a group (a new bar chart) is created.',
 						required: true,
-						variable: 'X Axis',
+						variable: 'XAxis',
 						type: ['string', 'number'],
 						id: 1
 					},
@@ -307,7 +307,7 @@ module.exports = {
 						description:
 								'Starting point of the bar. RAWGraphs requires dates in a specific format.',
 						required: true,
-						variable: 'Start date',
+						variable: 'Start',
 						type: ['date'],
 						id: 10
 					},
@@ -316,7 +316,7 @@ module.exports = {
 						description:
 								'Ending point of the bar. RAWGraphs requires dates in a specific format.',
 						required: true,
-						variable: 'End date',
+						variable: 'End',
 						type: ['date'],
 						id: 11
 					},
