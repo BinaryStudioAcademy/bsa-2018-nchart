@@ -7,6 +7,7 @@ import { ChartsActionConstants } from '@app/store/actions/charts/charts.action-t
 import * as chartActions from '@app/store/actions/charts/charts.actions';
 import { StoreService } from '@app/services/store.service';
 import { getChart, getFirstChart } from '@app/store/selectors/charts.selectors';
+import { of } from 'rxjs';
 import {
 	CreateChart,
 	CreateChartComplete,
