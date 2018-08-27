@@ -1,11 +1,11 @@
 <div class="chart-container project-bar-chart" [ngSwitch]="switchCharts">
 	<app-bar-chart 
 	[data]="data" 
-	[width]="barChartCustomizeSettings.set1.value" 
-	[height]="barChartCustomizeSettings.set2.value"
-	[leftMargin] = "barChartCustomizeSettings.set3.value"
-	[verticalPadding] = "barChartCustomizeSettings.set4.value"
-	[innerPadding] = "barChartCustomizeSettings.set5.value"
+	[width]="barChartCustomizeSettings.width.value" 
+	[height]="barChartCustomizeSettings.height.value"
+	[leftMargin] = "barChartCustomizeSettings.leftMargin.value"
+	[verticalPadding] = "barChartCustomizeSettings.verticalPadding.value"
+	[innerPadding] = "barChartCustomizeSettings.horizontalPadding.value"
 	*ngSwitchCase="'barChart'"></app-bar-chart>
 	<div *ngSwitchCase="'pieChart'">pieChart</div>
 	<div *ngSwitchCase="'ganttChart'">ganttChart</div>

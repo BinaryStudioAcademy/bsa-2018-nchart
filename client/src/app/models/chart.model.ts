@@ -26,6 +26,7 @@ export interface CustomizeOption {
 	value: chartValue;
 	option: string;
 	description: string;
+	sysName: string;
 }
 
 export interface DimensionColumnMap {
