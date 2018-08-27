@@ -1,4 +1,4 @@
-<app-animated-block class="project-name-wrp">
+<div class="project-name-wrp">
 	<div class="project-name">
 
 		<h3 *ngIf="!isEditing" (click)="editProjectName()">
@@ -15,10 +15,10 @@
 			></app-input-text>
 			<app-button icon="fas fa-save" 
 						type="icon" 
-						(onclick)="closeEditing(name)"
+						(onclick)="closeEditing()"
 						[disabled]="nameControl.invalid"
 			></app-button>
 		</div>
 
 	</div>
-</app-animated-block>
+</div>

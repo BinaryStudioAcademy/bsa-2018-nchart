@@ -9,8 +9,24 @@ class GroupService {
 		return this.GroupRepository.saveGroup(obj);
 	}
 
-	saveGroupUser(userId, groupId) {
-		return this.GroupRepository.saveGroupUser(userId, groupId);
+	saveGroupUser(obj) {
+		return this.GroupRepository.saveGroupUser(obj);
+	}
+
+	saveGroupProject(obj) {
+		return this.GroupRepository.saveGroupProject(obj);
+	}
+
+	findOneByQuery(query) {
+		return this.GroupRepository.findOneGroupUser(query);
+	}
+
+	findOneGroupProject(query) {
+		return this.GroupRepository.findOneGroupProject(query);
+	}
+
+	findAllByQuery(query) {
+		return this.GroupRepository.findAllGroupUser(query);
 	}
 }
 

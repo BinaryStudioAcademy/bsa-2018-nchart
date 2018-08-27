@@ -11,19 +11,19 @@ export class LoadingSpinnerComponent implements OnInit {
 	loadingSp = false;
 
 	@Input()
-	backgoundColor = 'transparent';
+	spBackgroundColor = 'transparent';
 
 	@Input()
-	innerSectionColor = '#FECD2F';
+	spInnerSectionColor = '#29166F';
 
 	@Input()
-	outerSectionColor = '#29166F';
+	spOuterSectionColor = '#29166F';
 
 	@HostBinding('class.with-spinner')
 	isDisplay = true;
 
 	@Input()
-	spinnerSize: 'small' | 'middle' | 'big' = 'middle';
+	spSize: 'small' | 'middle' | 'big' = 'middle';
 
 	constructor() {}
 
@@ -32,19 +32,19 @@ export class LoadingSpinnerComponent implements OnInit {
 	getDoubleRingClasses() {
 		return {
 			['lds-double-ring']: true,
-			[this.spinnerSize]: true
+			[this.spSize]: true
 		};
 	}
 
 	getInnerSectionStyle() {
 		return {
-			['border-color']: `${this.innerSectionColor}`
+			['border-color']: `${this.spInnerSectionColor}`
 		};
 	}
 
 	getOuterSectionStyle() {
 		return {
-			['border-color']: `transparent ${this.outerSectionColor}`
+			['border-color']: `transparent ${this.spOuterSectionColor}`
 		};
 	}
 }

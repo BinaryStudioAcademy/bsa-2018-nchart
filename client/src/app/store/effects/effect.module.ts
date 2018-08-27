@@ -6,6 +6,7 @@ import { ProjectsEffects } from '@app/store/effects/projects.effects';
 import { ChartsEffects } from '@app/store/effects/charts.effects';
 import { DatasetEffects } from '@app/store/effects/dataset.effects';
 import { RouterEffects } from '@app/store/effects/router.effects';
+import { ExportEffects } from '@app/store/effects/export.effects';
 
 @NgModule({
 	imports: [
@@ -15,7 +16,8 @@ import { RouterEffects } from '@app/store/effects/router.effects';
 			ChartsEffects,
 			DatasetEffects,
 			ProjectsEffects,
-			RouterEffects
+			RouterEffects,
+			ExportEffects
 		])
 	]
 })

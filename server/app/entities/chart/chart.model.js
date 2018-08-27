@@ -1,30 +1,34 @@
 const Sequelize = require('sequelize');
-const sequelize = require('../../config/index');
+const sequelize = require('../../../db/connection');
 const ProjectChart = require('../project/project.models/project_chart');
 
-const Chart = sequelize.define('chart', {
-	typeId: {
+const Chart = sequelize.define('charts', {
+	chartTypeId: {
 		type: Sequelize.INTEGER,
 		allowNull: false
 	},
-	userSettings: {
+	dimensionSettings: {
+		type: Sequelize.JSON,
+		allowNull: false
+	},
+	customizeSettings: {
 		type: Sequelize.JSON,
 		allowNull: false
 	},
 	datasetId: {
-		type: Sequelize.INTEGER,
+		type: Sequelize.STRING,
 		allowNull: false
 	}
 });
 
 Chart.sync().then(() => {
 	ProjectChart.sync().then(() => Chart.hasMany(ProjectChart, {
-		foreignKey: 'chartId',
+		foreignKey: 'chartTypeId',
 		sourceKey: 'id',
 		onDelete: 'CASCADE',
 		constraints: false
 	}));
-	ProjectChart.belongsTo(Chart, { foreignKey: 'chartId' });
+	ProjectChart.belongsTo(Chart, { foreignKey: 'chartTypeId' });
 });
 
 module.exports = Chart;
