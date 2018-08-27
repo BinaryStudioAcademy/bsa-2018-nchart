@@ -1,4 +1,4 @@
-import { DraftprojectModule } from './draftproject.module';
+import { DraftprojectModule } from '@app/features/draftproject/draftproject.module';
 
 describe('DraftprojectModule', () => {
 	let draftprojectModule: DraftprojectModule;

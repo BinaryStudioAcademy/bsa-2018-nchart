@@ -2,7 +2,7 @@
 <div
     *ngIf="loadingSp"
     class="spinner-container"
-    [style.background-color]="backgoundColor"
+    [style.background-color]="spBackgroundColor"
 >
     <div
         [ngClass]="getDoubleRingClasses()"
@@ -16,5 +16,5 @@
             [ngStyle]="getInnerSectionStyle()"
         ></div>
     </div>
-
 </div>
+<ng-content></ng-content>

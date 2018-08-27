@@ -1,14 +1,16 @@
 const Sequelize = require('sequelize');
-const sequelize = require('../../../config/index');
+const sequelize = require('../../../../db/connection');
 
-const ProjectChart = sequelize.define('projectChart', {
+const ProjectChart = sequelize.define('projectCharts', {
 	chartId: {
 		type: Sequelize.INTEGER,
-		allowNull: false
+		allowNull: false,
+		primaryKey: true
 	},
 	projectId: {
 		type: Sequelize.INTEGER,
-		allowNull: false
+		allowNull: false,
+		primaryKey: true
 	}
 });
 

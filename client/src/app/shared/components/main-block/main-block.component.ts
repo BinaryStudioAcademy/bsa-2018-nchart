@@ -43,6 +43,9 @@ export class MainBlockComponent implements OnChanges {
 	@Input()
 	indicator: string;
 
+	@Input()
+	loading: boolean;
+
 	pulse: boolean;
 	startHeight: number;
 
