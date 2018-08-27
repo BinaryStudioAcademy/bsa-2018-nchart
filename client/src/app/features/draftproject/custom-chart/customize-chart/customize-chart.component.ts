@@ -112,14 +112,13 @@ export function onChanges(form: FormGroup, storeService: StoreService) {
 	form.valueChanges.subscribe(val => {
 		if (form.valid) {
 			const newCustom = {};
-			// TODO REWRITE HARDCODE !!!
+			// TODO ATTENTION REWRITE HARDCODE !!!
 			let i = 1;
 			for (const prop in val) {
 				if (val.hasOwnProperty(prop)) {
 					newCustom[i] = val[prop];
 					i++;
 				}
-				
 			}
 			storeService.dispatch(new ChangeCustomSettings(newCustom));
 		}
