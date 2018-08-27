@@ -23,7 +23,7 @@ export interface DimensionOption {
 
 export interface CustomizeOption {
 	id: SchemeID;
-	value: chartValue;
+	defaultValue: chartValue;
 	option: string;
 	description: string;
 	sysName: string;
