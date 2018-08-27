@@ -12,26 +12,21 @@ export const steps = [
 	},
 	{
 		id: 2,
-		scrollTo: '#table',
-		name: 'Data table'
-	},
-	{
-		id: 3,
 		scrollTo: '#charts',
 		name: 'Choose Chart'
 	},
 	{
-		id: 4,
+		id: 3,
 		scrollTo: '#settings',
 		name: 'Map dimensions'
 	},
 	{
-		id: 5,
+		id: 4,
 		scrollTo: '#chart',
 		name: 'Customize'
 	},
 	{
-		id: 6,
+		id: 5,
 		scrollTo: '#export',
 		name: 'Export'
 	}
@@ -136,9 +131,12 @@ export class StepperComponent implements OnInit {
 		switch (id) {
 			case 1:
 				return true;
-			case 2: case 3: case 4:
+			case 2:
+			case 3:
 				return this.stepsStageTwo;
-			case 5: case 6:
+			case 4:
+			case 5:
+			case 6:
 				return this.stepsStageThree;
 		}
 	}
