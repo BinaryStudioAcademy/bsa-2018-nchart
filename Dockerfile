@@ -21,10 +21,8 @@ COPY . $APP_ROOT/client/dist
 
 WORKDIR $APP_ROOT
 
-RUN npm i \
-    && npm run seed \
-    && npm run migrate
+RUN npm i
 
 EXPOSE 8080
 
-CMD ["npm", "start"]
+CMD ["npm", "start-prod"]
