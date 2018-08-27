@@ -10,7 +10,8 @@
 		"migrate": "node_modules/.bin/sequelize db:migrate",
 		"migrate:undo": "node_modules/.bin/sequelize db:migrate:undo",
 		"seed": "node_modules/.bin/sequelize db:seed:all",
-		"start-prod": "npm run migrate && npm run seed && npm run start"
+		"seed:undo": "node_modules/.bin/sequelize db:seed:undo:all",
+		"start-prod": "npm run seed:undo && npm run migrate && npm run seed && npm run start"
 	},
 	"author": "",
 	"license": "ISC",
