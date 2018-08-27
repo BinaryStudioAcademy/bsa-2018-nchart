@@ -86,45 +86,52 @@ export const getIndexCol = colId => (state: AppState) => {
 	return state.datasets.byId[datasetId].modified.columns.indexOf(colId);
 };
 
-export const getData = () => (state: AppState) => {
-	const getRow = ({ id, columnIds }) => {
-		const name = state.defaultChartSettings.dimensionSettings[id].variable;
-		const datasetId =
-			state.userCharts.byId[state.userCharts.active].datasetId;
-		const values = [];
+export const getColumnValues = (datasetId: SchemeID, columnId: SchemeID) => (
+	state: AppState
+) => {
+	const dS = dataset(datasetId)(state);
+	if (dS) {
+		const colIndex = dS.modified.columns.indexOf(columnId);
 
-		if (columnIds.length) {
-			columnIds.map(columnId => {
-				const indexCol = getIndexCol(columnId)(state);
-				state.datasets.byId[datasetId].modified.data.reduce(
-					(colValues, arrId) => {
-						colValues.push(
-							state.datasetData[arrId[indexCol]].value
-						);
-						return colValues;
-					},
-					values
-				);
-			});
+		if (colIndex > -1) {
+			return dS.modified.data
+				.map(el =>
+					el.find((d: string) =>
+						d.includes(`-${colIndex}-${datasetId}`)
+					)
+				)
+				.map(el => state.datasetData[el].value);
 		}
 
-		return { name, values };
-	};
-
-	const dimens = state.userChartSettings.dimensionSettings;
-
-	const acc = [];
-	for (const dimenId in dimens) {
-		if (dimens.hasOwnProperty(dimenId)) {
-			acc.push(
-				getRow({
-					id: dimenId,
-					columnIds: dimens[dimenId].columnIds
-				})
-			);
-		}
+		return [];
 	}
-	return acc;
+
+	return [];
+};
+
+export const getData = () => (state: AppState) => {
+	const uC = userChart()(state);
+
+	if (uC) {
+		const dS = dataset(uC.datasetId)(state);
+
+		if (dS) {
+			const values = uC.dimensionSettings.map(id => ({
+				name: state.defaultChartSettings.dimensionSettings[id].variable,
+				values: state.userChartSettings.dimensionSettings[id].columnIds
+					.map(el => getColumnValues(dS.id, el)(state))
+					.reduce((acc, v) => {
+						acc = [...acc, ...v];
+						return acc;
+					}, [])
+			}));
+
+			return values;
+		}
+
+		return [];
+	}
+	return [];
 };
 
 export const getActiveChart = () => (
