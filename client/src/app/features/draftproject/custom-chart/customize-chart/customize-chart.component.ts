@@ -35,7 +35,7 @@ export class CustomizeChartComponent implements OnInit, OnDestroy {
 						this.customizeArrayProps
 					);
 					// this.form.patchValue(this.form);
-					// onChanges(this.form, this.storeService)
+					onChanges(this.form, this.storeService);
 				}
 			}
 		]);
@@ -113,9 +113,11 @@ export function onChanges(form: FormGroup, storeService: StoreService) {
 	form.valueChanges.subscribe(val => {
 		if (form.valid) {
 			const newCustom = {};
-			/*for (const prop in val) {
-				newCustom[prop.replace('set', '')] = val[prop];
-			}*/
+			for (const prop in val) {
+				if (val.hasOwnProperty(prop)) {
+					newCustom[prop.replace('set', '')] = val[prop];
+				}
+			}
 			storeService.dispatch(new ChangeCustomSettings(newCustom));
 		}
 	});
