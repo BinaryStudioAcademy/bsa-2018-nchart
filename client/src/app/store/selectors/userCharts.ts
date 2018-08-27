@@ -94,13 +94,15 @@ export const getColumnValues = (datasetId: SchemeID, columnId: SchemeID) => (
 		const colIndex = dS.modified.columns.indexOf(columnId);
 
 		if (colIndex > -1) {
-			return dS.modified.data
+			const values = dS.modified.data
 				.map(el =>
 					el.find((d: string) =>
-						d.includes(`-${colIndex}-${datasetId}`)
+						d.endsWith(`-${colIndex}-${datasetId}`)
 					)
 				)
+				.filter(el => !!el)
 				.map(el => state.datasetData[el].value);
+			return values;
 		}
 
 		return [];
@@ -125,7 +127,6 @@ export const getData = () => (state: AppState) => {
 						return acc;
 					}, [])
 			}));
-
 			return values;
 		}
 
