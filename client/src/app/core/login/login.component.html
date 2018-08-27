@@ -5,12 +5,7 @@
             class="logo"
         >
         <h3>Your innovative charts</h3>
-        <div
-            class="ui-main-block"
-            [loading-sp]="isLoading"
-            [spSize]="'big'"
-            [spBackgroundColor]="'white'"
-        >
+        <div class="ui-main-block">
             <p-tabView
                 [activeIndex]="0"
                 (onChange)="resetForms()"

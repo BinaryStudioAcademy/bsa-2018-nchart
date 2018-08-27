@@ -11,7 +11,7 @@ import { TokenService } from '@app/services/token.service';
 import { VerifyToken } from '@app/store/actions/user/user.actions';
 import { isVerifiedToken } from '@app/store/selectors/user.selectors';
 import { switchMap, catchError, elementAt } from 'rxjs/operators';
-import { AppState } from '@app/models';
+import { AppState } from '@app/models/store.model';
 import { Store, select } from '@ngrx/store';
 
 @Injectable({
