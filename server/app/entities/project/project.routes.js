@@ -13,8 +13,21 @@ project.get('/', (req, res, next) => {
 });
 
 project.post('/', ProjectPayloadValidator.fullSet, (req, res, next) => {
-	// get user from token, and set it into res.locals.user
+	// getByProjectId user from token, and set it into res.locals.user
 	ProjectService.handleProject(req.body, res)
+		.then(PayloadGeneratorService.nextWithData(next, res))
+		.catch(next);
+});
+
+project.get('/:id', (req, res, next) => {
+	ProjectService.fullProjectById(Number(req.params.id))
+		.then(PayloadGeneratorService.nextWithData(next, res))
+		.catch(next);
+});
+
+// todo: what do with rout names?
+project.get('/group/:id', (req, res, next) => {
+	ProjectService.fullProjectsByGroupId(Number(req.params.id))
 		.then(PayloadGeneratorService.nextWithData(next, res))
 		.catch(next);
 });

@@ -13,8 +13,12 @@ export interface ProjectDomain {
 
 	delete(payload: { projectId: string }): Observable<ResponseScheme<null>>;
 
-	get(payload: {
+	getByProjectId(payload: {
 		projectId: string;
+	}): Observable<ResponseScheme<OriginProject>>;
+
+	getByGroupId(payload: {
+		groupId: string;
 	}): Observable<ResponseScheme<OriginProject>>;
 
 	getAll(): Observable<ResponseScheme<OriginProject[]>>;

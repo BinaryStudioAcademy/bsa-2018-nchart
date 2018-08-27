@@ -12,6 +12,10 @@ class DatasetRepository extends Repository {
 		this.model = datasetModel;
 		return TransactionService(obj, this.model, 'upsert');
 	}
+
+	getAllById(ids) {
+		return this.model.findAll({ where: { id: ids } });
+	}
 }
 
 module.exports = new DatasetRepository();
