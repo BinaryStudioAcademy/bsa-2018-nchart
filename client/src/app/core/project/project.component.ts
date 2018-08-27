@@ -8,16 +8,16 @@ import {
 	AfterViewInit,
 	ViewChildren
 } from '@angular/core';
-import { StoreService } from '@app/services/store.service';
-import { LoadCharts } from '@app/store/actions/charts/charts.actions';
-import { CreateDraftProject } from '@app/store/actions/projects/projects.actions';
-import { isProjectDataset } from '@app/store/selectors/projects.selectors';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import {StoreService} from '@app/services/store.service';
+import {LoadCharts} from '@app/store/actions/charts/charts.actions';
+import {CreateDraftProject, LoadOneProject} from '@app/store/actions/projects/projects.actions';
+import {isProjectDataset} from '@app/store/selectors/projects.selectors';
+import {ActivatedRoute} from '@angular/router';
+import {Subscription} from 'rxjs';
 import * as ProjectsActions from '@app/store/actions/projects/projects.actions';
-import { project } from '@app/store/selectors/projects.selectors';
-import { SchemeID } from '@app/models/normalizr.model';
-import { isRequiredDimensionMatched } from '@app/store/selectors/userCharts';
+import {project} from '@app/store/selectors/projects.selectors';
+import {SchemeID} from '@app/models/normalizr.model';
+import {isRequiredDimensionMatched} from '@app/store/selectors/userCharts';
 
 interface StepperStep {
 	id: number;
@@ -45,7 +45,7 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 	stepperSteps: StepperStep[];
 	stepperErrors = []; // [2, 1];
 
-	@ViewChildren('viewItem', { read: ElementRef })
+	@ViewChildren('viewItem', {read: ElementRef})
 	viewItems: QueryList<any>;
 	viewItemsList: ElementRef[];
 
@@ -89,17 +89,18 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.viewItemsList = this.viewItems.toArray();
 	}
 
-	constructor(
-		private storeService: StoreService,
-		private route: ActivatedRoute
-	) {}
+	constructor(private storeService: StoreService,
+				private route: ActivatedRoute) {
+	}
 
 	ngOnInit() {
 		this.routeParams$ = this.route.params.subscribe(
 			(params: { id?: number }) => {
-				const { id } = params;
+				const {id} = params;
 
 				if (id) {
+					this.storeService.dispatch(new LoadCharts());
+					this.storeService.dispatch(new LoadOneProject({projectId: id + ''}));
 				} else {
 					this.storeService.dispatch(new LoadCharts());
 					this.storeService.dispatch(new CreateDraftProject());
@@ -110,8 +111,10 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.disconnect = this.storeService.connect([
 			{
 				subscriber: prj => {
-					this.projectId = prj.id;
-					this.projectName = prj.name;
+					if (prj) {
+						this.projectId = prj.id;
+						this.projectName = prj.name;
+					}
 				},
 				selector: project()
 			},

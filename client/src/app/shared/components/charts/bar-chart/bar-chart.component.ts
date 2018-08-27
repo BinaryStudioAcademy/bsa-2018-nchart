@@ -38,7 +38,8 @@ export class BarChartComponent implements OnInit, OnChanges {
 			'#ff8c00'
 		]);
 
-	ngOnInit() {}
+	ngOnInit() {
+	}
 
 	ngOnChanges() {
 		if (this.data !== undefined) {
