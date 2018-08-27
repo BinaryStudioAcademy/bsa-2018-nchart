@@ -1,0 +1,32 @@
+@import ../colors
+@import ../variables
+
+.data-table
+	.ui-table .ui-table-thead > tr > th
+		border: none
+		color: $secondaryTextColor
+		font-weight: 400
+	tr
+		height: 60px
+		border-bottom: 2px solid $disabledColor
+		background-color: $stateDefaultBgColor
+		&:last-child
+			border-bottom: 0
+	.ui-table-thead tr
+		border-bottom: 2px solid $disabledColor
+	.ui-table .ui-table-tbody > tr > td
+		border: none
+		background-color: $stateDefaultBgColor
+		text-align: center
+	.ui-table .ui-table-tbody>tr>td.ui-editing-cell
+		input.ui-widget.ui-inputtext
+			padding: 12px
+			border: 2px solid $disabledColor
+			border-radius: 3px
+			box-shadow: none
+			width: 100%
+			text-align: center
+			&:focus,
+			&:hover
+				border: 2px solid $activeColor!important
+				outline: none!important
