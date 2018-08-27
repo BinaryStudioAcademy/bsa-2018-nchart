@@ -74,7 +74,7 @@ export const getCustomizeSettings = () => (state: AppState) => {
 	if (aChart) {
 		return aChart.customizeSettings.reduce((obj, id) => {
 			const option = state.userChartSettings.customizeSettings[id];
-			obj[`set${id}`] = { ...option };
+			obj[option.sysName] = { ...option };
 			return obj;
 		}, {});
 	}
