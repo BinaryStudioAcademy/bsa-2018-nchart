@@ -1,23 +1,37 @@
-import { SchemeID } from '@app/models/normalizr.model';
-import { NormalizedSchemeWithoutAll } from '@app/models/normalizr.model';
+import {
+	SchemeID,
+	NormalizedSchemeWithoutAll
+} from '@app/models/normalizr.model';
+import { NormalizedSchemeField } from '@app/models/normalizr.model';
 
-export type DatasetState = NormalizedSchemeWithoutAll<Dataset>;
+export class DatasetState extends NormalizedSchemeWithoutAll<Dataset> {
+	isLoading = false;
+}
 
-export class Dataset {
+export class Dataset<C = SchemeID[], D = SchemeID[][]> {
 	id: SchemeID = null;
 	isDraft: boolean = null;
-	modified: DatasetTable = null;
+	modified: DatasetTable<C, D> = null;
 	source: DatasetTable = null;
 }
 
-interface Column {
+export interface DatasetColumn {
 	id: SchemeID;
 	title: string;
 	type: string;
 }
 
-export interface DatasetTable {
+export interface DatasetTable<C = DatasetColumn[], D = any[][]> {
 	id: SchemeID;
-	columns?: Column[];
-	data?: any[][];
+	columns?: C;
+	data?: D;
 }
+
+export interface DatasetData {
+	id: SchemeID;
+	value: any;
+}
+
+export type DatasetColumnState = NormalizedSchemeField<DatasetColumn>;
+
+export type DatasetDataState = NormalizedSchemeField<DatasetData>;

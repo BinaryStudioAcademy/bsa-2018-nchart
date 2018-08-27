@@ -7,6 +7,7 @@ export class ServiceRequest {
 		public readonly headers?: {
 			[key: string]: string;
 		},
-		public readonly payload?: any
+		public readonly payload?: any,
+		public readonly responseType?: string
 	) {}
 }

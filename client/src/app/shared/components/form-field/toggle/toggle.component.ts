@@ -9,8 +9,6 @@ export class ToggleComponent implements OnInit {
 	@Input()
 	name: string;
 	@Input()
-	disabled: boolean;
-	@Input()
 	control?: FormControl;
 
 	constructor() {}

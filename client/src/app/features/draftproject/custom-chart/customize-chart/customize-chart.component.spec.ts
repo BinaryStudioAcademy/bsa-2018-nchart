@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CustomizeChartComponent } from './customize-chart.component';
+import { CustomizeChartComponent } from '@app/features/draftproject/custom-chart/customize-chart/customize-chart.component';
 
 describe('CustomizeChartComponent', () => {
 	let component: CustomizeChartComponent;

@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize');
-const sequelize = require('../../config/index');
+const sequelize = require('../../../db/connection');
 const GroupGpoject = require('../group/group.models/group_project');
 
-const AccessType = sequelize.define('accessType', {
+const AccessType = sequelize.define('accessTypes', {
 	accessLevel: {
 		type: Sequelize.STRING,
 		allowNull: false

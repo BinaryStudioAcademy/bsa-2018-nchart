@@ -1,9 +1,9 @@
 const Sequelize = require('sequelize');
-const sequelize = require('../../config/index');
+const sequelize = require('../../../db/connection');
 const CompanyChartType = require('../company/company.models/company_chart_type');
 const Chart = require('../chart/chart.model');
 
-const ChartType = sequelize.define('chartType', {
+const ChartType = sequelize.define('chartTypes', {
 	type: {
 		type: Sequelize.STRING,
 		allowNull: false

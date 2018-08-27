@@ -1,4 +1,4 @@
-import { AppState } from '@app/models';
+import { AppState } from '@app/models/store.model';
 
 export const user = () => (state: AppState) => state.user.info;
 

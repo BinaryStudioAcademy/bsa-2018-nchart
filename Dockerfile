@@ -11,6 +11,7 @@ WORKDIR $APP_ROOT/client
 
 RUN npm i -g @angular/cli \
     && npm i -g typescript \
+    && npm i -g sequelize sequelize-cli pg \
     && npm i \
     && npm run build-prod
 
@@ -24,4 +25,4 @@ RUN npm i
 
 EXPOSE 8080
 
-CMD ["npm", "start"]
+CMD ["npm", "run", "start-prod"]

@@ -1,4 +1,4 @@
-import { AuthenticationModule } from './authentication.module';
+import { AuthenticationModule } from '@app/features/authentication/authentication.module';
 
 describe('AuthenticationModule', () => {
 	let authenticationModule: AuthenticationModule;
