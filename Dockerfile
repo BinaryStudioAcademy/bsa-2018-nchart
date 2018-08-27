@@ -11,6 +11,7 @@ WORKDIR $APP_ROOT/client
 
 RUN npm i -g @angular/cli \
     && npm i -g typescript \
+    && npm i sequelize sequelize-cli pg -g \
     && npm i \
     && npm run build-prod
 
@@ -20,7 +21,9 @@ COPY . $APP_ROOT/client/dist
 
 WORKDIR $APP_ROOT
 
-RUN npm i
+RUN npm run migrate \
+    && npm run seed \
+    && npm i
 
 EXPOSE 8080
 
