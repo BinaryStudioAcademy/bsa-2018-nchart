@@ -1,9 +1,12 @@
 const async = require('async');
+const _ = require('lodash');
 const ProjectRepository = require('./project.repository');
 const DatasetService = require('../dataset/dataset.service');
 const ChartService = require('../chart/chart.service');
 const GroupService = require('../group/group.service');
 const ExportService = require('../../common/services/export.services/export.service');
+
+// todo: wrong
 
 class ProjectService {
 	constructor() {
@@ -149,6 +152,65 @@ class ProjectService {
 				}
 			);
 		});
+	}
+
+	fullProjectById(id) {
+		// todo: remove waterfall
+		return new Promise((resolve, reject) => {
+			async.waterfall(
+				[
+					callback => {
+						this.ProjectRepository.fullProjectById(id)
+							.then(data => {
+								const project = ProjectService.getProjectFromPayload(
+									data.dataValues
+								);
+								callback(null, project);
+							})
+							.catch(err => callback(err, null));
+					}
+				],
+				(err, payload) => {
+					if (err) {
+						reject(err);
+					}
+					resolve(payload);
+				}
+			);
+		});
+	}
+
+	fullProjectsByGroupId(id) {
+		return this.ProjectRepository.fullProjectsByGroupId(id).then(data => {
+			const projects = [];
+			data.dataValues.groupProjects.forEach(el => {
+				projects.push(el.project.dataValues);
+			});
+			const payload = {
+				projects: []
+			};
+			projects.forEach(el => {
+				const project = ProjectService.getProjectFromPayload(el);
+				payload.projects.push(project);
+			});
+			return payload;
+		});
+	}
+
+	static getProjectFromPayload(rawProject) {
+		const charts = [];
+		const datasets = [];
+		rawProject.projectCharts.forEach(el => {
+			charts.push(_.omit(el.chart.dataValues, 'dataset'));
+			datasets.push(el.chart.dataValues.dataset.dataValues);
+		});
+		return {
+			id: rawProject.id,
+			name: rawProject.name,
+			createdAt: rawProject.createdAt,
+			charts,
+			datasets
+		};
 	}
 
 	export(id, type) {

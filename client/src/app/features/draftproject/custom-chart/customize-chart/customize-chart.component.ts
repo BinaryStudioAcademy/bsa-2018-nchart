@@ -34,7 +34,7 @@ export class CustomizeChartComponent implements OnInit, OnDestroy {
 						this.customizeBooleanProps,
 						this.customizeArrayProps
 					);
-					// onChanges(this.form, this.storeService);
+					onChanges(this.form, this.storeService);
 				}
 			}
 		]);
@@ -58,19 +58,22 @@ export function setFormGroup(
 ) {
 	const formDataObj = {};
 	for (const prop of Object.keys(customizeSettings)) {
-		if (isNumber(customizeSettings[prop].value)) {
-			formDataObj[prop] = new FormControl(customizeSettings[prop].value, [
-				minValidator('Minimum value is', 0)
-			]);
+		if (isNumber(customizeSettings[prop].defaultValue)) {
+			formDataObj[prop] = new FormControl(
+				customizeSettings[prop].defaultValue,
+				[minValidator('Minimum value is', 0)]
+			);
 			const numberProp = {
 				option: customizeSettings[prop].option,
 				control: formDataObj[prop],
-				step: customizeSettings[prop].value > 5 ? 1 : 0.1
+				step: customizeSettings[prop].defaultValue > 5 ? 1 : 0.1
 			};
 			customizeNumberProps.push(numberProp);
 		}
-		if (isBoolean(customizeSettings[prop].value)) {
-			formDataObj[prop] = new FormControl(customizeSettings[prop].value);
+		if (isBoolean(customizeSettings[prop].defaultValue)) {
+			formDataObj[prop] = new FormControl(
+				customizeSettings[prop].defaultValue
+			);
 			const booleanProp = {
 				option: customizeSettings[prop].option,
 				control: formDataObj[prop]
@@ -79,7 +82,7 @@ export function setFormGroup(
 		}
 		if (isArray(customizeSettings[prop])) {
 			formDataObj[prop] = new FormControl(
-				customizeSettings[prop][0].value
+				customizeSettings[prop][0].defaultValue
 			);
 			const arrayProp = {
 				control: prop,
