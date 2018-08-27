@@ -12,26 +12,21 @@ export const steps = [
 	},
 	{
 		id: 2,
-		scrollTo: '#table',
-		name: 'Data table'
-	},
-	{
-		id: 3,
 		scrollTo: '#charts',
 		name: 'Choose Chart'
 	},
 	{
-		id: 4,
+		id: 3,
 		scrollTo: '#settings',
 		name: 'Map dimensions'
 	},
 	{
-		id: 5,
+		id: 4,
 		scrollTo: '#chart',
 		name: 'Customize'
 	},
 	{
-		id: 6,
+		id: 5,
 		scrollTo: '#export',
 		name: 'Export'
 	}
@@ -65,9 +60,11 @@ export class StepperComponent implements OnInit {
 	@Input()
 	errors: number[];
 
-	stepsList = [steps[0]];
+	stepsList = steps;
 	stepIconClass: any;
 	disableSaveBtn = true;
+	stepsStageTwo = false;
+	stepsStageThree = false;
 
 	isVisible = true;
 
@@ -115,25 +112,32 @@ export class StepperComponent implements OnInit {
 		this.stepIconClass = this.getIconClasses(this.selectedStep.id);
 		this.storeService.connect([
 			{
+				selector: isProjectDataset(),
 				subscriber: isReady => {
-					if (isReady) {
-						this.stepsList.push(steps[1]);
-						this.stepsList.push(steps[2]);
-						this.stepsList.push(steps[3]);
-					}
-				},
-				selector: isProjectDataset()
+					this.stepsStageTwo = isReady;
+				}
 			},
 			{
 				selector: isRequiredDimensionMatched(),
 				subscriber: isReady => {
-					if (isReady) {
-						this.stepsList.push(steps[4]);
-						this.stepsList.push(steps[5]);
-						this.disableSaveBtn = false;
-					}
+					this.stepsStageThree = isReady;
+					this.disableSaveBtn = !isReady;
 				}
 			}
 		]);
+	}
+
+	isStepVisible(id) {
+		switch (id) {
+			case 1:
+				return true;
+			case 2:
+			case 3:
+				return this.stepsStageTwo;
+			case 4:
+			case 5:
+			case 6:
+				return this.stepsStageThree;
+		}
 	}
 }
