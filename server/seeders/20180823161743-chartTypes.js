@@ -15,7 +15,8 @@ module.exports = {
 						description:
 								'For each unique value found in the column, a group (a new bar chart) is created.',
 						required: true,
-						variable: 'XAxis',
+						variable: 'X Axis',
+						sysName: 'xaxis',
 						type: ['string', 'number'],
 						id: 1
 					},
@@ -25,6 +26,7 @@ module.exports = {
 								'For each unique value found in the column, a bar is created.',
 						required: false,
 						variable: 'Group',
+						sysName: 'group',
 						type: ['string', 'number'],
 						id: 2
 					},
@@ -34,6 +36,7 @@ module.exports = {
 								'Accepts only columns containing numbers. The value will define the bar height.',
 						required: false,
 						variable: 'Size',
+						sysName: 'size',
 						type: ['number'],
 						id: 3
 					},
@@ -43,6 +46,7 @@ module.exports = {
 								'Can accept both number and strings. A color will be defined for each unique value found in the list.',
 						required: false,
 						variable: 'Color',
+						sysName: 'color',
 						type: ['string', 'number'],
 						id: 4
 					}
@@ -119,6 +123,7 @@ module.exports = {
 								'The values in the dimension will be used as labels.',
 						required: false,
 						variable: 'Label',
+						sysName: 'label',
 						type: ['string', 'number', 'date'],
 						id: 5
 					},
@@ -128,6 +133,7 @@ module.exports = {
 								'The field accept multiple dimensions. Each dimension added to this field will generate an arc for each pie chart.',
 						required: true,
 						variable: 'Arcs',
+						sysName: 'arcs',
 						type: ['number'],
 						id: 6
 					}
@@ -224,6 +230,7 @@ module.exports = {
 								'It accept multiple values, at least two column must be selected. Each dragged column will define a step (a vertical group of nodes). The dragging order is also the visualization order. For each unique value found in each column a node will be created.',
 						required: true,
 						variable: 'Steps',
+						sysName: 'steps',
 						type: ['string', 'number', 'date'],
 						id: 7
 					},
@@ -233,6 +240,7 @@ module.exports = {
 								'Defines the weight of each line of the dataset. If not defined, all the lines will have the same weight.',
 						required: false,
 						variable: 'Size',
+						sysName: 'size',
 						type: ['number'],
 						id: 8
 					}
@@ -302,6 +310,7 @@ module.exports = {
 								'For each unique value found in the column, a group (an horizontal series of bars) is created.',
 						required: true,
 						variable: 'Group',
+						sysName: 'group',
 						type: ['string', 'number', 'date'],
 						id: 9
 					},
@@ -311,6 +320,7 @@ module.exports = {
 								'Starting point of the bar. RAWGraphs requires dates in a specific format.',
 						required: true,
 						variable: 'Start',
+						sysName: 'start',
 						type: ['date'],
 						id: 10
 					},
@@ -320,6 +330,7 @@ module.exports = {
 								'Ending point of the bar. RAWGraphs requires dates in a specific format.',
 						required: true,
 						variable: 'End',
+						sysName: 'end',
 						type: ['date'],
 						id: 11
 					},
@@ -329,6 +340,7 @@ module.exports = {
 								'Can accept both number and strings. A color will be defined for each unique value found in the list.',
 						required: false,
 						variable: 'Color',
+						sysName: 'color',
 						type: ['string'],
 						id: 12
 					}
