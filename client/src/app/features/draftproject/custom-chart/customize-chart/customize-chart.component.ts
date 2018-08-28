@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { minValidator } from '@app/shared/components/form-field/form-validators';
 import { StoreService } from '@app/services/store.service';
-import { getCustomizeSettings } from '@app/store/selectors/userCharts';
 import { ChangeCustomSettings } from '@app/store/actions/charts/charts.actions';
+import { getCustomizeSettings } from '@app/store/selectors/userCharts';
 @Component({
 	selector: 'app-customize-chart',
 	templateUrl: './customize-chart.component.html',
@@ -34,12 +34,7 @@ export class CustomizeChartComponent implements OnInit, OnDestroy {
 						this.customizeBooleanProps,
 						this.customizeArrayProps
 					);
-
-					onChanges(
-						this.form,
-						this.storeService,
-						this.customizeSettings
-					);
+					onChanges(this.form, this.storeService);
 				}
 			}
 		]);
@@ -116,23 +111,13 @@ export function isBoolean(value) {
 	return typeof value === 'boolean';
 }
 
-export function onChanges(
-	form: FormGroup,
-	storeService: StoreService,
-	customizeSettings
-) {
-	const ids = [];
-	for (const setting in customizeSettings) {
-		if (customizeSettings.hasOwnProperty(setting)) {
-			ids.push(customizeSettings[setting].id);
-		}
-	}
+export function onChanges(form: FormGroup, storeService: StoreService) {
 	form.valueChanges.subscribe(val => {
 		if (form.valid) {
 			const newCustom = {};
 			for (const prop in val) {
 				if (val.hasOwnProperty(prop)) {
-					newCustom[ids.shift()] = val[prop];
+					newCustom[prop.replace('set', '')] = val[prop];
 				}
 			}
 			storeService.dispatch(new ChangeCustomSettings(newCustom));
