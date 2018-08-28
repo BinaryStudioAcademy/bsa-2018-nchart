@@ -12,7 +12,7 @@ import { VerifyToken } from '@app/store/actions/user/user.actions';
 @Injectable({
 	providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class AppAuthGuard implements CanActivate {
 	constructor(
 		private storeService: StoreService,
 		private tokenService: TokenService
