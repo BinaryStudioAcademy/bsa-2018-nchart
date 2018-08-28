@@ -12,6 +12,7 @@ class ProjectService {
 	constructor() {
 		this.ProjectRepository = ProjectRepository;
 		this.ExportService = ExportService;
+		this.GroupService = GroupService;
 	}
 
 	getAll() {
@@ -108,7 +109,7 @@ class ProjectService {
 				[
 					callback => {
 						// todo: ask if this correct way to check
-						GroupService.findOneGroupUser({
+						this.GroupService.findOneGroupUser({
 							groupId: obj.groupId,
 							userId: res.locals.user.id
 						})
@@ -132,7 +133,7 @@ class ProjectService {
 							.catch(err => callback(err, null));
 					},
 					(payload, callback) => {
-						GroupService.saveGroupProject({
+						this.GroupService.saveGroupProject({
 							groupId: obj.groupId,
 							projectId: payload.id,
 							// todo: where does this come from
@@ -199,6 +200,43 @@ class ProjectService {
 
 	fullProjectByUserId(id) {
 		return this.ProjectRepository.fullProjectByUserId(id);
+	}
+
+	shareProject(obj) {
+		return new Promise((resolve, reject) => {
+			async.waterfall(
+				[
+					callback => {
+						this.GroupService.findOneGroupUser({ userId: obj.userId, defaultGroup: true })
+							.then(data => {
+								if (data === null) {
+									throw new Error('Object did not exist');
+								}
+								callback(null, data.dataValues.groupId);
+							})
+							.catch(err => callback(err, null));
+					},
+					(groupId, callback) => {
+						this.GroupService.saveGroupProject({
+							groupId,
+							projectId: obj.projectId,
+							accessLevelId: obj.accessLevelId
+						})
+							.then(data => {
+								callback(null, data);
+							})
+							.catch(err => callback(err, null));
+					}
+				],
+				(err, payload) => {
+					if (err) {
+						reject(err);
+					}
+					// todo: what should be here
+					resolve(payload);
+				}
+			);
+		});
 	}
 
 	static getProjectFromPayload(rawProject) {

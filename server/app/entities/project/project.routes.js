@@ -38,6 +38,12 @@ project.get('/user/:id', (req, res, next) => {
 		.catch(next);
 });
 
+project.post('/share', (req, res, next) => {
+	ProjectService.shareProject(req.body)
+		.then(PayloadGeneratorService.nextWithData(next, res))
+		.catch(next);
+});
+
 project.get('/:id/export', (req, res) => {
 	ProjectService.export(req.params.id, req.query.type).then(result => {
 		if (result) {
