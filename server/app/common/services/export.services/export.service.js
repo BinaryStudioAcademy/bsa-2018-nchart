@@ -1,8 +1,10 @@
 const PdfService = require('../export.services/pdf.service');
+const HtmlToPdfService = require('../export.services/htmlToPdf.service');
 
 class ExportService {
 	constructor() {
 		this.PdfService = PdfService;
+		this.HtmlToPdfService = HtmlToPdfService;
 	}
 
 	getFile(id, type) {
@@ -16,6 +18,10 @@ class ExportService {
 		default:
 			return '';
 		}
+	}
+
+	getPdfFromHtml(id, body) {
+		return this.HtmlToPdfService.createPdf(id, body);
 	}
 }
 

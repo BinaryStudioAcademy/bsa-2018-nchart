@@ -216,6 +216,10 @@ class ProjectService {
 	export(id, type) {
 		return this.ExportService.getFile(id, type);
 	}
+
+	exportHtml(id, body) {
+		return this.ExportService.getPdfFromHtml(id, body);
+	}
 }
 
 module.exports = new ProjectService();
