@@ -9,17 +9,21 @@ import d3Tip from 'd3-tip';
 })
 export class BarChartComponent implements OnInit, OnChanges {
 	@Input()
-	height = 500;
-	@Input()
-	width = 500;
-	@Input()
 	data: any[];
 	@Input()
-	leftMargin = 30;
-	@Input()
-	verticalPadding = 20;
-	@Input()
-	innerPadding = 0.5;
+	settings: {
+		height: number;
+		width: number;
+		leftMargin: number;
+		verticalPadding: number;
+		innerPadding: number;
+	} = {
+		height: 500,
+		width: 500,
+		leftMargin: 30,
+		verticalPadding: 20,
+		innerPadding: 0.5
+	};
 
 	svg: any;
 	x: any;
@@ -31,6 +35,14 @@ export class BarChartComponent implements OnInit, OnChanges {
 
 	ngOnChanges() {
 		if (this.data !== undefined) {
+			const {
+				width,
+				height,
+				leftMargin,
+				innerPadding,
+				verticalPadding
+			} = this.settings;
+
 			const tip = d3Tip()
 				.attr('class', 'd3-tip')
 				.offset([-10, 0])
@@ -45,13 +57,13 @@ export class BarChartComponent implements OnInit, OnChanges {
 			this.svg = d3
 				.select('.bar-chart')
 				.append('svg')
-				.attr('width', this.width)
-				.attr('height', this.height);
+				.attr('width', width)
+				.attr('height', height);
 			this.g = this.svg
 				.append('g')
 				.attr(
 					'transform',
-					'translate(' + this.leftMargin + ',' + this.margin.top + ')'
+					'translate(' + leftMargin + ',' + this.margin.top + ')'
 				);
 
 			const innerWidth =
@@ -60,14 +72,14 @@ export class BarChartComponent implements OnInit, OnChanges {
 				+this.svg.attr('height') -
 				this.margin.top -
 				this.margin.bottom -
-				this.verticalPadding;
+				verticalPadding;
 
 			this.svg.call(tip);
 
 			this.x = d3
 				.scaleBand()
 				.rangeRound([0, innerWidth])
-				.paddingInner(this.innerPadding);
+				.paddingInner(innerPadding);
 
 			this.y = d3.scaleLinear().rangeRound([innerHeight, 0]);
 

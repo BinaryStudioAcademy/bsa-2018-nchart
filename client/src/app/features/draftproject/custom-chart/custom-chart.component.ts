@@ -20,21 +20,21 @@ export class CustomChartComponent implements OnInit, OnDestroy {
 
 	data: any[];
 	disconnect: () => void;
-	barChartCustomizeSettings;
-	switchCharts: string;
+	customizeSettings;
+	chartType: string;
 
 	ngOnInit() {
 		this.disconnect = this.storeService.connect([
 			{
 				selector: getActiveChart(),
 				subscriber: t => {
-					this.switchCharts = t.sysName;
+					this.chartType = t.sysName;
 				}
 			},
 			{
 				selector: getData(),
 				subscriber: data => {
-					switch (this.switchCharts) {
+					switch (this.chartType) {
 						case 'barChart':
 							this.data = this.barChartService.getData(data);
 							break;
@@ -47,7 +47,7 @@ export class CustomChartComponent implements OnInit, OnDestroy {
 			{
 				selector: getCustomizeSettings(),
 				subscriber: t => {
-					this.barChartCustomizeSettings = t;
+					this.customizeSettings = t;
 				}
 			}
 		]);
