@@ -123,7 +123,7 @@ class ProjectRepository extends Repository {
 							include: [
 								{
 									model: this.projectModel,
-									attributes: ['id', 'name'],
+									attributes: ['id', 'name', 'createdAt'],
 									include: [
 										{
 											model: projectChartModel,

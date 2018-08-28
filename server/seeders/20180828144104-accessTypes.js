@@ -1,5 +1,3 @@
-
-
 module.exports = {
 	up: queryInterface => queryInterface.bulkInsert(
 		'accessTypes',

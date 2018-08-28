@@ -199,7 +199,24 @@ class ProjectService {
 	}
 
 	fullProjectByUserId(id) {
-		return this.ProjectRepository.fullProjectByUserId(id);
+		return this.ProjectRepository.fullProjectByUserId(id)
+			.then(data => {
+				const projects = [];
+				data.forEach(payload => {
+					payload.group.groupProjects.forEach(el => {
+						projects.push(el.project.dataValues);
+					});
+				});
+				const payload = {
+					projects: []
+				};
+				projects.forEach(el => {
+					const project = ProjectService.getProjectFromPayload(el);
+					payload.projects.push(project);
+				});
+				return payload;
+			})
+			.catch(err => { throw err; });
 	}
 
 	shareProject(obj) {
