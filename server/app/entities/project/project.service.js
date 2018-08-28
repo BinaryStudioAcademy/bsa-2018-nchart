@@ -207,7 +207,10 @@ class ProjectService {
 			async.waterfall(
 				[
 					callback => {
-						this.GroupService.findOneGroupUser({ userId: obj.userId, defaultGroup: true })
+						this.GroupService.findOneGroupUser({
+							userId: obj.userId,
+							defaultGroup: true
+						})
 							.then(data => {
 								if (data === null) {
 									throw new Error('Object did not exist');
