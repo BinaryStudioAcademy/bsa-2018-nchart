@@ -24,10 +24,10 @@ export class DatasetService {
 					modified: {
 						id: d.id,
 						columns: [...d.columns],
-						data: d.data.map((c, cI) =>
-							c.map((r, rI) => ({
+						data: d.data.map((r, rI) =>
+							r.map((c, cI) => ({
 								id: `${rI}-${cI}-${d.id}`,
-								value: r
+								value: c
 							}))
 						)
 					},

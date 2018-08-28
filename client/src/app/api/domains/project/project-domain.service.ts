@@ -15,11 +15,7 @@ export class ProjectDomainService implements ProjectDomain {
 
 	getAll(): Observable<ResponseScheme<OriginProject[]>> {
 		return this.httpService.makeRequest<ResponseScheme<OriginProject[]>>(
-			new ServiceRequest(
-				RequestType.GET,
-				`${this.projectPath}/test`,
-				null
-			)
+			new ServiceRequest(RequestType.GET, `${this.projectPath}`, null)
 		);
 	}
 
@@ -62,13 +58,24 @@ export class ProjectDomainService implements ProjectDomain {
 		return s;
 	}
 
-	get(payload: {
+	getByProjectId(payload: {
 		projectId: string;
 	}): Observable<ResponseScheme<OriginProject>> {
 		return this.httpService.makeRequest<ResponseScheme<OriginProject>>(
 			new ServiceRequest(
 				RequestType.GET,
 				`${this.projectPath}/${payload.projectId}`
+			)
+		);
+	}
+
+	getByGroupId(payload: {
+		groupId: string;
+	}): Observable<ResponseScheme<OriginProject>> {
+		return this.httpService.makeRequest<ResponseScheme<OriginProject>>(
+			new ServiceRequest(
+				RequestType.GET,
+				`${this.projectPath}/group/${payload.groupId}`
 			)
 		);
 	}

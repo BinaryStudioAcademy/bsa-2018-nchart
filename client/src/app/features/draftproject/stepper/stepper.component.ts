@@ -136,9 +136,12 @@ export class StepperComponent implements OnInit {
 		switch (id) {
 			case 1:
 				return true;
-			case 2: case 3: case 4:
+			case 2:
+			case 3:
+			case 4:
 				return this.stepsStageTwo;
-			case 5: case 6:
+			case 5:
+			case 6:
 				return this.stepsStageThree;
 		}
 	}

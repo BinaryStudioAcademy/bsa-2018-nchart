@@ -10,7 +10,10 @@ import {
 } from '@angular/core';
 import { StoreService } from '@app/services/store.service';
 import { LoadCharts } from '@app/store/actions/charts/charts.actions';
-import { CreateDraftProject } from '@app/store/actions/projects/projects.actions';
+import {
+	CreateDraftProject,
+	LoadOneProject
+} from '@app/store/actions/projects/projects.actions';
 import { isProjectDataset } from '@app/store/selectors/projects.selectors';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -100,6 +103,10 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 				const { id } = params;
 
 				if (id) {
+					this.storeService.dispatch(new LoadCharts());
+					this.storeService.dispatch(
+						new LoadOneProject({ projectId: id + '' })
+					);
 				} else {
 					this.storeService.dispatch(new LoadCharts());
 					this.storeService.dispatch(new CreateDraftProject());
@@ -110,8 +117,10 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.disconnect = this.storeService.connect([
 			{
 				subscriber: prj => {
-					this.projectId = prj.id;
-					this.projectName = prj.name;
+					if (prj) {
+						this.projectId = prj.id;
+						this.projectName = prj.name;
+					}
 				},
 				selector: project()
 			},
