@@ -1,5 +1,6 @@
 import { UserState } from '@app/models/user-store.model';
 import { ErrorHandlerState } from '@app/models/error-store.model';
+import { ExportProjectState } from '@app/models/export-store.model';
 import {
 	DefaultChartSettingsState,
 	UserChartSettingsState,
@@ -36,6 +37,7 @@ export interface AppState {
 	charts: ChartsState;
 	datasets: DatasetState;
 	userCharts: UserChartsState;
+	exportProject: ExportProjectState;
 	datasetColumns: DatasetColumnState;
 	datasetData: DatasetDataState;
 	defaultChartSettings: DefaultChartSettingsState;

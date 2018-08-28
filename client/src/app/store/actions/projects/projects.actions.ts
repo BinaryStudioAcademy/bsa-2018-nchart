@@ -1,8 +1,7 @@
 import { ProjectsActionConstants } from '@app/store/actions/projects/projects.action-types';
 import {
 	Project,
-	ProjectEntities,
-	OriginProject
+	ProjectEntities
 } from '@app/models/project.model';
 import { SchemeID } from '@app/models/normalizr.model';
 import { AppAction, FailedAction } from '@app/models/store.model';
@@ -59,8 +58,7 @@ export class ChangeProjectName extends AppAction<{
 }> {
 	readonly type = ProjectsActionConstants.CHANGE_PROJECT_NAME;
 }
-
-export class SaveProject extends AppAction<{ project: OriginProject }> {
+export class SaveProject extends AppAction<{ id: SchemeID }> {
 	readonly type = ProjectsActionConstants.SAVE_PROJECT;
 }
 
