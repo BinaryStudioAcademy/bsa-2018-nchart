@@ -34,7 +34,6 @@ export class CustomizeChartComponent implements OnInit, OnDestroy {
 						this.customizeBooleanProps,
 						this.customizeArrayProps
 					);
-
 					onChanges(
 						this.form,
 						this.storeService,
@@ -85,15 +84,24 @@ export function setFormGroup(
 			};
 			customizeBooleanProps.push(booleanProp);
 		}
-		if (isArray(customizeSettings[prop])) {
+		if (customizeSettings[prop].sysName === 'sortBy') {
 			formDataObj[prop] = new FormControl(
-				customizeSettings[prop][0].defaultValue
+				customizeSettings[prop].options[0]
+			);
+			const options = customizeSettings[prop].options.map(
+				(option: string | number) => ({
+					label: option,
+					value: option
+				})
 			);
 			const arrayProp = {
 				control: prop,
-				options: customizeSettings[prop]
+				options: options
 			};
 			customizeArrayProps.push(arrayProp);
+		}
+		if (customizeSettings[prop].sysName === 'colourScale') {
+			formDataObj[prop] = new FormControl([]);
 		}
 	}
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-
+import ColorHash from 'color-hash';
 @Injectable()
 export class BarChartService {
 	values: number[];
@@ -10,10 +10,11 @@ export class BarChartService {
 		this.data = mapData(dataObj.XAxis);
 		this.data = mapValues(this.data, dataObj.Size);
 		this.data = mapGroupsId(this.data, dataObj.Group);
-
+		this.data = mapColors(this.data, dataObj.Color);
 		if (!dataObj.Group.length) {
 			this.data = compressArray(this.data);
 		}
+
 		return this.data;
 	}
 
@@ -33,8 +34,24 @@ export function mapData(original: any[]) {
 		name: name,
 		value: 1,
 		group: name,
-		id: 1
+		id: 1,
+		color: '#69bf69'
 	}));
+}
+
+export function mapColors(original: any[], colors: any) {
+	if (colors.length) {
+		const colorHash = new ColorHash();
+		return original.map(obj => ({
+			name: obj.name,
+			value: obj.value,
+			group: obj.group,
+			id: obj.id,
+			color: colorHash.hex(colors[original.indexOf(obj)] + '')
+		}));
+	} else {
+		return original;
+	}
 }
 
 export function mapValues(original: any[], values: any[]) {
@@ -43,7 +60,8 @@ export function mapValues(original: any[], values: any[]) {
 			name: obj.name,
 			value: values[original.indexOf(obj)],
 			group: obj.group,
-			id: obj.id
+			id: obj.id,
+			color: obj.color
 		}));
 	} else {
 		return original;
@@ -56,7 +74,8 @@ export function mapGroups(original: any[], groups: any[]) {
 			name: obj.name,
 			value: obj.value,
 			group: groups[original.indexOf(obj)],
-			id: obj.id
+			id: obj.id,
+			color: obj.color
 		}));
 	} else {
 		return original;
@@ -78,18 +97,6 @@ export function mapGroupsId(original: any[], groups: any[]) {
 	}
 }
 
-/*export function mapColors(original: any[]) {
-	return original.map(obj => ({
-		name: obj.name,
-		value: obj.value,
-		color:
-			'#' +
-			Math.random()
-				.toString(16)
-				.substr(2, 6)
-	}));
-}*/
-
 export function compressArray(original) {
 	const compressed = [];
 	const copy = original.slice(0);
@@ -102,7 +109,8 @@ export function compressArray(original) {
 					name: '',
 					value: 0,
 					group: '',
-					id: ''
+					id: '',
+					color: ''
 				};
 				copy[w] = a;
 			}
@@ -113,12 +121,14 @@ export function compressArray(original) {
 				name: '',
 				value: 0,
 				group: '',
-				id: ''
+				id: '',
+				color: ''
 			};
 			a.name = original[i].name;
 			a.value = myCount;
 			a.group = original[i].group;
 			a.id = original[i].id;
+			a.color = original[i].color;
 			compressed.push(a);
 		}
 	}

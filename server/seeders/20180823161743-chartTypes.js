@@ -181,7 +181,8 @@ module.exports = {
 						sysName: 'showValues'
 					},
 					{
-						defaultValue: ['size', 'name'],
+						defaultValue: '',
+						options: ['size', 'name'],
 						description:
 								'Order of the pie chart. Can be ‘size’ (from the biggest to the smallest), ‘name’ (alphabetical order).',
 						option: 'Sort charts by',
@@ -189,7 +190,8 @@ module.exports = {
 						sysName: 'sortChartsBy'
 					},
 					{
-						defaultValue: ['size', 'name'],
+						defaultValue: '',
+						options: ['size', 'name'],
 						description:
 								'Order of the arcs inside each pie chart. Can be ‘automatic’ (same order in each pie chart), ‘size’ (from biggest to smallest in each pie chart) or ‘name’ (alphabetical order).',
 						option: 'Sort arcs by',
@@ -266,7 +268,8 @@ module.exports = {
 						sysName: 'linksOpacity'
 					},
 					{
-						defaultValue: ['size', 'name', 'automatic'],
+						defaultValue: '',
+						options: ['size', 'name', 'automatic'],
 						description:
 								'Sorting of nodes inside each step. It can be ‘automatic’ (trying to reduce the number of overlappings among flows), ‘size’ (nodes ordered from the biggest to the smallest), and ‘alphabetical’.',
 						option: 'Sort By',
@@ -360,7 +363,8 @@ module.exports = {
 						sysName: 'alignLabesToBar'
 					},
 					{
-						defaultValue: [
+						defaultValue: '',
+						options: [
 							'Start date (ascending)',
 							'Start date (descending)',
 							'name'

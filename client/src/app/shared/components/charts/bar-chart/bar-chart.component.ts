@@ -26,17 +26,6 @@ export class BarChartComponent implements OnInit, OnChanges {
 	y: any;
 	margin = { top: 20, right: 20, bottom: 20, left: 40 };
 	g: any;
-	colors = d3
-		.scaleOrdinal()
-		.range([
-			'#98abc5',
-			'#8a89a6',
-			'#7b6888',
-			'#6b486b',
-			'#a05d56',
-			'#d0743c',
-			'#ff8c00'
-		]);
 
 	ngOnInit() {}
 
@@ -84,7 +73,11 @@ export class BarChartComponent implements OnInit, OnChanges {
 
 			this.x.domain(this.data.map(d => d.group));
 			this.y.domain([0, d3.max(this.data, d => d.value)]);
-			const x1 = d3.scaleBand().rangeRound([0, this.x.bandwidth()]);
+			const x1 = d3
+				.scaleBand()
+				.padding(0.1)
+				.rangeRound([0, this.x.bandwidth()]);
+
 			x1.domain(this.data.map(d => d.id));
 
 			this.g
@@ -100,7 +93,7 @@ export class BarChartComponent implements OnInit, OnChanges {
 					'height',
 					d => innerHeight - this.y(this.clampHeight(d.value))
 				)
-				.attr('fill', (d, i) => this.colors(d.id))
+				.attr('fill', d => d.color)
 				.on('mouseover', function(d) {
 					tip.show(d, this);
 				})
