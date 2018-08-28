@@ -4,7 +4,6 @@
 		 	<app-spinner [label]="prop.option" [control]="prop.control" [min]="0" size="26" [step]="prop.step"></app-spinner>
 		</div>
 		<div *ngFor="let prop of customizeBooleanProps; let i = index">
-
 			<app-checkbox [label]="prop.option" [control]="prop.control" binary="true"></app-checkbox>
 		</div>
 		<div *ngFor="let prop of customizeArrayProps">

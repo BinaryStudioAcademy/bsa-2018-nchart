@@ -122,11 +122,11 @@ export class BarChartService {
 
 	getData(data: any) {
 		const dataObj = BarChartService.arrayToObject(data);
-		this.data = BarChartService.mapData(dataObj['X Axis']);
-		this.data = BarChartService.mapValues(this.data, dataObj.Size);
-		this.data = BarChartService.mapGroupsId(this.data, dataObj.Group);
-		this.data = BarChartService.mapColors(this.data, dataObj.Color);
-		if (!dataObj.Group.length) {
+		this.data = BarChartService.mapData(dataObj.xaxis);
+		this.data = BarChartService.mapValues(this.data, dataObj.size);
+		this.data = BarChartService.mapGroupsId(this.data, dataObj.group);
+		this.data = BarChartService.mapColors(this.data, dataObj.color);
+		if (!dataObj.group.length) {
 			this.data = BarChartService.compressArray(this.data);
 		}
 

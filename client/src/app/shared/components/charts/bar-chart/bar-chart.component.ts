@@ -1,6 +1,15 @@
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import * as d3 from 'd3';
 import d3Tip from 'd3-tip';
+import { CustomizeOption } from '@app/models/chart.model';
+
+interface Settings<T> {
+	height: T;
+	width: T;
+	leftMargin: T;
+	verticalPadding: T;
+	horizontalPadding: T;
+}
 
 @Component({
 	selector: 'app-bar-chart',
@@ -11,19 +20,7 @@ export class BarChartComponent implements OnInit, OnChanges {
 	@Input()
 	data: any[];
 	@Input()
-	settings: {
-		height: number;
-		width: number;
-		leftMargin: number;
-		verticalPadding: number;
-		innerPadding: number;
-	} = {
-		height: 500,
-		width: 500,
-		leftMargin: 30,
-		verticalPadding: 20,
-		innerPadding: 0.5
-	};
+	settings: Settings<CustomizeOption>;
 
 	svg: any;
 	x: any;
@@ -33,15 +30,25 @@ export class BarChartComponent implements OnInit, OnChanges {
 
 	ngOnInit() {}
 
+	getSettingsValue(settings: Settings<CustomizeOption>): Settings<any> {
+		return Object.keys(settings).reduce(
+			(acc, v) => {
+				acc[v] = settings[v].defaultValue;
+				return acc;
+			},
+			{} as Settings<any>
+		);
+	}
+
 	ngOnChanges() {
-		if (this.data !== undefined) {
+		if (this.data && this.settings) {
 			const {
 				width,
 				height,
 				leftMargin,
-				innerPadding,
+				horizontalPadding,
 				verticalPadding
-			} = this.settings;
+			} = this.getSettingsValue(this.settings);
 
 			const tip = d3Tip()
 				.attr('class', 'd3-tip')
@@ -79,7 +86,7 @@ export class BarChartComponent implements OnInit, OnChanges {
 			this.x = d3
 				.scaleBand()
 				.rangeRound([0, innerWidth])
-				.paddingInner(innerPadding);
+				.paddingInner(horizontalPadding);
 
 			this.y = d3.scaleLinear().rangeRound([innerHeight, 0]);
 

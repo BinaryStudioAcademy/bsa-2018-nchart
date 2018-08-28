@@ -19,6 +19,7 @@ export interface DimensionOption {
 	required: boolean;
 	type: string[];
 	description: string;
+	sysName: string;
 }
 
 export interface CustomizeOption {
