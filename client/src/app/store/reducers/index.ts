@@ -43,22 +43,22 @@ import { RouterStateSnapshot } from '@angular/router';
 import {
 	userChartSettingsReducer,
 	initialState as userChartSettingsInitialState
-} from './user-chart-settings.reducer';
+} from '@app/store/reducers/user-chart-settings.reducer';
 
 import {
 	defaultChartSettingsReducer,
 	initialState as defaultChartSettingsInitialState
-} from './default-chart-settings.reducer';
+} from '@app/store/reducers/default-chart-settings.reducer';
 
 import {
 	datasetColumnsReducer,
 	initialState as datasetColumnsInitialState
-} from './dataset-columns.reducer';
+} from '@app/store/reducers/dataset-columns.reducer';
 
 import {
 	datasetDataReducer,
 	initialState as datasetDataInitialState
-} from './dataset-data.reducer';
+} from '@app/store/reducers/dataset-data.reducer';
 import { RouterStateUrl } from '@app/models/router-state-url.model';
 
 export const initialState: AppState = {

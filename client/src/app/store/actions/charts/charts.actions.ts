@@ -1,4 +1,4 @@
-import { ChartsActionConstants } from './charts.action-types';
+import { ChartsActionConstants } from '@app/store/actions/charts/charts.action-types';
 import { NormalizedSchemeField, SchemeID } from '@app/models/normalizr.model';
 import {
 	DimensionOption,

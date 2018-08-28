@@ -7,7 +7,7 @@ import { normalize } from 'normalizr';
 import { arrayOfCommonScheme } from '@app/schemes/common.schema';
 import { ProjectsActionConstants } from '@app/store/actions/projects/projects.action-types';
 import * as projectActions from '@app/store/actions/projects/projects.actions';
-import { throwError } from 'rxjs/index';
+import { throwError } from 'rxjs';
 import { ProjectDomainService } from '@app/api/domains/project/project-domain.service';
 import { ProjectService } from '@app/services/project.service';
 import { projectScheme } from '@app/schemes/project.scheme';
