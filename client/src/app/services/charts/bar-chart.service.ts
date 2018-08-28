@@ -1,29 +1,8 @@
-import { BehaviorSubject } from 'rxjs';
-import { BarChartCustomizeSettings } from '@app/shared/components/charts/bar-chart/bar-chart.model';
 import { Injectable } from '@angular/core';
 @Injectable()
 export class BarChartService {
-	barChartCustomizeSettings: BarChartCustomizeSettings = {
-		set1: 800,
-		set2: 600,
-		set3: 40,
-		set4: 20,
-		set5: 0.2,
-		set6: false
-	};
-
 	values: number[];
-
 	data: any[];
-
-	private _barChartCustomizeSettings = new BehaviorSubject<
-		BarChartCustomizeSettings
-	>(this.barChartCustomizeSettings);
-	barChartCustomizeSettingsObs = this._barChartCustomizeSettings.asObservable();
-
-	setCustomizeSettings(settings: BarChartCustomizeSettings) {
-		this._barChartCustomizeSettings.next(settings);
-	}
 
 	getData(data: any) {
 		// todo
@@ -84,14 +63,18 @@ export function mapGroups(original: any[], groups: any[]) {
 }
 
 export function mapGroupsId(original: any[], groups: any[]) {
-	const ids = [];
-	const map = mapGroups(original, groups);
-	map.forEach((part, index) => {
-		map[index].id = map[index].id = ids[part.group] = ids[part.group]
-			? ids[part.group] + 1
-			: 1;
-	});
-	return map;
+	if (groups.length) {
+		const ids = [];
+		const map = mapGroups(original, groups);
+		map.forEach((part, index) => {
+			map[index].id = map[index].id = ids[part.group] = ids[part.group]
+				? ids[part.group] + 1
+				: 1;
+		});
+		return map;
+	} else {
+		return original;
+	}
 }
 
 /*export function mapColors(original: any[]) {

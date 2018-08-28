@@ -14,6 +14,10 @@ class DatasetService {
 		return this.DatasetRepository.getById(id);
 	}
 
+	getAllById(ids) {
+		return this.DatasetRepository.getAllById(ids);
+	}
+
 	upsert(obj) {
 		// todo: remove waterfall model
 		return new Promise((resolve, reject) => {

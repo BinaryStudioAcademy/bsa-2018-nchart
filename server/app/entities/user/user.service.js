@@ -44,9 +44,7 @@ class UserService {
 					},
 					callback => {
 						CompanyService.saveCompany('General')
-							.then(data =>
-								callback(null, { company: data.dataValues })
-							)
+							.then(data => callback(null, { company: data.dataValues }))
 							.catch(err => {
 								callback(err, null);
 							});
@@ -56,14 +54,12 @@ class UserService {
 							name: 'General',
 							companyId: payload.company.id
 						})
-							.then(data =>
-								callback(
-									null,
-									Object.assign({}, payload, {
-										group: data.dataValues
-									})
-								)
-							)
+							.then(data => callback(
+								null,
+								Object.assign({}, payload, {
+									group: data.dataValues
+								})
+							))
 							.catch(err => callback(err, null));
 					},
 					(payload, callback) => {
@@ -74,8 +70,7 @@ class UserService {
 									null,
 									payload,
 									Object.assign({}, obj.user, {
-										password: hash,
-										defaultGroupId: payload.group.id
+										password: hash
 									})
 								);
 							})
@@ -85,7 +80,8 @@ class UserService {
 						this.UserRepository.save(user)
 							.then(data => {
 								const userPayload = this.createUserPayload(
-									data.dataValues
+									data.dataValues,
+									payload.group.id
 								);
 								callback(
 									null,
@@ -104,14 +100,12 @@ class UserService {
 							payload.user.id,
 							payload.company.id
 						)
-							.then(data =>
-								callback(
-									null,
-									Object.assign({}, payload, {
-										companyUser: data.dataValues
-									})
-								)
-							)
+							.then(data => callback(
+								null,
+								Object.assign({}, payload, {
+									companyUser: data.dataValues
+								})
+							))
 							.catch(err => {
 								callback(err, null);
 							});
@@ -122,14 +116,12 @@ class UserService {
 							groupId: payload.group.id,
 							defaultGroup: true
 						})
-							.then(data =>
-								callback(
-									null,
-									Object.assign({}, payload, {
-										groupUser: data.dataValues
-									})
-								)
-							)
+							.then(data => callback(
+								null,
+								Object.assign({}, payload, {
+									groupUser: data.dataValues
+								})
+							))
 							.catch(err => callback(err, null));
 					}
 				],
@@ -158,19 +150,35 @@ class UserService {
 								if (data === null) {
 									throw new Error('Object did not exist');
 								}
-								callback(null, data);
+								callback(null, data.dataValues);
 							})
 							.catch(err => {
 								callback(err, null);
 							});
 					},
-					(data, callback) => {
+					(user, callback) => {
+						GroupService.findOneGroupUser({
+							userId: user.id,
+							defaultGroup: true
+						})
+							.then(data => {
+								if (data === null) {
+									throw new Error('Object did not exist');
+								}
+								callback(null, user, data.dataValues);
+							})
+							.catch(err => {
+								callback(err, null);
+							});
+					},
+					(user, groupUser, callback) => {
 						bcrypt
-							.compare(obj.password, data.dataValues.password)
+							.compare(obj.password, user.password)
 							.then(res => {
 								if (res === true) {
 									const userPayload = this.createUserPayload(
-										data.dataValues
+										user,
+										groupUser.groupId
 									);
 									callback(null, {
 										user: userPayload,
@@ -280,12 +288,12 @@ class UserService {
 		});
 	}
 
-	createUserPayload(data) {
+	createUserPayload(data, id) {
 		this.payload = {
 			id: data.id,
 			name: data.name,
 			email: data.email,
-			defaultGroupId: data.defaultGroupId
+			defaultGroupId: id
 		};
 		return this.payload;
 	}
