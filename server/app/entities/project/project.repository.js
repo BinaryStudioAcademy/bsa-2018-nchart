@@ -5,7 +5,8 @@ const TransactionService = require('../../common/services/db-transaction.service
 const chartModel = require('../chart/chart.model');
 const datasetModel = require('../dataset/dataset.model');
 const groupModel = require('../group/group.models/group');
-const groupProject = require('../group/group.models/group_project');
+const groupProjectModel = require('../group/group.models/group_project');
+const groupUserModel = require('../group/group.models/group_user');
 
 class ProjectRepository extends Repository {
 	constructor() {
@@ -58,12 +59,13 @@ class ProjectRepository extends Repository {
 	}
 
 	fullProjectsByGroupId(id) {
-		return groupModel.findOne({
+		this.groupModel = groupModel;
+		return this.groupModel.findOne({
 			where: { id },
 			attributes: ['id', 'name'],
 			include: [
 				{
-					model: groupProject,
+					model: groupProjectModel,
 					attributes: ['id', 'groupId', 'projectId'],
 					include: [
 						{
@@ -90,6 +92,63 @@ class ProjectRepository extends Repository {
 														'id',
 														'data',
 														'columns'
+													]
+												}
+											]
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		});
+	}
+
+	fullProjectByUserId(id) {
+		this.groupUser = groupUserModel;
+		return this.groupUser.findAll({
+			where: { userId: id },
+			attributes: ['groupId', 'userId', 'defaultGroup'],
+			include: [
+				{
+					model: groupModel,
+					attributes: ['id', 'name'],
+					include: [
+						{
+							model: groupProjectModel,
+							separate: true,
+							attributes: ['groupId', 'projectId'],
+							include: [
+								{
+									model: this.projectModel,
+									attributes: ['id', 'name'],
+									include: [
+										{
+											model: projectChartModel,
+											separate: true,
+											attributes: ['chartId'],
+											// separate:true,
+											include: [
+												{
+													model: chartModel,
+													attributes: [
+														'dimensionSettings',
+														'customizeSettings',
+														'id',
+														'chartTypeId',
+														'datasetId'
+													],
+													include: [
+														{
+															model: datasetModel,
+															attributes: [
+																'id',
+																'data',
+																'columns'
+															]
+														}
 													]
 												}
 											]

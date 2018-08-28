@@ -197,6 +197,10 @@ class ProjectService {
 		});
 	}
 
+	fullProjectByUserId(id) {
+		return this.ProjectRepository.fullProjectByUserId(id);
+	}
+
 	static getProjectFromPayload(rawProject) {
 		const charts = [];
 		const datasets = [];
