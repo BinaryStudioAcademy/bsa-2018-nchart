@@ -21,15 +21,22 @@ project.post('/', ProjectPayloadValidator.fullSet, (req, res, next) => {
 
 project.get('/:id/export', (req, res) => {
 	ProjectService.export(req.params.id, req.query.type).then(result => {
-		if (result) {
+		if (result && !(req.query.type === 'svg')) {
 			res.writeHead(200, {
 				'Content-Disposition': 'inline',
 				'Content-Length': result.length,
 				'Content-Type': `application/${req.query.type}`
 			});
 			res.end(result);
+		} else if (result && (req.query.type === 'svg')) {
+			res.writeHead(200, {
+				'Content-Disposition': 'inline',
+				'Content-Length': result.length,
+				'Content-Type': 'image/svg+xml'
+			});
+			res.end(result);
 		} else {
-			res.send(400);
+			res.sendStatus(400);
 		}
 	});
 });
