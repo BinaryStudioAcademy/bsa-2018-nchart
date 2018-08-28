@@ -108,7 +108,7 @@ class ProjectService {
 				[
 					callback => {
 						// todo: ask if this correct way to check
-						GroupService.findOneByQuery({
+						GroupService.findOneGroupUser({
 							groupId: obj.groupId,
 							userId: res.locals.user.id
 						})
