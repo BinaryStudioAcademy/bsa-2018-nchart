@@ -2,7 +2,7 @@ import { Actions as ProjectsActions } from '@app/store/actions/projects/projects
 import { combineReducers } from '@ngrx/store';
 import { ProjectsActionConstants as constants } from '@app/store/actions/projects/projects.action-types';
 import { SchemeID } from '@app/models/normalizr.model';
-import { DatasetActions } from '@app/store/actions/datasets/datasets.action-types';
+import { DatasetActionConstants } from '@app/store/actions/datasets/datasets.action-types';
 import { Actions as datasetsActions } from '@app/store/actions/datasets/datasets.actions';
 import { Actions as chartActions } from '@app/store/actions/charts/charts.actions';
 import { ChartsActionConstants } from '@app/store/actions/charts/charts.action-types';
@@ -60,7 +60,7 @@ const byId = (
 					]
 				}
 			};
-		case DatasetActions.PARSE_DATA__COMPLETE:
+		case DatasetActionConstants.PARSE_DATA__COMPLETE:
 			return {
 				...state,
 				[action.payload.projectId]: {

@@ -1,4 +1,4 @@
-export enum DatasetActions {
+export enum DatasetActionConstants {
 	PARSE_PLAIN_TEXT = 'Dataset: PARSE_PLAIN_TEXT',
 	PARSE_FROM_URL = 'Dataset: PARSE_FROM_URL',
 	PARSE_FROM_FILE = 'Dataset: PARSE_FROM_FILE',

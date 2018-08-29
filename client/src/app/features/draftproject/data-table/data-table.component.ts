@@ -1,9 +1,13 @@
 import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
 import { DatasetColumn } from '@app/models/dataset.model';
 import { StoreService } from '@app/services/store.service';
-import { getDatasetValues, getDatasetHeaders } from '@app/store/selectors/dataset.selectors';
+import {
+	getDatasetValues,
+	getDatasetHeaders
+} from '@app/store/selectors/dataset.selectors';
 import * as DatasetActions from '@app/store/actions/datasets/datasets.actions';
 import { SchemeID } from '@app/models/normalizr.model';
+import { activeDatasetId } from '@app/store/selectors/dataset.selectors';
 
 @Component({
 	selector: 'app-data-table',
@@ -13,51 +17,65 @@ import { SchemeID } from '@app/models/normalizr.model';
 export class DataTableComponent implements OnInit, OnDestroy {
 	disconnect: () => void;
 	columns: DatasetColumn[];
+	datasetId: SchemeID;
 	data: any[][];
 	dataId: SchemeID[][];
-	columnsId: SchemeID[];
 	headerId: number;
 	rowId: number;
-	headerItems = [{
-		label: 'New column',
-		icon: 'fa fa-plus',
-		command: () => {
-			this.addNewColumn();
+	rowItems = [
+		{
+			label: 'Delete row',
+			icon: 'fa fa-trash',
+			command: () => {
+				this.removeRow();
+			}
 		}
-	}, {
-		label: 'To number',
-		command: () => {
-			this.changeColumnType('number');
-		}
-	}, {
-		label: 'To string',
-		command: () => {
-			this.changeColumnType('string');
-		}
-	}, {
-		label: 'To boolean',
-		command: () => {
-			this.changeColumnType('boolean');
-		}
-	}, {
-		label: 'Delete column',
-		icon: 'fa fa-trash',
-		command: () => {
-			this.removeColumn();
-		}
-	}];
-	rowItems = [{
-		label: 'Delete row',
-		icon: 'fa fa-trash',
-		command: () => {
-			this.removeRow();
-		}
-	}];
+	];
 
-	removeColumn() {
+	headerItems = (columnId, index) => {
+		return [
+			{
+				label: 'New column',
+				icon: 'fa fa-plus',
+				command: () => {
+					this.addNewColumn();
+				}
+			},
+			{
+				label: 'To number',
+				command: () => {
+					this.changeColumnType('number');
+				}
+			},
+			{
+				label: 'To string',
+				command: () => {
+					this.changeColumnType('string');
+				}
+			},
+			{
+				label: 'To boolean',
+				command: () => {
+					this.changeColumnType('boolean');
+				}
+			},
+			{
+				label: 'Delete column',
+				icon: 'fa fa-trash',
+				command: () => {
+					this.removeColumn(this.datasetId, columnId, index);
+				}
+			}
+		];
+	// tslint:disable-next-line:semicolon
+	};
+
+	removeColumn(datasetId, columnId, index) {
 		this.storeService.dispatch(
 			new DatasetActions.DeleteColumn({
-				id: this.columnsId[this.headerId]
+				id: columnId,
+				datasetId,
+				index
 			})
 		);
 	}
@@ -73,12 +91,10 @@ export class DataTableComponent implements OnInit, OnDestroy {
 		});
 	}
 
-	addNewColumn() {
-
-	}
+	addNewColumn() {}
 
 	changeColumnType(type) {
-		const col = this.headerId;
+		/* const col = this.headerId;
 		this.storeService.dispatch(
 			new DatasetActions.ChangeColumnType({
 				id: this.columnsId[col],
@@ -88,7 +104,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
 		this.data.map((el, i) => {
 			const value = this.convertDataType(type, el[col]);
 			this.change({ value, i, col });
-		});
+		}); */
 	}
 
 	convertDataType(type, value) {
@@ -119,9 +135,8 @@ export class DataTableComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		this.disconnect = this.storeService.connect([
 			{
-				subscriber: dataHeaders => {
-					this.columns = dataHeaders.values;
-					this.columnsId = dataHeaders.ids;
+				subscriber: (dataHeaders: DatasetColumn[]) => {
+					this.columns = dataHeaders;
 				},
 				selector: getDatasetHeaders()
 			},
@@ -131,6 +146,12 @@ export class DataTableComponent implements OnInit, OnDestroy {
 					this.dataId = data.ids;
 				},
 				selector: getDatasetValues()
+			},
+			{
+				subscriber: id => {
+					this.datasetId = id;
+				},
+				selector: activeDatasetId()
 			}
 		]);
 	}
@@ -145,13 +166,13 @@ export class DataTableComponent implements OnInit, OnDestroy {
 		);
 	}
 
-	headerChange({ title, i}) {
-		this.storeService.dispatch(
+	headerChange({ title, i }) {
+		/* this.storeService.dispatch(
 			new DatasetActions.ChangeHeaderTitle({
 				id: this.columnsId[i],
 				title: title
 			})
-		);
+		); */
 	}
 
 	ngOnDestroy() {
