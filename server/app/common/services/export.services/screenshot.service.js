@@ -13,20 +13,22 @@ exports.createScreenshot = async () => {
 		if (!element) {
 			return null;
 		}
-		const { x, y, width, height } = element.getBoundingClientRect();
-		return { left: x, top: y, width, height, id: element.id };
+		const {
+			x, y, width, height
+		} = element.getBoundingClientRect();
+		return {
+			left: x, top: y, width, height, id: element.id
+		};
 	}, '#chart');
 
-	const buffer = await page.screenshot(
-		{
-			clip: {
-				x: rect.left,
-				y: rect.top,
-				width: rect.width,
-				height: rect.height
-			}
+	const buffer = await page.screenshot({
+		clip: {
+			x: rect.left,
+			y: rect.top,
+			width: rect.width,
+			height: rect.height
 		}
-	);
+	});
 	await browser.close();
 
 	return buffer;

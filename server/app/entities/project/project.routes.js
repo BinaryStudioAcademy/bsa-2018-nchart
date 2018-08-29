@@ -32,6 +32,7 @@ project.get('/group/:id', (req, res, next) => {
 		.catch(next);
 });
 
+// todo: add element selector to query
 project.get('/:id/export', (req, res) => {
 	ProjectService.export(req.params.id, req.query.type).then(result => {
 		if (result && !(req.query.type === 'svg')) {
@@ -41,7 +42,7 @@ project.get('/:id/export', (req, res) => {
 				'Content-Type': `application/${req.query.type}`
 			});
 			res.end(result);
-		} else if (result && (req.query.type === 'svg')) {
+		} else if (result && req.query.type === 'svg') {
 			res.writeHead(200, {
 				'Content-Disposition': 'inline',
 				'Content-Length': result.length,
@@ -54,6 +55,7 @@ project.get('/:id/export', (req, res) => {
 	});
 });
 
+// todo: add content and type to body
 project.post('/:id/export', (req, res) => {
 	ProjectService.exportHtml(req.params.id, req.body).then(result => {
 		if (result) {
@@ -69,6 +71,7 @@ project.post('/:id/export', (req, res) => {
 	});
 });
 
+// todo: remove this
 project.get('/:id/screenshot', (req, res) => {
 	ProjectService.screenshot(req.params.id).then(result => {
 		if (result) {
