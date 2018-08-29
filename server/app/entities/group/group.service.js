@@ -1,3 +1,4 @@
+const async = require('async');
 const GroupRepository = require('./group.repository');
 
 class GroupService {
@@ -7,6 +8,38 @@ class GroupService {
 
 	saveGroup(obj) {
 		return this.GroupRepository.saveGroup(obj);
+	}
+
+	saveFullGroup(obj, res) {
+		return new Promise((resolve, reject) => {
+			async.waterfall(
+				[
+					callback => {
+						this.GroupRepository.saveGroup(obj)
+							.then(data => callback(null, data.dataValues))
+							.catch(err => callback(err, null));
+					},
+					(group, callback) => {
+						this.GroupRepository.saveGroupUser(
+							{
+								groupId: group.id,
+								userId: res.locals.user.id,
+								defaultGroup: false
+
+							}
+						)
+							.then(() => callback(group))
+							.catch(err => callback(err, null));
+					}
+				],
+				(err, payload) => {
+					if (err) {
+						reject(err);
+					}
+					resolve(payload);
+				}
+			);
+		});
 	}
 
 	saveGroupUser(obj) {
