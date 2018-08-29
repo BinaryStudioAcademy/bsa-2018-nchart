@@ -3,9 +3,9 @@ import { StoreService } from '@app/services/store.service';
 import { FormService } from '@app/services/form.service';
 import { LoginService } from '@app/services/login.service';
 import { SourceService } from '@app/services/source.service';
-import { ProjectService } from './project.service';
-import { DatasetService } from './dataset.service';
-import { ChartService } from './chart.service';
+import { ProjectService } from '@app/services/project.service';
+import { DatasetService } from '@app/services/dataset.service';
+import { ChartService } from '@app/services/chart.service';
 import { TokenService } from '@app/services/token.service';
 import { BarChartService } from '@app/services/charts/bar-chart.service';
 

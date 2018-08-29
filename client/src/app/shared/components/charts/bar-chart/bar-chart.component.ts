@@ -22,18 +22,16 @@ export class BarChartComponent implements OnInit, OnChanges {
 	@Input()
 	settings: Settings<CustomizeOption>;
 
-	svg: any;
-	x: any;
-	y: any;
+	x: d3.ScaleBand<string> = null;
+	y: d3.ScaleLinear<number, number> = null;
 	margin = { top: 20, right: 20, bottom: 20, left: 40 };
-	g: any;
 
 	ngOnInit() {}
 
 	getSettingsValue(settings: Settings<CustomizeOption>): Settings<any> {
 		return Object.keys(settings).reduce(
 			(acc, v) => {
-				acc[v] = settings[v].defaultValue;
+				acc[v] = settings[v].value;
 				return acc;
 			},
 			{} as Settings<any>
@@ -61,12 +59,12 @@ export class BarChartComponent implements OnInit, OnChanges {
 
 			d3.select('svg').remove();
 			d3.select('.d3-tip').remove();
-			this.svg = d3
+			const svg = d3
 				.select('.bar-chart')
 				.append('svg')
 				.attr('width', width)
 				.attr('height', height);
-			this.g = this.svg
+			const g = svg
 				.append('g')
 				.attr(
 					'transform',
@@ -74,14 +72,14 @@ export class BarChartComponent implements OnInit, OnChanges {
 				);
 
 			const innerWidth =
-				+this.svg.attr('width') - this.margin.left - this.margin.right;
+				+svg.attr('width') - this.margin.left - this.margin.right;
 			const innerHeight =
-				+this.svg.attr('height') -
+				+svg.attr('height') -
 				this.margin.top -
 				this.margin.bottom -
 				verticalPadding;
 
-			this.svg.call(tip);
+			svg.call(tip);
 
 			this.x = d3
 				.scaleBand()
@@ -99,8 +97,7 @@ export class BarChartComponent implements OnInit, OnChanges {
 
 			x1.domain(this.data.map(d => d.id));
 
-			this.g
-				.selectAll('.bar')
+			g.selectAll('.bar')
 				.data(this.data)
 				.enter()
 				.append('rect')
@@ -120,14 +117,12 @@ export class BarChartComponent implements OnInit, OnChanges {
 					tip.hide(d, this);
 				});
 
-			this.g
-				.append('g')
+			g.append('g')
 				.attr('class', 'axis')
 				.attr('transform', 'translate(0,' + innerHeight + ')')
 				.call(d3.axisBottom(this.x));
 
-			this.g
-				.append('g')
+			g.append('g')
 				.attr('class', 'axis')
 				.call(d3.axisLeft(this.y))
 				.append('text')

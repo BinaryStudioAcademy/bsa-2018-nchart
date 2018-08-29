@@ -3,6 +3,7 @@
 		[value]="value" 
 		[formControl]="control"
 		binary="true"
+		(onChange)="onChange($event)"
 	></p-checkbox>
 	<label class="ui-checkbox-label" [class.ui-input-label-disabled]="isDisabled()">{{label}}</label>
 </div>
