@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CustomSettingsComponent } from './custom-settings.component';
+import { CustomSettingsComponent } from '@app/features/draftproject/custom-settings/custom-settings.component';
 
 describe('CustomSettingsComponent', () => {
 	let component: CustomSettingsComponent;

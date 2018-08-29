@@ -1,0 +1,84 @@
+@import ../variables
+@import ../colors
+
+.stepper-container
+	padding-top: 1.5rem
+	max-width: 75px
+	position: fixed
+	top: 120px
+	left: 0px
+	&.show-stepper
+		max-width: 50px
+	ul
+		margin: 0
+	.ui-widget.ui-button
+		margin-top: 15px
+		min-width: 50px
+		padding: 0
+		min-height: 24px
+		&:enabled:hover
+			min-height: 24px !important
+	.stepper-tools
+		display: flex
+		justify-content: space-between
+		position: absolute
+		top: 0
+		left: 0
+		right: 0.2rem
+		.ui-widget.ui-button
+			margin: 0
+			min-width: 1.5rem
+			min-height: 1.5rem
+			cursor: pointer
+
+.ui-main-block.stepper-container.show-stepper
+	padding: 0.5rem 0
+	.ui-widget.ui-button
+		margin: 0
+		min-width: 50px
+	
+.step
+	list-style: none
+	margin: 0 auto
+	display: flex
+	flex-wrap: wrap
+	position: relative
+	.step-connection
+		border-left: 1px dashed $teriaryColor
+		height: 25px
+		width: 50%
+		position: relative
+		left: calc(50% - 1px)
+	.fa-exclamation
+		position: absolute
+		color: $stateErrorTextColor
+		right: -0.1rem
+		top: 1.1rem
+	&:first-child
+		.fa-exclamation
+			top: -0.5rem
+
+
+.step-icon
+	height: 45px
+	width: 45px
+	margin: 0 auto
+	border-radius: 50%
+	border: 1px solid $shadowLightGrey
+	display: flex
+	align-items: center
+	justify-content: center
+	transition: .2s ease-out
+	cursor: pointer
+	color: $secondaryTextColor
+	background: white
+	i
+		font-size: 1.2rem
+	&:hover
+		color: $defaultButtonHover
+		border: 1px solid $defaultButtonHover
+	&.step-selected
+		color: $baseColor
+		border: 1px solid $baseColor
+		transform: scale(1.2)
+		z-index: 2

@@ -36,9 +36,35 @@ import {
 	initialState as projectsInitialState
 } from '@app/store/reducers/projects.reducer';
 
+import {
+	exportProjectReducer,
+	initialState as exportInitialState
+} from '@app/store/reducers/export.reducer';
+
 import { routerReducer, RouterStateSerializer } from '@ngrx/router-store';
-import { RouterStateUrl } from '@app/models';
+
 import { RouterStateSnapshot } from '@angular/router';
+
+import {
+	userChartSettingsReducer,
+	initialState as userChartSettingsInitialState
+} from './user-chart-settings.reducer';
+
+import {
+	defaultChartSettingsReducer,
+	initialState as defaultChartSettingsInitialState
+} from './default-chart-settings.reducer';
+
+import {
+	datasetColumnsReducer,
+	initialState as datasetColumnsInitialState
+} from './dataset-columns.reducer';
+
+import {
+	datasetDataReducer,
+	initialState as datasetDataInitialState
+} from './dataset-data.reducer';
+import { RouterStateUrl } from '@app/models/router-state-url.model';
 
 export const initialState: AppState = {
 	user: userInitialState,
@@ -47,7 +73,12 @@ export const initialState: AppState = {
 	projects: projectsInitialState,
 	charts: chartsInitialState,
 	datasets: datasetInitialState,
-	userCharts: userChartsInitialState
+	userCharts: userChartsInitialState,
+	exportProject: exportInitialState,
+	datasetColumns: datasetColumnsInitialState,
+	datasetData: datasetDataInitialState,
+	defaultChartSettings: defaultChartSettingsInitialState,
+	userChartSettings: userChartSettingsInitialState
 };
 
 export const getReducers = () => ({
@@ -58,6 +89,11 @@ export const getReducers = () => ({
 	charts: chartsReducer,
 	datasets: datasetReducer,
 	userCharts: userChartsReducer,
+	exportProject: exportProjectReducer,
+	userChartSettings: userChartSettingsReducer,
+	defaultChartSettings: defaultChartSettingsReducer,
+	datasetColumns: datasetColumnsReducer,
+	datasetData: datasetDataReducer,
 	router: routerReducer
 });
 

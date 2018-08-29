@@ -33,51 +33,18 @@ class UserService {
 			async.waterfall(
 				[
 					callback => {
-						bcrypt
-							.hash(obj.user.password, 10)
-							.then(hash => {
-								callback(
-									null,
-									Object.assign({}, obj.user, {
-										password: hash
-									})
-								);
+						UserRepository.findByEmail(obj.user.email)
+							.then(data => {
+								if (data === null) {
+									return callback(null);
+								}
+								throw new Error('email must be unique');
 							})
 							.catch(err => callback(err, null));
 					},
-					(user, callback) => {
-						this.UserRepository.save(user)
-							.then(data => callback(null, {
-								tokenSecret: TokenService.createToken(data),
-								user: this.createUserPayload(
-									data.dataValues
-								)
-							}))
-							.catch(err => callback(err, null));
-					},
-					(payload, callback) => {
-						CompanyService.saveCompany(obj)
-							.then(data => callback(
-								null,
-								Object.assign({}, payload, {
-									company: data.dataValues
-								})
-							))
-							.catch(err => {
-								callback(err, null);
-							});
-					},
-					(payload, callback) => {
-						CompanyService.saveCompanyUser(
-							payload.user.id,
-							payload.company.id
-						)
-							.then(data => callback(
-								null,
-								Object.assign({}, payload, {
-									companyUser: data.dataValues
-								})
-							))
+					callback => {
+						CompanyService.saveCompany('General')
+							.then(data => callback(null, { company: data.dataValues }))
 							.catch(err => {
 								callback(err, null);
 							});
@@ -96,10 +63,59 @@ class UserService {
 							.catch(err => callback(err, null));
 					},
 					(payload, callback) => {
-						GroupService.saveGroupUser(
+						bcrypt
+							.hash(obj.user.password, 10)
+							.then(hash => {
+								callback(
+									null,
+									payload,
+									Object.assign({}, obj.user, {
+										password: hash
+									})
+								);
+							})
+							.catch(err => callback(err, null));
+					},
+					(payload, user, callback) => {
+						this.UserRepository.save(user)
+							.then(data => {
+								const userPayload = this.createUserPayload(
+									data.dataValues,
+									payload.group.id
+								);
+								callback(
+									null,
+									Object.assign({}, payload, {
+										user: userPayload,
+										tokenSecret: TokenService.createToken(
+											userPayload
+										)
+									})
+								);
+							})
+							.catch(err => callback(err, null));
+					},
+					(payload, callback) => {
+						CompanyService.saveCompanyUser(
 							payload.user.id,
-							payload.group.id
+							payload.company.id
 						)
+							.then(data => callback(
+								null,
+								Object.assign({}, payload, {
+									companyUser: data.dataValues
+								})
+							))
+							.catch(err => {
+								callback(err, null);
+							});
+					},
+					(payload, callback) => {
+						GroupService.saveGroupUser({
+							userId: payload.user.id,
+							groupId: payload.group.id,
+							defaultGroup: true
+						})
 							.then(data => callback(
 								null,
 								Object.assign({}, payload, {
@@ -134,23 +150,40 @@ class UserService {
 								if (data === null) {
 									throw new Error('Object did not exist');
 								}
-								callback(null, data);
+								callback(null, data.dataValues);
 							})
 							.catch(err => {
 								callback(err, null);
 							});
 					},
-					(data, callback) => {
+					(user, callback) => {
+						GroupService.findOneGroupUser({
+							userId: user.id,
+							defaultGroup: true
+						})
+							.then(data => {
+								if (data === null) {
+									throw new Error('Object did not exist');
+								}
+								callback(null, user, data.dataValues);
+							})
+							.catch(err => {
+								callback(err, null);
+							});
+					},
+					(user, groupUser, callback) => {
 						bcrypt
-							.compare(obj.password, data.dataValues.password)
+							.compare(obj.password, user.password)
 							.then(res => {
 								if (res === true) {
+									const userPayload = this.createUserPayload(
+										user,
+										groupUser.groupId
+									);
 									callback(null, {
+										user: userPayload,
 										token: TokenService.createToken(
-											data.dataValues
-										),
-										user: this.createUserPayload(
-											data.dataValues
+											userPayload
 										)
 									});
 								} else {
@@ -181,8 +214,8 @@ class UserService {
 							.then(data => callback(null, data))
 							.catch(err => callback(err, null));
 					},
-					(email, callback) => {
-						this.UserRepository.findByEmail(email)
+					(decoded, callback) => {
+						this.UserRepository.findByEmail(decoded.email)
 							.then(data => {
 								if (data === null) {
 									throw new Error('Object did not exist');
@@ -202,6 +235,7 @@ class UserService {
 		});
 	}
 
+	// todo: discuss what's gonna be deleted with user
 	removeById(id) {
 		return this.UserRepository.removeById(id)
 			.then(data => {
@@ -254,12 +288,12 @@ class UserService {
 		});
 	}
 
-	// this must be used in class method...
-	createUserPayload(data) {
+	createUserPayload(data, id) {
 		this.payload = {
 			id: data.id,
 			name: data.name,
-			email: data.email
+			email: data.email,
+			defaultGroupId: id
 		};
 		return this.payload;
 	}

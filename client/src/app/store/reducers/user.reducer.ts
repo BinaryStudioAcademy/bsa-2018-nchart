@@ -1,13 +1,15 @@
 import { Actions as UserActions } from '@app/store/actions/user/user.actions';
 import { UserActionConstants } from '@app/store/actions/user/user.action-types';
-import { User, UserState } from '@app/models';
 import { combineReducers } from '@ngrx/store';
+import { UserState } from '@app/models/user-store.model';
+import { User } from '@app/models/user.model';
 
 export const initialState: UserState = {
 	info: {
 		id: null,
 		name: null,
-		email: null
+		email: null,
+		defaultGroupId: null
 	},
 	isLoading: null
 };

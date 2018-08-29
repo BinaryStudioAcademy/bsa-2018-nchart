@@ -20,7 +20,7 @@ storiesOf('Loading spinner', module)
                             text-align: center;
                             vertical-align: middle;' 
                     class="ui-main-block" 
-                    [loading-sp]="true" [spinnerSize]="'small'"
+                    [loading-sp]="true" [spSize]="'small'"
                     >
                         Small spinner 
                     </div>`,
@@ -34,7 +34,7 @@ storiesOf('Loading spinner', module)
                             text-align: center;
                             vertical-align: middle;' 
                     class="ui-main-block" 
-                    [loading-sp]="true" [spinnerSize]="'middle'"
+                    [loading-sp]="true" [spSize]="'middle'"
                     >
                         Middle spinner 
                     </div>`,
@@ -48,7 +48,7 @@ storiesOf('Loading spinner', module)
                             text-align: center;
                             vertical-align: middle;' 
                     class="ui-main-block" 
-                    [loading-sp]="true" [spinnerSize]="'big'"
+                    [loading-sp]="true" [spSize]="'big'"
                     >
                         Big spinner 
                     </div>`,
@@ -64,7 +64,7 @@ storiesOf('Loading spinner', module)
                     class="ui-main-block" 
                      [loading-sp]="true" 
                    
-                    [backgoundColor]="'#2ff1fe'">
+                    [spBackgroundColor]="'#2ff1fe'">
                         Spinner with background
                     </div>`,
 		props: {}
@@ -78,7 +78,7 @@ storiesOf('Loading spinner', module)
                             vertical-align: middle;' 
                     class="ui-main-block" 
                     [loading-sp]="true" 
-                    [backgoundColor]="'#2c2f2fab'">
+                    [spBackgroundColor]="'#2c2f2fab'">
                         Spinner with opacity background
                     </div>`,
 		props: {}

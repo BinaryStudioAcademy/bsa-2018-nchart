@@ -1,6 +1,8 @@
 import { Observable } from 'rxjs';
-import { ResponseScheme, Login, User, Register } from '@app/models';
-import { AuthenticatedUser } from '@app/models/user.model';
+import { AuthenticatedUser, User } from '@app/models/user.model';
+import { Register } from '@app/models/register.model';
+import { ResponseScheme } from '@app/models/response-scheme.model';
+import { Login } from '@app/models/login.model';
 
 export interface UserDomain {
 	register(payload: {

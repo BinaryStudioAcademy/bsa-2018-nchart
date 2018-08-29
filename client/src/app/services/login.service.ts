@@ -13,9 +13,12 @@ import {
 	passwordMatchValidator
 } from '@app/shared/components/form-field/form-validators';
 
-import { OptionalType, fieldsValidators } from '@app/models';
 import { Login } from '@app/models/login.model';
 import { Register } from '@app/models/register.model';
+import {
+	OptionalType,
+	fieldsValidators
+} from '@app/models/fields-validators.model';
 
 @Injectable()
 export class LoginService {

@@ -1,7 +1,8 @@
-import { AppState } from '@app/models';
 import { SchemeID } from '@app/models/normalizr.model';
+import { Dataset } from '../../models/dataset.model';
+import { AppState } from '@app/models/store.model';
 
-export const dataset = (id: SchemeID) => (state: AppState) =>
+export const dataset = (id: SchemeID) => (state: AppState): Dataset =>
 	state.datasets.byId[id] ? state.datasets.byId[id] : null;
 
 export const chartDataset = (id?: SchemeID) => (state: AppState) => {
@@ -13,3 +14,6 @@ export const chartDataset = (id?: SchemeID) => (state: AppState) => {
 
 	return null;
 };
+
+export const isDatasetLoading = () => (state: AppState) =>
+	state.datasets.isLoading;
