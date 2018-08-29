@@ -25,6 +25,7 @@ import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 // Drag&Drop
 import { DragulaModule } from 'ng2-dragula';
 import { TooltipModule } from 'primeng/tooltip';
+import { TableModule } from 'primeng/table';
 
 @NgModule({
 	imports: [
@@ -50,7 +51,8 @@ import { TooltipModule } from 'primeng/tooltip';
 		FormsModule,
 		ReactiveFormsModule,
 		TooltipModule,
-		SpinnerModule
+		SpinnerModule,
+		TableModule
 	],
 	exports: [
 		ButtonModule,
@@ -75,7 +77,8 @@ import { TooltipModule } from 'primeng/tooltip';
 		FormsModule,
 		ReactiveFormsModule,
 		TooltipModule,
-		SpinnerModule
+		SpinnerModule,
+		TableModule
 	],
 	declarations: []
 })
