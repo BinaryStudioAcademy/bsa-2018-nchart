@@ -84,7 +84,8 @@ class UserService {
 						this.UserRepository.save(user)
 							.then(data => {
 								const userPayload = this.createUserPayload(
-									data.dataValues, payload.group.id
+									data.dataValues,
+									payload.group.id
 								);
 								callback(
 									null,
@@ -160,7 +161,10 @@ class UserService {
 							});
 					},
 					(user, callback) => {
-						GroupService.findOneGroupUser({ userId: user.id, defaultGroup: true })
+						GroupService.findOneGroupUser({
+							userId: user.id,
+							defaultGroup: true
+						})
 							.then(data => {
 								if (data === null) {
 									throw new Error('Object did not exist');

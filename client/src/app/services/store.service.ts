@@ -24,11 +24,15 @@ export class StoreService {
 		return this.disconnect(subscriptions);
 	}
 
-	createSubscription(selector: any) {
-		return this.store$.pipe(
-			select(selector),
-			distinctUntilChanged((prev, curr) => equal(prev, curr))
-		);
+	createSubscription(selector?: any) {
+		if (selector) {
+			return this.store$.pipe(
+				select(selector),
+				distinctUntilChanged((prev, curr) => equal(prev, curr))
+			);
+		}
+
+		return this.store$.pipe(select(state => state));
 	}
 
 	dispatch(action: Action) {

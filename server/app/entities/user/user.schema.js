@@ -14,7 +14,10 @@ const userSchema = {
 			maxLength: 100,
 			regex: { pattern: namePattern.source, flags: 'i' }
 		},
-		email: { type: 'string', regex: { pattern: emailPattern.source, flags: 'i' } },
+		email: {
+			type: 'string',
+			regex: { pattern: emailPattern.source, flags: 'i' }
+		},
 		password: {
 			type: 'string',
 			minLength: 5,
