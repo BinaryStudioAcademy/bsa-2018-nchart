@@ -17,7 +17,7 @@ class GroupService {
 		return this.GroupRepository.saveGroupProject(obj);
 	}
 
-	findOneByQuery(query) {
+	findOneGroupUser(query) {
 		return this.GroupRepository.findOneGroupUser(query);
 	}
 

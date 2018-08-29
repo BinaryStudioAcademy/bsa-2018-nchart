@@ -5,12 +5,12 @@
 		[selectedStep]="selectedStep"
 	></app-stepper>
 	<div class="main-content">
-	<app-project-name [projectName]="projectName" (setProjectName)="changeProjectName($event)">
+	<app-project-name id="load" #viewItem [projectName]="projectName" (setProjectName)="changeProjectName($event)">
 	</app-project-name>
-		<app-load-data id="load" #viewItem></app-load-data>
-		<!-- <app-data-table *ngIf="false" id="table" #viewItem></app-data-table> -->
+		<app-load-data ></app-load-data>
+		<app-data-table *ngIf="isDataset()" id="table" #viewItem></app-data-table>
 		<app-list-charts *ngIf="isDataset()" id="charts" #viewItem></app-list-charts>
-		<app-custom-settings *ngIf="isDataset()" id="settings" #viewItem></app-custom-settings>
+		<app-dimension-settings *ngIf="isDataset()" id="settings" #viewItem></app-dimension-settings>
 		<app-custom-chart *ngIf="isCharts()" id="chart" #viewItem></app-custom-chart>
 		<app-export *ngIf="isCharts()" id="export" #viewItem></app-export>
 	</div>
