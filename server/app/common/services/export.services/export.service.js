@@ -1,10 +1,14 @@
 const PdfService = require('../export.services/pdf.service');
 const HtmlToPdfService = require('../export.services/htmlToPdf.service');
+const PngService = require('../export.services/png.service');
+const SvgService = require('../export.services/svg.service');
 
 class ExportService {
 	constructor() {
 		this.PdfService = PdfService;
 		this.HtmlToPdfService = HtmlToPdfService;
+		this.PngService = PngService;
+		this.SvgService = SvgService;
 	}
 
 	getFile(id, type) {
