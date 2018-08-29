@@ -28,11 +28,4 @@ group.post('/findOne', (req, res, next) => {
 		.catch(next);
 });
 
-group.post('/test', (req, res, next) => {
-	groupService
-		.findAllFullUserGroups(req.body, res)
-		.then(PayloadGeneratorService.nextWithData(next, res))
-		.catch(next);
-});
-
 module.exports = group;

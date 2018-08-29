@@ -29,6 +29,7 @@ class GroupService {
 							.catch(err => callback(err, null));
 					},
 					callback => {
+						// todo: omit unnecessary fields from payload
 						this.GroupRepository.saveGroup(obj)
 							.then(data => callback(null, data.dataValues))
 							.catch(err => callback(err, null));

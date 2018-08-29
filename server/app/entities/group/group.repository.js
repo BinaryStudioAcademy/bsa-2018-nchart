@@ -12,7 +12,7 @@ class GroupRepository extends Repository {
 	}
 
 	saveGroup(obj) {
-		return this.groupModel.create(obj, { attributes: ['id', 'name', 'companyId', 'createdAt'] });
+		return this.groupModel.create(obj);
 	}
 
 	saveGroupUser(obj) {
