@@ -44,6 +44,13 @@ project.post('/share', (req, res, next) => {
 		.catch(next);
 });
 
+// todo: retard route name
+project.post('/shareByEmail', (req, res, next) => {
+	ProjectService.shareProjectByEmail(req.body, res)
+		.then(PayloadGeneratorService.nextWithData(next, res))
+		.catch(next);
+});
+
 project.get('/:id/export', (req, res) => {
 	ProjectService.export(req.params.id, req.query.type).then(result => {
 		if (result) {

@@ -10,7 +10,8 @@ class DBError extends Error {
 			{ message: 'Wrong password', code: 6 },
 			{ message: 'jwt expired', code: 7 },
 			{ message: 'Incorrect file extension', code: 8 },
-			{ message: 'No file were uploaded', code: 9 }
+			{ message: 'No file were uploaded', code: 9 },
+			{ message: 'Can\'t share with yourself', code: 10 }
 		];
 	}
 

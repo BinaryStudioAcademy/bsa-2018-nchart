@@ -4,6 +4,7 @@ const ProjectRepository = require('./project.repository');
 const DatasetService = require('../dataset/dataset.service');
 const ChartService = require('../chart/chart.service');
 const GroupService = require('../group/group.service');
+const UserService = require('../user/user.service');
 const ExportService = require('../../common/services/export.services/export.service');
 
 // todo: wrong
@@ -216,7 +217,9 @@ class ProjectService {
 				});
 				return payload;
 			})
-			.catch(err => { throw err; });
+			.catch(err => {
+				throw err;
+			});
 	}
 
 	shareProject(obj) {
@@ -253,6 +256,44 @@ class ProjectService {
 						reject(err);
 					}
 					// todo: what should be here
+					resolve(payload);
+				}
+			);
+		});
+	}
+
+	shareProjectByEmail(obj, res) {
+		if (obj.email === res.locals.user.email) {
+			throw new Error('Can\'t share with yourself');
+		}
+		return new Promise((resolve, reject) => {
+			async.waterfall(
+				[
+					callback => {
+						UserService.findByEmail(obj.email)
+							.then(data => {
+								if (data !== null) {
+									return callback(null, data.dataValues.id);
+								}
+								throw new Error('Object did not exist');
+							});
+					},
+					(userId, callback) => {
+						this.shareProject(
+							{
+								userId,
+								projectId: obj.projectId,
+								accessLevelId: obj.accessLevelId
+							}
+						)
+							.then(data => callback(null, data))
+							.catch(err => callback(err, null));
+					}
+				],
+				(err, payload) => {
+					if (err) {
+						reject(err);
+					}
 					resolve(payload);
 				}
 			);
