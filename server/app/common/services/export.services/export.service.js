@@ -9,14 +9,14 @@ class ExportService {
 
 	getFile(id, type) {
 		switch (type) {
-		case 'pdf':
-			return this.PdfService.createPdf(id);
-		case 'png':
-			return this.PngService.createPng(id);
-		case 'svg':
-			return this.SvgService.createSvg(id);
-		default:
-			return '';
+			case 'pdf':
+				return this.PdfService.createPdf(id);
+			case 'png':
+				return this.PngService.createPng(id);
+			case 'svg':
+				return this.SvgService.createSvg(id);
+			default:
+				return '';
 		}
 	}
 

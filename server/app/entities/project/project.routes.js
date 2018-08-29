@@ -48,7 +48,6 @@ project.get('/:id/export', (req, res) => {
 });
 
 project.post('/:id/export', (req, res) => {
-	console.log(req.body);
 	ProjectService.exportHtml(req.params.id, req.body).then(result => {
 		if (result) {
 			res.writeHead(200, {
