@@ -26,6 +26,10 @@ export const datasetDataReducer = (
 					value: action.payload.value
 				}
 			};
+		case DatasetActions.DELETE_ROW: {
+			delete state[action.payload.id];
+			return state;
+		}
 		default:
 			return state;
 	}

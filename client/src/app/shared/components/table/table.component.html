@@ -3,25 +3,55 @@
 	[columns]="columns"
 	[scrollable]="true"
 	[rows]="20"
-	[scrollHeight]="'200px'"
 	[virtualScroll]="true"
+	[virtualRowHeight]="22"
 	[totalRecords]="data.length"
-	[virtualRowHeight]="28"
 	class="data-table"
+	[(selection)]="selectedRows" dataKey="vin"
 >
-	<ng-template pTemplate="header" let-columns>
+	<ng-template pTemplate="header" let-headerData>
 		<tr>
-			<th *ngFor="let col of columns">
-				{{col.title}}
+			<th class="header-cell number-cell">
+				<label>
+					<span pEditableColumn="headerData column-no">No</span>
+					<p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+				</label>
+			</th>
+			<th class="header-cell" *ngFor="let col of columns; let i = index" >
+				<div>
+					<span pEditableColumn="headerData">
+						<p-cellEditor>
+							<ng-template pTemplate="input">
+								<input
+									type="text"
+									[value]="headerData[i]"
+									(keydown)="onHeaderKeyDown($event, i)"
+									(blur)="onHeaderBlurDown($event, i)"
+								>
+							</ng-template>
+							<ng-template pTemplate="output">
+								{{headerData[i]}}
+							</ng-template>
+						</p-cellEditor>
+					</span>
+					<app-button-action (click)="getColumnId(i)" [items]="headerItems"></app-button-action>
+				</div>
 			</th>
 		</tr>
 	</ng-template>
-	<ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
-		<tr>
+	<ng-template pTemplate="body" let-columns="columns" let-rowData let-rowIndex="rowIndex">
+		<tr pSelectableRow="rowData">
+			<td class="number-cell">
+				<label>
+					<span class="column-no">{{rowIndex}}</span>
+					<p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+					<app-button-action (click)="getDataRowId(rowIndex)" [items]="rowItems"></app-button-action>
+				</label>
+			</td>
 			<td *ngFor="let col of columns; let i = index" pEditableColumn="rowData">
 				<p-cellEditor>
 					<ng-template pTemplate="input">
-						<input pInputText class="ui-widget ui-inputtext"
+						<input
 							type="text"
 							[value]="rowData[i]"
 							(keydown)="onKeyDown($event, rowIndex, i)"

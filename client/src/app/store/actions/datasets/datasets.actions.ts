@@ -1,5 +1,6 @@
 import { DatasetActions } from '@app/store/actions/datasets/datasets.action-types';
 import { AppAction, FailedAction } from '@app/models/store.model';
+import { SchemeID } from '@app/models/normalizr.model';
 
 export class ParseByText extends AppAction<{ text: string }> {
 	readonly type = DatasetActions.PARSE_PLAIN_TEXT;
@@ -35,11 +36,11 @@ export class ChangeHeaderTitle extends AppAction<{
 	readonly type = DatasetActions.CHANGE_HEADER_TITLE;
 }
 
-export class DeleteRow extends AppAction<{ id: string }> {
+export class DeleteRow extends AppAction<{ id: string | number }> {
 	readonly type = DatasetActions.DELETE_ROW;
 }
 
-export class DeleteColumn extends AppAction<{ id: string }> {
+export class DeleteColumn extends AppAction<{ id: string | number }> {
 	readonly type = DatasetActions.DELETE_COLUMN;
 }
 
