@@ -1,30 +1,31 @@
 import { Injectable } from '@angular/core';
+
 @Injectable()
 export class BarChartService {
 	values: number[];
 	data: any[];
-
 	getData(data: any) {
-		// todo
-		if (data.length === 4) {
-			if (data[0].values.length) {
-				this.data = compressArray(mapData(data[0].values));
-			}
-			if (data[2].values.length) {
-				let temp = mapData(data[0].values);
-				temp = mapValues(temp, data[2].values);
-				this.data = compressArray(temp);
-			}
-			if (data[1].values.length) {
-				this.data = mapData(data[0].values);
-				this.data = mapValues(this.data, data[2].values);
-				this.data = mapGroupsId(this.data, data[1].values);
-			}
-			return this.data;
+		const dataObj = arrayToObject(data);
+
+		this.data = mapData(dataObj.XAxis);
+		this.data = mapValues(this.data, dataObj.Size);
+		this.data = mapGroupsId(this.data, dataObj.Group);
+
+		if (!dataObj.Group.length) {
+			this.data = compressArray(this.data);
 		}
+		return this.data;
 	}
 
 	constructor() {}
+}
+
+export function arrayToObject(data: any[]) {
+	const dataObj = data.reduce((obj, item) => {
+		obj[item.name] = item.values;
+		return obj;
+	}, {});
+	return dataObj;
 }
 
 export function mapData(original: any[]) {

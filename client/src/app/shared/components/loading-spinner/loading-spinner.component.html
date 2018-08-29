@@ -1,11 +1,10 @@
+<ng-content></ng-content>
 <div
     *ngIf="loadingSp"
-    class="spinner-container"
+    [ngClass]="getClasses()"
     [style.background-color]="spBackgroundColor"
 >
-    <div
-        [ngClass]="getDoubleRingClasses()"
-    >
+    <div [ngClass]="getDoubleRingClasses()">
         <div
             class="outer-section"
             [ngStyle]="getOuterSectionStyle()"

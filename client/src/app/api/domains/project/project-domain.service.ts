@@ -19,14 +19,14 @@ export class ProjectDomainService implements ProjectDomain {
 		);
 	}
 
-	save(payload: {
-		project: OriginProject;
-	}): Observable<ResponseScheme<OriginProject>> {
-		return this.httpService.makeRequest<ResponseScheme<OriginProject>>(
+	save(payload): Observable<ResponseScheme<any>> {
+		return this.httpService.makeRequest<ResponseScheme<any>>(
 			new ServiceRequest(
 				RequestType.POST,
 				this.projectPath,
-				null,
+				{
+					'Content-Type': 'application/json'
+				},
 				payload
 			)
 		);
