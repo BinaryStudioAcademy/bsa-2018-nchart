@@ -24,5 +24,11 @@
 		</div>
 		</li>
 	</ul>
-	<app-button size="small" label="Save" type="secondary" [disabled]="disableSaveBtn"></app-button>
+	<app-button
+		size="small"
+		label="Save"
+		type="secondary"
+		[disabled]="disableSaveBtn"
+		(onclick)="saveProject()"
+	></app-button>
 </div>

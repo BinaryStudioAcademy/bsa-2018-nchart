@@ -3,7 +3,7 @@ const sequelize = require('../../../../db/connection');
 
 const ProjectChart = sequelize.define('projectCharts', {
 	chartId: {
-		type: Sequelize.INTEGER,
+		type: Sequelize.STRING,
 		allowNull: false,
 		primaryKey: true
 	},
