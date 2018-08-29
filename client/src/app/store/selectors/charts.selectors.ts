@@ -34,15 +34,19 @@ export const getFirstChart = () => (state: AppState): Chart => {
 	const fChart: Chart<SchemeID[], SchemeID[]> =
 		state.charts.byId[state.charts.all[0]];
 
-	return {
-		...fChart,
-		dimensionSettings: fChart.dimensionSettings.map(
-			id => state.defaultChartSettings.dimensionSettings[id]
-		),
-		customizeSettings: fChart.customizeSettings.map(
-			id => state.defaultChartSettings.customizeSettings[id]
-		)
-	};
+	if (fChart) {
+		return {
+			...fChart,
+			dimensionSettings: fChart.dimensionSettings.map(
+				id => state.defaultChartSettings.dimensionSettings[id]
+			),
+			customizeSettings: fChart.customizeSettings.map(
+				id => state.defaultChartSettings.customizeSettings[id]
+			)
+		};
+	}
+
+	return null;
 };
 
 export const isChartsLoading = () => (state: AppState) =>
