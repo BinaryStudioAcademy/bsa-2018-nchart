@@ -119,8 +119,6 @@ export const active = (
 		case constants.LOAD_ONE_PROJECT__COMPLETE:
 		case constants.SAVE_PROJECT__COMPLETE:
 			return action.payload.projectId;
-		case constants.SAVE_PROJECT__COMPLETE:
-			return action.payload.projectId;
 		default:
 			return state;
 	}
