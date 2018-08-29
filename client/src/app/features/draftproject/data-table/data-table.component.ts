@@ -136,20 +136,6 @@ export class DataTableComponent implements OnInit, OnDestroy {
 	}
 
 	change({ value, i, col }) {
-		// if (this.columns[col].type !== typeof(value)) {
-		// 	return;
-		// }
-		// switch (this.columns[col].type) {
-		// 	case 'string':
-		// 		value += '';
-		// 		break;
-		// 	case 'number':
-		// 		value = +value ? +value : 0;
-		// 		break;
-		// 	case 'boolean':
-		// 		value = !!value;
-		// 		break;
-		// }
 		value = this.convertDataType(this.columns[col].type, value);
 		this.storeService.dispatch(
 			new DatasetActions.ChangeContent({
