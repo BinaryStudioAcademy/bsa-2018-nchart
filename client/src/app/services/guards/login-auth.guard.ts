@@ -9,10 +9,13 @@ import { Observable, of } from 'rxjs';
 import { TokenService } from '@app/services/token.service';
 
 import { VerifyToken } from '@app/store/actions/user/user.actions';
-import { isVerifiedToken } from '@app/store/selectors/user.selectors';
-import { switchMap, catchError, elementAt } from 'rxjs/operators';
-import { AppState } from '@app/models/store.model';
-import { Store, select } from '@ngrx/store';
+import {
+	isVerifiedToken,
+	userLoadingAndVerifiedToken
+} from '@app/store/selectors/user.selectors';
+import { switchMap, tap, take, last, map, first } from 'rxjs/operators';
+import { StoreService } from '@app/services/store.service';
+import { TokenVerificationResult } from '@app/models/token-verification-result.model';
 
 @Injectable({
 	providedIn: 'root'
@@ -20,41 +23,67 @@ import { Store, select } from '@ngrx/store';
 export class LoginAuthGuard implements CanActivate {
 	constructor(
 		private tokenService: TokenService,
-		private store: Store<AppState>,
+		private storeService: StoreService,
 		private router: Router
 	) {}
 
-	checkIsVerifiedToken() {
-		return this.store.pipe(
-			select(isVerifiedToken()),
-			elementAt(1)
-		);
+	verifyToken() {
+		return this.storeService
+			.createSubscription(userLoadingAndVerifiedToken())
+			.pipe(
+				map(value => ({
+					...value,
+					token: this.tokenService.getToken()
+				})),
+				tap(value => {
+					if (
+						!value.isUserLoading &&
+						!value.isVerifiedToken &&
+						value.token
+					) {
+						this.storeService.dispatch(
+							new VerifyToken({ token: value.token })
+						);
+					}
+				}),
+				take(3),
+				last(),
+				switchMap(
+					value =>
+						value.isVerifiedToken
+							? of(TokenVerificationResult.verifiedToken)
+							: of(TokenVerificationResult.notVerifiedToken)
+				)
+			);
 	}
+
 	canActivate(
 		next: ActivatedRouteSnapshot,
 		state: RouterStateSnapshot
 	): Observable<boolean> | Promise<boolean> | boolean {
-		const token = this.tokenService.getToken();
-
-		if (token) {
-			this.store.dispatch(
-				new VerifyToken({ token: this.tokenService.getToken() })
-			);
-
-			return this.checkIsVerifiedToken().pipe(
-				switchMap((result: { isVerified: boolean }) => {
-					result.isVerified === true
-						? this.router.navigate(['/app/project/draft'])
-						: this.router.navigate(['/app']);
-
-					return of(true);
-				}),
-				catchError(error => {
-					return of(false);
-				})
-			);
-		} else {
-			return true;
-		}
+		return this.storeService.createSubscription(isVerifiedToken()).pipe(
+			first(),
+			switchMap<boolean, TokenVerificationResult>(
+				(isVerified: boolean) =>
+					isVerified
+						? of(TokenVerificationResult.verifiedToken)
+						: this.tokenService.getToken()
+							? this.verifyToken()
+							: of(TokenVerificationResult.noToken)
+			),
+			switchMap((value: TokenVerificationResult) => {
+				switch (value) {
+					case TokenVerificationResult.verifiedToken:
+						this.router.navigate(['/app/project/draft']);
+						return of(true);
+					case TokenVerificationResult.notVerifiedToken:
+						this.router.navigate(['/app']);
+						return of(true);
+					case TokenVerificationResult.noToken:
+					default:
+						return of(true);
+				}
+			})
+		);
 	}
 }
