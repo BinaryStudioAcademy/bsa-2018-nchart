@@ -39,7 +39,7 @@ const parseHeaders = workbook => {
 	for (C = range.s.c; C <= range.e.c; C += 1) {
 		const cell = sheet[XLSX.utils.encode_cell({ c: C, r: R })];
 		let hdr = 'UNKNOWN'; // <-- replace with your desired default
-		if (!cell) {
+		if (!cell || cell.v === '' || cell.v === ' ') {
 			countBreak += 1;
 			/* if 3 cell in a row undefined - break */
 			if (countBreak === 3) {
@@ -124,8 +124,8 @@ const parseData = (data, headers) => {
 		if (countNull[headers[c]] === dataInColumns[headers[c]].data.length) {
 			dataInColumns[headers[c]].type = 'null';
 		} else if (
-			countNumber[headers[c]] === dataInColumns[headers[c]].data.length
-			&& countNumber[headers[c]] !== countNull[headers[c]]
+			countNumber[headers[c]] === dataInColumns[headers[c]].data.length &&
+			countNumber[headers[c]] !== countNull[headers[c]]
 		) {
 			dataInColumns[headers[c]].type = 'number';
 		} else {
@@ -149,64 +149,67 @@ const parseData = (data, headers) => {
 	return payload;
 };
 
-const readFile = path => new Promise((resolve, reject) => {
-	const headers = getHeaders(path);
-	const file = fs.createReadStream(path);
-	const buffers = [];
-	file.on('data', data => {
-		buffers.push(data);
+const readFile = path =>
+	new Promise((resolve, reject) => {
+		const headers = getHeaders(path);
+		const file = fs.createReadStream(path);
+		const buffers = [];
+		file.on('data', data => {
+			buffers.push(data);
+		});
+		file.on('end', () => {
+			const buffer = Buffer.concat(buffers);
+			const workbook = XLSX.read(buffer); // works
+			const data = XLSX.utils.sheet_to_json(
+				workbook.Sheets[workbook.SheetNames[0]],
+				{ header: headers, range: 1, defval: null }
+			);
+			const payload = parseData(data, headers);
+			if (payload.length === 0) {
+				reject(new Error('Messed up file'));
+			}
+			resolve(payload);
+		});
 	});
-	file.on('end', () => {
-		const buffer = Buffer.concat(buffers);
-		const workbook = XLSX.read(buffer); // works
+
+const readString = content =>
+	new Promise((resolve, reject) => {
+		const headers = getHeaders(null, content);
+		const workbook = XLSX.read(content, { type: 'string' });
 		const data = XLSX.utils.sheet_to_json(
 			workbook.Sheets[workbook.SheetNames[0]],
-			{ header: headers, range: 1, defval: null }
+			{ header: headers, range: 1 }
 		);
 		const payload = parseData(data, headers);
-		if (payload.length === 0) {
+		if (payload.data.length === 0) {
 			reject(new Error('Messed up file'));
 		}
 		resolve(payload);
 	});
-});
 
-const readString = content => new Promise((resolve, reject) => {
-	const headers = getHeaders(null, content);
-	const workbook = XLSX.read(content, { type: 'string' });
-	const data = XLSX.utils.sheet_to_json(
-		workbook.Sheets[workbook.SheetNames[0]],
-		{ header: headers, range: 1 }
-	);
-	const payload = parseData(data, headers);
-	if (payload.data.length === 0) {
-		reject(new Error('Messed up file'));
-	}
-	resolve(payload);
-});
-
-const processFile = path => new Promise((resolve, reject) => {
-	async.waterfall(
-		[
-			callback => {
-				readFile(path)
-					.then(data => {
-						callback(null, data);
-					})
-					.catch(err => {
-						callback(err, null);
-					});
+const processFile = path =>
+	new Promise((resolve, reject) => {
+		async.waterfall(
+			[
+				callback => {
+					readFile(path)
+						.then(data => {
+							callback(null, data);
+						})
+						.catch(err => {
+							callback(err, null);
+						});
+				}
+			],
+			(error, payload) => {
+				FsService.deleteFile(path).catch(err => reject(err));
+				if (error) {
+					reject(error);
+				}
+				resolve(payload);
 			}
-		],
-		(error, payload) => {
-			FsService.deleteFile(path).catch(err => reject(err));
-			if (error) {
-				reject(error);
-			}
-			resolve(payload);
-		}
-	);
-});
+		);
+	});
 
 module.exports = {
 	processFile,
