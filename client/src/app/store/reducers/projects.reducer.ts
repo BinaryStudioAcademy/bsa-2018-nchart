@@ -7,6 +7,7 @@ import { Actions as datasetsActions } from '@app/store/actions/datasets/datasets
 import { Actions as chartActions } from '@app/store/actions/charts/charts.actions';
 import { ChartsActionConstants } from '@app/store/actions/charts/charts.action-types';
 import { ProjectsState } from '@app/models/projects-store.model';
+import { omit } from 'lodash';
 
 export const initialState: ProjectsState = {
 	byId: {},
@@ -25,6 +26,8 @@ const all = (state = initialState.all, action: ProjectsActions) => {
 			return [...state, action.payload.project.id];
 		case constants.LOAD_ONE_PROJECT__COMPLETE:
 			return [...state, action.payload.projectId];
+		case constants.SAVE_PROJECT__COMPLETE:
+			return [...state.filter(el => el !== action.payload.oldProjectId)];
 		default:
 			return state;
 	}
@@ -79,6 +82,10 @@ const byId = (
 					name: action.payload.name
 				}
 			};
+		case constants.SAVE_PROJECT__COMPLETE:
+			return {
+				...omit(state, action.payload.oldProjectId)
+			};
 		default:
 			return state;
 	}
@@ -110,6 +117,8 @@ export const active = (
 		case constants.CREATE_DRAFT_PROJECT__COMPLETE:
 			return action.payload.project.id;
 		case constants.LOAD_ONE_PROJECT__COMPLETE:
+			return action.payload.projectId;
+		case constants.SAVE_PROJECT__COMPLETE:
 			return action.payload.projectId;
 		default:
 			return state;

@@ -18,7 +18,7 @@ import { chartScheme } from '@app/schemes/chart.schema';
 import { ChartService } from '@app/services/chart.service';
 import { Chart } from '@app/models/chart.model';
 import { getActiveProject } from '@app/store/selectors/projects.selectors';
-import { withLatestFrom } from 'rxjs/internal/operators';
+import { withLatestFrom, filter } from 'rxjs/internal/operators';
 import { getActiveChartId } from '@app/store/selectors/userCharts';
 import { ChartTypeDomainService } from '@app/api/domains/chart/chart.domain';
 
@@ -65,6 +65,7 @@ export class ChartsEffects {
 		ofType(ChartsActionConstants.CREATE_CHART),
 		switchMap((action: CreateChart) => {
 			return this.storeService.createSubscription(getFirstChart()).pipe(
+				filter(el => !!el),
 				switchMap((fchart: Chart) => {
 					return this.chartService.createChart({
 						chartTypeId: fchart.id,

@@ -60,7 +60,8 @@ export class SaveProject extends AppAction<{ id: SchemeID }> {
 }
 
 export class SaveProjectComplete extends AppAction<{
-	projectId?: SchemeID;
+	projectId: SchemeID;
+	oldProjectId: SchemeID;
 }> {
 	readonly type = ProjectsActionConstants.SAVE_PROJECT__COMPLETE;
 }

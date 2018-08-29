@@ -10,6 +10,9 @@ export const project = (id?: SchemeID) => (state: AppState): Project =>
 		? state.projects.byId[id || state.projects.active]
 		: null;
 
+export const activeProjectId = () => (state: AppState): SchemeID =>
+	state.projects.active ? state.projects.active : null;
+
 export const isProjectDataset = (id?: SchemeID) => (
 	state: AppState
 ): boolean => {
@@ -17,6 +20,16 @@ export const isProjectDataset = (id?: SchemeID) => (
 
 	if (selectedProject) {
 		return !!selectedProject.datasets.length;
+	}
+
+	return false;
+};
+
+export const isActiveDraft = () => (state: AppState) => {
+	const p = project()(state);
+
+	if (p) {
+		return p.isDraft;
 	}
 
 	return false;
