@@ -12,7 +12,7 @@ class GroupRepository extends Repository {
 	}
 
 	saveGroup(obj) {
-		return this.groupModel.create(obj, {attributes: ['id', 'name', 'companyId', 'createdAt']});
+		return this.groupModel.create(obj, { attributes: ['id', 'name', 'companyId', 'createdAt'] });
 	}
 
 	saveGroupUser(obj) {
@@ -38,6 +38,21 @@ class GroupRepository extends Repository {
 	findAllGroupUser(query) {
 		return this.groupUserModel.findAll({
 			where: query
+		});
+	}
+
+	// userId, name - group.name
+	findAllFullUserGroups(obj) {
+		return this.groupUserModel.findAll({
+			where: { userId: obj.userId },
+			include: [
+				{
+					model: this.groupModel,
+					where: {
+						name: obj.name
+					}
+				}
+			]
 		});
 	}
 }

@@ -5,15 +5,7 @@ const PayloadGeneratorService = require('../../common/services/payload-generator
 
 group.use(tokenInfoMiddleware);
 
-// test route
 group.post('/', (req, res, next) => {
-	groupService
-		.saveGroup(req.body)
-		.then(PayloadGeneratorService.nextWithData(next, res))
-		.catch(next);
-});
-
-group.post('/test', (req, res, next) => {
 	groupService
 		.saveFullGroup(req.body, res)
 		.then(PayloadGeneratorService.nextWithData(next, res))
@@ -32,6 +24,13 @@ group.post('/user', (req, res, next) => {
 group.post('/findOne', (req, res, next) => {
 	groupService
 		.findOneGroupUser(req.body)
+		.then(PayloadGeneratorService.nextWithData(next, res))
+		.catch(next);
+});
+
+group.post('/test', (req, res, next) => {
+	groupService
+		.findAllFullUserGroups(req.body, res)
 		.then(PayloadGeneratorService.nextWithData(next, res))
 		.catch(next);
 });

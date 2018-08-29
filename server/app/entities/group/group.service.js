@@ -15,6 +15,20 @@ class GroupService {
 			async.waterfall(
 				[
 					callback => {
+						// check name duplicates
+						this.findAllFullUserGroups({
+							userId: res.locals.user.id,
+							name: obj.name
+						})
+							.then(data => {
+								if (data.length === 0) {
+									return callback(null);
+								}
+								throw new Error('Folder with such name already exists');
+							})
+							.catch(err => callback(err, null));
+					},
+					callback => {
 						this.GroupRepository.saveGroup(obj)
 							.then(data => callback(null, data.dataValues))
 							.catch(err => callback(err, null));
@@ -25,10 +39,9 @@ class GroupService {
 								groupId: group.id,
 								userId: res.locals.user.id,
 								defaultGroup: false
-
 							}
 						)
-							.then(() => callback(group))
+							.then(() => callback(null, group))
 							.catch(err => callback(err, null));
 					}
 				],
@@ -60,6 +73,10 @@ class GroupService {
 
 	findAllByQuery(query) {
 		return this.GroupRepository.findAllGroupUser(query);
+	}
+
+	findAllFullUserGroups(query) {
+		return this.GroupRepository.findAllFullUserGroups(query);
 	}
 }
 
