@@ -2,31 +2,107 @@
 @import ../variables
 
 .data-table
+	.ui-table
+		border: 2px solid $disabledColor
+		border-radius: 3px
+		margin-top: 20px
+		.ui-table-tbody>tr>td.ui-editing-cell input,
+		.ui-table-thead>tr>th input
+			outline: none
+			text-align: center
+		.ui-table-thead>tr>th input
+			border: none
+			color: $secondaryTextColor
+			font-size: 1rem
+			width: 100px
 	.ui-table .ui-table-thead > tr > th
 		border: none
 		color: $secondaryTextColor
 		font-weight: 400
 	tr
-		height: 60px
+		height: 20px
 		border-bottom: 2px solid $disabledColor
 		background-color: $stateDefaultBgColor
 		&:last-child
 			border-bottom: 0
 	.ui-table-thead tr
 		border-bottom: 2px solid $disabledColor
+		// display: flex
+		// justify-content: space-around
 	.ui-table .ui-table-tbody > tr > td
 		border: none
 		background-color: $stateDefaultBgColor
 		text-align: center
+		padding: 0
+		&.ui-editable-column
+			padding: 0
 	.ui-table .ui-table-tbody>tr>td.ui-editing-cell
-		input.ui-widget.ui-inputtext
-			padding: 12px
-			border: 2px solid $disabledColor
-			border-radius: 3px
-			box-shadow: none
-			width: 100%
+		padding: 0
+	.ui-table-scrollable-header
+		overflow: visible
+		th
+			position: relative
+	.ui-table-scrollable-body
+		max-height: 400px
+		overflow: visible
+	.ui-table-tbody
+		max-height: 400px
+	.header-cell
+		font-size: 1rem
+		&>div
+			margin-right: -30px
+		span
+			vertical-align: middle
 			text-align: center
-			&:focus,
-			&:hover
-				border: 2px solid $activeColor!important
-				outline: none!important
+		p-celleditor
+			vertical-align: middle
+			width: 100px
+			display: inline-block
+	.ui-checkbox-wrp
+		padding: 0
+	.header-cell.number-cell,
+	.number-cell
+		margin-right: 0
+		width: 6rem
+		label
+			display: flex
+			align-items: center
+			justify-content: space-between
+			color: $secondaryTextColor
+			padding: 0 8px 
+			span.column-no
+				min-width: 2rem
+				text-align: left
+			.ui-buttonset.ui-splitbutton .ui-widget.ui-button, 
+			.ui-buttonset.ui-splitbutton .ui-button
+				height: 20px
+		.ui-chkbox .ui-chkbox-box
+			position: relative
+			top: 0
+			width: 20px
+	.header-cell.number-cell
+		padding: 0
+		label
+			font-size: 1rem
+			padding-right: 22px
+	.ui-checkbox-wrp
+		width: 24px
+	.ui-buttonset.ui-splitbutton
+		border: none
+		box-shadow: none
+		position: relative
+		z-index: unset
+		background-color: $stateDefaultBgColor
+	.ui-buttonset.ui-splitbutton .ui-widget.ui-button, 
+	.ui-buttonset.ui-splitbutton .ui-button
+		padding: 0
+		height: 28px
+		width: 30px
+		&:hover,
+		&:focus,
+		&:active
+			background-color: $stateDefaultBgColor
+			box-shadow: none
+			color: $stateActiveTextColor
+	.ui-menu .ui-menuitem > .ui-menuitem-link
+		text-align: left

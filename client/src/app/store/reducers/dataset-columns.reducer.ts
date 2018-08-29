@@ -27,6 +27,10 @@ export const datasetColumnsReducer = (
 				}
 			};
 		}
+		case DatasetActions.DELETE_COLUMN: {
+			delete state[action.payload.id];
+			return state;
+		}
 		default:
 			return state;
 	}

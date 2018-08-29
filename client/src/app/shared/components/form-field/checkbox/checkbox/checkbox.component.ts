@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -7,13 +7,17 @@ import { FormControl } from '@angular/forms';
 })
 export class CheckboxComponent implements OnInit {
 	@Input()
-	control: FormControl;
+	checkedAll;
+	@Input()
+	control: FormControl = new FormControl();
 	@Input()
 	label: string;
 	@Input()
 	value: any;
 	@Input()
 	disabled: boolean;
+	@Output()
+	change = new EventEmitter();
 
 	constructor() {}
 

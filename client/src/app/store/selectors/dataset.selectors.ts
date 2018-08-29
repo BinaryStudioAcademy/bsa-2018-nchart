@@ -15,5 +15,29 @@ export const chartDataset = (id?: SchemeID) => (state: AppState) => {
 	return null;
 };
 
+export const getDatasetValues = () => (state: AppState) => {
+	const activeDataId = chartDataset()(state).modified.data;
+	return {
+		values: activeDataId.map(d =>
+			d.map(id => state.datasetData[id].value)
+		),
+		ids: activeDataId.map(d =>
+			d.map(id => state.datasetData[id].id)
+		)
+	};
+};
+
+export const getDatasetHeaders = () => (state: AppState) => {
+	const activeDataId = chartDataset()(state).modified.columns;
+	return {
+		values: activeDataId.map(col =>
+			state.datasetColumns[col].title
+		),
+		ids: activeDataId.map(col =>
+			state.datasetColumns[col].id
+		)
+	};
+};
+
 export const isDatasetLoading = () => (state: AppState) =>
 	state.datasets.isLoading;
