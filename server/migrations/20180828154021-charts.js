@@ -78,7 +78,8 @@ module.exports = {
 						.then(() => callback(null))
 						.catch(err => callback(err, null));
 				}
-			], (err, payload) => {
+			],
+			(err, payload) => {
 				if (err) {
 					reject(err);
 				}
@@ -165,7 +166,8 @@ module.exports = {
 						.then(() => callback(null))
 						.catch(err => callback(err, null));
 				}
-			], (err, payload) => {
+			],
+			(err, payload) => {
 				if (err) {
 					reject(err);
 				}

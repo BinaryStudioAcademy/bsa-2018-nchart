@@ -5,9 +5,16 @@ import {
 	UserChart
 } from '@app/models/user-chart-store.model';
 import { dataset } from '@app/store/selectors/dataset.selectors';
-import {Chart, CustomizeSettingsState, DimensionSettingsState} from '@app/models/chart.model';
-import {DatasetColumnState, DatasetDataState} from '@app/models/dataset.model';
-import {project} from '@app/store/selectors/projects.selectors';
+import {
+	Chart,
+	CustomizeSettingsState,
+	DimensionSettingsState
+} from '@app/models/chart.model';
+import {
+	DatasetColumnState,
+	DatasetDataState
+} from '@app/models/dataset.model';
+import { project } from '@app/store/selectors/projects.selectors';
 
 export const userChart = (id?: SchemeID) => (state: AppState): UserChart =>
 	state.userCharts.byId[id || state.userCharts.active]
@@ -74,32 +81,28 @@ export const mappingDimensions = () => (state: AppState): any => {
 export const getAllChartsByProject = (id: SchemeID) => (state: AppState) => {
 	const proj = project(id)(state);
 
-	return proj.charts.reduce(
-		(acc, idC) => {
-			acc[idC] = userChart(idC)(state);
-			return acc;
-		},
-		{}
-	);
+	return proj.charts.reduce((acc, idC) => {
+		acc[idC] = userChart(idC)(state);
+		return acc;
+	}, {});
 };
 
 export const getAllDatasetByProject = (id: SchemeID) => (state: AppState) => {
 	const proj = project(id)(state);
 
-	return proj.datasets.reduce(
-		(acc, idD) => {
-			acc[idD] = dataset(idD)(state);
-			return acc;
-		},
-		{}
-	);
+	return proj.datasets.reduce((acc, idD) => {
+		acc[idD] = dataset(idD)(state);
+		return acc;
+	}, {});
 };
 
-export const getDimensionSet = () => (state: AppState): DimensionSettingsState =>
-	state.userChartSettings.dimensionSettings;
+export const getDimensionSet = () => (
+	state: AppState
+): DimensionSettingsState => state.userChartSettings.dimensionSettings;
 
-export const getCustomizeSet = () => (state: AppState): CustomizeSettingsState =>
-	state.userChartSettings.customizeSettings;
+export const getCustomizeSet = () => (
+	state: AppState
+): CustomizeSettingsState => state.userChartSettings.customizeSettings;
 
 export const getDatasetCol = () => (state: AppState): DatasetColumnState =>
 	state.datasetColumns;
@@ -107,14 +110,14 @@ export const getDatasetCol = () => (state: AppState): DatasetColumnState =>
 export const getDatasetData = () => (state: AppState): DatasetDataState =>
 	state.datasetData;
 
-export const getFullProject = (id) => (state: AppState) => {
+export const getFullProject = id => (state: AppState) => {
 	return {
 		chart: getAllChartsByProject(id)(state),
 		dataset: getAllDatasetByProject(id)(state),
 		datasetColumn: getDatasetCol()(state),
 		datasetData: getDatasetData()(state),
 		project: {
-			[id]:  project(id)(state)
+			[id]: project(id)(state)
 		},
 		dimensionSetting: getDimensionSet()(state),
 		customizeSetting: getCustomizeSet()(state)
