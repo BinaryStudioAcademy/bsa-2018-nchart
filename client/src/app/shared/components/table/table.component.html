@@ -44,8 +44,8 @@
 			<td class="number-cell">
 				<label>
 					<span class="column-no">{{rowIndex}}</span>
-					<p-tableCheckbox [value]="rowData"></p-tableCheckbox>
 					<app-button-action (click)="getDataRowId(rowIndex)" [items]="rowItems"></app-button-action>
+					<p-tableCheckbox [value]="rowData"></p-tableCheckbox>
 				</label>
 			</td>
 			<td *ngFor="let col of columns; let i = index" pEditableColumn="rowData">

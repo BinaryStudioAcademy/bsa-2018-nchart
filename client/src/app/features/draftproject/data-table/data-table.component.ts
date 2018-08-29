@@ -19,12 +19,6 @@ export class DataTableComponent implements OnInit, OnDestroy {
 	headerId: number;
 	rowId: number;
 	headerItems = [{
-		label: 'Delete column',
-		icon: 'fa fa-trash',
-		command: () => {
-			this.removeColumn();
-		}
-	}, {
 		label: 'New column',
 		icon: 'fa fa-plus',
 		command: () => {
@@ -44,6 +38,12 @@ export class DataTableComponent implements OnInit, OnDestroy {
 		label: 'To boolean',
 		command: () => {
 			this.columnToBoolean();
+		}
+	}, {
+		label: 'Delete column',
+		icon: 'fa fa-trash',
+		command: () => {
+			this.removeColumn();
 		}
 	}];
 	rowItems = [{

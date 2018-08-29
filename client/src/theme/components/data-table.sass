@@ -14,7 +14,7 @@
 			border: none
 			color: $secondaryTextColor
 			font-size: 1rem
-			width: 100px
+			width: 60px
 	.ui-table .ui-table-thead > tr > th
 		border: none
 		color: $secondaryTextColor
@@ -56,7 +56,7 @@
 			text-align: center
 		p-celleditor
 			vertical-align: middle
-			width: 100px
+			width: 60px
 			display: inline-block
 	.ui-checkbox-wrp
 		padding: 0
@@ -71,7 +71,7 @@
 			color: $secondaryTextColor
 			padding: 0 8px 
 			span.column-no
-				min-width: 2rem
+				min-width: 1rem
 				text-align: left
 			.ui-buttonset.ui-splitbutton .ui-widget.ui-button, 
 			.ui-buttonset.ui-splitbutton .ui-button
@@ -84,7 +84,8 @@
 		padding: 0
 		label
 			font-size: 1rem
-			padding-right: 22px
+		.ui-checkbox-wrp
+			padding-left: 22px
 	.ui-checkbox-wrp
 		width: 24px
 	.ui-buttonset.ui-splitbutton
@@ -92,17 +93,31 @@
 		box-shadow: none
 		position: relative
 		z-index: unset
+		width: 20px
+		margin-right: 5px
 		background-color: $stateDefaultBgColor
 	.ui-buttonset.ui-splitbutton .ui-widget.ui-button, 
 	.ui-buttonset.ui-splitbutton .ui-button
 		padding: 0
 		height: 28px
-		width: 30px
+		min-width: 20px
 		&:hover,
 		&:focus,
 		&:active
 			background-color: $stateDefaultBgColor
 			box-shadow: none
 			color: $stateActiveTextColor
+	.ui-menu .ui-menuitem
+		a
+			padding-left: 30px
+		margin: 0
+		&:first-child
+			border-bottom: 1px solid $disabledColor
+			a
+				padding-left: 15px
+		&:last-child
+			border-top: 1px solid $disabledColor
+			a
+				padding-left: 15px
 	.ui-menu .ui-menuitem > .ui-menuitem-link
 		text-align: left
