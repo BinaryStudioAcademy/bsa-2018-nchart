@@ -1,6 +1,7 @@
 import { SchemeID } from '@app/models/normalizr.model';
 import { Dataset } from '../../models/dataset.model';
 import { AppState } from '@app/models/store.model';
+import { DatasetColumn } from '@app/models/dataset.model';
 
 export const dataset = (id: SchemeID) => (state: AppState): Dataset =>
 	state.datasets.byId[id] ? state.datasets.byId[id] : null;
@@ -18,26 +19,31 @@ export const chartDataset = (id?: SchemeID) => (state: AppState) => {
 export const getDatasetValues = () => (state: AppState) => {
 	const activeDataId = chartDataset()(state).modified.data;
 	return {
-		values: activeDataId.map(d =>
-			d.map(id => state.datasetData[id].value)
-		),
-		ids: activeDataId.map(d =>
-			d.map(id => state.datasetData[id].id)
-		)
+		values: activeDataId.map(d => d.map(id => state.datasetData[id].value)),
+		ids: activeDataId.map(d => d.map(id => state.datasetData[id].id))
 	};
 };
 
-export const getDatasetHeaders = () => (state: AppState) => {
-	const activeDataId = chartDataset()(state).modified.columns;
-	return {
-		values: activeDataId.map(col => ({
-			title: state.datasetColumns[col].title,
-			type: state.datasetColumns[col].type
-		})),
-		ids: activeDataId.map(col =>
-			state.datasetColumns[col].id
-		)
-	};
+export const getDatasetHeaders = () => (state: AppState): DatasetColumn[] => {
+	const activeDataset = chartDataset()(state);
+
+	if (activeDataset) {
+		return activeDataset.modified.columns.map(
+			id => state.datasetColumns[id]
+		);
+	}
+
+	return [];
+};
+
+export const activeDatasetId = () => (state: AppState) => {
+	const d = chartDataset()(state);
+
+	if (d) {
+		return d.id;
+	}
+
+	return null;
 };
 
 export const isDatasetLoading = () => (state: AppState) =>

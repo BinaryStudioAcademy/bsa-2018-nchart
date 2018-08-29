@@ -7,7 +7,8 @@ import {
 	ChangeDetectionStrategy
 } from '@angular/core';
 import { DatasetColumn } from '@app/models/dataset.model';
-import { FormControl } from '@angular/forms';
+import { SchemeID } from '@app/models/normalizr.model';
+import { MenuItem } from 'primeng/api';
 
 @Component({
 	selector: 'app-table',
@@ -15,15 +16,13 @@ import { FormControl } from '@angular/forms';
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableComponent implements OnInit {
-
-	
 	constructor() {}
 	@Input()
 	columns: DatasetColumn[] = [];
 	@Input()
 	data: any[][] = [[]];
 	@Input()
-	headerItems;
+	headerItems: (columnId: SchemeID) => MenuItem[];
 	@Input()
 	rowItems;
 	@Output()
@@ -44,8 +43,7 @@ export class TableComponent implements OnInit {
 		this.getRowId.emit(i);
 	}
 
-	checkboxChange(e) {
-	}
+	checkboxChange(e) {}
 
 	ngOnInit() {}
 
@@ -94,5 +92,4 @@ export class TableComponent implements OnInit {
 			});
 		}
 	}
-
 }

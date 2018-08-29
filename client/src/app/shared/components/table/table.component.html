@@ -35,7 +35,7 @@
 							</ng-template>
 						</p-cellEditor>
 					</span>
-					<app-button-action (click)="getColumnId(i)" [items]="headerItems"></app-button-action>
+					<app-button-action (click)="getColumnId(i)" [items]="headerItems(col.id, i)"></app-button-action>
 				</div>
 				<p class="column-type">
 					({{headerData[i].type}})

@@ -22,7 +22,11 @@ export class LoadDataComponent implements OnInit {
 
 	activeTab: number;
 
-	pasteDataControl = new FormControl('', Validators.required);
+	pasteDataControl = new FormControl(
+		`a, b
+	1,2`,
+		Validators.required
+	);
 
 	pasteUrlControl = new FormControl('', [
 		patternValidator('Invalid URL', RegExp('https?://.+')),
