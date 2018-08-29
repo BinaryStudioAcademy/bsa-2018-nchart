@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LoginFormComponent } from './login-form.component';
+import { LoginFormComponent } from '@app/features/authentication/login-form/login-form.component';
 
 describe('LoginFormComponent', () => {
 	let component: LoginFormComponent;

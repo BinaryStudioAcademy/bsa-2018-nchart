@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "server/bin/www",
 	"scripts": {
-		"format:fix": "pretty-quick --branch develop --write",
+		"format:fix": "pretty-quick --branch origin/develop --write",
 		"lint:client": "cd client && npm run lint",
 		"lint:server": "cd server && npm run lint",
 		"precommit": "run-s format:fix lint:client lint:server"

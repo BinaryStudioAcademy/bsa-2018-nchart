@@ -10,7 +10,7 @@ import { FormControl } from '@angular/forms';
 import {
 	requiredValidator,
 	maxLengthValidator
-} from '../../../shared/components/form-field/form-validators';
+} from '@app/shared/components/form-field/form-validators';
 
 @Component({
 	selector: 'app-project-name',

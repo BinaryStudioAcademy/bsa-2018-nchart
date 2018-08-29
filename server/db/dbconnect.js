@@ -1,4 +1,4 @@
-const sequelize = require('../config/index');
+const sequelize = require('../db/connection');
 
 function DBConnectionHandler() {
 	sequelize

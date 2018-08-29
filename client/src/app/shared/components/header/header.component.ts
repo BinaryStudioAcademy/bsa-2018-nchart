@@ -24,10 +24,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
 	private disconnectStore = null;
 	userName: string;
 	userImage = 'fas fa-user-tie';
-
 	constructor(private storeService: StoreService) {}
 
 	ngOnInit() {
+		this.items = [
+			{
+				label: null,
+				routerLink: ['/app/projects/draft']
+			}
+		];
 		this.authItems = [
 			{ label: 'Projects', routerLink: ['/app/projects'] },
 			{ label: 'Companies', routerLink: ['/app/companies'] }

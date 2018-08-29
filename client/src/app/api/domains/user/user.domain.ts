@@ -1,11 +1,3 @@
-import {
-	UserDomain,
-	ResponseScheme,
-	Register,
-	Login,
-	User,
-	AuthenticatedUser
-} from '@app/models';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpService } from '@app/api/http/http.service';
@@ -13,6 +5,11 @@ import { ServiceRequest } from '@app/models/serviceRequest.model';
 import { RequestType } from '@app/models/requestType.model';
 import { tap } from 'rxjs/operators';
 import { TokenService } from '@app/services/token.service';
+import { UserDomain } from '@app/models/user-domain.model';
+import { Register } from '@app/models/register.model';
+import { ResponseScheme } from '@app/models/response-scheme.model';
+import { AuthenticatedUser, User } from '@app/models/user.model';
+import { Login } from '@app/models/login.model';
 
 @Injectable()
 export class UserDomainService implements UserDomain {

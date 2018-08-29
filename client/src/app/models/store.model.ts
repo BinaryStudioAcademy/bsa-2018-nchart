@@ -1,12 +1,19 @@
 import { UserState } from '@app/models/user-store.model';
 import { ErrorHandlerState } from '@app/models/error-store.model';
+import { ExportProjectState } from '@app/models/export-store.model';
 import {
-	ChartsState,
-	UserChartsState,
-	DatasetState,
-	ProjectsState,
-	CompaniesState
-} from '@app/models';
+	DefaultChartSettingsState,
+	UserChartSettingsState,
+	ChartsState
+} from '@app/models/chart.model';
+import {
+	DatasetColumnState,
+	DatasetDataState,
+	DatasetState
+} from '@app/models/dataset.model';
+import { CompaniesState } from '@app/models/companies-store.model';
+import { ProjectsState } from '@app/models/projects-store.model';
+import { UserChartsState } from '@app/models/user-chart-store.model';
 
 export class AppAction<T = undefined> {
 	readonly type: string;
@@ -30,4 +37,9 @@ export interface AppState {
 	charts: ChartsState;
 	datasets: DatasetState;
 	userCharts: UserChartsState;
+	exportProject: ExportProjectState;
+	datasetColumns: DatasetColumnState;
+	datasetData: DatasetDataState;
+	defaultChartSettings: DefaultChartSettingsState;
+	userChartSettings: UserChartSettingsState;
 }

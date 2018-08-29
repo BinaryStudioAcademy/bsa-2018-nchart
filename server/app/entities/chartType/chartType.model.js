@@ -1,9 +1,9 @@
 const Sequelize = require('sequelize');
-const sequelize = require('../../config/index');
+const sequelize = require('../../../db/connection');
 const CompanyChartType = require('../company/company.models/company_chart_type');
 const Chart = require('../chart/chart.model');
 
-const ChartType = sequelize.define('chartType', {
+const ChartType = sequelize.define('chartTypes', {
 	type: {
 		type: Sequelize.STRING,
 		allowNull: false
@@ -40,13 +40,13 @@ ChartType.sync().then(() => {
 	CompanyChartType.belongsTo(ChartType, { foreignKey: 'chartTypeId' });
 	Chart.sync().then(() => {
 		ChartType.hasMany(Chart, {
-			foreignKey: 'typeId',
+			foreignKey: 'chartTypeId',
 			sourceKey: 'id',
 			onDelete: 'CASCADE',
 			constraints: false
 		});
 	});
-	Chart.belongsTo(ChartType, { foreignKey: 'typeId' });
+	Chart.belongsTo(ChartType, { foreignKey: 'chartTypeId' });
 });
 
 module.exports = ChartType;

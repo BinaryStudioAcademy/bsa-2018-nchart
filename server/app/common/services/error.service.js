@@ -28,6 +28,12 @@ class DBError extends Error {
 					}
 				}
 			}
+			if (errorPayload.length >= 1) {
+				return errorPayload;
+			}
+			for (let i = 0; i < err.errors.length; i += 1) {
+				errorPayload.push(err.errors[i].message);
+			}
 			return errorPayload;
 		}
 		if (err.message) {
