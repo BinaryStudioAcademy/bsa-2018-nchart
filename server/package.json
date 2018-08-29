@@ -6,12 +6,12 @@
 	"scripts": {
 		"start": "nodemon --experimental-worker ./bin/www",
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"lint": "eslint -c ./.eslintrc.json ./**/*.js --fix",
+		"lint": "eslint -c ./.eslintrc.json ./**/*.js --ignore-pattern ./node_modules/** --fix",
 		"migrate": "node_modules/.bin/sequelize db:migrate",
 		"migrate:undo": "node_modules/.bin/sequelize db:migrate:undo",
 		"seed": "node_modules/.bin/sequelize db:seed:all",
 		"seed:undo": "node_modules/.bin/sequelize db:seed:undo:all",
-		"start-prod": "npm run seed:undo && npm run migrate && npm run seed && npm run start"
+		"start-prod": "npm run migrate:undo || true && npm run migrate || true && npm run seed || true && npm run start"
 	},
 	"author": "",
 	"license": "ISC",
