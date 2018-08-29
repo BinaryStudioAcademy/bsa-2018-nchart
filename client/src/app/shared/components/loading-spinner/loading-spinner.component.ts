@@ -11,6 +11,9 @@ export class LoadingSpinnerComponent implements OnInit {
 	loadingSp = false;
 
 	@Input()
+	spFixed = false;
+
+	@Input()
 	spBackgroundColor = 'transparent';
 
 	@Input()
@@ -45,6 +48,13 @@ export class LoadingSpinnerComponent implements OnInit {
 	getOuterSectionStyle() {
 		return {
 			['border-color']: `transparent ${this.spOuterSectionColor}`
+		};
+	}
+
+	getClasses() {
+		return {
+			'spinner-container': true,
+			'spinner-container__fixed': this.spFixed
 		};
 	}
 }
