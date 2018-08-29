@@ -1,8 +1,5 @@
 import { ProjectsActionConstants } from '@app/store/actions/projects/projects.action-types';
-import {
-	Project,
-	ProjectEntities
-} from '@app/models/project.model';
+import { Project, ProjectEntities } from '@app/models/project.model';
 import { SchemeID } from '@app/models/normalizr.model';
 import { AppAction, FailedAction } from '@app/models/store.model';
 
@@ -63,10 +60,13 @@ export class SaveProject extends AppAction<{ id: SchemeID }> {
 }
 
 export class SaveProjectComplete extends AppAction<{
-	projectId: SchemeID;
-	entities: ProjectEntities;
+	projectId?: SchemeID;
 }> {
 	readonly type = ProjectsActionConstants.SAVE_PROJECT__COMPLETE;
+}
+
+export class UpdateProjectComplete extends AppAction<void> {
+	readonly type = ProjectsActionConstants.UPDATE_PROJECT__COMPLETE;
 }
 
 export class SaveProjectFailed extends FailedAction {
@@ -86,4 +86,5 @@ export type Actions =
 	| ChangeProjectName
 	| SaveProject
 	| SaveProjectComplete
+	| UpdateProjectComplete
 	| SaveProjectFailed;
