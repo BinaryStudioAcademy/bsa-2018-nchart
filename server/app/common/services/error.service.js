@@ -11,7 +11,8 @@ class DBError extends Error {
 			{ message: 'jwt expired', code: 7 },
 			{ message: 'Incorrect file extension', code: 8 },
 			{ message: 'No file were uploaded', code: 9 },
-			{ message: 'Folder with such name already exists', code: 11 }
+			{ message: 'Folder with such name already exists', code: 11 },
+			{ message: 'Company with such name already exists', code: 12 }
 		];
 	}
 

@@ -1,3 +1,4 @@
+const async = require('async');
 const CompanyRepository = require('./company.repository');
 
 class CompanyService {
@@ -11,6 +12,47 @@ class CompanyService {
 
 	saveCompanyUser(userId, companyId) {
 		return this.CompanyRepository.saveCompanyUser(userId, companyId);
+	}
+
+	saveFullCompany(obj, res) {
+		return new Promise((resolve, reject) => {
+			async.waterfall(
+				[
+					callback => {
+						this.CompanyRepository.findAllFullCompanies({
+							userId: res.locals.user.id,
+							name: obj.name
+						})
+							.then(data => {
+								if (data.length === 0) {
+									return callback(null);
+								}
+								throw new Error('Company with such name already exists');
+							})
+							.catch(err => callback(err, null));
+					},
+					callback => {
+						this.CompanyRepository.saveCompany(obj.name)
+							.then(data => callback(null, data.dataValues))
+							.catch(err => callback(err, null));
+					},
+					(company, callback) => {
+						this.CompanyRepository.saveCompanyUser(
+							res.locals.user.id,
+							company.id
+						)
+							.then(() => callback(null, company))
+							.catch(err => callback(err, null));
+					}
+				],
+				(err, payload) => {
+					if (err) {
+						reject(err);
+					}
+					resolve(payload);
+				}
+			);
+		});
 	}
 }
 
