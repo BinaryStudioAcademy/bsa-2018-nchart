@@ -222,6 +222,10 @@ class ProjectService {
 	exportHtml(id, body) {
 		return this.ExportService.getPdfFromHtml(id, body);
 	}
+
+	screenshot(id) {
+		return this.ExportService.getScreenshot(id);
+	}
 }
 
 module.exports = new ProjectService();
