@@ -27,17 +27,17 @@ export class DataTableComponent implements OnInit, OnDestroy {
 	}, {
 		label: 'To number',
 		command: () => {
-			this.columnToNumber();
+			this.changeColumnType('number');
 		}
 	}, {
 		label: 'To string',
 		command: () => {
-			this.columnToString();
+			this.changeColumnType('string');
 		}
 	}, {
 		label: 'To boolean',
 		command: () => {
-			this.columnToBoolean();
+			this.changeColumnType('boolean');
 		}
 	}, {
 		label: 'Delete column',
@@ -77,30 +77,33 @@ export class DataTableComponent implements OnInit, OnDestroy {
 
 	}
 
-	columnToNumber() {
+	changeColumnType(type) {
 		const col = this.headerId;
+		this.storeService.dispatch(
+			new DatasetActions.ChangeColumnType({
+				id: this.columnsId[col],
+				type: type
+			})
+		);
 		this.data.map((el, i) => {
-			const value = +el[col];
-			if (!!value) {
-				this.change({ value, i, col });
-			}
-		});
-	}
-
-	columnToString() {
-		const col = this.headerId;
-		this.data.map((el, i) => {
-			const value = String(el[col]);
+			const value = this.convertDataType(type, el[col]);
 			this.change({ value, i, col });
 		});
 	}
 
-	columnToBoolean() {
-		const col = this.headerId;
-		this.data.map((el, i) => {
-			const value = !!el[col];
-			this.change({ value, i, col });
-		});
+	convertDataType(type, value) {
+		switch (type) {
+			case 'string':
+				value += '';
+				break;
+			case 'number':
+				value = +value ? +value : 0;
+				break;
+			case 'boolean':
+				value = !!value;
+				break;
+		}
+		return value;
 	}
 
 	getHeaderId(id) {
@@ -133,17 +136,21 @@ export class DataTableComponent implements OnInit, OnDestroy {
 	}
 
 	change({ value, i, col }) {
-		// switch (typeof(this.data[i][col])) {
-		// 	case 'number':
-		// 		value = +value;
-		// 		break;
+		// if (this.columns[col].type !== typeof(value)) {
+		// 	return;
+		// }
+		// switch (this.columns[col].type) {
 		// 	case 'string':
 		// 		value += '';
+		// 		break;
+		// 	case 'number':
+		// 		value = +value ? +value : 0;
 		// 		break;
 		// 	case 'boolean':
 		// 		value = !!value;
 		// 		break;
 		// }
+		value = this.convertDataType(this.columns[col].type, value);
 		this.storeService.dispatch(
 			new DatasetActions.ChangeContent({
 				id: this.dataId[i][col],

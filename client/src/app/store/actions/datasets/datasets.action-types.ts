@@ -8,5 +8,6 @@ export enum DatasetActions {
 	CHANGE_CONTENT = 'Dataset data: CHANGE_CONTENT',
 	CHANGE_HEADER_TITLE = 'Dataset data: CHANGE_HEADER_TITLE',
 	DELETE_COLUMN = 'Dataset data: DELETE_COLUMN',
-	DELETE_ROW = 'Dataset data: DELETE_ROW'
+	DELETE_ROW = 'Dataset data: DELETE_ROW',
+	CHANGE_COLUMN_TYPE = 'Dataset data: CHANGE_COLUMN_TYPE'
 }

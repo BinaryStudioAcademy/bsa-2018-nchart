@@ -30,9 +30,10 @@ export const getDatasetValues = () => (state: AppState) => {
 export const getDatasetHeaders = () => (state: AppState) => {
 	const activeDataId = chartDataset()(state).modified.columns;
 	return {
-		values: activeDataId.map(col =>
-			state.datasetColumns[col].title
-		),
+		values: activeDataId.map(col => ({
+			title: state.datasetColumns[col].title,
+			type: state.datasetColumns[col].type
+		})),
 		ids: activeDataId.map(col =>
 			state.datasetColumns[col].id
 		)

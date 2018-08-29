@@ -44,7 +44,12 @@ export class DeleteColumn extends AppAction<{ id: string | number }> {
 	readonly type = DatasetActions.DELETE_COLUMN;
 }
 
+export class ChangeColumnType extends AppAction<{ id: string | number, type: string }> {
+	readonly type = DatasetActions.CHANGE_COLUMN_TYPE;
+}
+
 export type Actions =
+	| ChangeColumnType
 	| ChangeContent
 	| ChangeHeaderTitle
 	| DeleteRow

@@ -31,6 +31,15 @@ export const datasetColumnsReducer = (
 			delete state[action.payload.id];
 			return state;
 		}
+		case DatasetActions.CHANGE_COLUMN_TYPE: {
+			return {
+				...state,
+				[action.payload.id]: {
+					...state[action.payload.id],
+					type: action.payload.type
+				}
+			};
+		}
 		default:
 			return state;
 	}

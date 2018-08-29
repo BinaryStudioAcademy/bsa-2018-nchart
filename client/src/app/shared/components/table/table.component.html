@@ -7,7 +7,8 @@
 	[virtualRowHeight]="22"
 	[totalRecords]="data.length"
 	class="data-table"
-	[(selection)]="selectedRows" dataKey="vin"
+	[(selection)]="selectedRows" 
+	dataKey="vin"
 >
 	<ng-template pTemplate="header" let-headerData>
 		<tr>
@@ -24,18 +25,21 @@
 							<ng-template pTemplate="input">
 								<input
 									type="text"
-									[value]="headerData[i]"
+									[value]="headerData[i].title"
 									(keydown)="onHeaderKeyDown($event, i)"
 									(blur)="onHeaderBlurDown($event, i)"
 								>
 							</ng-template>
 							<ng-template pTemplate="output">
-								{{headerData[i]}}
+								{{headerData[i].title}}
 							</ng-template>
 						</p-cellEditor>
 					</span>
 					<app-button-action (click)="getColumnId(i)" [items]="headerItems"></app-button-action>
 				</div>
+				<p class="column-type">
+					({{headerData[i].type}})
+				</p>
 			</th>
 		</tr>
 	</ng-template>
@@ -43,7 +47,7 @@
 		<tr pSelectableRow="rowData">
 			<td class="number-cell">
 				<label>
-					<span class="column-no">{{rowIndex}}</span>
+					<span class="column-no">{{rowIndex + 1}}</span>
 					<app-button-action (click)="getDataRowId(rowIndex)" [items]="rowItems"></app-button-action>
 					<p-tableCheckbox [value]="rowData"></p-tableCheckbox>
 				</label>
