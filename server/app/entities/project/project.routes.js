@@ -20,7 +20,7 @@ project.post('/', ProjectPayloadValidator.fullSet, (req, res, next) => {
 });
 
 project.get('/:id', (req, res, next) => {
-	ProjectService.fullProjectById(Number(req.params.id))
+	ProjectService.fullProjectById(Number(req.params.id), res)
 		.then(PayloadGeneratorService.nextWithData(next, res))
 		.catch(next);
 });
@@ -28,6 +28,25 @@ project.get('/:id', (req, res, next) => {
 // todo: what do with rout names?
 project.get('/group/:id', (req, res, next) => {
 	ProjectService.fullProjectsByGroupId(Number(req.params.id))
+		.then(PayloadGeneratorService.nextWithData(next, res))
+		.catch(next);
+});
+
+project.get('/user/:id', (req, res, next) => {
+	ProjectService.fullProjectByUserId(Number(req.params.id))
+		.then(PayloadGeneratorService.nextWithData(next, res))
+		.catch(next);
+});
+
+project.post('/share', (req, res, next) => {
+	ProjectService.shareProject(req.body)
+		.then(PayloadGeneratorService.nextWithData(next, res))
+		.catch(next);
+});
+
+// todo: retard route name
+project.post('/shareByEmail', (req, res, next) => {
+	ProjectService.shareProjectByEmail(req.body, res)
 		.then(PayloadGeneratorService.nextWithData(next, res))
 		.catch(next);
 });
