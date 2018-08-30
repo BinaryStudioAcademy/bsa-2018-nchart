@@ -156,11 +156,25 @@ class ProjectService {
 		});
 	}
 
-	fullProjectById(id) {
-		// todo: remove waterfall
+	fullProjectById(id, res) {
 		return new Promise((resolve, reject) => {
 			async.waterfall(
 				[
+					callback => {
+						this.ProjectRepository.findByUserIdAndProjectId(
+							{
+								projectId: id,
+								userId: res.locals.user.id
+							}
+						)
+							.then(data => {
+								if (data !== null) {
+									return callback(null);
+								}
+								throw new Error('User has no rights on this project');
+							})
+							.catch(err => callback(err, null));
+					},
 					callback => {
 						this.ProjectRepository.fullProjectById(id)
 							.then(data => {

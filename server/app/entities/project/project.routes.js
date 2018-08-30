@@ -20,7 +20,7 @@ project.post('/', ProjectPayloadValidator.fullSet, (req, res, next) => {
 });
 
 project.get('/:id', (req, res, next) => {
-	ProjectService.fullProjectById(Number(req.params.id))
+	ProjectService.fullProjectById(Number(req.params.id), res)
 		.then(PayloadGeneratorService.nextWithData(next, res))
 		.catch(next);
 });
