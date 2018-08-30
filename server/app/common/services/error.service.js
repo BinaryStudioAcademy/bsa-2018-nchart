@@ -14,7 +14,9 @@ class DBError extends Error {
 			{ message: 'Can\'t share with yourself', code: 10 },
 			{ message: 'File size is undefined', code: 11 },
 			{ message: 'File is too big', code: 12 },
-			{ message: 'User has no rights on this project', code: 13 }
+			{ message: 'User has no rights on this project', code: 13 },
+			{ message: 'Folder with such name already exists', code: 14 },
+			{ message: 'Company with such name already exists', code: 15 }
 		];
 	}
 

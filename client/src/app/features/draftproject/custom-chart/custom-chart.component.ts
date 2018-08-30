@@ -6,6 +6,8 @@ import {
 	getCustomizeSettings,
 	getActiveChart
 } from '@app/store/selectors/userCharts';
+import { FormGroup } from '@angular/forms';
+import { CustomizeControl } from '@app/models/customize-control.model';
 
 @Component({
 	selector: 'app-custom-chart',
@@ -20,34 +22,42 @@ export class CustomChartComponent implements OnInit, OnDestroy {
 
 	data: any[];
 	disconnect: () => void;
-	barChartCustomizeSettings;
-	switchCharts: string;
+	customizeSettings;
+	chartType: string;
+	customizeForm: FormGroup;
+	customizeControls: CustomizeControl[];
 
 	ngOnInit() {
 		this.disconnect = this.storeService.connect([
 			{
 				selector: getActiveChart(),
 				subscriber: t => {
-					this.switchCharts = t.sysName;
-				}
-			},
-			{
-				selector: getData(),
-				subscriber: data => {
-					switch (this.switchCharts) {
-						case 'barChart':
-							this.data = this.barChartService.getData(data);
-							break;
-
-						default:
-							break;
-					}
+					this.chartType = t.sysName;
 				}
 			},
 			{
 				selector: getCustomizeSettings(),
 				subscriber: t => {
-					this.barChartCustomizeSettings = t;
+					this.customizeSettings = t;
+				}
+			},
+			{
+				selector: getData(),
+				subscriber: data => {
+					switch (this.chartType) {
+						case 'barChart':
+							this.data = this.barChartService.getData(data);
+							this.customizeForm = this.barChartService.createBarChartCustomizeForm(
+								this.customizeSettings
+							);
+							this.customizeControls = this.barChartService.getCustomizeControls(
+								this.customizeForm
+							);
+							break;
+
+						default:
+							break;
+					}
 				}
 			}
 		]);

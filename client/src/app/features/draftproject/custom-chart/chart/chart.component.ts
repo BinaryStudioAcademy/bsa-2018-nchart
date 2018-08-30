@@ -14,9 +14,9 @@ export class ChartComponent implements OnInit {
 	@Input()
 	data: any[];
 	@Input()
-	switchCharts: string;
+	chartType: string;
 	@Input()
-	barChartCustomizeSettings;
+	customizeSettings;
 
 	constructor() {}
 

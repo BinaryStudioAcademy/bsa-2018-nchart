@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs/index';
+import { Observable, of } from 'rxjs';
 import { v4 } from 'uuid';
 import {
 	DatasetTable,

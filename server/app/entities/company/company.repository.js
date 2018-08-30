@@ -22,6 +22,20 @@ class CompanyRepository extends Repository {
 			isAdmin: true
 		});
 	}
+
+	findAllFullCompanies(obj) {
+		return this.companyUserModel.findAll({
+			where: { userId: obj.userId },
+			include: [
+				{
+					model: this.companyModel,
+					where: {
+						name: obj.name
+					}
+				}
+			]
+		});
+	}
 }
 
 module.exports = new CompanyRepository();

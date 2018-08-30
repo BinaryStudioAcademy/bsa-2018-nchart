@@ -3,7 +3,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { switchMap } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
-import * as constants from '../actions/datasets/datasets.actions';
+import * as constants from '@app/store/actions/datasets/datasets.actions';
 import { DatasetActions } from '@app/store/actions/datasets/datasets.action-types';
 import { DatasetDomainService } from '@app/api/domains/source/dataset-domain.service';
 import { DatasetService } from '@app/services/dataset.service';
@@ -13,7 +13,7 @@ import { withLatestFrom } from 'rxjs/internal/operators';
 import { getActiveProject } from '@app/store/selectors/projects.selectors';
 import { CreateChart } from '@app/store/actions/charts/charts.actions';
 import { StoreService } from '@app/services/store.service';
-import { throwError } from 'rxjs/index';
+import { throwError } from 'rxjs';
 import { ResponseScheme } from '@app/models/response-scheme.model';
 import { DatasetColumn } from '@app/models/dataset.model';
 
