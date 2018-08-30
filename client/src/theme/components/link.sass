@@ -1,0 +1,83 @@
+@import ../variables
+@import ../colors
+
+
+$linkTextColor: $textActiveColor
+$linkUnderlineTextColor: $textColorDark
+$linkHoverTextColor: $secondaryTextColor
+$linkIconColor: $secondaryTextColor
+$linkUnderlineThin: 0.08em
+$linkUnderlineFat: 0.12em
+$linkFontSize: 1em
+$linkIconFontSize: 1.2em
+$linkShapeFontSize: 0.9em
+
+.ui-link
+    font-family: $fontFamily
+    line-height: 1.6
+    text-decoration: none
+    outline: none
+    .icon,
+    .shape
+        vertical-align: middle
+        margin-left: 0.3em
+        font-size: $linkShapeFontSize
+    .icon
+        font-size: $linkIconFontSize
+        color: $linkIconColor
+
+.ui-link-primary,
+.ui-link-secondary,
+.ui-link-underline
+    &:link,
+    &:visited
+        .shape
+            visibility: hidden
+    &:focus,
+    &:hover,
+    &:active
+        .shape
+            visibility: visible
+
+        
+.ui-link-primary
+    &:link,
+    &:visited
+        font-weight: bold
+        color: $linkTextColor
+    &:focus,
+    &:hover 
+        color: $linkHoverTextColor
+        .label
+            border-bottom: $linkUnderlineThin solid $linkHoverTextColor
+    &:active
+        color: $linkTextColor
+        .label
+            border-bottom: $linkUnderlineFat solid $linkTextColor
+
+.ui-link-secondary
+    &:link,
+    &:visited
+        color: $linkTextColor
+    &:focus,
+    &:hover
+        color: $linkHoverTextColor
+    &:active
+        color: $linkTextColor
+
+.ui-link-underline
+    &:link,
+    &:visited
+        color: $linkUnderlineTextColor
+        .label
+            border-bottom: $linkUnderlineThin solid $linkUnderlineTextColor
+    &:focus,
+    &:hover
+        color: $linkHoverTextColor
+        .label
+            border-bottom: $linkUnderlineThin solid $linkHoverTextColor
+    &:active
+        color: $linkUnderlineTextColor
+        .label
+            border-bottom: $linkUnderlineFat solid $linkUnderlineTextColor  
+    

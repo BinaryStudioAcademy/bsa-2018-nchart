@@ -1,0 +1,6 @@
+{
+	"eslint.options": {
+		"configFile": "./server/.eslintrc.json"
+	},
+	"eslint.alwaysShowStatus": true
+}

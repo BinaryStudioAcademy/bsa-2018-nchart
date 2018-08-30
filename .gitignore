@@ -1,14 +1,22 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-/dist
+/client/dist
 /tmp
 /out-tsc
 
 # dependencies
 /client/node_modules/
 /server/node_modules/
+/node_modules/
 /server/.env
+
+/server/app/fileStorage/*
+!.gitkeep
+
+/client/package-lock.json
+/client/dist
+/server/package-lock.json
 
 # IDEs and editors
 /.idea
@@ -39,3 +47,8 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+/data/postgres
+/data/pgadmin
+*.env
+credentials.json

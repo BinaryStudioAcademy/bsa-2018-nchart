@@ -1,0 +1,36 @@
+<form [formGroup]="registerForm">
+    <div class="ui-fluid">
+        <app-input-text
+            type="text"
+            label="Name"
+            [control]="registerForm.controls['name']"
+        ></app-input-text>
+        <app-input-text
+            type="text"
+            label="Email"
+            [control]="registerForm.controls['email']"
+        ></app-input-text>
+        <app-input-text
+            type="password"
+            label="Password"
+            [control]="registerForm.controls['password']"
+        ></app-input-text>
+        <app-input-text
+            type="password"
+            label="Confirm password"
+            [control]="registerForm.controls['confirmPassword']"
+        ></app-input-text>
+    </div>
+    <div class="ui-g">
+        <div class="ui-g-4 ui-g-offset-4">
+            <app-button
+                class="ui-fluid"
+                label="Create profile"
+                type="secondary"
+                [disabled]="registerForm.invalid"
+                (onclick)="onClickCreateProfile()"
+                [loading]="isLoading"
+            ></app-button>
+        </div>
+    </div>
+</form>

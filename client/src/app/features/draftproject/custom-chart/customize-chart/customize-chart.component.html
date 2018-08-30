@@ -1,0 +1,7 @@
+<div class="customize-chart-container" [ngSwitch]="chartType">
+		<app-bar-chart-customize
+		*ngSwitchCase="'barChart'"
+		[formGroup]="formGroup"
+		[customizeSettings]="customizeSettings"
+	></app-bar-chart-customize>
+</div>
