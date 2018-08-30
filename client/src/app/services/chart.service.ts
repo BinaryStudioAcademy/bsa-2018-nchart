@@ -18,12 +18,12 @@ export class ChartService {
 		customizeSettings,
 		dimensionSettings
 	}) {
-		return ({
+		return {
 			id: v4(),
 			chartTypeId,
 			datasetId,
 			customizeSettings,
 			dimensionSettings
-		});
+		};
 	}
 }

@@ -10,7 +10,8 @@ import { getChart, getFirstChart } from '@app/store/selectors/charts.selectors';
 import { of } from 'rxjs';
 import {
 	CreateChart,
-	CreateChartComplete, CreateChartFailed,
+	CreateChartComplete,
+	CreateChartFailed,
 	SelectChart,
 	SelectChartComplete
 } from '@app/store/actions/charts/charts.actions';
@@ -68,7 +69,7 @@ export class ChartsEffects {
 			try {
 				const fchart: Chart = getFirstChart()(state);
 				const projectId = getActiveProject()(state);
-				const newChart =  this.chartService.createChart({
+				const newChart = this.chartService.createChart({
 					chartTypeId: fchart.id,
 					datasetId: (action as CreateChart).payload.datatsetId,
 					customizeSettings: [...fchart.customizeSettings],
@@ -96,7 +97,7 @@ export class ChartsEffects {
 					msg: 'Create chart failed'
 				});
 			}
-		}),
+		})
 	);
 
 	@Effect()
