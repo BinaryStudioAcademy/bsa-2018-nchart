@@ -1,4 +1,3 @@
-// todo: Puppeteer with init, screenshot
 const puppeteer = require('puppeteer');
 const potrace = require('potrace');
 

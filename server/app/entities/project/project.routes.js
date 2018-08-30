@@ -66,7 +66,6 @@ project.get('/:id/export', (req, res) => {
 	});
 });
 
-// todo: add content and type to body
 project.post('/:id/export', (req, res) => {
 	ProjectService.exportHtml(
 		req.params.id,
