@@ -5,6 +5,7 @@ const DatasetService = require('../dataset/dataset.service');
 const ChartService = require('../chart/chart.service');
 const GroupService = require('../group/group.service');
 const ExportService = require('../../common/services/export.services/export.service');
+const DocumentGeneratingService = require('../../common/services/export.services/document-generating.service');
 
 // todo: wrong
 
@@ -12,6 +13,7 @@ class ProjectService {
 	constructor() {
 		this.ProjectRepository = ProjectRepository;
 		this.ExportService = ExportService;
+		this.DocumentGeneratingService = DocumentGeneratingService;
 	}
 
 	getAll() {
@@ -213,17 +215,14 @@ class ProjectService {
 		};
 	}
 
-	export(id, type) {
-		return this.ExportService.getFile(id, type);
+	export(id, type, selector) {
+		return this.DocumentGeneratingService.getDocument(id, type, selector);
 	}
 
-	exportHtml(id, body) {
-		return this.ExportService.getPdfFromHtml(id, body);
+	exportHtml(id, content, type) {
+		return this.ExportService.getFileFromHtml(id, content, type);
 	}
 
-	screenshot(id) {
-		return this.ExportService.getScreenshot(id);
-	}
 }
 
 module.exports = new ProjectService();

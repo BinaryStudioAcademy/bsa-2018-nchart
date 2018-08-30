@@ -32,57 +32,64 @@ project.get('/group/:id', (req, res, next) => {
 		.catch(next);
 });
 
-// todo: add element selector to query
 project.get('/:id/export', (req, res) => {
-	ProjectService.export(req.params.id, req.query.type).then(result => {
-		if (result && !(req.query.type === 'svg')) {
-			res.writeHead(200, {
-				'Content-Disposition': 'inline',
-				'Content-Length': result.length,
-				'Content-Type': `application/${req.query.type}`
-			});
-			res.end(result);
-		} else if (result && req.query.type === 'svg') {
-			res.writeHead(200, {
-				'Content-Disposition': 'inline',
-				'Content-Length': result.length,
-				'Content-Type': 'image/svg+xml'
-			});
-			res.end(result);
-		} else {
-			res.sendStatus(400);
-		}
-	});
+	ProjectService.export(req.params.id, req.query.type, req.query.selector)
+		.then(result => {
+			let contentType;
+			switch (req.query.type) {
+			case 'pdf':
+				contentType = 'application/pdf';
+				break;
+			case 'png':
+				contentType = 'image/png';
+				break;
+			case 'svg':
+				contentType = 'image/svg+xml';
+				break;
+			default:
+				contentType = 'application/json';
+				break;
+			}
+			if (result) {
+				res.writeHead(200, {
+					'Content-Disposition': 'inline',
+					'Content-Length': result.length,
+					'Content-Type': `${contentType}`
+				});
+				res.end(result);
+			} else {
+				res.sendStatus(400);
+			}
+		});
 });
 
 // todo: add content and type to body
 project.post('/:id/export', (req, res) => {
-	ProjectService.exportHtml(req.params.id, req.body).then(result => {
+	ProjectService.exportHtml(req.params.id, req.body.content, req.body.type).then(result => {
+		let contentType;
+		switch (req.body.type) {
+		case 'pdf':
+			contentType = 'application/pdf';
+			break;
+		case 'png':
+			contentType = 'image/png';
+			break;
+		case 'svg':
+			contentType = 'image/svg+xml';
+			break;
+		default:
+			contentType = 'application/json';
+			break;
+		}
 		if (result) {
 			res.writeHead(200, {
 				'Content-Disposition': 'inline',
 				'Content-Length': result.length,
-				'Content-Type': 'application/pdf'
+				'Content-Type': `${contentType}`
 			});
 			res.end(result);
 		} else {
-			res.send(400);
-		}
-	});
-});
-
-// todo: remove this
-project.get('/:id/screenshot', (req, res) => {
-	ProjectService.screenshot(req.params.id).then(result => {
-		if (result) {
-			res.writeHead(200, {
-				'Content-Disposition': 'attachment; filename="screenshot.png"',
-				'Content-Length': result.length,
-				'Content-Type': 'application/png'
-			});
-			res.end(result);
-		} else {
-			res.send(400);
+			res.sendStatus(400);
 		}
 	});
 });
