@@ -4,6 +4,6 @@ export interface ErrorHandlerState {
 	action: AppAction;
 	msg: string;
 	serverMessages?: string[];
-	error?: Error;
+	error: Error;
 	isOpen?: boolean;
 }
