@@ -14,5 +14,6 @@ export enum ProjectsActionConstants {
 
 	SAVE_PROJECT = 'Projects: SAVE',
 	SAVE_PROJECT__COMPLETE = 'Projects: SAVE__COMPLETE',
+	UPDATE_PROJECT__COMPLETE = 'Projects: UPDATE_PROJECT__COMPLETE',
 	SAVE_PROJECT__FAILED = 'Projects: SAVE__FAILED'
 }

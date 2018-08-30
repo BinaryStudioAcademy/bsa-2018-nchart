@@ -9,7 +9,7 @@ const chartSchema = {
 		'customizeSettings'
 	],
 	properties: {
-		id: { type: ['number', 'null'] },
+		id: { type: ['string', 'null'] },
 		chartTypeId: { type: 'number' },
 		datasetId: { type: 'string' },
 		dimensionSettings: { type: 'array' },

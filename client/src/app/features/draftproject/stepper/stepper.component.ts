@@ -3,6 +3,9 @@ import { StoreService } from '@app/services/store.service';
 import { isProjectDataset } from '@app/store/selectors/projects.selectors';
 import { isRequiredDimensionMatched } from '@app/store/selectors/userCharts';
 import { trigger, style, animate, transition } from '@angular/animations';
+import { SchemeID } from '@app/models/normalizr.model';
+import { activeProjectId } from '../../../store/selectors/projects.selectors';
+import { SaveProject } from '../../../store/actions/projects/projects.actions';
 
 export const steps = [
 	{
@@ -70,6 +73,7 @@ export class StepperComponent implements OnInit {
 	disableSaveBtn = true;
 	stepsStageTwo = false;
 	stepsStageThree = false;
+	activeProjectId: SchemeID;
 
 	isVisible = true;
 
@@ -128,6 +132,12 @@ export class StepperComponent implements OnInit {
 					this.stepsStageThree = isReady;
 					this.disableSaveBtn = !isReady;
 				}
+			},
+			{
+				selector: activeProjectId(),
+				subscriber: id => {
+					this.activeProjectId = id;
+				}
 			}
 		]);
 	}
@@ -144,5 +154,11 @@ export class StepperComponent implements OnInit {
 			case 6:
 				return this.stepsStageThree;
 		}
+	}
+
+	saveProject() {
+		this.storeService.dispatch(
+			new SaveProject({ id: this.activeProjectId })
+		);
 	}
 }
