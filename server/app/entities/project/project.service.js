@@ -31,12 +31,14 @@ class ProjectService {
 					callback => {
 						if (obj.project.id) {
 							this.ProjectRepository.upsert(obj.project)
-								.then(() => callback(null, {
-									project: {
-										id: obj.project.id,
-										name: obj.project.name
-									}
-								}))
+								.then(() =>
+									callback(null, {
+										project: {
+											id: obj.project.id,
+											name: obj.project.name
+										}
+									})
+								)
 								.catch(err => callback(err, null));
 						} else {
 							this.ProjectRepository.create(obj.project.name)
@@ -222,7 +224,6 @@ class ProjectService {
 	exportHtml(id, content, type) {
 		return this.ExportService.getFileFromHtml(id, content, type);
 	}
-
 }
 
 module.exports = new ProjectService();

@@ -33,10 +33,13 @@ project.get('/group/:id', (req, res, next) => {
 });
 
 project.get('/:id/export', (req, res) => {
-	ProjectService.export(req.params.id, req.query.type, req.query.selector)
-		.then(result => {
-			let contentType;
-			switch (req.query.type) {
+	ProjectService.export(
+		req.params.id,
+		req.query.type,
+		req.query.selector
+	).then(result => {
+		let contentType;
+		switch (req.query.type) {
 			case 'pdf':
 				contentType = 'application/pdf';
 				break;
@@ -49,37 +52,41 @@ project.get('/:id/export', (req, res) => {
 			default:
 				contentType = 'application/json';
 				break;
-			}
-			if (result) {
-				res.writeHead(200, {
-					'Content-Disposition': 'inline',
-					'Content-Length': result.length,
-					'Content-Type': `${contentType}`
-				});
-				res.end(result);
-			} else {
-				res.sendStatus(400);
-			}
-		});
+		}
+		if (result) {
+			res.writeHead(200, {
+				'Content-Disposition': 'inline',
+				'Content-Length': result.length,
+				'Content-Type': `${contentType}`
+			});
+			res.end(result);
+		} else {
+			res.sendStatus(400);
+		}
+	});
 });
 
 // todo: add content and type to body
 project.post('/:id/export', (req, res) => {
-	ProjectService.exportHtml(req.params.id, req.body.content, req.body.type).then(result => {
+	ProjectService.exportHtml(
+		req.params.id,
+		req.body.content,
+		req.body.type
+	).then(result => {
 		let contentType;
 		switch (req.body.type) {
-		case 'pdf':
-			contentType = 'application/pdf';
-			break;
-		case 'png':
-			contentType = 'image/png';
-			break;
-		case 'svg':
-			contentType = 'image/svg+xml';
-			break;
-		default:
-			contentType = 'application/json';
-			break;
+			case 'pdf':
+				contentType = 'application/pdf';
+				break;
+			case 'png':
+				contentType = 'image/png';
+				break;
+			case 'svg':
+				contentType = 'image/svg+xml';
+				break;
+			default:
+				contentType = 'application/json';
+				break;
 		}
 		if (result) {
 			res.writeHead(200, {
