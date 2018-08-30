@@ -2,8 +2,8 @@ import { storiesOf, moduleMetadata } from '@storybook/angular';
 import '@storybook/addon-notes/register';
 
 import { ButtonModule } from 'primeng/button';
-import { ButtonComponent } from '../app/shared/components/button/button/button.component';
-import { LoadingSpinnerComponent } from '../app/shared/components/loading-spinner/loading-spinner.component';
+import { ButtonComponent } from '@app/shared/components/button/button/button.component';
+import { LoadingSpinnerComponent } from '@app/shared/components/loading-spinner/loading-spinner.component';
 
 storiesOf('Loading spinner', module)
 	.addDecorator(

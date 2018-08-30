@@ -11,4 +11,10 @@ company.get('/', (req, res, next) => {
 		.catch(next);
 });
 
+company.post('/', (req, res, next) => {
+	CompanyService.saveFullCompany(req.body, res)
+		.then(PayloadGeneratorService.nextWithData(next, res))
+		.catch(next);
+});
+
 module.exports = company;

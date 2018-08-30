@@ -37,8 +37,6 @@ export class DragDropComponent implements OnInit, OnDestroy {
 	@Input()
 	columns: UserMappingColumn[] = [];
 	public dimensions = [];
-	@Input()
-	data;
 	@Output()
 	setDimension = new EventEmitter();
 	@Output()

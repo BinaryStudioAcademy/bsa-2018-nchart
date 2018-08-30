@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs/index';
+import { Observable } from 'rxjs';
 import { ResponseScheme } from '@app/models/response-scheme.model';
 import { DatasetColumn } from '@app/models/dataset.model';
 

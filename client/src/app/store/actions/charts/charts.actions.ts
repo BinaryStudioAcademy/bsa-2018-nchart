@@ -1,4 +1,4 @@
-import { ChartsActionConstants } from './charts.action-types';
+import { ChartsActionConstants } from '@app/store/actions/charts/charts.action-types';
 import { NormalizedSchemeField, SchemeID } from '@app/models/normalizr.model';
 import {
 	DimensionOption,
@@ -64,6 +64,10 @@ export class CreateChart extends AppAction<{
 	readonly type = ChartsActionConstants.CREATE_CHART;
 }
 
+export class CreateChartFailed extends FailedAction {
+	readonly type = ChartsActionConstants.CREATE_CHART__FAILED;
+}
+
 export class CreateChartComplete extends AppAction<{
 	projectId: SchemeID;
 	chart: {
@@ -93,4 +97,5 @@ export type Actions =
 	| SelectChart
 	| SelectChartComplete
 	| CreateChartComplete
+	| CreateChartFailed
 	| CreateChart;

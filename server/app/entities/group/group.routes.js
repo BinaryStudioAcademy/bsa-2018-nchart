@@ -12,46 +12,27 @@ group.get('/', (req, res, next) => {
 		.catch(next);
 });
 
-// test route
-group.post('/', (req, res) => {
+group.post('/', (req, res, next) => {
 	groupService
-		.saveGroup(req.body)
-		.then(data => {
-			res.json(data);
-		})
-		.catch(err => {
-			res.json(err);
-			res.status(400);
-			res.end();
-		});
+		.saveFullGroup(req.body, res)
+		.then(PayloadGeneratorService.nextWithData(next, res))
+		.catch(next);
 });
 
 // test route
-group.post('/user', (req, res) => {
+group.post('/user', (req, res, next) => {
 	groupService
 		.saveGroupUser(req.body.userId, req.body.groupId)
-		.then(data => {
-			res.json(data);
-		})
-		.catch(err => {
-			res.json(err);
-			res.status(400);
-			res.end();
-		});
+		.then(PayloadGeneratorService.nextWithData(next, res))
+		.catch(next);
 });
 
 // test route
-group.post('/findOne', (req, res) => {
+group.post('/findOne', (req, res, next) => {
 	groupService
 		.findOneGroupUser(req.body)
-		.then(data => {
-			res.json(data);
-		})
-		.catch(err => {
-			res.json(err);
-			res.status(400);
-			res.end();
-		});
+		.then(PayloadGeneratorService.nextWithData(next, res))
+		.catch(next);
 });
 
 module.exports = group;

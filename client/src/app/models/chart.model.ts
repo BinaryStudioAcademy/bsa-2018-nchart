@@ -19,11 +19,12 @@ export interface DimensionOption {
 	required: boolean;
 	type: string[];
 	description: string;
+	sysName: string;
 }
 
 export interface CustomizeOption {
 	id: SchemeID;
-	defaultValue: chartValue;
+	value: chartValue;
 	option: string;
 	description: string;
 	sysName: string;

@@ -41,6 +41,7 @@ class GroupRepository extends Repository {
 		});
 	}
 
+
 	findAllUserGroups(userId) {
 		return this.groupUserModel.findAll({
 			where: { userId },
@@ -48,7 +49,22 @@ class GroupRepository extends Repository {
 			include: [
 				{
 					model: this.groupModel,
-					attributes: ['id', 'name','companyId','createdAt']
+					attributes: ['id', 'name', 'companyId', 'createdAt']
+				}
+			]
+		});
+	}
+
+	// userId, name - group.name
+	findUserGroupByName(obj) {
+		return this.groupUserModel.findAll({
+			where: { userId: obj.userId },
+			include: [
+				{
+					model: this.groupModel,
+					where: {
+						name: obj.name
+					}
 				}
 			]
 		});

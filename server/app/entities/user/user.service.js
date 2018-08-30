@@ -28,12 +28,16 @@ class UserService {
 			});
 	}
 
+	findByEmail(email) {
+		return this.UserRepository.findByEmail(email);
+	}
+
 	save(obj) {
 		return new Promise((resolve, reject) => {
 			async.waterfall(
 				[
 					callback => {
-						UserRepository.findByEmail(obj.user.email)
+						this.UserRepository.findByEmail(obj.user.email)
 							.then(data => {
 								if (data === null) {
 									return callback(null);
