@@ -11,7 +11,7 @@ class DBError extends Error {
 			{ message: 'jwt expired', code: 7 },
 			{ message: 'Incorrect file extension', code: 8 },
 			{ message: 'No file were uploaded', code: 9 },
-			{ message: 'Can\'t share with yourself', code: 10},
+			{ message: 'Can\'t share with yourself', code: 10 },
 			{ message: 'File size is undefined', code: 11 },
 			{ message: 'File is too big', code: 12 }
 		];

@@ -164,10 +164,13 @@ class ProjectService {
 					callback => {
 						this.ProjectRepository.fullProjectById(id)
 							.then(data => {
-								const project = ProjectService.getProjectFromPayload(
-									data.dataValues
-								);
-								callback(null, project);
+								if (data) {
+									const project = ProjectService.getProjectFromPayload(
+										data.dataValues
+									);
+									return callback(null, project);
+								}
+								throw new Error('Object did not exist');
 							})
 							.catch(err => callback(err, null));
 					}
