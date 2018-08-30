@@ -48,7 +48,7 @@ class GroupRepository extends Repository {
 			include: [
 				{
 					model: this.groupModel,
-					attributes: ['id', 'name', 'createdAt']
+					attributes: ['id', 'name','companyId','createdAt']
 				}
 			]
 		});

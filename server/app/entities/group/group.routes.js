@@ -6,7 +6,8 @@ const tokenInfoMiddleware = require('../../common/middleware/token-info.middlewa
 group.use(tokenInfoMiddleware);
 
 group.get('/', (req, res, next) => {
-	groupService.findAllUserGroups(res)
+	groupService
+		.findAllUserGroups(res)
 		.then(PayloadGeneratorService.nextWithData(next, res))
 		.catch(next);
 });
