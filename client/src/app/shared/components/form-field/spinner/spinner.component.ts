@@ -25,7 +25,9 @@ export class SpinnerComponent implements OnInit {
 	@Input()
 	icon: string;
 	@Output()
-	change: EventEmitter<any> = new EventEmitter();
+	onchange: EventEmitter<any> = new EventEmitter();
+	@Output()
+	onblur: EventEmitter<any> = new EventEmitter();
 
 	ngOnInit() {}
 
@@ -44,8 +46,12 @@ export class SpinnerComponent implements OnInit {
 		return errors && errors[Object.keys(errors)[0]];
 	}
 
-	onChange(e) {
-		this.change.emit(e);
+	change(e) {
+		this.onchange.emit(e);
+	}
+
+	blur(e) {
+		this.onblur.emit(e);
 	}
 
 	getClasses() {

@@ -14,7 +14,8 @@
     [type]="type"
     [placeholder]="placeholder"
     [ngClass]="getClasses()"
-    (onChange)="onChange($event)"
+    (onChange)="change($event)"
+    (onBlur)="blur($event)"
     >
     </p-spinner>
 
