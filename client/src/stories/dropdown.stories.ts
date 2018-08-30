@@ -8,7 +8,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // Dropdowns
 import { DropdownModule } from 'primeng/dropdown';
-import { DropdownSimpleComponent } from '../app/shared/components/form-field/dropdown/dropdown-simple/dropdown-simple.component';
+import { DropdownSimpleComponent } from '@app/shared/components/form-field/dropdown/dropdown-simple/dropdown-simple.component';
 
 storiesOf('Dropdowns', module)
 	.addDecorator(

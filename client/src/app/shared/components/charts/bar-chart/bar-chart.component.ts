@@ -1,6 +1,15 @@
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import * as d3 from 'd3';
 import d3Tip from 'd3-tip';
+import { CustomizeOption } from '@app/models/chart.model';
+
+interface Settings<T> {
+	height: T;
+	width: T;
+	leftMargin: T;
+	verticalPadding: T;
+	horizontalPadding: T;
+}
 
 @Component({
 	selector: 'app-bar-chart',
@@ -9,39 +18,36 @@ import d3Tip from 'd3-tip';
 })
 export class BarChartComponent implements OnInit, OnChanges {
 	@Input()
-	height = 500;
-	@Input()
-	width = 500;
-	@Input()
 	data: any[];
 	@Input()
-	leftMargin = 30;
-	@Input()
-	verticalPadding = 20;
-	@Input()
-	innerPadding = 0.5;
+	settings: Settings<CustomizeOption>;
 
-	svg: any;
-	x: any;
-	y: any;
+	x: d3.ScaleBand<string> = null;
+	y: d3.ScaleLinear<number, number> = null;
 	margin = { top: 20, right: 20, bottom: 20, left: 40 };
-	g: any;
-	colors = d3
-		.scaleOrdinal()
-		.range([
-			'#98abc5',
-			'#8a89a6',
-			'#7b6888',
-			'#6b486b',
-			'#a05d56',
-			'#d0743c',
-			'#ff8c00'
-		]);
 
 	ngOnInit() {}
 
+	getSettingsValue(settings: Settings<CustomizeOption>): Settings<any> {
+		return Object.keys(settings).reduce(
+			(acc, v) => {
+				acc[v] = settings[v].value;
+				return acc;
+			},
+			{} as Settings<any>
+		);
+	}
+
 	ngOnChanges() {
-		if (this.data !== undefined) {
+		if (this.data && this.settings) {
+			const {
+				width,
+				height,
+				leftMargin,
+				horizontalPadding,
+				verticalPadding
+			} = this.getSettingsValue(this.settings);
+
 			const tip = d3Tip()
 				.attr('class', 'd3-tip')
 				.offset([-10, 0])
@@ -53,42 +59,45 @@ export class BarChartComponent implements OnInit, OnChanges {
 
 			d3.select('svg').remove();
 			d3.select('.d3-tip').remove();
-			this.svg = d3
+			const svg = d3
 				.select('.bar-chart')
 				.append('svg')
-				.attr('width', this.width)
-				.attr('height', this.height);
-			this.g = this.svg
+				.attr('width', width)
+				.attr('height', height);
+			const g = svg
 				.append('g')
 				.attr(
 					'transform',
-					'translate(' + this.leftMargin + ',' + this.margin.top + ')'
+					'translate(' + leftMargin + ',' + this.margin.top + ')'
 				);
 
 			const innerWidth =
-				+this.svg.attr('width') - this.margin.left - this.margin.right;
+				+svg.attr('width') - this.margin.left - this.margin.right;
 			const innerHeight =
-				+this.svg.attr('height') -
+				+svg.attr('height') -
 				this.margin.top -
 				this.margin.bottom -
-				this.verticalPadding;
+				verticalPadding;
 
-			this.svg.call(tip);
+			svg.call(tip);
 
 			this.x = d3
 				.scaleBand()
 				.rangeRound([0, innerWidth])
-				.paddingInner(this.innerPadding);
+				.paddingInner(horizontalPadding);
 
 			this.y = d3.scaleLinear().rangeRound([innerHeight, 0]);
 
 			this.x.domain(this.data.map(d => d.group));
 			this.y.domain([0, d3.max(this.data, d => d.value)]);
-			const x1 = d3.scaleBand().rangeRound([0, this.x.bandwidth()]);
+			const x1 = d3
+				.scaleBand()
+				.padding(0.1)
+				.rangeRound([0, this.x.bandwidth()]);
+
 			x1.domain(this.data.map(d => d.id));
 
-			this.g
-				.selectAll('.bar')
+			g.selectAll('.bar')
 				.data(this.data)
 				.enter()
 				.append('rect')
@@ -100,7 +109,7 @@ export class BarChartComponent implements OnInit, OnChanges {
 					'height',
 					d => innerHeight - this.y(this.clampHeight(d.value))
 				)
-				.attr('fill', (d, i) => this.colors(d.id))
+				.attr('fill', d => d.color)
 				.on('mouseover', function(d) {
 					tip.show(d, this);
 				})
@@ -108,14 +117,12 @@ export class BarChartComponent implements OnInit, OnChanges {
 					tip.hide(d, this);
 				});
 
-			this.g
-				.append('g')
+			g.append('g')
 				.attr('class', 'axis')
 				.attr('transform', 'translate(0,' + innerHeight + ')')
 				.call(d3.axisBottom(this.x));
 
-			this.g
-				.append('g')
+			g.append('g')
 				.attr('class', 'axis')
 				.call(d3.axisLeft(this.y))
 				.append('text')

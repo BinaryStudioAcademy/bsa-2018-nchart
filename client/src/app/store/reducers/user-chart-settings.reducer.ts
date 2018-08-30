@@ -93,7 +93,7 @@ const customizeSettings = (
 			for (const id in newValues) {
 				if (newValues.hasOwnProperty(id)) {
 					customValues[id] = { ...state[id] };
-					customValues[id].defaultValue = newValues[id];
+					customValues[id].value = newValues[id];
 				}
 			}
 			return {

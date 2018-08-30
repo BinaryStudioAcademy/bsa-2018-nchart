@@ -3,8 +3,7 @@ import { StoreService } from '@app/services/store.service';
 import { UserMappingColumn } from '@app/models/user-chart-store.model';
 import {
 	mappingColumns,
-	mappingDimensions,
-	getData
+	mappingDimensions
 } from '@app/store/selectors/userCharts';
 import { SetDimension } from '@app/store/actions/charts/charts.actions';
 import {
@@ -13,11 +12,11 @@ import {
 } from '@app/store/actions/charts/charts.actions';
 
 @Component({
-	selector: 'app-custom-settings',
-	templateUrl: './custom-settings.component.html',
-	styleUrls: ['./custom-settings.component.sass']
+	selector: 'app-dimension-settings',
+	templateUrl: './dimension-settings.component.html',
+	styleUrls: ['./dimension-settings.component.sass']
 })
-export class CustomSettingsComponent implements OnInit, OnDestroy {
+export class DimensionSettingsComponent implements OnInit, OnDestroy {
 	constructor(private storeService: StoreService, element: ElementRef) {
 		this.onMappingColumnsUpdate = this.onMappingColumnsUpdate.bind(this);
 	}
@@ -25,7 +24,6 @@ export class CustomSettingsComponent implements OnInit, OnDestroy {
 	disconnect: () => void;
 	columns: UserMappingColumn[] = [];
 	dimensionsSettings;
-	data: any[][];
 
 	ngOnInit() {
 		this.disconnect = this.storeService.connect([
@@ -38,10 +36,6 @@ export class CustomSettingsComponent implements OnInit, OnDestroy {
 				subscriber: d => {
 					this.dimensionsSettings = d;
 				}
-			},
-			{
-				selector: getData(),
-				subscriber: d => (this.data = d)
 			}
 		]);
 	}
