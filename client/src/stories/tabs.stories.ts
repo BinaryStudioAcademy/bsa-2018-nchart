@@ -3,7 +3,7 @@ import '@storybook/addon-notes/register';
 import { TabViewModule } from 'primeng/tabview';
 
 import { ButtonModule } from 'primeng/button';
-import { ButtonComponent } from '../app/shared/components/button/button/button.component';
+import { ButtonComponent } from '@app/shared/components/button/button/button.component';
 
 storiesOf('Tabs', module)
 	.addDecorator(
