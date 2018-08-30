@@ -30,7 +30,14 @@ class GroupService {
 	}
 
 	findAllUserGroups(res) {
-		return this.GroupRepository.findAllUserGroups(res.locals.user.id);
+		return this.GroupRepository.findAllUserGroups(res.locals.user.id)
+			.then(data=>{
+				let payload = [];
+				data.forEach(el =>{
+					payload.push(el.group.dataValues);
+				});
+				return payload;
+			})
 	}
 }
 

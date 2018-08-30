@@ -14,7 +14,14 @@ class CompanyService {
 	}
 
 	findAllUserCompanies(res) {
-		return this.CompanyRepository.findAllUserCompanies(res.locals.user.id);
+		return this.CompanyRepository.findAllUserCompanies(res.locals.user.id)
+            .then(data=>{
+                let payload = [];
+                data.forEach(el =>{
+                    payload.push(el.company.dataValues);
+                });
+                return payload;
+            })
 	}
 }
 

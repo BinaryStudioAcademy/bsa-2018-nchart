@@ -6,8 +6,6 @@ const ChartService = require('../chart/chart.service');
 const GroupService = require('../group/group.service');
 const ExportService = require('../../common/services/export.services/export.service');
 
-// todo: wrong
-
 class ProjectService {
 	constructor() {
 		this.ProjectRepository = ProjectRepository;
