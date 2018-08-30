@@ -62,7 +62,7 @@ class ProjectRepository extends Repository {
 		this.groupModel = groupModel;
 		return this.groupModel.findOne({
 			where: { id },
-			attributes: ['id', 'name'],
+			attributes: ['id'],
 			include: [
 				{
 					model: groupProjectModel,
@@ -110,11 +110,11 @@ class ProjectRepository extends Repository {
 		this.groupUser = groupUserModel;
 		return this.groupUser.findAll({
 			where: { userId: id },
-			attributes: ['groupId', 'userId', 'defaultGroup'],
+			attributes: ['groupId'],
 			include: [
 				{
 					model: groupModel,
-					attributes: ['id', 'name'],
+					attributes: ['id'],
 					include: [
 						{
 							model: groupProjectModel,
@@ -129,16 +129,15 @@ class ProjectRepository extends Repository {
 											model: projectChartModel,
 											separate: true,
 											attributes: ['chartId'],
-											// separate:true,
 											include: [
 												{
 													model: chartModel,
 													attributes: [
-														'dimensionSettings',
-														'customizeSettings',
 														'id',
 														'chartTypeId',
-														'datasetId'
+														'datasetId',
+														'dimensionSettings',
+														'customizeSettings'
 													],
 													include: [
 														{

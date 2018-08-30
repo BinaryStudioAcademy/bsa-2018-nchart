@@ -157,7 +157,6 @@ class ProjectService {
 	}
 
 	fullProjectById(id) {
-		// todo: remove waterfall
 		return new Promise((resolve, reject) => {
 			async.waterfall(
 				[
