@@ -1,4 +1,5 @@
 const async = require('async');
+const _ = require('lodash');
 const GroupRepository = require('./group.repository');
 
 class GroupService {
@@ -42,7 +43,7 @@ class GroupService {
 								defaultGroup: false
 							}
 						)
-							.then(() => callback(null, group))
+							.then(() => callback(null, _.omit(group, 'updatedAt')))
 							.catch(err => callback(err, null));
 					}
 				],

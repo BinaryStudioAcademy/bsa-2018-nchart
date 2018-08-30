@@ -1,4 +1,5 @@
 const async = require('async');
+const _ = require('lodash');
 const CompanyRepository = require('./company.repository');
 
 class CompanyService {
@@ -41,7 +42,7 @@ class CompanyService {
 							res.locals.user.id,
 							company.id
 						)
-							.then(() => callback(null, company))
+							.then(() => callback(null, _.omit(company, 'updatedAt')))
 							.catch(err => callback(err, null));
 					}
 				],
