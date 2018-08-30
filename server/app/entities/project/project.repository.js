@@ -13,6 +13,7 @@ class ProjectRepository extends Repository {
 		super();
 		this.projectModel = projectModel;
 		this.projectChartModel = projectChartModel;
+		this.groupProjectModel = groupProjectModel;
 	}
 
 	upsert(obj) {
@@ -155,6 +156,23 @@ class ProjectRepository extends Repository {
 									]
 								}
 							]
+						}
+					]
+				}
+			]
+		});
+	}
+
+	findByUserIdAndProjectId(obj) {
+		return this.groupProjectModel.findOne({
+			where: { projectId: obj.projectId },
+			include: [
+				{
+					model: groupModel,
+					include: [
+						{
+							model: groupUserModel,
+							where: { userId: obj.userId }
 						}
 					]
 				}
