@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -24,6 +24,10 @@ export class SpinnerComponent implements OnInit {
 	control: FormControl;
 	@Input()
 	icon: string;
+	@Output()
+	onchange: EventEmitter<any> = new EventEmitter();
+	@Output()
+	onblur: EventEmitter<any> = new EventEmitter();
 
 	ngOnInit() {}
 
@@ -40,6 +44,14 @@ export class SpinnerComponent implements OnInit {
 		const { errors } = this.control;
 
 		return errors && errors[Object.keys(errors)[0]];
+	}
+
+	change(e) {
+		this.onchange.emit(e);
+	}
+
+	blur(e) {
+		this.onblur.emit(e);
 	}
 
 	getClasses() {

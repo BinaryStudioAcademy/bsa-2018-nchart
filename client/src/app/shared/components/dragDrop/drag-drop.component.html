@@ -6,18 +6,18 @@
       <div class="ui-g-8 ">
 		  	<app-button type="icon"
 						icon="fa fa-trash-alt"
-						class="removeAllIcon"
+						class="remove-all-icon"
 						(onclick)="removeAll()"
 			></app-button>
-            <div *ngFor='let el of dimensionsSettings' [ngClass]="getClasses(el.multiple, el.required)" class="dropArea">
-              <h4 class="dimensionHeader">{{el.variable}}</h4>
-              <i *ngIf="el.required" class="fa fa-asterisk fa-xs requiredIcon"></i>
-              <i *ngIf="el.multiple" class="fa fa-list fa-xs multipleIcon"></i>
-              <pre class="dimensionSubHeader">{{el.type}}</pre>
-              <div [dragula]="DIMENSIONS" [(dragulaModel)]='el.value' class="dropContainer" [attr.data-dimensionId]="el.id">
+            <div *ngFor='let el of dimensionsSettings' [ngClass]="getClasses(el.multiple, el.required)" class="drop-area">
+              <h4 class="dimension-header">{{el.variable}}</h4>
+              <i *ngIf="el.required" class="fa fa-asterisk fa-xs required-icon"></i>
+              <i *ngIf="el.multiple" class="fa fa-list fa-xs multiple-icon"></i>
+              <pre class="dimension-sub-header">{{el.type}}</pre>
+              <div [dragula]="DIMENSIONS" [(dragulaModel)]='el.value' class="drop-container" [attr.data-dimensionId]="el.id">
                   <div class="draggble" *ngFor='let x of el.value'>{{x.variable}}
                       <small style="margin-left: 10px">{{x.type}}</small>
-                    <i class="fas fa-times removeIcon" [attr.data-dimensionId]="el.id" (click)="remove(x, $event)"></i>
+                    <i class="fas fa-times remove-icon" [attr.data-dimensionId]="el.id" (click)="remove(x, $event)"></i>
                   </div>
               </div>
             </div>

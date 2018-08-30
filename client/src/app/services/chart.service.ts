@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DimensionOption } from '@app/models/chart.model';
-import { DimensionColumnMap } from '../models/chart.model';
+import { DimensionColumnMap } from '@app/models/chart.model';
 import { v4 } from 'uuid';
-import { of } from 'rxjs/index';
 
 @Injectable()
 export class ChartService {
@@ -19,12 +18,12 @@ export class ChartService {
 		customizeSettings,
 		dimensionSettings
 	}) {
-		return of({
+		return {
 			id: v4(),
 			chartTypeId,
 			datasetId,
 			customizeSettings,
 			dimensionSettings
-		});
+		};
 	}
 }

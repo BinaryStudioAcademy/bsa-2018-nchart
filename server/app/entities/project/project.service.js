@@ -4,13 +4,15 @@ const ProjectRepository = require('./project.repository');
 const DatasetService = require('../dataset/dataset.service');
 const ChartService = require('../chart/chart.service');
 const GroupService = require('../group/group.service');
-const ExportService = require('../../common/services/export.services/export.service');
+const MarkupTemplateService = require('../../common/services/export.services/markup-template.service');
+const DocumentGeneratingService = require('../../common/services/export.services/document-generating.service');
 
 class ProjectService {
-    constructor() {
-        this.ProjectRepository = ProjectRepository;
-        this.ExportService = ExportService;
-    }
+	constructor() {
+		this.ProjectRepository = ProjectRepository;
+		this.DocumentGeneratingService = DocumentGeneratingService;
+		this.MarkupTemplateService = MarkupTemplateService;
+	}
 
     getAll() {
         return this.ProjectRepository.getAll();
@@ -193,9 +195,13 @@ class ProjectService {
         };
     }
 
-    export(id, type) {
-        return this.ExportService.getFile(id, type);
-    }
+	export(id, type, selector) {
+		return this.DocumentGeneratingService.getDocument(id, type, selector);
+	}
+
+	exportHtml(content, type) {
+		return this.MarkupTemplateService.getDocument(content, type);
+	}
 }
 
 module.exports = new ProjectService();

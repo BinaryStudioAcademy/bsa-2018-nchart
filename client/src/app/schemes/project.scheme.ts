@@ -1,6 +1,6 @@
 import { schema } from 'normalizr';
-import { chartScheme } from './chart.schema';
-import { datasetScheme } from './dataset.schema';
+import { chartScheme } from '@app/schemes/chart.schema';
+import { datasetScheme } from '@app/schemes/dataset.schema';
 
 export const projectScheme = new schema.Entity(
 	'project',

@@ -1,5 +1,5 @@
 import { HttpService } from '@app/api/http/http.service';
-import { Observable } from 'rxjs/index';
+import { Observable } from 'rxjs';
 import { RequestType } from '@app/models/requestType.model';
 import { Injectable } from '@angular/core';
 import { DatasetDomain } from '@app/models/dataset-domain.model';
