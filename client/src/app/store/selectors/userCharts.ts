@@ -204,7 +204,6 @@ export const getActiveChart = () => (
 
 export const isRequiredDimensionMatched = () => (state: AppState): boolean => {
 	const c = userChart()(state);
-
 	if (c) {
 		return c.dimensionSettings
 			.map(d => ({

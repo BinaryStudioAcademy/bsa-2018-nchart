@@ -83,7 +83,7 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	isCharts(): boolean {
 		this.updateViewChildren();
-		return this.showCharts && this.isChartsReady;
+		return this.showCharts && this.isChartsReady && this.showTable;
 	}
 
 	getSteps(data) {

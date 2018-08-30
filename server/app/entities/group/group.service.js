@@ -1,3 +1,5 @@
+const async = require('async');
+const _ = require('lodash');
 const GroupRepository = require('./group.repository');
 
 class GroupService {
@@ -7,6 +9,51 @@ class GroupService {
 
 	saveGroup(obj) {
 		return this.GroupRepository.saveGroup(obj);
+	}
+
+	saveFullGroup(obj, res) {
+		return new Promise((resolve, reject) => {
+			async.waterfall(
+				[
+					callback => {
+						// check name duplicates
+						this.findAllFullUserGroups({
+							userId: res.locals.user.id,
+							name: obj.name
+						})
+							.then(data => {
+								if (data.length === 0) {
+									return callback(null);
+								}
+								throw new Error(
+									'Folder with such name already exists'
+								);
+							})
+							.catch(err => callback(err, null));
+					},
+					callback => {
+						this.GroupRepository.saveGroup(obj)
+							.then(data => callback(null, data.dataValues))
+							.catch(err => callback(err, null));
+					},
+					(group, callback) => {
+						this.GroupRepository.saveGroupUser({
+							groupId: group.id,
+							userId: res.locals.user.id,
+							defaultGroup: false
+						})
+							.then(() => callback(null, _.omit(group, 'updatedAt')))
+							.catch(err => callback(err, null));
+					}
+				],
+				(err, payload) => {
+					if (err) {
+						reject(err);
+					}
+					resolve(payload);
+				}
+			);
+		});
 	}
 
 	saveGroupUser(obj) {
@@ -27,6 +74,10 @@ class GroupService {
 
 	findAllByQuery(query) {
 		return this.GroupRepository.findAllGroupUser(query);
+	}
+
+	findAllFullUserGroups(query) {
+		return this.GroupRepository.findAllFullUserGroups(query);
 	}
 }
 
