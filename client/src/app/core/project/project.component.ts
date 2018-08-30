@@ -21,6 +21,7 @@ import * as ProjectsActions from '@app/store/actions/projects/projects.actions';
 import { project } from '@app/store/selectors/projects.selectors';
 import { SchemeID } from '@app/models/normalizr.model';
 import { isRequiredDimensionMatched } from '@app/store/selectors/userCharts';
+import { isChartsReady } from '@app/store/selectors/charts.selectors';
 
 interface StepperStep {
 	id: number;
@@ -36,6 +37,7 @@ interface StepperStep {
 export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 	showCharts = false;
 	showTable = false;
+	isChartsReady = false;
 	routeParams$: Subscription;
 
 	projectName: string;
@@ -81,7 +83,7 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	isCharts(): boolean {
 		this.updateViewChildren();
-		return this.showCharts;
+		return this.showCharts && this.isChartsReady && this.showTable;
 	}
 
 	getSteps(data) {
@@ -134,6 +136,12 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 				selector: isRequiredDimensionMatched(),
 				subscriber: t => {
 					this.showCharts = t;
+				}
+			},
+			{
+				selector: isChartsReady(),
+				subscriber: t => {
+					this.isChartsReady = t;
 				}
 			}
 		]);

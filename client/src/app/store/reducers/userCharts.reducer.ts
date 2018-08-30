@@ -49,6 +49,8 @@ const active = (
 		case ProjectsActionConstants.LOAD_ONE_PROJECT__COMPLETE:
 			return action.payload.entities.project[action.payload.projectId]
 				.charts[0];
+		case ProjectsActionConstants.CREATE_DRAFT_PROJECT__COMPLETE:
+			return null;
 		case ChartsActionConstants.CREATE_CHART__COMPLETE:
 			return action.payload.chart.chartId;
 		default:
