@@ -42,22 +42,24 @@ if (isMainThread) {
 				});
 			} else if (link) {
 				// checks if file is not too big and return path to created file
-				LinkService.processLink(link).then(path => {
-					const worker = new Worker(__filename, {
-						workerData: { path, contents, link }
-					});
-					worker.on('message', resolve);
-					worker.on('error', reject);
-					worker.on('exit', code => {
-						if (code !== 0) {
-							reject(
-								new Error(
-									`Worker stopped with exit code ${code}`
-								)
-							);
-						}
-					});
-				});
+				LinkService.processLink(link)
+					.then(path => {
+						const worker = new Worker(__filename, {
+							workerData: { path, contents, link }
+						});
+						worker.on('message', resolve);
+						worker.on('error', reject);
+						worker.on('exit', code => {
+							if (code !== 0) {
+								reject(
+									new Error(
+										`Worker stopped with exit code ${code}`
+									)
+								);
+							}
+						});
+					})
+					.catch(err => reject(err));
 			} else if (contents) {
 				const worker = new Worker(__filename, {
 					workerData: { file, contents, link }

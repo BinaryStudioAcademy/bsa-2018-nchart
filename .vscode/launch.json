@@ -10,7 +10,7 @@
 			"name": "Attach to client 4200",
 			"urlFilter": "http://localhost:4200/*",
 			"port": 9222,
-			"webRoot": "${workspaceFolder}"
+			"webRoot": "${workspaceFolder}/client"
 		},
 		{
 			"type": "node",
