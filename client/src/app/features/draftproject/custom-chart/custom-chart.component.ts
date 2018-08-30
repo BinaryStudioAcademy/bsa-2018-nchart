@@ -7,7 +7,6 @@ import {
 	getActiveChart
 } from '@app/store/selectors/userCharts';
 import { FormGroup } from '@angular/forms';
-import { CustomizeControl } from '@app/models/customize-control.model';
 
 @Component({
 	selector: 'app-custom-chart',
@@ -25,7 +24,6 @@ export class CustomChartComponent implements OnInit, OnDestroy {
 	customizeSettings;
 	chartType: string;
 	customizeForm: FormGroup;
-	customizeControls: CustomizeControl[];
 
 	ngOnInit() {
 		this.disconnect = this.storeService.connect([
@@ -49,9 +47,6 @@ export class CustomChartComponent implements OnInit, OnDestroy {
 							this.data = this.barChartService.getData(data);
 							this.customizeForm = this.barChartService.createBarChartCustomizeForm(
 								this.customizeSettings
-							);
-							this.customizeControls = this.barChartService.getCustomizeControls(
-								this.customizeForm
 							);
 							break;
 
