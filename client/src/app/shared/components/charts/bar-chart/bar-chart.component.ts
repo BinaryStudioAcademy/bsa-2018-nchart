@@ -63,7 +63,9 @@ export class BarChartComponent implements OnInit, OnChanges {
 				.select('.bar-chart')
 				.append('svg')
 				.attr('width', width)
-				.attr('height', height);
+				.attr('height', height)
+				.attr('xmlns', 'http://www.w3.org/2000/svg')
+				.attr('xmlns:xlink', 'http://www.w3.org/1999/xlink');
 			const g = svg
 				.append('g')
 				.attr(
