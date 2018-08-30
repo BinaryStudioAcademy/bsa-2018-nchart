@@ -1,7 +1,10 @@
 const puppeteer = require('puppeteer');
 
 exports.createPdf = async id => {
-	const browser = await puppeteer.launch();
+	const browser = await puppeteer.launch({
+		headless: true,
+		args: [`--no-sandbox`, `--disable-setuid-sandbox`],
+	});
 	const page = await browser.newPage();
 	const options = {
 		format: 'A4'
