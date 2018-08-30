@@ -16,14 +16,21 @@ class MarkupTemplateService {
 		const page = await browser.newPage();
 		const templateName = 'template';
 		await page.setContent(this.compileHtml(templateName, { content }));
-		const buffer = await this.DocumentGeneratingService.returnBuffer(type, page);
+		const buffer = await this.DocumentGeneratingService.returnBuffer(
+			type,
+			page
+		);
 		await browser.close();
 		return buffer;
 	}
 
 	compileHtml(templateName, content) {
 		const templateN = 'template';
-		const filePath = this.Path.join(__dirname, 'templates', `${templateN}.pug`);
+		const filePath = this.Path.join(
+			__dirname,
+			'templates',
+			`${templateN}.pug`
+		);
 		return pug.compileFile(filePath)(content);
 	}
 }
