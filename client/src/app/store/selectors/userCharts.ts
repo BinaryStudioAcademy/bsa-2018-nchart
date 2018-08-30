@@ -195,12 +195,11 @@ export const getActiveChart = () => (
 ): Chart<SchemeID[], SchemeID[]> => {
 	const activeUserChart = userChart()(state);
 	if (activeUserChart) {
-		const c =
-			state.charts.byId[
-				activeUserChart.chartTypeId || state.userCharts.active
-			];
+		const c = state.charts.byId[activeUserChart.chartTypeId];
 		return c;
 	}
+
+	return null;
 };
 
 export const isRequiredDimensionMatched = () => (state: AppState): boolean => {
