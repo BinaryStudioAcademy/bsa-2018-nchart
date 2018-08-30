@@ -1,12 +1,10 @@
 require('dotenv').config();
 
-const exportConfig = id => {
-	return {
-		host: process.env.EXPORT_HOST,
-		port: process.env.EXPORT_PORT,
-		path: `${process.env.EXPORT_PATH}/${id}/pdf_preview`
-	};
-};
+const exportConfig = id => ({
+	host: process.env.EXPORT_HOST,
+	port: process.env.EXPORT_PORT,
+	path: `${process.env.EXPORT_PATH}/${id}/pdf_preview`
+});
 
 const connectionConfig = {
 	username: process.env.DB_USER,

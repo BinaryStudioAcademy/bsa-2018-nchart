@@ -31,14 +31,12 @@ class ProjectService {
 					callback => {
 						if (obj.project.id) {
 							this.ProjectRepository.upsert(obj.project)
-								.then(() =>
-									callback(null, {
-										project: {
-											id: obj.project.id,
-											name: obj.project.name
-										}
-									})
-								)
+								.then(() => callback(null, {
+									project: {
+										id: obj.project.id,
+										name: obj.project.name
+									}
+								}))
 								.catch(err => callback(err, null));
 						} else {
 							this.ProjectRepository.create(obj.project.name)
@@ -221,8 +219,8 @@ class ProjectService {
 		return this.DocumentGeneratingService.getDocument(id, type, selector);
 	}
 
-	exportHtml(id, content, type) {
-		return this.MarkupTemplateService.getDocument(id, content, type);
+	exportHtml(content, type) {
+		return this.MarkupTemplateService.getDocument(content, type);
 	}
 }
 

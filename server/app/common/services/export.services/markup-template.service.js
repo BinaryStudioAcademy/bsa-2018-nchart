@@ -11,11 +11,19 @@ class MarkupTemplateService {
 		this.Path = path;
 	}
 
-	async getDocument(id, content, type) {
+	async getDocument(content, type) {
+		const templateName = 'template';
+		const template = this.compileHtml(templateName, { content });
+
+		if (type === 'svg') {
+			const buffer = Buffer.from(template, 'utf-8');
+			return buffer;
+		}
+
 		const browser = await this.Puppeteer.launch();
 		const page = await browser.newPage();
-		const templateName = 'template';
-		await page.setContent(this.compileHtml(templateName, { content }));
+
+		await page.setContent(template);
 		const buffer = await this.DocumentGeneratingService.returnBuffer(
 			type,
 			page
@@ -25,11 +33,10 @@ class MarkupTemplateService {
 	}
 
 	compileHtml(templateName, content) {
-		const templateN = 'template';
 		const filePath = this.Path.join(
 			__dirname,
 			'templates',
-			`${templateN}.pug`
+			`${templateName}.pug`
 		);
 		return pug.compileFile(filePath)(content);
 	}
