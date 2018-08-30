@@ -6,8 +6,7 @@ const PayloadGeneratorService = require('../../common/services/payload-generator
 company.use(tokenInfoMiddleware);
 
 company.post('/', (req, res, next) => {
-	CompanyService
-		.saveFullCompany(req.body, res)
+	CompanyService.saveFullCompany(req.body, res)
 		.then(PayloadGeneratorService.nextWithData(next, res))
 		.catch(next);
 });

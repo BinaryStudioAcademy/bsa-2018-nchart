@@ -25,24 +25,23 @@ class GroupService {
 								if (data.length === 0) {
 									return callback(null);
 								}
-								throw new Error('Folder with such name already exists');
+								throw new Error(
+									'Folder with such name already exists'
+								);
 							})
 							.catch(err => callback(err, null));
 					},
 					callback => {
-						// todo: omit unnecessary fields from payload
 						this.GroupRepository.saveGroup(obj)
 							.then(data => callback(null, data.dataValues))
 							.catch(err => callback(err, null));
 					},
 					(group, callback) => {
-						this.GroupRepository.saveGroupUser(
-							{
-								groupId: group.id,
-								userId: res.locals.user.id,
-								defaultGroup: false
-							}
-						)
+						this.GroupRepository.saveGroupUser({
+							groupId: group.id,
+							userId: res.locals.user.id,
+							defaultGroup: false
+						})
 							.then(() => callback(null, _.omit(group, 'updatedAt')))
 							.catch(err => callback(err, null));
 					}

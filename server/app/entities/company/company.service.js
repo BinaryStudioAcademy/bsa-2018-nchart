@@ -28,7 +28,9 @@ class CompanyService {
 								if (data.length === 0) {
 									return callback(null);
 								}
-								throw new Error('Company with such name already exists');
+								throw new Error(
+									'Company with such name already exists'
+								);
 							})
 							.catch(err => callback(err, null));
 					},
