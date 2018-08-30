@@ -12,6 +12,10 @@ class CompanyService {
 	saveCompanyUser(userId, companyId) {
 		return this.CompanyRepository.saveCompanyUser(userId, companyId);
 	}
+
+	findAllUserCompanies(res) {
+		return this.CompanyRepository.findAllUserCompanies(res.locals.user.id);
+	}
 }
 
 module.exports = new CompanyService();
