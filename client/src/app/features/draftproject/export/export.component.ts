@@ -6,7 +6,7 @@ import {
 } from '@app/shared/components/form-field/form-validators';
 import { StoreService } from '@app/services/store.service';
 import { ExportType } from '@app/models/export.model';
-import { ExportProject } from '@app/store/actions/export/export.actions';
+// import { ExportProject } from '@app/store/actions/export/export.actions';
 import { isProjectExporting } from '@app/store/selectors/export.selectors';
 
 @Component({
@@ -58,6 +58,17 @@ export class ExportComponent implements OnInit, OnDestroy {
 				selector: isProjectExporting()
 			}
 		]);
+
+		// service.response observale subscribe
+
+		// update action to accept svg
+
+		/* const filename = this.controlName.value.trim();
+		const type = this.controlType.value as ExportType;
+
+		this.storeService.dispatch(
+			new ExportProject({ id: 1, type, filename })
+		); */
 	}
 
 	ngOnDestroy() {
@@ -65,11 +76,6 @@ export class ExportComponent implements OnInit, OnDestroy {
 	}
 
 	exportData() {
-		const filename = this.controlName.value.trim();
-		const type = this.controlType.value as ExportType;
-
-		this.storeService.dispatch(
-			new ExportProject({ id: 1, type, filename })
-		);
+		// service requestSvg
 	}
 }

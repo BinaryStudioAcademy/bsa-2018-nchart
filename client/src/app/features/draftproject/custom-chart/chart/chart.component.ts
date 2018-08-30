@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import {
 	getData,
 	getCustomizeSettings,
@@ -17,6 +17,9 @@ export class ChartComponent implements OnInit {
 	chartType: string;
 	@Input()
 	customizeSettings;
+
+	@ViewChild('chart')
+	chart: ElementRef;
 
 	constructor() {}
 

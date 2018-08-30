@@ -3,6 +3,7 @@
 		*ngSwitchCase="'barChart'"
 		[data]="data"
 		[settings]="customizeSettings"
+		#chart
 	></app-bar-chart>
 	<div *ngSwitchCase="'pieChart'">pieChart</div>
 	<div *ngSwitchCase="'ganttChart'">ganttChart</div>
