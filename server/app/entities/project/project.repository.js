@@ -66,7 +66,7 @@ class ProjectRepository extends Repository {
 			include: [
 				{
 					model: groupProjectModel,
-					attributes: ['id', 'groupId', 'projectId'],
+					attributes: ['groupId', 'projectId'],
 					include: [
 						{
 							model: this.projectModel,
