@@ -40,6 +40,7 @@ const appRoutes: Routes = [
 			{
 				path: 'project/draft',
 				component: ProjectComponent,
+				canDeactivate: [ProjectGuard],
 				canActivate: [ProjectGuard]
 			},
 			{
