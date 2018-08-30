@@ -52,4 +52,4 @@ export const getFirstChart = () => (state: AppState): Chart => {
 export const isChartsLoading = () => (state: AppState) =>
 	state.charts.isLoading;
 
-export const isChartsReady = () => (state: AppState) => state.charts.all.length;
+export const isChartsReady = () => (state: AppState) => !!state.charts.all.length;
