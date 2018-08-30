@@ -40,6 +40,19 @@ class GroupRepository extends Repository {
 			where: query
 		});
 	}
+
+	findAllUserGroups(userId) {
+		return this.groupUserModel.findAll({
+			where: { userId },
+			attributes: [],
+			include: [
+				{
+					model: this.groupModel,
+					attributes: ['id', 'name', 'createdAt']
+				}
+			]
+		});
+	}
 }
 
 module.exports = new GroupRepository();

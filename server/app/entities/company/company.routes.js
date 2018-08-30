@@ -6,8 +6,7 @@ const tokenInfoMiddleware = require('../../common/middleware/token-info.middlewa
 company.use(tokenInfoMiddleware);
 
 company.get('/', (req, res, next) => {
-	CompanyService
-		.findAllUserCompanies(res)
+	CompanyService.findAllUserCompanies(res)
 		.then(PayloadGeneratorService.nextWithData(next, res))
 		.catch(next);
 });

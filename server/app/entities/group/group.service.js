@@ -28,6 +28,10 @@ class GroupService {
 	findAllByQuery(query) {
 		return this.GroupRepository.findAllGroupUser(query);
 	}
+
+	findAllUserGroups(res) {
+		return this.GroupRepository.findAllUserGroups(res.locals.user.id);
+	}
 }
 
 module.exports = new GroupService();
