@@ -22,26 +22,16 @@ export class TableComponent implements OnInit {
 	@Input()
 	data: any[][] = [[]];
 	@Input()
-	headerItems: (columnId: SchemeID) => MenuItem[];
+	headerItems: (index: number) => MenuItem[];
 	@Input()
-	rowItems;
+	rowItems: (columnId: SchemeID, index: number) => MenuItem[];
+	@Input()
+	headerRowItems: () => MenuItem[];
 	@Output()
 	cellChange = new EventEmitter();
 	@Output()
 	headerChange = new EventEmitter();
-	@Output()
-	getHeaderId = new EventEmitter();
-	@Output()
-	getRowId = new EventEmitter();
 	selectedRows;
-
-	getColumnId(i) {
-		this.getHeaderId.emit(i);
-	}
-
-	getDataRowId(i) {
-		this.getRowId.emit(i);
-	}
 
 	checkboxChange(e) {}
 

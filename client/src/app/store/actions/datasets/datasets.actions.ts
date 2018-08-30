@@ -36,7 +36,11 @@ export class ChangeHeaderTitle extends AppAction<{
 	readonly type = constants.CHANGE_HEADER_TITLE;
 }
 
-export class DeleteRow extends AppAction<{ id: SchemeID }> {
+export class DeleteRow extends AppAction<{
+	rows: number;
+	index: number;
+	datasetId: SchemeID;
+}> {
 	readonly type = constants.DELETE_ROW;
 }
 
@@ -48,14 +52,38 @@ export class DeleteColumn extends AppAction<{
 	readonly type = constants.DELETE_COLUMN;
 }
 
-export class ChangeColumnType extends AppAction<{
+export class AddNewColumn extends AppAction<{
 	id: SchemeID;
+	title: string;
 	type: string;
+	datasetId: SchemeID;
+	index: number;
+	rows: number;
+}> {
+	readonly type = constants.ADD_NEW_COLUMN;
+}
+
+export class AddNewRow extends AppAction<{
+	datasetId: SchemeID;
+	index: number;
+	rows: number
+}> {
+	readonly type = constants.ADD_NEW_ROW;
+}
+
+export class ChangeColumnType extends AppAction<{
+	datasetId: SchemeID,
+	columnId: SchemeID,
+	type: string,
+	data: any[],
+	index: number
 }> {
 	readonly type = constants.CHANGE_COLUMN_TYPE;
 }
 
 export type Actions =
+	| AddNewRow
+	| AddNewColumn
 	| ChangeColumnType
 	| ChangeContent
 	| ChangeHeaderTitle

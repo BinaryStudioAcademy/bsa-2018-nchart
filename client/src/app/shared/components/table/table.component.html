@@ -15,6 +15,7 @@
 			<th class="header-cell number-cell">
 				<label>
 					<span pEditableColumn="headerData column-no">No</span>
+					<app-button-action [items]="headerRowItems()"></app-button-action>
 					<p-tableHeaderCheckbox></p-tableHeaderCheckbox>
 				</label>
 			</th>
@@ -35,7 +36,7 @@
 							</ng-template>
 						</p-cellEditor>
 					</span>
-					<app-button-action (click)="getColumnId(i)" [items]="headerItems(col.id, i)"></app-button-action>
+					<app-button-action [items]="headerItems(col.id, i)"></app-button-action>
 				</div>
 				<p class="column-type">
 					({{headerData[i].type}})
@@ -44,11 +45,13 @@
 		</tr>
 	</ng-template>
 	<ng-template pTemplate="body" let-columns="columns" let-rowData let-rowIndex="rowIndex">
-		<tr pSelectableRow="rowData">
+		<tr pSelectableRow="rowData" *ngIf="rowData.length > 1">
 			<td class="number-cell">
 				<label>
 					<span class="column-no">{{rowIndex + 1}}</span>
-					<app-button-action (click)="getDataRowId(rowIndex)" [items]="rowItems"></app-button-action>
+					<app-button-action [items]="rowItems(rowIndex)"></app-button-action>
+					<!-- <p-tieredMenu #menu [model]="rowItems(rowIndex)" [popup]="true"></p-tieredMenu>
+					<app-button #btn type="icon" icon="pi pi-check" (onclick)="menu.toggle($event)"></app-button> -->
 					<p-tableCheckbox [value]="rowData"></p-tableCheckbox>
 				</label>
 			</td>
@@ -57,13 +60,13 @@
 					<ng-template pTemplate="input">
 						<input
 							type="text"
-							[value]="rowData[i]"
+							[value]="rowData[i].value"
 							(keydown)="onKeyDown($event, rowIndex, i)"
 							(blur)="onBlur($event, rowIndex, i)"
 						>
 					</ng-template>
 					<ng-template pTemplate="output">
-						{{rowData[i]}}
+						{{rowData[i].value}}
 					</ng-template>
 				</p-cellEditor>
 			</td>

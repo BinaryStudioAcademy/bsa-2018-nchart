@@ -17,11 +17,13 @@ export const chartDataset = (id?: SchemeID) => (state: AppState) => {
 };
 
 export const getDatasetValues = () => (state: AppState) => {
-	const activeDataId = chartDataset()(state).modified.data;
-	return {
-		values: activeDataId.map(d => d.map(id => state.datasetData[id].value)),
-		ids: activeDataId.map(d => d.map(id => state.datasetData[id].id))
-	};
+	const activeDataset = chartDataset()(state);
+	if (activeDataset) {
+		return activeDataset.modified.data.map(
+			d => d.map(id => state.datasetData[id])
+		);
+	}
+	return [];
 };
 
 export const getDatasetHeaders = () => (state: AppState): DatasetColumn[] => {

@@ -3,7 +3,7 @@ import { ProjectsActionConstants } from '@app/store/actions/projects/projects.ac
 import { Actions as projectActions } from '@app/store/actions/projects/projects.actions';
 import { DatasetActionConstants as constants } from '@app/store/actions/datasets/datasets.action-types';
 import { Actions as datasetsActions } from '@app/store/actions/datasets/datasets.actions';
-import { omit, omitBy } from 'lodash';
+import { range, mapKeys, omitBy, zipObject } from 'lodash';
 
 export const initialState: DatasetDataState = {};
 
@@ -29,7 +29,17 @@ export const datasetDataReducer = (
 			};
 		case constants.DELETE_ROW:
 			return {
-				...omit(state, action.payload.id)
+				...mapKeys(state, (value, key) => {
+					const i = +key.split('-')[0], j = +key.split('-')[1];
+					if (i >= action.payload.index && i < action.payload.rows) {
+						state[key].value = state[key.replace(`${i}-${j}`, `${i + 1}-${j}`)].value;
+					}
+				}),
+				...omitBy(state, (value, key: string) => {
+						return key.startsWith(
+							`${action.payload.rows}-`
+						);
+					})
 			};
 		case constants.DELETE_COLUMN:
 			return {
@@ -39,6 +49,38 @@ export const datasetDataReducer = (
 					);
 				})
 			};
+		case constants.ADD_NEW_COLUMN:
+			const colKeys = range(0, action.payload.rows).map(i =>
+				i + '-' + action.payload.index + '-' + action.payload.datasetId
+			);
+			return {
+				...state,
+				...zipObject(colKeys, colKeys.map(key => ({
+					id: key,
+					value: ''
+				}))),
+			};
+		case constants.ADD_NEW_ROW:
+			const rowKeys = range(0, action.payload.index).map(i =>
+				action.payload.rows + '-' + i + '-' + action.payload.datasetId
+			);
+			return {
+				...state,
+				...zipObject(rowKeys, rowKeys.map(key => ({
+					id: key,
+					value: ''
+				}))),
+			};
+		case constants.CHANGE_COLUMN_TYPE: {
+				return {
+					...state,
+					...mapKeys(state, (value, key) => {
+						if (key.includes(`-${action.payload.index}-`)) {
+							state[key].value = action.payload.data.find(el => el.id === key).value;
+						}
+					})
+				};
+			}
 		default:
 			return state;
 	}

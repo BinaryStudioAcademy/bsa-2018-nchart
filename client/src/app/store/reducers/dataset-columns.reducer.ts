@@ -31,11 +31,21 @@ export const datasetColumnsReducer = (
 			delete state[action.payload.id];
 			return state;
 		}
-		case constants.CHANGE_COLUMN_TYPE: {
+		case constants.ADD_NEW_COLUMN: {
 			return {
 				...state,
 				[action.payload.id]: {
-					...state[action.payload.id],
+					title: action.payload.title,
+					type: action.payload.type,
+					id: action.payload.id
+				}
+			};
+		}
+		case constants.CHANGE_COLUMN_TYPE: {
+			return {
+				...state,
+				[action.payload.columnId]: {
+					...state[action.payload.columnId],
 					type: action.payload.type
 				}
 			};

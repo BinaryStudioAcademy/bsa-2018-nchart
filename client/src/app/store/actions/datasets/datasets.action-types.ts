@@ -9,5 +9,7 @@ export enum DatasetActionConstants {
 	CHANGE_HEADER_TITLE = 'Dataset data: CHANGE_HEADER_TITLE',
 	DELETE_COLUMN = 'Dataset data: DELETE_COLUMN',
 	DELETE_ROW = 'Dataset data: DELETE_ROW',
-	CHANGE_COLUMN_TYPE = 'Dataset data: CHANGE_COLUMN_TYPE'
+	CHANGE_COLUMN_TYPE = 'Dataset data: CHANGE_COLUMN_TYPE',
+	ADD_NEW_COLUMN = 'Dataset data: ADD_NEW_COLUMN',
+	ADD_NEW_ROW = 'Dataset data: ADD_NEW_ROW'
 }

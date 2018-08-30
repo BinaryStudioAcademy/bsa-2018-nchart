@@ -102,6 +102,11 @@
 		width: 20px
 		margin-right: 5px
 		background-color: $stateDefaultBgColor
+		&:hover,
+		&:focus,
+		&:active,
+		&:focus-within
+			background-color: $stateDefaultBgColor
 	.ui-buttonset.ui-splitbutton .ui-widget.ui-button, 
 	.ui-buttonset.ui-splitbutton .ui-button
 		padding: 0
@@ -109,7 +114,8 @@
 		min-width: 20px
 		&:hover,
 		&:focus,
-		&:active
+		&:active,
+		&:focus-within
 			background-color: $stateDefaultBgColor
 			box-shadow: none
 			color: $stateActiveTextColor

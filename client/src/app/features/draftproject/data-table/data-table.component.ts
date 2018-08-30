@@ -8,6 +8,8 @@ import {
 import * as DatasetActions from '@app/store/actions/datasets/datasets.actions';
 import { SchemeID } from '@app/models/normalizr.model';
 import { activeDatasetId } from '@app/store/selectors/dataset.selectors';
+import { v4 } from 'uuid';
+import { MenuItem } from 'primeng/api';
 
 @Component({
 	selector: 'app-data-table',
@@ -19,92 +21,141 @@ export class DataTableComponent implements OnInit, OnDestroy {
 	columns: DatasetColumn[];
 	datasetId: SchemeID;
 	data: any[][];
-	dataId: SchemeID[][];
-	headerId: number;
-	rowId: number;
-	rowItems = [
-		{
-			label: 'Delete row',
-			icon: 'fa fa-trash',
-			command: () => {
-				this.removeRow();
+	rowItems = (index): MenuItem[] => {
+		return [
+			{
+				label: 'New row',
+				icon: 'fa fa-plus',
+				command: () => {
+					this.addNewRow();
+				}
+			}, {
+				label: 'Delete row',
+				icon: 'fa fa-trash',
+				command: () => {
+					this.removeRow(index);
+				}
 			}
-		}
-	];
+		];
+	}
+
+	headerRowItems = (): MenuItem[] => {
+		return [{
+				label: 'New row',
+				icon: 'fa fa-plus',
+				url: '#/draft/project',
+				command: () => {
+					this.addNewRow();
+				}
+			}
+		];
+	}
 
 	headerItems = (columnId, index) => {
 		return [
 			{
 				label: 'New column',
 				icon: 'fa fa-plus',
+				url: '#/draft/project',
 				command: () => {
 					this.addNewColumn();
 				}
-			},
-			{
+			}, {
 				label: 'To number',
+				url: '#/draft/project',
 				command: () => {
-					this.changeColumnType('number');
+					this.changeColumnType('number', index, columnId);
 				}
 			},
 			{
 				label: 'To string',
+				url: '#/draft/project',
 				command: () => {
-					this.changeColumnType('string');
+					this.changeColumnType('string', index, columnId);
 				}
 			},
 			{
 				label: 'To boolean',
+				url: '#/draft/project',
 				command: () => {
-					this.changeColumnType('boolean');
+					this.changeColumnType('boolean', index, columnId);
 				}
 			},
 			{
 				label: 'Delete column',
 				icon: 'fa fa-trash',
+				url: '#/draft/project',
 				command: () => {
-					this.removeColumn(this.datasetId, columnId, index);
+					this.removeColumn(columnId, index);
 				}
 			}
 		];
-	// tslint:disable-next-line:semicolon
-	};
+	}
 
-	removeColumn(datasetId, columnId, index) {
+	removeColumn(columnId, index) {
 		this.storeService.dispatch(
 			new DatasetActions.DeleteColumn({
 				id: columnId,
-				datasetId,
+				datasetId: this.datasetId,
 				index
 			})
 		);
 	}
 
-	removeRow() {
-		const data = this.dataId[this.rowId];
-		data.map((d, i) => {
-			this.storeService.dispatch(
-				new DatasetActions.DeleteRow({
-					id: this.dataId[this.rowId][i]
-				})
-			);
-		});
-	}
-
-	addNewColumn() {}
-
-	changeColumnType(type) {
-		/* const col = this.headerId;
+	removeRow(index) {
 		this.storeService.dispatch(
-			new DatasetActions.ChangeColumnType({
-				id: this.columnsId[col],
-				type: type
+			new DatasetActions.DeleteRow({
+				rows: this.data.length - 1,
+				datasetId: this.datasetId,
+				index: index
 			})
 		);
-		this.data.map((el, i) => {
-			const value = this.convertDataType(type, el[col]);
-			this.change({ value, i, col });
-		}); */
+	}
+
+	addNewColumn() {
+		this.storeService.dispatch(
+			new DatasetActions.AddNewColumn({
+				id: v4(),
+				title: 'Header',
+				type: 'string',
+				datasetId: this.datasetId,
+				index: this.columns.length,
+				rows: this.data.length
+			})
+		);
+	}
+
+	addNewRow() {
+		this.storeService.dispatch(
+			new DatasetActions.AddNewRow({
+				datasetId: this.datasetId,
+				index: this.columns.length,
+				rows: this.data.length
+			})
+		);
+	}
+
+	changeColumnType(type, col, columnId) {
+		this.storeService.dispatch(
+			new DatasetActions.ChangeColumnType({
+				datasetId: this.datasetId,
+				columnId: columnId,
+				type: type,
+				data: this.getDataByCol(col, type),
+				index: col
+			})
+		);
+	}
+
+	getDataByCol(col, type) {
+		const result = [];
+		this.data.filter(dataArr => dataArr.map((data) => {
+			if (data.id.includes(`-${col}-`)) {
+				data.value = this.convertDataType(type, data.value);
+				result.push(data);
+			}
+		}));
+		return result;
 	}
 
 	convertDataType(type, value) {
@@ -122,14 +173,6 @@ export class DataTableComponent implements OnInit, OnDestroy {
 		return value;
 	}
 
-	getHeaderId(id) {
-		this.headerId = id;
-	}
-
-	getRowId(id) {
-		this.rowId = id;
-	}
-
 	constructor(element: ElementRef, private storeService: StoreService) {}
 
 	ngOnInit() {
@@ -142,8 +185,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
 			},
 			{
 				subscriber: data => {
-					this.data = data.values;
-					this.dataId = data.ids;
+					this.data = data;
 				},
 				selector: getDatasetValues()
 			},
@@ -160,19 +202,19 @@ export class DataTableComponent implements OnInit, OnDestroy {
 		value = this.convertDataType(this.columns[col].type, value);
 		this.storeService.dispatch(
 			new DatasetActions.ChangeContent({
-				id: this.dataId[i][col],
+				id: this.data[i][col].id,
 				value: value
 			})
 		);
 	}
 
 	headerChange({ title, i }) {
-		/* this.storeService.dispatch(
+		this.storeService.dispatch(
 			new DatasetActions.ChangeHeaderTitle({
-				id: this.columnsId[i],
+				id: this.columns[i].id,
 				title: title
 			})
-		); */
+		);
 	}
 
 	ngOnDestroy() {

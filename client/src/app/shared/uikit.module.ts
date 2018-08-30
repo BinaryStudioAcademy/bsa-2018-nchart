@@ -26,6 +26,7 @@ import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { DragulaModule } from 'ng2-dragula';
 import { TooltipModule } from 'primeng/tooltip';
 import { TableModule } from 'primeng/table';
+import { TieredMenuModule } from 'primeng/tieredmenu';
 
 @NgModule({
 	imports: [
@@ -52,7 +53,8 @@ import { TableModule } from 'primeng/table';
 		ReactiveFormsModule,
 		TooltipModule,
 		SpinnerModule,
-		TableModule
+		TableModule,
+		TieredMenuModule
 	],
 	exports: [
 		ButtonModule,
@@ -78,7 +80,8 @@ import { TableModule } from 'primeng/table';
 		ReactiveFormsModule,
 		TooltipModule,
 		SpinnerModule,
-		TableModule
+		TableModule,
+		TieredMenuModule
 	],
 	declarations: []
 })

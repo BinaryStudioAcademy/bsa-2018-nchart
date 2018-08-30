@@ -9,6 +9,7 @@ import { LinkComponent } from '@app/shared/components/link/link.component';
 import { DragDropComponent } from '@app/shared/components/dragDrop/drag-drop.component';
 import { ChartsModule } from '@app/shared/components/charts/charts.module';
 import { TableComponent } from '@app/shared/components/table/table.component';
+import { PopupMenuComponent } from '@app/shared/components/button/popup-menu/popup-menu.component';
 
 @NgModule({
 	imports: [
@@ -27,14 +28,16 @@ import { TableComponent } from '@app/shared/components/table/table.component';
 		MainBlockComponent,
 		DragDropComponent,
 		LinkComponent,
-		TableComponent
+		TableComponent,
+		PopupMenuComponent
 	],
 	declarations: [
 		ActionButtonComponent,
 		DragDropComponent,
 		MainBlockComponent,
 		LinkComponent,
-		TableComponent
+		TableComponent,
+		PopupMenuComponent
 	]
 })
 export class SharedModule {}
