@@ -1,12 +1,9 @@
-<div class="chart-container project-bar-chart" [ngSwitch]="switchCharts">
+<div class="chart-container project-bar-chart" [ngSwitch]="chartType">
 	<app-bar-chart 
-	[data]="data" 
-	[width]="barChartCustomizeSettings.width.defaultValue" 
-	[height]="barChartCustomizeSettings.height.defaultValue"
-	[leftMargin] = "barChartCustomizeSettings.leftMargin.defaultValue"
-	[verticalPadding] = "barChartCustomizeSettings.verticalPadding.defaultValue"
-	[innerPadding] = "barChartCustomizeSettings.horizontalPadding.defaultValue"
-	*ngSwitchCase="'barChart'"></app-bar-chart>
+		*ngSwitchCase="'barChart'"
+		[data]="data"
+		[settings]="customizeSettings"
+	></app-bar-chart>
 	<div *ngSwitchCase="'pieChart'">pieChart</div>
 	<div *ngSwitchCase="'ganttChart'">ganttChart</div>
 	<div *ngSwitchCase="'alluvialDiagram'">pieChart</div>

@@ -18,3 +18,4 @@ export * from '@app/models/user-domain.model';
 export * from '@app/models/router-state-url.model';
 export * from '@app/models/export-domain.model';
 export * from '@app/models/export-store.model';
+export * from '@app/models/bar-chart.model';
