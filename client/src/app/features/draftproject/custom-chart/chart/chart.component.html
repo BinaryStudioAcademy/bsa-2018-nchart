@@ -4,7 +4,10 @@
 		[data]="data"
 		[settings]="customizeSettings"
 	></app-bar-chart>
-	<app-pie-chart  *ngSwitchCase="'pieChart'"></app-pie-chart >
+	<app-pie-chart  
+		*ngSwitchCase="'pieChart'" 
+		[settings]="customizeSettings"
+	></app-pie-chart >
 	<div *ngSwitchCase="'ganttChart'">ganttChart</div>
 	<div *ngSwitchCase="'alluvialDiagram'">pieChart</div>
 </div>

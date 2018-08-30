@@ -7,6 +7,7 @@ import {
 	getActiveChart
 } from '@app/store/selectors/userCharts';
 import { FormGroup } from '@angular/forms';
+import { PieChartService } from '@app/services/charts/pie-chart.service';
 
 @Component({
 	selector: 'app-custom-chart',
@@ -16,6 +17,7 @@ import { FormGroup } from '@angular/forms';
 export class CustomChartComponent implements OnInit, OnDestroy {
 	constructor(
 		private barChartService: BarChartService,
+		private pieChartService: PieChartService,
 		private storeService: StoreService
 	) {}
 
@@ -46,6 +48,12 @@ export class CustomChartComponent implements OnInit, OnDestroy {
 						case 'barChart':
 							this.data = this.barChartService.getData(data);
 							this.customizeForm = this.barChartService.createBarChartCustomizeForm(
+								this.customizeSettings
+							);
+							break;
+						case 'pieChart':
+							// this.data = this.barChartService.getData(data);
+							this.customizeForm = this.pieChartService.createPieChartCustomizeForm(
 								this.customizeSettings
 							);
 							break;

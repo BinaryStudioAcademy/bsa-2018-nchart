@@ -4,4 +4,9 @@
 		[formGroup]="formGroup"
 		[customizeSettings]="customizeSettings"
 	></app-bar-chart-customize>
+	<app-pie-chart-customize
+		*ngSwitchCase="'pieChart'"
+		[formGroup]="formGroup"
+		[customizeSettings]="customizeSettings"
+	></app-pie-chart-customize>
 </div>

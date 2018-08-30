@@ -5,12 +5,14 @@ import { BarChartComponent } from '@app/shared/components/charts/bar-chart/bar-c
 import { PieChartComponent } from '@app/shared/components/charts/pie-chart/pie-chart.component';
 import { BarChartCustomizeComponent } from '@app/shared/components/charts/bar-chart/bar-chart-customize.component';
 import { FormFieldModule } from '@app/shared/components/form-field/form-field.module';
+import { PieChartCustomizeComponent } from '@app/shared/components/charts/pie-chart/pie-chart-customize.component';
 
 const chartComponents = [
 	TestChartComponent,
 	BarChartComponent,
 	PieChartComponent,
-	BarChartCustomizeComponent
+	BarChartCustomizeComponent,
+	PieChartCustomizeComponent
 ];
 
 @NgModule({
