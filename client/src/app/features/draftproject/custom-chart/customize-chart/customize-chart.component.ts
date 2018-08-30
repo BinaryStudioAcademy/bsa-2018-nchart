@@ -17,7 +17,7 @@ export class CustomizeChartComponent implements OnInit {
 	customizeSettings;
 
 	constructor(private storeService: StoreService) {}
-	disconnect: () => void;
+
 	ngOnInit() {}
 
 	change() {

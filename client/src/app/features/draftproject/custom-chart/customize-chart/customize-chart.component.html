@@ -2,7 +2,7 @@
 	<form [formGroup]="form" class="customize-settings-container">
 		<div *ngFor="let control of customizeControls; let i = index">
 			<div [ngSwitch]="control.type">
-			  <app-spinner *ngSwitchCase="'spinner'" [label]="control.label" (change)="change()"  [control]="control.control" [min]="0" size="26" [step]="getStep(control.control.value)"></app-spinner>
+			  <app-spinner *ngSwitchCase="'spinner'" [label]="control.label" (onchange)="change()" [control]="control.control" [min]="0" size="26" [step]="getStep(control.control.value)"></app-spinner>
 				<app-checkbox *ngSwitchCase="'checkBox'" [label]="control.label" (change)="change()" [control]="control.control"></app-checkbox>
 			</div>
 		  </div>

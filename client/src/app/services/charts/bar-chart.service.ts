@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
 import ColorHash from 'color-hash';
-import {
-	BarChartCustomize,
-	OptionalType,
-	fieldsValidators,
-	BarChartDataObj
-} from '@app/models';
+import { OptionalType, fieldsValidators, BarChartDataObj } from '@app/models';
+import { BarChartCustomize } from '@app/models/bar-chart.model';
 import { FormService } from '@app/services/form.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { minValidator } from '@app/shared/components/form-field/form-validators';
@@ -159,18 +155,6 @@ export class BarChartService {
 		return compressed;
 	}
 
-	static getValues(barChartCustomize): BarChartCustomize {
-		return {
-			width: barChartCustomize.width.value,
-			height: barChartCustomize.height.value,
-			leftMargin: barChartCustomize.leftMargin.value,
-			verticalPadding: barChartCustomize.verticalPadding.value,
-			horizontalPadding: barChartCustomize.horizontalPadding.value,
-			useSameScale: barChartCustomize.useSameScale.value,
-			colourScale: barChartCustomize.colourScale.value
-		};
-	}
-
 	getCustomizeControls(formGroup: FormGroup): CustomizeControl[] {
 		return Object.entries(formGroup.controls).map(c => ({
 			type: BarChartService.getType(c[0]),
@@ -195,7 +179,15 @@ export class BarChartService {
 	createBarChartCustomizeForm(barChartCustomize): FormGroup {
 		const initialValues: OptionalType<
 			BarChartCustomize
-		> = BarChartService.getValues(barChartCustomize);
+		> = new BarChartCustomize(
+			barChartCustomize.width.value,
+			barChartCustomize.height.value,
+			barChartCustomize.leftMargin.value,
+			barChartCustomize.verticalPadding.value,
+			barChartCustomize.horizontalPadding.value,
+			barChartCustomize.useSameScale.value,
+			barChartCustomize.colourScale.value
+		);
 
 		const validators: fieldsValidators<BarChartCustomize> = {
 			width: [minValidator('Minimum value is', 0)],
@@ -211,7 +203,6 @@ export class BarChartService {
 			initialValues,
 			validators
 		);
-
 		return this.formBuilder.group(controls);
 	}
 }
