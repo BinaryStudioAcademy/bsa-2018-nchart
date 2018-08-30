@@ -33,16 +33,65 @@ project.get('/group/:id', (req, res, next) => {
 });
 
 project.get('/:id/export', (req, res) => {
-	ProjectService.export(req.params.id, req.query.type).then(result => {
+	ProjectService.export(
+		req.params.id,
+		req.query.type,
+		req.query.selector
+	).then(result => {
+		let contentType;
+		switch (req.query.type) {
+		case 'pdf':
+			contentType = 'application/pdf';
+			break;
+		case 'png':
+			contentType = 'image/png';
+			break;
+		case 'svg':
+			contentType = 'image/svg+xml';
+			break;
+		default:
+			contentType = 'application/json';
+			break;
+		}
 		if (result) {
 			res.writeHead(200, {
 				'Content-Disposition': 'inline',
 				'Content-Length': result.length,
-				'Content-Type': `application/${req.query.type}`
+				'Content-Type': `${contentType}`
 			});
 			res.end(result);
 		} else {
-			res.send(400);
+			res.sendStatus(400);
+		}
+	});
+});
+
+project.post('/:id/export', (req, res) => {
+	ProjectService.exportHtml(req.body.content, req.body.type).then(result => {
+		let contentType;
+		switch (req.body.type) {
+		case 'pdf':
+			contentType = 'application/pdf';
+			break;
+		case 'png':
+			contentType = 'image/png';
+			break;
+		case 'svg':
+			contentType = 'image/svg+xml';
+			break;
+		default:
+			contentType = 'application/json';
+			break;
+		}
+		if (result) {
+			res.writeHead(200, {
+				'Content-Disposition': 'inline',
+				'Content-Length': result.length,
+				'Content-Type': `${contentType}`
+			});
+			res.end(result);
+		} else {
+			res.sendStatus(400);
 		}
 	});
 });
