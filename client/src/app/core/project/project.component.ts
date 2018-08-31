@@ -9,7 +9,6 @@ import {
 	ViewChildren
 } from '@angular/core';
 import { StoreService } from '@app/services/store.service';
-import { LoadCharts } from '@app/store/actions/charts/charts.actions';
 import {
 	CreateDraftProject,
 	LoadOneProject
@@ -83,7 +82,7 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	isCharts(): boolean {
 		this.updateViewChildren();
-		return this.showCharts && this.isChartsReady;
+		return this.showCharts && this.isChartsReady && this.showTable;
 	}
 
 	getSteps(data) {
@@ -105,12 +104,10 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 				const { id } = params;
 
 				if (id) {
-					this.storeService.dispatch(new LoadCharts());
 					this.storeService.dispatch(
 						new LoadOneProject({ projectId: id + '' })
 					);
 				} else {
-					this.storeService.dispatch(new LoadCharts());
 					this.storeService.dispatch(new CreateDraftProject());
 				}
 			}
