@@ -314,6 +314,10 @@ class ProjectService {
 		});
 	}
 
+	findProjectsWithOwners(res) {
+		return this.ProjectRepository.findProjectsWithOwners(res.locals.user.id);
+	}
+
 	static getProjectFromPayload(rawProject) {
 		const charts = [];
 		const datasets = [];

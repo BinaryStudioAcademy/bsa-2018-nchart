@@ -7,6 +7,7 @@ const datasetModel = require('../dataset/dataset.model');
 const groupModel = require('../group/group.models/group');
 const groupProjectModel = require('../group/group.models/group_project');
 const groupUserModel = require('../group/group.models/group_user');
+const userModel = require('../user/user.model');
 
 class ProjectRepository extends Repository {
 	constructor() {
@@ -148,6 +149,57 @@ class ProjectRepository extends Repository {
 																'data',
 																'columns'
 															]
+														}
+													]
+												}
+											]
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		});
+	}
+
+	findProjectsWithOwners(userId) {
+		this.groupUser = groupUserModel;
+		return this.groupUser.findAll({
+			where: { userId },
+			separate: true,
+			attributes: ['groupId'],
+			include: [
+				{
+					model: groupModel,
+					attributes: ['id'],
+					include: [
+						{
+							model: groupProjectModel,
+							attributes: ['projectId'],
+							include: [
+								{
+									model: this.projectModel,
+									attributes: ['id', 'name'],
+									include: [
+										{
+											model: groupProjectModel,
+											separate: true,
+											attributes: ['projectId', 'groupId'],
+											where: { accessLevelId: 1 },
+											include: [
+												{
+													model: groupModel,
+													attributes: ['id'],
+													include: [
+														{
+															model: groupUserModel,
+															attributes: ['userId'],
+															include: {
+																model: userModel,
+																attributes: ['email']
+															}
 														}
 													]
 												}

@@ -49,6 +49,12 @@ project.post('/shareByEmail', (req, res, next) => {
 		.catch(next);
 });
 
+project.get('/owners', (req, res, next) => {
+	ProjectService.findProjectsWithOwners(res)
+		.then(PayloadGeneratorService.nextWithData(next, res))
+		.catch(next);
+}, successOrEmptyPayload);
+
 project.get('/:id', (req, res, next) => {
 	ProjectService.fullProjectById(Number(req.params.id), res)
 		.then(PayloadGeneratorService.nextWithData(next, res))
