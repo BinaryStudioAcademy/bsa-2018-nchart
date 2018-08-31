@@ -16,14 +16,15 @@ class CompanyService {
 	}
 
 	findAllUserCompanies(res) {
-		return this.CompanyRepository.findAllUserCompanies(res.locals.user.id)
-			.then(data => {
-				const payload = [];
-				data.forEach(el => {
-					payload.push(el.company.dataValues);
-				});
-				return payload;
+		return this.CompanyRepository.findAllUserCompanies(
+			res.locals.user.id
+		).then(data => {
+			const payload = [];
+			data.forEach(el => {
+				payload.push(el.company.dataValues);
 			});
+			return payload;
+		});
 	}
 
 	saveFullCompany(obj, res) {
@@ -67,6 +68,10 @@ class CompanyService {
 				}
 			);
 		});
+	}
+
+	findCompanyUsers(query) {
+		return this.CompanyRepository.findCompanyUsers(query);
 	}
 }
 

@@ -41,7 +41,6 @@ class GroupRepository extends Repository {
 		});
 	}
 
-
 	findAllUserGroups(userId) {
 		return this.groupUserModel.findAll({
 			where: { userId },

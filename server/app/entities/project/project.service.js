@@ -161,17 +161,17 @@ class ProjectService {
 			async.waterfall(
 				[
 					callback => {
-						this.ProjectRepository.findByUserIdAndProjectId(
-							{
-								projectId: id,
-								userId: res.locals.user.id
-							}
-						)
+						this.ProjectRepository.findByUserIdAndProjectId({
+							projectId: id,
+							userId: res.locals.user.id
+						})
 							.then(data => {
 								if (data !== null) {
 									return callback(null);
 								}
-								throw new Error('User has no rights on this project');
+								throw new Error(
+									'User has no rights on this project'
+								);
 							})
 							.catch(err => callback(err, null));
 					},
@@ -281,28 +281,25 @@ class ProjectService {
 
 	shareProjectByEmail(obj, res) {
 		if (obj.email === res.locals.user.email) {
-			throw new Error('Can\'t share with yourself');
+			throw new Error("Can't share with yourself");
 		}
 		return new Promise((resolve, reject) => {
 			async.waterfall(
 				[
 					callback => {
-						UserService.findByEmail(obj.email)
-							.then(data => {
-								if (data !== null) {
-									return callback(null, data.dataValues.id);
-								}
-								throw new Error('Object did not exist');
-							});
+						UserService.findByEmail(obj.email).then(data => {
+							if (data !== null) {
+								return callback(null, data.dataValues.id);
+							}
+							throw new Error('Object did not exist');
+						});
 					},
 					(userId, callback) => {
-						this.shareProject(
-							{
-								userId,
-								projectId: obj.projectId,
-								accessLevelId: obj.accessLevelId
-							}
-						)
+						this.shareProject({
+							userId,
+							projectId: obj.projectId,
+							accessLevelId: obj.accessLevelId
+						})
 							.then(data => callback(null, data))
 							.catch(err => callback(err, null));
 					}

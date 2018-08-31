@@ -49,6 +49,12 @@ class CompanyRepository extends Repository {
 			]
 		});
 	}
+
+	findCompanyUsers(query) {
+		return this.companyUserModel.findOne({
+			where: query
+		});
+	}
 }
 
 module.exports = new CompanyRepository();
