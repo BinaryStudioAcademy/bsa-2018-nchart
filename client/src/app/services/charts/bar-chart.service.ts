@@ -16,7 +16,9 @@ export class BarChartService {
 
 	static arrayToObject(data: any[]): BarChartDataObj {
 		const dataObj: BarChartDataObj = data.reduce((obj, item) => {
-			obj[item.name] = item.values;
+			item.values.length
+				? (obj[item.name] = item.values[0].values)
+				: (obj[item.name] = []);
 			return obj;
 		}, {});
 		return dataObj;

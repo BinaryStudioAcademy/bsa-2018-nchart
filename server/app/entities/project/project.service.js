@@ -154,9 +154,7 @@ class ProjectService {
 
 	fullProjectById(id) {
 		return this.ProjectRepository.fullProjectById(id)
-			.then(data => ProjectService.getProjectFromPayload(
-				data.dataValues
-			))
+			.then(data => ProjectService.getProjectFromPayload(data.dataValues))
 			.catch(err => err);
 	}
 
