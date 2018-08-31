@@ -324,13 +324,13 @@ class ProjectService {
 				// todo: look very, very bad
 				data.forEach(el => {
 					el.group.groupProjects.forEach(pj => {
-						const user =							pj.project.groupProjects[0].group.groupUsers[0].user
+						const user = pj.project.groupProjects[0].group.groupUsers[0].user
 							.dataValues;
-						const project = {
+						projects.push({
 							id: pj.project.dataValues.id,
-							name: pj.project.dataValues.name
-						};
-						projects.push({ project, user });
+							name: pj.project.dataValues.name,
+							user
+						});
 					});
 				});
 				return projects;
