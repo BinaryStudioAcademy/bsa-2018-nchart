@@ -23,6 +23,8 @@ import {SchemeID} from '@app/models/normalizr.model';
 import {isRequiredDimensionMatched} from '@app/store/selectors/userCharts';
 import {isChartsReady} from '@app/store/selectors/charts.selectors';
 import {filter, withLatestFrom} from 'rxjs/internal/operators';
+import { Observable } from 'rxjs/index';
+import { isActiveChartDataset } from '@app/store/selectors/dataset.selectors';
 
 interface StepperStep {
 	id: number;
@@ -45,6 +47,7 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 	isShowLoad: boolean;
 	projectName: string;
 	projectId: SchemeID;
+	isActiveChartDataset$: Observable<boolean>;
 
 	disconnect: () => void;
 
@@ -118,6 +121,8 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 				}
 			}
 		);
+
+		this.isActiveChartDataset$ = this.storeService.createSubscription(isActiveChartDataset());
 
 		this.disconnect = this.storeService.connect([
 			{
@@ -193,6 +198,10 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.disconnect();
 		this.routeParams$.unsubscribe();
 		this.amountDatasets$.unsubscribe();
+	}
+
+	getIsActiveChartDataset() {
+		return this.isActiveChartDataset$;
 	}
 
 	changeProjectName(name) {

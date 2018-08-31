@@ -9,7 +9,7 @@
 	</app-project-name>
 		<app-button
 			class="btn-toggle"
-			*ngIf="isShowBtn"
+			*ngIf="getIsActiveChartDataset() | async"
 			[label]="'Load more data'"
 			(onclick)="toggle()"></app-button>
 		<app-load-data *ngIf="isShowLoad"></app-load-data>
