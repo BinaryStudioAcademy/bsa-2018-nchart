@@ -7,6 +7,7 @@ interface ProjectExportPayload {
 	id: SchemeID;
 	type: ExportType;
 	filename: string;
+	svg: string;
 }
 
 export class ExportProject extends AppAction<ProjectExportPayload> {

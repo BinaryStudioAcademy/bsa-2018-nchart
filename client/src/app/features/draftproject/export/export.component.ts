@@ -6,8 +6,10 @@ import {
 } from '@app/shared/components/form-field/form-validators';
 import { StoreService } from '@app/services/store.service';
 import { ExportType } from '@app/models/export.model';
-// import { ExportProject } from '@app/store/actions/export/export.actions';
+import { ExportProject } from '@app/store/actions/export/export.actions';
 import { isProjectExporting } from '@app/store/selectors/export.selectors';
+import { ExportSvgBusService } from '@app/services/export-svg-bus.service';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-export',
@@ -18,6 +20,7 @@ export class ExportComponent implements OnInit, OnDestroy {
 	@Input()
 	isLoading = false;
 
+	exportBusResponse: Subscription;
 	controlName = new FormControl('', [
 		patternValidator(
 			'Invalid filename',
@@ -47,7 +50,10 @@ export class ExportComponent implements OnInit, OnDestroy {
 	];
 	disconnect: () => void;
 
-	constructor(private storeService: StoreService) {}
+	constructor(
+		private storeService: StoreService,
+		private exportSvgBus: ExportSvgBusService
+	) {}
 
 	ngOnInit() {
 		this.disconnect = this.storeService.connect([
@@ -58,24 +64,23 @@ export class ExportComponent implements OnInit, OnDestroy {
 				selector: isProjectExporting()
 			}
 		]);
-
-		// service.response observale subscribe
-
-		// update action to accept svg
-
-		/* const filename = this.controlName.value.trim();
-		const type = this.controlType.value as ExportType;
-
-		this.storeService.dispatch(
-			new ExportProject({ id: 1, type, filename })
-		); */
+		this.exportBusResponse = this.exportSvgBus.responseObservable.subscribe(
+			svg => {
+				const filename = this.controlName.value.trim();
+				const type = this.controlType.value as ExportType;
+				this.storeService.dispatch(
+					new ExportProject({ id: 1, type, filename, svg })
+				);
+			}
+		);
 	}
 
 	ngOnDestroy() {
 		this.disconnect();
+		this.exportBusResponse.unsubscribe();
 	}
 
 	exportData() {
-		// service requestSvg
+		this.exportSvgBus.requestSvg();
 	}
 }

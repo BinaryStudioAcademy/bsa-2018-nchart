@@ -1,9 +1,19 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class ExportSvgBusService {
-	// create private 2 subjects
-	// create 2 observable based on subjects (asObservable)
-	// requestSVg
-	// sendSvg
+	private requestSubject = new Subject<any>();
+	private responseSubject = new Subject<any>();
+
+	requestObservable = this.requestSubject.asObservable();
+	responseObservable = this.responseSubject.asObservable();
+
+	requestSvg() {
+		this.requestSubject.next();
+	}
+
+	sendSvg(svg: string): void {
+		this.responseSubject.next(svg);
+	}
 }

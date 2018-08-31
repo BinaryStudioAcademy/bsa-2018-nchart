@@ -40,5 +40,31 @@ export class ExportDomainService implements ExportDomain {
 			);
 	}
 
-	// add post
+	exportProjectSvg(payload: {
+		id: SchemeID;
+		type: ExportType;
+		filename: string;
+		svg: string;
+	}): Observable<{
+		filename: string;
+		data: Blob;
+	}> {
+		return this.httpService
+			.makeFileRequestSvg(
+				new ServiceRequest(
+					RequestType.POST,
+					`${this.projectPath}/${payload.id}/export`,
+					{ svg: payload.svg },
+					{ type: payload.type }
+				)
+			)
+			.pipe(
+				map(res => {
+					return {
+						filename: `${payload.filename}.${payload.type}`,
+						data: res
+					};
+				})
+			);
+	}
 }
