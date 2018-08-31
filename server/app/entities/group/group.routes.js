@@ -1,9 +1,16 @@
 const group = require('express').Router();
 const groupService = require('../../entities/group/group.service');
-const tokenInfoMiddleware = require('../../common/middleware/token-info.middleware');
 const PayloadGeneratorService = require('../../common/services/payload-generator.service');
+const tokenInfoMiddleware = require('../../common/middleware/token-info.middleware');
 
 group.use(tokenInfoMiddleware);
+
+group.get('/', (req, res, next) => {
+	groupService
+		.findAllUserGroups(res)
+		.then(PayloadGeneratorService.nextWithData(next, res))
+		.catch(next);
+});
 
 group.post('/', (req, res, next) => {
 	groupService

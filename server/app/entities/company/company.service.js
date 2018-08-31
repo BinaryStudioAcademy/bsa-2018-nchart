@@ -15,17 +15,29 @@ class CompanyService {
 		return this.CompanyRepository.saveCompanyUser(userId, companyId);
 	}
 
+	findAllUserCompanies(res) {
+		return this.CompanyRepository.findAllUserCompanies(
+			res.locals.user.id
+		).then(data => {
+			const payload = [];
+			data.forEach(el => {
+				payload.push(el.company.dataValues);
+			});
+			return payload;
+		});
+	}
+
 	saveFullCompany(obj, res) {
 		return new Promise((resolve, reject) => {
 			async.waterfall(
 				[
 					callback => {
-						this.CompanyRepository.findAllFullCompanies({
+						this.CompanyRepository.findCompanyUsersByName({
 							userId: res.locals.user.id,
 							name: obj.name
 						})
 							.then(data => {
-								if (data.length === 0) {
+								if (data === null) {
 									return callback(null);
 								}
 								throw new Error(
@@ -56,6 +68,10 @@ class CompanyService {
 				}
 			);
 		});
+	}
+
+	findCompanyUsers(query) {
+		return this.CompanyRepository.findCompanyUsers(query);
 	}
 }
 

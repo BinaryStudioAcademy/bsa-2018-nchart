@@ -23,8 +23,21 @@ class CompanyRepository extends Repository {
 		});
 	}
 
-	findAllFullCompanies(obj) {
+	findAllUserCompanies(userId) {
 		return this.companyUserModel.findAll({
+			where: { userId },
+			attributes: [],
+			include: [
+				{
+					model: this.companyModel,
+					attributes: ['id', 'name', 'createdAt']
+				}
+			]
+		});
+	}
+
+	findCompanyUsersByName(obj) {
+		return this.companyUserModel.findOne({
 			where: { userId: obj.userId },
 			include: [
 				{
@@ -34,6 +47,12 @@ class CompanyRepository extends Repository {
 					}
 				}
 			]
+		});
+	}
+
+	findCompanyUsers(query) {
+		return this.companyUserModel.findOne({
+			where: query
 		});
 	}
 }
