@@ -1,0 +1,71 @@
+@import ../colors
+@import ../variables
+
+
+.ui-tooltip 
+	.ui-tooltip-text
+		min-width: 118px
+		background-color: $stateDefaultBgColor
+		color: $stateActiveTextColor
+		border-radius: 3px
+		padding: 5px
+		box-shadow: 0 2px 8px $shadowLightGrey
+		padding: 12px
+
+		i
+			margin-right: 5px
+
+		h1, h2, h3, h4, h5, h6
+			margin: 0
+			margin-bottom: 12px
+
+	&.ui-tooltip-right
+		.ui-tooltip-text
+			min-width: 123px
+		.ui-tooltip-arrow
+			border-right-color: $stateDefaultBgColor
+
+	&.ui-tooltip-left
+		margin-right: 5px
+		.ui-tooltip-text
+			min-width: 123px
+		.ui-tooltip-arrow
+			border-left-color: $stateDefaultBgColor
+	
+	&.ui-tooltip-top
+		.ui-tooltip-arrow
+			border-top-color: $stateDefaultBgColor
+
+	&.ui-tooltip-bottom
+		.ui-tooltip-arrow
+			border-bottom-color: $stateDefaultBgColor
+
+.d3-tip 
+  line-height: 1
+  font-weight: bold
+  padding: 12px
+  background: rgba(0, 0, 0, 0.8)
+  color: #fff
+  border-radius: 2px
+
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after 
+  box-sizing: border-box
+  display: inline
+  font-size: 10px
+  width: 100%
+  line-height: 1
+  color: rgba(0, 0, 0, 0.8)
+  content: "\25BC"
+  position: absolute
+  text-align: center
+
+
+/* Style northward tooltips differently */
+.d3-tip.n:after 
+  margin: -1px 0 0 0
+  top: 100%
+  left: 0
+
+

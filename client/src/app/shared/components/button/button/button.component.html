@@ -1,0 +1,16 @@
+<button
+    [disabled]="disabled || loading"
+    [icon]="icon"
+    [iconPos]="iconPosition"
+    type="button"
+    pButton
+    (click)="onClick($event)"
+    [ngClass]="getClasses()"
+    [label]="label"
+    [loading-sp]="loading"
+    [spSize]="'small'"
+    [spInnerSectionColor]="'white'"
+	[spOuterSectionColor]="'white'"
+	[spBackgroundColor]="loadingBackgroundColor"
+>
+</button>

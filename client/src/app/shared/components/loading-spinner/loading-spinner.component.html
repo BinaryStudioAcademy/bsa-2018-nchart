@@ -1,0 +1,18 @@
+<ng-content></ng-content>
+<div
+    *ngIf="loadingSp"
+    [ngClass]="getClasses()"
+    [style.background-color]="spBackgroundColor"
+>
+    <div [ngClass]="getDoubleRingClasses()">
+        <div
+            class="outer-section"
+            [ngStyle]="getOuterSectionStyle()"
+        ></div>
+        <div
+            class="inner-section"
+            [ngStyle]="getInnerSectionStyle()"
+        ></div>
+    </div>
+</div>
+<ng-content></ng-content>
