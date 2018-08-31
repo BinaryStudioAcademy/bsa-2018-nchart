@@ -19,12 +19,6 @@ project.post('/', ProjectPayloadValidator.fullSet, (req, res, next) => {
 		.catch(next);
 });
 
-project.get('/:id', (req, res, next) => {
-	ProjectService.fullProjectById(Number(req.params.id), res)
-		.then(PayloadGeneratorService.nextWithData(next, res))
-		.catch(next);
-});
-
 // todo: what do with rout names?
 project.get('/group/:id', (req, res, next) => {
 	ProjectService.fullProjectsByGroupId(Number(req.params.id))
@@ -32,6 +26,8 @@ project.get('/group/:id', (req, res, next) => {
 		.catch(next);
 });
 
+// todo: use token
+// todo: token doesn't work
 project.get('/user/:id', (req, res, next) => {
 	ProjectService.fullProjectByUserId(Number(req.params.id))
 		.then(PayloadGeneratorService.nextWithData(next, res))
@@ -47,6 +43,12 @@ project.post('/share', (req, res, next) => {
 // todo: retard route name
 project.post('/shareByEmail', (req, res, next) => {
 	ProjectService.shareProjectByEmail(req.body, res)
+		.then(PayloadGeneratorService.nextWithData(next, res))
+		.catch(next);
+});
+
+project.get('/:id', (req, res, next) => {
+	ProjectService.fullProjectById(Number(req.params.id), res)
 		.then(PayloadGeneratorService.nextWithData(next, res))
 		.catch(next);
 });

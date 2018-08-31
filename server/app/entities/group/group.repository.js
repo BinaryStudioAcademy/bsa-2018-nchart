@@ -63,7 +63,8 @@ class GroupRepository extends Repository {
 				{
 					model: this.groupModel,
 					where: {
-						name: obj.name
+						name: obj.name,
+						companyId: obj.companyId
 					}
 				}
 			]

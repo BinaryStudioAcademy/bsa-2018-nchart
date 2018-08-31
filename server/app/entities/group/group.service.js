@@ -11,6 +11,8 @@ class GroupService {
 		return this.GroupRepository.saveGroup(obj);
 	}
 
+	// todo: first check if company belongs to user
+	// todo: next check names
 	saveFullGroup(obj, res) {
 		return new Promise((resolve, reject) => {
 			async.waterfall(
@@ -19,7 +21,8 @@ class GroupService {
 						// check name duplicates
 						this.GroupRepository.findUserGroupByName({
 							userId: res.locals.user.id,
-							name: obj.name
+							name: obj.name,
+							companyId: obj.companyId
 						})
 							.then(data => {
 								if (data.length === 0) {

@@ -36,7 +36,7 @@ class CompanyService {
 							name: obj.name
 						})
 							.then(data => {
-								if (data.length === 0) {
+								if (data === null) {
 									return callback(null);
 								}
 								throw new Error(

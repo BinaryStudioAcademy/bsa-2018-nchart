@@ -37,7 +37,7 @@ class CompanyRepository extends Repository {
 	}
 
 	findCompanyUsersByName(obj) {
-		return this.companyUserModel.findAll({
+		return this.companyUserModel.findOne({
 			where: { userId: obj.userId },
 			include: [
 				{
