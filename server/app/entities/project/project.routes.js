@@ -62,16 +62,6 @@ project.get(
 	successOrEmptyPayload
 );
 
-project.get(
-	'/owners/:id',
-	(req, res, next) => {
-		ProjectService.findProjectsWithOwners(Number(req.params.id))
-			.then(PayloadGeneratorService.nextWithData(next, res))
-			.catch(next);
-	},
-	successOrEmptyPayload
-);
-
 project.get('/:id', (req, res, next) => {
 	ProjectService.fullProjectById(Number(req.params.id), res)
 		.then(PayloadGeneratorService.nextWithData(next, res))
