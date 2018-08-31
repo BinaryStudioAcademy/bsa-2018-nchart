@@ -8,7 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LinkComponent } from '@app/shared/components/link/link.component';
 import { DragDropComponent } from '@app/shared/components/dragDrop/drag-drop.component';
 import { ChartsModule } from '@app/shared/components/charts/charts.module';
-import {ProjectCardComponent} from '@app/shared/components/projectCard/project-card.component';
+import { ProjectCardComponent } from '@app/shared/components/projectCard/project-card.component';
 
 @NgModule({
 	imports: [

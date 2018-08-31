@@ -1,2 +1,9 @@
 <button style="margin-top: 100px" (click)="dispatch()">Get Projects Info</button>
+<ng-container *ngIf="getProjects() | async as projects">
+	<div *ngFor="let project of projects">
+		<span>
+			{{ project.name }}
+		</span>
+	</div>
+</ng-container>
 <app-project-card></app-project-card>

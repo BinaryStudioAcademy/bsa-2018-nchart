@@ -1,7 +1,4 @@
-import {
-	Component,
-	OnInit
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
 	selector: 'app-project-card',
@@ -9,9 +6,7 @@ import {
 	animations: []
 })
 export class ProjectCardComponent implements OnInit {
-	constructor() {
-	}
+	constructor() {}
 
-	ngOnInit() {
-	}
+	ngOnInit() {}
 }

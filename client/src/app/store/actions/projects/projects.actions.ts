@@ -79,7 +79,10 @@ export class LoadProjetcsInfo extends AppAction<{ userId: string }> {
 	readonly type = ProjectsActionConstants.LOAD_PROJECTS_INFO;
 }
 
-export class LoadProjectsInfoComplete extends AppAction<any[]> {
+export class LoadProjectsInfoComplete extends AppAction<{
+	all: SchemeID[];
+	byId: any;
+}> {
 	readonly type = ProjectsActionConstants.LOAD_PROJECTS_INFO__COMPLETE;
 }
 
@@ -101,4 +104,7 @@ export type Actions =
 	| SaveProject
 	| SaveProjectComplete
 	| UpdateProjectComplete
-	| SaveProjectFailed;
+	| SaveProjectFailed
+	| LoadProjetcsInfo
+	| LoadProjectsInfoComplete
+	| LoadProjectsInfoFailed;

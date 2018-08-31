@@ -28,6 +28,8 @@ const all = (state = initialState.all, action: ProjectsActions) => {
 			return [...state, action.payload.projectId];
 		case constants.SAVE_PROJECT__COMPLETE:
 			return [...state.filter(el => el !== action.payload.oldProjectId)];
+		case constants.LOAD_PROJECTS_INFO__COMPLETE:
+			return action.payload.all;
 		default:
 			return state;
 	}
@@ -86,6 +88,8 @@ const byId = (
 			return {
 				...omit(state, action.payload.oldProjectId)
 			};
+		case constants.LOAD_PROJECTS_INFO__COMPLETE:
+			return action.payload.byId;
 		default:
 			return state;
 	}
@@ -98,11 +102,14 @@ export const isLoading = (
 	switch (action.type) {
 		case constants.LOAD_PROJECTS:
 		case constants.LOAD_ONE_PROJECT:
+		case constants.LOAD_PROJECTS_INFO:
 			return true;
 		case constants.LOAD_PROJECTS__COMPLETE:
 		case constants.LOAD_ONE_PROJECT__COMPLETE:
 		case constants.LOAD_ONE_PROJECT__FAILED:
 		case constants.LOAD_PROJECTS__FAILED:
+		case constants.LOAD_PROJECTS_INFO__COMPLETE:
+		case constants.LOAD_PROJECTS_INFO__FAILED:
 			return false;
 		default:
 			return state;

@@ -189,9 +189,23 @@ export class ProjectsEffects {
 			this.projectDomainService.getPartByUserId(action.payload).pipe(
 				map(value => {
 					if (value.isSuccess) {
-						return new projectActions.LoadProjectsInfoComplete(
-							value.payload
+						const {
+							result: all,
+							entities: { project: byId }
+						} = normalize(
+							[
+								{
+									id: 1,
+									name: 'lol',
+									user: { name: 'lol', email: 'lol2' }
+								}
+							],
+							[projectScheme]
 						);
+						return new projectActions.LoadProjectsInfoComplete({
+							all,
+							byId
+						});
 					}
 					return throwError(new Error('Cant getPartByUserId'));
 				}),
