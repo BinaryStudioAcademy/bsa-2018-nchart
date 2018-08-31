@@ -314,9 +314,9 @@ class ProjectService {
 		});
 	}
 
-	findProjectsWithOwners(res) {
+	findProjectsWithOwners(id) {
 		return this.ProjectRepository.findProjectsWithOwners(
-			res.locals.user.id
+			id
 		)
 			.then(data => {
 				// data[0].group.groupProjects[0].project - id, name

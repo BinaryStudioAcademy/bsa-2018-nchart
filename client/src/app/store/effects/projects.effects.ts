@@ -181,4 +181,28 @@ export class ProjectsEffects {
 			);
 		})
 	);
+
+	@Effect()
+	loadInfo = this.action$.pipe(
+		ofType(ProjectsActionConstants.LOAD_PROJECTS_INFO),
+		switchMap((action: projectActions.LoadProjetcsInfo) =>
+			this.projectDomainService.getPartByUserId(action.payload).pipe(
+				map(value => {
+					if (value.isSuccess) {
+						return new projectActions.LoadProjectsInfoComplete(value.payload);
+					}
+					return throwError(new Error('Cant getPartByUserId'));
+				}),
+				catchError(error => {
+					return of(
+						new projectActions.LoadProjectsInfoFailed({
+							action: action,
+							msg: 'test',
+							error: error
+						})
+					);
+				})
+			)
+		)
+	);
 }
