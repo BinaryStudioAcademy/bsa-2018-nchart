@@ -15,7 +15,7 @@ import {
 } from '@app/store/actions/projects/projects.actions';
 import { isProjectDataset } from '@app/store/selectors/projects.selectors';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription} from 'rxjs';
+import { Subscription } from 'rxjs';
 import * as ProjectsActions from '@app/store/actions/projects/projects.actions';
 import { project } from '@app/store/selectors/projects.selectors';
 import { SchemeID } from '@app/models/normalizr.model';

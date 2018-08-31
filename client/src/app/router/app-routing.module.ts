@@ -10,7 +10,7 @@ import { CompanyComponent } from '@app/core/company/company.component';
 import { AppComponent } from '@app/core/app/app.component';
 import { ExportPdfComponent } from '@app/features/export-pdf/export-pdf.component';
 import { LandingPageComponent } from '@app/core/landing-page/landing-page.component';
-import {ProjectGuard} from '@app/services/guards/project.guard';
+import { ProjectGuard } from '@app/services/guards/project.guard';
 
 const appRoutes: Routes = [
 	{
