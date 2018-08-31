@@ -7,7 +7,7 @@
 		<app-button type="icon" icon="fas fa-arrow-left" (onclick)="toggleStepper()"></app-button>
 	</div>
 	<ul>
-		<li *ngFor="let step of stepsList" 
+		<li *ngFor="let step of stepsList"
 			(click)="selectChart(step.id)"
 			class="step"
 		>
@@ -16,7 +16,7 @@
 			<div *ngIf="step.id !== 1" class="step-connection"></div>
 			<div [ngClass]="getClasses(step.id)"
 				[ngx-scroll-to]="step.scrollTo"
-				[ngx-scroll-to-duration]="500" 
+				[ngx-scroll-to-duration]="500"
 				[ngx-scroll-to-offset]="-100"
 			>
 				<i [ngClass]="getIconClasses(step.id)"></i>
