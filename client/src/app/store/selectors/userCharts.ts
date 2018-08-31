@@ -1,10 +1,10 @@
-import { SchemeID } from '@app/models/normalizr.model';
-import { AppState } from '@app/models/store.model';
+import {SchemeID} from '@app/models/normalizr.model';
+import {AppState} from '@app/models/store.model';
 import {
 	UserMappingColumn,
 	UserChart
 } from '@app/models/user-chart-store.model';
-import { dataset } from '@app/store/selectors/dataset.selectors';
+import {dataset} from '@app/store/selectors/dataset.selectors';
 import {
 	Chart,
 	CustomizeSettingsState,
@@ -14,7 +14,7 @@ import {
 	DatasetColumnState,
 	DatasetDataState
 } from '@app/models/dataset.model';
-import { project } from '@app/store/selectors/projects.selectors';
+import {project} from '@app/store/selectors/projects.selectors';
 
 export const userChart = (id?: SchemeID) => (state: AppState): UserChart =>
 	state.userCharts.byId[id || state.userCharts.active]
@@ -96,13 +96,9 @@ export const getAllDatasetByProject = (id: SchemeID) => (state: AppState) => {
 	}, {});
 };
 
-export const getDimensionSet = () => (
-	state: AppState
-): DimensionSettingsState => state.userChartSettings.dimensionSettings;
+export const getDimensionSet = () => (state: AppState): DimensionSettingsState => state.userChartSettings.dimensionSettings;
 
-export const getCustomizeSet = () => (
-	state: AppState
-): CustomizeSettingsState => state.userChartSettings.customizeSettings;
+export const getCustomizeSet = () => (state: AppState): CustomizeSettingsState => state.userChartSettings.customizeSettings;
 
 export const getDatasetCol = () => (state: AppState): DatasetColumnState =>
 	state.datasetColumns;
@@ -129,7 +125,7 @@ export const getCustomizeSettings = () => (state: AppState) => {
 	if (aChart) {
 		return aChart.customizeSettings.reduce((obj, id) => {
 			const option = state.userChartSettings.customizeSettings[id];
-			obj[option.sysName] = { ...option };
+			obj[option.sysName] = {...option};
 			return obj;
 		}, {});
 	}
@@ -141,9 +137,7 @@ export const getIndexCol = colId => (state: AppState) => {
 	return state.datasets.byId[datasetId].modified.columns.indexOf(colId);
 };
 
-export const getColumnValues = (datasetId: SchemeID, columnId: SchemeID) => (
-	state: AppState
-) => {
+export const getColumnValues = (datasetId: SchemeID, columnId: SchemeID) => (state: AppState) => {
 	const dS = dataset(datasetId)(state);
 	if (dS) {
 		const colIndex = dS.modified.columns.indexOf(columnId);
@@ -176,9 +170,14 @@ export const getData = () => (state: AppState) => {
 			const values = uC.dimensionSettings.map(id => ({
 				name: state.defaultChartSettings.dimensionSettings[id].sysName,
 				values: state.userChartSettings.dimensionSettings[id].columnIds
-					.map(el => getColumnValues(dS.id, el)(state))
+					.map(el =>
+						({
+							name: state.datasetColumns[el].title,
+							values: getColumnValues(dS.id, el)(state)
+						})
+					)
 					.reduce((acc, v) => {
-						acc = [...acc, ...v];
+						acc = [...acc, v];
 						return acc;
 					}, [])
 			}));
@@ -190,9 +189,7 @@ export const getData = () => (state: AppState) => {
 	return [];
 };
 
-export const getActiveChart = () => (
-	state: AppState
-): Chart<SchemeID[], SchemeID[]> => {
+export const getActiveChart = () => (state: AppState): Chart<SchemeID[], SchemeID[]> => {
 	const activeUserChart = userChart()(state);
 	if (activeUserChart) {
 		const c = state.charts.byId[activeUserChart.chartTypeId];
