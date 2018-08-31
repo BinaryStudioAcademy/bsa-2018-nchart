@@ -9,7 +9,7 @@ import {
 	ViewChildren
 } from '@angular/core';
 import {StoreService} from '@app/services/store.service';
-import {LoadCharts} from '@app/store/actions/charts/charts.actions';
+import {LoadCharts, RemoveChart} from '@app/store/actions/charts/charts.actions';
 import {
 	CreateDraftProject,
 	LoadOneProject
@@ -190,8 +190,7 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 	}
 
 	toggle() {
-		this.showLoadData();
-		this.hideBtn();
+		this.storeService.dispatch(new RemoveChart());
 	}
 
 	ngOnDestroy() {
