@@ -186,7 +186,10 @@ class ProjectRepository extends Repository {
 										{
 											model: groupProjectModel,
 											separate: true,
-											attributes: ['projectId', 'groupId'],
+											attributes: [
+												'projectId',
+												'groupId'
+											],
 											where: { accessLevelId: 1 },
 											include: [
 												{
@@ -195,10 +198,15 @@ class ProjectRepository extends Repository {
 													include: [
 														{
 															model: groupUserModel,
-															attributes: ['userId'],
+															attributes: [
+																'userId'
+															],
 															include: {
 																model: userModel,
-																attributes: ['email']
+																attributes: [
+																	'name',
+																	'email'
+																]
 															}
 														}
 													]

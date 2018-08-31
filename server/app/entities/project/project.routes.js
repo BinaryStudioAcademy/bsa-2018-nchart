@@ -7,7 +7,6 @@ const {
 	successOrEmptyPayload
 } = require('../../common/middleware/payload.middleware');
 
-
 project.use(tokenInfoMiddleware);
 
 project.get('/', (req, res, next) => {
@@ -30,11 +29,15 @@ project.get('/group/:id', (req, res, next) => {
 		.catch(next);
 });
 
-project.get('/user', (req, res, next) => {
-	ProjectService.fullProjectByUserId(res.locals.user.id)
-		.then(PayloadGeneratorService.nextWithData(next, res))
-		.catch(next);
-}, successOrEmptyPayload);
+project.get(
+	'/user',
+	(req, res, next) => {
+		ProjectService.fullProjectByUserId(res.locals.user.id)
+			.then(PayloadGeneratorService.nextWithData(next, res))
+			.catch(next);
+	},
+	successOrEmptyPayload
+);
 
 project.post('/share', (req, res, next) => {
 	ProjectService.shareProject(req.body)
@@ -49,11 +52,12 @@ project.post('/shareByEmail', (req, res, next) => {
 		.catch(next);
 });
 
-project.get('/owners', (req, res, next) => {
+project.get('/owners',	(req, res, next) => {
 	ProjectService.findProjectsWithOwners(res)
 		.then(PayloadGeneratorService.nextWithData(next, res))
 		.catch(next);
-}, successOrEmptyPayload);
+},
+successOrEmptyPayload);
 
 project.get('/:id', (req, res, next) => {
 	ProjectService.fullProjectById(Number(req.params.id), res)
