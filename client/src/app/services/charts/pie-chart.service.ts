@@ -12,6 +12,56 @@ export class PieChartService {
 		private formBuilder: FormBuilder
 	) {}
 
+	data: any[];
+
+	static arrayToObject(data: any[]) {
+		const dataObj = data.reduce((obj, item) => {
+			item.values.length
+				? (obj[item.name] = item.values)
+				: (obj[item.name] = []);
+			return obj;
+		}, {});
+		return dataObj;
+	}
+
+	static mapData(original: any[]) {
+		let id = 1;
+		return original.map(obj => ({
+			label: id++,
+			name: obj.name,
+			value: obj.value
+		}));
+	}
+
+	static concat(...args) {
+		return args.reduce((acc, val) => [...acc, ...val]);
+	}
+
+	getData(data: any) {
+		const dataObj = PieChartService.arrayToObject(data);
+		dataObj.arcs.forEach(el => {
+			el.values = el.values.map(value => {
+				return {
+					name: el.name,
+					value: value
+				};
+			});
+		});
+
+		let arcsData = [];
+		dataObj.arcs.forEach(el => {
+			arcsData.push(el.values);
+		});
+		const temp = [];
+		arcsData.forEach(el => {
+			el = PieChartService.mapData(el);
+			temp.push(el);
+		});
+		arcsData = PieChartService.concat(...temp);
+		this.data = arcsData;
+		return this.data;
+	}
+
 	createPieChartCustomizeForm(pieChartCustomize): FormGroup {
 		const initialValues: OptionalType<
 			PieChartCustomize

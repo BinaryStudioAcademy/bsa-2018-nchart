@@ -39,6 +39,21 @@ export class CustomChartComponent implements OnInit, OnDestroy {
 				selector: getCustomizeSettings(),
 				subscriber: t => {
 					this.customizeSettings = t;
+					switch (this.chartType) {
+						case 'barChart':
+							this.customizeForm = this.barChartService.createBarChartCustomizeForm(
+								this.customizeSettings
+							);
+							break;
+						case 'pieChart':
+							this.customizeForm = this.pieChartService.createPieChartCustomizeForm(
+								this.customizeSettings
+							);
+							break;
+
+						default:
+							break;
+					}
 				}
 			},
 			{
@@ -47,15 +62,9 @@ export class CustomChartComponent implements OnInit, OnDestroy {
 					switch (this.chartType) {
 						case 'barChart':
 							this.data = this.barChartService.getData(data);
-							this.customizeForm = this.barChartService.createBarChartCustomizeForm(
-								this.customizeSettings
-							);
 							break;
 						case 'pieChart':
-							// this.data = this.barChartService.getData(data);
-							this.customizeForm = this.pieChartService.createPieChartCustomizeForm(
-								this.customizeSettings
-							);
+							this.data = this.pieChartService.getData(data);
 							break;
 
 						default:

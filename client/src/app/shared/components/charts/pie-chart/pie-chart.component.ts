@@ -4,7 +4,7 @@ import { CustomizeOption } from '@app/models/chart.model';
 
 interface DataType {
 	label: string;
-	item: string;
+	name: string;
 	value: number;
 }
 
@@ -50,18 +50,6 @@ export class PieChartComponent implements OnInit, OnChanges {
 			// sortArcsBy,
 			showValues
 		} = this.getSettingsValue(this.settings);
-
-		this.data = [
-			{ label: 'America', item: 'B', value: 20 },
-			{ label: 'America', item: 'C', value: 55 },
-			{ label: 'America', item: 'A', value: 11 },
-			{ label: 'Europe', item: 'A', value: 9 },
-			{ label: 'Europe', item: 'B', value: 2 },
-			{ label: 'Europe', item: 'C', value: 22 },
-			{ label: 'Africa', item: 'C', value: 5 },
-			{ label: 'Africa', item: 'B', value: 22 },
-			{ label: 'Africa', item: 'A', value: 11 }
-		];
 
 		this.data.sort((a, b) => {
 			return a.label < b.label ? -1 : a.label > b.label ? 1 : 0;
@@ -127,11 +115,11 @@ export class PieChartComponent implements OnInit, OnChanges {
 		g.append('path')
 			.attr('d', <any>arc)
 			.style('fill', function(d) {
-				return z(d.data.item);
+				return z(d.data.name);
 			});
 		if (showValues) {
 			g.append('title').text(function(d) {
-				return d.data.item + ': ' + d.data.value;
+				return d.data.name + ': ' + d.data.value;
 			});
 
 			g.filter(function(d) {
@@ -150,7 +138,7 @@ export class PieChartComponent implements OnInit, OnChanges {
 					);
 				})
 				.text(function(d) {
-					return `${d.data.item}: ${d.data.value}`;
+					return `${d.data.name}: ${d.data.value}`;
 				});
 		}
 		function angle(d) {
