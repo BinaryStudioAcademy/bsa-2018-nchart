@@ -60,7 +60,7 @@ class ProjectService {
 							.then(() => {
 								callback(null, payload);
 							})
-							.catch((err) => {
+							.catch(err => {
 								callback(null, err);
 							});
 					},
@@ -337,7 +337,7 @@ class ProjectService {
 				// todo: look very, very bad
 				data.forEach(el => {
 					el.group.groupProjects.forEach(pj => {
-						const user = pj.project.groupProjects[0].group.groupUsers[0].user
+						const user =							pj.project.groupProjects[0].group.groupUsers[0].user
 							.dataValues;
 						projects.push({
 							id: pj.project.dataValues.id,
