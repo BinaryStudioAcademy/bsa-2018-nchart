@@ -315,9 +315,7 @@ class ProjectService {
 	}
 
 	findProjectsWithOwners(id) {
-		return this.ProjectRepository.findProjectsWithOwners(
-			id
-		)
+		return this.ProjectRepository.findProjectsWithOwners(id)
 			.then(data => {
 				// data[0].group.groupProjects[0].project - id, name
 				// data[0].group.groupProjects[0].project
@@ -326,11 +324,13 @@ class ProjectService {
 				// todo: look very, very bad
 				data.forEach(el => {
 					el.group.groupProjects.forEach(pj => {
-						const user = pj.project.groupProjects[0].group.groupUsers[0].user.dataValues;
-						const project = { id: pj.project.dataValues.id, name: pj.project.dataValues.name };
-						projects.push(
-							{ project, user }
-						);
+						const user =							pj.project.groupProjects[0].group.groupUsers[0].user
+							.dataValues;
+						const project = {
+							id: pj.project.dataValues.id,
+							name: pj.project.dataValues.name
+						};
+						projects.push({ project, user });
 					});
 				});
 				return projects;

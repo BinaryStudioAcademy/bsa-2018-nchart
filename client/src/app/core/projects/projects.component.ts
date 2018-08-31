@@ -1,8 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {projects as projectsSelector} from '@app/store/selectors/projects.selectors.ts';
 import {StoreService} from '@app/services/store.service';
-import * as fromProjects from '@app/store/actions/projects/projects.actions';
-import {Project} from '@app/models';
+import * as projectActions from '@app/store/actions/projects/projects.actions';
+
+// import { Project } from '@app/models';
 
 @Component({
 	selector: 'app-projects',
@@ -10,7 +11,8 @@ import {Project} from '@app/models';
 	styleUrls: ['./projects.component.sass']
 })
 export class ProjectsComponent implements OnInit, OnDestroy {
-	projects: Array<Project>;
+	// projects: Array<Project>;
+	projects: any;
 	disconnect;
 
 	constructor(private storeService: StoreService) {
@@ -28,7 +30,9 @@ export class ProjectsComponent implements OnInit, OnDestroy {
 	}
 
 	dispatch() {
-		this.storeService.dispatch(new fromProjects.LoadProjetcsInfo({userId: '1'}));
+		this.storeService.dispatch(
+			new projectActions.LoadProjetcsInfo({userId: '1'})
+		);
 	}
 
 	ngOnDestroy() {

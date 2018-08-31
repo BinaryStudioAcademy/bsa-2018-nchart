@@ -189,7 +189,9 @@ export class ProjectsEffects {
 			this.projectDomainService.getPartByUserId(action.payload).pipe(
 				map(value => {
 					if (value.isSuccess) {
-						return new projectActions.LoadProjectsInfoComplete(value.payload);
+						return new projectActions.LoadProjectsInfoComplete(
+							value.payload
+						);
 					}
 					return throwError(new Error('Cant getPartByUserId'));
 				}),
