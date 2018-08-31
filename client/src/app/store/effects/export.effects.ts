@@ -24,9 +24,7 @@ export class ExportEffects {
 						return this.mapAction(res);
 					}),
 					catchError(error =>
-						of(
-							this.catchErrorAction(action, error)
-						)
+						of(this.catchErrorAction(action, error))
 					)
 				);
 			}
@@ -34,11 +32,7 @@ export class ExportEffects {
 				map(res => {
 					return this.mapAction(res);
 				}),
-				catchError(error =>
-					of(
-						this.catchErrorAction(action, error)
-					)
-				)
+				catchError(error => of(this.catchErrorAction(action, error)))
 			);
 		})
 	);
@@ -62,6 +56,6 @@ export class ExportEffects {
 			msg: `Can't export project`,
 			action,
 			error
-		})
+		});
 	}
 }

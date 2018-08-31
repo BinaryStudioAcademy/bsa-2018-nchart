@@ -1,10 +1,4 @@
-import {
-	Component,
-	OnInit,
-	Input,
-	ViewChild,
-	OnDestroy
-} from '@angular/core';
+import { Component, OnInit, Input, ViewChild, OnDestroy } from '@angular/core';
 import {
 	getData,
 	getCustomizeSettings,
