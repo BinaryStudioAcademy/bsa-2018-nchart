@@ -59,14 +59,10 @@ export class HttpService {
 	}
 
 	makeFileRequestSvg(request: ServiceRequest): Observable<Blob> {
-		let url = `${HttpService.baseURL}${request.url}`;
+		const url = `${HttpService.baseURL}${request.url}`;
 		const headers = this.prepareHeaders(request.headers);
 
-		if (request.payload) {
-			url = `${url}?${queryString.stringify(request.payload)}`;
-		}
-
-		return this.http.post(url, request.payload.svg, {
+		return this.http.post(url, request.payload, {
 			headers,
 			responseType: 'blob'
 		});

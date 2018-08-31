@@ -3,7 +3,6 @@ import {
 	OnInit,
 	Input,
 	ViewChild,
-	ElementRef,
 	OnDestroy
 } from '@angular/core';
 import {
@@ -14,6 +13,7 @@ import {
 } from '@app/store/selectors/userCharts';
 import { ExportSvgBusService } from '@app/services/export-svg-bus.service';
 import { Subscription } from 'rxjs';
+import { BarChartComponent } from '@app/shared/components/charts/bar-chart/bar-chart.component';
 @Component({
 	selector: 'app-chart',
 	templateUrl: './chart.component.html',
@@ -30,14 +30,16 @@ export class ChartComponent implements OnInit, OnDestroy {
 	customizeSettings;
 
 	@ViewChild('chart')
-	chart: ElementRef;
+	chart: BarChartComponent;
 
 	constructor(private exportSvgBus: ExportSvgBusService) {}
 
 	ngOnInit() {
 		this.subscription = this.exportSvgBus.requestObservable.subscribe(
 			() => {
-				this.exportSvgBus.sendSvg(this.chart.nativeElement);
+				this.exportSvgBus.sendSvg(
+					this.chart.chart.nativeElement.innerHTML
+				);
 			}
 		);
 	}

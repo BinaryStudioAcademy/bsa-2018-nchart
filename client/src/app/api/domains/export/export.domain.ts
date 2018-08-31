@@ -54,8 +54,11 @@ export class ExportDomainService implements ExportDomain {
 				new ServiceRequest(
 					RequestType.POST,
 					`${this.projectPath}/${payload.id}/export`,
-					{ svg: payload.svg },
-					{ type: payload.type }
+					null,
+					{
+						type: payload.type,
+						content: payload.svg
+					}
 				)
 			)
 			.pipe(
