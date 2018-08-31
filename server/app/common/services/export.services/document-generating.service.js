@@ -9,10 +9,7 @@ class DocumentGeneratingService {
 	}
 
 	async getDocument(id, type, selector) {
-		const browser = await this.Puppeteer.launch({
-			headless: true,
-			args: ['--disable-dev-shm-usage', '--no-sandbox', '--disable-setuid-sandbox']
-		});
+		const browser = await this.Puppeteer.launch();
 		const page = await browser.newPage();
 		const url = config.exportUrl(id);
 		await page.goto(`http://${url.host}:${url.port}${url.path}`, {

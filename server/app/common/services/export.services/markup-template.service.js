@@ -20,10 +20,7 @@ class MarkupTemplateService {
 			return buffer;
 		}
 
-		const browser = await this.Puppeteer.launch({
-			headless: true,
-			args: ['--disable-dev-shm-usage', '--no-sandbox', '--disable-setuid-sandbox']
-		});
+		const browser = await this.Puppeteer.launch();
 		const page = await browser.newPage();
 
 		await page.setContent(template);
