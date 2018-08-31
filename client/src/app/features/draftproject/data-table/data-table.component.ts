@@ -21,6 +21,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
 	columns: DatasetColumn[];
 	datasetId: SchemeID;
 	data: any[][];
+	selectedRows = [];
 	rowItems = (index): MenuItem[] => {
 		return [
 			{
@@ -43,7 +44,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
 		return [{
 				label: 'New row',
 				icon: 'fa fa-plus',
-				url: '#/draft/project',
+				// url: '#/draft/project',
 				command: () => {
 					this.addNewRow();
 				}
@@ -56,7 +57,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
 			{
 				label: 'New column',
 				icon: 'fa fa-plus',
-				url: '#/draft/project',
+				// url: '#/draft/project',
 				command: () => {
 					this.addNewColumn();
 				}
@@ -69,14 +70,14 @@ export class DataTableComponent implements OnInit, OnDestroy {
 			},
 			{
 				label: 'To string',
-				url: '#/draft/project',
+				// url: '#/draft/project',
 				command: () => {
 					this.changeColumnType('string', index, columnId);
 				}
 			},
 			{
 				label: 'To boolean',
-				url: '#/draft/project',
+				// url: '#/draft/project',
 				command: () => {
 					this.changeColumnType('boolean', index, columnId);
 				}
@@ -84,12 +85,16 @@ export class DataTableComponent implements OnInit, OnDestroy {
 			{
 				label: 'Delete column',
 				icon: 'fa fa-trash',
-				url: '#/draft/project',
+				// url: '#/draft/project',
 				command: () => {
 					this.removeColumn(columnId, index);
 				}
 			}
 		];
+	}
+
+	getSelectedRows(rows) {
+		this.selectedRows = rows;
 	}
 
 	removeColumn(columnId, index) {
@@ -107,9 +112,27 @@ export class DataTableComponent implements OnInit, OnDestroy {
 			new DatasetActions.DeleteRow({
 				rows: this.data.length - 1,
 				datasetId: this.datasetId,
-				index: index
+				index: this.checkRows([index]),
+				ids: this.getIdsByRows(this.checkRows([index]))
 			})
 		);
+		this.selectedRows = [];
+	}
+
+	checkRows(i: number[]) {
+		if (this.selectedRows.length) {
+			return this.selectedRows;
+		} else {
+			return i;
+		}
+	}
+
+	getIdsByRows(rows) {
+		const ids = [];
+		rows.map(row => this.data[row].map(el =>
+			ids.push(el.id)
+		));
+		return ids;
 	}
 
 	addNewColumn() {
@@ -119,7 +142,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
 				title: 'Header',
 				type: 'string',
 				datasetId: this.datasetId,
-				index: this.columns.length,
+				index: this.nextColumn(),
 				rows: this.data.length
 			})
 		);
@@ -130,9 +153,19 @@ export class DataTableComponent implements OnInit, OnDestroy {
 			new DatasetActions.AddNewRow({
 				datasetId: this.datasetId,
 				index: this.columns.length,
-				rows: this.data.length
+				rows: this.nextRow()
 			})
 		);
+	}
+
+	nextRow() {
+		return this.data.length ?
+			+this.data[this.data.length - 1][0].id.split('-')[0] + 1 : 0;
+	}
+
+	nextColumn() {
+		return this.columns.length ?
+			+this.data[0][this.data[0].length - 1].id.split('-')[1] + 1 : 0;
 	}
 
 	changeColumnType(type, col, columnId) {

@@ -57,19 +57,19 @@ const byId = (
 						...state[action.payload.datasetId].modified,
 						data: [
 							...state[action.payload.datasetId].modified.data.filter(
-								(values, i) => i !== action.payload.index
+								(values, i) => !action.payload.index.includes(i)
 							)
-							.map(
-								(values, i) => {
-									if (i >= action.payload.index) {
-										return values.map(
-											(valueId: string, j) =>
-												valueId.replace(`${i + 1}-${j}`, `${i}-${j}`)
-										);
-									}
-									return values;
-								}
-							)
+							// .map(
+							// 	(values, i) => {
+							// 		if (i >= action.payload.index) {
+							// 			return values.map(
+							// 				(valueId: string, j) =>
+							// 					valueId.replace(`${i + 1}-${j}`, `${i}-${j}`)
+							// 			);
+							// 		}
+							// 		return values;
+							// 	}
+							// )
 						]
 					}
 				} as Dataset

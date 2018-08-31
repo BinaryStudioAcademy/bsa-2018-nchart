@@ -87,7 +87,7 @@
 		label
 			font-size: 1rem
 		.ui-checkbox-wrp
-			padding-left: 22px
+			// padding-left: 22px
 	.column-type
 		margin: 0
 		padding: 0
@@ -133,3 +133,7 @@
 				padding-left: 15px
 	.ui-menu .ui-menuitem > .ui-menuitem-link
 		text-align: left
+
+	.ui-table-tbody > tr:nth-child(even).ui-state-highlight,
+	.ui-table-tbody > tr.ui-state-highlight
+		color: $stateActiveTextColor

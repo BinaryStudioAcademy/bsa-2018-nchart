@@ -29,17 +29,18 @@ export const datasetDataReducer = (
 			};
 		case constants.DELETE_ROW:
 			return {
-				...mapKeys(state, (value, key) => {
-					const i = +key.split('-')[0], j = +key.split('-')[1];
-					if (i >= action.payload.index && i < action.payload.rows) {
-						state[key].value = state[key.replace(`${i}-${j}`, `${i + 1}-${j}`)].value;
-					}
-				}),
+				// ...mapKeys(state, (value, key) => {
+				// 	const i = +key.split('-')[0], j = +key.split('-')[1];
+				// 	if (i >= action.payload.index && i < action.payload.rows) {
+				// 		state[key].value = state[key.replace(`${i}-${j}`, `${i + 1}-${j}`)].value;
+				// 	}
+				// }),
 				...omitBy(state, (value, key: string) => {
-						return key.startsWith(
-							`${action.payload.rows}-`
-						);
-					})
+						// return key.startsWith(
+						// 	`${action.payload.rows}-`
+						// );
+					action.payload.ids.includes(key);
+				})
 			};
 		case constants.DELETE_COLUMN:
 			return {

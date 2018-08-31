@@ -4,11 +4,13 @@ import {
 	Input,
 	EventEmitter,
 	Output,
-	ChangeDetectionStrategy
+	ChangeDetectionStrategy,
+	ViewChildren
 } from '@angular/core';
 import { DatasetColumn } from '@app/models/dataset.model';
 import { SchemeID } from '@app/models/normalizr.model';
 import { MenuItem } from 'primeng/api';
+import { FormControl } from '@angular/forms';
 
 @Component({
 	selector: 'app-table',
@@ -31,11 +33,53 @@ export class TableComponent implements OnInit {
 	cellChange = new EventEmitter();
 	@Output()
 	headerChange = new EventEmitter();
-	selectedRows;
+	@Output()
+	getSelectedRows = new EventEmitter();
+	@Input()
+	selectedRows = [];
+	isCheckedAll = false;
+	checkControl = new FormControl();
+	control = new FormControl();
+	@ViewChildren('checkbox')
+	checkboxes;
+
+	getSelectedCheckboxes() {
+		let res = 0;
+		this.checkboxes.toArray().map(el => {
+			return el.control.value ? res++ : res;
+		});
+		return res;
+	}
 
 	checkboxChange(e) {}
 
 	ngOnInit() {}
+
+	getRows(val, i) {
+		if (val) {
+			this.selectedRows.push(i);
+		} else {
+			this.control.setValue(false);
+			this.isCheckedAll = false;
+			this.selectedRows.splice(this.selectedRows.indexOf(i), 1);
+		}
+		if (this.selectedRows.length === this.getSelectedCheckboxes()) {
+			this.control.setValue(true);
+			this.isCheckedAll = true;
+		}
+		this.getSelectedRows.emit(this.selectedRows);
+	}
+
+	checkAll() {
+		this.isCheckedAll = !this.isCheckedAll;
+		if (this.isCheckedAll) {
+			this.selectedRows = this.data.map((e, i) => i);
+			this.checkControl.setValue(true);
+		} else {
+			this.selectedRows = [];
+			this.checkControl.setValue(null);
+		}
+	}
 
 	isNewValue(oldValue, newValue) {
 		return oldValue !== newValue;

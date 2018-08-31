@@ -38,7 +38,8 @@ export class ChangeHeaderTitle extends AppAction<{
 
 export class DeleteRow extends AppAction<{
 	rows: number;
-	index: number;
+	index: number[];
+	ids: SchemeID[];
 	datasetId: SchemeID;
 }> {
 	readonly type = constants.DELETE_ROW;

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ElementRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -13,13 +13,13 @@ export class CheckboxComponent implements OnInit {
 	@Input()
 	label: string;
 	@Input()
-	value: any;
+	value: boolean;
 	@Input()
 	disabled: boolean;
 	@Output()
 	change = new EventEmitter();
 
-	constructor() {}
+	constructor(el: ElementRef) {}
 
 	isDisabled() {
 		if (this.disabled) {

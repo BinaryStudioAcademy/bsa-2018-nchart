@@ -16,7 +16,7 @@
 				<label>
 					<span pEditableColumn="headerData column-no">No</span>
 					<app-button-action [items]="headerRowItems()"></app-button-action>
-					<p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+					<app-checkbox (change)="checkAll()" [control]="control"></app-checkbox>
 				</label>
 			</th>
 			<th class="header-cell" *ngFor="let col of columns; let i = index" >
@@ -52,7 +52,7 @@
 					<app-button-action [items]="rowItems(rowIndex)"></app-button-action>
 					<!-- <p-tieredMenu #menu [model]="rowItems(rowIndex)" [popup]="true"></p-tieredMenu>
 					<app-button #btn type="icon" icon="pi pi-check" (onclick)="menu.toggle($event)"></app-button> -->
-					<p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+					<app-checkbox #checkbox [control]="checkControl" (change)="getRows($event, rowIndex)"></app-checkbox>
 				</label>
 			</td>
 			<td *ngFor="let col of columns; let i = index" pEditableColumn="rowData">
