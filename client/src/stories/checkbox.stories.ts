@@ -6,8 +6,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormControl, Validators } from '@angular/forms';
 // Checkbox
 import { CheckboxModule } from 'primeng/checkbox';
-import { CheckboxComponent } from '@app/shared/components/form-field/checkbox/checkbox/checkbox.component';
-import { CheckboxGroupComponent } from '@app/shared/components/form-field/checkbox/checkbox-group/checkbox-group.component';
+import { CheckboxComponent } from '../app/shared/components/form-field/checkbox/checkbox/checkbox.component';
+import { CheckboxGroupComponent } from '../app/shared/components/form-field/checkbox/checkbox-group/checkbox-group.component';
 
 storiesOf('Checkbox', module)
 	.addDecorator(

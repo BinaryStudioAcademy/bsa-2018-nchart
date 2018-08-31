@@ -7,9 +7,9 @@ import { FormsModule, MinLengthValidator } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormControl, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
-import { ButtonComponent } from '@app/shared/components/button/button/button.component';
+import { ButtonComponent } from '../app/shared/components/button/button/button.component';
 import { InputTextModule } from 'primeng/inputtext';
-import { InputTextComponent } from '@app/shared/components/form-field/input-text/input-text.component';
+import { InputTextComponent } from '../app/shared/components/form-field/input-text/input-text.component';
 
 export const control = new FormControl();
 export function showList(): string {
