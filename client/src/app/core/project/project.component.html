@@ -7,12 +7,7 @@
 	<div class="main-content">
 	<app-project-name id="load" #viewItem [projectName]="projectName" (setProjectName)="changeProjectName($event)">
 	</app-project-name>
-		<app-button
-			class="btn-toggle"
-			*ngIf="getIsActiveChartDataset() | async"
-			[label]="'Load more data'"
-			(onclick)="toggle()"></app-button>
-		<app-load-data *ngIf="isShowLoad"></app-load-data>
+		<app-load-data 	*ngIf="!(getIsActiveChartDataset() | async)"></app-load-data>
 		<app-data-table *ngIf="isDataset()" id="table" #viewItem></app-data-table>
 		<app-list-charts *ngIf="isDataset()" id="charts" #viewItem></app-list-charts>
 		<app-dimension-settings *ngIf="isDataset()" id="settings" #viewItem></app-dimension-settings>
