@@ -24,7 +24,7 @@ class ProjectService {
 		return this.ProjectRepository.upsertProjectCharts(objs);
 	}
 
-	createProject(obj) {
+	createProject(obj, defaultGroupId) {
 		return new Promise((resolve, reject) => {
 			async.waterfall(
 				[
@@ -50,6 +50,19 @@ class ProjectService {
 								})
 								.catch(err => callback(err, null));
 						}
+					},
+					(payload, callback) => {
+						this.GroupService.saveGroupProject({
+							groupId: defaultGroupId,
+							projectId: payload.project.id,
+							accessLevelId: 1
+						})
+							.then(() => {
+								callback(null, payload);
+							})
+							.catch((err) => {
+								callback(null, err);
+							});
 					},
 					(payload, callback) => {
 						DatasetService.upsert(obj.project.datasets)
@@ -102,7 +115,7 @@ class ProjectService {
 
 	handleProject(obj, res) {
 		if (obj.project && !obj.groupId) {
-			return this.createProject(obj);
+			return this.createProject(obj, res.locals.user.defaultGroupId);
 		}
 		// obj.groupId, res.locals.user
 		return new Promise((resolve, reject) => {
