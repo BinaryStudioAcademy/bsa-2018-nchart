@@ -1,5 +1,5 @@
 <div class="ui-dialog-wrp">
-	<p-dialog header="Share project" [(visible)]="display">
+	<p-dialog header="Share project" [(visible)]="display" (onHide)="close()" (onAfterHide)="close()">
 		<!--<app-input-text [label]="email" [control]="formControl"></app-input-text>-->
 		<label for="email">Email: </label><input type="email" id="email">
 		<p-footer>
@@ -7,6 +7,6 @@
 		</p-footer>
 	</p-dialog>
 
-	<button type="text" (click)="showDialog()" pButton label="share"></button>
+	<!--<button type="text" (click)="showDialog()" pButton label="share"></button>-->
 </div>
 

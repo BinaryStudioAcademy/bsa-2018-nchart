@@ -1,18 +1,29 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 
 @Component({
 	selector: 'app-dialog',
 	templateUrl: './dialog.component.html'
 })
 export class DialogComponent implements OnInit {
-	display = false;
+
+	@Input()
+	display: boolean;
+	@Output() displayChange = new EventEmitter<boolean>();
 
 	@Input()
 	projectId: number;
 
-	showDialog() {
-		this.display = true;
+	@Input()
+	accessLevelId: number;
+
+	// showDialog() {
+	// 	this.display = true;
+	// }
+
+	close() {
+		this.displayChange.emit(false);
 	}
 
-	ngOnInit() {}
+	ngOnInit() {
+	}
 }
