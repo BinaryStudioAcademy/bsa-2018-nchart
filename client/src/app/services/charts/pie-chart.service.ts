@@ -33,8 +33,54 @@ export class PieChartService {
 		}));
 	}
 
+	static mapLabels(original: any[], labels: string[]) {
+		return original.map(obj => ({
+			label: labels[original.indexOf(obj)],
+			name: obj.name,
+			value: obj.value
+		}));
+	}
+
+	static compressArray(original) {
+		const compressed = [];
+		const copy = original.slice(0);
+		for (let i = 0; i < original.length; i++) {
+			let myCount = 0;
+			for (let w = 0; w < copy.length; w++) {
+				if (
+					original[i].name === copy[w].name &&
+					original[i].label === copy[w].label
+				) {
+					myCount += copy[w].value;
+					const a = {
+						label: '',
+						name: '',
+						value: 0
+					};
+					copy[w] = a;
+				}
+			}
+			if (myCount > 0) {
+				const a = {
+					label: '',
+					name: '',
+					value: 0
+				};
+				a.label = original[i].label;
+				a.name = original[i].name;
+				a.value = myCount;
+				compressed.push(a);
+			}
+		}
+		return compressed;
+	}
+
 	static concat(...args) {
-		return args.reduce((acc, val) => [...acc, ...val]);
+		if (args.length) {
+			return args.reduce((acc, val) => [...acc, ...val]);
+		} else {
+			return [];
+		}
 	}
 
 	getData(data: any) {
@@ -47,17 +93,28 @@ export class PieChartService {
 				};
 			});
 		});
-
 		let arcsData = [];
 		dataObj.arcs.forEach(el => {
 			arcsData.push(el.values);
 		});
-		const temp = [];
+		let temp = [];
 		arcsData.forEach(el => {
 			el = PieChartService.mapData(el);
 			temp.push(el);
 		});
+
+		const arrLabels = [];
+		if (dataObj.label.length) {
+			temp.forEach(el => {
+				el = PieChartService.mapLabels(el, dataObj.label[0].values);
+				arrLabels.push(el);
+			});
+			temp = arrLabels;
+		}
 		arcsData = PieChartService.concat(...temp);
+		if (dataObj.label.length && arcsData.length) {
+			arcsData = PieChartService.compressArray(arcsData);
+		}
 		this.data = arcsData;
 		return this.data;
 	}

@@ -13,6 +13,16 @@ export class PieChartCustomizeComponent implements OnChanges {
 
 	constructor(private storeService: StoreService) {}
 
+	sortArcsBy = [
+		{ label: 'Name', value: 'name' },
+		{ label: 'Value', value: 'value' }
+	];
+
+	sortChartsBy = [
+		{ label: 'Name (asc)', value: 'name(asc)' },
+		{ label: 'Name (desc)', value: 'name(desc)' }
+	];
+
 	ngOnChanges() {
 		this.formGroup.controls.width['id'] = this.customizeSettings.width.id;
 		this.formGroup.controls.margin['id'] = this.customizeSettings.margin.id;

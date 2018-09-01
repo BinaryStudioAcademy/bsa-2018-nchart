@@ -147,7 +147,7 @@ module.exports = {
 						sysName: 'width'
 					},
 					{
-						value: 4,
+						value: 25,
 						description:
 								'Pie chart will be disposed on a grid. This option allows to define margin of each pie',
 						option: 'Margin',
@@ -155,7 +155,7 @@ module.exports = {
 						sysName: 'margin'
 					},
 					{
-						value: 10,
+						value: 100,
 						description: 'Radius of each pie.',
 						option: 'Radius',
 						id: 10,
@@ -178,14 +178,14 @@ module.exports = {
 						sysName: 'showValues'
 					},
 					{
-						value: '',
+						value: 'name(asc)',
 						description: 'Order of the pie chart.',
 						option: 'Sort charts by',
 						id: 14,
 						sysName: 'sortChartsBy'
 					},
 					{
-						value: '',
+						value: 'name',
 						description:
 								'Order of the arcs inside each pie chart. Can be ‘automatic’ (same order in each pie chart), ‘size’ (from biggest to smallest in each pie chart) or ‘name’ (alphabetical order).',
 						option: 'Sort arcs by',
