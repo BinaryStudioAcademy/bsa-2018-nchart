@@ -9,6 +9,12 @@ export class ProjectCardComponent implements OnInit {
 	constructor() {}
 
 	@Input()
+	companyName: string;
+
+	@Input()
+	groupName: string;
+
+	@Input()
 	projectId: number;
 
 	@Input()

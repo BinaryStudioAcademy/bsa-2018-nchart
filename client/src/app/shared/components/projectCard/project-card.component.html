@@ -1,10 +1,19 @@
 <div class="project-card-wrp">
-	<div class="project-card-user-info">
-		<p>{{userName}}</p>
-		<p>{{email}}</p>
+	<div class="project-card-info">
+		<div class="project-card-user">
+			<span>{{userName}}</span>
+			<span>{{email}}</span>
+		</div>
+		<div class="project-card-folder">
+			<span>Company: {{companyName}}</span>
+			<span>Group: {{groupName}}</span>
+		</div>
+		<div class="project-card-project-info">
+			<span>Project: {{projectName}}</span>
+		</div>
 	</div>
-	<div class="project-card-project-info">
-		<p>{{projectId}}</p>
-		<span>{{projectName}}</span>
+	<div  class="project-card-control">
+		<input type="checkbox">
+		<input type="checkbox">
 	</div>
 </div>
