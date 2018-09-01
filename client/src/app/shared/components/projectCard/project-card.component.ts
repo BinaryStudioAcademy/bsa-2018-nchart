@@ -8,8 +8,16 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ProjectCardComponent implements OnInit {
 	itemsObjs = [
 		{
-			label: 'New row',
-			icon: 'fa fa-plus'
+			label: 'Rename',
+			// icon: 'fa fa-plus'
+		},
+		{
+			label: 'Delete',
+			// icon: 'fa fa-plus'
+		},
+		{
+			label: 'Share',
+			// icon: 'fa fa-plus'
 		}
 	];
 
@@ -32,6 +40,9 @@ export class ProjectCardComponent implements OnInit {
 
 	@Input()
 	email: string;
+
+	@Input()
+	accessLevelId: number;
 
 	ngOnInit() {}
 }
