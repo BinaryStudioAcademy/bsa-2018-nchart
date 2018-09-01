@@ -3,7 +3,7 @@ import { ProjectsActionConstants } from '@app/store/actions/projects/projects.ac
 import { Actions as projectActions } from '@app/store/actions/projects/projects.actions';
 import { DatasetActionConstants as constants } from '@app/store/actions/datasets/datasets.action-types';
 import { Actions as datasetsActions } from '@app/store/actions/datasets/datasets.actions';
-import { mapKeys, zipObject } from 'lodash';
+import { omitBy, zipObject, range } from 'lodash';
 
 export const initialState: DatasetDataState = {};
 
@@ -27,80 +27,47 @@ export const datasetDataReducer = (
 					value: action.payload.value
 				}
 			};
-		// case constants.ADD_NEW_ROW:
-		// case constants.ADD_NEW_COLUMN:
-		// case constants.DELETE_ROW:
-		/* case constants.DELETE_COLUMN:
-			const colKeys = [].concat(
-				...action.payload.keys
-					.map((d, i) => d.filter((v, j) => j !== action.payload.id))
-					.map((r, rI) =>
-						r.map((c, cI) => ({
-							id: `${rI}-${cI}-${action.payload.datasetId}`,
-							value: c.value
-						}))
-					)
-			);
+		case constants.DELETE_COLUMN:
 			return {
-				...zipObject(
-					colKeys.map(el => el.id),
-					colKeys.map(key => ({
-						id: key.id,
-						value: key.value
-					}))
-				)
-			}; */
-
-		/* case constants.DELETE_ROW:
-			const rowKeys = [].concat(
-				...action.payload.keys
-					.filter((d, i) => !action.payload.id.includes(i))
-					.map((r, rI) =>
-						r.map((c, cI) => ({
-							id: `${rI}-${cI}-${action.payload.datasetId}`,
-							value: c.value
-						}))
-					)
-			);
-			return {
-				...zipObject(
-					rowKeys.map(el => el.id),
-					rowKeys.map(key => ({
-						id: key.id,
-						value: key.value
-					}))
-				)
-			}; */
-
-		/* case constants.ADD_NEW_ROW:
-			const newData = [].concat(
-				...action.payload.data.modified.data.filter(
-					(key, i) =>
-						i === action.payload.data.modified.data.length - 1
-				)
-			);
-			return {
-				...state,
-				...zipObject(
-					newData.map(el => el.id),
-					newData.map(key => ({
-						id: key.id,
-						value: key.value
-					}))
-				)
-			}; */
-		/* case constants.CHANGE_COLUMN_TYPE: {
-			return {
-				...state,
-				...mapKeys(state, (value, key) => {
-					if (key.includes(`-${action.payload.index}-`)) {
-						state[key].value = action.payload.data.find(
-							el => el.id === key
-						).value;
-					}
-				})
+				...omitBy(state, (val, key) =>
+					key.endsWith(`-${action.payload.columnId}-${action.payload.datasetId}`
+				))
 			};
-		} */
+		case constants.DELETE_ROW:
+			const id = action.payload.rowId as string;
+			return {
+				...omitBy(state, (val, key) =>
+					key.startsWith(`${id.split('-')[0]}-`
+				))
+			};
+		case constants.ADD_NEW_COLUMN:
+			const colKeys = range(action.payload.dataLength).map(
+				i => `${i}-${action.payload.columnId}-${action.payload.datasetId}`
+			);
+			return {
+				...state,
+				...zipObject(
+					colKeys,
+					colKeys.map(key => ({
+						id: key,
+						value: ''
+					}))
+				)
+			};
+		case constants.ADD_NEW_ROW:
+			const rowKeys = action.payload.columnIds.map(
+				colId => `${action.payload.dataLength}-${colId}-${action.payload.datasetId}`
+			);
+			return {
+				...state,
+				...zipObject(
+					rowKeys,
+					rowKeys.map(key => ({
+						id: key,
+						value: ''
+					}))
+				)
+			};
 		default:
 			return state;
 	}

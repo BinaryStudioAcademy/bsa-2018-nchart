@@ -23,7 +23,7 @@ const byId = (
 				...state,
 				...action.payload.entities.dataset
 			};
-		/* case constants.DELETE_COLUMN:
+		case constants.DELETE_COLUMN:
 			return {
 				...state,
 				[action.payload.datasetId]: {
@@ -31,25 +31,16 @@ const byId = (
 					modified: {
 						...state[action.payload.datasetId].modified,
 						columns: [
-							...state[
-								action.payload.datasetId
-							].modified.columns.filter(
-								col => col !== action.payload.columnId
+							...state[action.payload.datasetId].modified.columns.filter(
+								colId => colId !== action.payload.columnId
 							)
 						],
 						data: [
-							...state[action.payload.datasetId].modified.data
-								.map((d, i) =>
-									d.filter((v, j) => j !== action.payload.id)
+							...state[action.payload.datasetId].modified.data.map(
+								dataArr => dataArr.filter(
+									(data: string) => !data.endsWith(`-${action.payload.columnId}-${action.payload.datasetId}`)
 								)
-								.map((r, rI) =>
-									r.map(
-										(c, cI) =>
-											`${rI}-${cI}-${
-												action.payload.datasetId
-											}`
-									)
-								)
+							)
 						]
 					}
 				}
@@ -62,35 +53,50 @@ const byId = (
 					modified: {
 						...state[action.payload.datasetId].modified,
 						data: [
-							...state[action.payload.datasetId].modified.data
-								.filter(
-									(row, i) => !action.payload.id.includes(i)
-								)
-								.map((r, rI) =>
-									r.map(
-										(c, cI) =>
-											`${rI}-${cI}-${
-												action.payload.datasetId
-											}`
-									)
-								)
+							...state[action.payload.datasetId].modified.data.filter(
+								dataArr => !dataArr.includes(action.payload.rowId)
+							)
 						]
 					}
 				}
-			}; */
+			};
+		case constants.ADD_NEW_COLUMN:
+			return {
+				...state,
+				[action.payload.datasetId]: {
+					...state[action.payload.datasetId],
+					modified: {
+						...state[action.payload.datasetId].modified,
+						columns: [
+							...state[action.payload.datasetId].modified.columns,
+							action.payload.columnId
+						],
+						data: [
+							...state[action.payload.datasetId].modified.data.map(
+								(dataArr, i) => {
+									dataArr.push(`${i}-${action.payload.columnId}-${action.payload.datasetId}`);
+									return dataArr;
+								}
+							)
+						]
+					}
+				}
+			};
 		case constants.ADD_NEW_ROW:
 			return {
-				// ...state,
-				// [action.payload.datasetId]: {
-				// 	...state[action.payload.datasetId],
-				// 	modified: {
-				// 		...state[action.payload.datasetId].modified,
-				// 		data: [
-				// 			...union(state[action.payload.datasetId].modified.data,
-				// 			newData)
-				// 		]
-				// 	}
-				// }
+				...state,
+				[action.payload.datasetId]: {
+					...state[action.payload.datasetId],
+					modified: {
+						...state[action.payload.datasetId].modified,
+						data: [
+							...state[action.payload.datasetId].modified.data,
+							action.payload.columnIds.map(colId =>
+								`${action.payload.dataLength}-${colId}-${action.payload.datasetId}`
+							)
+						]
+					}
+				}
 			};
 		default:
 			return state;

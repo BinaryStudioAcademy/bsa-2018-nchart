@@ -45,11 +45,11 @@
 		</tr>
 	</ng-template>
 	<ng-template pTemplate="body" let-columns="columns" let-rowData let-rowIndex="rowIndex">
-		<tr pSelectableRow="rowData" *ngIf="rowData.length > 1">
+		<tr pSelectableRow="rowData" *ngIf="!!rowData">
 			<td class="number-cell">
 				<label>
 					<span class="column-no">{{rowIndex + 1}}</span>
-					<app-button-action [items]="rowItems(rowData[rowIndex].id)"></app-button-action>
+					<app-button-action *ngIf="rowData[rowIndex]" [items]="rowItems(rowData[rowIndex].id)"></app-button-action>
 					<app-checkbox #checkbox [control]="checkControl" (change)="getRows($event, rowIndex)"></app-checkbox>
 				</label>
 			</td>

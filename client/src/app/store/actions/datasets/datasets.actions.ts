@@ -39,8 +39,7 @@ export class ChangeHeaderTitle extends AppAction<{
 
 export class DeleteRow extends AppAction<{
 	datasetId: SchemeID;
-	id: number[];
-	keys: any[][];
+	rowId: SchemeID;
 }> {
 	readonly type = constants.DELETE_ROW;
 }
@@ -54,14 +53,16 @@ export class DeleteColumn extends AppAction<{
 
 export class AddNewColumn extends AppAction<{
 	datasetId: SchemeID;
-	// data: Dataset<DatasetColumn[], DatasetData[][]>;
+	dataLength: number;
+	columnId: SchemeID;
 }> {
 	readonly type = constants.ADD_NEW_COLUMN;
 }
 
 export class AddNewRow extends AppAction<{
 	datasetId: SchemeID;
-	// data: Dataset<DatasetColumn[], DatasetData[][]>;
+	dataLength: number;
+	columnIds: SchemeID[];
 }> {
 	readonly type = constants.ADD_NEW_ROW;
 }

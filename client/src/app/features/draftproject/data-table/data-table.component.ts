@@ -9,6 +9,7 @@ import * as DatasetActions from '@app/store/actions/datasets/datasets.actions';
 import { SchemeID } from '@app/models/normalizr.model';
 import { activeDatasetId } from '@app/store/selectors/dataset.selectors';
 import { MenuItem } from 'primeng/api';
+import { v4 } from 'uuid';
 
 @Component({
 	selector: 'app-data-table',
@@ -76,7 +77,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
 			},
 			{
 				label: 'To number',
-				url: '#/draft/project',
+				// url: '#/draft/project',
 				command: () => {
 					this.changeColumnType('number', columnId);
 				}
@@ -111,14 +112,6 @@ export class DataTableComponent implements OnInit, OnDestroy {
 		this.selectedRows = rows;
 	}
 
-	// transformData(data, columns?) {
-	// 	return this.datasetService.transformDatasets([{
-	// 		id: this.datasetId,
-	// 		columns: columns || this.columns,
-	// 		data: data.map(d => d.map(v => v.value))
-	// 	}])[0];
-	// }
-
 	removeColumn(columnId) {
 		this.storeService.dispatch(
 			new DatasetActions.DeleteColumn({
@@ -132,43 +125,29 @@ export class DataTableComponent implements OnInit, OnDestroy {
 		this.storeService.dispatch(
 			new DatasetActions.DeleteRow({
 				datasetId: this.datasetId,
-				id: this.selectedRows.length ? this.selectedRows : [rowId],
-				keys: this.data
+				rowId
 			})
 		);
-		this.selectedRows = [];
 	}
 
-	// checkRows(i) {
-	// 	return this.selectedRows.length ?
-	// 		this.data.filter(
-	// 			(data, row) => !this.selectedRows.includes(row)
-	// 		) : this.data.filter(
-	// 			(data, row) => row !== i
-	// 		);
-	// }
-
 	addNewColumn() {
-		// this.columns.push({
-		// 	id: v4(),
-		// 	title: 'Header',
-		// 	type: 'string'
-		// });
 		this.storeService.dispatch(
 			new DatasetActions.AddNewColumn({
-				datasetId: this.datasetId
+				datasetId: this.datasetId,
+				dataLength: this.data.length,
+				columnId: v4()
 			})
 		);
 	}
 
 	addNewRow() {
-		// this.data.push(this.columns.map(e => ({id: null, value: ''})));
-		// this.storeService.dispatch(
-		// 	new DatasetActions.AddNewRow({
-		// 		datasetId: this.datasetId,
-		// 		data: this.transformData(this.data)
-		// 	})
-		// );
+		this.storeService.dispatch(
+			new DatasetActions.AddNewRow({
+				datasetId: this.datasetId,
+				dataLength: this.data.length,
+				columnIds: this.columns.map(col => col.id)
+			})
+		);
 	}
 
 	changeColumnType(type, columnId) {
