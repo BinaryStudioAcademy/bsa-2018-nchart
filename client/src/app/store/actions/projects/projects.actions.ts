@@ -1,7 +1,7 @@
-import { ProjectsActionConstants } from '@app/store/actions/projects/projects.action-types';
-import { Project, ProjectEntities } from '@app/models/project.model';
-import { SchemeID } from '@app/models/normalizr.model';
-import { AppAction, FailedAction } from '@app/models/store.model';
+import {ProjectsActionConstants} from '@app/store/actions/projects/projects.action-types';
+import {Project, ProjectEntities} from '@app/models/project.model';
+import {SchemeID} from '@app/models/normalizr.model';
+import {AppAction, FailedAction} from '@app/models/store.model';
 
 export class LoadProjetcs extends AppAction<{ groupId: string }> {
 	readonly type = ProjectsActionConstants.LOAD_PROJECTS;
@@ -55,6 +55,7 @@ export class ChangeProjectName extends AppAction<{
 }> {
 	readonly type = ProjectsActionConstants.CHANGE_PROJECT_NAME;
 }
+
 export class SaveProject extends AppAction<{ id: SchemeID }> {
 	readonly type = ProjectsActionConstants.SAVE_PROJECT;
 }
@@ -74,7 +75,6 @@ export class SaveProjectFailed extends FailedAction {
 	readonly type = ProjectsActionConstants.SAVE_PROJECT__FAILED;
 }
 
-// todo: remove userId when token added
 export class LoadProjetcsInfo extends AppAction<void> {
 	readonly type = ProjectsActionConstants.LOAD_PROJECTS_INFO;
 }
@@ -88,6 +88,22 @@ export class LoadProjectsInfoComplete extends AppAction<{
 
 export class LoadProjectsInfoFailed extends FailedAction {
 	readonly type = ProjectsActionConstants.LOAD_PROJECTS_INFO__FAILED;
+}
+
+export class ShareProject extends AppAction<{
+	projectId: number;
+	email: string;
+	accessLevelId: number;
+}> {
+	readonly type = ProjectsActionConstants.SHARE_PROJECT;
+}
+
+export class ShareProjectComplete extends AppAction<any> {
+	readonly type = ProjectsActionConstants.SHARE_PROJECTS__COMPLETE;
+}
+
+export class ShareProjectFailed extends FailedAction {
+	readonly type = ProjectsActionConstants.SHARE_PROJECTS__FAILED;
 }
 
 export type Actions =
@@ -107,4 +123,7 @@ export type Actions =
 	| SaveProjectFailed
 	| LoadProjetcsInfo
 	| LoadProjectsInfoComplete
-	| LoadProjectsInfoFailed;
+	| LoadProjectsInfoFailed
+	| ShareProject
+	| ShareProjectComplete
+	| ShareProjectFailed;

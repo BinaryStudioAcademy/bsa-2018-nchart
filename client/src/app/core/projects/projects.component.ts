@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { projects as projectsSelector } from '@app/store/selectors/projects.selectors.ts';
-import { StoreService } from '@app/services/store.service';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {projects as projectsSelector} from '@app/store/selectors/projects.selectors.ts';
+import {StoreService} from '@app/services/store.service';
 import * as projectActions from '@app/store/actions/projects/projects.actions';
-import { Observable } from 'rxjs';
+import {Observable} from 'rxjs';
 
 @Component({
 	selector: 'app-projects',
@@ -12,7 +12,9 @@ import { Observable } from 'rxjs';
 export class ProjectsComponent implements OnInit, OnDestroy {
 	projects$: Observable<any>;
 	disconnect;
-	constructor(private storeService: StoreService) {}
+
+	constructor(private storeService: StoreService) {
+	}
 
 	ngOnInit() {
 		this.projects$ = this.storeService.createSubscription(
@@ -27,5 +29,14 @@ export class ProjectsComponent implements OnInit, OnDestroy {
 
 	ngOnDestroy() {
 		this.disconnect();
+	}
+
+	// test sharing
+	sharePj() {
+		this.storeService.dispatch(new projectActions.ShareProject({
+			projectId: 2,
+			email: '5user@gmail.com',
+			accessLevelId: 3
+		}));
 	}
 }

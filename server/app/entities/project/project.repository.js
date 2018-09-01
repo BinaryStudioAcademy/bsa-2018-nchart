@@ -220,9 +220,7 @@ class ProjectRepository extends Repository {
 						},
 						{
 							model: companyModel,
-							attributes: [
-								'name'
-							]
+							attributes: ['name']
 						}
 					]
 				}

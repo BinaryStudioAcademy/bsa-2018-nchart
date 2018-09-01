@@ -25,4 +25,10 @@ export interface ProjectDomain {
 	getPartByUserId(): Observable<ResponseScheme<any[]>>;
 
 	getAll(): Observable<ResponseScheme<OriginProject[]>>;
+
+	share(payload: {
+		projectId: number,
+		email: string,
+		accessLevelId: number
+	}): Observable<ResponseScheme<any>>;
 }

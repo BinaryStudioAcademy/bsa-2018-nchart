@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
 	selector: 'app-dialog',
@@ -14,7 +14,5 @@ export class DialogComponent implements OnInit {
 		this.display = true;
 	}
 
-	ngOnInit() {
-
-	}
+	ngOnInit() {}
 }

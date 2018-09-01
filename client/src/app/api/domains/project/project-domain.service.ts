@@ -19,7 +19,19 @@ export class ProjectDomainService implements ProjectDomain {
 		);
 	}
 
-	// todo: add token to header
+	share(payload): Observable<ResponseScheme<any>> {
+		return this.httpService.makeRequest<ResponseScheme<any>>(
+			new ServiceRequest(
+				RequestType.POST,
+				`${this.projectPath}/shareByEmail`,
+				{
+					'Content-Type': 'application/json'
+				},
+				payload
+			)
+		);
+	}
+
 	getPartByUserId(): Observable<ResponseScheme<any[]>> {
 		return this.httpService.makeRequest<ResponseScheme<any[]>>(
 			new ServiceRequest(RequestType.GET, `${this.projectPath}/owners`)

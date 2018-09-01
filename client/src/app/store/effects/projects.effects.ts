@@ -212,4 +212,28 @@ export class ProjectsEffects {
 			)
 		)
 	);
+
+	@Effect()
+	shareProject = this.action$.pipe(
+		ofType(ProjectsActionConstants.SHARE_PROJECT),
+		switchMap((action: projectActions.ShareProject) =>
+			this.projectDomainService.share(action.payload).pipe(
+				map(value => {
+					if (value.isSuccess) {
+						return new projectActions.ShareProjectComplete(value.payload);
+					}
+					return throwError(new Error('Cant share project'));
+				}),
+				catchError(error => {
+					return of(
+						new projectActions.ShareProjectFailed({
+							action: action,
+							msg: 'test',
+							error: error
+						})
+					);
+				})
+			)
+		)
+	);
 }
