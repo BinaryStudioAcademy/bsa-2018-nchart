@@ -31,14 +31,23 @@ const byId = (
 					modified: {
 						...state[action.payload.datasetId].modified,
 						columns: [
-							...state[action.payload.datasetId].modified.columns.filter(
+							...state[
+								action.payload.datasetId
+							].modified.columns.filter(
 								colId => colId !== action.payload.columnId
 							)
 						],
 						data: [
-							...state[action.payload.datasetId].modified.data.map(
-								dataArr => dataArr.filter(
-									(data: string) => !data.endsWith(`-${action.payload.columnId}-${action.payload.datasetId}`)
+							...state[
+								action.payload.datasetId
+							].modified.data.map(dataArr =>
+								dataArr.filter(
+									(data: string) =>
+										!data.endsWith(
+											`-${action.payload.columnId}-${
+												action.payload.datasetId
+											}`
+										)
 								)
 							)
 						]
@@ -53,8 +62,11 @@ const byId = (
 					modified: {
 						...state[action.payload.datasetId].modified,
 						data: [
-							...state[action.payload.datasetId].modified.data.filter(
-								dataArr => !dataArr.includes(action.payload.rowId)
+							...state[
+								action.payload.datasetId
+							].modified.data.filter(
+								dataArr =>
+									!dataArr.includes(action.payload.rowId)
 							)
 						]
 					}
@@ -72,12 +84,16 @@ const byId = (
 							action.payload.columnId
 						],
 						data: [
-							...state[action.payload.datasetId].modified.data.map(
-								(dataArr, i) => {
-									dataArr.push(`${i}-${action.payload.columnId}-${action.payload.datasetId}`);
-									return dataArr;
-								}
-							)
+							...state[
+								action.payload.datasetId
+							].modified.data.map((dataArr, i) => {
+								dataArr.push(
+									`${i}-${action.payload.columnId}-${
+										action.payload.datasetId
+									}`
+								);
+								return dataArr;
+							})
 						]
 					}
 				}
@@ -91,8 +107,11 @@ const byId = (
 						...state[action.payload.datasetId].modified,
 						data: [
 							...state[action.payload.datasetId].modified.data,
-							action.payload.columnIds.map(colId =>
-								`${action.payload.dataLength}-${colId}-${action.payload.datasetId}`
+							action.payload.columnIds.map(
+								colId =>
+									`${action.payload.dataLength}-${colId}-${
+										action.payload.datasetId
+									}`
 							)
 						]
 					}

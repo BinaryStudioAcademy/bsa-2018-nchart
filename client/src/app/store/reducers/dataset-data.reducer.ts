@@ -30,19 +30,26 @@ export const datasetDataReducer = (
 		case constants.DELETE_COLUMN:
 			return {
 				...omitBy(state, (val, key) =>
-					key.endsWith(`-${action.payload.columnId}-${action.payload.datasetId}`
-				))
+					key.endsWith(
+						`-${action.payload.columnId}-${
+							action.payload.datasetId
+						}`
+					)
+				)
 			};
 		case constants.DELETE_ROW:
 			const id = action.payload.rowId as string;
 			return {
 				...omitBy(state, (val, key) =>
-					key.startsWith(`${id.split('-')[0]}-`
-				))
+					key.startsWith(`${id.split('-')[0]}-`)
+				)
 			};
 		case constants.ADD_NEW_COLUMN:
 			const colKeys = range(action.payload.dataLength).map(
-				i => `${i}-${action.payload.columnId}-${action.payload.datasetId}`
+				i =>
+					`${i}-${action.payload.columnId}-${
+						action.payload.datasetId
+					}`
 			);
 			return {
 				...state,
@@ -56,7 +63,10 @@ export const datasetDataReducer = (
 			};
 		case constants.ADD_NEW_ROW:
 			const rowKeys = action.payload.columnIds.map(
-				colId => `${action.payload.dataLength}-${colId}-${action.payload.datasetId}`
+				colId =>
+					`${action.payload.dataLength}-${colId}-${
+						action.payload.datasetId
+					}`
 			);
 			return {
 				...state,

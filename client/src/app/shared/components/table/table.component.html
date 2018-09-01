@@ -16,7 +16,7 @@
 				<label>
 					<span pEditableColumn="headerData column-no">No</span>
 					<app-button-action [items]="headerRowItems()"></app-button-action>
-					<app-checkbox (change)="checkAll()" [control]="control"></app-checkbox>
+					<!-- <app-checkbox (change)="checkAll()" [control]="control"></app-checkbox> -->
 				</label>
 			</th>
 			<th class="header-cell" *ngFor="let col of columns; let i = index" >
@@ -50,7 +50,7 @@
 				<label>
 					<span class="column-no">{{rowIndex + 1}}</span>
 					<app-button-action *ngIf="rowData[rowIndex]" [items]="rowItems(rowData[rowIndex].id)"></app-button-action>
-					<app-checkbox #checkbox [control]="checkControl" (change)="getRows($event, rowIndex)"></app-checkbox>
+					<!-- <app-checkbox #checkbox [control]="checkControl" (change)="getRows($event, rowIndex)"></app-checkbox> -->
 				</label>
 			</td>
 			<td *ngFor="let col of columns; let i = index" pEditableColumn="rowData">
@@ -71,5 +71,3 @@
 		</tr>
 	</ng-template>
 </p-table>
-
-<!-- <app-popup-menu [items]="rowItems" icon="pi pi-check"></app-popup-menu> -->

@@ -21,8 +21,6 @@ export class DataTableComponent implements OnInit, OnDestroy {
 	columns: DatasetColumn[];
 	datasetId: SchemeID;
 	data: any[][];
-	selectedRows = [];
-	checkedAll: boolean;
 	rowItems = (rowId): MenuItem[] => {
 		return [
 			{
@@ -107,10 +105,6 @@ export class DataTableComponent implements OnInit, OnDestroy {
 		];
 		// tslint:disable-next-line:semicolon
 	};
-
-	getSelectedRows(rows) {
-		this.selectedRows = rows;
-	}
 
 	removeColumn(columnId) {
 		this.storeService.dispatch(
