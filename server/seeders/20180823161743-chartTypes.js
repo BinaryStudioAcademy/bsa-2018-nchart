@@ -386,6 +386,98 @@ module.exports = {
 				]),
 				createdAt: '2018-08-16T21:00:00.000Z',
 				updatedAt: '2018-08-16T21:00:00.000Z'
+			},
+			{
+				id: 5,
+				type: 'Other',
+				name: 'Scatter Plot',
+				sysName: 'scatterplot',
+				description:
+						'A scatter plot, scatterplot, or scattergraph is a type of mathematical diagram using Cartesian coordinates to display values for two variables for a set of data.',
+				dimensionSettings: JSON.stringify([
+					{
+						multiple: false,
+						description:
+								'The horizontal position of the circles.',
+						required: true,
+						variable: 'X Axis',
+						sysName: 'xaxis',
+						type: ['number'],
+						id: 13
+					},
+					{
+						multiple: false,
+						description:
+								'The vertical position of the circles.',
+						required: true,
+						variable: 'Y Axis',
+						sysName: 'yaxis',
+						type: ['number'],
+						id: 14
+					},
+					{
+						multiple: false,
+						description:
+								'Area of the circles. If not provided, size will be proportional to the count of rows.',
+						required: false,
+						variable: 'Size',
+						sysName: 'size',
+						type: ['number'],
+						id: 15
+					},
+					{
+						multiple: false,
+						description:
+								'For each unique value found in the dimension, a color is created.',
+						required: false,
+						variable: 'Color',
+						sysName: 'color',
+						type: ['string', 'number'],
+						id: 16
+					}
+				]),
+				customizeSettings: JSON.stringify([
+					{
+						id: 29,
+						value: 800,
+						description: 'Artboard width in pixels.',
+						option: 'Width',
+						sysName: 'width'
+					},
+					{
+						id: 30,
+						value: 600,
+						description: 'Artboard height in pixels.',
+						option: 'Height',
+						sysName: 'height'
+					},
+					{
+						id: 31,
+						value: 20,
+						description:
+								'The radius for the circle with the highest value in the dimension mapped as Size.',
+						option: 'Max Radius',
+						sysName: 'maxRadius'
+					},
+					{
+						id: 32,
+						value: false,
+						description:
+								'If selected, the scatterplot origin will be set at the zero value for both the axes. If not selected, origin will be set to the minimum value for the two axes.',
+						option: 'Set Origin',
+						sysName: 'setOrigin'
+					},
+					{
+						id: 33,
+						value: [],
+						description:
+								'List of uniques values in the dimension mapped as “color”. If set to ordinal, you can set a color for each value. If set to linear, the app will try to find the minimum and maximum value contained in the dimension, and then creating a gradient among those two values.',
+						option: 'Colour Scale',
+						sysName: 'colourScale'
+					}
+				]),
+				createdAt: '2018-08-16T21:00:00.000Z',
+				updatedAt: '2018-08-16T21:00:00.000Z'
 			}
 		],
 		{}

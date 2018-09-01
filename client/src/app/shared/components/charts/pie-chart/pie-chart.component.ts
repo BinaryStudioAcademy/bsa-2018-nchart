@@ -27,8 +27,7 @@ interface Settings<T> {
 
 @Component({
 	selector: 'app-pie-chart',
-	templateUrl: './pie-chart.component.html',
-	styleUrls: ['./pie-chart.component.sass']
+	templateUrl: './pie-chart.component.html'
 })
 export class PieChartComponent implements OnInit, OnChanges {
 	@Input()
@@ -49,134 +48,144 @@ export class PieChartComponent implements OnInit, OnChanges {
 	}
 	ngOnInit() {}
 	ngOnChanges() {
-		d3.select('svg').remove();
-		const {
-			width,
-			margin,
-			radius,
-			isDonut,
-			sortChartsBy,
-			sortArcsBy,
-			showValues
-		} = this.getSettingsValue(this.settings);
+		if (this.data && this.settings) {
+			d3.select('svg').remove();
+			const {
+				width,
+				margin,
+				radius,
+				isDonut,
+				sortChartsBy,
+				sortArcsBy,
+				showValues
+			} = this.getSettingsValue(this.settings);
 
-		switch (sortChartsBy) {
-			case 'name(asc)':
-				this.data.sort((a, b) => {
-					return a.label < b.label ? -1 : a.label > b.label ? 1 : 0;
-				});
-				break;
-			case 'name(desc)':
-				this.data.sort((a, b) => {
-					return a.label > b.label ? -1 : a.label < b.label ? 1 : 0;
-				});
-				break;
-			default:
-				break;
-		}
+			switch (sortChartsBy) {
+				case 'name(asc)':
+					this.data.sort((a, b) => {
+						return a.label < b.label
+							? -1
+							: a.label > b.label
+								? 1
+								: 0;
+					});
+					break;
+				case 'name(desc)':
+					this.data.sort((a, b) => {
+						return a.label > b.label
+							? -1
+							: a.label < b.label
+								? 1
+								: 0;
+					});
+					break;
+				default:
+					break;
+			}
 
-		const pie = d3.pie<DataType>().value(d => {
-			return d.value;
-		});
-		switch (sortArcsBy) {
-			case 'value':
-				pie.sort((a, b) => {
-					return b.value - a.value;
-				});
-				break;
-			case 'name':
-				pie.sort(function(a, b) {
-					return a.name < b.name ? 1 : b.name < a.name ? -1 : 0;
-				});
-				break;
-			default:
-				break;
-		}
-
-		const colorHash = new ColorHash();
-		const arc = d3.arc().outerRadius(radius);
-
-		isDonut ? arc.innerRadius(radius / 1.5) : arc.innerRadius(0);
-
-		const pies = d3
-			.nest<DataType>()
-			.key(function(d) {
-				return d.label;
-			})
-			.entries(this.data);
-
-		let row = 1;
-		let column = 1;
-		const numInRow = 4;
-		const svg = d3
-			.select('.pie-chart')
-			.append('svg')
-			.attr('width', width)
-			.attr('height', width)
-			.attr('xmlns', 'http://www.w3.org/2000/svg')
-			.attr('xmlns:xlink', 'http://www.w3.org/1999/xlink')
-			.selectAll('g')
-			.data(pies)
-			.enter()
-			.append('g')
-			.attr('width', (radius + margin) * 2)
-			.attr('height', (radius + margin) * 2)
-			.append('g')
-			.attr('transform', function(d) {
-				const x = (radius + margin) * 2 * row - radius;
-				const y = (radius + margin) * 2 * column - radius;
-				const translate = `translate(${x}, ${y})`;
-				row++;
-				if (row > numInRow) {
-					row = 1;
-					column++;
-				}
-				return translate;
+			const pie = d3.pie<DataType>().value(d => {
+				return d.value;
 			});
+			switch (sortArcsBy) {
+				case 'value':
+					pie.sort((a, b) => {
+						return b.value - a.value;
+					});
+					break;
+				case 'name':
+					pie.sort(function(a, b) {
+						return a.name < b.name ? 1 : b.name < a.name ? -1 : 0;
+					});
+					break;
+				default:
+					break;
+			}
 
-		svg.append('text')
-			.attr('dy', `${radius + 20}`)
-			.attr('text-anchor', 'middle')
-			.text(function(d) {
-				return d.key;
-			});
+			const colorHash = new ColorHash();
+			const arc = d3.arc().outerRadius(radius);
 
-		const g = svg
-			.selectAll('g')
-			.data(function(d) {
-				return pie(d.values);
-			})
-			.enter()
-			.append('g');
+			isDonut ? arc.innerRadius(radius / 1.5) : arc.innerRadius(0);
 
-		g.append('path')
-			.attr('d', <any>arc)
-			.style('fill', function(d) {
-				return colorHash.hex(d.data.name + '');
-			});
-		if (showValues) {
-			g.append('title').text(function(d) {
-				return d.data.value;
-			});
-
-			g.filter(function(d) {
-				return d.endAngle - d.startAngle > 0.2;
-			})
-				.append('text')
-				.attr('dy', '.35em')
-				.attr('text-anchor', 'middle')
-				.attr('transform', function(d) {
-					return (
-						'translate(' +
-						arc.centroid(<any>d) +
-						')rotate(' +
-						angle(d) +
-						')'
-					);
+			const pies = d3
+				.nest<DataType>()
+				.key(function(d) {
+					return d.label;
 				})
-				.text(function(d) {
-					return `${d.data.value}`;
+				.entries(this.data);
+
+			let row = 1;
+			let column = 1;
+			const numInRow = 4;
+			const svg = d3
+				.select('.pie-chart')
+				.append('svg')
+				.attr('width', width)
+				.attr('height', width)
+				.attr('xmlns', 'http://www.w3.org/2000/svg')
+				.attr('xmlns:xlink', 'http://www.w3.org/1999/xlink')
+				.selectAll('g')
+				.data(pies)
+				.enter()
+				.append('g')
+				.attr('width', (radius + margin) * 2)
+				.attr('height', (radius + margin) * 2)
+				.append('g')
+				.attr('transform', function(d) {
+					const x = (radius + margin) * 2 * row - radius;
+					const y = (radius + margin) * 2 * column - radius;
+					const translate = `translate(${x}, ${y})`;
+					row++;
+					if (row > numInRow) {
+						row = 1;
+						column++;
+					}
+					return translate;
 				});
+
+			svg.append('text')
+				.attr('dy', `${radius + 20}`)
+				.attr('text-anchor', 'middle')
+				.text(function(d) {
+					return d.key;
+				});
+
+			const g = svg
+				.selectAll('g')
+				.data(function(d) {
+					return pie(d.values);
+				})
+				.enter()
+				.append('g');
+
+			g.append('path')
+				.attr('d', <any>arc)
+				.style('fill', function(d) {
+					return colorHash.hex(d.data.name + '');
+				});
+			if (showValues) {
+				g.append('title').text(function(d) {
+					return d.data.value;
+				});
+
+				g.filter(function(d) {
+					return d.endAngle - d.startAngle > 0.2;
+				})
+					.append('text')
+					.attr('dy', '.35em')
+					.attr('text-anchor', 'middle')
+					.attr('transform', function(d) {
+						return (
+							'translate(' +
+							arc.centroid(<any>d) +
+							')rotate(' +
+							angle(d) +
+							')'
+						);
+					})
+					.text(function(d) {
+						return `${d.data.value}`;
+					});
+			}
 		}
 		function angle(d) {
 			const a = ((d.startAngle + d.endAngle) * 90) / Math.PI - 90;

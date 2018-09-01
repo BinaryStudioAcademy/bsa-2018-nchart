@@ -7,6 +7,7 @@ import { BarChartCustomizeComponent } from '@app/shared/components/charts/bar-ch
 import { FormFieldModule } from '@app/shared/components/form-field/form-field.module';
 import { PieChartCustomizeComponent } from '@app/shared/components/charts/pie-chart/pie-chart-customize.component';
 import { ScatterplotChartComponent } from '@app/shared/components/charts/scatterplot-chart/scatterplot-chart.component';
+import { ScatterplotChartCustomizeComponent } from '@app/shared/components/charts/scatterplot-chart/scatterplot-chart-customize';
 
 const chartComponents = [
 	TestChartComponent,
@@ -14,7 +15,8 @@ const chartComponents = [
 	PieChartComponent,
 	ScatterplotChartComponent,
 	BarChartCustomizeComponent,
-	PieChartCustomizeComponent
+	PieChartCustomizeComponent,
+	ScatterplotChartCustomizeComponent
 ];
 
 @NgModule({

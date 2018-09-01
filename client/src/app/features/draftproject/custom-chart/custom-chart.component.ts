@@ -8,6 +8,7 @@ import {
 } from '@app/store/selectors/userCharts';
 import { FormGroup } from '@angular/forms';
 import { PieChartService } from '@app/services/charts/pie-chart.service';
+import { ScatterplotChartService } from '@app/services/charts/scatterplot-chart.service';
 
 @Component({
 	selector: 'app-custom-chart',
@@ -18,6 +19,7 @@ export class CustomChartComponent implements OnInit, OnDestroy {
 	constructor(
 		private barChartService: BarChartService,
 		private pieChartService: PieChartService,
+		private scatterplotChartService: ScatterplotChartService,
 		private storeService: StoreService
 	) {}
 
@@ -50,7 +52,11 @@ export class CustomChartComponent implements OnInit, OnDestroy {
 								this.customizeSettings
 							);
 							break;
-
+						case 'scatterplot':
+							this.customizeForm = this.scatterplotChartService.createScatterplotChartCustomizeForm(
+								this.customizeSettings
+							);
+							break;
 						default:
 							break;
 					}
@@ -65,6 +71,11 @@ export class CustomChartComponent implements OnInit, OnDestroy {
 							break;
 						case 'pieChart':
 							this.data = this.pieChartService.getData(data);
+							break;
+						case 'scatterplot':
+							this.data = this.scatterplotChartService.getData(
+								data
+							);
 							break;
 
 						default:

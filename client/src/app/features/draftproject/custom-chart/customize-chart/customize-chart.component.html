@@ -9,4 +9,9 @@
 		[formGroup]="formGroup"
 		[customizeSettings]="customizeSettings"
 	></app-pie-chart-customize>
+	<app-scatterplot-chart-customize
+		*ngSwitchCase="'scatterplot'"
+		[formGroup]="formGroup"
+		[customizeSettings]="customizeSettings"
+	></app-scatterplot-chart-customize>
 </div>
