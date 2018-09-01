@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { StoreService } from '@app/services/store.service';
 import { isUserLoading } from '@app/store/selectors/user.selectors';
+import { isChartsLoading } from '@app/store/selectors/charts.selectors';
 
 @Component({
 	selector: 'app-app',
@@ -20,7 +21,7 @@ export class AppComponent implements OnInit, OnDestroy {
 				subscriber: isLoading => {
 					this.isLoading = isLoading;
 				},
-				selector: isUserLoading()
+				selector: state => isUserLoading()(state) || isChartsLoading()(state)
 			}
 		]);
 	}
