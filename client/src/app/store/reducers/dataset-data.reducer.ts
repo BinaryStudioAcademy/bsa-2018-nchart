@@ -30,7 +30,7 @@ export const datasetDataReducer = (
 		// case constants.ADD_NEW_ROW:
 		// case constants.ADD_NEW_COLUMN:
 		// case constants.DELETE_ROW:
-		case constants.DELETE_COLUMN:
+		/* case constants.DELETE_COLUMN:
 			const colKeys = [].concat(
 				...action.payload.keys
 					.map((d, i) => d.filter((v, j) => j !== action.payload.id))
@@ -49,9 +49,9 @@ export const datasetDataReducer = (
 						value: key.value
 					}))
 				)
-			};
+			}; */
 
-		case constants.DELETE_ROW:
+		/* case constants.DELETE_ROW:
 			const rowKeys = [].concat(
 				...action.payload.keys
 					.filter((d, i) => !action.payload.id.includes(i))
@@ -70,9 +70,9 @@ export const datasetDataReducer = (
 						value: key.value
 					}))
 				)
-			};
+			}; */
 
-		case constants.ADD_NEW_ROW:
+		/* case constants.ADD_NEW_ROW:
 			const newData = [].concat(
 				...action.payload.data.modified.data.filter(
 					(key, i) =>
@@ -88,8 +88,8 @@ export const datasetDataReducer = (
 						value: key.value
 					}))
 				)
-			};
-		case constants.CHANGE_COLUMN_TYPE: {
+			}; */
+		/* case constants.CHANGE_COLUMN_TYPE: {
 			return {
 				...state,
 				...mapKeys(state, (value, key) => {
@@ -100,7 +100,7 @@ export const datasetDataReducer = (
 					}
 				})
 			};
-		}
+		} */
 		default:
 			return state;
 	}

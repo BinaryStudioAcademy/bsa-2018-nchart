@@ -8,9 +8,7 @@ import {
 import * as DatasetActions from '@app/store/actions/datasets/datasets.actions';
 import { SchemeID } from '@app/models/normalizr.model';
 import { activeDatasetId } from '@app/store/selectors/dataset.selectors';
-import { v4 } from 'uuid';
 import { MenuItem } from 'primeng/api';
-import { DatasetService } from '@app/services/dataset.service';
 
 @Component({
 	selector: 'app-data-table',
@@ -24,7 +22,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
 	data: any[][];
 	selectedRows = [];
 	checkedAll: boolean;
-	rowItems = (index): MenuItem[] => {
+	rowItems = (rowId): MenuItem[] => {
 		return [
 			{
 				label: 'New row',
@@ -37,7 +35,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
 				label: 'Delete row',
 				icon: 'fa fa-trash',
 				command: () => {
-					this.removeRow(index);
+					this.removeRow(rowId);
 				}
 			}
 		];
@@ -66,7 +64,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
 		// tslint:disable-next-line:semicolon
 	};
 
-	headerItems = (columnId, index) => {
+	headerItems = columnId => {
 		return [
 			{
 				label: 'New column',
@@ -80,21 +78,21 @@ export class DataTableComponent implements OnInit, OnDestroy {
 				label: 'To number',
 				url: '#/draft/project',
 				command: () => {
-					this.changeColumnType('number', index, columnId);
+					this.changeColumnType('number', columnId);
 				}
 			},
 			{
 				label: 'To string',
 				// url: '#/draft/project',
 				command: () => {
-					this.changeColumnType('string', index, columnId);
+					this.changeColumnType('string', columnId);
 				}
 			},
 			{
 				label: 'To boolean',
 				// url: '#/draft/project',
 				command: () => {
-					this.changeColumnType('boolean', index, columnId);
+					this.changeColumnType('boolean', columnId);
 				}
 			},
 			{
@@ -102,7 +100,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
 				icon: 'fa fa-trash',
 				// url: '#/draft/project',
 				command: () => {
-					this.removeColumn(columnId, index);
+					this.removeColumn(columnId);
 				}
 			}
 		];
@@ -121,13 +119,11 @@ export class DataTableComponent implements OnInit, OnDestroy {
 	// 	}])[0];
 	// }
 
-	removeColumn(columnId, index) {
+	removeColumn(columnId) {
 		this.storeService.dispatch(
 			new DatasetActions.DeleteColumn({
-				id: index,
 				columnId: columnId,
-				datasetId: this.datasetId,
-				keys: this.data
+				datasetId: this.datasetId
 			})
 		);
 	}
@@ -175,23 +171,22 @@ export class DataTableComponent implements OnInit, OnDestroy {
 		// );
 	}
 
-	changeColumnType(type, col, columnId) {
+	changeColumnType(type, columnId) {
 		this.storeService.dispatch(
 			new DatasetActions.ChangeColumnType({
 				datasetId: this.datasetId,
 				columnId: columnId,
-				type: type,
-				data: this.getDataByCol(col, type),
-				index: col
+				type,
+				data: this.getDataByCol(type, columnId)
 			})
 		);
 	}
 
-	getDataByCol(col, type) {
+	getDataByCol(type, columnId) {
 		const result = [];
 		this.data.filter(dataArr =>
 			dataArr.map(data => {
-				if (data.id.includes(`-${col}-`)) {
+				if (data.id.includes(`-${columnId}-`)) {
 					data.value = this.convertDataType(type, data.value);
 					result.push(data);
 				}
@@ -215,11 +210,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
 		return value;
 	}
 
-	constructor(
-		element: ElementRef,
-		private storeService: StoreService,
-		private datasetService: DatasetService
-	) {}
+	constructor(element: ElementRef, private storeService: StoreService) {}
 
 	ngOnInit() {
 		this.disconnect = this.storeService.connect([

@@ -46,10 +46,8 @@ export class DeleteRow extends AppAction<{
 }
 
 export class DeleteColumn extends AppAction<{
-	id: number;
 	columnId: SchemeID;
 	datasetId: SchemeID;
-	keys: any[][];
 }> {
 	readonly type = constants.DELETE_COLUMN;
 }
@@ -73,7 +71,6 @@ export class ChangeColumnType extends AppAction<{
 	columnId: SchemeID;
 	type: string;
 	data: any[];
-	index: number;
 }> {
 	readonly type = constants.CHANGE_COLUMN_TYPE;
 }

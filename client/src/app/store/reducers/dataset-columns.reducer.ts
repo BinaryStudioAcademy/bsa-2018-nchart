@@ -3,7 +3,7 @@ import { ProjectsActionConstants } from '@app/store/actions/projects/projects.ac
 import { Actions as projectActions } from '@app/store/actions/projects/projects.actions';
 import { Actions as datasetsActions } from '@app/store/actions/datasets/datasets.actions';
 import { DatasetActionConstants as constants } from '@app/store/actions/datasets/datasets.action-types';
-import { last, omit } from 'lodash';
+import { /*last,*/ omit } from 'lodash';
 
 export const initialState: DatasetColumnState = {};
 
@@ -33,7 +33,7 @@ export const datasetColumnsReducer = (
 				...omit(state, action.payload.columnId)
 			};
 		}
-		case constants.ADD_NEW_COLUMN: {
+		/* case constants.ADD_NEW_COLUMN: {
 			const key = last(
 				[].concat(...action.payload.data.modified.columns)
 			);
@@ -45,7 +45,7 @@ export const datasetColumnsReducer = (
 					type: key.type
 				}
 			};
-		}
+		} */
 		case constants.CHANGE_COLUMN_TYPE: {
 			return {
 				...state,

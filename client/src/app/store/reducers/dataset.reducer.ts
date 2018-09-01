@@ -23,7 +23,7 @@ const byId = (
 				...state,
 				...action.payload.entities.dataset
 			};
-		case constants.DELETE_COLUMN:
+		/* case constants.DELETE_COLUMN:
 			return {
 				...state,
 				[action.payload.datasetId]: {
@@ -77,7 +77,7 @@ const byId = (
 						]
 					}
 				}
-			};
+			}; */
 		case constants.ADD_NEW_ROW:
 			return {
 				// ...state,

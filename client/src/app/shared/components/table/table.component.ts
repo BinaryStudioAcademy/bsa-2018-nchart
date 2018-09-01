@@ -46,6 +46,10 @@ export class TableComponent implements OnInit, OnChanges {
 	@ViewChildren('checkbox')
 	checkboxes;
 
+	/* {
+		[rowid]: true
+	} */
+
 	getSelectedCheckboxes() {
 		let res = 0;
 		this.checkboxes.toArray().map(el => {
@@ -131,5 +135,9 @@ export class TableComponent implements OnInit, OnChanges {
 				i
 			});
 		}
+	}
+
+	getRowId(dataCellId: string) {
+		return dataCellId.split('-')[0];
 	}
 }

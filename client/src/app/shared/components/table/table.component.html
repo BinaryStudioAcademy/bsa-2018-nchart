@@ -36,7 +36,7 @@
 							</ng-template>
 						</p-cellEditor>
 					</span>
-					<app-button-action [items]="headerItems(col.id, i)"></app-button-action>
+					<app-button-action [items]="headerItems(col.id)"></app-button-action>
 				</div>
 				<p class="column-type">
 					({{headerData[i].type}})
@@ -49,9 +49,7 @@
 			<td class="number-cell">
 				<label>
 					<span class="column-no">{{rowIndex + 1}}</span>
-					<app-button-action [items]="rowItems(rowIndex)"></app-button-action>
-					<!-- <p-tieredMenu #menu [model]="rowItems(rowIndex)" [popup]="true"></p-tieredMenu>
-					<app-button #btn type="icon" icon="pi pi-check" (onclick)="menu.toggle($event)"></app-button> -->
+					<app-button-action [items]="rowItems(rowData[rowIndex].id)"></app-button-action>
 					<app-checkbox #checkbox [control]="checkControl" (change)="getRows($event, rowIndex)"></app-checkbox>
 				</label>
 			</td>
