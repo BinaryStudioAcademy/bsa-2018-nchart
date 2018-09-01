@@ -9,6 +9,7 @@
 		*ngSwitchCase="'pieChart'" 
 		[data]="data"
 		[settings]="customizeSettings"
+		#chart
 	></app-pie-chart >
 	<div *ngSwitchCase="'ganttChart'">ganttChart</div>
 	<div *ngSwitchCase="'alluvialDiagram'">pieChart</div>

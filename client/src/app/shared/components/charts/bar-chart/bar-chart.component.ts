@@ -101,6 +101,7 @@ export class BarChartComponent implements OnInit, OnChanges {
 
 			this.x.domain(this.data.map(d => d.group));
 			this.y.domain([0, d3.max(this.data, d => d.value)]);
+
 			const x1 = d3
 				.scaleBand()
 				.padding(0.1)

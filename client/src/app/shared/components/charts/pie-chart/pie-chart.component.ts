@@ -1,4 +1,11 @@
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnInit,
+	OnChanges,
+	ViewChild,
+	ElementRef
+} from '@angular/core';
 import * as d3 from 'd3';
 import { CustomizeOption } from '@app/models/chart.model';
 import ColorHash from 'color-hash';
@@ -28,6 +35,8 @@ export class PieChartComponent implements OnInit, OnChanges {
 	settings: Settings<CustomizeOption>;
 	@Input()
 	data: DataType[];
+	@ViewChild('chart')
+	chart: ElementRef;
 
 	getSettingsValue(settings: Settings<CustomizeOption>): Settings<any> {
 		return Object.keys(settings).reduce(
@@ -40,7 +49,7 @@ export class PieChartComponent implements OnInit, OnChanges {
 	}
 	ngOnInit() {}
 	ngOnChanges() {
-		d3.selectAll('.pie').remove();
+		d3.select('svg').remove();
 		const {
 			width,
 			margin,
@@ -65,8 +74,6 @@ export class PieChartComponent implements OnInit, OnChanges {
 			default:
 				break;
 		}
-
-		d3.select('.pie-chart').style('width', `${width}px`);
 
 		const pie = d3.pie<DataType>().value(d => {
 			return d.value;
@@ -98,24 +105,34 @@ export class PieChartComponent implements OnInit, OnChanges {
 			})
 			.entries(this.data);
 
+		let row = 1;
+		let column = 1;
+		const numInRow = 4;
 		const svg = d3
 			.select('.pie-chart')
-			.selectAll('div')
+			.append('svg')
+			.attr('width', width)
+			.attr('height', width)
+			.attr('xmlns', 'http://www.w3.org/2000/svg')
+			.attr('xmlns:xlink', 'http://www.w3.org/1999/xlink')
+			.selectAll('g')
 			.data(pies)
 			.enter()
-			.append('div')
-			.attr('class', 'pie')
-			.style('display', 'inline-block')
-			.style('width', (radius + margin) * 2 + 'px')
-			.style('height', (radius + margin) * 2 + 'px')
-			.append('svg')
+			.append('g')
 			.attr('width', (radius + margin) * 2)
 			.attr('height', (radius + margin) * 2)
 			.append('g')
-			.attr(
-				'transform',
-				'translate(' + (radius + margin) + ',' + (radius + margin) + ')'
-			);
+			.attr('transform', function(d) {
+				const x = (radius + margin) * 2 * row - radius;
+				const y = (radius + margin) * 2 * column - radius;
+				const translate = `translate(${x}, ${y})`;
+				row++;
+				if (row > numInRow) {
+					row = 1;
+					column++;
+				}
+				return translate;
+			});
 
 		svg.append('text')
 			.attr('dy', `${radius + 20}`)
