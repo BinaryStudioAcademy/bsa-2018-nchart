@@ -75,7 +75,7 @@ export class SaveProjectFailed extends FailedAction {
 }
 
 // todo: remove userId when token added
-export class LoadProjetcsInfo extends AppAction<{ userId: string }> {
+export class LoadProjetcsInfo extends AppAction<void> {
 	readonly type = ProjectsActionConstants.LOAD_PROJECTS_INFO;
 }
 

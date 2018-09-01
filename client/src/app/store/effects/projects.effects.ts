@@ -186,22 +186,13 @@ export class ProjectsEffects {
 	loadInfo = this.action$.pipe(
 		ofType(ProjectsActionConstants.LOAD_PROJECTS_INFO),
 		switchMap((action: projectActions.LoadProjetcsInfo) =>
-			this.projectDomainService.getPartByUserId(action.payload).pipe(
+			this.projectDomainService.getPartByUserId().pipe(
 				map(value => {
 					if (value.isSuccess) {
 						const {
 							result: all,
 							entities: { project: byId }
-						} = normalize(
-							[
-								{
-									id: 1,
-									name: 'lol',
-									user: { name: 'lol', email: 'lol2' }
-								}
-							],
-							[projectScheme]
-						);
+						} = normalize(value.payload, [projectScheme]);
 						return new projectActions.LoadProjectsInfoComplete({
 							all,
 							byId

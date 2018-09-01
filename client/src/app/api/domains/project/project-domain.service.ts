@@ -20,14 +20,9 @@ export class ProjectDomainService implements ProjectDomain {
 	}
 
 	// todo: add token to header
-	getPartByUserId(payload: {
-		userId: string;
-	}): Observable<ResponseScheme<any[]>> {
+	getPartByUserId(): Observable<ResponseScheme<any[]>> {
 		return this.httpService.makeRequest<ResponseScheme<any[]>>(
-			new ServiceRequest(
-				RequestType.GET,
-				`${this.projectPath}/owners/${payload.userId}`
-			)
+			new ServiceRequest(RequestType.GET, `${this.projectPath}/owners`)
 		);
 	}
 
