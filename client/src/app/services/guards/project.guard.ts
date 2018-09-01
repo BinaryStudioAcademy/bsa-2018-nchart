@@ -100,6 +100,12 @@ export class ProjectGuard
 				} else {
 					return !hasDataset;
 				}
+			}),
+			switchMap(canLeave => {
+				if (!canLeave) {
+					return component.canDeactivate();
+				}
+				return of(canLeave);
 			})
 		);
 	}

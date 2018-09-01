@@ -15,7 +15,7 @@ import {
 } from '@app/store/actions/projects/projects.actions';
 import { isProjectDataset } from '@app/store/selectors/projects.selectors';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import {Observable, Subject, Subscription} from 'rxjs';
 import * as ProjectsActions from '@app/store/actions/projects/projects.actions';
 import { project } from '@app/store/selectors/projects.selectors';
 import { SchemeID } from '@app/models/normalizr.model';
@@ -28,17 +28,22 @@ interface StepperStep {
 	name: string;
 }
 
+export interface ComponentCanDeactivate {
+	canDeactivate: () => boolean | Observable<boolean>;
+}
+
 @Component({
 	selector: 'app-project',
 	templateUrl: './project.component.html',
 	styleUrls: ['./project.component.sass']
 })
-export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit, ComponentCanDeactivate {
 	showCharts = false;
 	showTable = false;
 	isChartsReady = false;
 	routeParams$: Subscription;
-
+	subConf = new Subject<boolean>();
+	display = false;
 	projectName: string;
 	projectId: SchemeID;
 
@@ -98,18 +103,23 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 		private route: ActivatedRoute
 	) {}
 
-	display: boolean = false;
-
 	showDialog() {
 		this.display = true;
 	}
 
 	accept() {
 		this.display = false;
+		this.subConf.next(true);
 	}
 
 	reject() {
 		this.display = false;
+		this.subConf.next(false);
+	}
+
+	canDeactivate(): Observable<boolean> {
+		this.showDialog();
+		return this.subConf;
 	}
 
 	ngOnInit() {
