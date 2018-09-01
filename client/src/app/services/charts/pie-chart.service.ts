@@ -78,9 +78,7 @@ export class PieChartService {
 	static concat(...args) {
 		if (args.length) {
 			return args.reduce((acc, val) => [...acc, ...val]);
-		} else {
-			return [];
-		}
+		} else {return []};
 	}
 
 	getData(data: any) {
