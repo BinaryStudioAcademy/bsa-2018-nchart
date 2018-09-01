@@ -12,7 +12,6 @@ import { Observable } from 'rxjs';
 export class ProjectsComponent implements OnInit, OnDestroy {
 	projects$: Observable<any>;
 	disconnect;
-
 	constructor(private storeService: StoreService) {}
 
 	ngOnInit() {

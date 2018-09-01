@@ -7,6 +7,8 @@
 	display: grid
 	grid-template-columns: 90% 10%
 	padding: 20px
+	box-shadow: 1px 1px 1px 1px grey
+	font-family: $fontFamily
 
 .project-card-user
 	display: grid
@@ -16,10 +18,12 @@
 
 .project-card-project-info
 	display: grid
+	& a
+		text-decoration: none
 
 .project-card-control
 	position: relative
-	& input:nth-child(1)
+	& input
 		position: absolute
 		bottom: 0
 		left: 0

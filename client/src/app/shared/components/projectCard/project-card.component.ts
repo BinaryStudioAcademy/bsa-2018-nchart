@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
 	selector: 'app-project-card',
@@ -6,7 +6,15 @@ import { Component, Input, OnInit } from '@angular/core';
 	animations: []
 })
 export class ProjectCardComponent implements OnInit {
-	constructor() {}
+	itemsObjs = [
+		{
+			label: 'New row',
+			icon: 'fa fa-plus'
+		}
+		];
+
+	constructor() {
+	}
 
 	@Input()
 	companyName: string;
@@ -26,5 +34,6 @@ export class ProjectCardComponent implements OnInit {
 	@Input()
 	email: string;
 
-	ngOnInit() {}
+	ngOnInit() {
+	}
 }

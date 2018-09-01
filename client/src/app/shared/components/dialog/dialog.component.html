@@ -1,0 +1,12 @@
+<div class="ui-dialog-wrp">
+	<p-dialog header="Share project" [(visible)]="display">
+		<!--<app-input-text [label]="email" [control]="formControl"></app-input-text>-->
+		<label for="email">Email: </label><input type="email" id="email">
+		<p-footer>
+			<button type="button" pButton icon="pi pi-check" (click)="display=false" label="Send" class="ui-button-secondary"></button>
+		</p-footer>
+	</p-dialog>
+
+	<button type="text" (click)="showDialog()" pButton label="share"></button>
+</div>
+

@@ -9,11 +9,12 @@
 			<span>Group: {{groupName}}</span>
 		</div>
 		<div class="project-card-project-info">
-			<span>Project: {{projectName}}</span>
+			<a href="#">Project: {{projectName}}</a>
 		</div>
 	</div>
 	<div  class="project-card-control">
-		<input type="checkbox">
-		<input type="checkbox">
+		<app-button-action [items]="itemsObjs"></app-button-action>
+		<!--<app-checkbox [value]=""></app-checkbox>-->
+		<app-dialog [projectId]="projectId"></app-dialog>
 	</div>
 </div>
