@@ -3,6 +3,9 @@ const ProjectService = require('../../entities/project/project.service');
 const PayloadGeneratorService = require('../../common/services/payload-generator.service');
 const tokenInfoMiddleware = require('../../common/middleware/token-info.middleware');
 const ProjectPayloadValidator = require('../../common/middleware/validation/project.validator');
+const {
+	successOrEmptyPayload
+} = require('../../common/middleware/payload.middleware');
 
 project.use(tokenInfoMiddleware);
 
@@ -19,15 +22,38 @@ project.post('/', ProjectPayloadValidator.fullSet, (req, res, next) => {
 		.catch(next);
 });
 
-project.get('/:id', (req, res, next) => {
-	ProjectService.fullProjectById(Number(req.params.id))
+// todo: what do with rout names?
+project.get('/group/:id', (req, res, next) => {
+	ProjectService.fullProjectsByGroupId(Number(req.params.id))
 		.then(PayloadGeneratorService.nextWithData(next, res))
 		.catch(next);
 });
 
-// todo: what do with rout names?
-project.get('/group/:id', (req, res, next) => {
-	ProjectService.fullProjectsByGroupId(Number(req.params.id))
+project.get(
+	'/user',
+	(req, res, next) => {
+		ProjectService.fullProjectByUserId(res.locals.user.id)
+			.then(PayloadGeneratorService.nextWithData(next, res))
+			.catch(next);
+	},
+	successOrEmptyPayload
+);
+
+project.post('/share', (req, res, next) => {
+	ProjectService.shareProject(req.body)
+		.then(PayloadGeneratorService.nextWithData(next, res))
+		.catch(next);
+});
+
+// todo: retard route name
+project.post('/shareByEmail', (req, res, next) => {
+	ProjectService.shareProjectByEmail(req.body, res)
+		.then(PayloadGeneratorService.nextWithData(next, res))
+		.catch(next);
+});
+
+project.get('/:id', (req, res, next) => {
+	ProjectService.fullProjectById(Number(req.params.id), res)
 		.then(PayloadGeneratorService.nextWithData(next, res))
 		.catch(next);
 });

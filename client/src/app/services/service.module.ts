@@ -9,6 +9,7 @@ import { ChartService } from '@app/services/chart.service';
 import { TokenService } from '@app/services/token.service';
 import { BarChartService } from '@app/services/charts/bar-chart.service';
 import { PieChartService } from '@app/services/charts/pie-chart.service';
+import { ExportSvgBusService } from './export-svg-bus.service';
 
 @NgModule({
 	providers: [
@@ -21,7 +22,8 @@ import { PieChartService } from '@app/services/charts/pie-chart.service';
 		TokenService,
 		ChartService,
 		BarChartService,
-		PieChartService
+		PieChartService,
+		ExportSvgBusService
 	]
 })
 export class ServiceModule {}

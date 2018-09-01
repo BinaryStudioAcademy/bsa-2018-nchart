@@ -1,6 +1,7 @@
 const async = require('async');
 const _ = require('lodash');
 const GroupRepository = require('./group.repository');
+const CompanyService = require('../company/company.service');
 
 class GroupService {
 	constructor() {
@@ -16,10 +17,26 @@ class GroupService {
 			async.waterfall(
 				[
 					callback => {
-						// check name duplicates
-						this.findAllFullUserGroups({
+						CompanyService.findCompanyUsers({
 							userId: res.locals.user.id,
-							name: obj.name
+							companyId: obj.companyId
+						})
+							.then(data => {
+								if (data !== null) {
+									return callback(null);
+								}
+								throw new Error(
+									'Company does not belong to user'
+								);
+							})
+							.catch(err => callback(err, null));
+					},
+					callback => {
+						// check name duplicates
+						this.GroupRepository.findUserGroupByName({
+							userId: res.locals.user.id,
+							name: obj.name,
+							companyId: obj.companyId
 						})
 							.then(data => {
 								if (data.length === 0) {
@@ -76,8 +93,16 @@ class GroupService {
 		return this.GroupRepository.findAllGroupUser(query);
 	}
 
-	findAllFullUserGroups(query) {
-		return this.GroupRepository.findAllFullUserGroups(query);
+	findAllUserGroups(res) {
+		return this.GroupRepository.findAllUserGroups(res.locals.user.id).then(
+			data => {
+				const payload = [];
+				data.forEach(el => {
+					payload.push(el.group.dataValues);
+				});
+				return payload;
+			}
+		);
 	}
 }
 

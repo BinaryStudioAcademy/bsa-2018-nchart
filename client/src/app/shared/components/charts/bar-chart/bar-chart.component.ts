@@ -1,4 +1,11 @@
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnInit,
+	OnChanges,
+	ElementRef,
+	ViewChild
+} from '@angular/core';
 import * as d3 from 'd3';
 import d3Tip from 'd3-tip';
 import { CustomizeOption } from '@app/models/chart.model';
@@ -24,6 +31,9 @@ export class BarChartComponent implements OnInit, OnChanges {
 	x: d3.ScaleBand<string> = null;
 	y: d3.ScaleLinear<number, number> = null;
 	margin = { top: 20, right: 20, bottom: 20, left: 40 };
+
+	@ViewChild('chart')
+	chart: ElementRef;
 
 	ngOnInit() {}
 
