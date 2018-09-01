@@ -53,6 +53,12 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 	viewItems: QueryList<any>;
 	viewItemsList: ElementRef[];
 
+	display = false;
+
+	showDialog() {
+		this.display = true;
+	}
+
 	@HostListener('window:scroll', ['$event'])
 	onScrollEvent() {
 		const scrollPosition = window.pageYOffset;
