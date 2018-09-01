@@ -5,7 +5,9 @@ const datasetSchema = {
 	properties: {
 		id: { type: 'string' },
 		data: { type: 'array' },
-		columns: { type: 'array' }
+		columns: { type: 'array' },
+		name: { type: 'string' },
+		sample: { type: 'boolean' }
 	}
 };
 
