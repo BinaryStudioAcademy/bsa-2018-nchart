@@ -337,11 +337,12 @@ class ProjectService {
 				// todo: look very, very bad
 				data.forEach(el => {
 					el.group.groupProjects.forEach(pj => {
-						const user =							pj.project.groupProjects[0].group.groupUsers[0].user
-							.dataValues;
+						const user = pj.project.groupProjects[0].group.groupUsers[0].user.dataValues;
 						projects.push({
 							id: pj.project.dataValues.id,
 							name: pj.project.dataValues.name,
+							groupName: el.group.name,
+							companyName: el.group.company.name,
 							user
 						});
 					});

@@ -8,6 +8,7 @@ const groupModel = require('../group/group.models/group');
 const groupProjectModel = require('../group/group.models/group_project');
 const groupUserModel = require('../group/group.models/group_user');
 const userModel = require('../user/user.model');
+const companyModel = require('../company/company.models/company');
 
 class ProjectRepository extends Repository {
 	constructor() {
@@ -173,7 +174,7 @@ class ProjectRepository extends Repository {
 			include: [
 				{
 					model: groupModel,
-					attributes: ['id'],
+					attributes: ['id', 'name', 'companyId'],
 					include: [
 						{
 							model: groupProjectModel,
@@ -215,6 +216,12 @@ class ProjectRepository extends Repository {
 										}
 									]
 								}
+							]
+						},
+						{
+							model: companyModel,
+							attributes: [
+								'name'
 							]
 						}
 					]
