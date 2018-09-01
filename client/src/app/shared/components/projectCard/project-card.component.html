@@ -9,7 +9,7 @@
 			<span>Group: {{groupName}}</span>
 		</div>
 		<div class="project-card-project-info">
-			<a href="#">Project: {{projectName}}</a>
+			<a [routerLink]="['/app/project', projectId]">Project: {{projectName}}</a>
 		</div>
 	</div>
 	<div  class="project-card-control">

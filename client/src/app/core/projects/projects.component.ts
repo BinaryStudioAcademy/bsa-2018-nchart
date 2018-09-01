@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {projects as projectsSelector} from '@app/store/selectors/projects.selectors.ts';
 import {StoreService} from '@app/services/store.service';
 import * as projectActions from '@app/store/actions/projects/projects.actions';
@@ -9,9 +9,8 @@ import {Observable} from 'rxjs';
 	templateUrl: './projects.component.html',
 	styleUrls: ['./projects.component.sass']
 })
-export class ProjectsComponent implements OnInit, OnDestroy {
+export class ProjectsComponent implements OnInit {
 	projects$: Observable<any>;
-	disconnect;
 
 	constructor(private storeService: StoreService) {
 	}
@@ -25,10 +24,6 @@ export class ProjectsComponent implements OnInit, OnDestroy {
 
 	getProjects() {
 		return this.projects$;
-	}
-
-	ngOnDestroy() {
-		this.disconnect();
 	}
 
 	// test sharing
