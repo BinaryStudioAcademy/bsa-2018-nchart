@@ -9,7 +9,7 @@ import { DatasetDomainService } from '@app/api/domains/source/dataset-domain.ser
 import { DatasetService } from '@app/services/dataset.service';
 import { datasetScheme } from '@app/schemes/dataset.schema';
 import { normalize } from 'normalizr';
-import { withLatestFrom } from 'rxjs/internal/operators';
+import { withLatestFrom, map } from 'rxjs/internal/operators';
 import { getActiveProject } from '@app/store/selectors/projects.selectors';
 import { CreateChart } from '@app/store/actions/charts/charts.actions';
 import { StoreService } from '@app/services/store.service';
@@ -111,5 +111,35 @@ export class DatasetEffects {
 				);
 			}
 		)
+	);
+
+	@Effect()
+	preloadSamples$ = this.action$.pipe(
+		ofType(DatasetActions.PRELOAD_SAMPLES),
+		switchMap((action: constants.PreloadSamples) => {
+			return this.datasetDomService.preloadSamples().pipe(
+				map(res => {
+					const resSamples = [];
+					res.payload.forEach(element => {
+						if (element.sample === true) {
+							resSamples.push({
+								id: element.id,
+								name: element.name
+							});
+						}
+					});
+					return new constants.PreloadSamplesComplete(resSamples);
+				}),
+				catchError(error =>
+					of(
+						new constants.PreloadSamplesFailed({
+							msg: `Can't export project`,
+							action,
+							error
+						})
+					)
+				)
+			);
+		})
 	);
 }

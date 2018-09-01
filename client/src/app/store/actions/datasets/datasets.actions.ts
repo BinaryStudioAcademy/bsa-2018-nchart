@@ -43,6 +43,18 @@ export class DeleteColumn extends AppAction<{ id: string }> {
 	readonly type = DatasetActions.DELETE_COLUMN;
 }
 
+export class PreloadSamples extends AppAction<any> {
+	readonly type = DatasetActions.PRELOAD_SAMPLES;
+}
+
+export class PreloadSamplesComplete extends AppAction<any> {
+	readonly type = DatasetActions.PRELOAD_SAMPLES__COMPLETE;
+}
+
+export class PreloadSamplesFailed extends FailedAction {
+	readonly type = DatasetActions.PRELOAD_SAMPLES__FAILED;
+}
+
 export type Actions =
 	| ChangeContent
 	| ChangeHeaderTitle
@@ -52,4 +64,7 @@ export type Actions =
 	| ParseComplete
 	| ParseByText
 	| ParseByFile
-	| ParseByLink;
+	| ParseByLink
+	| PreloadSamples
+	| PreloadSamplesComplete
+	| PreloadSamplesFailed;

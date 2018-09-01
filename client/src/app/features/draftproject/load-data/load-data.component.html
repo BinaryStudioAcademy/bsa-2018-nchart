@@ -53,6 +53,11 @@
 			</p-tabPanel>
 
 			<p-tabPanel header="Samples">
+				<div class="ui-g">
+					<div *ngFor = "let sample of datasetSamples" class="ui-g-12 ui-md-6 ui-lg-3 samples">
+						{{sample.name}}
+					</div>
+				</div>
 			</p-tabPanel>
 
 		</p-tabView>

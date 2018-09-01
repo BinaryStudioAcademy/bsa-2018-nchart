@@ -17,3 +17,6 @@ export const chartDataset = (id?: SchemeID) => (state: AppState) => {
 
 export const isDatasetLoading = () => (state: AppState) =>
 	state.datasets.isLoading;
+
+export const datasetPreloadSamples = () => (state: AppState) =>
+	state.datasetPreload.preloadSamples;

@@ -8,9 +8,13 @@ import { StoreService } from '@app/services/store.service';
 import {
 	ParseByFile,
 	ParseByLink,
-	ParseByText
+	ParseByText,
+	PreloadSamples
 } from '@app/store/actions/datasets/datasets.actions';
-import { isDatasetLoading } from '@app/store/selectors/dataset.selectors';
+import {
+	isDatasetLoading,
+	datasetPreloadSamples
+} from '@app/store/selectors/dataset.selectors';
 
 @Component({
 	selector: 'app-load-data',
@@ -21,6 +25,7 @@ export class LoadDataComponent implements OnInit {
 	isLoading = false;
 
 	activeTab: number;
+	datasetSamples: any;
 
 	pasteDataControl = new FormControl('', Validators.required);
 
@@ -44,8 +49,15 @@ export class LoadDataComponent implements OnInit {
 					this.isLoading = isLoading;
 				},
 				selector: isDatasetLoading()
+			},
+			{
+				subscriber: preloadSamples => {
+					this.datasetSamples = preloadSamples;
+				},
+				selector: datasetPreloadSamples()
 			}
 		]);
+		this.storeService.dispatch(new PreloadSamples());
 	}
 
 	loadFile(event) {
