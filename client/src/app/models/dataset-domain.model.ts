@@ -28,4 +28,12 @@ export interface DatasetDomain {
 		}>
 	>;
 	preloadSamples(): Observable<ResponseScheme<any>>;
+	loadSample({
+		id: string
+	}): Observable<
+		ResponseScheme<{
+			columns?: DatasetColumn[];
+			data?: any[][];
+		}>
+	>;
 }

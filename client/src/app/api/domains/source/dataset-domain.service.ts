@@ -67,4 +67,18 @@ export class DatasetDomainService implements DatasetDomain {
 			url: '/api/dataset/'
 		});
 	}
+
+	loadSample({
+		id
+	}): Observable<
+		ResponseScheme<{
+			columns?: DatasetColumn[];
+			data?: any[][];
+		}>
+	> {
+		return this.httpService.makeRequest({
+			type: RequestType.GET,
+			url: `/api/dataset/${id}`
+		});
+	}
 }

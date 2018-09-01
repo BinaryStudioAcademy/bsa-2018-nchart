@@ -35,6 +35,7 @@ const isLoading = (
 		case DatasetActions.PARSE_FROM_FILE:
 		case DatasetActions.PARSE_FROM_URL:
 		case DatasetActions.PARSE_PLAIN_TEXT:
+		case DatasetActions.LOAD_SAMPLE:
 			return true;
 		case DatasetActions.PARSE_DATA__COMPLETE:
 		case DatasetActions.PARSE_DATA__FAILED:

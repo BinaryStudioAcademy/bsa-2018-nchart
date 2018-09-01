@@ -31,7 +31,8 @@ export class DatasetEffects {
 		ofType(
 			DatasetActions.PARSE_PLAIN_TEXT,
 			DatasetActions.PARSE_FROM_FILE,
-			DatasetActions.PARSE_FROM_URL
+			DatasetActions.PARSE_FROM_URL,
+			DatasetActions.LOAD_SAMPLE
 		),
 		switchMap(
 			(
@@ -39,6 +40,7 @@ export class DatasetEffects {
 					| constants.ParseByText
 					| constants.ParseByLink
 					| constants.ParseByFile
+					| constants.LoadSample
 			) => {
 				let loadData$;
 
@@ -56,6 +58,11 @@ export class DatasetEffects {
 					case DatasetActions.PARSE_FROM_FILE:
 						loadData$ = this.datasetDomService.loadByFile({
 							file: action.payload.file
+						});
+						break;
+					case DatasetActions.LOAD_SAMPLE:
+						loadData$ = this.datasetDomService.loadSample({
+							id: action.payload.id
 						});
 						break;
 				}

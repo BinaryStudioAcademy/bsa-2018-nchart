@@ -9,7 +9,8 @@ import {
 	ParseByFile,
 	ParseByLink,
 	ParseByText,
-	PreloadSamples
+	PreloadSamples,
+	LoadSample
 } from '@app/store/actions/datasets/datasets.actions';
 import {
 	isDatasetLoading,
@@ -77,5 +78,9 @@ export class LoadDataComponent implements OnInit {
 			const text = this.pasteDataControl.value;
 			this.storeService.dispatch(new ParseByText({ text }));
 		}
+	}
+
+	loadSample(e, item) {
+		this.storeService.dispatch(new LoadSample({ id: item.id }));
 	}
 }

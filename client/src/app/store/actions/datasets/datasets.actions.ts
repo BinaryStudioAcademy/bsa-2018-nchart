@@ -55,6 +55,20 @@ export class PreloadSamplesFailed extends FailedAction {
 	readonly type = DatasetActions.PRELOAD_SAMPLES__FAILED;
 }
 
+export class LoadSample extends AppAction<{
+	id: string;
+}> {
+	readonly type = DatasetActions.LOAD_SAMPLE;
+}
+
+export class LoadSampleComplete extends AppAction<any> {
+	readonly type = DatasetActions.LOAD_SAMPLE__COMPLETE;
+}
+
+export class LoadSampleFailed extends FailedAction {
+	readonly type = DatasetActions.LOAD_SAMPLE__FAILED;
+}
+
 export type Actions =
 	| ChangeContent
 	| ChangeHeaderTitle
@@ -67,4 +81,7 @@ export type Actions =
 	| ParseByLink
 	| PreloadSamples
 	| PreloadSamplesComplete
-	| PreloadSamplesFailed;
+	| PreloadSamplesFailed
+	| LoadSample
+	| LoadSampleComplete
+	| LoadSampleFailed;
