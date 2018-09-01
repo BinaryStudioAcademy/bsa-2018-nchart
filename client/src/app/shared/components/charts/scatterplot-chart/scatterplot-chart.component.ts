@@ -96,7 +96,7 @@ export class ScatterplotChartComponent implements OnChanges {
 				.domain([
 					0,
 					d3.max(this.data, d => {
-						return d.size;
+						return d.yAxis;
 					})
 				])
 				.nice();
@@ -111,7 +111,7 @@ export class ScatterplotChartComponent implements OnChanges {
 			yScale
 				.domain(
 					d3.extent(this.data, d => {
-						return d.size;
+						return d.yAxis;
 					})
 				)
 				.nice();

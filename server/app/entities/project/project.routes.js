@@ -66,18 +66,18 @@ project.get('/:id/export', (req, res) => {
 	).then(result => {
 		let contentType;
 		switch (req.query.type) {
-		case 'pdf':
-			contentType = 'application/pdf';
-			break;
-		case 'png':
-			contentType = 'image/png';
-			break;
-		case 'svg':
-			contentType = 'image/svg+xml';
-			break;
-		default:
-			contentType = 'application/json';
-			break;
+			case 'pdf':
+				contentType = 'application/pdf';
+				break;
+			case 'png':
+				contentType = 'image/png';
+				break;
+			case 'svg':
+				contentType = 'image/svg+xml';
+				break;
+			default:
+				contentType = 'application/json';
+				break;
 		}
 		if (result) {
 			res.writeHead(200, {
@@ -96,18 +96,18 @@ project.post('/:id/export', (req, res) => {
 	ProjectService.exportHtml(req.body.content, req.body.type).then(result => {
 		let contentType;
 		switch (req.body.type) {
-		case 'pdf':
-			contentType = 'application/pdf';
-			break;
-		case 'png':
-			contentType = 'image/png';
-			break;
-		case 'svg':
-			contentType = 'image/svg+xml';
-			break;
-		default:
-			contentType = 'application/json';
-			break;
+			case 'pdf':
+				contentType = 'application/pdf';
+				break;
+			case 'png':
+				contentType = 'image/png';
+				break;
+			case 'svg':
+				contentType = 'image/svg+xml';
+				break;
+			default:
+				contentType = 'application/json';
+				break;
 		}
 		if (result) {
 			res.writeHead(200, {
