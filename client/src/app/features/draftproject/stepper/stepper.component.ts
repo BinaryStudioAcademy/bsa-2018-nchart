@@ -134,6 +134,8 @@ export class StepperComponent implements OnInit {
 					this.stepsStageOne = !isActive;
 					if (isActive) {
 						this.selectChart(2);
+					} else {
+						this.selectChart(1);
 					}
 				}
 			},
