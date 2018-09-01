@@ -178,7 +178,7 @@ class ProjectRepository extends Repository {
 					include: [
 						{
 							model: groupProjectModel,
-							attributes: ['projectId'],
+							attributes: ['projectId', 'accessLevelId'],
 							include: [
 								{
 									model: this.projectModel,

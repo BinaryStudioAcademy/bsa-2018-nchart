@@ -344,6 +344,7 @@ class ProjectService {
 							name: pj.project.dataValues.name,
 							groupName: el.group.name,
 							companyName: el.group.company.name,
+							accessLevelId: pj.dataValues.accessLevelId,
 							user
 						});
 					});
