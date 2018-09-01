@@ -3,6 +3,7 @@ import { ProjectsActionConstants } from '@app/store/actions/projects/projects.ac
 import { Actions as projectActions } from '@app/store/actions/projects/projects.actions';
 import { Actions as datasetsActions } from '@app/store/actions/datasets/datasets.actions';
 import { DatasetActionConstants as constants } from '@app/store/actions/datasets/datasets.action-types';
+import { last, omit} from 'lodash';
 
 export const initialState: DatasetColumnState = {};
 
@@ -28,16 +29,18 @@ export const datasetColumnsReducer = (
 			};
 		}
 		case constants.DELETE_COLUMN: {
-			delete state[action.payload.id];
-			return state;
+			return {
+				...omit(state, action.payload.columnId)
+			};
 		}
 		case constants.ADD_NEW_COLUMN: {
+			const key = last([].concat(...action.payload.data.modified.columns));
 			return {
 				...state,
-				[action.payload.id]: {
-					title: action.payload.title,
-					type: action.payload.type,
-					id: action.payload.id
+				[key.id]: {
+					id: key.id,
+					title: key.title,
+					type: key.type
 				}
 			};
 		}

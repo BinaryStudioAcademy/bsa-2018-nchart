@@ -5,7 +5,8 @@ import {
 	EventEmitter,
 	Output,
 	ChangeDetectionStrategy,
-	ViewChildren
+	ViewChildren,
+	OnChanges
 } from '@angular/core';
 import { DatasetColumn } from '@app/models/dataset.model';
 import { SchemeID } from '@app/models/normalizr.model';
@@ -17,7 +18,7 @@ import { FormControl } from '@angular/forms';
 	templateUrl: './table.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TableComponent implements OnInit {
+export class TableComponent implements OnInit, OnChanges {
 	constructor() {}
 	@Input()
 	columns: DatasetColumn[] = [];
@@ -37,9 +38,11 @@ export class TableComponent implements OnInit {
 	getSelectedRows = new EventEmitter();
 	@Input()
 	selectedRows = [];
+	@Input()
+	checkedAll;
 	isCheckedAll = false;
-	checkControl = new FormControl();
-	control = new FormControl();
+	checkControl = new FormControl(this.checkedAll || false);
+	control = new FormControl(this.checkedAll || false);
 	@ViewChildren('checkbox')
 	checkboxes;
 
@@ -51,16 +54,19 @@ export class TableComponent implements OnInit {
 		return res;
 	}
 
-	checkboxChange(e) {}
-
 	ngOnInit() {}
+
+	ngOnChanges() {
+		this.checkControl.setValue(false);
+		this.control.setValue(false);
+	}
 
 	getRows(val, i) {
 		if (val) {
 			this.selectedRows.push(i);
 		} else {
-			this.control.setValue(false);
 			this.isCheckedAll = false;
+			this.control.setValue(false);
 			this.selectedRows.splice(this.selectedRows.indexOf(i), 1);
 		}
 		if (this.selectedRows.length === this.getSelectedCheckboxes()) {
@@ -77,7 +83,7 @@ export class TableComponent implements OnInit {
 			this.checkControl.setValue(true);
 		} else {
 			this.selectedRows = [];
-			this.checkControl.setValue(null);
+			this.checkControl.setValue(false);
 		}
 	}
 

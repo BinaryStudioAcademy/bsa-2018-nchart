@@ -19,8 +19,8 @@ export const chartDataset = (id?: SchemeID) => (state: AppState) => {
 export const getDatasetValues = () => (state: AppState) => {
 	const activeDataset = chartDataset()(state);
 	if (activeDataset) {
-		return activeDataset.modified.data.map(
-			d => d.map(id => state.datasetData[id])
+		return activeDataset.modified.data.map(d =>
+			d.map(id => state.datasetData[id])
 		);
 	}
 	return [];

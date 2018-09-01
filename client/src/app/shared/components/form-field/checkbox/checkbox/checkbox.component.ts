@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter, ElementRef } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	Input,
+	Output,
+	EventEmitter,
+	ElementRef
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({

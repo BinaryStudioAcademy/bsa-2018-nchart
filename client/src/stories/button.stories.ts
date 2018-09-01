@@ -176,17 +176,20 @@ storiesOf('Buttons', module)
 				{
 					label: 'New column',
 					icon: 'pi pi-fw pi-plus'
-				}, {
+				},
+				{
 					label: 'Convert type',
-					items: [{
-						label: 'To number'
-					},
-					{
-						label: 'To string'
-					},
-					{
-						label: 'To boolean'
-					}]
+					items: [
+						{
+							label: 'To number'
+						},
+						{
+							label: 'To string'
+						},
+						{
+							label: 'To boolean'
+						}
+					]
 				},
 				{
 					label: 'Delete column',

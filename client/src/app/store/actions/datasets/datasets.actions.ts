@@ -1,6 +1,7 @@
 import { DatasetActionConstants as constants } from '@app/store/actions/datasets/datasets.action-types';
 import { AppAction, FailedAction } from '@app/models/store.model';
 import { SchemeID } from '@app/models/normalizr.model';
+import { DatasetColumn, Dataset, DatasetTable, DatasetData } from '@app/models';
 
 export class ParseByText extends AppAction<{ text: string }> {
 	readonly type = constants.PARSE_PLAIN_TEXT;
@@ -37,47 +38,42 @@ export class ChangeHeaderTitle extends AppAction<{
 }
 
 export class DeleteRow extends AppAction<{
-	rows: number;
-	index: number[];
-	ids: SchemeID[];
 	datasetId: SchemeID;
+	id: number[];
+	keys: any[][];
 }> {
 	readonly type = constants.DELETE_ROW;
 }
 
 export class DeleteColumn extends AppAction<{
-	id: SchemeID;
-	index: number;
+	id: number;
+	columnId: SchemeID;
 	datasetId: SchemeID;
+	keys: any[][];
 }> {
 	readonly type = constants.DELETE_COLUMN;
 }
 
 export class AddNewColumn extends AppAction<{
-	id: SchemeID;
-	title: string;
-	type: string;
 	datasetId: SchemeID;
-	index: number;
-	rows: number;
+	// data: Dataset<DatasetColumn[], DatasetData[][]>;
 }> {
 	readonly type = constants.ADD_NEW_COLUMN;
 }
 
 export class AddNewRow extends AppAction<{
 	datasetId: SchemeID;
-	index: number;
-	rows: number
+	// data: Dataset<DatasetColumn[], DatasetData[][]>;
 }> {
 	readonly type = constants.ADD_NEW_ROW;
 }
 
 export class ChangeColumnType extends AppAction<{
-	datasetId: SchemeID,
-	columnId: SchemeID,
-	type: string,
-	data: any[],
-	index: number
+	datasetId: SchemeID;
+	columnId: SchemeID;
+	type: string;
+	data: any[];
+	index: number;
 }> {
 	readonly type = constants.CHANGE_COLUMN_TYPE;
 }
