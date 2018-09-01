@@ -52,7 +52,10 @@ class ProjectService {
 						}
 					},
 					(payload, callback) => {
-						this.GroupService.saveGroupProject({
+						if (!defaultGroupId) {
+							return callback(null, payload);
+						}
+						return this.GroupService.saveGroupProject({
 							groupId: defaultGroupId,
 							projectId: payload.project.id,
 							accessLevelId: 1
@@ -114,8 +117,10 @@ class ProjectService {
 	}
 
 	handleProject(obj, res) {
-		if (obj.project && !obj.groupId) {
+		if (obj.project && !obj.groupId && res.locals.user) {
 			return this.createProject(obj, res.locals.user.defaultGroupId);
+		} if (!res.locals.user) {
+			return this.createProject(obj);
 		}
 		// obj.groupId, res.locals.user
 		return new Promise((resolve, reject) => {
@@ -174,7 +179,10 @@ class ProjectService {
 			async.waterfall(
 				[
 					callback => {
-						this.ProjectRepository.findByUserIdAndProjectId({
+						if (!res.locals.user) {
+							return callback(null);
+						}
+						return this.ProjectRepository.findByUserIdAndProjectId({
 							projectId: id,
 							userId: res.locals.user.id
 						})
