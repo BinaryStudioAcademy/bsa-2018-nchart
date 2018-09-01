@@ -31,7 +31,7 @@ class ProjectService {
 					callback => {
 						if (obj.project.id) {
 							this.ProjectRepository.upsert(obj.project)
-								.then(() => callback(null, {
+								.then(() => callback(null, false, {
 									project: {
 										id: obj.project.id,
 										name: obj.project.name
@@ -41,7 +41,7 @@ class ProjectService {
 						} else {
 							this.ProjectRepository.create(obj.project.name)
 								.then(data => {
-									callback(null, {
+									callback(null, true, {
 										project: {
 											id: data.dataValues.id,
 											name: data.dataValues.name
@@ -51,8 +51,8 @@ class ProjectService {
 								.catch(err => callback(err, null));
 						}
 					},
-					(payload, callback) => {
-						if (!defaultGroupId) {
+					(status, payload, callback) => {
+						if (!status) {
 							return callback(null, payload);
 						}
 						return this.GroupService.saveGroupProject({
