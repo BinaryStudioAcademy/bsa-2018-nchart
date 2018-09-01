@@ -13,7 +13,7 @@ import { withLatestFrom } from 'rxjs/internal/operators';
 import { getActiveProject } from '@app/store/selectors/projects.selectors';
 import { CreateChart } from '@app/store/actions/charts/charts.actions';
 import { StoreService } from '@app/services/store.service';
-import { throwError } from 'rxjs/index';
+import { throwError } from 'rxjs';
 import { ResponseScheme } from '@app/models/response-scheme.model';
 import { DatasetColumn } from '@app/models/dataset.model';
 

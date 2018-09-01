@@ -24,7 +24,7 @@ export class CheckboxComponent implements OnInit {
 	@Input()
 	disabled: boolean;
 	@Output()
-	change = new EventEmitter();
+	change: EventEmitter<any> = new EventEmitter();
 
 	constructor(el: ElementRef) {}
 
@@ -33,6 +33,10 @@ export class CheckboxComponent implements OnInit {
 			this.control.disable();
 		}
 		return this.disabled;
+	}
+
+	onChange(e) {
+		this.change.emit(e);
 	}
 
 	ngOnInit() {}

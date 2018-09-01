@@ -19,6 +19,7 @@ export interface DimensionOption {
 	required: boolean;
 	type: string[];
 	description: string;
+	sysName: string;
 }
 
 export interface CustomizeOption {
@@ -26,6 +27,7 @@ export interface CustomizeOption {
 	value: chartValue;
 	option: string;
 	description: string;
+	sysName: string;
 }
 
 export interface DimensionColumnMap {

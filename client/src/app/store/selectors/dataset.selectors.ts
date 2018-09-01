@@ -1,5 +1,5 @@
 import { SchemeID } from '@app/models/normalizr.model';
-import { Dataset } from '../../models/dataset.model';
+import { Dataset } from '@app/models/dataset.model';
 import { AppState } from '@app/models/store.model';
 import { DatasetColumn } from '@app/models/dataset.model';
 

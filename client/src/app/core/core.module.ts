@@ -11,6 +11,7 @@ import { SharedModule } from '@app/shared/shared.module';
 import { FeatureModule } from '@app/features/feature.module';
 import { CommonModule } from '@angular/common';
 import { LandingPageComponent } from './landing-page/landing-page.component';
+import { FormFieldModule } from '@app/shared/components/form-field/form-field.module';
 
 @NgModule({
 	declarations: [
@@ -27,7 +28,8 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 		RouterModule,
 		APIModule,
 		SharedModule,
-		FeatureModule
+		FeatureModule,
+		FormFieldModule
 	],
 	exports: []
 })

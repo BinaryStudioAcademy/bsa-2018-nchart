@@ -4,14 +4,16 @@ const ProjectRepository = require('./project.repository');
 const DatasetService = require('../dataset/dataset.service');
 const ChartService = require('../chart/chart.service');
 const GroupService = require('../group/group.service');
-const ExportService = require('../../common/services/export.services/export.service');
-
-// todo: wrong
+const UserService = require('../user/user.service');
+const MarkupTemplateService = require('../../common/services/export.services/markup-template.service');
+const DocumentGeneratingService = require('../../common/services/export.services/document-generating.service');
 
 class ProjectService {
 	constructor() {
 		this.ProjectRepository = ProjectRepository;
-		this.ExportService = ExportService;
+		this.GroupService = GroupService;
+		this.DocumentGeneratingService = DocumentGeneratingService;
+		this.MarkupTemplateService = MarkupTemplateService;
 	}
 
 	getAll() {
@@ -108,7 +110,7 @@ class ProjectService {
 				[
 					callback => {
 						// todo: ask if this correct way to check
-						GroupService.findOneGroupUser({
+						this.GroupService.findOneGroupUser({
 							groupId: obj.groupId,
 							userId: res.locals.user.id
 						})
@@ -132,7 +134,7 @@ class ProjectService {
 							.catch(err => callback(err, null));
 					},
 					(payload, callback) => {
-						GroupService.saveGroupProject({
+						this.GroupService.saveGroupProject({
 							groupId: obj.groupId,
 							projectId: payload.id,
 							// todo: where does this come from
@@ -154,18 +156,35 @@ class ProjectService {
 		});
 	}
 
-	fullProjectById(id) {
-		// todo: remove waterfall
+	fullProjectById(id, res) {
 		return new Promise((resolve, reject) => {
 			async.waterfall(
 				[
 					callback => {
+						this.ProjectRepository.findByUserIdAndProjectId({
+							projectId: id,
+							userId: res.locals.user.id
+						})
+							.then(data => {
+								if (data !== null) {
+									return callback(null);
+								}
+								throw new Error(
+									'User has no rights on this project'
+								);
+							})
+							.catch(err => callback(err, null));
+					},
+					callback => {
 						this.ProjectRepository.fullProjectById(id)
 							.then(data => {
-								const project = ProjectService.getProjectFromPayload(
-									data.dataValues
-								);
-								callback(null, project);
+								if (data) {
+									const project = ProjectService.getProjectFromPayload(
+										data.dataValues
+									);
+									return callback(null, project);
+								}
+								throw new Error('Object did not exist');
 							})
 							.catch(err => callback(err, null));
 					}
@@ -197,6 +216,104 @@ class ProjectService {
 		});
 	}
 
+	fullProjectByUserId(id) {
+		return this.ProjectRepository.fullProjectByUserId(id)
+			.then(data => {
+				const projects = [];
+				data.forEach(payload => {
+					payload.group.groupProjects.forEach(el => {
+						projects.push(el.project.dataValues);
+					});
+				});
+				const payload = {
+					projects: []
+				};
+				projects.forEach(el => {
+					const project = ProjectService.getProjectFromPayload(el);
+					payload.projects.push(project);
+				});
+				return payload;
+			})
+			.catch(err => {
+				throw err;
+			});
+	}
+
+	shareProject(obj) {
+		return new Promise((resolve, reject) => {
+			async.waterfall(
+				[
+					callback => {
+						this.GroupService.findOneGroupUser({
+							userId: obj.userId,
+							defaultGroup: true
+						})
+							.then(data => {
+								if (data === null) {
+									throw new Error('Object did not exist');
+								}
+								callback(null, data.dataValues.groupId);
+							})
+							.catch(err => callback(err, null));
+					},
+					(groupId, callback) => {
+						this.GroupService.saveGroupProject({
+							groupId,
+							projectId: obj.projectId,
+							accessLevelId: obj.accessLevelId
+						})
+							.then(data => {
+								callback(null, data);
+							})
+							.catch(err => callback(err, null));
+					}
+				],
+				(err, payload) => {
+					if (err) {
+						reject(err);
+					}
+					// todo: what should be here
+					resolve(payload);
+				}
+			);
+		});
+	}
+
+	shareProjectByEmail(obj, res) {
+		if (obj.email === res.locals.user.email) {
+			throw new Error("Can't share with yourself");
+		}
+		return new Promise((resolve, reject) => {
+			async.waterfall(
+				[
+					callback => {
+						UserService.findByEmail(obj.email).then(data => {
+							if (data !== null) {
+								return callback(null, data.dataValues.id);
+							}
+							throw new Error('Object did not exist');
+						});
+					},
+					(userId, callback) => {
+						this.shareProject({
+							userId,
+							projectId: obj.projectId,
+							accessLevelId: obj.accessLevelId
+						})
+							.then(data => callback(null, data))
+							.catch(err => callback(err, null));
+					}
+				],
+				(err, payload) => {
+					if (err) {
+						reject(err);
+					}
+					resolve(payload);
+				}
+			);
+		});
+	}
+
 	static getProjectFromPayload(rawProject) {
 		const charts = [];
 		const datasets = [];
@@ -213,8 +330,12 @@ class ProjectService {
 		};
 	}
 
-	export(id, type) {
-		return this.ExportService.getFile(id, type);
+	export(id, type, selector) {
+		return this.DocumentGeneratingService.getDocument(id, type, selector);
+	}
+
+	exportHtml(content, type) {
+		return this.MarkupTemplateService.getDocument(content, type);
 	}
 }
 

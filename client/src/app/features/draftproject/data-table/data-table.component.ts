@@ -53,7 +53,8 @@ export class DataTableComponent implements OnInit, OnDestroy {
 				command: () => {
 					this.addNewRow();
 				}
-			}, {
+			},
+			{
 				label: 'New column',
 				icon: 'fa fa-plus',
 				// url: '#/draft/project',
@@ -214,7 +215,11 @@ export class DataTableComponent implements OnInit, OnDestroy {
 		return value;
 	}
 
-	constructor(element: ElementRef, private storeService: StoreService, private datasetService: DatasetService) {}
+	constructor(
+		element: ElementRef,
+		private storeService: StoreService,
+		private datasetService: DatasetService
+	) {}
 
 	ngOnInit() {
 		this.disconnect = this.storeService.connect([

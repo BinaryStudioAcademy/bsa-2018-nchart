@@ -10,7 +10,7 @@
 		<app-load-data id="load" #viewItem></app-load-data>
 		<app-data-table *ngIf="isDataset()" id="table" #viewItem></app-data-table>
 		<app-list-charts *ngIf="isDataset()" id="charts" #viewItem></app-list-charts>
-		<app-custom-settings *ngIf="isDataset()" id="settings" #viewItem></app-custom-settings>
+		<app-dimension-settings *ngIf="isDataset()" id="settings" #viewItem></app-dimension-settings>
 		<app-custom-chart *ngIf="isCharts()" id="chart" #viewItem></app-custom-chart>
 		<app-export *ngIf="isCharts()" id="export" #viewItem></app-export>
 	</div>

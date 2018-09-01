@@ -1,21 +1,32 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, mergeMap } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { normalize } from 'normalizr';
+import { denormalize, normalize } from 'normalizr';
 import { arrayOfCommonScheme } from '@app/schemes/common.schema';
 import { ProjectsActionConstants } from '@app/store/actions/projects/projects.action-types';
 import * as projectActions from '@app/store/actions/projects/projects.actions';
-import { throwError } from 'rxjs/index';
 import { ProjectDomainService } from '@app/api/domains/project/project-domain.service';
 import { ProjectService } from '@app/services/project.service';
 import { projectScheme } from '@app/schemes/project.scheme';
 import { DatasetService } from '@app/services/dataset.service';
+import { StoreService } from '@app/services/store.service';
+import { getFullProject } from '@app/store/selectors/userCharts';
+import {
+	SaveProjectComplete,
+	UpdateProjectComplete
+} from '@app/store/actions/projects/projects.actions';
+import { concat, throwError } from 'rxjs';
+import { SaveProjectFailed } from '@app/store/actions/projects/projects.actions';
+import { withLatestFrom } from 'rxjs/internal/operators';
+import { Go } from '@app/store/actions/router/router.actions';
+import { AppState } from '@app/models/store.model';
 
 @Injectable()
 export class ProjectsEffects {
 	constructor(
+		private storeService: StoreService,
 		private action$: Actions,
 		private projectDomainService: ProjectDomainService,
 		private projectService: ProjectService,
@@ -90,6 +101,7 @@ export class ProjectsEffects {
 							projectScheme
 						);
 
+						entities.project[projectId].isDraft = false;
 						return new projectActions.LoadOneProjectComplete({
 							entities,
 							projectId
@@ -97,8 +109,16 @@ export class ProjectsEffects {
 					}
 					return throwError(new Error(`Can't get one project`));
 				}),
-				catchError(error =>
-					of(new projectActions.LoadOneProjectFailed())
+				catchError(
+					error =>
+						concat([
+							new projectActions.LoadOneProjectFailed({
+								msg: `can't get project`,
+								error,
+								action
+							}),
+							new Go({ path: ['/app/project/draft'] })
+						]) as any
 				)
 			)
 		)
@@ -107,29 +127,58 @@ export class ProjectsEffects {
 	@Effect()
 	saveProject = this.action$.pipe(
 		ofType(ProjectsActionConstants.SAVE_PROJECT),
-		switchMap((action: projectActions.SaveProject) =>
-			this.projectDomainService.save(action.payload).pipe(
-				map(value => {
-					if (value.isSuccess) {
-						const { result: projectId, entities } = normalize(
-							{
-								...value.payload,
-								datasets: this.datasetService.transformDatasets(
-									value.payload.datasets
-								)
-							},
-							projectScheme
-						);
+		withLatestFrom(this.storeService.createSubscription()),
+		switchMap(([action, state]: [projectActions.SaveProject, AppState]) => {
+			const entities = getFullProject(action.payload.id)(state);
+			const denProj = denormalize(
+				action.payload.id,
+				projectScheme,
+				entities
+			);
 
-						return new projectActions.SaveProjectComplete({
-							entities,
-							projectId
-						});
+			const datasets = denProj.datasets.map(dataset => {
+				return {
+					id: dataset.id,
+					columns: dataset.modified.columns,
+					data: dataset.modified.data.map(arrData => {
+						return arrData.map(el => el.value);
+					})
+				};
+			});
+
+			const project = {
+				id: denProj.isDraft ? null : action.payload.id,
+				name: denProj.name,
+				charts: denProj.charts,
+				datasets
+			};
+
+			return this.projectDomainService.save({ project }).pipe(
+				mergeMap(response => {
+					if (project.id) {
+						return [new UpdateProjectComplete()] as any;
+					} else {
+						return [
+							new SaveProjectComplete({
+								projectId: response.payload.id,
+								oldProjectId: action.payload.id
+							}),
+							new Go({
+								path: [`/app/project/${response.payload.id}`]
+							})
+						] as any;
 					}
-					return throwError(new Error(`Can't save project`));
 				}),
-				catchError(error => of(new projectActions.SaveProjectFailed()))
-			)
-		)
+				catchError(error => {
+					return of(
+						new SaveProjectFailed({
+							action: action,
+							msg: 'test',
+							error
+						})
+					);
+				})
+			);
+		})
 	);
 }

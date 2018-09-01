@@ -11,6 +11,7 @@ import { of } from 'rxjs';
 import {
 	CreateChart,
 	CreateChartComplete,
+	CreateChartFailed,
 	SelectChart,
 	SelectChartComplete
 } from '@app/store/actions/charts/charts.actions';
@@ -63,76 +64,72 @@ export class ChartsEffects {
 	@Effect()
 	createChart$ = this.action$.pipe(
 		ofType(ChartsActionConstants.CREATE_CHART),
-		switchMap((action: CreateChart) => {
-			return this.storeService.createSubscription(getFirstChart()).pipe(
-				switchMap((fchart: Chart) => {
-					return this.chartService.createChart({
-						chartTypeId: fchart.id,
-						datasetId: action.payload.datatsetId,
-						customizeSettings: [...fchart.customizeSettings],
-						dimensionSettings: this.chartService.transformDimensions(
-							fchart.dimensionSettings
-						)
-					});
-				}),
-				withLatestFrom(
-					this.storeService.createSubscription(getActiveProject())
-				),
-				map(([c, projectId]) => {
-					const { result: chartId, entities } = normalize(
-						c,
-						chartScheme
-					);
+		withLatestFrom(this.storeService.createSubscription()),
+		map(([action, state]) => {
+			try {
+				const fchart: Chart = getFirstChart()(state);
+				const projectId = getActiveProject()(state);
+				const newChart = this.chartService.createChart({
+					chartTypeId: fchart.id,
+					datasetId: (action as CreateChart).payload.datatsetId,
+					customizeSettings: [...fchart.customizeSettings],
+					dimensionSettings: this.chartService.transformDimensions(
+						fchart.dimensionSettings
+					)
+				});
 
-					return new CreateChartComplete({
-						projectId,
-						chart: {
-							entities,
-							chartId
-						}
-					});
-				})
-			);
+				const { result: chartId, entities } = normalize(
+					newChart,
+					chartScheme
+				);
+
+				return new CreateChartComplete({
+					projectId,
+					chart: {
+						entities,
+						chartId
+					}
+				});
+			} catch (err) {
+				return new CreateChartFailed({
+					action,
+					error: err,
+					msg: 'Create chart failed'
+				});
+			}
 		})
 	);
 
 	@Effect()
 	selectChart$ = this.action$.pipe(
 		ofType(ChartsActionConstants.SELECT_CHART),
-		switchMap((action: SelectChart) => {
-			return this.storeService
-				.createSubscription(getChart(action.payload.id))
-				.pipe(
-					withLatestFrom(
-						this.storeService.createSubscription(
-							getActiveProject()
-						),
-						this.storeService.createSubscription(getActiveChartId())
-					),
-					map(([c, projectId, id]) => {
-						const currentChart = {
-							id: id,
-							chartTypeId: c.id,
-							customizeSettings: [...c.customizeSettings],
-							dimensionSettings: this.chartService.transformDimensions(
-								c.dimensionSettings
-							)
-						};
+		withLatestFrom(this.storeService.createSubscription()),
+		map(([action, state]) => {
+			const chart = getChart((action as SelectChart).payload.id)(state);
+			const projectId = getActiveProject()(state);
+			const aChartId = getActiveChartId()(state);
 
-						const { result: chartId, entities } = normalize(
-							currentChart,
-							chartScheme
-						);
+			const currentChart = {
+				id: aChartId,
+				chartTypeId: chart.id,
+				customizeSettings: [...chart.customizeSettings],
+				dimensionSettings: this.chartService.transformDimensions(
+					chart.dimensionSettings
+				)
+			};
 
-						return new SelectChartComplete({
-							projectId,
-							chart: {
-								entities,
-								chartId
-							}
-						});
-					})
-				);
+			const { result: chartId, entities } = normalize(
+				currentChart,
+				chartScheme
+			);
+
+			return new SelectChartComplete({
+				projectId,
+				chart: {
+					entities,
+					chartId
+				}
+			});
 		})
 	);
 }

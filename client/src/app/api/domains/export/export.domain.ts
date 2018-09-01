@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { HttpService } from '@app/api/http/http.service';
 import { ServiceRequest } from '@app/models/serviceRequest.model';
 import { RequestType } from '@app/models/requestType.model';
-import { ExportType } from '@app/models/export.model';
+import { ExportType, ProjectExportPayload } from '@app/models/export.model';
 import { SchemeID } from '@app/models/normalizr.model';
 import { map } from 'rxjs/operators';
 
@@ -28,6 +28,34 @@ export class ExportDomainService implements ExportDomain {
 					`${this.projectPath}/${payload.id}/export`,
 					null,
 					{ type: payload.type }
+				)
+			)
+			.pipe(
+				map(res => {
+					return {
+						filename: `${payload.filename}.${payload.type}`,
+						data: res
+					};
+				})
+			);
+	}
+
+	exportProjectSvg(
+		payload: ProjectExportPayload
+	): Observable<{
+		filename: string;
+		data: Blob;
+	}> {
+		return this.httpService
+			.makeFileRequest(
+				new ServiceRequest(
+					RequestType.POST,
+					`${this.projectPath}/${payload.id}/export`,
+					null,
+					{
+						type: payload.type,
+						content: payload.svg
+					}
 				)
 			)
 			.pipe(

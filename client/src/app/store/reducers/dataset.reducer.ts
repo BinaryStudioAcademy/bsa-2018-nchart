@@ -2,10 +2,9 @@ import { ProjectsActionConstants } from '@app/store/actions/projects/projects.ac
 import { Actions as projectActions } from '@app/store/actions/projects/projects.actions';
 import { DatasetActionConstants as constants } from '@app/store/actions/datasets/datasets.action-types';
 import { Actions as datasetsActions } from '@app/store/actions/datasets/datasets.actions';
-import { DatasetState, Dataset, DatasetTable, DatasetColumn, DatasetData } from '@app/models/dataset.model';
+import { DatasetState, Dataset } from '@app/models/dataset.model';
 import { combineReducers } from '@ngrx/store';
-import { NormalizedSchemeField, SchemeID } from '@app/models/normalizr.model';
-import { union, range } from 'lodash';
+import { NormalizedSchemeField } from '@app/models/normalizr.model';
 
 export const initialState: DatasetState = {
 	byId: {},
@@ -14,7 +13,7 @@ export const initialState: DatasetState = {
 
 const byId = (
 	state = initialState.byId,
-	action: projectActions | datasetsActions,
+	action: projectActions | datasetsActions
 ): NormalizedSchemeField<Dataset> => {
 	switch (action.type) {
 		case ProjectsActionConstants.LOAD_ONE_PROJECT__COMPLETE:
@@ -32,15 +31,25 @@ const byId = (
 					modified: {
 						...state[action.payload.datasetId].modified,
 						columns: [
-							...state[action.payload.datasetId].modified.columns.filter(
+							...state[
+								action.payload.datasetId
+							].modified.columns.filter(
 								col => col !== action.payload.columnId
 							)
 						],
 						data: [
-							...state[action.payload.datasetId].modified.data.map((d, i) => d.filter((v, j) => j !== action.payload.id))
-							.map((r, rI) =>
-								r.map((c, cI) => `${rI}-${cI}-${action.payload.datasetId}`
-							))
+							...state[action.payload.datasetId].modified.data
+								.map((d, i) =>
+									d.filter((v, j) => j !== action.payload.id)
+								)
+								.map((r, rI) =>
+									r.map(
+										(c, cI) =>
+											`${rI}-${cI}-${
+												action.payload.datasetId
+											}`
+									)
+								)
 						]
 					}
 				}
@@ -53,29 +62,36 @@ const byId = (
 					modified: {
 						...state[action.payload.datasetId].modified,
 						data: [
-							...state[action.payload.datasetId].modified.data.filter((row, i) =>
-								!action.payload.id.includes(i)
-							).map((r, rI) =>
-								r.map((c, cI) => `${rI}-${cI}-${action.payload.datasetId}`
-							)
-						)]
+							...state[action.payload.datasetId].modified.data
+								.filter(
+									(row, i) => !action.payload.id.includes(i)
+								)
+								.map((r, rI) =>
+									r.map(
+										(c, cI) =>
+											`${rI}-${cI}-${
+												action.payload.datasetId
+											}`
+									)
+								)
+						]
 					}
 				}
 			};
 		case constants.ADD_NEW_ROW:
-				return {
-					// ...state,
-					// [action.payload.datasetId]: {
-					// 	...state[action.payload.datasetId],
-					// 	modified: {
-					// 		...state[action.payload.datasetId].modified,
-					// 		data: [
-					// 			...union(state[action.payload.datasetId].modified.data,
-					// 			newData)
-					// 		]
-					// 	}
-					// }
-				};
+			return {
+				// ...state,
+				// [action.payload.datasetId]: {
+				// 	...state[action.payload.datasetId],
+				// 	modified: {
+				// 		...state[action.payload.datasetId].modified,
+				// 		data: [
+				// 			...union(state[action.payload.datasetId].modified.data,
+				// 			newData)
+				// 		]
+				// 	}
+				// }
+			};
 		default:
 			return state;
 	}

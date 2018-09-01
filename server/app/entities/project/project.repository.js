@@ -5,13 +5,15 @@ const TransactionService = require('../../common/services/db-transaction.service
 const chartModel = require('../chart/chart.model');
 const datasetModel = require('../dataset/dataset.model');
 const groupModel = require('../group/group.models/group');
-const groupProject = require('../group/group.models/group_project');
+const groupProjectModel = require('../group/group.models/group_project');
+const groupUserModel = require('../group/group.models/group_user');
 
 class ProjectRepository extends Repository {
 	constructor() {
 		super();
 		this.projectModel = projectModel;
 		this.projectChartModel = projectChartModel;
+		this.groupProjectModel = groupProjectModel;
 	}
 
 	upsert(obj) {
@@ -58,13 +60,14 @@ class ProjectRepository extends Repository {
 	}
 
 	fullProjectsByGroupId(id) {
-		return groupModel.findOne({
+		this.groupModel = groupModel;
+		return this.groupModel.findOne({
 			where: { id },
-			attributes: ['id', 'name'],
+			attributes: ['id'],
 			include: [
 				{
-					model: groupProject,
-					attributes: ['id', 'groupId', 'projectId'],
+					model: groupProjectModel,
+					attributes: ['groupId', 'projectId'],
 					include: [
 						{
 							model: this.projectModel,
@@ -97,6 +100,79 @@ class ProjectRepository extends Repository {
 									]
 								}
 							]
+						}
+					]
+				}
+			]
+		});
+	}
+
+	fullProjectByUserId(id) {
+		this.groupUser = groupUserModel;
+		return this.groupUser.findAll({
+			where: { userId: id },
+			attributes: ['groupId'],
+			include: [
+				{
+					model: groupModel,
+					attributes: ['id'],
+					include: [
+						{
+							model: groupProjectModel,
+							separate: true,
+							attributes: ['groupId', 'projectId'],
+							include: [
+								{
+									model: this.projectModel,
+									attributes: ['id', 'name', 'createdAt'],
+									include: [
+										{
+											model: projectChartModel,
+											separate: true,
+											attributes: ['chartId'],
+											include: [
+												{
+													model: chartModel,
+													attributes: [
+														'id',
+														'chartTypeId',
+														'datasetId',
+														'dimensionSettings',
+														'customizeSettings'
+													],
+													include: [
+														{
+															model: datasetModel,
+															attributes: [
+																'id',
+																'data',
+																'columns'
+															]
+														}
+													]
+												}
+											]
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		});
+	}
+
+	findByUserIdAndProjectId(obj) {
+		return this.groupProjectModel.findOne({
+			where: { projectId: obj.projectId },
+			include: [
+				{
+					model: groupModel,
+					include: [
+						{
+							model: groupUserModel,
+							where: { userId: obj.userId }
 						}
 					]
 				}

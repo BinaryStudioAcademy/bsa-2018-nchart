@@ -10,7 +10,14 @@ class DBError extends Error {
 			{ message: 'Wrong password', code: 6 },
 			{ message: 'jwt expired', code: 7 },
 			{ message: 'Incorrect file extension', code: 8 },
-			{ message: 'No file were uploaded', code: 9 }
+			{ message: 'No file were uploaded', code: 9 },
+			{ message: "Can't share with yourself", code: 10 },
+			{ message: 'File size is undefined', code: 11 },
+			{ message: 'File is too big', code: 12 },
+			{ message: 'User has no rights on this project', code: 13 },
+			{ message: 'Folder with such name already exists', code: 14 },
+			{ message: 'Company with such name already exists', code: 15 },
+			{ message: 'Company does not belong to user', code: 16 }
 		];
 	}
 

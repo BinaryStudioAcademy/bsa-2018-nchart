@@ -10,15 +10,29 @@
 			"name": "Attach to client 4200",
 			"urlFilter": "http://localhost:4200/*",
 			"port": 9222,
-			"webRoot": "${workspaceFolder}"
+			"webRoot": "${workspaceFolder}/client"
 		},
 		{
 			"type": "node",
 			"request": "attach",
-			"name": "Node: Nodemon",
+			"name": "Attach to Node: Nodemon",
 			"processId": "${command:PickProcess}",
 			"restart": true,
 			"protocol": "inspector"
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Launch Node: Nodemon",
+			"program": "${workspaceRoot}/server/bin/www",
+			"protocol": "inspector",
+			"runtimeArgs": [
+				"--harmony",
+				"--no-deprecation",
+				"--experimental-worker"
+			],
+			"envFile": "${workspaceFolder}/server/.env",
+			"smartStep": true
 		}
 	]
 }
