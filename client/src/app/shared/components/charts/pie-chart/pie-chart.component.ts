@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import * as d3 from 'd3';
 import { CustomizeOption } from '@app/models/chart.model';
-
+import ColorHash from 'color-hash';
 interface DataType {
 	label: string;
 	name: string;
@@ -46,27 +46,47 @@ export class PieChartComponent implements OnInit, OnChanges {
 			margin,
 			radius,
 			isDonut,
-			// sortChartsBy,
-			// sortArcsBy,
+			sortChartsBy,
+			sortArcsBy,
 			showValues
 		} = this.getSettingsValue(this.settings);
 
-		this.data.sort((a, b) => {
-			return a.label < b.label ? -1 : a.label > b.label ? 1 : 0;
-		});
-
-		const z = d3.scaleOrdinal(d3.schemeCategory10);
+		switch (sortChartsBy) {
+			case 'name(asc)':
+				this.data.sort((a, b) => {
+					return a.label < b.label ? -1 : a.label > b.label ? 1 : 0;
+				});
+				break;
+			case 'name(desc)':
+				this.data.sort((a, b) => {
+					return a.label > b.label ? -1 : a.label < b.label ? 1 : 0;
+				});
+				break;
+			default:
+				break;
+		}
 
 		d3.select('.pie-chart').style('width', `${width}px`);
 
 		const pie = d3.pie<DataType>().value(d => {
 			return d.value;
 		});
-		/*.sort((a, b) => {
-				return b.value - a.value;
-			});*/
-		// .sort(function(a, b)  {return (a.item < b.item) ? 1 : ((b.item < a.item) ? -1 : 0);})
+		switch (sortArcsBy) {
+			case 'value':
+				pie.sort((a, b) => {
+					return b.value - a.value;
+				});
+				break;
+			case 'name':
+				pie.sort(function(a, b) {
+					return a.name < b.name ? 1 : b.name < a.name ? -1 : 0;
+				});
+				break;
+			default:
+				break;
+		}
 
+		const colorHash = new ColorHash();
 		const arc = d3.arc().outerRadius(radius);
 
 		isDonut ? arc.innerRadius(radius / 1.5) : arc.innerRadius(0);
@@ -115,11 +135,11 @@ export class PieChartComponent implements OnInit, OnChanges {
 		g.append('path')
 			.attr('d', <any>arc)
 			.style('fill', function(d) {
-				return z(d.data.name);
+				return colorHash.hex(d.data.name + '');
 			});
 		if (showValues) {
 			g.append('title').text(function(d) {
-				return d.data.name + ': ' + d.data.value;
+				return d.data.value;
 			});
 
 			g.filter(function(d) {
@@ -138,7 +158,7 @@ export class PieChartComponent implements OnInit, OnChanges {
 					);
 				})
 				.text(function(d) {
-					return `${d.data.name}: ${d.data.value}`;
+					return `${d.data.value}`;
 				});
 		}
 		function angle(d) {

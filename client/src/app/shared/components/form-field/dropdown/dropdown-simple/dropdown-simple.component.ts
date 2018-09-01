@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -20,6 +20,8 @@ export class DropdownSimpleComponent implements OnInit {
 	placeholder: string;
 	@Input()
 	group: boolean;
+	@Output()
+	change: EventEmitter<any> = new EventEmitter();
 
 	constructor() {}
 
@@ -28,6 +30,10 @@ export class DropdownSimpleComponent implements OnInit {
 			this.control.disable();
 		}
 		return this.disabled;
+	}
+
+	onChange(e) {
+		this.change.emit(e);
 	}
 
 	ngOnInit() {}
