@@ -98,6 +98,20 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 		private route: ActivatedRoute
 	) {}
 
+	display: boolean = false;
+
+	showDialog() {
+		this.display = true;
+	}
+
+	accept() {
+		this.display = false;
+	}
+
+	reject() {
+		this.display = false;
+	}
+
 	ngOnInit() {
 		this.routeParams$ = this.route.params.subscribe(
 			(params: { id?: number }) => {

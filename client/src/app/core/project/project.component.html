@@ -5,13 +5,41 @@
 		[selectedStep]="selectedStep"
 	></app-stepper>
 	<div class="main-content">
-	<app-project-name id="load" #viewItem [projectName]="projectName" (setProjectName)="changeProjectName($event)">
-	</app-project-name>
+		<app-project-name id="load" #viewItem [projectName]="projectName" (setProjectName)="changeProjectName($event)">
+		</app-project-name>
 		<app-load-data ></app-load-data>
 		<app-data-table *ngIf="isDataset()" id="table" #viewItem></app-data-table>
 		<app-list-charts *ngIf="isDataset()" id="charts" #viewItem></app-list-charts>
 		<app-dimension-settings *ngIf="isDataset()" id="settings" #viewItem></app-dimension-settings>
 		<app-custom-chart *ngIf="isCharts()" id="chart" #viewItem></app-custom-chart>
 		<app-export *ngIf="isCharts()" id="export" #viewItem></app-export>
+
+
+		<p-dialog header="Confirmation"
+				  [(visible)]="display"
+				  [modal]="true"
+				  [responsive]="true"
+				  [closable]="false"
+				  [width]="350"
+				  [minWidth]="200"
+				  [minY]="70"
+				  [baseZIndex]="10000">
+			<span>
+				Are you sure that you want to leave page with unsaved project?
+			</span>
+			<p-footer class="modal-controls">
+				<app-button
+					label="Yes"
+					(onclick)="accept()"
+				></app-button>
+				<app-button
+					label="No"
+					type="secondary"
+					(onclick)="reject()"
+				></app-button>
+			</p-footer>
+		</p-dialog>
+
+		<button type="text" (click)="showDialog()" pButton icon="pi pi-info-circle" label="Show"></button>
 	</div>
 </div>
