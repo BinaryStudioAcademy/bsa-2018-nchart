@@ -60,6 +60,7 @@ class ProjectService {
 							projectId: payload.project.id,
 							accessLevelId: 1
 						})
+						// todo: error handler if groupProject  already exists
 							.then(() => {
 								callback(null, payload);
 							})
@@ -187,7 +188,14 @@ class ProjectService {
 							userId: res.locals.user.id
 						})
 							.then(data => {
-								if (data !== null) {
+								let count = 0;
+								data.forEach(el => {
+									if (el.group) {
+										count += 1;
+									}
+								});
+								// data[1].group.groupUsers[0].dataValues
+								if (count >= 1) {
 									return callback(null);
 								}
 								throw new Error(

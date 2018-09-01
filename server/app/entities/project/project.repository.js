@@ -229,11 +229,13 @@ class ProjectRepository extends Repository {
 	}
 
 	findByUserIdAndProjectId(obj) {
-		return this.groupProjectModel.findOne({
+		return this.groupProjectModel.findAll({
 			where: { projectId: obj.projectId },
+			attributes: ['groupId'],
 			include: [
 				{
 					model: groupModel,
+					attributes: ['id'],
 					include: [
 						{
 							model: groupUserModel,
