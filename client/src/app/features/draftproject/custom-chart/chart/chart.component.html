@@ -1,16 +1,18 @@
 <div class="chart-container" [ngSwitch]="chartType">
-	<app-bar-chart 
+	<!--<app-bar-chart 
 		*ngSwitchCase="'barChart'"
 		[data]="data"
 		[settings]="customizeSettings"
 		#chart
-	></app-bar-chart>
+	></app-bar-chart>-->
 	<app-pie-chart  
 		*ngSwitchCase="'pieChart'" 
 		[data]="data"
 		[settings]="customizeSettings"
 		#chart
 	></app-pie-chart >
-	<div *ngSwitchCase="'ganttChart'">ganttChart</div>
+	<app-scatterplot-chart 
+	*ngSwitchCase="'barChart'"
+	></app-scatterplot-chart>
 	<div *ngSwitchCase="'alluvialDiagram'">pieChart</div>
 </div>
