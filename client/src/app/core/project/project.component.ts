@@ -59,7 +59,7 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 		for (const i in this.viewItemsList) {
 			if (this.viewItemsList[i]) {
 				const position =
-					this.viewItemsList[i].nativeElement.offsetTop - 300;
+					this.viewItemsList[i].nativeElement.offsetTop;
 				if (scrollPosition >= position) {
 					this.selectedStep = this.stepperSteps.find(
 						el => el.id === +i + 1

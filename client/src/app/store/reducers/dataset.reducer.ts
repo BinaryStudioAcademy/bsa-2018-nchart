@@ -65,8 +65,13 @@ const byId = (
 							...state[
 								action.payload.datasetId
 							].modified.data.filter(
-								dataArr =>
-									!dataArr.includes(action.payload.rowId)
+								dataArr => {
+									if ((<string>dataArr[0]).startsWith(`${action.payload.rowId}-`)) {
+										return false;
+									} else {
+										return true;
+									}
+								}
 							)
 						]
 					}
@@ -88,7 +93,7 @@ const byId = (
 								action.payload.datasetId
 							].modified.data.map((dataArr, i) => {
 								dataArr.push(
-									`${i}-${action.payload.columnId}-${
+									`${action.payload.rowIds[i]}-${action.payload.columnId}-${
 										action.payload.datasetId
 									}`
 								);

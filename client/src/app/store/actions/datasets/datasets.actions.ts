@@ -55,6 +55,7 @@ export class AddNewColumn extends AppAction<{
 	datasetId: SchemeID;
 	dataLength: number;
 	columnId: SchemeID;
+	rowIds: number[];
 }> {
 	readonly type = constants.ADD_NEW_COLUMN;
 }

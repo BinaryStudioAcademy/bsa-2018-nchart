@@ -38,16 +38,15 @@ export const datasetDataReducer = (
 				)
 			};
 		case constants.DELETE_ROW:
-			const id = action.payload.rowId as string;
+			// const id = action.payload.rowId as string;
 			return {
 				...omitBy(state, (val, key) =>
-					key.startsWith(`${id.split('-')[0]}-`)
+					key.startsWith(`${action.payload.rowId}-`)
 				)
 			};
 		case constants.ADD_NEW_COLUMN:
-			const colKeys = range(action.payload.dataLength).map(
-				i =>
-					`${i}-${action.payload.columnId}-${
+			const colKeys = action.payload.rowIds.map(
+				i => `${i}-${action.payload.columnId}-${
 						action.payload.datasetId
 					}`
 			);

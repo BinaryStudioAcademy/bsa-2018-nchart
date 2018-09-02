@@ -4,7 +4,7 @@ import { Actions as chartActions } from '@app/store/actions/charts/charts.action
 import { UserChartSettingsState } from '@app/models/chart.model';
 import { combineReducers } from '@ngrx/store';
 import { ChartsActionConstants as constants } from '@app/store/actions/charts/charts.action-types';
-// import { DatasetActionConstants } from '@app/store/actions/datasets/datasets.action-types';
+import { DatasetActionConstants } from '@app/store/actions/datasets/datasets.action-types';
 import { Actions as datasetsActions } from '@app/store/actions/datasets/datasets.actions';
 
 export const initialState: UserChartSettingsState = {
@@ -67,19 +67,19 @@ const dimensionSettings = (
 				...dimensions
 			};
 		}
-		/* case DatasetActionConstants.DELETE_COLUMN: {
+		case DatasetActionConstants.DELETE_COLUMN: {
 			return Object.keys(state)
 				.map(key => ({
 					...state[key],
 					columnIds: state[key].columnIds.filter(
-						c => c !== action.payload.id
+						c => c !== action.payload.columnId
 					)
 				}))
 				.reduce((acc, v) => {
 					acc[v.id] = v;
 					return acc;
 				}, {});
-		} */
+		}
 		default:
 			return state;
 	}

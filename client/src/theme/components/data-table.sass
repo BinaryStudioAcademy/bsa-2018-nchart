@@ -41,6 +41,7 @@
 		padding: 0 0.6rem
 	&.ui-widget .ui-dialog-content
 		padding: 1em 1.5em
+		overflow: visible
 	.ui-dialog-footer
 		padding: 0 1rem
 		padding-bottom: 1rem
@@ -71,9 +72,8 @@
 	.ui-dialog.ui-widget .ui-dialog-content
 		padding: 0
 	&.fullscreen-chart
-		&.ui-dialog
-			&.ui-widget .ui-dialog-content
-				padding: 0
+		&.ui-dialog.ui-widget .ui-dialog-content
+			padding: 0
 .full-screen-btn
 	position: absolute
 	top: 0.8rem

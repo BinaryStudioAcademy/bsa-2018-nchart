@@ -21,6 +21,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
 	columns: DatasetColumn[];
 	datasetId: SchemeID;
 	data: any[][];
+	rowIds: number[] = [];
 	display = false;
 
 	showDialog() {
@@ -124,9 +125,10 @@ export class DataTableComponent implements OnInit, OnDestroy {
 		this.storeService.dispatch(
 			new DatasetActions.DeleteRow({
 				datasetId: this.datasetId,
-				rowId
+				rowId: this.rowIds[rowId]
 			})
 		);
+		this.rowIds = this.rowIds.filter(el => el !== this.rowIds[rowId]);
 	}
 
 	addNewColumn() {
@@ -134,16 +136,18 @@ export class DataTableComponent implements OnInit, OnDestroy {
 			new DatasetActions.AddNewColumn({
 				datasetId: this.datasetId,
 				dataLength: this.data.length,
-				columnId: v4()
+				columnId: v4(),
+				rowIds: this.rowIds
 			})
 		);
 	}
 
 	addNewRow() {
+		this.rowIds.push(this.rowIds[this.rowIds.length - 1] + 1);
 		this.storeService.dispatch(
 			new DatasetActions.AddNewRow({
 				datasetId: this.datasetId,
-				dataLength: this.data.length,
+				dataLength: this.rowIds[this.rowIds.length - 1],
 				columnIds: this.columns.map(col => col.id)
 			})
 		);
@@ -211,8 +215,8 @@ export class DataTableComponent implements OnInit, OnDestroy {
 				selector: activeDatasetId()
 			}
 		]);
+		this.rowIds = this.data.map((d, i) => i);
 	}
-
 	change({ value, i, col }) {
 		value = this.convertDataType(this.columns[col].type, value);
 		this.storeService.dispatch(
