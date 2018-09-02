@@ -27,6 +27,6 @@ export class ProjectsComponent implements OnInit {
 	}
 
 	deleteTest() {
-		this.storeService.dispatch(new projectActions.DeleteOneProject({projectId: 4, accessLevelId: 1}));
+		this.storeService.dispatch(new projectActions.DeleteOneProject({projectId: 11, accessLevelId: 2}));
 	}
 }

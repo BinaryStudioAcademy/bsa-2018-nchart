@@ -409,18 +409,16 @@ class ProjectService {
 	}
 
 	deleteProjects(obj, res) {
+		if (obj.accessLevelId === 2) {
+			return this.ProjectRepository.deleteGroupProject(
+				obj.projectId,
+				res.locals.user.defaultGroupId
+			);
+		}
 		return new Promise((resolve, reject) => {
 			async.waterfall(
 				[
 					callback => {
-						if (obj.accessLevelId === 2) {
-							this.ProjectRepository.deleteGroupProject(
-								obj.projectId,
-								res.locals.user.defaultGroupId
-							)
-								.then(data => callback(null, data))
-								.catch(err => callback(err, null));
-						}
 						this.ProjectRepository.deleteGroupProject(obj.projectId)
 							.then(() => callback(null))
 							.catch(err => callback(err, null));

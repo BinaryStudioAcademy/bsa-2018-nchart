@@ -245,7 +245,7 @@ export class ProjectsEffects {
 			this.projectDomainService.delete(action.payload).pipe(
 				map(value => {
 					if (value.isSuccess) {
-						return new projectActions.DeleteOneProject(
+						return new projectActions.DeleteOneProjectComplete(
 							value.payload
 						);
 					}
