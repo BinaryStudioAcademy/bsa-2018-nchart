@@ -1,7 +1,7 @@
-import { ProjectsActionConstants } from '@app/store/actions/projects/projects.action-types';
-import { Project, ProjectEntities } from '@app/models/project.model';
-import { SchemeID } from '@app/models/normalizr.model';
-import { AppAction, FailedAction } from '@app/models/store.model';
+import {ProjectsActionConstants} from '@app/store/actions/projects/projects.action-types';
+import {Project, ProjectEntities} from '@app/models/project.model';
+import {SchemeID} from '@app/models/normalizr.model';
+import {AppAction, FailedAction} from '@app/models/store.model';
 
 export class LoadProjetcs extends AppAction<{ groupId: string }> {
 	readonly type = ProjectsActionConstants.LOAD_PROJECTS;
@@ -106,6 +106,21 @@ export class ShareProjectFailed extends FailedAction {
 	readonly type = ProjectsActionConstants.SHARE_PROJECTS__FAILED;
 }
 
+export class DeleteOneProject extends AppAction<{
+	projectId: number;
+	accessLevelId: number;
+}> {
+	readonly type = ProjectsActionConstants.DELETE_ONE_PROJECT;
+}
+
+export class DeleteOneProjectComplete extends AppAction<any> {
+	readonly type = ProjectsActionConstants.DELETE_ONE_PROJECT__COMPLETE;
+}
+
+export class DeleteOneProjectFailed extends FailedAction {
+	readonly type = ProjectsActionConstants.DELETE_ONE_PROJECT__FAILED;
+}
+
 export type Actions =
 	| LoadProjetcs
 	| LoadProjectsComplete
@@ -126,4 +141,7 @@ export type Actions =
 	| LoadProjectsInfoFailed
 	| ShareProject
 	| ShareProjectComplete
-	| ShareProjectFailed;
+	| ShareProjectFailed
+	| DeleteOneProject
+	| DeleteOneProjectComplete
+	| DeleteOneProjectFailed;

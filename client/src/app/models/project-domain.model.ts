@@ -1,6 +1,6 @@
-import { Observable } from 'rxjs';
-import { OriginProject } from '@app/models/project.model';
-import { ResponseScheme } from '@app/models/response-scheme.model';
+import {Observable} from 'rxjs';
+import {OriginProject} from '@app/models/project.model';
+import {ResponseScheme} from '@app/models/response-scheme.model';
 
 export interface ProjectDomain {
 	save(payload: {
@@ -11,7 +11,7 @@ export interface ProjectDomain {
 		project: OriginProject;
 	}): Observable<ResponseScheme<OriginProject>>;
 
-	delete(payload: { projectId: string }): Observable<ResponseScheme<null>>;
+	delete(payload: { projectId: number, accessLevelId: number }): Observable<ResponseScheme<null>>;
 
 	getByProjectId(payload: {
 		projectId: string;

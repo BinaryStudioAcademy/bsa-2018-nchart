@@ -69,7 +69,7 @@ project.get(
 	successOrEmptyPayload
 );
 
-project.delete('/', (req, res, next) => {
+project.post('/delete', (req, res, next) => {
 	ProjectService.deleteProjects(req.body, res)
 		.then(PayloadGeneratorService.nextWithData(next, res))
 		.catch(next);
