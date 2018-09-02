@@ -22,6 +22,13 @@ project.post('/', ProjectPayloadValidator.fullSet, (req, res, next) => {
 		.catch(next);
 });
 
+project.post('/name', (req, res, next) => {
+	// getByProjectId user from token, and set it into res.locals.user
+	ProjectService.updateProjectName(req.body)
+		.then(PayloadGeneratorService.nextWithData(next, res))
+		.catch(next);
+});
+
 // todo: what do with rout names?
 project.get('/group/:id', (req, res, next) => {
 	ProjectService.fullProjectsByGroupId(Number(req.params.id))
@@ -61,6 +68,12 @@ project.get(
 	},
 	successOrEmptyPayload
 );
+
+project.delete('/', (req, res, next) => {
+	ProjectService.deleteProjects(req.body, res)
+		.then(PayloadGeneratorService.nextWithData(next, res))
+		.catch(next);
+});
 
 project.get('/:id', (req, res, next) => {
 	ProjectService.fullProjectById(Number(req.params.id), res)

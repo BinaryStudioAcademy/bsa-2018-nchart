@@ -14,19 +14,27 @@ Project.sync().then(() => {
 	ProjectChart.sync().then(() => Project.hasMany(ProjectChart, {
 		foreignKey: 'projectId',
 		sourceKey: 'id',
-		onDelete: 'CASCADE',
-		constraints: false
+		onDelete: 'CASCADE'
+		// constraints: false
 	}));
-	ProjectChart.belongsTo(Project, { foreignKey: 'projectId' });
+	ProjectChart.belongsTo(Project, {
+		foreignKey: 'projectId',
+		onDelete: 'CASCADE',
+		hooks: true
+	});
 	GroupProject.sync().then(() => {
 		Project.hasMany(GroupProject, {
 			foreignKey: 'projectId',
 			sourceKey: 'id',
-			onDelete: 'CASCADE',
-			constraints: false
+			onDelete: 'CASCADE'
+			// constraints: false
 		});
 	});
-	GroupProject.belongsTo(Project, { foreignKey: 'projectId' });
+	GroupProject.belongsTo(Project, {
+		foreignKey: 'projectId',
+		onDelete: 'CASCADE',
+		hooks: true
+	});
 });
 
 module.exports = Project;

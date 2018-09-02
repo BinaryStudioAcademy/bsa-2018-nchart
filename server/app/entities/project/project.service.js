@@ -74,7 +74,7 @@ class ProjectService {
 								projectId: payload.project.id,
 								accessLevelId: 1
 							})
-								// todo: error handler if groupProject  already exists
+							// todo: error handler if groupProject  already exists
 								.then(() => {
 									callback(null, payload);
 								})
@@ -375,7 +375,7 @@ class ProjectService {
 				// todo: look very, very bad
 				data.forEach(el => {
 					el.group.groupProjects.forEach(pj => {
-						const user =							pj.project.groupProjects[0].group.groupUsers[0].user
+						const user = pj.project.groupProjects[0].group.groupUsers[0].user
 							.dataValues;
 						projects.push({
 							id: pj.project.dataValues.id,
@@ -406,6 +406,48 @@ class ProjectService {
 			charts,
 			datasets
 		};
+	}
+
+	deleteProjects(obj, res) {
+		return new Promise((resolve, reject) => {
+			async.waterfall(
+				[
+					callback => {
+						if (obj.accessLevelId === 2) {
+							this.ProjectRepository.deleteGroupProject(
+								obj.projectId,
+								res.locals.user.defaultGroupId
+							)
+								.then(data => callback(null, data))
+								.catch(err => callback(err, null));
+						}
+						this.ProjectRepository.deleteGroupProject(obj.projectId)
+							.then(() => callback(null))
+							.catch(err => callback(err, null));
+					},
+					callback => {
+						this.ProjectRepository.deleteProjectCharts(obj.projectId)
+							.then(() => callback(null))
+							.catch(err => callback(err, null));
+					},
+					callback => {
+						this.ProjectRepository.deleteProject(obj.projectId)
+							.then((data) => callback(null, data))
+							.catch(err => callback(err, null));
+					}
+				],
+				(err, payload) => {
+					if (err) {
+						reject(err);
+					}
+					resolve(payload);
+				}
+			);
+		});
+	}
+
+	updateProjectName(obj) {
+		return this.ProjectRepository.updateProjectName(obj.projectId, obj.name);
 	}
 
 	export(id, type, selector) {

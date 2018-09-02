@@ -250,6 +250,25 @@ class ProjectRepository extends Repository {
 	publicProject(projectId) {
 		return this.groupProjectModel.findOne({ where: { projectId } });
 	}
+
+	deleteProject(id) {
+		return this.projectModel.destroy({ where: { id } });
+	}
+
+	deleteGroupProject(projectId, groupId) {
+		if (groupId) {
+			return this.groupProjectModel.destroy({ where: { projectId, groupId } });
+		}
+		return this.groupProjectModel.destroy({ where: { projectId } });
+	}
+
+	deleteProjectCharts(projectId) {
+		return this.projectChartModel.destroy({ where: { projectId } });
+	}
+
+	updateProjectName(id, name) {
+		return this.projectModel.update({ name }, { where: { id } });
+	}
 }
 
 module.exports = new ProjectRepository();
