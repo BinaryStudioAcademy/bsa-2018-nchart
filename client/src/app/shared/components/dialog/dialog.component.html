@@ -41,7 +41,6 @@
 				</div>
 			</div>
 		</form>
-		{{formGroup.value | json}}
 		<p-footer>
 				<app-button label="Send" [disabled]="!formGroup.valid" (onclick)="share(formGroup.value)"></app-button>
 		</p-footer>

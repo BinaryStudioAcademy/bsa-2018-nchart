@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
 	selector: 'app-card',
@@ -7,6 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class CardComponent implements OnInit {
 	display = false;
+	status: string;
 	itemsObjs = [
 		{
 			label: 'Rename'
@@ -25,7 +26,8 @@ export class CardComponent implements OnInit {
 		}
 	];
 
-	constructor() {}
+	constructor() {
+	}
 
 	@Input()
 	companyName: string;
@@ -48,9 +50,22 @@ export class CardComponent implements OnInit {
 	@Input()
 	accessLevelId: number;
 
-	ngOnInit() {}
+	ngOnInit() {
+		if (this.accessLevelId === 1) {
+			this.status = 'Admin';
+		}
+		if (this.accessLevelId === 2) {
+			this.status = 'Read/Write';
+		}
+		if (this.accessLevelId === 3) {
+			this.status = 'Read';
+		}
+	}
 
 	shareDialog() {
+		if (this.accessLevelId === 3) {
+			return;
+		}
 		this.display = true;
 	}
 }

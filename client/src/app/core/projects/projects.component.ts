@@ -24,15 +24,4 @@ export class ProjectsComponent implements OnInit {
 	getProjects() {
 		return this.projects$;
 	}
-
-	// test sharing
-	sharePj() {
-		this.storeService.dispatch(
-			new projectActions.ShareProject({
-				projectId: 2,
-				email: '5user@gmail.com',
-				accessLevelId: 3
-			})
-		);
-	}
 }
