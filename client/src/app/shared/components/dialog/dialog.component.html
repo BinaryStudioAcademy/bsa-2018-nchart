@@ -1,12 +1,51 @@
 <div class="ui-dialog-wrp">
-	<p-dialog header="Share project" [(visible)]="display" (onHide)="close()" (onAfterHide)="close()">
-		<!--<app-input-text [label]="email" [control]="formControl"></app-input-text>-->
-		<label for="email">Email: </label><input type="email" id="email">
+	<p-dialog 
+	[modal]="true"
+	[draggable]="false"  
+	[width]="350"
+	[minWidth]="200" 
+	[minY]="70" 
+	[maximizable]="false"
+	[baseZIndex]="10000"
+	[(visible)]="display"
+	(onHide)="close()"
+	(onAfterHide)="close()">
+	<p-header>
+		Share project
+	</p-header>
+		<app-input-text  
+			class="ui-fluid"
+			type="text"
+			label="Email" 
+			[control]="formGroup.controls.email">
+		</app-input-text>
+		<form [formGroup]="formGroup">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<app-radio-button 
+						name="group"
+		 				value="1" 
+		 				label="Read" 
+		 				[control]="formGroup.controls.accessLevel">
+					</app-radio-button>
+				</div>
+				<div class="ui-g-12">
+					<app-radio-button 
+						name="group"
+						value="2" 
+						label="Read/Write" 
+						[control]="formGroup.controls.accessLevel" >
+					</app-radio-button>
+				</div>
+			</div>
+		</form>
 		<p-footer>
-			<button type="button" pButton icon="pi pi-check" (click)="display=false" label="Send" class="ui-button-secondary"></button>
+				<app-button label="Send" (click)="display=false"></app-button>
 		</p-footer>
 	</p-dialog>
-
-	<!--<button type="text" (click)="showDialog()" pButton label="share"></button>-->
+	
 </div>
 
+<!--<label for="email">Email: </label><input type="email" id="email">-->
+	<!--<button type="button" pButton icon="pi pi-check" (click)="display=false" label="Send" class="ui-button-secondary"></button>-->
+	<!--<button type="text" (click)="showDialog()" pButton label="share"></button>-->

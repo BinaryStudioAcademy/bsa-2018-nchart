@@ -2,13 +2,13 @@
 	<ng-container *ngIf="getProjects() | async as projects">
 		<div *ngFor="let project of projects">
 			<app-project-card
-				[projectId]="project.id"
-				[projectName]="project.name"
-				[companyName]="project.companyName"
+				[projectId]="project?.id"
+				[projectName]="project?.name"
+				[companyName]="project?.companyName"
 				[groupName]="project.groupName"
-				[userName]="project.user.name"
-				[email]="project.user.email"
-				[accessLevelId]="project.accessLevelId"
+				[userName]="project.user?.name"
+				[email]="project.user?.email"
+				[accessLevelId]="project?.accessLevelId"
 			></app-project-card>
 		</div>
 	</ng-container>

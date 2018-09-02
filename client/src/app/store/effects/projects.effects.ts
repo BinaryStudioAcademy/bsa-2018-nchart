@@ -220,7 +220,9 @@ export class ProjectsEffects {
 			this.projectDomainService.share(action.payload).pipe(
 				map(value => {
 					if (value.isSuccess) {
-						return new projectActions.ShareProjectComplete(value.payload);
+						return new projectActions.ShareProjectComplete(
+							value.payload
+						);
 					}
 					return throwError(new Error('Cant share project'));
 				}),

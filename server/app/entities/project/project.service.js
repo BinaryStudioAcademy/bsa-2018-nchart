@@ -55,18 +55,20 @@ class ProjectService {
 						if (!status) {
 							return callback(null, payload);
 						}
-						return this.GroupService.saveGroupProject({
-							groupId: defaultGroupId,
-							projectId: payload.project.id,
-							accessLevelId: 1
-						})
-						// todo: error handler if groupProject  already exists
-							.then(() => {
-								callback(null, payload);
+						return (
+							this.GroupService.saveGroupProject({
+								groupId: defaultGroupId,
+								projectId: payload.project.id,
+								accessLevelId: 1
 							})
-							.catch(err => {
-								callback(null, err);
-							});
+								// todo: error handler if groupProject  already exists
+								.then(() => {
+									callback(null, payload);
+								})
+								.catch(err => {
+									callback(null, err);
+								})
+						);
 					},
 					(payload, callback) => {
 						DatasetService.upsert(obj.project.datasets)
@@ -120,7 +122,8 @@ class ProjectService {
 	handleProject(obj, res) {
 		if (obj.project && !obj.groupId && res.locals.user) {
 			return this.createProject(obj, res.locals.user.defaultGroupId);
-		} if (!res.locals.user) {
+		}
+		if (!res.locals.user) {
 			return this.createProject(obj);
 		}
 		// obj.groupId, res.locals.user
