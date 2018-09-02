@@ -68,18 +68,20 @@ class ProjectService {
 									callback(null, err);
 								});
 						}
-						return this.GroupService.saveGroupProject({
-							groupId: defaultGroupId,
-							projectId: payload.project.id,
-							accessLevelId: 1
-						})
-						// todo: error handler if groupProject  already exists
-							.then(() => {
-								callback(null, payload);
+						return (
+							this.GroupService.saveGroupProject({
+								groupId: defaultGroupId,
+								projectId: payload.project.id,
+								accessLevelId: 1
 							})
-							.catch(err => {
-								callback(null, err);
-							});
+								// todo: error handler if groupProject  already exists
+								.then(() => {
+									callback(null, payload);
+								})
+								.catch(err => {
+									callback(null, err);
+								})
+						);
 					},
 					(payload, callback) => {
 						DatasetService.upsert(obj.project.datasets)
@@ -132,7 +134,11 @@ class ProjectService {
 
 	handleProject(obj, res) {
 		if (!obj.groupId && res.locals.user) {
-			return this.createProject(obj, res.locals.user.defaultGroupId, null);
+			return this.createProject(
+				obj,
+				res.locals.user.defaultGroupId,
+				null
+			);
 		}
 		// obj.groupId, res.locals.user
 		return new Promise((resolve, reject) => {
@@ -147,9 +153,7 @@ class ProjectService {
 								if (data !== null) {
 									return callback(null);
 								}
-								throw new Error(
-									'Group with such user does not exist'
-								);
+								return callback('Group with such user does not exist', null);
 							})
 							.catch(err => {
 								callback(err, null);
@@ -279,9 +283,9 @@ class ProjectService {
 						})
 							.then(data => {
 								if (data === null) {
-									throw new Error('Object did not exist');
+									return callback('Object did not exist', null);
 								}
-								callback(null, data.dataValues.groupId);
+								return callback(null, data.dataValues.groupId);
 							})
 							.catch(err => callback(err, null));
 					},
@@ -301,7 +305,6 @@ class ProjectService {
 					if (err) {
 						reject(err);
 					}
-					// todo: what should be here
 					resolve(payload);
 				}
 			);
@@ -317,10 +320,10 @@ class ProjectService {
 				[
 					callback => {
 						UserService.findByEmail(obj.email).then(data => {
-							if (data !== null) {
-								return callback(null, data.dataValues.id);
+							if (data === null) {
+								return callback('Object did not exist', null);
 							}
-							throw new Error('Object did not exist');
+							return callback(null, data.dataValues.id);
 						});
 					},
 					(userId, callback) => {
@@ -353,7 +356,7 @@ class ProjectService {
 				// todo: look very, very bad
 				data.forEach(el => {
 					el.group.groupProjects.forEach(pj => {
-						const user = pj.project.groupProjects[0].group.groupUsers[0].user
+						const user =							pj.project.groupProjects[0].group.groupUsers[0].user
 							.dataValues;
 						projects.push({
 							id: pj.project.dataValues.id,
