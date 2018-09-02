@@ -24,7 +24,7 @@ class ProjectService {
 		return this.ProjectRepository.upsertProjectCharts(objs);
 	}
 
-	createProject(obj, defaultGroupId) {
+	createProject(obj, defaultGroupId, groupId) {
 		return new Promise((resolve, reject) => {
 			async.waterfall(
 				[
@@ -54,6 +54,19 @@ class ProjectService {
 					(status, payload, callback) => {
 						if (!status) {
 							return callback(null, payload);
+						}
+						if (groupId) {
+							return this.GroupService.saveGroupProject({
+								groupId,
+								projectId: payload.project.id,
+								accessLevelId: 1
+							})
+								.then(() => {
+									callback(null, payload);
+								})
+								.catch(err => {
+									callback(null, err);
+								});
 						}
 						return this.GroupService.saveGroupProject({
 							groupId: defaultGroupId,
@@ -118,17 +131,14 @@ class ProjectService {
 	}
 
 	handleProject(obj, res) {
-		if (obj.project && !obj.groupId && res.locals.user) {
-			return this.createProject(obj, res.locals.user.defaultGroupId);
-		} if (!res.locals.user) {
-			return this.createProject(obj);
+		if (!obj.groupId && res.locals.user) {
+			return this.createProject(obj, res.locals.user.defaultGroupId, null);
 		}
 		// obj.groupId, res.locals.user
 		return new Promise((resolve, reject) => {
 			async.waterfall(
 				[
 					callback => {
-						// todo: ask if this correct way to check
 						this.GroupService.findOneGroupUser({
 							groupId: obj.groupId,
 							userId: res.locals.user.id
@@ -146,23 +156,13 @@ class ProjectService {
 							});
 					},
 					callback => {
-						this.createProject(obj)
+						this.createProject(obj, null, obj.groupId)
 							.then(data => {
 								callback(null, data);
 							})
-							.catch(err => callback(err, null));
-					},
-					(payload, callback) => {
-						this.GroupService.saveGroupProject({
-							groupId: obj.groupId,
-							projectId: payload.id,
-							// todo: where does this come from
-							accessLevelId: 1
-						})
-							.then(() => {
-								callback(null, payload);
-							})
-							.catch(() => callback(null, payload));
+							.catch(err => {
+								callback(err, null);
+							});
 					}
 				],
 				(err, payload) => {
@@ -353,7 +353,7 @@ class ProjectService {
 				// todo: look very, very bad
 				data.forEach(el => {
 					el.group.groupProjects.forEach(pj => {
-						const user =							pj.project.groupProjects[0].group.groupUsers[0].user
+						const user = pj.project.groupProjects[0].group.groupUsers[0].user
 							.dataValues;
 						projects.push({
 							id: pj.project.dataValues.id,
