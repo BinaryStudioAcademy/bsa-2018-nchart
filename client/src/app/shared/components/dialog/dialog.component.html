@@ -22,23 +22,26 @@
 		<form [formGroup]="formGroup">
 			<div class="ui-g">
 				<div class="ui-g-12">
-					<app-radio-button 
+					<p-radioButton
 						name="group"
-		 				value="1" 
+		 				value='1' 
 		 				label="Read" 
-		 				[control]="formGroup.controls.accessLevel">
-					</app-radio-button>
+						formControlName="accessLevel"
+						inputId="opt1">
+					</p-radioButton>
 				</div>
 				<div class="ui-g-12">
-					<app-radio-button 
+					<p-radioButton 
 						name="group"
-						value="2" 
+						value='2' 
 						label="Read/Write" 
-						[control]="formGroup.controls.accessLevel" >
-					</app-radio-button>
+						formControlName="accessLevel" 
+						inputId="opt2">
+					</p-radioButton>
 				</div>
 			</div>
 		</form>
+		{{formGroup.value | json}}
 		<p-footer>
 				<app-button label="Send" (click)="display=false"></app-button>
 		</p-footer>
