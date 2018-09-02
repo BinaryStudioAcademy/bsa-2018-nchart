@@ -10,6 +10,7 @@ import { ExportProject } from '@app/store/actions/export/export.actions';
 import { isProjectExporting } from '@app/store/selectors/export.selectors';
 import { ExportSvgBusService } from '@app/services/export-svg-bus.service';
 import { Subscription } from 'rxjs';
+import { ClipboardService } from 'ngx-clipboard';
 
 @Component({
 	selector: 'app-export',
@@ -19,8 +20,9 @@ import { Subscription } from 'rxjs';
 export class ExportComponent implements OnInit, OnDestroy {
 	@Input()
 	isLoading = false;
-
+	svgFormControl: FormControl;
 	exportBusResponse: Subscription;
+
 	controlName = new FormControl('', [
 		patternValidator(
 			'Invalid filename',
@@ -52,10 +54,13 @@ export class ExportComponent implements OnInit, OnDestroy {
 
 	constructor(
 		private storeService: StoreService,
-		private exportSvgBus: ExportSvgBusService
+		private exportSvgBus: ExportSvgBusService,
+		private clipboardService: ClipboardService
 	) {}
 
 	ngOnInit() {
+		this.exportSvgBus.requestSvg();
+		this.svgFormControl = new FormControl('')
 		this.disconnect = this.storeService.connect([
 			{
 				subscriber: isExporting => {
@@ -66,11 +71,7 @@ export class ExportComponent implements OnInit, OnDestroy {
 		]);
 		this.exportBusResponse = this.exportSvgBus.responseObservable.subscribe(
 			svg => {
-				const filename = this.controlName.value.trim();
-				const type = this.controlType.value as ExportType;
-				this.storeService.dispatch(
-					new ExportProject({ id: 1, type, filename, svg })
-				);
+				this.svgFormControl.patchValue(svg);
 			}
 		);
 	}
@@ -80,7 +81,23 @@ export class ExportComponent implements OnInit, OnDestroy {
 		this.exportBusResponse.unsubscribe();
 	}
 
+	onTabChange(event) {
+       	if(event.index === 1){
+			this.exportSvgBus.requestSvg();
+		}
+    }
+
 	exportData() {
 		this.exportSvgBus.requestSvg();
+		const filename = this.controlName.value.trim();
+		const type = this.controlType.value as ExportType;
+		const svg = this.svgFormControl.value;
+		this.storeService.dispatch(
+			new ExportProject({ id: 1, type, filename, svg })
+		);
 	}
+
+	copyToClipBoard() {
+        this.clipboardService.copyFromContent(this.svgFormControl.value);
+    }
 }
