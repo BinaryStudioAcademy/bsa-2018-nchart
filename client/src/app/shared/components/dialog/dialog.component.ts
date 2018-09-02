@@ -33,8 +33,9 @@ export class DialogComponent implements OnInit {
 
 	ngOnInit() {
 		this.formGroup = new FormGroup({
+			projectId: new FormControl(this.projectId),
 			email: new FormControl('', [requiredValidator(), emailValidator()]),
-			accessLevel: new FormControl()
+			accessLevel: new FormControl('1', [])
 		});
 	}
 }
