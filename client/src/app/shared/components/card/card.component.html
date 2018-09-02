@@ -2,15 +2,18 @@
 	<div class="project-card-info">
 		<span>{{status}}</span>
 		<div class="project-card-user">
-			<span>{{userName}}</span>
+			<span class="user-name">{{userName}}</span>
 			<span>{{email}}</span>
 		</div>
 		<div class="project-card-folder">
-			<span>Company: {{companyName}}</span>
-			<span>Group: {{groupName}}</span>
+			<span><b>Company:</b> {{companyName}}</span>
+			<span><b>Group:</b> {{groupName}}</span>
 		</div>
 		<div class="project-card-project-info">
-			<a [routerLink]="['/app/project', projectId]">Project: {{projectName}}</a>
+			<b>Project:&nbsp;</b><a [routerLink]="['/app/project', projectId]"> {{projectName}}</a>
+		</div>
+		<div class="project-access">
+			<span><b>Access: </b> {{accessLevelId}}</span>
 		</div>
 	</div>
 	<div class="project-card-control">
