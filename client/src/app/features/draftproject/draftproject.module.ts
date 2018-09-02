@@ -16,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 import { SharedModule } from '@app/shared/shared.module';
 import { TabViewModule } from 'primeng/tabview';
 import { FileUploadModule } from 'primeng/fileupload';
+import { DialogModule } from 'primeng/dialog';
 import { DimensionSettingsComponent } from '@app/features/draftproject/dimension-settings/dimension-settings.component';
 
 @NgModule({
@@ -26,7 +27,8 @@ import { DimensionSettingsComponent } from '@app/features/draftproject/dimension
 		CommonModule,
 		BrowserModule,
 		BrowserAnimationsModule,
-		FormsModule
+		FormsModule,
+		DialogModule
 	],
 	declarations: [
 		StepperComponent,

@@ -27,6 +27,7 @@ import { DragulaModule } from 'ng2-dragula';
 import { TooltipModule } from 'primeng/tooltip';
 import { TableModule } from 'primeng/table';
 import { TieredMenuModule } from 'primeng/tieredmenu';
+import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
 	imports: [
@@ -54,7 +55,8 @@ import { TieredMenuModule } from 'primeng/tieredmenu';
 		TooltipModule,
 		SpinnerModule,
 		TableModule,
-		TieredMenuModule
+		TieredMenuModule,
+		DialogModule
 	],
 	exports: [
 		ButtonModule,
@@ -81,7 +83,8 @@ import { TieredMenuModule } from 'primeng/tieredmenu';
 		TooltipModule,
 		SpinnerModule,
 		TableModule,
-		TieredMenuModule
+		TieredMenuModule,
+		DialogModule
 	],
 	declarations: []
 })

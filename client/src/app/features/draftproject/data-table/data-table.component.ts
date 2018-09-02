@@ -21,6 +21,11 @@ export class DataTableComponent implements OnInit, OnDestroy {
 	columns: DatasetColumn[];
 	datasetId: SchemeID;
 	data: any[][];
+	display = false;
+
+	showDialog() {
+		this.display = true;
+	}
 	rowItems = (rowId): MenuItem[] => {
 		return [
 			{
