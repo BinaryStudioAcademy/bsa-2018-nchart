@@ -1,14 +1,14 @@
 @import ../variables
 @import ../colors
 
-.project-card-wrp
+.ui-card-content
 	background-color: $backgroundWhiteColor
 	width: 200px
 	display: grid
 	grid-template-columns: 90% 10%
 	padding: 20px
 	box-shadow: 1px 1px 1px 1px grey
-	font-family: $fontFamily
+	font-family: $fontFamily !important
 
 .project-card-user
 	display: grid
@@ -20,10 +20,14 @@
 	display: grid
 	& a
 		text-decoration: none
+		&:visited
+			color: #29166f !important
+		&:hover
+			color: red !important
 
-.project-card-control
-	position: relative
-	& input
-		position: absolute
-		bottom: 0
-		left: 0
+//.project-card-control
+//	position: relative
+//	& input
+//		position: absolute
+//		bottom: 0
+//		left: 0

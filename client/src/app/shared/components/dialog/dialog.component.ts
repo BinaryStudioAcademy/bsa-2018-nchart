@@ -1,15 +1,20 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {FormControl, FormGroup} from '@angular/forms';
 import {
 	requiredValidator,
 	emailValidator
 } from '@app/shared/components/form-field/form-validators';
+import * as projectActions from '@app/store/actions/projects/projects.actions';
+import {StoreService} from '@app/services/store.service';
 
 @Component({
 	selector: 'app-dialog',
 	templateUrl: './dialog.component.html'
 })
 export class DialogComponent implements OnInit {
+	constructor(private storeService: StoreService) {
+	}
+
 	@Input()
 	display: boolean;
 	@Output()
@@ -35,7 +40,14 @@ export class DialogComponent implements OnInit {
 		this.formGroup = new FormGroup({
 			projectId: new FormControl(this.projectId),
 			email: new FormControl('', [requiredValidator(), emailValidator()]),
-			accessLevel: new FormControl('1', [])
+			accessLevelId: new FormControl('3', [])
 		});
+	}
+
+	share(value) {
+		this.storeService.dispatch(
+			new projectActions.ShareProject(value)
+		);
+		this.displayChange.emit(false);
 	}
 }

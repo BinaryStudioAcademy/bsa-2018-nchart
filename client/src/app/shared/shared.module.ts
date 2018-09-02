@@ -8,9 +8,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LinkComponent } from '@app/shared/components/link/link.component';
 import { DragDropComponent } from '@app/shared/components/dragDrop/drag-drop.component';
 import { ChartsModule } from '@app/shared/components/charts/charts.module';
-import { ProjectCardComponent } from '@app/shared/components/projectCard/project-card.component';
 import { DialogComponent } from '@app/shared/components/dialog/dialog.component';
-import {CardComponent} from '@app/shared/components/card/card.component';
+import { CardComponent } from '@app/shared/components/card/card.component';
 
 @NgModule({
 	imports: [
@@ -29,7 +28,6 @@ import {CardComponent} from '@app/shared/components/card/card.component';
 		MainBlockComponent,
 		DragDropComponent,
 		LinkComponent,
-		ProjectCardComponent,
 		DialogComponent,
 		CardComponent
 	],
@@ -38,7 +36,6 @@ import {CardComponent} from '@app/shared/components/card/card.component';
 		DragDropComponent,
 		MainBlockComponent,
 		LinkComponent,
-		ProjectCardComponent,
 		DialogComponent,
 		CardComponent
 	]

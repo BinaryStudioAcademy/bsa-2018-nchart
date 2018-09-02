@@ -18,7 +18,7 @@ export const isProjectDataset = (id?: SchemeID) => (
 ): boolean => {
 	const selectedProject = project(id)(state);
 
-	if (selectedProject) {
+	if (selectedProject && selectedProject.datasets) {
 		return !!selectedProject.datasets.length;
 	}
 

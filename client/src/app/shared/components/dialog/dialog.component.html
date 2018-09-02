@@ -1,10 +1,10 @@
 <div class="ui-dialog-wrp">
-	<p-dialog 
+	<p-dialog
 	[modal]="true"
-	[draggable]="false"  
+	[draggable]="false"
 	[width]="350"
-	[minWidth]="200" 
-	[minY]="70" 
+	[minWidth]="200"
+	[minY]="70"
 	[maximizable]="false"
 	[baseZIndex]="10000"
 	[(visible)]="display"
@@ -13,10 +13,10 @@
 	<p-header>
 		Share project
 	</p-header>
-		<app-input-text  
+		<app-input-text
 			class="ui-fluid"
 			type="text"
-			label="Email" 
+			label="Email"
 			[control]="formGroup.controls.email">
 		</app-input-text>
 		<form [formGroup]="formGroup">
@@ -24,18 +24,18 @@
 				<div class="ui-g-12">
 					<p-radioButton
 						name="group"
-		 				value='1' 
-		 				label="Read" 
-						formControlName="accessLevel"
+		 				value='3'
+		 				label="Read"
+						formControlName="accessLevelId"
 						inputId="opt1">
 					</p-radioButton>
 				</div>
 				<div class="ui-g-12">
-					<p-radioButton 
+					<p-radioButton
 						name="group"
-						value='2' 
-						label="Read/Write" 
-						formControlName="accessLevel" 
+						value='2'
+						label="Read/Write"
+						formControlName="accessLevelId"
 						inputId="opt2">
 					</p-radioButton>
 				</div>
@@ -43,10 +43,10 @@
 		</form>
 		{{formGroup.value | json}}
 		<p-footer>
-				<app-button label="Send" (click)="display=false"></app-button>
+				<app-button label="Send" [disabled]="!formGroup.valid" (onclick)="share(formGroup.value)"></app-button>
 		</p-footer>
 	</p-dialog>
-	
+
 </div>
 
 <!--<label for="email">Email: </label><input type="email" id="email">-->
