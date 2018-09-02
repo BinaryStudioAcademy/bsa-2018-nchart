@@ -1,6 +1,5 @@
 <p-card>
 	<div class="project-card-info">
-		<span>{{status}}</span>
 		<div class="project-card-user">
 			<span class="user-name">{{userName}}</span>
 			<span>{{email}}</span>
@@ -13,7 +12,7 @@
 			<b>Project:&nbsp;</b><a [routerLink]="['/app/project', projectId]"> {{projectName}}</a>
 		</div>
 		<div class="project-access">
-			<span><b>Access: </b> {{accessLevelId}}</span>
+			<span><b>Access: </b> {{status}}</span>
 		</div>
 	</div>
 	<div class="project-card-control">
