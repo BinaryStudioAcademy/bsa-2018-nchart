@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
 	selector: 'app-project-card',
@@ -9,11 +9,11 @@ export class ProjectCardComponent implements OnInit {
 	display = false;
 	itemsObjs = [
 		{
-			label: 'Rename',
+			label: 'Rename'
 			// icon: 'fa fa-plus'
 		},
 		{
-			label: 'Delete',
+			label: 'Delete'
 			// icon: 'fa fa-plus'
 		},
 		{
@@ -25,8 +25,7 @@ export class ProjectCardComponent implements OnInit {
 		}
 	];
 
-	constructor() {
-	}
+	constructor() {}
 
 	@Input()
 	companyName: string;
@@ -49,8 +48,7 @@ export class ProjectCardComponent implements OnInit {
 	@Input()
 	accessLevelId: number;
 
-	ngOnInit() {
-	}
+	ngOnInit() {}
 
 	shareDialog() {
 		this.display = true;

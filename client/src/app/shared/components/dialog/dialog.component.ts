@@ -1,20 +1,27 @@
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import {
+	requiredValidator,
+	emailValidator
+} from '@app/shared/components/form-field/form-validators';
 
 @Component({
 	selector: 'app-dialog',
 	templateUrl: './dialog.component.html'
 })
 export class DialogComponent implements OnInit {
-
 	@Input()
 	display: boolean;
-	@Output() displayChange = new EventEmitter<boolean>();
+	@Output()
+	displayChange = new EventEmitter<boolean>();
 
 	@Input()
 	projectId: number;
 
 	@Input()
 	accessLevelId: number;
+
+	formGroup: FormGroup;
 
 	// showDialog() {
 	// 	this.display = true;
@@ -25,5 +32,9 @@ export class DialogComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.formGroup = new FormGroup({
+			email: new FormControl('', [requiredValidator(), emailValidator()]),
+			accessLevel: new FormControl()
+		});
 	}
 }
