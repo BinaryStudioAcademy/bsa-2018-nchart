@@ -1,7 +1,9 @@
 import { combineReducers } from '@ngrx/store';
 import { ProjectsActionConstants } from '@app/store/actions/projects/projects.action-types';
+import { DatasetActionConstants } from '@app/store/actions/datasets/datasets.action-types';
 import { Actions as projectActions } from '@app/store/actions/projects/projects.actions';
 import { Actions as chartActions } from '@app/store/actions/charts/charts.actions';
+import { Actions as datasetActions } from '@app/store/actions/datasets/datasets.actions';
 import { ChartsActionConstants } from '@app/store/actions/charts/charts.action-types';
 import { UserChart, UserChartsState } from '@app/models/user-chart-store.model';
 import { NormalizedSchemeField } from '@app/models/normalizr.model';
@@ -13,7 +15,7 @@ export const initialState: UserChartsState = {
 
 const byId = (
 	state = initialState.byId,
-	action: projectActions | chartActions
+	action: projectActions | chartActions | datasetActions
 ): NormalizedSchemeField<UserChart> => {
 	switch (action.type) {
 		case ProjectsActionConstants.LOAD_ONE_PROJECT__COMPLETE:
@@ -36,6 +38,11 @@ const byId = (
 					]
 				}
 			};
+		case DatasetActionConstants.DELETE_COLUMN:
+			return {
+
+			};
+
 		default:
 			return state;
 	}

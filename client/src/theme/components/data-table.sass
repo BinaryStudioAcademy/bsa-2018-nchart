@@ -40,7 +40,7 @@
 	.ui-dialog-titlebar
 		padding: 0 0.6rem
 	&.ui-widget .ui-dialog-content
-		// padding: 1.2rem 1rem
+		padding: 1em 1.5em
 	.ui-dialog-footer
 		padding: 0 1rem
 		padding-bottom: 1rem
@@ -62,10 +62,23 @@
 	width: calc(100% - 2rem)!important
 	height: calc(100% - 2rem)!important
 	border-radius: 0
+	.custom-chart-container[_ngcontent-c9]
+		margin: 0
+		padding: 0
+	app-chart[_ngcontent-c9]
+		width: 100%
+		padding: 0
+	.ui-dialog.ui-widget .ui-dialog-content
+		padding: 0
+	&.fullscreen-chart
+		&.ui-dialog
+			&.ui-widget .ui-dialog-content
+				padding: 0
 .full-screen-btn
 	position: absolute
 	top: 0.8rem
 	right: 0.4rem
+
 .data-table
 	.ui-modal>.ui-widget-content
 		top: 0!important
