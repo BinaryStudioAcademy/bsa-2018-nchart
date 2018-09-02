@@ -52,7 +52,7 @@ class ProjectService {
 						}
 					},
 					(status, payload, callback) => {
-						if (!status) {
+						if (!status || (!groupId && !defaultGroupId)) {
 							return callback(null, payload);
 						}
 						if (groupId) {
@@ -139,6 +139,12 @@ class ProjectService {
 				res.locals.user.defaultGroupId,
 				null
 			);
+		} if (!obj.groupId && !res.locals.user) {
+			return this.createProject(
+				obj,
+				null,
+				null
+			);
 		}
 		// obj.groupId, res.locals.user
 		return new Promise((resolve, reject) => {
@@ -185,7 +191,13 @@ class ProjectService {
 				[
 					callback => {
 						if (!res.locals.user) {
-							return callback(null);
+							return this.ProjectRepository.publicProject(id)
+								.then(data => {
+									if (data === null) {
+										return callback(null);
+									}
+									return callback('User has no rights on this project', null);
+								});
 						}
 						return this.ProjectRepository.findByUserIdAndProjectId({
 							projectId: id,

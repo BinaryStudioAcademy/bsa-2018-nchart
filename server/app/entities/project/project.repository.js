@@ -246,6 +246,10 @@ class ProjectRepository extends Repository {
 			]
 		});
 	}
+
+	publicProject(projectId) {
+		return this.groupProjectModel.findOne({ where: { projectId } });
+	}
 }
 
 module.exports = new ProjectRepository();
