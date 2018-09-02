@@ -4,6 +4,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { DialogModule } from 'primeng/dialog';
+import { CardModule } from 'primeng/card';
+
 // Forms
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -51,7 +53,8 @@ import { TooltipModule } from 'primeng/tooltip';
 		ReactiveFormsModule,
 		TooltipModule,
 		SpinnerModule,
-		DialogModule
+		DialogModule,
+		CardModule
 	],
 	exports: [
 		ButtonModule,
@@ -77,7 +80,8 @@ import { TooltipModule } from 'primeng/tooltip';
 		ReactiveFormsModule,
 		TooltipModule,
 		SpinnerModule,
-		DialogModule
+		DialogModule,
+		CardModule
 	],
 	declarations: []
 })

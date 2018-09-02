@@ -1,0 +1,22 @@
+<p-card title="Simple Card">
+	<div class="project-card-wrp">
+		<div class="project-card-info">
+			<div class="project-card-user">
+				<span>{{userName}}</span>
+				<span>{{email}}</span>
+			</div>
+			<div class="project-card-folder">
+				<span>Company: {{companyName}}</span>
+				<span>Group: {{groupName}}</span>
+			</div>
+			<div class="project-card-project-info">
+				<a [routerLink]="['/app/project', projectId]">Project: {{projectName}}</a>
+			</div>
+		</div>
+		<div class="project-card-control">
+			<app-button-action [items]="itemsObjs"></app-button-action>
+			<!--<app-checkbox [value]=""></app-checkbox>-->
+			<app-dialog [projectId]="projectId" [accessLevelId]="accessLevelId" [(display)]="display"></app-dialog>
+		</div>
+	</div>
+</p-card>
