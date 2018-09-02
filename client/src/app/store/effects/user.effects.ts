@@ -24,6 +24,7 @@ import {concatMap, withLatestFrom} from 'rxjs/internal/operators';
 import {StoreService} from '@app/services/store.service';
 import {activeProjectId} from '@app/store/selectors/projects.selectors';
 import {SaveProject} from '@app/store/actions/projects/projects.actions';
+import {isRequiredDimensionMatched} from '@app/store/selectors/userCharts';
 
 @Injectable()
 export class UserEffects {
@@ -65,15 +66,16 @@ export class UserEffects {
 		ofType(UserActionConstants.LOGIN),
 		switchMap((action: Login) =>
 			this.api.login(action.payload.user).pipe(
-				withLatestFrom(this.storeService.createSubscription(activeProjectId())),
-				concatMap(([value, aProjectId]) => {
+				withLatestFrom(this.storeService.createSubscription()),
+				concatMap(([value, state]) => {
 					if (value.isSuccess) {
 						const { user } = value.payload;
-
-						if (aProjectId) {
+						const canSaveProj = isRequiredDimensionMatched()(state);
+						if (canSaveProj) {
+							const id = activeProjectId()(state);
 							return [
 								new LoginComplete({user}),
-								new SaveProject({id: aProjectId})
+								new SaveProject({id})
 							] as any;
 						} else {
 							return [
@@ -103,15 +105,17 @@ export class UserEffects {
 		ofType(UserActionConstants.REGISTER),
 		switchMap((action: Register) =>
 			this.api.register({ user: action.payload.user }).pipe(
-				withLatestFrom(this.storeService.createSubscription(activeProjectId())),
-				concatMap(([value, aProjectId]) => {
+				withLatestFrom(this.storeService.createSubscription()),
+				concatMap(([value, state]) => {
 					if (value.isSuccess) {
 						const { user } = value.payload;
+						const canSaveProj = isRequiredDimensionMatched()(state);
 
-						if (aProjectId) {
+						if (canSaveProj) {
+							const id = activeProjectId()(state);
 							return [
 								new RegisterComplete({ user }),
-								new SaveProject({ id: aProjectId })
+								new SaveProject({ id })
 							] as any;
 						} else {
 							return [
