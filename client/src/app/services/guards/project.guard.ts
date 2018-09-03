@@ -94,11 +94,20 @@ export class ProjectGuard
 				this.storeService.createSubscription(isProjectDataset())
 			),
 			map(([isDraft, hasDataset]) => {
+				if (nextState.url.includes('login')) {
+					return true;
+				}
 				if (nextState.url.includes('app/project/')) {
 					return !isDraft;
 				} else {
 					return !hasDataset;
 				}
+			}),
+			switchMap(canLeave => {
+				if (!canLeave) {
+					return component.canDeactivate();
+				}
+				return of(canLeave);
 			})
 		);
 	}

@@ -7,11 +7,77 @@
 	<div class="main-content">
 	<app-project-name id="load" #viewItem [projectName]="projectName" (setProjectName)="changeProjectName($event)">
 	</app-project-name>
-		<app-load-data *ngIf="isShowLoad"></app-load-data>
+	<div *ngIf="listPages.length">
+		<div
+			class="page"
+			*ngFor="let pageId of listPages">
+			<span
+				(click)="select(pageId)"
+				[ngClass]="{'active': activeCharId === pageId}"
+			>{{pageId}}</span>
+			<span
+				(click)="removePage(pageId)"
+				*ngIf="activeCharId !== pageId"
+			>(delete page)</span>
+		</div>
+		<span (click)="displayModalDataset = true">new page</span>
+	</div>
+		<app-load-data 	*ngIf="!(getIsActiveChartDataset() | async)"></app-load-data>
 		<app-data-table *ngIf="isDataset()" id="table" #viewItem></app-data-table>
 		<app-list-charts *ngIf="isDataset()" id="charts" #viewItem></app-list-charts>
 		<app-dimension-settings *ngIf="isDataset()" id="settings" #viewItem></app-dimension-settings>
 		<app-custom-chart *ngIf="isCharts()" id="chart" #viewItem></app-custom-chart>
 		<app-export *ngIf="isCharts()" id="export" #viewItem></app-export>
+
+
+		<p-dialog header="Confirmation"
+				  [(visible)]="display"
+				  [modal]="true"
+				  [responsive]="true"
+				  [closable]="false"
+				  [width]="350"
+				  [minWidth]="200"
+				  [minY]="70"
+				  [baseZIndex]="10000">
+			<span>
+				Are you sure that you want to leave page with unsaved project?
+			</span>
+			<p-footer class="modal-controls">
+				<app-button
+					label="Yes"
+					(onclick)="accept()"
+				></app-button>
+				<app-button
+					label="No"
+					type="secondary"
+					(onclick)="reject()"
+				></app-button>
+			</p-footer>
+		</p-dialog>
+
+		<p-dialog header="Confirmation"
+				  [(visible)]="displayModalDataset"
+				  [modal]="true"
+				  [responsive]="true"
+				  [closable]="false"
+				  [width]="350"
+				  [minWidth]="200"
+				  [minY]="70"
+				  [baseZIndex]="10000">
+			<span>
+				Do you want use current dataset?
+			</span>
+			<p-footer class="modal-controls">
+				<app-button
+					label="Yes"
+					(onclick)="acceptDataset()"
+				></app-button>
+				<app-button
+					label="No"
+					type="secondary"
+					(onclick)="rejectDataset()"
+				></app-button>
+			</p-footer>
+		</p-dialog>
 	</div>
 </div>

@@ -35,6 +35,9 @@ export class DragDropComponent implements OnInit, OnDestroy {
 	dimensionsSettings = [];
 
 	@Input()
+	activeId;
+
+	@Input()
 	columns: UserMappingColumn[] = [];
 	public dimensions = [];
 	@Output()
@@ -92,7 +95,9 @@ export class DragDropComponent implements OnInit, OnDestroy {
 							targetModel.splice(targetModel.indexOf(item), 1);
 						} else {
 							this.setDimension.emit({
-								dimensionId: target['dataset'].dimensionid,
+								dimensionId: `${this.activeId}-${
+									target['dataset'].dimensionid
+								}`,
 								columnId: item.id
 							});
 						}
@@ -139,7 +144,7 @@ export class DragDropComponent implements OnInit, OnDestroy {
 
 	remove(item, { target }) {
 		this.removeDimension.emit({
-			dimensionId: target['dataset'].dimensionid,
+			dimensionId: `${this.activeId}-${target['dataset'].dimensionid}`,
 			columnId: item.id
 		});
 	}

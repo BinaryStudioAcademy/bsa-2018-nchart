@@ -10,6 +10,8 @@ import { SchemeID } from '@app/models/normalizr.model';
 import { activeDatasetId } from '@app/store/selectors/dataset.selectors';
 import { MenuItem } from 'primeng/api';
 import { v4 } from 'uuid';
+import { RemovePageProject } from '@app/store/actions/projects/projects.actions';
+import { getActiveChartId } from '@app/store/selectors/userCharts';
 
 @Component({
 	selector: 'app-data-table',
@@ -23,6 +25,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
 	data: any[][];
 	rowIds: number[] = [];
 	display = false;
+	aChart: SchemeID;
 
 	showDialog() {
 		this.display = true;
@@ -213,6 +216,12 @@ export class DataTableComponent implements OnInit, OnDestroy {
 					this.datasetId = id;
 				},
 				selector: activeDatasetId()
+			},
+			{
+				selector: getActiveChartId(),
+				subscriber: aChart => {
+					this.aChart = aChart;
+				}
 			}
 		]);
 		this.rowIds = this.data.map((d, i) => i);
@@ -233,6 +242,12 @@ export class DataTableComponent implements OnInit, OnDestroy {
 				id: this.columns[i].id,
 				title: title
 			})
+		);
+	}
+
+	remove() {
+		this.storeService.dispatch(
+			new RemovePageProject({ chartId: this.aChart })
 		);
 	}
 

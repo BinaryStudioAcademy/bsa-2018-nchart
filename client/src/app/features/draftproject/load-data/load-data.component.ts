@@ -28,10 +28,7 @@ export class LoadDataComponent implements OnInit {
 	activeTab: number;
 	datasetSamples: any;
 
-	pasteDataControl = new FormControl(
-		'',
-		Validators.required
-	);
+	pasteDataControl = new FormControl('', Validators.required);
 
 	pasteUrlControl = new FormControl('', [
 		patternValidator('Invalid URL', RegExp('https?://.+')),

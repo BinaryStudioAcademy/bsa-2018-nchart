@@ -13,6 +13,14 @@ export const project = (id?: SchemeID) => (state: AppState): Project =>
 export const activeProjectId = () => (state: AppState): SchemeID =>
 	state.projects.active ? state.projects.active : null;
 
+export const projectCharts = () => (state: AppState) => {
+	const proj = project()(state);
+	if (proj) {
+		return proj.charts;
+	}
+	return [];
+};
+
 export const isProjectDataset = (id?: SchemeID) => (
 	state: AppState
 ): boolean => {

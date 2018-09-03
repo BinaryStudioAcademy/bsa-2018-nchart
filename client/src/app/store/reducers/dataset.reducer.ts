@@ -5,6 +5,9 @@ import { Actions as datasetsActions } from '@app/store/actions/datasets/datasets
 import { DatasetState, Dataset } from '@app/models/dataset.model';
 import { combineReducers } from '@ngrx/store';
 import { NormalizedSchemeField } from '@app/models/normalizr.model';
+import { Actions as chartsActions } from '@app/store/actions/charts/charts.actions';
+import { ChartsActionConstants } from '@app/store/actions/charts/charts.action-types';
+import { omit } from 'lodash';
 
 export const initialState: DatasetState = {
 	byId: {},
@@ -13,7 +16,7 @@ export const initialState: DatasetState = {
 
 const byId = (
 	state = initialState.byId,
-	action: projectActions | datasetsActions
+	action: projectActions | datasetsActions | chartsActions
 ): NormalizedSchemeField<Dataset> => {
 	switch (action.type) {
 		case ProjectsActionConstants.LOAD_ONE_PROJECT__COMPLETE:
@@ -123,6 +126,10 @@ const byId = (
 						]
 					}
 				}
+			};
+		case ChartsActionConstants.REMOVE_CHART__COMPLETE:
+			return {
+				...omit(state, action.payload.datasetId)
 			};
 		default:
 			return state;

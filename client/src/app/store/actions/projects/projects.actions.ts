@@ -56,6 +56,26 @@ export class ChangeProjectName extends AppAction<{
 	readonly type = ProjectsActionConstants.CHANGE_PROJECT_NAME;
 }
 
+export class RemovePageProject extends AppAction<{
+	chartId: SchemeID;
+}> {
+	readonly type = ProjectsActionConstants.REMOVE_PAGE_PROJECT;
+}
+
+export class RemoveChartProject extends AppAction<{
+	chartId: SchemeID;
+	projectId: SchemeID;
+}> {
+	readonly type = ProjectsActionConstants.REMOVE_CHART_PROJECT;
+}
+
+export class RemoveDatasetProject extends AppAction<{
+	datasetId: SchemeID;
+	projectId: SchemeID;
+}> {
+	readonly type = ProjectsActionConstants.REMOVE_DATASET_PROJECT;
+}
+
 export class SaveProject extends AppAction<{ id: SchemeID }> {
 	readonly type = ProjectsActionConstants.SAVE_PROJECT;
 }
@@ -134,6 +154,9 @@ export type Actions =
 	| LoadOneProjectComplete
 	| LoadOneProjectFailed
 	| ChangeProjectName
+	| RemovePageProject
+	| RemoveChartProject
+	| RemoveDatasetProject
 	| SaveProject
 	| SaveProjectComplete
 	| UpdateProjectComplete

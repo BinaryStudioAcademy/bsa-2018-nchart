@@ -39,7 +39,9 @@ export class CustomChartComponent implements OnInit, OnDestroy {
 			{
 				selector: getActiveChart(),
 				subscriber: t => {
-					this.chartType = t.sysName;
+					if (t) {
+						this.chartType = t.sysName;
+					}
 				}
 			},
 			{
@@ -70,21 +72,23 @@ export class CustomChartComponent implements OnInit, OnDestroy {
 			{
 				selector: getData(),
 				subscriber: data => {
-					switch (this.chartType) {
-						case 'barChart':
-							this.data = this.barChartService.getData(data);
-							break;
-						case 'pieChart':
-							this.data = this.pieChartService.getData(data);
-							break;
-						case 'scatterplot':
-							this.data = this.scatterplotChartService.getData(
-								data
-							);
-							break;
+					if (!!data.length) {
+						switch (this.chartType) {
+							case 'barChart':
+								this.data = this.barChartService.getData(data);
+								break;
+							case 'pieChart':
+								this.data = this.pieChartService.getData(data);
+								break;
+							case 'scatterplot':
+								this.data = this.scatterplotChartService.getData(
+									data
+								);
+								break;
 
-						default:
-							break;
+							default:
+								break;
+						}
 					}
 				}
 			}

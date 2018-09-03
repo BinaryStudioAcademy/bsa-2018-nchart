@@ -31,7 +31,7 @@ const loginSchema = {
 	additionalProperties: true,
 	required: ['email', 'password'],
 	properties: {
-		email: { type: 'string', pattern: emailPattern.source },
+		email: { type: 'string', pattern: emailPattern.source, flags: 'i' },
 		password: {
 			type: 'string',
 			minLength: 5,

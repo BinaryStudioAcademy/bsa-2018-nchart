@@ -47,6 +47,55 @@ export const mappingColumns = () => (state: AppState): UserMappingColumn[] => {
 export const getActiveChartId = () => (state: AppState) =>
 	state.userCharts.active;
 
+export const getActiveDatasetId = () => (state: AppState) => {
+	const uChart = userChart()(state);
+
+	if (uChart) {
+		return uChart.datasetId;
+	}
+	return null;
+};
+
+export const hasChartDataset = () => (state: AppState) => {
+	const uChart = userChart()(state);
+
+	if (uChart && uChart.datasetId) {
+		return true;
+	}
+
+	return false;
+};
+
+export const getAllUserCharts = () => (state: AppState): UserChart[] => {
+	const aProject = project()(state);
+
+	if (aProject) {
+		return aProject.charts.map(id => state.userCharts.byId[id]);
+	}
+
+	return null;
+};
+
+export const isRepeatDataset = (userChartId: SchemeID) => (state: AppState) => {
+	const userCharts = getAllUserCharts()(state);
+
+	if (userCharts) {
+		const currentChart = userChart(userChartId)(state);
+
+		const counts = userCharts.filter(
+			chart => chart.datasetId === currentChart.datasetId
+		).length;
+
+		if (counts > 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	return false;
+};
+
 export const mappingDimensions = () => (state: AppState): any => {
 	const c: UserChart = userChart()(state);
 
@@ -70,7 +119,9 @@ export const mappingDimensions = () => (state: AppState): any => {
 
 			return {
 				value: value,
-				...state.defaultChartSettings.dimensionSettings[id]
+				...state.defaultChartSettings.dimensionSettings[
+					(id as string).slice(37)
+				]
 			};
 		});
 	}
@@ -161,7 +212,10 @@ export const getData = () => (state: AppState) => {
 
 		if (dS) {
 			const values = uC.dimensionSettings.map(id => ({
-				name: state.defaultChartSettings.dimensionSettings[id].sysName,
+				name:
+					state.defaultChartSettings.dimensionSettings[
+						(id as string).slice(37)
+					].sysName,
 				values: state.userChartSettings.dimensionSettings[id].columnIds
 					.map(el => ({
 						name: state.datasetColumns[el].title,

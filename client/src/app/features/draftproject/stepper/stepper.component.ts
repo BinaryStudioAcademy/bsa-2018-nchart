@@ -6,6 +6,9 @@ import { trigger, style, animate, transition } from '@angular/animations';
 import { SchemeID } from '@app/models/normalizr.model';
 import { activeProjectId } from '../../../store/selectors/projects.selectors';
 import { SaveProject } from '../../../store/actions/projects/projects.actions';
+import { isActiveChartDataset } from '@app/store/selectors/dataset.selectors';
+import { isVerifiedToken } from '@app/store/selectors/user.selectors';
+import { Go } from '@app/store/actions/router/router.actions';
 
 export const steps = [
 	{
@@ -68,9 +71,12 @@ export class StepperComponent implements OnInit {
 	@Input()
 	errors: number[];
 
+	btnMsg = 'Save';
+	isAuth: boolean;
 	stepsList = steps;
 	stepIconClass: any;
 	disableSaveBtn = true;
+	stepsStageOne = true;
 	stepsStageTwo = false;
 	stepsStageThree = false;
 	activeProjectId: SchemeID;
@@ -121,9 +127,31 @@ export class StepperComponent implements OnInit {
 		this.stepIconClass = this.getIconClasses(this.selectedStep.id);
 		this.storeService.connect([
 			{
+				selector: isVerifiedToken(),
+				subscriber: isAuth => {
+					this.isAuth = isAuth;
+					if (isAuth) {
+						this.btnMsg = 'Save';
+					} else {
+						this.btnMsg = 'Login and save';
+					}
+				}
+			},
+			{
 				selector: isProjectDataset(),
 				subscriber: isReady => {
 					this.stepsStageTwo = isReady;
+				}
+			},
+			{
+				selector: isActiveChartDataset(),
+				subscriber: isActive => {
+					this.stepsStageOne = !isActive;
+					if (isActive) {
+						this.selectChart(2);
+					} else {
+						this.selectChart(1);
+					}
 				}
 			},
 			{
@@ -145,7 +173,7 @@ export class StepperComponent implements OnInit {
 	isStepVisible(id) {
 		switch (id) {
 			case 1:
-				return true;
+				return this.stepsStageOne;
 			case 2:
 			case 3:
 			case 4:
@@ -157,8 +185,12 @@ export class StepperComponent implements OnInit {
 	}
 
 	saveProject() {
-		this.storeService.dispatch(
-			new SaveProject({ id: this.activeProjectId })
-		);
+		if (this.isAuth) {
+			this.storeService.dispatch(
+				new SaveProject({ id: this.activeProjectId })
+			);
+		} else {
+			this.storeService.dispatch(new Go({ path: ['/login'] }));
+		}
 	}
 }

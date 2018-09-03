@@ -32,6 +32,7 @@ import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
 	imports: [
+		DialogModule,
 		ButtonModule,
 		SplitButtonModule,
 		PasswordModule,
@@ -55,7 +56,6 @@ import { DialogModule } from 'primeng/dialog';
 		ReactiveFormsModule,
 		TooltipModule,
 		SpinnerModule,
-		DialogModule,
 		CardModule,
 		TableModule,
 		TieredMenuModule

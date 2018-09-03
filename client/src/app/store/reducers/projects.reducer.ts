@@ -96,6 +96,45 @@ const byId = (
 			return {
 				...omit(state, action.payload.id)
 			};
+		case constants.REMOVE_CHART_PROJECT:
+			return {
+				...state,
+				[action.payload.projectId]: {
+					...state[action.payload.projectId],
+					charts: [
+						...state[action.payload.projectId].charts.filter(
+							id => id !== action.payload.chartId
+						)
+					]
+				}
+			};
+		case constants.REMOVE_DATASET_PROJECT:
+			return {
+				...state,
+				[action.payload.projectId]: {
+					...state[action.payload.projectId],
+					datasets: [
+						...state[action.payload.projectId].datasets.filter(
+							id => id !== action.payload.datasetId
+						)
+					]
+				}
+			};
+		case ChartsActionConstants.REMOVE_CHART__COMPLETE: {
+			const activeProjectId = action.payload.projectId;
+			return {
+				...state,
+				[activeProjectId]: {
+					...state[activeProjectId],
+					charts: state[activeProjectId].charts.filter(
+						chId => chId !== action.payload.id
+					),
+					datasets: state[activeProjectId].datasets.filter(
+						dId => dId !== action.payload.datasetId
+					)
+				}
+			};
+		}
 		default:
 			return state;
 	}
