@@ -1,20 +1,22 @@
 <p-card>
 	<div class="project-card-info">
 		<div class="project-card-user">
-			<!-- <b>Project:&nbsp;</b><a [routerLink]="['/app/project', projectId]"> {{projectName}}</a> -->
-			<a  class="user-name" [routerLink]="['/app/project', projectId]"> {{projectName}}</a>
-			<!-- <span>{{email}}</span> -->
+			<a class="project-name" [routerLink]="['/app/project', projectId]"> {{projectName}}</a>
+		</div>
+		<!--todo: make those look like tags-->
+		<div class="user-charts">
+			<ul>
+				<li *ngFor="let chart of userCharts">
+					{{ chart }}
+				</li>
+			</ul>
 		</div>
 		<div class="project-card-folder">
 			<span><b>Owner:</b> {{userName}}</span>
-			<!-- <span><b>Group:</b> {{groupName}}</span> -->
 		</div>
-		<!-- <div class="project-card-project-info">
-			<b>Project:&nbsp;</b><a [routerLink]="['/app/project', projectId]"> {{projectName}}</a>
-		</div> -->
-		<!-- <div class="project-access">
-			<span><b>Access: </b> {{status}}</span>
-		</div> -->
+		<div>
+			<b>Last update:</b><span>{{date}}</span>
+		</div>
 	</div>
 	<div class="project-card-control">
 		<app-button-action [items]="itemsObjs"></app-button-action>

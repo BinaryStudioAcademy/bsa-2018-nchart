@@ -397,6 +397,7 @@ class ProjectService {
 						projects.push({
 							id: pj.project.dataValues.id,
 							name: pj.project.dataValues.name,
+							updatedAt: pj.project.dataValues.updatedAt,
 							groupName: el.group.name,
 							companyName: el.group.company.name,
 							accessLevelId: pj.dataValues.accessLevelId,
