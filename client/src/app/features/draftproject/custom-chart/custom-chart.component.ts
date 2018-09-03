@@ -28,6 +28,11 @@ export class CustomChartComponent implements OnInit, OnDestroy {
 	customizeSettings;
 	chartType: string;
 	customizeForm: FormGroup;
+	display = false;
+
+	showDialog() {
+		this.display = true;
+	}
 
 	ngOnInit() {
 		this.disconnect = this.storeService.connect([

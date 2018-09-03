@@ -36,6 +36,7 @@ const byId = (
 					]
 				}
 			};
+
 		default:
 			return state;
 	}

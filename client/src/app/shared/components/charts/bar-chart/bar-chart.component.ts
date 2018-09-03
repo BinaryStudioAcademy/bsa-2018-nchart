@@ -69,7 +69,7 @@ export class BarChartComponent implements OnInit, OnChanges {
 			d3.select('svg').remove();
 			d3.select('.d3-tip').remove();
 			const svg = d3
-				.select('.bar-chart')
+				.selectAll('.bar-chart')
 				.append('svg')
 				.attr('width', width)
 				.attr('height', height)

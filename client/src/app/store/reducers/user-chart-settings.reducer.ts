@@ -3,7 +3,9 @@ import { Actions as projectActions } from '@app/store/actions/projects/projects.
 import { Actions as chartActions } from '@app/store/actions/charts/charts.actions';
 import { UserChartSettingsState } from '@app/models/chart.model';
 import { combineReducers } from '@ngrx/store';
-import { ChartsActionConstants } from '@app/store/actions/charts/charts.action-types';
+import { ChartsActionConstants as constants } from '@app/store/actions/charts/charts.action-types';
+import { DatasetActionConstants } from '@app/store/actions/datasets/datasets.action-types';
+import { Actions as datasetsActions } from '@app/store/actions/datasets/datasets.actions';
 
 export const initialState: UserChartSettingsState = {
 	dimensionSettings: {},
@@ -12,21 +14,21 @@ export const initialState: UserChartSettingsState = {
 
 const dimensionSettings = (
 	state = initialState.dimensionSettings,
-	action: projectActions | chartActions
+	action: projectActions | chartActions | datasetsActions
 ) => {
 	switch (action.type) {
 		case ProjectsActionConstants.LOAD_ONE_PROJECT__COMPLETE:
 			return action.payload.entities.dimensionSetting;
-		case ChartsActionConstants.CREATE_CHART__COMPLETE:
+		case constants.CREATE_CHART__COMPLETE:
 			return {
 				...state,
 				...action.payload.chart.entities.dimensionSetting
 			};
-		case ChartsActionConstants.SELECT_CHART__COMPLETE:
+		case constants.SELECT_CHART__COMPLETE:
 			return {
 				...action.payload.chart.entities.dimensionSetting
 			};
-		case ChartsActionConstants.SET_DIMENSION:
+		case constants.SET_DIMENSION:
 			return {
 				...state,
 				[action.payload.dimensionId]: {
@@ -37,7 +39,7 @@ const dimensionSettings = (
 					]
 				}
 			};
-		case ChartsActionConstants.REMOVE_DIMENSION: {
+		case constants.REMOVE_DIMENSION: {
 			const removedColumnId = action.payload.columnId;
 			const columnIds = [
 				...state[action.payload.dimensionId].columnIds
@@ -51,7 +53,7 @@ const dimensionSettings = (
 				}
 			};
 		}
-		case ChartsActionConstants.REMOVE_ALL_DIMENSION: {
+		case constants.REMOVE_ALL_DIMENSION: {
 			const dimensions = {
 				...state
 			};
@@ -65,6 +67,19 @@ const dimensionSettings = (
 				...dimensions
 			};
 		}
+		case DatasetActionConstants.DELETE_COLUMN: {
+			return Object.keys(state)
+				.map(key => ({
+					...state[key],
+					columnIds: state[key].columnIds.filter(
+						c => c !== action.payload.columnId
+					)
+				}))
+				.reduce((acc, v) => {
+					acc[v.id] = v;
+					return acc;
+				}, {});
+		}
 		default:
 			return state;
 	}
@@ -77,16 +92,16 @@ const customizeSettings = (
 	switch (action.type) {
 		case ProjectsActionConstants.LOAD_ONE_PROJECT__COMPLETE:
 			return action.payload.entities.customizeSetting;
-		case ChartsActionConstants.CREATE_CHART__COMPLETE:
+		case constants.CREATE_CHART__COMPLETE:
 			return {
 				...state,
 				...action.payload.chart.entities.customizeSetting
 			};
-		case ChartsActionConstants.SELECT_CHART__COMPLETE:
+		case constants.SELECT_CHART__COMPLETE:
 			return {
 				...action.payload.chart.entities.customizeSetting
 			};
-		case ChartsActionConstants.CHANGE_CUSTOM_SETTINGS:
+		case constants.CHANGE_CUSTOM_SETTINGS:
 			const newValues = action.payload;
 			const customValues = {};
 

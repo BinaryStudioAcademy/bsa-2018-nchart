@@ -1,4 +1,4 @@
-export enum DatasetActions {
+export enum DatasetActionConstants {
 	PARSE_PLAIN_TEXT = 'Dataset: PARSE_PLAIN_TEXT',
 	PARSE_FROM_URL = 'Dataset: PARSE_FROM_URL',
 	PARSE_FROM_FILE = 'Dataset: PARSE_FROM_FILE',
@@ -16,5 +16,8 @@ export enum DatasetActions {
 
 	LOAD_SAMPLE = 'Dataset samples: LOAD_SAMPLE',
 	LOAD_SAMPLE__COMPLETE = 'Dataset samples: LOAD_SAMPLE__COMPLETE',
-	LOAD_SAMPLE__FAILED = 'Dataset samples: LOAD_SAMPLE__FAILED'
+	LOAD_SAMPLE__FAILED = 'Dataset samples: LOAD_SAMPLE__FAILED',
+	CHANGE_COLUMN_TYPE = 'Dataset data: CHANGE_COLUMN_TYPE',
+	ADD_NEW_COLUMN = 'Dataset data: ADD_NEW_COLUMN',
+	ADD_NEW_ROW = 'Dataset data: ADD_NEW_ROW'
 }

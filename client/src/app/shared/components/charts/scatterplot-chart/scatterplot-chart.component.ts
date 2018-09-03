@@ -195,7 +195,7 @@ export class ScatterplotChartComponent implements OnChanges {
 		// no need to define a function for fill, this is automatically fill by color.
 		legend
 			.append('rect')
-			.attr('x', width+this.margin.right/2)
+			.attr('x', width + this.margin.right / 2)
 			.attr('width', 18)
 			.attr('height', 18)
 			.style('fill', color);
@@ -204,7 +204,7 @@ export class ScatterplotChartComponent implements OnChanges {
 		// rects are defined at x value equal to width, we define text at width - 6, this will print name of the legends before the rects.
 		legend
 			.append('text')
-			.attr('x', width - 6 + this.margin.right/2)
+			.attr('x', width - 6 + this.margin.right / 2)
 			.attr('y', 9)
 			.attr('dy', '.35em')
 			.style('text-anchor', 'end')

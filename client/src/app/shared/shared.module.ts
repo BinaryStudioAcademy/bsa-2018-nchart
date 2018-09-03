@@ -11,6 +11,8 @@ import { ChartsModule } from '@app/shared/components/charts/charts.module';
 import { DialogComponent } from '@app/shared/components/dialog/dialog.component';
 import { CardComponent } from '@app/shared/components/card/card.component';
 import { DeleteDialogComponent } from '@app/shared/deleteDialog/delete-dialog.component';
+import { TableComponent } from '@app/shared/components/table/table.component';
+import { PopupMenuComponent } from '@app/shared/components/button/popup-menu/popup-menu.component';
 
 @NgModule({
 	imports: [
@@ -31,7 +33,9 @@ import { DeleteDialogComponent } from '@app/shared/deleteDialog/delete-dialog.co
 		LinkComponent,
 		DialogComponent,
 		CardComponent,
-		DeleteDialogComponent
+		DeleteDialogComponent,
+		TableComponent,
+		PopupMenuComponent
 	],
 	declarations: [
 		ActionButtonComponent,
@@ -40,7 +44,9 @@ import { DeleteDialogComponent } from '@app/shared/deleteDialog/delete-dialog.co
 		LinkComponent,
 		DialogComponent,
 		CardComponent,
-		DeleteDialogComponent
+		DeleteDialogComponent,
+		TableComponent,
+		PopupMenuComponent
 	]
 })
 export class SharedModule {}

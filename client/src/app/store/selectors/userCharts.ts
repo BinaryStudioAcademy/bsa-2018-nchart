@@ -136,31 +136,18 @@ export const getCustomizeSettings = () => (state: AppState) => {
 	return [];
 };
 
-export const getIndexCol = colId => (state: AppState) => {
-	const datasetId = state.userCharts.byId[state.userCharts.active].datasetId;
-	return state.datasets.byId[datasetId].modified.columns.indexOf(colId);
-};
-
 export const getColumnValues = (datasetId: SchemeID, columnId: SchemeID) => (
 	state: AppState
 ) => {
 	const dS = dataset(datasetId)(state);
 	if (dS) {
-		const colIndex = dS.modified.columns.indexOf(columnId);
-
-		if (colIndex > -1) {
-			const values = dS.modified.data
-				.map(el =>
-					el.find((d: string) =>
-						d.endsWith(`-${colIndex}-${datasetId}`)
-					)
-				)
-				.filter(el => !!el)
-				.map(el => state.datasetData[el].value);
-			return values;
-		}
-
-		return [];
+		const values = dS.modified.data
+			.map(el =>
+				el.find((d: string) => d.endsWith(`-${columnId}-${datasetId}`))
+			)
+			.filter(el => !!el)
+			.map(el => state.datasetData[el].value);
+		return values;
 	}
 
 	return [];
