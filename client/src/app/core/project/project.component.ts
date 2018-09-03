@@ -26,7 +26,7 @@ import * as ProjectsActions from '@app/store/actions/projects/projects.actions';
 import { project } from '@app/store/selectors/projects.selectors';
 import {
 	getActiveChartId,
-	getActiveDatasetId,
+	getActiveDatasetId, hasChartDataset,
 	isRequiredDimensionMatched
 } from '@app/store/selectors/userCharts';
 import { isActiveChartDataset } from '@app/store/selectors/dataset.selectors';
@@ -203,7 +203,7 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 				}
 			},
 			{
-				selector: isProjectDataset(),
+				selector: hasChartDataset(),
 				subscriber: t => {
 					this.showTable = t;
 				}
