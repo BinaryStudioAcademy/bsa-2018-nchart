@@ -88,6 +88,13 @@ export class StepperComponent implements OnInit {
 
 	constructor(private storeService: StoreService) {}
 
+	isLoadingEl() {
+		if (this.stepsStageTwo && this.stepsStageThree) {
+			return true;
+		}
+		return false;
+	}
+
 	toggleStepper() {
 		this.isVisible = !this.isVisible;
 	}
