@@ -19,7 +19,7 @@ import {Observable, Subject, Subscription} from 'rxjs';
 import * as ProjectsActions from '@app/store/actions/projects/projects.actions';
 import {project} from '@app/store/selectors/projects.selectors';
 import {SchemeID} from '@app/models/normalizr.model';
-import {getActiveDatasetId, isRequiredDimensionMatched} from '@app/store/selectors/userCharts';
+import {getActiveChartId, getActiveDatasetId, isRequiredDimensionMatched} from '@app/store/selectors/userCharts';
 import {isChartsReady} from '@app/store/selectors/charts.selectors';
 import {isActiveChartDataset} from '@app/store/selectors/dataset.selectors';
 import {CreateChart, PickActiveChart} from '@app/store/actions/charts/charts.actions';
@@ -43,7 +43,7 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 	showCharts = false;
 	showTable = false;
 	listPages = [];
-	items;
+	activeCharId: SchemeID;
 	isChartsReady = false;
 	routeParams$: Subscription;
 	subConf = new Subject<boolean>();
@@ -174,20 +174,18 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 				selector: projectCharts(),
 				subscriber: charts => {
 					this.listPages = charts;
-
-					if (charts.length) {
-						this.items = this.listPages.map(id =>
-							({
-								label: id
-							})
-						);
-					}
 				}
 			},
 			{
 				selector: getActiveDatasetId(),
 				subscriber: id => {
 					this.currentDatasetId = id;
+				}
+			},
+			{
+				selector: getActiveChartId(),
+				subscriber: id => {
+					this.activeCharId = id;
 				}
 			},
 			{

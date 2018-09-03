@@ -8,16 +8,20 @@
 	<app-project-name id="load" #viewItem [projectName]="projectName" (setProjectName)="changeProjectName($event)">
 	</app-project-name>
 	<div *ngIf="listPages.length">
-		<span *ngFor="let pageId of listPages">
-			<span (click)="select(pageId)">{{pageId}}</span>
-			<span (click)="removePage(pageId)">delete page</span>
-		</span>
+		<div
+			class="page"
+			*ngFor="let pageId of listPages">
+			<span
+				(click)="select(pageId)"
+				[ngClass]="{'active': activeCharId === pageId}"
+			>{{pageId}}</span>
+			<span
+				(click)="removePage(pageId)"
+				*ngIf="activeCharId !== pageId"
+			>(delete page)</span>
+		</div>
 		<span (click)="displayModalDataset = true">new page</span>
 	</div>
-		<p-tabMenu
-			*ngIf="listPages.length"
-			[model]="items"
-		></p-tabMenu>
 		<app-load-data 	*ngIf="!(getIsActiveChartDataset() | async)"></app-load-data>
 		<app-data-table *ngIf="isDataset()" id="table" #viewItem></app-data-table>
 		<app-list-charts *ngIf="isDataset()" id="charts" #viewItem></app-list-charts>

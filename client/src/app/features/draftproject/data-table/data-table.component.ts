@@ -1,8 +1,6 @@
 import {Component, OnInit, ElementRef, OnDestroy} from '@angular/core';
 import {StoreService} from '@app/services/store.service';
-import {RemoveChart} from '@app/store/actions/charts/charts.actions';
 import {RemovePageProject} from '@app/store/actions/projects/projects.actions';
-import {isUserLoading} from '@app/store/selectors/user.selectors';
 import {getActiveChartId} from '@app/store/selectors/userCharts';
 
 @Component({
