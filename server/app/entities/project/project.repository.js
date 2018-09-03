@@ -257,7 +257,9 @@ class ProjectRepository extends Repository {
 
 	deleteGroupProject(projectId, groupId) {
 		if (groupId) {
-			return this.groupProjectModel.destroy({ where: { projectId, groupId } });
+			return this.groupProjectModel.destroy({
+				where: { projectId, groupId }
+			});
 		}
 		return this.groupProjectModel.destroy({ where: { projectId } });
 	}

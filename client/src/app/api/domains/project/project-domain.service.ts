@@ -68,8 +68,8 @@ export class ProjectDomainService implements ProjectDomain {
 	delete(payload: {
 		projectId: number;
 		accessLevelId: number;
-	}): Observable<ResponseScheme<null>> {
-		return this.httpService.makeRequest<ResponseScheme<null>>(
+	}): Observable<ResponseScheme<any>> {
+		return this.httpService.makeRequest<ResponseScheme<any>>(
 			new ServiceRequest(
 				RequestType.POST,
 				`${this.projectPath}/delete`,

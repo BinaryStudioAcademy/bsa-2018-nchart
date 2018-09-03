@@ -246,9 +246,9 @@ export class ProjectsEffects {
 			this.projectDomainService.delete(action.payload).pipe(
 				map(value => {
 					if (value.isSuccess) {
-						return new projectActions.DeleteOneProjectComplete(
-							value.payload
-						);
+						return new projectActions.DeleteOneProjectComplete({
+							id: action.payload.projectId
+						});
 					}
 					return throwError(new Error('Cant delete project'));
 				}),

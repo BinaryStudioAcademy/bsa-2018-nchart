@@ -30,6 +30,8 @@ const all = (state = initialState.all, action: ProjectsActions) => {
 			return [...state.filter(el => el !== action.payload.oldProjectId)];
 		case constants.LOAD_PROJECTS_INFO__COMPLETE:
 			return action.payload.all;
+		case constants.DELETE_ONE_PROJECT__COMPLETE:
+			return [...state.filter(el => el !== action.payload.id)];
 		default:
 			return state;
 	}
@@ -90,6 +92,10 @@ const byId = (
 			};
 		case constants.LOAD_PROJECTS_INFO__COMPLETE:
 			return action.payload.byId;
+		case constants.DELETE_ONE_PROJECT__COMPLETE:
+			return {
+				...omit(state, action.payload.id)
+			};
 		default:
 			return state;
 	}

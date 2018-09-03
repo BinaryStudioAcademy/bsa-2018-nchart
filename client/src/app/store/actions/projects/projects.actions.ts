@@ -91,7 +91,7 @@ export class LoadProjectsInfoFailed extends FailedAction {
 }
 
 export class ShareProject extends AppAction<{
-	projectId: number;
+	projectId: SchemeID;
 	email: string;
 	accessLevelId: number;
 }> {
@@ -107,13 +107,15 @@ export class ShareProjectFailed extends FailedAction {
 }
 
 export class DeleteOneProject extends AppAction<{
-	projectId: number;
+	projectId: SchemeID;
 	accessLevelId: number;
 }> {
 	readonly type = ProjectsActionConstants.DELETE_ONE_PROJECT;
 }
 
-export class DeleteOneProjectComplete extends AppAction<any> {
+export class DeleteOneProjectComplete extends AppAction<{
+	id: SchemeID;
+}> {
 	readonly type = ProjectsActionConstants.DELETE_ONE_PROJECT__COMPLETE;
 }
 
