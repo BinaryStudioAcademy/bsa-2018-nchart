@@ -18,6 +18,7 @@ import { TabViewModule } from 'primeng/tabview';
 import { FileUploadModule } from 'primeng/fileupload';
 import { CardModule } from 'primeng/card';
 import { DimensionSettingsComponent } from '@app/features/draftproject/dimension-settings/dimension-settings.component';
+import { ClipboardModule } from 'ngx-clipboard';
 
 @NgModule({
 	imports: [
@@ -28,7 +29,8 @@ import { DimensionSettingsComponent } from '@app/features/draftproject/dimension
 		BrowserModule,
 		BrowserAnimationsModule,
 		FormsModule,
-		CardModule
+		CardModule,
+		ClipboardModule
 	],
 	declarations: [
 		StepperComponent,
