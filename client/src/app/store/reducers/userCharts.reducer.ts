@@ -36,6 +36,14 @@ const byId = (
 					]
 				}
 			};
+			case ChartsActionConstants.SET_DATASET_CHART:
+			return {
+				...state,
+				[action.payload.chartId]: {
+					...state[action.payload.chartId],
+					datasetId: action.payload.datatsetId
+				}
+			};
 		default:
 			return state;
 	}
@@ -53,6 +61,8 @@ const active = (
 			return null;
 		case ChartsActionConstants.CREATE_CHART__COMPLETE:
 			return action.payload.chart.chartId;
+		case ChartsActionConstants.PICK_ACTIVE_CHART:
+			return action.payload.id;
 		default:
 			return state;
 	}

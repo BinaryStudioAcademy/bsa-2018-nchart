@@ -34,6 +34,19 @@ export class SelectChart extends AppAction<any> {
 	readonly type = ChartsActionConstants.SELECT_CHART;
 }
 
+export class PickActiveChart extends AppAction<{
+	id: SchemeID
+}> {
+	readonly type = ChartsActionConstants.PICK_ACTIVE_CHART;
+}
+
+export class SetDatasetChart extends AppAction<{
+	datatsetId: SchemeID,
+	chartId: SchemeID
+}> {
+	readonly type = ChartsActionConstants.SET_DATASET_CHART;
+}
+
 export class ChangeCustomSettings extends AppAction<{
 	[key: string]: any;
 }> {
@@ -90,6 +103,8 @@ export type Actions =
 	| LoadCharts
 	| LoadChartsComplete
 	| LoadChartsFailed
+	| SetDatasetChart
+	| PickActiveChart
 	| ChangeCustomSettings
 	| SetDimension
 	| RemoveDimension

@@ -11,11 +11,12 @@ import { datasetScheme } from '@app/schemes/dataset.schema';
 import { normalize } from 'normalizr';
 import { withLatestFrom } from 'rxjs/internal/operators';
 import { getActiveProject } from '@app/store/selectors/projects.selectors';
-import { CreateChart } from '@app/store/actions/charts/charts.actions';
+import {CreateChart, SetDatasetChart} from '@app/store/actions/charts/charts.actions';
 import { StoreService } from '@app/services/store.service';
 import { throwError } from 'rxjs';
 import { ResponseScheme } from '@app/models/response-scheme.model';
 import { DatasetColumn } from '@app/models/dataset.model';
+import { userChart} from '@app/store/selectors/userCharts';
 
 @Injectable()
 export class DatasetEffects {
@@ -78,9 +79,10 @@ export class DatasetEffects {
 						}
 					),
 					withLatestFrom(
-						this.storeService.createSubscription(getActiveProject())
+						this.storeService.createSubscription(getActiveProject()),
+						this.storeService.createSubscription(userChart())
 					),
-					switchMap(([dataset, projectId]) => {
+					switchMap(([dataset, projectId, uChart]) => {
 						const {
 							result: [datasetId],
 							entities
@@ -88,16 +90,31 @@ export class DatasetEffects {
 							this.datasetService.transformDatasets([dataset]),
 							[datasetScheme]
 						);
-						return [
-							new constants.ParseComplete({
-								entities,
-								datasetId,
-								projectId
-							}),
-							new CreateChart({
-								datatsetId: datasetId
-							})
-						];
+
+						if (uChart && !uChart.datasetId) {
+							return [
+								new constants.ParseComplete({
+									entities,
+									datasetId,
+									projectId
+								}),
+								new SetDatasetChart({
+									datatsetId: datasetId,
+									chartId: uChart.id
+								})
+							] as any;
+						} else {
+							return [
+								new constants.ParseComplete({
+									entities,
+									datasetId,
+									projectId
+								}),
+								new CreateChart({
+									datatsetId: datasetId
+								})
+							] as any;
+						}
 					}),
 					catchError(error => {
 						return of(

@@ -73,9 +73,7 @@ export class ChartsEffects {
 					chartTypeId: fchart.id,
 					datasetId: (action as CreateChart).payload.datatsetId,
 					customizeSettings: [...fchart.customizeSettings],
-					dimensionSettings: this.chartService.transformDimensions(
-						fchart.dimensionSettings
-					)
+					dimensionSettings: [...fchart.dimensionSettings]
 				});
 
 				const { result: chartId, entities } = normalize(
@@ -114,6 +112,7 @@ export class ChartsEffects {
 				chartTypeId: chart.id,
 				customizeSettings: [...chart.customizeSettings],
 				dimensionSettings: this.chartService.transformDimensions(
+					aChartId,
 					chart.dimensionSettings
 				)
 			};

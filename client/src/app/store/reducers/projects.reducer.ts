@@ -86,6 +86,28 @@ const byId = (
 			return {
 				...omit(state, action.payload.oldProjectId)
 			};
+		case constants.REMOVE_CHART_PROJECT:
+			return {
+				...state,
+				[action.payload.projectId]: {
+					...state[action.payload.projectId],
+					charts: [
+						...state[action.payload.projectId].charts.filter(id =>
+							id !== action.payload.chartId)
+					]
+				}
+			};
+		case constants.REMOVE_DATASET_PROJECT:
+			return {
+				...state,
+				[action.payload.projectId]: {
+					...state[action.payload.projectId],
+					datasets: [
+						...state[action.payload.projectId].datasets.filter(id =>
+							id !== action.payload.datasetId)
+					]
+				}
+			};
 		default:
 			return state;
 	}

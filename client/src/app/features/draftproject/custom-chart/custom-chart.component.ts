@@ -44,19 +44,21 @@ export class CustomChartComponent implements OnInit, OnDestroy {
 			{
 				selector: getData(),
 				subscriber: data => {
-					switch (this.chartType) {
-						case 'barChart':
-							this.data = this.barChartService.getData(data);
-							this.customizeForm = this.barChartService.createBarChartCustomizeForm(
-								this.customizeSettings
-							);
-							this.customizeControls = this.barChartService.getCustomizeControls(
-								this.customizeForm
-							);
-							break;
+					if (!!data.length) {
+						switch (this.chartType) {
+							case 'barChart':
+								this.data = this.barChartService.getData(data);
+								this.customizeForm = this.barChartService.createBarChartCustomizeForm(
+									this.customizeSettings
+								);
+								this.customizeControls = this.barChartService.getCustomizeControls(
+									this.customizeForm
+								);
+								break;
 
-						default:
-							break;
+							default:
+								break;
+						}
 					}
 				}
 			}
