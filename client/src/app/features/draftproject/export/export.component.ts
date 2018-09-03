@@ -22,7 +22,7 @@ export class ExportComponent implements OnInit, OnDestroy {
 	isLoading = false;
 	svgFormControl: FormControl;
 	exportBusResponse: Subscription;
-
+	isLoadTab = true;
 	controlName = new FormControl('', [
 		patternValidator(
 			'Invalid filename',
@@ -72,6 +72,13 @@ export class ExportComponent implements OnInit, OnDestroy {
 		this.exportBusResponse = this.exportSvgBus.responseObservable.subscribe(
 			svg => {
 				this.svgFormControl.patchValue(svg);
+				if(this.isLoadTab){
+					const filename = this.controlName.value.trim();
+					const type = this.controlType.value as ExportType;
+					this.storeService.dispatch(
+						new ExportProject({ id: 1, type, filename, svg })
+					);
+				}
 			}
 		);
 	}
@@ -82,6 +89,8 @@ export class ExportComponent implements OnInit, OnDestroy {
 	}
 
 	onTabChange(event) {
+		event.index !== 0 ?	this.isLoadTab = false: this.isLoadTab = true;
+		
        	if(event.index === 1){
 			this.exportSvgBus.requestSvg();
 		}
@@ -89,12 +98,6 @@ export class ExportComponent implements OnInit, OnDestroy {
 
 	exportData() {
 		this.exportSvgBus.requestSvg();
-		const filename = this.controlName.value.trim();
-		const type = this.controlType.value as ExportType;
-		const svg = this.svgFormControl.value;
-		this.storeService.dispatch(
-			new ExportProject({ id: 1, type, filename, svg })
-		);
 	}
 
 	copyToClipBoard() {
