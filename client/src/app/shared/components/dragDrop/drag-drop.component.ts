@@ -54,7 +54,7 @@ export class DragDropComponent implements OnInit, OnDestroy {
 				return new Column(column.id, column.variable, column.type);
 			},
 			accepts: (el, target, source, sibling) => {
-				return target.id !== 'columns';
+				return target.id !== 'columns' && source.id === 'columns';
 			}
 		});
 

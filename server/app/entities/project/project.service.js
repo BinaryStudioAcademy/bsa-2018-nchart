@@ -148,6 +148,7 @@ class ProjectService {
 			async.waterfall(
 				[
 					callback => {
+						// todo: ask if this correct way to check
 						this.GroupService.findOneGroupUser({
 							groupId: obj.groupId,
 							userId: res.locals.user.id
@@ -170,9 +171,19 @@ class ProjectService {
 							.then(data => {
 								callback(null, data);
 							})
-							.catch(err => {
-								callback(err, null);
-							});
+							.catch(err => callback(err, null));
+					},
+					(payload, callback) => {
+						this.GroupService.saveGroupProject({
+							groupId: obj.groupId,
+							projectId: payload.id,
+							// todo: where does this come from
+							accessLevelId: 1
+						})
+							.then(() => {
+								callback(null, payload);
+							})
+							.catch(() => callback(null, payload));
 					}
 				],
 				(err, payload) => {

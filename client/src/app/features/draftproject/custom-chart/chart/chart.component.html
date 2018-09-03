@@ -1,11 +1,16 @@
-<div class="chart-container project-bar-chart" [ngSwitch]="chartType">
+<div class="chart-container" [ngSwitch]="chartType">
 	<app-bar-chart 
 		*ngSwitchCase="'barChart'"
 		[data]="data"
 		[settings]="customizeSettings"
 		#chart
 	></app-bar-chart>
-	<div *ngSwitchCase="'pieChart'">pieChart</div>
+	<app-pie-chart  
+		*ngSwitchCase="'pieChart'" 
+		[data]="data"
+		[settings]="customizeSettings"
+		#chart
+	></app-pie-chart >
 	<div *ngSwitchCase="'ganttChart'">ganttChart</div>
 	<div *ngSwitchCase="'alluvialDiagram'">pieChart</div>
 </div>

@@ -147,20 +147,19 @@ module.exports = {
 						sysName: 'width'
 					},
 					{
-						value: 4,
+						value: 25,
 						description:
-								'Pie chart will be disposed on a grid. This option allows to define how many pie charts must be drawn for each line. The number of lines is calculated according to this option.',
-						option: 'Columns',
+								'Pie chart will be disposed on a grid. This option allows to define margin of each pie',
+						option: 'Margin',
 						id: 9,
-						sysName: 'columns'
+						sysName: 'margin'
 					},
 					{
-						value: 10,
-						description:
-								'The vertical and horizontal padding between pie charts, in pixels.',
-						option: 'Padding',
+						value: 100,
+						description: 'Radius of each pie.',
+						option: 'Radius',
 						id: 10,
-						sysName: 'padding'
+						sysName: 'radius'
 					},
 					{
 						value: false,
@@ -168,15 +167,7 @@ module.exports = {
 								'If selected, pie charts will be drawn ad donut chart. The size is defined by the Thickness option (see below).',
 						option: 'Donut chart',
 						id: 11,
-						sysName: 'donutChart'
-					},
-					{
-						value: 10,
-						description:
-								'If Donut chart option is selects, this value will be used to defines its thickness.',
-						option: 'Thickness',
-						id: 12,
-						sysName: 'thickness'
+						sysName: 'isDonut'
 					},
 					{
 						value: false,
@@ -187,17 +178,14 @@ module.exports = {
 						sysName: 'showValues'
 					},
 					{
-						value: '',
-						options: ['size', 'name'],
-						description:
-								'Order of the pie chart. Can be ‘size’ (from the biggest to the smallest), ‘name’ (alphabetical order).',
+						value: 'name(asc)',
+						description: 'Order of the pie chart.',
 						option: 'Sort charts by',
 						id: 14,
 						sysName: 'sortChartsBy'
 					},
 					{
-						value: '',
-						options: ['size', 'name'],
+						value: 'name',
 						description:
 								'Order of the arcs inside each pie chart. Can be ‘automatic’ (same order in each pie chart), ‘size’ (from biggest to smallest in each pie chart) or ‘name’ (alphabetical order).',
 						option: 'Sort arcs by',

@@ -1,11 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { StoreService } from '@app/services/store.service';
 import { ChangeCustomSettings } from '@app/store/actions/charts/charts.actions';
 @Component({
 	selector: 'app-bar-chart-customize',
 	templateUrl: './bar-chart-customize.component.html'
 })
-export class BarChartCustomizeComponent implements OnInit {
+export class BarChartCustomizeComponent implements OnChanges {
 	@Input()
 	formGroup: any;
 	@Input()
@@ -13,7 +13,7 @@ export class BarChartCustomizeComponent implements OnInit {
 
 	constructor(private storeService: StoreService) {}
 
-	ngOnInit() {
+	ngOnChanges() {
 		this.formGroup.controls.width['id'] = this.customizeSettings.width.id;
 		this.formGroup.controls.height['id'] = this.customizeSettings.height.id;
 		this.formGroup.controls.leftMargin[
