@@ -12,7 +12,6 @@ import { normalize } from 'normalizr';
 import {withLatestFrom, map, concatMap} from 'rxjs/internal/operators';
 import { getActiveProject } from '@app/store/selectors/projects.selectors';
 import {
-	CreateChart,
 	SetDatasetChart
 } from '@app/store/actions/charts/charts.actions';
 import { StoreService } from '@app/services/store.service';

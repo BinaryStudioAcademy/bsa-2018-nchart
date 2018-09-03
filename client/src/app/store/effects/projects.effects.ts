@@ -84,7 +84,7 @@ export class ProjectsEffects {
 					return	[
 							new projectActions.CreateDraftProjectComplete({project}),
 							new CreateChart({ datatsetId: null })
-						]
+						];
 					}
 				),
 				catchError(error =>

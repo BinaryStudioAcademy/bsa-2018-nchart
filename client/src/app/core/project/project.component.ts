@@ -17,7 +17,6 @@ import {
 import { SchemeID } from '@app/models/normalizr.model';
 import { isChartsReady } from '@app/store/selectors/charts.selectors';
 import {
-	isProjectDataset,
 	projectCharts
 } from '@app/store/selectors/projects.selectors';
 import { ActivatedRoute } from '@angular/router';
