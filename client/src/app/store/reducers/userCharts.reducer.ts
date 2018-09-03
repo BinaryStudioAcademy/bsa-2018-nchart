@@ -49,6 +49,14 @@ const byId = (
 					datasetId: action.payload.datatsetId
 				}
 			};
+		case ProjectsActionConstants.REMOVE_DATASET_PROJECT:
+			return {
+				...state,
+				[action.payload.chartId]: {
+					...state[action.payload.chartId],
+					datasetId: null
+				}
+			};
 		default:
 			return state;
 	}
@@ -64,7 +72,6 @@ const active = (
 				.charts[0];
 		case ProjectsActionConstants.CREATE_DRAFT_PROJECT__COMPLETE:
 		case ChartsActionConstants.REMOVE_CHART__COMPLETE:
-		case ProjectsActionConstants.REMOVE_CHART_PROJECT:
 			return null;
 		case ChartsActionConstants.CREATE_CHART__COMPLETE:
 			return action.payload.chart.chartId;

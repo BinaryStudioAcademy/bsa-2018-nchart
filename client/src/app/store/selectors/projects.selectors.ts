@@ -21,6 +21,9 @@ export const projectCharts = () => (state: AppState) => {
 	return [];
 };
 
+export const getAmountUserCharts = () => (state: AppState) =>
+	projectCharts()(state).length;
+
 export const isProjectDataset = (id?: SchemeID) => (
 	state: AppState
 ): boolean => {
