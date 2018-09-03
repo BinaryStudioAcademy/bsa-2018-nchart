@@ -8,6 +8,10 @@ export class ButtonComponent implements OnInit {
 	@Input()
 	label = 'text';
 	@Input()
+	tooltip: string = null;
+	@Input()
+	tooltipPosition: 'top' | 'left' | 'bottom' | 'right' = 'right';
+	@Input()
 	icon: string;
 	@Input()
 	iconPosition: string;

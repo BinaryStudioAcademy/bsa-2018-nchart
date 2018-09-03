@@ -15,5 +15,9 @@ export const chartDataset = (id?: SchemeID) => (state: AppState) => {
 	return null;
 };
 
+export const isActiveChartDataset = (id?: SchemeID) => (state: AppState): boolean => {
+	return !!chartDataset(id)(state);
+};
+
 export const isDatasetLoading = () => (state: AppState) =>
 	state.datasets.isLoading;

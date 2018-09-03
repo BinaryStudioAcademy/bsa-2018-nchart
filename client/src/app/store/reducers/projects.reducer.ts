@@ -108,6 +108,17 @@ const byId = (
 					]
 				}
 			};
+		case ChartsActionConstants.REMOVE_CHART__COMPLETE: {
+			const activeProjectId = action.payload.projectId;
+			return {
+				...state,
+				[activeProjectId]: {
+					...state[activeProjectId],
+					charts: state[activeProjectId].charts.filter(chId => chId !== action.payload.id),
+					datasets: state[activeProjectId].datasets.filter(dId => dId !== action.payload.datasetId)
+				}
+			};
+		}
 		default:
 			return state;
 	}

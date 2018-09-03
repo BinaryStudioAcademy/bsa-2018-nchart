@@ -11,16 +11,16 @@ import { of } from 'rxjs';
 import {
 	CreateChart,
 	CreateChartComplete,
-	CreateChartFailed,
+	CreateChartFailed, RemoveChartComplete,
 	SelectChart,
 	SelectChartComplete
 } from '@app/store/actions/charts/charts.actions';
 import { chartScheme } from '@app/schemes/chart.schema';
 import { ChartService } from '@app/services/chart.service';
 import { Chart } from '@app/models/chart.model';
-import { getActiveProject } from '@app/store/selectors/projects.selectors';
+import {activeProjectId, getActiveProject} from '@app/store/selectors/projects.selectors';
 import { withLatestFrom } from 'rxjs/internal/operators';
-import { getActiveChartId } from '@app/store/selectors/userCharts';
+import {getActiveChartId, userChart} from '@app/store/selectors/userCharts';
 import { ChartTypeDomainService } from '@app/api/domains/chart/chart.domain';
 
 @Injectable()
@@ -59,6 +59,18 @@ export class ChartsEffects {
 				})
 			)
 		)
+	);
+
+	@Effect()
+	removeChart$ = this.action$.pipe(
+		ofType(ChartsActionConstants.REMOVE_CHART),
+		withLatestFrom(
+			this.storeService.createSubscription(userChart()),
+			this.storeService.createSubscription(activeProjectId())
+		),
+		map(([_, {id, datasetId}, projectId]) => {
+			return new RemoveChartComplete({id, datasetId, projectId});
+		})
 	);
 
 	@Effect()

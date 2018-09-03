@@ -17,10 +17,10 @@ import { isProjectDataset } from '@app/store/selectors/projects.selectors';
 import { ActivatedRoute } from '@angular/router';
 import {Observable, Subject, Subscription} from 'rxjs';
 import * as ProjectsActions from '@app/store/actions/projects/projects.actions';
-import { project } from '@app/store/selectors/projects.selectors';
-import { SchemeID } from '@app/models/normalizr.model';
-import { isRequiredDimensionMatched } from '@app/store/selectors/userCharts';
-import { isChartsReady } from '@app/store/selectors/charts.selectors';
+import {project} from '@app/store/selectors/projects.selectors';
+import {SchemeID} from '@app/models/normalizr.model';
+import {isRequiredDimensionMatched} from '@app/store/selectors/userCharts';
+import {isChartsReady} from '@app/store/selectors/charts.selectors';
 
 interface StepperStep {
 	id: number;
@@ -37,7 +37,7 @@ export interface ComponentCanDeactivate {
 	templateUrl: './project.component.html',
 	styleUrls: ['./project.component.sass']
 })
-export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit, ComponentCanDeactivate {
+export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 	showCharts = false;
 	showTable = false;
 	isChartsReady = false;
@@ -46,6 +46,7 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit, Compo
 	display = false;
 	projectName: string;
 	projectId: SchemeID;
+	isActiveChartDataset$: Observable<boolean>;
 
 	disconnect: () => void;
 
@@ -137,6 +138,8 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit, Compo
 			}
 		);
 
+		this.isActiveChartDataset$ = this.storeService.createSubscription(isActiveChartDataset());
+
 		this.disconnect = this.storeService.connect([
 			{
 				subscriber: prj => {
@@ -171,6 +174,10 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit, Compo
 	ngOnDestroy() {
 		this.disconnect();
 		this.routeParams$.unsubscribe();
+	}
+
+	getIsActiveChartDataset() {
+		return this.isActiveChartDataset$;
 	}
 
 	changeProjectName(name) {

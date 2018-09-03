@@ -6,6 +6,7 @@ import { trigger, style, animate, transition } from '@angular/animations';
 import { SchemeID } from '@app/models/normalizr.model';
 import { activeProjectId } from '../../../store/selectors/projects.selectors';
 import { SaveProject } from '../../../store/actions/projects/projects.actions';
+import {isActiveChartDataset} from '@app/store/selectors/dataset.selectors';
 import {isVerifiedToken} from '@app/store/selectors/user.selectors';
 import {Go} from '@app/store/actions/router/router.actions';
 
@@ -75,6 +76,7 @@ export class StepperComponent implements OnInit {
 	stepsList = steps;
 	stepIconClass: any;
 	disableSaveBtn = true;
+	stepsStageOne = true;
 	stepsStageTwo = false;
 	stepsStageThree = false;
 	activeProjectId: SchemeID;
@@ -142,6 +144,17 @@ export class StepperComponent implements OnInit {
 				}
 			},
 			{
+				selector: isActiveChartDataset(),
+				subscriber: isActive => {
+					this.stepsStageOne = !isActive;
+					if (isActive) {
+						this.selectChart(2);
+					} else {
+						this.selectChart(1);
+					}
+				}
+			},
+			{
 				selector: isRequiredDimensionMatched(),
 				subscriber: isReady => {
 					this.stepsStageThree = isReady;
@@ -160,7 +173,7 @@ export class StepperComponent implements OnInit {
 	isStepVisible(id) {
 		switch (id) {
 			case 1:
-				return true;
+				return this.stepsStageOne;
 			case 2:
 			case 3:
 			case 4:

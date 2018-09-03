@@ -5,6 +5,7 @@ import { Actions as chartActions } from '@app/store/actions/charts/charts.action
 import { ChartsActionConstants } from '@app/store/actions/charts/charts.action-types';
 import { UserChart, UserChartsState } from '@app/models/user-chart-store.model';
 import { NormalizedSchemeField } from '@app/models/normalizr.model';
+import { omit } from 'lodash';
 
 export const initialState: UserChartsState = {
 	byId: {},
@@ -25,6 +26,10 @@ const byId = (
 					action.payload.chart.entities.chart[
 						action.payload.chart.chartId
 					]
+			};
+		case ChartsActionConstants.REMOVE_CHART__COMPLETE:
+			return	{
+				...omit(state, action.payload.id)
 			};
 		case ChartsActionConstants.SELECT_CHART__COMPLETE:
 			return {
@@ -58,6 +63,7 @@ const active = (
 			return action.payload.entities.project[action.payload.projectId]
 				.charts[0];
 		case ProjectsActionConstants.CREATE_DRAFT_PROJECT__COMPLETE:
+		case ChartsActionConstants.REMOVE_CHART__COMPLETE:
 			return null;
 		case ChartsActionConstants.CREATE_CHART__COMPLETE:
 			return action.payload.chart.chartId;

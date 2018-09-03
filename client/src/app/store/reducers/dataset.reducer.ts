@@ -2,8 +2,11 @@ import { ProjectsActionConstants } from '@app/store/actions/projects/projects.ac
 import { Actions as projectActions } from '@app/store/actions/projects/projects.actions';
 import { DatasetActions } from '@app/store/actions/datasets/datasets.action-types';
 import { Actions as datasetsActions } from '@app/store/actions/datasets/datasets.actions';
+import { Actions as chartsActions } from '@app/store/actions/charts/charts.actions';
 import { DatasetState } from '@app/models/dataset.model';
 import { combineReducers } from '@ngrx/store';
+import {ChartsActionConstants} from '@app/store/actions/charts/charts.action-types';
+import { omit } from 'lodash';
 
 export const initialState: DatasetState = {
 	byId: {},
@@ -12,7 +15,7 @@ export const initialState: DatasetState = {
 
 const byId = (
 	state = initialState.byId,
-	action: projectActions | datasetsActions
+	action: projectActions | datasetsActions | chartsActions
 ) => {
 	switch (action.type) {
 		case ProjectsActionConstants.LOAD_ONE_PROJECT__COMPLETE:
@@ -22,6 +25,10 @@ const byId = (
 				...state,
 				...action.payload.entities.dataset
 			};
+		case ChartsActionConstants.REMOVE_CHART__COMPLETE:
+			return	{
+				...omit(state, action.payload.datasetId)
+				};
 		default:
 			return state;
 	}
