@@ -3,12 +3,12 @@
 	[columns]="columns"
 	[scrollable]="true"
 	[rows]="20"
+	[lazy]="true"
+	scrollHeight="400px"
 	[virtualScroll]="true"
 	[virtualRowHeight]="22"
 	[totalRecords]="data.length"
 	class="data-table"
-	[(selection)]="selectedRows" 
-	dataKey="vin"
 >
 	<ng-template pTemplate="header" let-headerData>
 		<tr>
