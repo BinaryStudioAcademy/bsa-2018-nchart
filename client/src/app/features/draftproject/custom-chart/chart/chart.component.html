@@ -11,6 +11,13 @@
 		[settings]="customizeSettings"
 		#chart
 	></app-pie-chart >
-	<div *ngSwitchCase="'ganttChart'">ganttChart</div>
-	<div *ngSwitchCase="'alluvialDiagram'">pieChart</div>
+	<app-scatterplot-chart 
+		*ngSwitchCase="'scatterplot'"
+		[data]="data"
+		[settings]="customizeSettings"
+		#chart
+	></app-scatterplot-chart>
+	<div 
+	*ngSwitchCase="'alluvialDiagram'"
+	>pieChart</div>
 </div>
