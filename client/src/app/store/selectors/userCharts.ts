@@ -253,7 +253,7 @@ export const isRequiredDimensionMatched = () => (state: AppState): boolean => {
 			.map(d => ({
 				...state.userChartSettings.dimensionSettings[d],
 				required: (
-					state.defaultChartSettings.dimensionSettings[d] || {
+					state.defaultChartSettings.dimensionSettings[(d as string).slice(37)] || {
 						required: false
 					}
 				).required

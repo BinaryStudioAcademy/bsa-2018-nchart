@@ -9,10 +9,9 @@ import { DatasetDomainService } from '@app/api/domains/source/dataset-domain.ser
 import { DatasetService } from '@app/services/dataset.service';
 import { datasetScheme } from '@app/schemes/dataset.schema';
 import { normalize } from 'normalizr';
-import { withLatestFrom, map } from 'rxjs/internal/operators';
+import {withLatestFrom, map, concatMap} from 'rxjs/internal/operators';
 import { getActiveProject } from '@app/store/selectors/projects.selectors';
 import {
-	CreateChart,
 	SetDatasetChart
 } from '@app/store/actions/charts/charts.actions';
 import { StoreService } from '@app/services/store.service';
@@ -94,7 +93,7 @@ export class DatasetEffects {
 						),
 						this.storeService.createSubscription(userChart())
 					),
-					switchMap(([dataset, projectId, uChart]) => {
+					concatMap(([dataset, projectId, uChart]) => {
 						const {
 							result: [datasetId],
 							entities
@@ -103,30 +102,17 @@ export class DatasetEffects {
 							[datasetScheme]
 						);
 
-						if (uChart && !uChart.datasetId) {
-							return [
-								new DatasetActions.ParseComplete({
-									entities,
-									datasetId,
-									projectId
-								}),
-								new SetDatasetChart({
-									datatsetId: datasetId,
-									chartId: uChart.id
-								})
-							] as any;
-						} else {
-							return [
-								new DatasetActions.ParseComplete({
-									entities,
-									datasetId,
-									projectId
-								}),
-								new CreateChart({
-									datatsetId: datasetId
-								})
-							] as any;
-						}
+						return [
+							new DatasetActions.ParseComplete({
+								entities,
+								datasetId,
+								projectId
+							}),
+							new SetDatasetChart({
+								datatsetId: datasetId,
+								chartId: uChart.id
+							})
+						];
 					}),
 					catchError(error => {
 						return of(
