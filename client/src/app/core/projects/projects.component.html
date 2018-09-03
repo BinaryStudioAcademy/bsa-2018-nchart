@@ -1,6 +1,6 @@
 <div class="project-card-container">
 	<ng-container *ngIf="getProjects() | async as projects">
-		<div *ngFor="let project of projects" style="float: left;">
+		<div *ngFor="let project of projects">
 			<app-card
 				[projectId]="project?.id"
 				[projectName]="project?.name"

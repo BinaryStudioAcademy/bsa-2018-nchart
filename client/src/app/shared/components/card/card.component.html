@@ -5,16 +5,16 @@
 		</div>
 		<!--todo: make those look like tags-->
 		<div class="user-charts">
-				<div class="chart-type" [ngClass]="getCardTypeClasses(chart)" *ngFor="let chart of userCharts">
+			<ul>
+				<li *ngFor="let chart of userCharts">
 					{{ chart }}
-				</div>
+				</li>
+			</ul>
 		</div>
 		<div class="project-card-folder">
-			<div class="card-profile-image user-image"><i class="fas fa-user-tie"></i></div>
-			<div class="card-user-name">{{userName}}</div>
+			<span><b>Owner:</b> {{userName}}</span>
 		</div>
-		<hr>
-		<div class="last-update">
+		<div>
 			<b>Last update:</b><span>{{date}}</span>
 		</div>
 	</div>
