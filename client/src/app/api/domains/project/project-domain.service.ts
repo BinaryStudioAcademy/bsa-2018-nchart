@@ -6,6 +6,7 @@ import { RequestType } from '@app/models/requestType.model';
 import { ProjectDomain } from '@app/models/project-domain.model';
 import { OriginProject } from '@app/models/project.model';
 import { ResponseScheme } from '@app/models/response-scheme.model';
+import { SchemeID } from '@app/models/normalizr.model';
 
 @Injectable()
 export class ProjectDomainService implements ProjectDomain {
@@ -66,7 +67,7 @@ export class ProjectDomainService implements ProjectDomain {
 	}
 
 	delete(payload: {
-		projectId: number;
+		projectId: SchemeID;
 		accessLevelId: number;
 	}): Observable<ResponseScheme<any>> {
 		return this.httpService.makeRequest<ResponseScheme<any>>(

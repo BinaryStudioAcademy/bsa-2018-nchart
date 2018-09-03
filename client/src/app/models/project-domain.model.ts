@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
 import { OriginProject } from '@app/models/project.model';
 import { ResponseScheme } from '@app/models/response-scheme.model';
+import { SchemeID } from '@app/models/normalizr.model';
 
 export interface ProjectDomain {
 	save(payload: {
@@ -12,7 +13,7 @@ export interface ProjectDomain {
 	}): Observable<ResponseScheme<OriginProject>>;
 
 	delete(payload: {
-		projectId: number;
+		projectId: SchemeID;
 		accessLevelId: number;
 	}): Observable<ResponseScheme<null>>;
 
