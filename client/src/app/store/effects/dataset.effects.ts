@@ -9,7 +9,7 @@ import { DatasetDomainService } from '@app/api/domains/source/dataset-domain.ser
 import { DatasetService } from '@app/services/dataset.service';
 import { datasetScheme } from '@app/schemes/dataset.schema';
 import { normalize } from 'normalizr';
-import { withLatestFrom } from 'rxjs/internal/operators';
+import { withLatestFrom, map } from 'rxjs/internal/operators';
 import { getActiveProject } from '@app/store/selectors/projects.selectors';
 import { CreateChart } from '@app/store/actions/charts/charts.actions';
 import { StoreService } from '@app/services/store.service';
@@ -31,7 +31,8 @@ export class DatasetEffects {
 		ofType(
 			DatasetActions.PARSE_PLAIN_TEXT,
 			DatasetActions.PARSE_FROM_FILE,
-			DatasetActions.PARSE_FROM_URL
+			DatasetActions.PARSE_FROM_URL,
+			DatasetActions.LOAD_SAMPLE
 		),
 		switchMap(
 			(
@@ -39,6 +40,7 @@ export class DatasetEffects {
 					| constants.ParseByText
 					| constants.ParseByLink
 					| constants.ParseByFile
+					| constants.LoadSample
 			) => {
 				let loadData$;
 
@@ -58,6 +60,11 @@ export class DatasetEffects {
 							file: action.payload.file
 						});
 						break;
+					case DatasetActions.LOAD_SAMPLE:
+						loadData$ = this.datasetDomService.loadSample({
+							id: action.payload.id
+						});
+						break;
 				}
 
 				return loadData$.pipe(
@@ -71,6 +78,7 @@ export class DatasetEffects {
 							if (!value.isSuccess) {
 								return throwError(new Error('Cant parse data'));
 							}
+
 							return this.datasetService.createDataset(
 								value.payload.columns,
 								value.payload.data
@@ -111,5 +119,33 @@ export class DatasetEffects {
 				);
 			}
 		)
+	);
+
+	@Effect()
+	preloadSamples$ = this.action$.pipe(
+		ofType(DatasetActions.PRELOAD_SAMPLES),
+		switchMap((action: constants.PreloadSamples) => {
+			return this.datasetDomService.preloadSamples().pipe(
+				map(res => {
+					const resSamples = [];
+					res.payload.forEach(element => {
+						resSamples.push({
+							id: element.id,
+							name: element.name
+						});
+					});
+					return new constants.PreloadSamplesComplete(resSamples);
+				}),
+				catchError(error =>
+					of(
+						new constants.PreloadSamplesFailed({
+							msg: `Can't export project`,
+							action,
+							error
+						})
+					)
+				)
+			);
+		})
 	);
 }

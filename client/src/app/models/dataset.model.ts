@@ -21,6 +21,11 @@ export interface DatasetColumn {
 	type: string;
 }
 
+export interface DatasetPreload {
+	id: SchemeID;
+	name: string | null;
+}
+
 export interface DatasetTable<C = DatasetColumn[], D = any[][]> {
 	id: SchemeID;
 	columns?: C;

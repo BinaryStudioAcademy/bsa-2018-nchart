@@ -8,5 +8,13 @@ export enum DatasetActions {
 	CHANGE_CONTENT = 'Dataset data: CHANGE_CONTENT',
 	CHANGE_HEADER_TITLE = 'Dataset data: CHANGE_HEADER_TITLE',
 	DELETE_COLUMN = 'Dataset data: DELETE_COLUMN',
-	DELETE_ROW = 'Dataset data: DELETE_ROW'
+	DELETE_ROW = 'Dataset data: DELETE_ROW',
+
+	PRELOAD_SAMPLES = 'Dataset samples: PRELOAD_SAMPLES',
+	PRELOAD_SAMPLES__COMPLETE = 'Dataset samples: PRELOAD_SAMPLES__COMPLETE',
+	PRELOAD_SAMPLES__FAILED = 'Dataset samples: PRELOAD_SAMPLES__FAILED',
+
+	LOAD_SAMPLE = 'Dataset samples: LOAD_SAMPLE',
+	LOAD_SAMPLE__COMPLETE = 'Dataset samples: LOAD_SAMPLE__COMPLETE',
+	LOAD_SAMPLE__FAILED = 'Dataset samples: LOAD_SAMPLE__FAILED'
 }
