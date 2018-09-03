@@ -47,6 +47,15 @@ export const mappingColumns = () => (state: AppState): UserMappingColumn[] => {
 export const getActiveChartId = () => (state: AppState) =>
 	state.userCharts.active;
 
+export const getActiveDatasetId = () => (state: AppState) => {
+	const uChart = userChart()(state);
+
+	if (uChart) {
+		return uChart.datasetId;
+	}
+	return null;
+};
+
 export const hasChartDataset = () => (state: AppState) => {
 	const uChart = userChart()(state);
 

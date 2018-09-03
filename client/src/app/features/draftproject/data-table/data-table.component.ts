@@ -31,7 +31,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy(): void {
-		this.storeDisconnect.unsubscribe();
+		// this.storeDisconnect.unsubscribe();
 	}
 
 	remove() {

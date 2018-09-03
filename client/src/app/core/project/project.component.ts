@@ -11,17 +11,18 @@ import {
 import { StoreService } from '@app/services/store.service';
 import {
 	CreateDraftProject,
-	LoadOneProject
+	LoadOneProject, RemovePageProject
 } from '@app/store/actions/projects/projects.actions';
-import { isProjectDataset } from '@app/store/selectors/projects.selectors';
+import {isProjectDataset, projectCharts} from '@app/store/selectors/projects.selectors';
 import { ActivatedRoute } from '@angular/router';
 import {Observable, Subject, Subscription} from 'rxjs';
 import * as ProjectsActions from '@app/store/actions/projects/projects.actions';
 import {project} from '@app/store/selectors/projects.selectors';
 import {SchemeID} from '@app/models/normalizr.model';
-import {isRequiredDimensionMatched} from '@app/store/selectors/userCharts';
+import {getActiveDatasetId, isRequiredDimensionMatched} from '@app/store/selectors/userCharts';
 import {isChartsReady} from '@app/store/selectors/charts.selectors';
 import {isActiveChartDataset} from '@app/store/selectors/dataset.selectors';
+import {CreateChart, PickActiveChart} from '@app/store/actions/charts/charts.actions';
 
 interface StepperStep {
 	id: number;
@@ -41,10 +42,14 @@ export interface ComponentCanDeactivate {
 export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 	showCharts = false;
 	showTable = false;
+	listPages = [];
+	items;
 	isChartsReady = false;
 	routeParams$: Subscription;
 	subConf = new Subject<boolean>();
 	display = false;
+	displayModalDataset = false;
+	currentDatasetId: SchemeID;
 	projectName: string;
 	projectId: SchemeID;
 	isActiveChartDataset$: Observable<boolean>;
@@ -119,6 +124,20 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.subConf.next(false);
 	}
 
+	acceptDataset() {
+		this.displayModalDataset = false;
+		this.storeService.dispatch(new CreateChart({datatsetId: this.currentDatasetId}));
+	}
+
+	rejectDataset() {
+		this.displayModalDataset = false;
+		this.storeService.dispatch(new CreateChart({datatsetId: null}));
+	}
+
+	removePage(chartId) {
+		this.storeService.dispatch(new RemovePageProject({chartId}));
+	}
+
 	canDeactivate(): Observable<boolean> {
 		this.showDialog();
 		return this.subConf;
@@ -152,6 +171,26 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 				selector: project()
 			},
 			{
+				selector: projectCharts(),
+				subscriber: charts => {
+					this.listPages = charts;
+
+					if (charts.length) {
+						this.items = this.listPages.map(id =>
+							({
+								label: id
+							})
+						);
+					}
+				}
+			},
+			{
+				selector: getActiveDatasetId(),
+				subscriber: id => {
+					this.currentDatasetId = id;
+				}
+			},
+			{
 				selector: isProjectDataset(),
 				subscriber: t => {
 					this.showTable = t;
@@ -170,6 +209,10 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 				}
 			}
 		]);
+	}
+
+	select(id) {
+		this.storeService.dispatch(new PickActiveChart({id}));
 	}
 
 	ngOnDestroy() {

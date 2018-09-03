@@ -7,6 +7,17 @@
 	<div class="main-content">
 	<app-project-name id="load" #viewItem [projectName]="projectName" (setProjectName)="changeProjectName($event)">
 	</app-project-name>
+	<div *ngIf="listPages.length">
+		<span *ngFor="let pageId of listPages">
+			<span (click)="select(pageId)">{{pageId}}</span>
+			<span (click)="removePage(pageId)">delete page</span>
+		</span>
+		<span (click)="displayModalDataset = true">new page</span>
+	</div>
+		<p-tabMenu
+			*ngIf="listPages.length"
+			[model]="items"
+		></p-tabMenu>
 		<app-load-data 	*ngIf="!(getIsActiveChartDataset() | async)"></app-load-data>
 		<app-data-table *ngIf="isDataset()" id="table" #viewItem></app-data-table>
 		<app-list-charts *ngIf="isDataset()" id="charts" #viewItem></app-list-charts>
@@ -36,6 +47,31 @@
 					label="No"
 					type="secondary"
 					(onclick)="reject()"
+				></app-button>
+			</p-footer>
+		</p-dialog>
+
+		<p-dialog header="Confirmation"
+				  [(visible)]="displayModalDataset"
+				  [modal]="true"
+				  [responsive]="true"
+				  [closable]="false"
+				  [width]="350"
+				  [minWidth]="200"
+				  [minY]="70"
+				  [baseZIndex]="10000">
+			<span>
+				Do you want use current dataset?
+			</span>
+			<p-footer class="modal-controls">
+				<app-button
+					label="Yes"
+					(onclick)="acceptDataset()"
+				></app-button>
+				<app-button
+					label="No"
+					type="secondary"
+					(onclick)="rejectDataset()"
 				></app-button>
 			</p-footer>
 		</p-dialog>
