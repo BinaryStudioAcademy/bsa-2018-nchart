@@ -76,12 +76,12 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 	}
 
 	isDataset(): boolean {
-		this.updateViewChildren();
+		// this.updateViewChildren();
 		return this.showTable;
 	}
 
 	isCharts(): boolean {
-		this.updateViewChildren();
+		// this.updateViewChildren();
 		return this.showCharts && this.isChartsReady && this.showTable;
 	}
 
