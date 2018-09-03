@@ -11,6 +11,7 @@ export class CardComponent implements OnInit {
 	displayDelete = false;
 	date: string;
 	status: string;
+
 	itemsObjs = [
 		{
 			label: 'Rename'
@@ -82,5 +83,13 @@ export class CardComponent implements OnInit {
 			return;
 		}
 		this.display = true;
+	}
+
+	getCardTypeClasses(card) {
+		return {
+			'bar-chart': 'Bar chart' === card,
+			'pie-chart': 'Pie Chart' === card,
+			'scatterplot': 'Scatter Plot' === card
+		};
 	}
 }
