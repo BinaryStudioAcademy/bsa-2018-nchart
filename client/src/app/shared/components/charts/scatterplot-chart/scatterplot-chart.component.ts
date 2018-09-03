@@ -54,7 +54,7 @@ export class ScatterplotChartComponent implements OnChanges {
 		d3.select('svg').remove();
 		d3.selectAll('.tooltip').remove();
 		const svg = d3
-			.select('.scatterplot-chart')
+			.selectAll('.scatterplot-chart')
 			.append('svg')
 			.attr('width', width + this.margin.left + this.margin.right)
 			.attr('height', height + this.margin.top + this.margin.bottom)

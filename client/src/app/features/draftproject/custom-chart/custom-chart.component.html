@@ -3,7 +3,7 @@
 	<p-dialog 
 		*ngIf="display" 
 		class="ui-modal" 
-		styleClass="fullscreen" 
+		styleClass="ui-modal-fullscreen fullscreen-chart" 
 		[(visible)]="display" 
 		[modal]="true" 
 		[resizable]="false" 
@@ -11,6 +11,14 @@
 		[baseZIndex]="10000"
 		[blockScroll]="true"
 		>
+		<div class="custom-chart-container">
+			<app-chart
+				class="ui-g-9"
+				[data]="data"
+				[chartType]="chartType"
+				[customizeSettings]="customizeSettings"
+			></app-chart>
+		</div>
 	</p-dialog>
 	<app-button type="icon" icon="fas fa-arrows-alt" class="full-screen-btn" (onclick)="showDialog()"></app-button>
 	<div class="custom-chart-container">
