@@ -409,7 +409,7 @@ class ProjectService {
 	}
 
 	deleteProjects(obj, res) {
-		if (obj.accessLevelId === 2) {
+		if (obj.accessLevelId !== 1) {
 			return this.ProjectRepository.deleteGroupProject(
 				obj.projectId,
 				res.locals.user.defaultGroupId

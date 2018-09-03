@@ -1,0 +1,26 @@
+<div class="ui-dialog-wrp">
+	<p-dialog
+	[modal]="true"
+	[draggable]="false"
+	[width]="350"
+	[minWidth]="200"
+	[minY]="70"
+	[maximizable]="false"
+	[baseZIndex]="10000"
+	[(visible)]="displayDelete"
+	(onHide)="close()"
+	(onAfterHide)="close()">
+	<p-header>
+		Are you sure you want to delete this project?
+	</p-header>
+		<p-footer>
+			<app-button label="Delete" (onclick)="delete()" style="margin-right: 5px"></app-button>
+			<app-button label="Cancel" (onclick)="close()"></app-button>
+		</p-footer>
+	</p-dialog>
+
+</div>
+
+<!--<label for="email">Email: </label><input type="email" id="email">-->
+	<!--<button type="button" pButton icon="pi pi-check" (click)="display=false" label="Send" class="ui-button-secondary"></button>-->
+	<!--<button type="text" (click)="showDialog()" pButton label="share"></button>-->

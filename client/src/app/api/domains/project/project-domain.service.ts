@@ -1,18 +1,17 @@
-import {Observable} from 'rxjs';
-import {Injectable} from '@angular/core';
-import {HttpService} from '@app/api/http/http.service';
-import {ServiceRequest} from '@app/models/serviceRequest.model';
-import {RequestType} from '@app/models/requestType.model';
-import {ProjectDomain} from '@app/models/project-domain.model';
-import {OriginProject} from '@app/models/project.model';
-import {ResponseScheme} from '@app/models/response-scheme.model';
+import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { HttpService } from '@app/api/http/http.service';
+import { ServiceRequest } from '@app/models/serviceRequest.model';
+import { RequestType } from '@app/models/requestType.model';
+import { ProjectDomain } from '@app/models/project-domain.model';
+import { OriginProject } from '@app/models/project.model';
+import { ResponseScheme } from '@app/models/response-scheme.model';
 
 @Injectable()
 export class ProjectDomainService implements ProjectDomain {
 	private projectPath = '/api/project';
 
-	constructor(private httpService: HttpService) {
-	}
+	constructor(private httpService: HttpService) {}
 
 	getAll(): Observable<ResponseScheme<OriginProject[]>> {
 		return this.httpService.makeRequest<ResponseScheme<OriginProject[]>>(
@@ -66,7 +65,10 @@ export class ProjectDomainService implements ProjectDomain {
 		return s;
 	}
 
-	delete(payload: { projectId: number, accessLevelId: number }): Observable<ResponseScheme<null>> {
+	delete(payload: {
+		projectId: number;
+		accessLevelId: number;
+	}): Observable<ResponseScheme<null>> {
 		return this.httpService.makeRequest<ResponseScheme<null>>(
 			new ServiceRequest(
 				RequestType.POST,

@@ -10,6 +10,7 @@ import { DragDropComponent } from '@app/shared/components/dragDrop/drag-drop.com
 import { ChartsModule } from '@app/shared/components/charts/charts.module';
 import { DialogComponent } from '@app/shared/components/dialog/dialog.component';
 import { CardComponent } from '@app/shared/components/card/card.component';
+import { DeleteDialogComponent } from '@app/shared/deleteDialog/delete-dialog.component';
 
 @NgModule({
 	imports: [
@@ -29,7 +30,8 @@ import { CardComponent } from '@app/shared/components/card/card.component';
 		DragDropComponent,
 		LinkComponent,
 		DialogComponent,
-		CardComponent
+		CardComponent,
+		DeleteDialogComponent
 	],
 	declarations: [
 		ActionButtonComponent,
@@ -37,7 +39,8 @@ import { CardComponent } from '@app/shared/components/card/card.component';
 		MainBlockComponent,
 		LinkComponent,
 		DialogComponent,
-		CardComponent
+		CardComponent,
+		DeleteDialogComponent
 	]
 })
 export class SharedModule {}

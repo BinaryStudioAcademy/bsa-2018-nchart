@@ -1,36 +1,37 @@
-import {Injectable} from '@angular/core';
-import {Effect, Actions, ofType} from '@ngrx/effects';
-import {map, switchMap, mergeMap} from 'rxjs/operators';
-import {catchError} from 'rxjs/operators';
-import {of} from 'rxjs';
-import {denormalize, normalize} from 'normalizr';
-import {arrayOfCommonScheme} from '@app/schemes/common.schema';
-import {ProjectsActionConstants} from '@app/store/actions/projects/projects.action-types';
+import { Injectable } from '@angular/core';
+import { Effect, Actions, ofType } from '@ngrx/effects';
+import { map, switchMap, mergeMap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { denormalize, normalize } from 'normalizr';
+import { arrayOfCommonScheme } from '@app/schemes/common.schema';
+import { ProjectsActionConstants } from '@app/store/actions/projects/projects.action-types';
 import * as projectActions from '@app/store/actions/projects/projects.actions';
-import {ProjectDomainService} from '@app/api/domains/project/project-domain.service';
-import {ProjectService} from '@app/services/project.service';
-import {projectScheme} from '@app/schemes/project.scheme';
-import {DatasetService} from '@app/services/dataset.service';
-import {StoreService} from '@app/services/store.service';
-import {getFullProject} from '@app/store/selectors/userCharts';
+import { ProjectDomainService } from '@app/api/domains/project/project-domain.service';
+import { ProjectService } from '@app/services/project.service';
+import { projectScheme } from '@app/schemes/project.scheme';
+import { DatasetService } from '@app/services/dataset.service';
+import { StoreService } from '@app/services/store.service';
+import { getFullProject } from '@app/store/selectors/userCharts';
 import {
 	SaveProjectComplete,
 	UpdateProjectComplete
 } from '@app/store/actions/projects/projects.actions';
-import {concat, throwError} from 'rxjs';
-import {SaveProjectFailed} from '@app/store/actions/projects/projects.actions';
-import {withLatestFrom} from 'rxjs/internal/operators';
-import {Go} from '@app/store/actions/router/router.actions';
-import {AppState} from '@app/models/store.model';
+import { concat, throwError } from 'rxjs';
+import { SaveProjectFailed } from '@app/store/actions/projects/projects.actions';
+import { withLatestFrom } from 'rxjs/internal/operators';
+import { Go } from '@app/store/actions/router/router.actions';
+import { AppState } from '@app/models/store.model';
 
 @Injectable()
 export class ProjectsEffects {
-	constructor(private storeService: StoreService,
-				private action$: Actions,
-				private projectDomainService: ProjectDomainService,
-				private projectService: ProjectService,
-				private datasetService: DatasetService) {
-	}
+	constructor(
+		private storeService: StoreService,
+		private action$: Actions,
+		private projectDomainService: ProjectDomainService,
+		private projectService: ProjectService,
+		private datasetService: DatasetService
+	) {}
 
 	@Effect()
 	loadData$ = this.action$.pipe(
@@ -41,7 +42,7 @@ export class ProjectsEffects {
 					if (value.isSuccess) {
 						const {
 							result: all,
-							entities: {byId}
+							entities: { byId }
 						} = normalize(value.payload, arrayOfCommonScheme);
 						return new projectActions.LoadProjectsComplete({
 							projects: {
@@ -90,7 +91,7 @@ export class ProjectsEffects {
 			this.projectDomainService.getByProjectId(action.payload).pipe(
 				map(value => {
 					if (value.isSuccess) {
-						const {result: projectId, entities} = normalize(
+						const { result: projectId, entities } = normalize(
 							{
 								...value.payload,
 								datasets: this.datasetService.transformDatasets(
@@ -116,7 +117,7 @@ export class ProjectsEffects {
 								error,
 								action
 							}),
-							new Go({path: ['/app/project/draft']})
+							new Go({ path: ['/app/project/draft'] })
 						]) as any
 				)
 			)
@@ -152,7 +153,7 @@ export class ProjectsEffects {
 				datasets
 			};
 
-			return this.projectDomainService.save({project}).pipe(
+			return this.projectDomainService.save({ project }).pipe(
 				mergeMap(response => {
 					if (project.id) {
 						return [new UpdateProjectComplete()] as any;
@@ -190,7 +191,7 @@ export class ProjectsEffects {
 					if (value.isSuccess) {
 						const {
 							result: all,
-							entities: {project: byId}
+							entities: { project: byId }
 						} = normalize(value.payload, [projectScheme]);
 						return new projectActions.LoadProjectsInfoComplete({
 							all,

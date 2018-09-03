@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {projects as projectsSelector} from '@app/store/selectors/projects.selectors.ts';
-import {StoreService} from '@app/services/store.service';
+import { Component, OnInit } from '@angular/core';
+import { projects as projectsSelector } from '@app/store/selectors/projects.selectors.ts';
+import { StoreService } from '@app/services/store.service';
 import * as projectActions from '@app/store/actions/projects/projects.actions';
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
 	selector: 'app-projects',
@@ -12,8 +12,7 @@ import {Observable} from 'rxjs';
 export class ProjectsComponent implements OnInit {
 	projects$: Observable<any>;
 
-	constructor(private storeService: StoreService) {
-	}
+	constructor(private storeService: StoreService) {}
 
 	ngOnInit() {
 		this.projects$ = this.storeService.createSubscription(
@@ -24,9 +23,5 @@ export class ProjectsComponent implements OnInit {
 
 	getProjects() {
 		return this.projects$;
-	}
-
-	deleteTest() {
-		this.storeService.dispatch(new projectActions.DeleteOneProject({projectId: 11, accessLevelId: 2}));
 	}
 }

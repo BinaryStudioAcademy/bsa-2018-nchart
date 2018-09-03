@@ -18,6 +18,7 @@
 				type="default"
 				routerLink="/app/projects"
 				class="header-newProject-button"
+				*ngIf="isAuthorized"
 			></app-button>
 			<app-button
 				label="New project"

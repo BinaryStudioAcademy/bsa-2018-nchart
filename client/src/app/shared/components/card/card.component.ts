@@ -7,6 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class CardComponent implements OnInit {
 	display = false;
+	displayDelete = false;
 	status: string;
 	itemsObjs = [
 		{
@@ -14,12 +15,13 @@ export class CardComponent implements OnInit {
 			// icon: 'fa fa-plus'
 		},
 		{
-			label: 'Delete'
-			// icon: 'fa fa-plus'
+			label: 'Delete',
+			command: () => {
+				this.deleteDialog();
+			}
 		},
 		{
 			label: 'Share',
-			// icon: 'fa fa-plus',
 			command: () => {
 				this.shareDialog();
 			}
@@ -59,6 +61,10 @@ export class CardComponent implements OnInit {
 		if (this.accessLevelId === 3) {
 			this.status = 'Read';
 		}
+	}
+
+	deleteDialog() {
+		this.displayDelete = true;
 	}
 
 	shareDialog() {
