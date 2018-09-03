@@ -20,8 +20,7 @@ interface Settings<T> {
 
 @Component({
 	selector: 'app-bar-chart',
-	templateUrl: './bar-chart.component.html',
-	styleUrls: ['./bar-chart.component.sass']
+	templateUrl: './bar-chart.component.html'
 })
 export class BarChartComponent implements OnInit, OnChanges {
 	@Input()

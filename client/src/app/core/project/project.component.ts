@@ -13,7 +13,11 @@ import {
 	CreateDraftProject,
 	LoadOneProject
 } from '@app/store/actions/projects/projects.actions';
-import { isProjectDataset } from '@app/store/selectors/projects.selectors';
+import {
+	getCountProjectDatasets,
+	isProjectDataset,
+	isProjectsLoading
+} from '@app/store/selectors/projects.selectors';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import * as ProjectsActions from '@app/store/actions/projects/projects.actions';
@@ -21,6 +25,7 @@ import { project } from '@app/store/selectors/projects.selectors';
 import { SchemeID } from '@app/models/normalizr.model';
 import { isRequiredDimensionMatched } from '@app/store/selectors/userCharts';
 import { isChartsReady } from '@app/store/selectors/charts.selectors';
+import { filter, withLatestFrom } from 'rxjs/internal/operators';
 
 interface StepperStep {
 	id: number;
@@ -38,7 +43,9 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 	showTable = false;
 	isChartsReady = false;
 	routeParams$: Subscription;
-
+	amountDatasets$: Subscription;
+	isShowBtn: boolean;
+	isShowLoad: boolean;
 	projectName: string;
 	projectId: SchemeID;
 
@@ -142,11 +149,52 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 				}
 			}
 		]);
+
+		this.amountDatasets$ = this.storeService
+			.createSubscription(getCountProjectDatasets())
+			.pipe(
+				withLatestFrom(
+					this.storeService
+						.createSubscription(isProjectsLoading())
+						.pipe(filter(v => !v))
+				)
+			)
+			.subscribe(([amountDatasets, _]) => {
+				if (amountDatasets > 0) {
+					this.hideLoadData();
+					this.showBtn();
+				} else {
+					this.showLoadData();
+					this.hideBtn();
+				}
+			});
+	}
+
+	hideBtn() {
+		this.isShowBtn = false;
+	}
+
+	showBtn() {
+		this.isShowBtn = true;
+	}
+
+	showLoadData() {
+		this.isShowLoad = true;
+	}
+
+	hideLoadData() {
+		this.isShowLoad = false;
+	}
+
+	toggle() {
+		this.showLoadData();
+		this.hideBtn();
 	}
 
 	ngOnDestroy() {
 		this.disconnect();
 		this.routeParams$.unsubscribe();
+		this.amountDatasets$.unsubscribe();
 	}
 
 	changeProjectName(name) {

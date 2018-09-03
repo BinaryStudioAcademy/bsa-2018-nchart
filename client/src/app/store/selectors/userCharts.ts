@@ -176,9 +176,12 @@ export const getData = () => (state: AppState) => {
 			const values = uC.dimensionSettings.map(id => ({
 				name: state.defaultChartSettings.dimensionSettings[id].sysName,
 				values: state.userChartSettings.dimensionSettings[id].columnIds
-					.map(el => getColumnValues(dS.id, el)(state))
+					.map(el => ({
+						name: state.datasetColumns[el].title,
+						values: getColumnValues(dS.id, el)(state)
+					}))
 					.reduce((acc, v) => {
-						acc = [...acc, ...v];
+						acc = [...acc, v];
 						return acc;
 					}, [])
 			}));
