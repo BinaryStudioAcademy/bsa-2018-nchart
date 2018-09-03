@@ -3,6 +3,7 @@ const projectModel = require('./project.models/project');
 const projectChartModel = require('./project.models/project_chart');
 const TransactionService = require('../../common/services/db-transaction.service');
 const chartModel = require('../chart/chart.model');
+const chartTypeModel = require('../chartType/chartType.model');
 const datasetModel = require('../dataset/dataset.model');
 const groupModel = require('../group/group.models/group');
 const groupProjectModel = require('../group/group.models/group_project');
@@ -209,6 +210,23 @@ class ProjectRepository extends Repository {
 																	'email'
 																]
 															}
+														}
+													]
+												}
+											]
+										}, {
+											model: this.projectChartModel,
+											attributes: [
+												'chartId'
+											],
+											include: [
+												{
+													model: chartModel,
+													attributes: ['chartTypeId'],
+													include: [
+														{
+															model: chartTypeModel,
+															attributes: ['name']
 														}
 													]
 												}

@@ -388,12 +388,19 @@ class ProjectService {
 					el.group.groupProjects.forEach(pj => {
 						const user =							pj.project.groupProjects[0].group.groupUsers[0].user
 							.dataValues;
+						const userCharts = [];
+						// pj.project.projectCharts[0].chart.chartType.name
+						pj.project.projectCharts.forEach(projectChart => {
+							userCharts.push(projectChart.chart.chartType.name);
+						});
+						const uniqueCharts = userCharts.filter((item, pos) => userCharts.indexOf(item) === pos);
 						projects.push({
 							id: pj.project.dataValues.id,
 							name: pj.project.dataValues.name,
 							groupName: el.group.name,
 							companyName: el.group.company.name,
 							accessLevelId: pj.dataValues.accessLevelId,
+							userCharts: uniqueCharts,
 							user
 						});
 					});
