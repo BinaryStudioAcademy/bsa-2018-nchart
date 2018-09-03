@@ -130,11 +130,7 @@ export class StepperComponent implements OnInit {
 				selector: isVerifiedToken(),
 				subscriber: isAuth => {
 					this.isAuth = isAuth;
-					if (isAuth) {
-						this.btnMsg = 'Save';
-					} else {
-						this.btnMsg = 'Login and save';
-					}
+					this.btnMsg = 'Save';
 				}
 			},
 			{
