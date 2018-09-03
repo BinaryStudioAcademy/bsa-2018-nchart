@@ -64,7 +64,7 @@ export class DatasetDomainService implements DatasetDomain {
 	preloadSamples(): Observable<ResponseScheme<any>> {
 		return this.httpService.makeRequest({
 			type: RequestType.GET,
-			url: '/api/dataset/'
+			url: '/api/dataset/samples'
 		});
 	}
 

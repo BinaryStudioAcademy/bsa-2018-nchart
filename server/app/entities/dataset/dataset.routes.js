@@ -16,6 +16,13 @@ dataset.get('/:id', (req, res, next) => {
 		.catch(next);
 });
 
+dataset.get('/samples', (req, res, next) => {
+	datasetService
+		.getSamples()
+		.then(PayloadGeneratorService.nextWithData(next, res))
+		.catch(next);
+});
+
 dataset.post('/', (req, res, next) => {
 	datasetService
 		.upsert(req.body.datasets)

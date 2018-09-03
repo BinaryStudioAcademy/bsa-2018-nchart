@@ -78,6 +78,7 @@ export class DatasetEffects {
 							if (!value.isSuccess) {
 								return throwError(new Error('Cant parse data'));
 							}
+
 							return this.datasetService.createDataset(
 								value.payload.columns,
 								value.payload.data
@@ -128,12 +129,10 @@ export class DatasetEffects {
 				map(res => {
 					const resSamples = [];
 					res.payload.forEach(element => {
-						if (element.sample === true) {
-							resSamples.push({
-								id: element.id,
-								name: element.name
-							});
-						}
+						resSamples.push({
+							id: element.id,
+							name: element.name
+						});
 					});
 					return new constants.PreloadSamplesComplete(resSamples);
 				}),

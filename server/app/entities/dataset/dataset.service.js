@@ -44,6 +44,10 @@ class DatasetService {
 			);
 		});
 	}
+
+	getSamples() {
+		return this.DatasetRepository.getSamples();
+	}
 }
 
 module.exports = new DatasetService();
