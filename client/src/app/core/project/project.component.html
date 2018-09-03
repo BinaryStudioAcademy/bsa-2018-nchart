@@ -38,18 +38,23 @@
 				  [width]="350"
 				  [minWidth]="200"
 				  [minY]="70"
-				  [baseZIndex]="10000">
+				  [baseZIndex]="10000"
+				  [resizable]="false"
+				  class="no-closable"
+		>
 			<span>
 				Are you sure that you want to leave page with unsaved project?
 			</span>
 			<p-footer class="modal-controls">
 				<app-button
 					label="Yes"
+					size="small"
 					(onclick)="accept()"
 				></app-button>
 				<app-button
 					label="No"
 					type="secondary"
+					size="small"
 					(onclick)="reject()"
 				></app-button>
 			</p-footer>
@@ -62,18 +67,23 @@
 				  [closable]="false"
 				  [width]="350"
 				  [minWidth]="200"
+				  [resizable]="false"
 				  [minY]="70"
-				  [baseZIndex]="10000">
+				  [baseZIndex]="10000"
+				  class="no-closable"
+		>
 			<span>
 				Do you want use current dataset?
 			</span>
 			<p-footer class="modal-controls">
 				<app-button
 					label="Yes"
+					size="small"
 					(onclick)="acceptDataset()"
 				></app-button>
 				<app-button
 					label="No"
+					size="small"
 					type="secondary"
 					(onclick)="rejectDataset()"
 				></app-button>
