@@ -20,8 +20,7 @@ interface Settings<T> {
 
 @Component({
 	selector: 'app-bar-chart',
-	templateUrl: './bar-chart.component.html',
-	styleUrls: ['./bar-chart.component.sass']
+	templateUrl: './bar-chart.component.html'
 })
 export class BarChartComponent implements OnInit, OnChanges {
 	@Input()
@@ -70,7 +69,7 @@ export class BarChartComponent implements OnInit, OnChanges {
 			d3.select('svg').remove();
 			d3.select('.d3-tip').remove();
 			const svg = d3
-				.select('.bar-chart')
+				.selectAll('.bar-chart')
 				.append('svg')
 				.attr('width', width)
 				.attr('height', height)
@@ -102,6 +101,7 @@ export class BarChartComponent implements OnInit, OnChanges {
 
 			this.x.domain(this.data.map(d => d.group));
 			this.y.domain([0, d3.max(this.data, d => d.value)]);
+
 			const x1 = d3
 				.scaleBand()
 				.padding(0.1)

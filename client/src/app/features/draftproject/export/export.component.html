@@ -1,27 +1,40 @@
 <div class="ui-main-block">
 	<h2><i class="fas fa-download"></i>Export</h2>
 	<div class="export-data-tabs-wrap">
-		<p-tabView 	activeIndex="0">
-
+		<p-tabView 	activeIndex="0" (onChange)="onTabChange($event)">
 			<p-tabPanel header="Download">
-				<app-input-text		[control]="controlName"
-									   placeholder="File name"
-									   [showStates]="true"
-									   label="Enter file name"
+				<app-input-text		
+					[control]="controlName"
+					placeholder="File name"
+					[showStates]="true"
+					label="Enter file name"
 				></app-input-text>
-				<app-dropdown-simple 	[options]="options"
-										[control]="controlType"
-										label="Select file type"
+				<app-dropdown-simple 	
+					[options]="options"
+					[control]="controlType"
+					label="Select file type"
 				></app-dropdown-simple>
-				<app-button (onclick)="exportData()"
-							label="Load Data"
-							class="ui-button-position-right"
-							[disabled]="controlName.invalid"
-							[loading]="isLoading"
+				<app-button 
+					(onclick)="exportData()"
+					label="Load Data"
+					class="ui-button-position-right"
+					[disabled]="controlName.invalid"
+					[loading]="isLoading"
 				></app-button>
 			</p-tabPanel>
 
 			<p-tabPanel header="Embed">
+				<!-- TODO make changes dynamic-->
+				<app-input-textarea 
+				class="load-data-paste"
+				rows="8" 
+				autoResize="autoResize"
+				[control]='svgFormControl'>
+				</app-input-textarea>
+				<div>
+					<span>Copy the snippet above into your HTML code to embed the visualization</span>
+					<i class="fas fa-paste paste-icon" (click)="copyToClipBoard()"></i>
+				</div>
 			</p-tabPanel>
 
 		</p-tabView>

@@ -1,5 +1,32 @@
-<div class="data-table-container">
-  <p>
-    data-table works!
-  </p>
+<div class="data-table-container ui-main-block">
+	<h2><i class="fas fa-table"></i>Modify parsed data</h2>
+	<p-dialog class="ui-modal" styleClass="ui-modal-fullscreen" [(visible)]="display" [modal]="true" [resizable]="false" [minWidth]="200" 
+		[baseZIndex]="10000">
+		<p-header><h2><i class="fas fa-table"></i>Modify parsed data</h2></p-header>
+		<app-table  [columns]="columns" 
+				[data]="data" 
+				(cellChange)="change($event)"
+				(headerChange)="headerChange($event)"
+				[headerItems]="headerItems"
+				[rowItems]="rowItems"
+				[headerRowItems]="headerRowItems"
+		></app-table>
+	</p-dialog>
+	<app-button
+		class="btn-remove"
+		type="icon"
+		icon="fas fa-trash-alt"
+		tooltip="Remove dataset"
+		tooltipPosition="top"
+		(onclick)="remove()"
+	></app-button>
+	<app-button type="icon" icon="fas fa-external-link-alt" class="full-screen-btn" (onclick)="showDialog()"></app-button>
+	<app-table  [columns]="columns" 
+				[data]="data" 
+				(cellChange)="change($event)"
+				(headerChange)="headerChange($event)"
+				[headerItems]="headerItems"
+				[rowItems]="rowItems"
+				[headerRowItems]="headerRowItems"
+	></app-table>
 </div>

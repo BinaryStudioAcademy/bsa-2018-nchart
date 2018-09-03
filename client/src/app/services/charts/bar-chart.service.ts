@@ -1,24 +1,12 @@
 import { Injectable } from '@angular/core';
-import ColorHash from 'color-hash';
+// import ColorHash from 'color-hash';
 import { OptionalType, fieldsValidators, BarChartDataObj } from '@app/models';
 import { BarChartCustomize } from '@app/models/bar-chart.model';
 import { FormService } from '@app/services/form.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { minValidator } from '@app/shared/components/form-field/form-validators';
-import { CustomizeControl } from '@app/models/customize-control.model';
 @Injectable()
 export class BarChartService {
-	static spinners = [
-		'width',
-		'height',
-		'leftMargin',
-		'verticalPadding',
-		'horizontalPadding'
-	];
-	static checkBox = ['useSameScale'];
-	static dropDown = [];
-	static colorScale = ['colourScale'];
-
 	constructor(
 		private formService: FormService,
 		private formBuilder: FormBuilder
@@ -26,24 +14,11 @@ export class BarChartService {
 
 	data: any[];
 
-	static getType(k: string): string {
-		if (this.spinners.indexOf(k) > -1) {
-			return 'spinner';
-		}
-		if (this.checkBox.indexOf(k) > -1) {
-			return 'checkBox';
-		}
-		if (this.dropDown.indexOf(k) > -1) {
-			return 'dropDown';
-		}
-		if (this.colorScale.indexOf(k) > -1) {
-			return 'colourScale';
-		}
-	}
-
 	static arrayToObject(data: any[]): BarChartDataObj {
 		const dataObj: BarChartDataObj = data.reduce((obj, item) => {
-			obj[item.name] = item.values;
+			item.values.length
+				? (obj[item.name] = item.values[0].values)
+				: (obj[item.name] = []);
 			return obj;
 		}, {});
 		return dataObj;
@@ -60,18 +35,18 @@ export class BarChartService {
 	}
 
 	static mapColors(original: any[], colors: any) {
-		if (colors.length) {
-			const colorHash = new ColorHash();
-			return original.map(obj => ({
-				name: obj.name,
-				value: obj.value,
-				group: obj.group,
-				id: obj.id,
-				color: colorHash.hex(colors[original.indexOf(obj)] + '')
-			}));
-		} else {
-			return original;
-		}
+		// if (colors.length) {
+		// 	const colorHash = new ColorHash();
+		// 	return original.map(obj => ({
+		// 		name: obj.name,
+		// 		value: obj.value,
+		// 		group: obj.group,
+		// 		id: obj.id,
+		// 		color: colorHash.hex(colors[original.indexOf(obj)] + '')
+		// 	}));
+		// } else {
+		// 	return original;
+		// }
 	}
 
 	static mapValues(original: any[], values: any[]) {
@@ -155,20 +130,12 @@ export class BarChartService {
 		return compressed;
 	}
 
-	getCustomizeControls(formGroup: FormGroup): CustomizeControl[] {
-		return Object.entries(formGroup.controls).map(c => ({
-			type: BarChartService.getType(c[0]),
-			label: c[0],
-			control: c[1]
-		}));
-	}
-
 	getData(data: any) {
 		const dataObj = BarChartService.arrayToObject(data);
 		this.data = BarChartService.mapData(dataObj.xaxis);
 		this.data = BarChartService.mapValues(this.data, dataObj.size);
 		this.data = BarChartService.mapGroupsId(this.data, dataObj.group);
-		this.data = BarChartService.mapColors(this.data, dataObj.color);
+		// this.data = BarChartService.mapColors(this.data, dataObj.color);
 		if (!dataObj.group.length) {
 			this.data = BarChartService.compressArray(this.data);
 		}

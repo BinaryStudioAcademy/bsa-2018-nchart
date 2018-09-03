@@ -16,7 +16,10 @@ import { FormsModule } from '@angular/forms';
 import { SharedModule } from '@app/shared/shared.module';
 import { TabViewModule } from 'primeng/tabview';
 import { FileUploadModule } from 'primeng/fileupload';
+import { CardModule } from 'primeng/card';
+import { DialogModule } from 'primeng/dialog';
 import { DimensionSettingsComponent } from '@app/features/draftproject/dimension-settings/dimension-settings.component';
+import { ClipboardModule } from 'ngx-clipboard';
 
 @NgModule({
 	imports: [
@@ -26,7 +29,10 @@ import { DimensionSettingsComponent } from '@app/features/draftproject/dimension
 		CommonModule,
 		BrowserModule,
 		BrowserAnimationsModule,
-		FormsModule
+		FormsModule,
+		CardModule,
+		ClipboardModule,
+		DialogModule
 	],
 	declarations: [
 		StepperComponent,

@@ -20,10 +20,16 @@ import { of, throwError } from 'rxjs';
 import { UserDomainService } from '@app/api/domains/user/user.domain';
 import { TokenService } from '@app/services/token.service';
 import { Go } from '@app/store/actions/router/router.actions';
+import { concatMap, withLatestFrom } from 'rxjs/internal/operators';
+import { StoreService } from '@app/services/store.service';
+import { activeProjectId } from '@app/store/selectors/projects.selectors';
+import { SaveProject } from '@app/store/actions/projects/projects.actions';
+import { isRequiredDimensionMatched } from '@app/store/selectors/userCharts';
 
 @Injectable()
 export class UserEffects {
 	constructor(
+		private storeService: StoreService,
 		private action$: Actions,
 		private api: UserDomainService,
 		private tokenService: TokenService
@@ -60,14 +66,23 @@ export class UserEffects {
 		ofType(UserActionConstants.LOGIN),
 		switchMap((action: Login) =>
 			this.api.login(action.payload.user).pipe(
-				mergeMap(value => {
+				withLatestFrom(this.storeService.createSubscription()),
+				concatMap(([value, state]) => {
 					if (value.isSuccess) {
 						const { user } = value.payload;
-
-						return [
-							new LoginComplete({ user }),
-							new Go({ path: ['/app/project/draft'] })
-						];
+						const canSaveProj = isRequiredDimensionMatched()(state);
+						if (canSaveProj) {
+							const id = activeProjectId()(state);
+							return [
+								new LoginComplete({ user }),
+								new SaveProject({ id })
+							] as any;
+						} else {
+							return [
+								new LoginComplete({ user }),
+								new Go({ path: ['/app/project/draft'] })
+							];
+						}
 					}
 
 					return throwError(new Error(`Can't login`));
@@ -90,14 +105,24 @@ export class UserEffects {
 		ofType(UserActionConstants.REGISTER),
 		switchMap((action: Register) =>
 			this.api.register({ user: action.payload.user }).pipe(
-				mergeMap(value => {
+				withLatestFrom(this.storeService.createSubscription()),
+				concatMap(([value, state]) => {
 					if (value.isSuccess) {
 						const { user } = value.payload;
+						const canSaveProj = isRequiredDimensionMatched()(state);
 
-						return [
-							new RegisterComplete({ user }),
-							new Go({ path: ['/app/project/draft'] })
-						];
+						if (canSaveProj) {
+							const id = activeProjectId()(state);
+							return [
+								new RegisterComplete({ user }),
+								new SaveProject({ id })
+							] as any;
+						} else {
+							return [
+								new RegisterComplete({ user }),
+								new Go({ path: ['/app/project/draft'] })
+							] as any;
+						}
 					}
 
 					return throwError(new Error(`Can't register`));

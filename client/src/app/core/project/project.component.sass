@@ -1,11 +1,11 @@
 .project-container
 	width: 100%
 	margin: 0 auto
-	padding-bottom: 140px
+	padding-bottom: 40px
 
 .main-content
-	padding-top: 120px
-	margin: 0 auto
+	margin: 120px auto 0
+	position: relative
 	width: 60%
 
 app-load-data
@@ -14,10 +14,19 @@ app-load-data
 
 app-data-table
 	display: block
-	margin: 20px 0  
+	margin: 20px 0
 
 @media screen and(max-width: 1000px)
 	.main-content
 		width: 90%
 	app-stepper
 		display: none
+
+.modal-controls
+	display: flex
+	justify-content: space-between
+
+.active
+	color: #3ccc38
+.page
+	cursor: pointer

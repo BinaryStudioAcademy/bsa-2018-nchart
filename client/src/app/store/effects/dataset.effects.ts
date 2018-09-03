@@ -3,19 +3,23 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { switchMap } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
-import * as constants from '@app/store/actions/datasets/datasets.actions';
-import { DatasetActions } from '@app/store/actions/datasets/datasets.action-types';
+import * as DatasetActions from '../actions/datasets/datasets.actions';
+import { DatasetActionConstants as constants } from '@app/store/actions/datasets/datasets.action-types';
 import { DatasetDomainService } from '@app/api/domains/source/dataset-domain.service';
 import { DatasetService } from '@app/services/dataset.service';
 import { datasetScheme } from '@app/schemes/dataset.schema';
 import { normalize } from 'normalizr';
-import { withLatestFrom } from 'rxjs/internal/operators';
+import { withLatestFrom, map } from 'rxjs/internal/operators';
 import { getActiveProject } from '@app/store/selectors/projects.selectors';
-import { CreateChart } from '@app/store/actions/charts/charts.actions';
+import {
+	CreateChart,
+	SetDatasetChart
+} from '@app/store/actions/charts/charts.actions';
 import { StoreService } from '@app/services/store.service';
 import { throwError } from 'rxjs';
 import { ResponseScheme } from '@app/models/response-scheme.model';
 import { DatasetColumn } from '@app/models/dataset.model';
+import { userChart } from '@app/store/selectors/userCharts';
 
 @Injectable()
 export class DatasetEffects {
@@ -29,33 +33,39 @@ export class DatasetEffects {
 	@Effect()
 	parseByText$ = this.action$.pipe(
 		ofType(
-			DatasetActions.PARSE_PLAIN_TEXT,
-			DatasetActions.PARSE_FROM_FILE,
-			DatasetActions.PARSE_FROM_URL
+			constants.PARSE_PLAIN_TEXT,
+			constants.PARSE_FROM_FILE,
+			constants.PARSE_FROM_URL
 		),
 		switchMap(
 			(
 				action:
-					| constants.ParseByText
-					| constants.ParseByLink
-					| constants.ParseByFile
+					| DatasetActions.ParseByText
+					| DatasetActions.ParseByLink
+					| DatasetActions.ParseByFile
+					| DatasetActions.LoadSample
 			) => {
 				let loadData$;
 
 				switch (action.type) {
-					case DatasetActions.PARSE_PLAIN_TEXT:
+					case constants.PARSE_PLAIN_TEXT:
 						loadData$ = this.datasetDomService.loadByText({
 							text: action.payload.text
 						});
 						break;
-					case DatasetActions.PARSE_FROM_URL:
+					case constants.PARSE_FROM_URL:
 						loadData$ = this.datasetDomService.loadByUrl({
 							link: action.payload.link
 						});
 						break;
-					case DatasetActions.PARSE_FROM_FILE:
+					case constants.PARSE_FROM_FILE:
 						loadData$ = this.datasetDomService.loadByFile({
 							file: action.payload.file
+						});
+						break;
+					case constants.LOAD_SAMPLE:
+						loadData$ = this.datasetDomService.loadSample({
+							id: action.payload.id
 						});
 						break;
 				}
@@ -71,6 +81,7 @@ export class DatasetEffects {
 							if (!value.isSuccess) {
 								return throwError(new Error('Cant parse data'));
 							}
+
 							return this.datasetService.createDataset(
 								value.payload.columns,
 								value.payload.data
@@ -78,9 +89,12 @@ export class DatasetEffects {
 						}
 					),
 					withLatestFrom(
-						this.storeService.createSubscription(getActiveProject())
+						this.storeService.createSubscription(
+							getActiveProject()
+						),
+						this.storeService.createSubscription(userChart())
 					),
-					switchMap(([dataset, projectId]) => {
+					switchMap(([dataset, projectId, uChart]) => {
 						const {
 							result: [datasetId],
 							entities
@@ -88,20 +102,35 @@ export class DatasetEffects {
 							this.datasetService.transformDatasets([dataset]),
 							[datasetScheme]
 						);
-						return [
-							new constants.ParseComplete({
-								entities,
-								datasetId,
-								projectId
-							}),
-							new CreateChart({
-								datatsetId: datasetId
-							})
-						];
+
+						if (uChart && !uChart.datasetId) {
+							return [
+								new DatasetActions.ParseComplete({
+									entities,
+									datasetId,
+									projectId
+								}),
+								new SetDatasetChart({
+									datatsetId: datasetId,
+									chartId: uChart.id
+								})
+							] as any;
+						} else {
+							return [
+								new DatasetActions.ParseComplete({
+									entities,
+									datasetId,
+									projectId
+								}),
+								new CreateChart({
+									datatsetId: datasetId
+								})
+							] as any;
+						}
 					}),
 					catchError(error => {
 						return of(
-							new constants.ParseFailed({
+							new DatasetActions.ParseFailed({
 								action: action,
 								msg: 'test',
 								error
@@ -111,5 +140,35 @@ export class DatasetEffects {
 				);
 			}
 		)
+	);
+
+	@Effect()
+	preloadSamples$ = this.action$.pipe(
+		ofType(constants.PRELOAD_SAMPLES),
+		switchMap((action: DatasetActions.PreloadSamples) => {
+			return this.datasetDomService.preloadSamples().pipe(
+				map(res => {
+					const resSamples = [];
+					res.payload.forEach(element => {
+						resSamples.push({
+							id: element.id,
+							name: element.name
+						});
+					});
+					return new DatasetActions.PreloadSamplesComplete(
+						resSamples
+					);
+				}),
+				catchError(error =>
+					of(
+						new DatasetActions.PreloadSamplesFailed({
+							msg: `Can't export project`,
+							action,
+							error
+						})
+					)
+				)
+			);
+		})
 	);
 }

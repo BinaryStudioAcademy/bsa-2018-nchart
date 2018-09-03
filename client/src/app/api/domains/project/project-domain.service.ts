@@ -6,6 +6,7 @@ import { RequestType } from '@app/models/requestType.model';
 import { ProjectDomain } from '@app/models/project-domain.model';
 import { OriginProject } from '@app/models/project.model';
 import { ResponseScheme } from '@app/models/response-scheme.model';
+import { SchemeID } from '@app/models/normalizr.model';
 
 @Injectable()
 export class ProjectDomainService implements ProjectDomain {
@@ -16,6 +17,25 @@ export class ProjectDomainService implements ProjectDomain {
 	getAll(): Observable<ResponseScheme<OriginProject[]>> {
 		return this.httpService.makeRequest<ResponseScheme<OriginProject[]>>(
 			new ServiceRequest(RequestType.GET, `${this.projectPath}`, null)
+		);
+	}
+
+	share(payload): Observable<ResponseScheme<any>> {
+		return this.httpService.makeRequest<ResponseScheme<any>>(
+			new ServiceRequest(
+				RequestType.POST,
+				`${this.projectPath}/shareByEmail`,
+				{
+					'Content-Type': 'application/json'
+				},
+				payload
+			)
+		);
+	}
+
+	getPartByUserId(): Observable<ResponseScheme<any[]>> {
+		return this.httpService.makeRequest<ResponseScheme<any[]>>(
+			new ServiceRequest(RequestType.GET, `${this.projectPath}/owners`)
 		);
 	}
 
@@ -46,16 +66,18 @@ export class ProjectDomainService implements ProjectDomain {
 		return s;
 	}
 
-	delete(payload: { projectId: string }): Observable<ResponseScheme<null>> {
-		const s = this.httpService.makeRequest<ResponseScheme<null>>(
+	delete(payload: {
+		projectId: SchemeID;
+		accessLevelId: number;
+	}): Observable<ResponseScheme<any>> {
+		return this.httpService.makeRequest<ResponseScheme<any>>(
 			new ServiceRequest(
-				RequestType.DELETE,
-				`/${this.projectPath}/${payload.projectId}`,
+				RequestType.POST,
+				`${this.projectPath}/delete`,
 				null,
 				payload
 			)
 		);
-		return s;
 	}
 
 	getByProjectId(payload: {

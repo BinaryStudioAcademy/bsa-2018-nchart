@@ -14,6 +14,7 @@ import {
 import { CompaniesState } from '@app/models/companies-store.model';
 import { ProjectsState } from '@app/models/projects-store.model';
 import { UserChartsState } from '@app/models/user-chart-store.model';
+import { DatasetPreloadSamplesState } from '@app/models/dataset-store.model';
 
 export class AppAction<T = undefined> {
 	readonly type: string;
@@ -42,4 +43,5 @@ export interface AppState {
 	datasetData: DatasetDataState;
 	defaultChartSettings: DefaultChartSettingsState;
 	userChartSettings: UserChartSettingsState;
+	datasetPreload: DatasetPreloadSamplesState;
 }

@@ -7,7 +7,6 @@ const {
 	successOrEmptyPayload
 } = require('../../common/middleware/payload.middleware');
 
-
 project.use(tokenInfoMiddleware);
 
 project.get('/', (req, res, next) => {
@@ -23,6 +22,13 @@ project.post('/', ProjectPayloadValidator.fullSet, (req, res, next) => {
 		.catch(next);
 });
 
+project.post('/name', (req, res, next) => {
+	// getByProjectId user from token, and set it into res.locals.user
+	ProjectService.updateProjectName(req.body)
+		.then(PayloadGeneratorService.nextWithData(next, res))
+		.catch(next);
+});
+
 // todo: what do with rout names?
 project.get('/group/:id', (req, res, next) => {
 	ProjectService.fullProjectsByGroupId(Number(req.params.id))
@@ -30,11 +36,15 @@ project.get('/group/:id', (req, res, next) => {
 		.catch(next);
 });
 
-project.get('/user', (req, res, next) => {
-	ProjectService.fullProjectByUserId(res.locals.user.id)
-		.then(PayloadGeneratorService.nextWithData(next, res))
-		.catch(next);
-}, successOrEmptyPayload);
+project.get(
+	'/user',
+	(req, res, next) => {
+		ProjectService.fullProjectByUserId(res.locals.user.id)
+			.then(PayloadGeneratorService.nextWithData(next, res))
+			.catch(next);
+	},
+	successOrEmptyPayload
+);
 
 project.post('/share', (req, res, next) => {
 	ProjectService.shareProject(req.body)
@@ -45,6 +55,22 @@ project.post('/share', (req, res, next) => {
 // todo: retard route name
 project.post('/shareByEmail', (req, res, next) => {
 	ProjectService.shareProjectByEmail(req.body, res)
+		.then(PayloadGeneratorService.nextWithData(next, res))
+		.catch(next);
+});
+
+project.get(
+	'/owners',
+	(req, res, next) => {
+		ProjectService.findProjectsWithOwners(res.locals.user.id)
+			.then(PayloadGeneratorService.nextWithData(next, res))
+			.catch(next);
+	},
+	successOrEmptyPayload
+);
+
+project.post('/delete', (req, res, next) => {
+	ProjectService.deleteProjects(req.body, res)
 		.then(PayloadGeneratorService.nextWithData(next, res))
 		.catch(next);
 });

@@ -66,6 +66,11 @@ import {
 } from '@app/store/reducers/dataset-data.reducer';
 import { RouterStateUrl } from '@app/models/router-state-url.model';
 
+import {
+	datasetPreloadReducer,
+	initialState as datasetPreloadInitialState
+} from '@app/store/reducers/dataset-samples.reducer';
+
 export const initialState: AppState = {
 	user: userInitialState,
 	errorHandler: errorHandlerInitialState,
@@ -78,7 +83,8 @@ export const initialState: AppState = {
 	datasetColumns: datasetColumnsInitialState,
 	datasetData: datasetDataInitialState,
 	defaultChartSettings: defaultChartSettingsInitialState,
-	userChartSettings: userChartSettingsInitialState
+	userChartSettings: userChartSettingsInitialState,
+	datasetPreload: datasetPreloadInitialState
 };
 
 export const getReducers = () => ({
@@ -94,7 +100,8 @@ export const getReducers = () => ({
 	defaultChartSettings: defaultChartSettingsReducer,
 	datasetColumns: datasetColumnsReducer,
 	datasetData: datasetDataReducer,
-	router: routerReducer
+	router: routerReducer,
+	datasetPreload: datasetPreloadReducer
 });
 
 export const reducersToken = new InjectionToken<ActionReducerMap<AppState>>(

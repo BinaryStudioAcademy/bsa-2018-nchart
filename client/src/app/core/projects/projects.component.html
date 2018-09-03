@@ -1,3 +1,15 @@
-<p>
-  projects works!
-</p>
+<div class="project-card-container">
+	<ng-container *ngIf="getProjects() | async as projects">
+		<div *ngFor="let project of projects">
+			<app-card
+				[projectId]="project?.id"
+				[projectName]="project?.name"
+				[companyName]="project?.companyName"
+				[groupName]="project.groupName"
+				[userName]="project.user?.name"
+				[email]="project.user?.email"
+				[accessLevelId]="project?.accessLevelId"
+			></app-card>
+		</div>
+	</ng-container>
+</div>

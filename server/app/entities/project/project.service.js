@@ -24,14 +24,14 @@ class ProjectService {
 		return this.ProjectRepository.upsertProjectCharts(objs);
 	}
 
-	createProject(obj, defaultGroupId) {
+	createProject(obj, defaultGroupId, groupId) {
 		return new Promise((resolve, reject) => {
 			async.waterfall(
 				[
 					callback => {
 						if (obj.project.id) {
 							this.ProjectRepository.upsert(obj.project)
-								.then(() => callback(null, {
+								.then(() => callback(null, false, {
 									project: {
 										id: obj.project.id,
 										name: obj.project.name
@@ -41,7 +41,7 @@ class ProjectService {
 						} else {
 							this.ProjectRepository.create(obj.project.name)
 								.then(data => {
-									callback(null, {
+									callback(null, true, {
 										project: {
 											id: data.dataValues.id,
 											name: data.dataValues.name
@@ -51,18 +51,37 @@ class ProjectService {
 								.catch(err => callback(err, null));
 						}
 					},
-					(payload, callback) => {
-						this.GroupService.saveGroupProject({
-							groupId: defaultGroupId,
-							projectId: payload.project.id,
-							accessLevelId: 1
-						})
-							.then(() => {
-								callback(null, payload);
+					(status, payload, callback) => {
+						if (!status || (!groupId && !defaultGroupId)) {
+							return callback(null, payload);
+						}
+						if (groupId) {
+							return this.GroupService.saveGroupProject({
+								groupId,
+								projectId: payload.project.id,
+								accessLevelId: 1
 							})
-							.catch((err) => {
-								callback(null, err);
-							});
+								.then(() => {
+									callback(null, payload);
+								})
+								.catch(err => {
+									callback(null, err);
+								});
+						}
+						return (
+							this.GroupService.saveGroupProject({
+								groupId: defaultGroupId,
+								projectId: payload.project.id,
+								accessLevelId: 1
+							})
+								// todo: error handler if groupProject  already exists
+								.then(() => {
+									callback(null, payload);
+								})
+								.catch(err => {
+									callback(null, err);
+								})
+						);
 					},
 					(payload, callback) => {
 						DatasetService.upsert(obj.project.datasets)
@@ -114,8 +133,15 @@ class ProjectService {
 	}
 
 	handleProject(obj, res) {
-		if (obj.project && !obj.groupId) {
-			return this.createProject(obj, res.locals.user.defaultGroupId);
+		if (!obj.groupId && res.locals.user) {
+			return this.createProject(
+				obj,
+				res.locals.user.defaultGroupId,
+				null
+			);
+		}
+		if (!obj.groupId && !res.locals.user) {
+			return this.createProject(obj, null, null);
 		}
 		// obj.groupId, res.locals.user
 		return new Promise((resolve, reject) => {
@@ -131,8 +157,9 @@ class ProjectService {
 								if (data !== null) {
 									return callback(null);
 								}
-								throw new Error(
-									'Group with such user does not exist'
+								return callback(
+									'Group with such user does not exist',
+									null
 								);
 							})
 							.catch(err => {
@@ -140,7 +167,7 @@ class ProjectService {
 							});
 					},
 					callback => {
-						this.createProject(obj)
+						this.createProject(obj, null, obj.groupId)
 							.then(data => {
 								callback(null, data);
 							})
@@ -174,12 +201,32 @@ class ProjectService {
 			async.waterfall(
 				[
 					callback => {
-						this.ProjectRepository.findByUserIdAndProjectId({
+						if (!res.locals.user) {
+							return this.ProjectRepository.publicProject(
+								id
+							).then(data => {
+								if (data === null) {
+									return callback(null);
+								}
+								return callback(
+									'User has no rights on this project',
+									null
+								);
+							});
+						}
+						return this.ProjectRepository.findByUserIdAndProjectId({
 							projectId: id,
 							userId: res.locals.user.id
 						})
 							.then(data => {
-								if (data !== null) {
+								let count = 0;
+								data.forEach(el => {
+									if (el.group) {
+										count += 1;
+									}
+								});
+								// data[1].group.groupUsers[0].dataValues
+								if (count >= 1) {
 									return callback(null);
 								}
 								throw new Error(
@@ -263,9 +310,12 @@ class ProjectService {
 						})
 							.then(data => {
 								if (data === null) {
-									throw new Error('Object did not exist');
+									return callback(
+										'Object did not exist',
+										null
+									);
 								}
-								callback(null, data.dataValues.groupId);
+								return callback(null, data.dataValues.groupId);
 							})
 							.catch(err => callback(err, null));
 					},
@@ -285,7 +335,6 @@ class ProjectService {
 					if (err) {
 						reject(err);
 					}
-					// todo: what should be here
 					resolve(payload);
 				}
 			);
@@ -301,10 +350,10 @@ class ProjectService {
 				[
 					callback => {
 						UserService.findByEmail(obj.email).then(data => {
-							if (data !== null) {
-								return callback(null, data.dataValues.id);
+							if (data === null) {
+								return callback('Object did not exist', null);
 							}
-							throw new Error('Object did not exist');
+							return callback(null, data.dataValues.id);
 						});
 					},
 					(userId, callback) => {
@@ -327,6 +376,33 @@ class ProjectService {
 		});
 	}
 
+	findProjectsWithOwners(id) {
+		return this.ProjectRepository.findProjectsWithOwners(id)
+			.then(data => {
+				// data[0].group.groupProjects[0].project - id, name
+				// data[0].group.groupProjects[0].project
+				// .groupProjects[0].group.groupUsers[0].user.dataValues - name, email
+				const projects = [];
+				// todo: look very, very bad
+				data.forEach(el => {
+					el.group.groupProjects.forEach(pj => {
+						const user =							pj.project.groupProjects[0].group.groupUsers[0].user
+							.dataValues;
+						projects.push({
+							id: pj.project.dataValues.id,
+							name: pj.project.dataValues.name,
+							groupName: el.group.name,
+							companyName: el.group.company.name,
+							accessLevelId: pj.dataValues.accessLevelId,
+							user
+						});
+					});
+				});
+				return projects;
+			})
+			.catch(err => err);
+	}
+
 	static getProjectFromPayload(rawProject) {
 		const charts = [];
 		const datasets = [];
@@ -341,6 +417,51 @@ class ProjectService {
 			charts,
 			datasets
 		};
+	}
+
+	deleteProjects(obj, res) {
+		if (obj.accessLevelId !== 1) {
+			return this.ProjectRepository.deleteGroupProject(
+				obj.projectId,
+				res.locals.user.defaultGroupId
+			);
+		}
+		return new Promise((resolve, reject) => {
+			async.waterfall(
+				[
+					callback => {
+						this.ProjectRepository.deleteGroupProject(obj.projectId)
+							.then(() => callback(null))
+							.catch(err => callback(err, null));
+					},
+					callback => {
+						this.ProjectRepository.deleteProjectCharts(
+							obj.projectId
+						)
+							.then(() => callback(null))
+							.catch(err => callback(err, null));
+					},
+					callback => {
+						this.ProjectRepository.deleteProject(obj.projectId)
+							.then(data => callback(null, data))
+							.catch(err => callback(err, null));
+					}
+				],
+				(err, payload) => {
+					if (err) {
+						reject(err);
+					}
+					resolve(payload);
+				}
+			);
+		});
+	}
+
+	updateProjectName(obj) {
+		return this.ProjectRepository.updateProjectName(
+			obj.projectId,
+			obj.name
+		);
 	}
 
 	export(id, type, selector) {

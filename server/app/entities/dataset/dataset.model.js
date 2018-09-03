@@ -15,6 +15,14 @@ const Dataset = sequelize.define('datasets', {
 	columns: {
 		type: Sequelize.JSON,
 		allowNull: false
+	},
+	name: {
+		type: Sequelize.STRING,
+		allowNull: true
+	},
+	sample: {
+		type: Sequelize.BOOLEAN,
+		allowNull: true
 	}
 });
 

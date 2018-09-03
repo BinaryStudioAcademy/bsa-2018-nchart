@@ -1,0 +1,29 @@
+<p-card>
+	<div class="project-card-info">
+		<div class="project-card-user">
+			<!-- <b>Project:&nbsp;</b><a [routerLink]="['/app/project', projectId]"> {{projectName}}</a> -->
+			<a  class="user-name" [routerLink]="['/app/project', projectId]"> {{projectName}}</a>
+			<!-- <span>{{email}}</span> -->
+		</div>
+		<div class="project-card-folder">
+			<span><b>Owner:</b> {{userName}}</span>
+			<!-- <span><b>Group:</b> {{groupName}}</span> -->
+		</div>
+		<!-- <div class="project-card-project-info">
+			<b>Project:&nbsp;</b><a [routerLink]="['/app/project', projectId]"> {{projectName}}</a>
+		</div> -->
+		<!-- <div class="project-access">
+			<span><b>Access: </b> {{status}}</span>
+		</div> -->
+	</div>
+	<div class="project-card-control">
+		<app-button-action [items]="itemsObjs"></app-button-action>
+		<!--<app-checkbox [value]=""></app-checkbox>-->
+		<app-dialog [projectId]="projectId" [accessLevelId]="accessLevelId" [(display)]="display"></app-dialog>
+		<app-delete-dialog
+			[projectId]="projectId"
+			[accessLevelId]="accessLevelId"
+			[(displayDelete)]="displayDelete">
+		</app-delete-dialog>
+	</div>
+</p-card>

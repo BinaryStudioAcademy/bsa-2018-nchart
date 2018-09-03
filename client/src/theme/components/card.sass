@@ -1,0 +1,65 @@
+@import ../variables
+@import ../colors
+
+.ui-card-content
+	background-color: $backgroundWhiteColor
+	width: 200px
+	display: grid
+	grid-template-columns: 90% 10%
+	padding: 20px
+	padding-top: 12px
+	box-shadow: $boxShadow
+	font-family: $fontFamily !important
+	position: relative
+
+	.ui-buttonset.ui-splitbutton
+		position: absolute
+		top: 0
+		right: 0
+		box-shadow: none
+		&:hover
+			box-shadow: none
+	.ui-buttonset.ui-splitbutton:hover
+		background: #fff
+		box-shadow: none
+		color: $primaryColor
+	.ui-buttonset.ui-splitbutton:active
+		background-color: #fff
+	.ui-buttonset.ui-splitbutton:hover .ui-widget.ui-button,
+	.ui-buttonset.ui-splitbutton:hover .ui-button
+		box-shadow: none
+		color: $stateActiveTextColor
+	.ui-buttonset.ui-splitbutton .ui-widget.ui-button:active,
+	.ui-buttonset.ui-splitbutton .ui-button:active
+		background-color: #fff
+	.user-name
+		color: $activeColor
+		font-weight: 900
+		font-size: 1rem
+
+.project-card-user
+	display: grid
+
+.project-card-folder
+	display: grid
+	margin: 10px 0
+
+.project-card-project-info
+	display: flex
+	& a
+		color: $linkTextColor
+		text-decoration: none
+		&:visited
+			color: $linkTextColor !important
+		&:hover
+			color: $linkHoverTextColor !important
+
+.project-access
+	margin-top: 10px
+
+//.project-card-control
+//	position: relative
+//	& input
+//		position: absolute
+//		bottom: 0
+//		left: 0

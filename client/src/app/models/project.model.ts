@@ -1,9 +1,9 @@
 import { SchemeID, NormalizedSchemeField } from '@app/models/normalizr.model';
 import {
 	DatasetTable,
-	DatasetState,
 	DatasetDataState,
-	DatasetColumnState
+	DatasetColumnState,
+	Dataset
 } from '@app/models/dataset.model';
 import {
 	Chart,
@@ -34,7 +34,7 @@ export interface ProjectEntities {
 	chart: NormalizedSchemeField<UserChart>;
 	customizeSetting: CustomizeSettingsState;
 	dimensionSetting: DimensionSettingsState;
-	dataset: DatasetState;
+	dataset: NormalizedSchemeField<Dataset>;
 	project: NormalizedSchemeField<Project>;
 	datasetData: DatasetDataState;
 	datasetColumn: DatasetColumnState;

@@ -26,7 +26,7 @@ export class DatasetService {
 						columns: [...d.columns],
 						data: d.data.map((r, rI) =>
 							r.map((c, cI) => ({
-								id: `${rI}-${cI}-${d.id}`,
+								id: `${rI}-${d.columns[cI].id}-${d.id}`,
 								value: c
 							}))
 						)

@@ -105,7 +105,7 @@
 		margin-left: 16px
 		order: 2
 
-// Action Button
+Action Button
 .ui-buttonset.ui-splitbutton 
 	box-shadow: $boxShadow
 	background-color: $stateDefaultBgColor
@@ -160,27 +160,36 @@
 		.ui-widget.ui-button:enabled:not(.ui-splitbutton-menubutton),
 		.ui-button:enabled:not(.ui-splitbutton-menubutton)
 			color: #fff
-			background-color: $activeButtonColor
 			border: none
-		.ui-widget.ui-button:enabled,
-		.ui-button:enabled
-			background-color: $activeButtonColor
 
 // Action Button Menu
-.ui-menu
-	background: $stateDefaultBgColor
+.ui-menu,
+.ui-widget.ui-tieredmenu,
+.ui-widget.ui-submenu,
+.ui-tieredmenu .ui-submenu-list,
+.ui-widget.ui-tieredmenu p-tieredmenusub.ui-widget.ui-submenu.ng-star-inserted .ui-submenu-list
+	background: $stateDefaultBgColor!important
+	background-color: white
 	padding: 0
 	border-radius: 0
 	box-shadow: 0 1px 3px $teriaryColor
 	.ui-menuitem
 		border-radius: 0
+		margin: 0
 	.ui-menuitem > .ui-menuitem-link
 		color: $secondaryTextColor
 		border-radius: 0
-		padding-left: 20px
+		padding-left: 30px
+		margin: 0
 	.ui-menuitem > .ui-menuitem-link:hover
 		background-color: $disabledColor
 		color: $stateDefaultTextColor
+
+.ui-tieredmenu .ui-menuitem > .ui-menuitem-link:hover,
+.ui-tieredmenu .ui-menuitem > .ui-menuitem-link:focus,
+.ui-tieredmenu .ui-menuitem > .ui-menuitem-link:active,
+.ui-tieredmenu .ui-menuitem.ui-menuitem-active > .ui-menuitem-link
+	background-color: $disabledColor
 
 // Sizes
 .ui-button-large
