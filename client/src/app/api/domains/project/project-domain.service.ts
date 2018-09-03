@@ -52,18 +52,18 @@ export class ProjectDomainService implements ProjectDomain {
 		);
 	}
 
-	update(payload: {
-		project: OriginProject;
-	}): Observable<ResponseScheme<OriginProject>> {
-		const s = this.httpService.makeRequest<ResponseScheme<OriginProject>>(
+	updateName(payload: {
+		id: SchemeID;
+		name: string;
+	}): Observable<ResponseScheme<any>> {
+		return this.httpService.makeRequest<ResponseScheme<any>>(
 			new ServiceRequest(
-				RequestType.PUT,
-				`/${this.projectPath}/${payload.project.id}`,
+				RequestType.POST,
+				`/${this.projectPath}/name`,
 				null,
-				payload.project
+				payload
 			)
 		);
-		return s;
 	}
 
 	delete(payload: {

@@ -143,6 +143,23 @@ export class DeleteOneProjectFailed extends FailedAction {
 	readonly type = ProjectsActionConstants.DELETE_ONE_PROJECT__FAILED;
 }
 
+export class UpdateProjectName extends AppAction<{
+	projectId: SchemeID;
+	name: string;
+}> {
+	readonly type = ProjectsActionConstants.UPDATE_PROJECT_NAME;
+}
+
+export class UpdateProjectNameComplete extends AppAction<{
+	name: string;
+}> {
+	readonly type = ProjectsActionConstants.UPDATE_PROJECT__COMPLETE;
+}
+
+export class UpdateProjectNameFailed extends FailedAction {
+	readonly type = ProjectsActionConstants.UPDATE_PROJECT_NAME__FAILED;
+}
+
 export type Actions =
 	| LoadProjetcs
 	| LoadProjectsComplete
@@ -169,4 +186,7 @@ export type Actions =
 	| ShareProjectFailed
 	| DeleteOneProject
 	| DeleteOneProjectComplete
-	| DeleteOneProjectFailed;
+	| DeleteOneProjectFailed
+	| UpdateProjectName
+	| UpdateProjectNameComplete
+	| UpdateProjectNameFailed;
