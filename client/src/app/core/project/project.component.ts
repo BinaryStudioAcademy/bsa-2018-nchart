@@ -21,6 +21,7 @@ import {project} from '@app/store/selectors/projects.selectors';
 import {SchemeID} from '@app/models/normalizr.model';
 import {isRequiredDimensionMatched} from '@app/store/selectors/userCharts';
 import {isChartsReady} from '@app/store/selectors/charts.selectors';
+import {isActiveChartDataset} from '@app/store/selectors/dataset.selectors';
 
 interface StepperStep {
 	id: number;

@@ -64,6 +64,7 @@ const active = (
 				.charts[0];
 		case ProjectsActionConstants.CREATE_DRAFT_PROJECT__COMPLETE:
 		case ChartsActionConstants.REMOVE_CHART__COMPLETE:
+		case ProjectsActionConstants.REMOVE_CHART_PROJECT:
 			return null;
 		case ChartsActionConstants.CREATE_CHART__COMPLETE:
 			return action.payload.chart.chartId;

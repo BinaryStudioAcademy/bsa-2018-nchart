@@ -32,7 +32,9 @@ export class CustomChartComponent implements OnInit, OnDestroy {
 			{
 				selector: getActiveChart(),
 				subscriber: t => {
-					this.chartType = t.sysName;
+					if(t) {
+						this.chartType = t.sysName;
+					}
 				}
 			},
 			{
