@@ -166,7 +166,11 @@ class ProjectRepository extends Repository {
 		});
 	}
 
-	findProjectsWithOwners(userId) {
+	findProjectsWithOwners(userId, name) {
+		let projectName = name;
+		if (!name) {
+			projectName = '';
+		}
 		this.groupUser = groupUserModel;
 		return this.groupUser.findAll({
 			where: { userId },
@@ -184,6 +188,7 @@ class ProjectRepository extends Repository {
 								{
 									model: this.projectModel,
 									attributes: ['id', 'name', 'updatedAt'],
+									where: { name: { $like: `%${projectName}%` } },
 									include: [
 										{
 											model: groupProjectModel,

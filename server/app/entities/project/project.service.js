@@ -376,14 +376,13 @@ class ProjectService {
 		});
 	}
 
-	findProjectsWithOwners(id) {
-		return this.ProjectRepository.findProjectsWithOwners(id)
+	findProjectsWithOwners(id, params) {
+		return this.ProjectRepository.findProjectsWithOwners(id, params.name)
 			.then(data => {
 				// data[0].group.groupProjects[0].project - id, name
 				// data[0].group.groupProjects[0].project
 				// .groupProjects[0].group.groupUsers[0].user.dataValues - name, email
 				const projects = [];
-				// todo: look very, very bad
 				data.forEach(el => {
 					el.group.groupProjects.forEach(pj => {
 						const user =							pj.project.groupProjects[0].group.groupUsers[0].user
@@ -408,10 +407,20 @@ class ProjectService {
 						});
 					});
 				});
+				// this.paggination(params.page,projects);
 				return projects;
 			})
 			.catch(err => err);
 	}
+
+	// paggination(page, projects){
+	//     const pageLimit = 3;
+	//     let payload = projects.slice(page*pageLimit, page*pageLimit+pageLimit);
+	//     if(payload.length === 0){
+	//         payload = projects.slice(pageLimit, pageLimit+pageLimit);
+	//     }
+	//     return payload;
+	// }
 
 	static getProjectFromPayload(rawProject) {
 		const charts = [];
