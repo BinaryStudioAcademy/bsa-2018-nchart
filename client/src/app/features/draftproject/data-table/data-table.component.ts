@@ -10,9 +10,9 @@ import { SchemeID } from '@app/models/normalizr.model';
 import { activeDatasetId } from '@app/store/selectors/dataset.selectors';
 import { MenuItem } from 'primeng/api';
 import { v4 } from 'uuid';
-import {RemoveDatasetProject} from '@app/store/actions/projects/projects.actions';
+import { RemoveDatasetProject } from '@app/store/actions/projects/projects.actions';
 import { getActiveChartId } from '@app/store/selectors/userCharts';
-import {activeProjectId} from '@app/store/selectors/projects.selectors';
+import { activeProjectId } from '@app/store/selectors/projects.selectors';
 
 @Component({
 	selector: 'app-data-table',

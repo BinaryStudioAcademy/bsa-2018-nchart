@@ -9,11 +9,9 @@ import { DatasetDomainService } from '@app/api/domains/source/dataset-domain.ser
 import { DatasetService } from '@app/services/dataset.service';
 import { datasetScheme } from '@app/schemes/dataset.schema';
 import { normalize } from 'normalizr';
-import {withLatestFrom, map, concatMap} from 'rxjs/internal/operators';
+import { withLatestFrom, map, concatMap } from 'rxjs/internal/operators';
 import { getActiveProject } from '@app/store/selectors/projects.selectors';
-import {
-	SetDatasetChart
-} from '@app/store/actions/charts/charts.actions';
+import { SetDatasetChart } from '@app/store/actions/charts/charts.actions';
 import { StoreService } from '@app/services/store.service';
 import { throwError } from 'rxjs';
 import { ResponseScheme } from '@app/models/response-scheme.model';

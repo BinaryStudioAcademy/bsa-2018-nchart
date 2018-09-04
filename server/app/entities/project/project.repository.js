@@ -188,7 +188,9 @@ class ProjectRepository extends Repository {
 								{
 									model: this.projectModel,
 									attributes: ['id', 'name', 'updatedAt'],
-									where: { name: { $like: `%${projectName}%` } },
+									where: {
+										name: { $like: `%${projectName}%` }
+									},
 									include: [
 										{
 											model: groupProjectModel,

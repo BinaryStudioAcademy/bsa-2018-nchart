@@ -16,16 +16,15 @@ import {
 } from '@app/store/actions/projects/projects.actions';
 import { SchemeID } from '@app/models/normalizr.model';
 import { isChartsReady } from '@app/store/selectors/charts.selectors';
-import {
-	projectCharts
-} from '@app/store/selectors/projects.selectors';
+import { projectCharts } from '@app/store/selectors/projects.selectors';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject, Subscription } from 'rxjs';
 import * as ProjectsActions from '@app/store/actions/projects/projects.actions';
 import { project } from '@app/store/selectors/projects.selectors';
 import {
 	getActiveChartId,
-	getActiveDatasetId, hasChartDataset,
+	getActiveDatasetId,
+	hasChartDataset,
 	isRequiredDimensionMatched
 } from '@app/store/selectors/userCharts';
 import { isActiveChartDataset } from '@app/store/selectors/dataset.selectors';
@@ -245,15 +244,15 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 		);
 	}
 
-	onChange(event){
+	onChange(event) {
 		this.select(this.listPages[event.index]);
 		this.activeIndex = event.index;
 	}
 
 	handleClose(event) {
-		if(event.index !== this.activeIndex){
-			this.removePage(this.listPages[event.index])
+		if (event.index !== this.activeIndex) {
+			this.removePage(this.listPages[event.index]);
 			event.close();
-		}	
+		}
 	}
 }

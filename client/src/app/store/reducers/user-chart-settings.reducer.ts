@@ -24,8 +24,7 @@ const dimensionSettings = (
 			const subDimId = action.payload.chartId as string;
 			return {
 				...state,
-				...Object
-					.keys(state)
+				...Object.keys(state)
 					.filter(dimId => dimId.includes(subDimId))
 					.reduce((acc, dimId) => {
 						acc[dimId] = {

@@ -18,18 +18,22 @@ import {
 	userChart
 } from '@app/store/selectors/userCharts';
 import {
-	RemoveChartProject, RemoveChartProjectComplete,
+	RemoveChartProject,
+	RemoveChartProjectComplete,
 	RemoveDatasetProject,
 	SaveProjectComplete,
 	UpdateProjectComplete
 } from '@app/store/actions/projects/projects.actions';
 import { concat, throwError } from 'rxjs';
 import { SaveProjectFailed } from '@app/store/actions/projects/projects.actions';
-import {concatMap, filter, withLatestFrom} from 'rxjs/internal/operators';
+import { concatMap, filter, withLatestFrom } from 'rxjs/internal/operators';
 import { Go } from '@app/store/actions/router/router.actions';
 import { AppState } from '@app/models/store.model';
-import {activeProjectId, getAmountUserCharts} from '@app/store/selectors/projects.selectors';
-import {CreateChart} from '@app/store/actions/charts/charts.actions';
+import {
+	activeProjectId,
+	getAmountUserCharts
+} from '@app/store/selectors/projects.selectors';
+import { CreateChart } from '@app/store/actions/charts/charts.actions';
 
 @Injectable()
 export class ProjectsEffects {
@@ -79,14 +83,14 @@ export class ProjectsEffects {
 		ofType(ProjectsActionConstants.CREATE_DRAFT_PROJECT),
 		switchMap((action: projectActions.CreateDraftProject) =>
 			this.projectService.createDraftProject().pipe(
-				concatMap(
-					project => {
-					return	[
-							new projectActions.CreateDraftProjectComplete({project}),
-							new CreateChart({ datatsetId: null })
-						];
-					}
-				),
+				concatMap(project => {
+					return [
+						new projectActions.CreateDraftProjectComplete({
+							project
+						}),
+						new CreateChart({ datatsetId: null })
+					];
+				}),
 				catchError(error =>
 					of(new projectActions.CreateDraftProjectFailed())
 				)
@@ -118,13 +122,15 @@ export class ProjectsEffects {
 	@Effect()
 	removeChart$ = this.action$.pipe(
 		ofType(ProjectsActionConstants.REMOVE_CHART_PROJECT),
-		withLatestFrom(this.storeService.createSubscription(getAmountUserCharts())),
+		withLatestFrom(
+			this.storeService.createSubscription(getAmountUserCharts())
+		),
 		filter(([action, counts]) => counts > 1),
 		withLatestFrom(this.storeService.createSubscription()),
 		map(([[action], state]) => {
 			const chartId = (action as RemoveChartProject).payload.chartId;
 			const projectId = activeProjectId()(state);
-			return new RemoveChartProjectComplete({chartId, projectId});
+			return new RemoveChartProjectComplete({ chartId, projectId });
 		})
 	);
 

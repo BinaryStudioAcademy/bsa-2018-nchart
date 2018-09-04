@@ -47,12 +47,20 @@ class DatasetService {
 
 	getSamples() {
 		return new Promise((resolve, reject) => {
-			this.DatasetRepository.getSamples().then((res) => {
-				res.forEach(element => {
-					element.dataValues = _.omit(element.dataValues, ['data', 'columns', 'createdAt', 'updatedAt', 'sample']);
-				});
-				return resolve(res);
-			}).catch((err) => reject(err));
+			this.DatasetRepository.getSamples()
+				.then(res => {
+					res.forEach(element => {
+						element.dataValues = _.omit(element.dataValues, [
+							'data',
+							'columns',
+							'createdAt',
+							'updatedAt',
+							'sample'
+						]);
+					});
+					return resolve(res);
+				})
+				.catch(err => reject(err));
 		});
 		// return this.DatasetRepository.getSamples();
 	}
