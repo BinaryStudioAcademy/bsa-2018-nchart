@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { StoreService } from '@app/services/store.service';
 import { isProjectDataset } from '@app/store/selectors/projects.selectors';
-import { isRequiredDimensionMatched } from '@app/store/selectors/userCharts';
+import {hasChartDataset} from '@app/store/selectors/userCharts';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { SchemeID } from '@app/models/normalizr.model';
 import { activeProjectId } from '../../../store/selectors/projects.selectors';
@@ -130,7 +130,6 @@ export class StepperComponent implements OnInit {
 				selector: isVerifiedToken(),
 				subscriber: isAuth => {
 					this.isAuth = isAuth;
-					this.btnMsg = 'Save';
 				}
 			},
 			{
@@ -151,7 +150,7 @@ export class StepperComponent implements OnInit {
 				}
 			},
 			{
-				selector: isRequiredDimensionMatched(),
+				selector: hasChartDataset(),
 				subscriber: isReady => {
 					this.stepsStageThree = isReady;
 					this.disableSaveBtn = !isReady;
