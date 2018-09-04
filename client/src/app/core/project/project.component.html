@@ -8,7 +8,7 @@
 	<app-project-name id="load" #viewItem [projectName]="projectName" (setProjectName)="changeProjectName($event)">
 	</app-project-name>
 	<div *ngIf="listPages.length">
-			<app-button label="New Page" (onclick)="displayModalDataset = true" size="small"></app-button>
+			
 			<p-tabView (onChange)="onChange($event)" [controlClose]="true" (onClose)="handleClose($event)">
 				
 				<p-tabPanel 
@@ -18,6 +18,7 @@
 				>
 				</p-tabPanel>
 			</p-tabView>
+			<app-button label="New Page" (onclick)="displayModalDataset = true" size="small"></app-button>
 			
 	</div>
 		<app-load-data 	*ngIf="!(getIsActiveChartDataset() | async)"></app-load-data>
