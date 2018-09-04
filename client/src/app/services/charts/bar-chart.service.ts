@@ -35,17 +35,17 @@ export class BarChartService {
 	}
 
 	static mapColors(original: any[], colors: any) {
-		 if (colors.length) {
-		 	const colorHash = new ColorHash();
+		if (colors.length) {
+			const colorHash = new ColorHash();
 			return original.map(obj => ({
 				name: obj.name,
 				value: obj.value,
 				group: obj.group,
-		 		id: obj.id,
-		 		color: colorHash.hex(colors[original.indexOf(obj)] + '')
-		 	}));
-			 } else {
-		 	return original;
+				id: obj.id,
+				color: colorHash.hex(colors[original.indexOf(obj)] + '')
+			}));
+		} else {
+			return original;
 		}
 	}
 

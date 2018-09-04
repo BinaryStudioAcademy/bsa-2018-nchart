@@ -65,6 +65,8 @@ export class DimensionSettingsComponent implements OnInit, OnDestroy {
 	}
 
 	onRemoveAllDimension() {
-		this.storeService.dispatch(new RemoveAllDimension({ chartId: this.activeUserChartId}));
+		this.storeService.dispatch(
+			new RemoveAllDimension({ chartId: this.activeUserChartId })
+		);
 	}
 }
