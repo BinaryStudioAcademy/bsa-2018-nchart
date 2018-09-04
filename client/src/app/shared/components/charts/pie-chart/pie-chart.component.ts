@@ -117,7 +117,7 @@ export class PieChartComponent implements OnInit, OnChanges {
 			let column = 1;
 			const numInRow = 4;
 			const svg = d3
-				.select('.pie-chart')
+				.selectAll('.pie-chart')
 				.append('svg')
 				.attr('width', width)
 				.attr('height', width)

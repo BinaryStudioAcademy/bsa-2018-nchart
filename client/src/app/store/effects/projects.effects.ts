@@ -25,10 +25,11 @@ import {
 } from '@app/store/actions/projects/projects.actions';
 import { concat, throwError } from 'rxjs';
 import { SaveProjectFailed } from '@app/store/actions/projects/projects.actions';
-import { withLatestFrom } from 'rxjs/internal/operators';
+import {concatMap, withLatestFrom} from 'rxjs/internal/operators';
 import { Go } from '@app/store/actions/router/router.actions';
 import { AppState } from '@app/models/store.model';
 import { activeProjectId } from '@app/store/selectors/projects.selectors';
+import {CreateChart} from '@app/store/actions/charts/charts.actions';
 
 @Injectable()
 export class ProjectsEffects {
@@ -78,11 +79,13 @@ export class ProjectsEffects {
 		ofType(ProjectsActionConstants.CREATE_DRAFT_PROJECT),
 		switchMap((action: projectActions.CreateDraftProject) =>
 			this.projectService.createDraftProject().pipe(
-				map(
-					project =>
-						new projectActions.CreateDraftProjectComplete({
-							project
-						})
+				concatMap(
+					project => {
+					return	[
+							new projectActions.CreateDraftProjectComplete({project}),
+							new CreateChart({ datatsetId: null })
+						];
+					}
 				),
 				catchError(error =>
 					of(new projectActions.CreateDraftProjectFailed())
