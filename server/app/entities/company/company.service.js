@@ -75,8 +75,9 @@ class CompanyService {
 	}
 
 	findGroupsByCompanyId(id) {
-		return this.CompanyRepository.findGroupsByCompanyId(id)
-			.then(data => data.groups);
+		return this.CompanyRepository.findGroupsByCompanyId(id).then(
+			data => data.groups
+		);
 	}
 }
 
