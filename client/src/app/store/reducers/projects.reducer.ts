@@ -96,7 +96,7 @@ const byId = (
 			return {
 				...omit(state, action.payload.id)
 			};
-		case constants.REMOVE_CHART_PROJECT:
+		case constants.REMOVE_CHART_PROJECT__COMPLETE:
 			return {
 				...state,
 				[action.payload.projectId]: {

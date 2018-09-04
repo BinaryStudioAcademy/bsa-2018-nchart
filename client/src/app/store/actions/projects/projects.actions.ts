@@ -69,8 +69,16 @@ export class RemoveChartProject extends AppAction<{
 	readonly type = ProjectsActionConstants.REMOVE_CHART_PROJECT;
 }
 
+export class RemoveChartProjectComplete extends AppAction<{
+	chartId: SchemeID;
+	projectId: SchemeID;
+}> {
+	readonly type = ProjectsActionConstants.REMOVE_CHART_PROJECT__COMPLETE;
+}
+
 export class RemoveDatasetProject extends AppAction<{
 	datasetId: SchemeID;
+	chartId: SchemeID;
 	projectId: SchemeID;
 }> {
 	readonly type = ProjectsActionConstants.REMOVE_DATASET_PROJECT;
@@ -156,6 +164,7 @@ export type Actions =
 	| ChangeProjectName
 	| RemovePageProject
 	| RemoveChartProject
+	| RemoveChartProjectComplete
 	| RemoveDatasetProject
 	| SaveProject
 	| SaveProjectComplete

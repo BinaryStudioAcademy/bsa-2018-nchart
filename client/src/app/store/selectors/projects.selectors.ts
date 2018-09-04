@@ -13,6 +13,9 @@ export const project = (id?: SchemeID) => (state: AppState): Project =>
 export const activeProjectId = () => (state: AppState): SchemeID =>
 	state.projects.active ? state.projects.active : null;
 
+export const isDraftActiveProject = () => (state: AppState): boolean =>
+	project()(state) && project()(state).isDraft;
+
 export const projectCharts = () => (state: AppState) => {
 	const proj = project()(state);
 	if (proj) {
@@ -20,6 +23,9 @@ export const projectCharts = () => (state: AppState) => {
 	}
 	return [];
 };
+
+export const getAmountUserCharts = () => (state: AppState) =>
+	projectCharts()(state).length;
 
 export const isProjectDataset = (id?: SchemeID) => (
 	state: AppState

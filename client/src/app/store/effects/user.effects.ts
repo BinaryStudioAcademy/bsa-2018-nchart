@@ -20,9 +20,12 @@ import { of, throwError } from 'rxjs';
 import { UserDomainService } from '@app/api/domains/user/user.domain';
 import { TokenService } from '@app/services/token.service';
 import { Go } from '@app/store/actions/router/router.actions';
-import { concatMap, withLatestFrom } from 'rxjs/internal/operators';
+import {concatMap, filter, withLatestFrom} from 'rxjs/internal/operators';
 import { StoreService } from '@app/services/store.service';
-import { activeProjectId } from '@app/store/selectors/projects.selectors';
+import {
+	activeProjectId,
+	isProjectDataset
+} from '@app/store/selectors/projects.selectors';
 import { SaveProject } from '@app/store/actions/projects/projects.actions';
 import { isRequiredDimensionMatched } from '@app/store/selectors/userCharts';
 
@@ -147,5 +150,14 @@ export class UserEffects {
 			this.tokenService.removeToken();
 			return [new LogoutComplete(), new Go({ path: ['/app'] })];
 		})
+	);
+
+	@Effect()
+	canSave$ = this.action$.pipe(
+		ofType(UserActionConstants.CAN_SAVE),
+		withLatestFrom(this.storeService.createSubscription(isProjectDataset())),
+		filter(([_, hasDataset]) => hasDataset),
+		withLatestFrom(this.storeService.createSubscription(activeProjectId())),
+		map(([_, id]) =>  new SaveProject({ id }))
 	);
 }

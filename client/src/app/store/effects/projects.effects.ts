@@ -18,17 +18,17 @@ import {
 	userChart
 } from '@app/store/selectors/userCharts';
 import {
-	RemoveChartProject,
+	RemoveChartProject, RemoveChartProjectComplete,
 	RemoveDatasetProject,
 	SaveProjectComplete,
 	UpdateProjectComplete
 } from '@app/store/actions/projects/projects.actions';
 import { concat, throwError } from 'rxjs';
 import { SaveProjectFailed } from '@app/store/actions/projects/projects.actions';
-import {concatMap, withLatestFrom} from 'rxjs/internal/operators';
+import {concatMap, filter, withLatestFrom} from 'rxjs/internal/operators';
 import { Go } from '@app/store/actions/router/router.actions';
 import { AppState } from '@app/models/store.model';
-import { activeProjectId } from '@app/store/selectors/projects.selectors';
+import {activeProjectId, getAmountUserCharts} from '@app/store/selectors/projects.selectors';
 import {CreateChart} from '@app/store/actions/charts/charts.actions';
 
 @Injectable()
@@ -104,14 +104,27 @@ export class ProjectsEffects {
 			const projectId = activeProjectId()(state);
 
 			if (isUseDataset) {
-				return [new RemoveChartProject({ chartId, projectId })];
+				return [new RemoveChartProject({ chartId, projectId })] as any;
 			} else {
 				const { datasetId } = userChart(chartId)(state);
 				return [
 					new RemoveChartProject({ chartId, projectId }),
-					new RemoveDatasetProject({ datasetId, projectId })
-				];
+					new RemoveDatasetProject({ datasetId, projectId, chartId })
+				] as any;
 			}
+		})
+	);
+
+	@Effect()
+	removeChart$ = this.action$.pipe(
+		ofType(ProjectsActionConstants.REMOVE_CHART_PROJECT),
+		withLatestFrom(this.storeService.createSubscription(getAmountUserCharts())),
+		filter(([action, counts]) => counts > 1),
+		withLatestFrom(this.storeService.createSubscription()),
+		map(([[action], state]) => {
+			const chartId = (action as RemoveChartProject).payload.chartId;
+			const projectId = activeProjectId()(state);
+			return new RemoveChartProjectComplete({chartId, projectId});
 		})
 	);
 
