@@ -9,7 +9,11 @@
 .ui-widget-overlay
 	background-color: $teriaryColor
 .ui-dialog 
-	background: $stateDefaultBgColor
+	.close-icon
+		float: right
+		cursor: pointer
+		&:hover
+			opacity: 0.5	
 	.ui-dialog-titlebar-icon
 		position: absolute
 		top: 0
@@ -32,9 +36,7 @@
 		&:hover
 			border-color: transparent
 	&.ui-widget .ui-dialog-titlebar
-		padding: 0 1rem
 		.ui-dialog-title
-			font-size: 1.2rem
 			font-weight: 500
 			padding: 0
 	.ui-dialog-titlebar

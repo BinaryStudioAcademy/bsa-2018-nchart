@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import * as moment from 'moment';
 
 @Component({
 	selector: 'app-card',
@@ -8,7 +9,9 @@ import { Component, Input, OnInit } from '@angular/core';
 export class CardComponent implements OnInit {
 	display = false;
 	displayDelete = false;
+	date: string;
 	status: string;
+
 	itemsObjs = [
 		{
 			label: 'Rename'
@@ -51,6 +54,12 @@ export class CardComponent implements OnInit {
 	@Input()
 	accessLevelId: number;
 
+	@Input()
+	userCharts: String[];
+
+	@Input()
+	updatedAt: Date;
+
 	ngOnInit() {
 		if (this.accessLevelId === 1) {
 			this.status = 'Admin';
@@ -61,6 +70,8 @@ export class CardComponent implements OnInit {
 		if (this.accessLevelId === 3) {
 			this.status = 'Read';
 		}
+		// format data
+		this.date = moment(this.updatedAt).format('MM/DD/YYYY HH:MM');
 	}
 
 	deleteDialog() {
@@ -72,5 +83,13 @@ export class CardComponent implements OnInit {
 			return;
 		}
 		this.display = true;
+	}
+
+	getCardTypeClasses(card) {
+		return {
+			'bar-chart-tag': 'Bar chart' === card,
+			'pie-chart-tag': 'Pie Chart' === card,
+			'scatterplot-tag': 'Scatter Plot' === card
+		};
 	}
 }

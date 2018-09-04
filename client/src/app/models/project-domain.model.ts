@@ -8,8 +8,9 @@ export interface ProjectDomain {
 		project: OriginProject;
 	}): Observable<ResponseScheme<OriginProject>>;
 
-	update(payload: {
-		project: OriginProject;
+	updateName(payload: {
+		id: SchemeID;
+		name: string;
 	}): Observable<ResponseScheme<OriginProject>>;
 
 	delete(payload: {

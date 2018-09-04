@@ -60,9 +60,9 @@ project.post('/shareByEmail', (req, res, next) => {
 });
 
 project.get(
-	'/owners',
+	'/owners/:page?/:name?',
 	(req, res, next) => {
-		ProjectService.findProjectsWithOwners(res.locals.user.id)
+		ProjectService.findProjectsWithOwners(res.locals.user.id, req.params)
 			.then(PayloadGeneratorService.nextWithData(next, res))
 			.catch(next);
 	},

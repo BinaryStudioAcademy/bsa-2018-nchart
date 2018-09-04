@@ -9,9 +9,11 @@
 	[baseZIndex]="10000"
 	[(visible)]="display"
 	(onHide)="close()"
+	[closable]="false"
 	(onAfterHide)="close()">
 	<p-header>
 		Share project
+		<i class="fas fa-times close-icon" (click)='close()'></i>
 	</p-header>
 		<app-input-text
 			class="ui-fluid"
@@ -42,8 +44,8 @@
 				</div>
 			</div>
 		</form>
-		<p-footer>
-				<app-button label="Send" [disabled]="!formGroup.valid" (onclick)="share(formGroup.value)"></app-button>
+		<p-footer style="width: 100%">
+				<app-button label="Send" [disabled]="!formGroup.valid" (onclick)="share(formGroup.value)" style="float: right;"></app-button>
 		</p-footer>
 	</p-dialog>
 
