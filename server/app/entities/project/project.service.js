@@ -31,14 +31,12 @@ class ProjectService {
 					callback => {
 						if (obj.project.id) {
 							this.ProjectRepository.upsert(obj.project)
-								.then(() =>
-									callback(null, false, {
-										project: {
-											id: obj.project.id,
-											name: obj.project.name
-										}
-									})
-								)
+								.then(() => callback(null, false, {
+									project: {
+										id: obj.project.id,
+										name: obj.project.name
+									}
+								}))
 								.catch(err => callback(err, null));
 						} else {
 							this.ProjectRepository.create(obj.project.name)
@@ -76,7 +74,7 @@ class ProjectService {
 								projectId: payload.project.id,
 								accessLevelId: 1
 							})
-								// todo: error handler if groupProject  already exists
+							// todo: error handler if groupProject  already exists
 								.then(() => {
 									callback(null, payload);
 								})
@@ -387,9 +385,8 @@ class ProjectService {
 				const projects = [];
 				data.forEach(el => {
 					el.group.groupProjects.forEach(pj => {
-						const user =
-							pj.project.groupProjects[0].group.groupUsers[0].user
-								.dataValues;
+						const user = pj.project.groupProjects[0].group.groupUsers[0].user
+							.dataValues;
 						const userCharts = [];
 						// pj.project.projectCharts[0].chart.chartType.name
 						pj.project.projectCharts.forEach(projectChart => {
@@ -416,14 +413,64 @@ class ProjectService {
 			.catch(err => err);
 	}
 
-	// paggination(page, projects){
-	//     const pageLimit = 3;
-	//     let payload = projects.slice(page*pageLimit, page*pageLimit+pageLimit);
-	//     if(payload.length === 0){
-	//         payload = projects.slice(pageLimit, pageLimit+pageLimit);
-	//     }
-	//     return payload;
-	// }
+	projectsWithPagination(id, params) {
+		return this.ProjectRepository.findProjectsWithOwners(id, params.name)
+			.then(data => {
+				// data[0].group.groupProjects[0].project - id, name
+				// data[0].group.groupProjects[0].project
+				// .groupProjects[0].group.groupUsers[0].user.dataValues - name, email
+				const projects = [];
+				data.forEach(el => {
+					el.group.groupProjects.forEach(pj => {
+						const user = pj.project.groupProjects[0].group.groupUsers[0].user
+							.dataValues;
+						const userCharts = [];
+						// pj.project.projectCharts[0].chart.chartType.name
+						pj.project.projectCharts.forEach(projectChart => {
+							userCharts.push(projectChart.chart.chartType.name);
+						});
+						const uniqueCharts = userCharts.filter(
+							(item, pos) => userCharts.indexOf(item) === pos
+						);
+						projects.push({
+							id: pj.project.dataValues.id,
+							name: pj.project.dataValues.name,
+							updatedAt: pj.project.dataValues.updatedAt,
+							groupName: el.group.name,
+							companyName: el.group.company.name,
+							accessLevelId: pj.dataValues.accessLevelId,
+							userCharts: uniqueCharts,
+							user
+						});
+					});
+				});
+				// let payload =
+				// console.log(payload);
+				return ProjectService.pagination(params.page, projects);
+			})
+			.catch(err => err);
+	}
+
+	static pagination(page, projects) {
+		let userPage = page;
+		const pageLimit = 3;
+		const numberOfPages = Math.floor(projects.length / pageLimit);
+		let payload;
+		if (userPage === 1) {
+			payload = projects.slice(0, userPage * pageLimit);
+		} else {
+			payload = projects.slice(userPage * pageLimit, userPage * pageLimit + pageLimit);
+		}
+		if (payload.length === 0) {
+			userPage = 1;
+			payload = projects.slice(0, pageLimit);
+		}
+		return {
+			payload,
+			numberOfPages,
+			page: userPage
+		};
+	}
 
 	static getProjectFromPayload(rawProject) {
 		const charts = [];
