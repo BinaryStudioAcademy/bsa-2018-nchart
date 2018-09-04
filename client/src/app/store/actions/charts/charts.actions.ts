@@ -83,7 +83,9 @@ export class RemoveChartFailed extends AppAction<any> {
 	readonly type = ChartsActionConstants.REMOVE_CHART__FAILED;
 }
 
-export class RemoveAllDimension extends AppAction<void> {
+export class RemoveAllDimension extends AppAction<{
+	chartId: SchemeID
+}> {
 	readonly type = ChartsActionConstants.REMOVE_ALL_DIMENSION;
 }
 

@@ -19,6 +19,7 @@ const dimensionSettings = (
 	switch (action.type) {
 		case ProjectsActionConstants.LOAD_ONE_PROJECT__COMPLETE:
 			return action.payload.entities.dimensionSetting;
+		case constants.REMOVE_ALL_DIMENSION:
 		case ProjectsActionConstants.REMOVE_DATASET_PROJECT: {
 			const subDimId = action.payload.chartId as string;
 			return {
@@ -68,20 +69,6 @@ const dimensionSettings = (
 					...state[action.payload.dimensionId],
 					columnIds
 				}
-			};
-		}
-		case constants.REMOVE_ALL_DIMENSION: {
-			const dimensions = {
-				...state
-			};
-			for (const id in dimensions) {
-				if (dimensions.hasOwnProperty(id)) {
-					dimensions[id].columnIds = [];
-				}
-			}
-
-			return {
-				...dimensions
 			};
 		}
 		case DatasetActionConstants.DELETE_COLUMN: {
