@@ -17,4 +17,10 @@ company.post('/', (req, res, next) => {
 		.catch(next);
 });
 
+company.get('/:id/groups', (req, res, next) => {
+	CompanyService.findGroupsByCompanyId(Number(req.params.id))
+		.then(PayloadGeneratorService.nextWithData(next, res))
+		.catch(next);
+});
+
 module.exports = company;

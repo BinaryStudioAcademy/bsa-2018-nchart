@@ -1,6 +1,7 @@
 const Repository = require('../../common/repository/repository');
 const companyModel = require('./company.models/company');
 const companyUserModel = require('./company.models/company_user');
+const groupModel = require('../group/group.models/group');
 
 class CompanyRepository extends Repository {
 	constructor() {
@@ -53,6 +54,19 @@ class CompanyRepository extends Repository {
 	findCompanyUsers(query) {
 		return this.companyUserModel.findOne({
 			where: query
+		});
+	}
+
+	findGroupsByCompanyId(id) {
+		return this.companyModel.findOne({
+			where: { id },
+			attributes: ['id'],
+			include: [
+				{
+					model: groupModel,
+					attributes: ['id', 'name']
+				}
+			]
 		});
 	}
 }
