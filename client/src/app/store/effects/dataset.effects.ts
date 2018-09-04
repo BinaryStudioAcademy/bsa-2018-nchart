@@ -35,7 +35,8 @@ export class DatasetEffects {
 		ofType(
 			constants.PARSE_PLAIN_TEXT,
 			constants.PARSE_FROM_FILE,
-			constants.PARSE_FROM_URL
+			constants.PARSE_FROM_URL,
+			constants.LOAD_SAMPLE
 		),
 		switchMap(
 			(
