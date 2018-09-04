@@ -3,7 +3,6 @@ const async = require('async');
 const fs = require('fs');
 const uuidv4 = require('uuid/v4');
 const FsService = require('../../middleware/file.middleware');
-const transliterate = require('../../services/file.services/transliterate.service');
 
 function renameFiles(arr) {
 	const count = {};
@@ -69,7 +68,7 @@ const getHeaders = (path, content) => {
 		return parseHeaders(workbook);
 	}
 	// if user sent string
-	const workbook = XLSX.read(transliterate(content), { type: 'string' });
+	const workbook = XLSX.read(content, { type: 'string' });
 	return parseHeaders(workbook);
 };
 
