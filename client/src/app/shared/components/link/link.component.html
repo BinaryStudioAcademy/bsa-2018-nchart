@@ -2,6 +2,7 @@
     [ngClass]="getClasses()"
     [routerLink]="link"
     [ngSwitch]="displayWith"
+	(click)="onClick($event)"
 >
     <span class="label">{{label}}</span>
 
