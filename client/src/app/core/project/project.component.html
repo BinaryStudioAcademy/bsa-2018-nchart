@@ -69,14 +69,17 @@
 			</span>
 			<p-footer class="modal-controls">
 				<app-button
-					label="Yes"
-					(onclick)="acceptDataset()"
-				></app-button>
-				<app-button
 					label="No"
+					size="small"
 					type="secondary"
 					(onclick)="rejectDataset()"
 				></app-button>
+				<app-button
+					label="Yes"
+					size="small"
+					(onclick)="acceptDataset()"
+				></app-button>
+				
 			</p-footer>
 		</p-dialog>
 	</div>

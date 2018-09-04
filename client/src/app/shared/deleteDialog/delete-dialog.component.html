@@ -2,6 +2,7 @@
 	<p-dialog
 	[modal]="true"
 	[draggable]="false"
+	[closable]="false"
 	[width]="350"
 	[minWidth]="200"
 	[minY]="70"
@@ -10,12 +11,17 @@
 	[(visible)]="displayDelete"
 	(onHide)="close()"
 	(onAfterHide)="close()">
-	<p-header>
-		Are you sure you want to delete this project?
-	</p-header>
-		<p-footer>
-			<app-button label="Delete" (onclick)="delete()" style="margin-right: 5px"></app-button>
-			<app-button label="Cancel" (onclick)="close()"></app-button>
+		<p-header>
+			Delete
+		</p-header>
+		<div> 
+			<i class="fas fa-info-circle"></i>Are you sure you want to delete this project?	
+		</div>
+		
+		<p-footer style="width: 100%">
+			<hr>
+			<app-button size="small" label="Cancel" (onclick)="close()" class="delete-dialog-buttons" style="float: left;"></app-button>
+			<app-button size="small" label="Delete" (onclick)="delete()" class="delete-dialog-buttons" style="float: right;"></app-button>
 		</p-footer>
 	</p-dialog>
 

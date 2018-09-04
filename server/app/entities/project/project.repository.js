@@ -214,11 +214,10 @@ class ProjectRepository extends Repository {
 													]
 												}
 											]
-										}, {
+										},
+										{
 											model: this.projectChartModel,
-											attributes: [
-												'chartId'
-											],
+											attributes: ['chartId'],
 											include: [
 												{
 													model: chartModel,

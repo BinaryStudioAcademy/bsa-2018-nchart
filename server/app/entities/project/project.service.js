@@ -393,7 +393,9 @@ class ProjectService {
 						pj.project.projectCharts.forEach(projectChart => {
 							userCharts.push(projectChart.chart.chartType.name);
 						});
-						const uniqueCharts = userCharts.filter((item, pos) => userCharts.indexOf(item) === pos);
+						const uniqueCharts = userCharts.filter(
+							(item, pos) => userCharts.indexOf(item) === pos
+						);
 						projects.push({
 							id: pj.project.dataValues.id,
 							name: pj.project.dataValues.name,
