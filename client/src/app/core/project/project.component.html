@@ -45,10 +45,14 @@
 			<p-footer class="modal-controls">
 				<app-button
 					label="Yes"
+					class="dialog-button"
+					size="small"
 					(onclick)="accept()"
 				></app-button>
 				<app-button
 					label="No"
+					class="dialog-button"
+					size="small"
 					type="secondary"
 					(onclick)="reject()"
 				></app-button>
@@ -70,12 +74,14 @@
 			<p-footer class="modal-controls">
 				<app-button
 					label="No"
+					class="dialog-button"
 					size="small"
 					type="secondary"
 					(onclick)="rejectDataset()"
 				></app-button>
 				<app-button
 					label="Yes"
+					class="dialog-button"
 					size="small"
 					(onclick)="acceptDataset()"
 				></app-button>
