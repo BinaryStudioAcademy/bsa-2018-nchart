@@ -245,15 +245,18 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 		);
 	}
 
-	onChange(event){
+	onChange(event) {
 		this.select(this.listPages[event.index]);
-		this.activeIndex = event.index;
+	}
+
+	isActive(id) {
+		return this.activeCharId === id;
 	}
 
 	handleClose(event) {
-		if(event.index !== this.activeIndex){
-			this.removePage(this.listPages[event.index])
+		if(event.index !== this.activeIndex) {
+			this.removePage(this.listPages[event.index]);
 			event.close();
-		}	
+		}
 	}
 }
