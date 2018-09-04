@@ -49,7 +49,9 @@ class DatasetService {
 		return new Promise((resolve, reject) => {
 			this.DatasetRepository.getSamples()
 				.then(res => {
-					res.forEach(element => {
+					let resCutted;
+					Object.assign(resCutted, res);
+					resCutted.forEach(element => {
 						element.dataValues = _.omit(element.dataValues, [
 							'data',
 							'columns',
@@ -58,7 +60,7 @@ class DatasetService {
 							'sample'
 						]);
 					});
-					return resolve(res);
+					return resolve(resCutted);
 				})
 				.catch(err => reject(err));
 		});
