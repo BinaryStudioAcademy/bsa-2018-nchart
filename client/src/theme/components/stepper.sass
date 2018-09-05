@@ -36,7 +36,7 @@
 	.ui-widget.ui-button
 		margin: 0
 		min-width: 50px
-	
+
 .step
 	list-style: none
 	margin: 0 auto
@@ -58,6 +58,8 @@
 		.fa-exclamation
 			top: -0.5rem
 
+ul .step:last-child .step-connection
+	display: none
 
 .step-icon
 	height: 45px
@@ -81,4 +83,5 @@
 		color: $baseColor
 		border: 1px solid $baseColor
 		transform: scale(1.2)
-		z-index: 2
+		z-index: 20
+		position: relative

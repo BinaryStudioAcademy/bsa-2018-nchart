@@ -1,0 +1,74 @@
+<p-table
+	[value]="data"
+	[columns]="columns"
+	[scrollable]="true"
+	[rows]="20"
+	[lazy]="true"
+	scrollHeight="600px"
+	[virtualScroll]="true"
+	[virtualRowHeight]="22"
+	[totalRecords]="data.length"
+	class="data-table"
+>
+	<ng-template pTemplate="header" let-headerData>
+		<tr>
+			<th class="header-cell number-cell">
+				<label>
+					<span pEditableColumn="headerData column-no">No</span>
+					<app-button-action [items]="headerRowItems()"></app-button-action>
+					<!-- <app-checkbox (change)="checkAll()" [control]="control"></app-checkbox> -->
+				</label>
+				<p class="column-type">&nbsp;</p>
+			</th>
+			<th class="header-cell" *ngFor="let col of columns; let i = index" >
+				<div>
+					<span pEditableColumn="headerData">
+						<p-cellEditor>
+							<ng-template pTemplate="input">
+								<input
+									type="text"
+									[value]="headerData[i].title"
+									(keydown)="onHeaderKeyDown($event, i)"
+									(blur)="onHeaderBlurDown($event, i)"
+								>
+							</ng-template>
+							<ng-template pTemplate="output">
+								{{headerData[i].title}}
+							</ng-template>
+						</p-cellEditor>
+					</span>
+					<app-button-action [items]="headerItems(col.id)"></app-button-action>
+				</div>
+				<p class="column-type">
+					({{headerData[i].type}})
+				</p>
+			</th>
+		</tr>
+	</ng-template>
+	<ng-template pTemplate="body" let-columns="columns" let-rowData let-rowIndex="rowIndex">
+		<tr pSelectableRow="rowData">
+			<td class="number-cell">
+				<label>
+					<span class="column-no">{{rowIndex + 1}}</span>
+					<app-button-action [items]="rowItems(rowIndex)"></app-button-action>
+					<!-- <app-checkbox #checkbox [control]="checkControl" (change)="getRows($event, rowIndex)"></app-checkbox> -->
+				</label>
+			</td>
+			<td *ngFor="let col of columns; let i = index" pEditableColumn="rowData">
+				<p-cellEditor>
+					<ng-template pTemplate="input">
+						<input
+							type="text"
+							[value]="rowData[i].value"
+							(keydown)="onKeyDown($event, rowIndex, i)"
+							(blur)="onBlur($event, rowIndex, i)"
+						>
+					</ng-template>
+					<ng-template pTemplate="output">
+						{{rowData[i].value}}
+					</ng-template>
+				</p-cellEditor>
+			</td>
+		</tr>
+	</ng-template>
+</p-table>

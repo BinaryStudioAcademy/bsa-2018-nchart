@@ -55,6 +55,35 @@ export class ChangeProjectName extends AppAction<{
 }> {
 	readonly type = ProjectsActionConstants.CHANGE_PROJECT_NAME;
 }
+
+export class RemovePageProject extends AppAction<{
+	chartId: SchemeID;
+}> {
+	readonly type = ProjectsActionConstants.REMOVE_PAGE_PROJECT;
+}
+
+export class RemoveChartProject extends AppAction<{
+	chartId: SchemeID;
+	projectId: SchemeID;
+}> {
+	readonly type = ProjectsActionConstants.REMOVE_CHART_PROJECT;
+}
+
+export class RemoveChartProjectComplete extends AppAction<{
+	chartId: SchemeID;
+	projectId: SchemeID;
+}> {
+	readonly type = ProjectsActionConstants.REMOVE_CHART_PROJECT__COMPLETE;
+}
+
+export class RemoveDatasetProject extends AppAction<{
+	datasetId: SchemeID;
+	chartId: SchemeID;
+	projectId: SchemeID;
+}> {
+	readonly type = ProjectsActionConstants.REMOVE_DATASET_PROJECT;
+}
+
 export class SaveProject extends AppAction<{ id: SchemeID }> {
 	readonly type = ProjectsActionConstants.SAVE_PROJECT;
 }
@@ -74,6 +103,71 @@ export class SaveProjectFailed extends FailedAction {
 	readonly type = ProjectsActionConstants.SAVE_PROJECT__FAILED;
 }
 
+export class LoadProjetcsInfo extends AppAction<void> {
+	readonly type = ProjectsActionConstants.LOAD_PROJECTS_INFO;
+}
+
+export class LoadProjectsInfoComplete extends AppAction<{
+	all: SchemeID[];
+	byId: any;
+}> {
+	readonly type = ProjectsActionConstants.LOAD_PROJECTS_INFO__COMPLETE;
+}
+
+export class LoadProjectsInfoFailed extends FailedAction {
+	readonly type = ProjectsActionConstants.LOAD_PROJECTS_INFO__FAILED;
+}
+
+export class ShareProject extends AppAction<{
+	projectId: SchemeID;
+	email: string;
+	accessLevelId: number;
+}> {
+	readonly type = ProjectsActionConstants.SHARE_PROJECT;
+}
+
+export class ShareProjectComplete extends AppAction<any> {
+	readonly type = ProjectsActionConstants.SHARE_PROJECTS__COMPLETE;
+}
+
+export class ShareProjectFailed extends FailedAction {
+	readonly type = ProjectsActionConstants.SHARE_PROJECTS__FAILED;
+}
+
+export class DeleteOneProject extends AppAction<{
+	projectId: SchemeID;
+	accessLevelId: number;
+}> {
+	readonly type = ProjectsActionConstants.DELETE_ONE_PROJECT;
+}
+
+export class DeleteOneProjectComplete extends AppAction<{
+	id: SchemeID;
+}> {
+	readonly type = ProjectsActionConstants.DELETE_ONE_PROJECT__COMPLETE;
+}
+
+export class DeleteOneProjectFailed extends FailedAction {
+	readonly type = ProjectsActionConstants.DELETE_ONE_PROJECT__FAILED;
+}
+
+export class UpdateProjectName extends AppAction<{
+	projectId: SchemeID;
+	name: string;
+}> {
+	readonly type = ProjectsActionConstants.UPDATE_PROJECT_NAME;
+}
+
+export class UpdateProjectNameComplete extends AppAction<{
+	name: string;
+}> {
+	readonly type = ProjectsActionConstants.UPDATE_PROJECT__COMPLETE;
+}
+
+export class UpdateProjectNameFailed extends FailedAction {
+	readonly type = ProjectsActionConstants.UPDATE_PROJECT_NAME__FAILED;
+}
+
 export type Actions =
 	| LoadProjetcs
 	| LoadProjectsComplete
@@ -85,7 +179,23 @@ export type Actions =
 	| LoadOneProjectComplete
 	| LoadOneProjectFailed
 	| ChangeProjectName
+	| RemovePageProject
+	| RemoveChartProject
+	| RemoveChartProjectComplete
+	| RemoveDatasetProject
 	| SaveProject
 	| SaveProjectComplete
 	| UpdateProjectComplete
-	| SaveProjectFailed;
+	| SaveProjectFailed
+	| LoadProjetcsInfo
+	| LoadProjectsInfoComplete
+	| LoadProjectsInfoFailed
+	| ShareProject
+	| ShareProjectComplete
+	| ShareProjectFailed
+	| DeleteOneProject
+	| DeleteOneProjectComplete
+	| DeleteOneProjectFailed
+	| UpdateProjectName
+	| UpdateProjectNameComplete
+	| UpdateProjectNameFailed;

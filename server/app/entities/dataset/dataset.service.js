@@ -1,4 +1,5 @@
 const async = require('async');
+const _ = require('lodash');
 const DatasetRepository = require('./dataset.repository');
 
 class DatasetService {
@@ -19,16 +20,17 @@ class DatasetService {
 	}
 
 	upsert(obj) {
+		const objCutted = obj.map(el => _.omit(el, ['sample']));
 		// todo: remove waterfall model
 		return new Promise((resolve, reject) => {
 			async.waterfall(
 				[
 					callback => {
-						this.DatasetRepository.upsertMulti(obj)
+						this.DatasetRepository.upsertMulti(objCutted)
 							.then(() => {
 								// todo: seems to be always success, add schema error handling
 								// return [[true][false]]
-								callback(null, obj);
+								callback(null, objCutted);
 							})
 							.catch(err => callback(err, null));
 					}
@@ -41,6 +43,26 @@ class DatasetService {
 				}
 			);
 		});
+	}
+
+	getSamples() {
+		return new Promise((resolve, reject) => {
+			this.DatasetRepository.getSamples()
+				.then(res => {
+					res.forEach(element => {
+						element.dataValues = _.omit(element.dataValues, [
+							'data',
+							'columns',
+							'createdAt',
+							'updatedAt',
+							'sample'
+						]);
+					});
+					return resolve(res);
+				})
+				.catch(err => reject(err));
+		});
+		// return this.DatasetRepository.getSamples();
 	}
 }
 

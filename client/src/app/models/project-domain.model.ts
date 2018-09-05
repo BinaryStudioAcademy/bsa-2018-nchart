@@ -1,17 +1,22 @@
 import { Observable } from 'rxjs';
 import { OriginProject } from '@app/models/project.model';
 import { ResponseScheme } from '@app/models/response-scheme.model';
+import { SchemeID } from '@app/models/normalizr.model';
 
 export interface ProjectDomain {
 	save(payload: {
 		project: OriginProject;
 	}): Observable<ResponseScheme<OriginProject>>;
 
-	update(payload: {
-		project: OriginProject;
+	updateName(payload: {
+		id: SchemeID;
+		name: string;
 	}): Observable<ResponseScheme<OriginProject>>;
 
-	delete(payload: { projectId: string }): Observable<ResponseScheme<null>>;
+	delete(payload: {
+		projectId: SchemeID;
+		accessLevelId: number;
+	}): Observable<ResponseScheme<null>>;
 
 	getByProjectId(payload: {
 		projectId: string;
@@ -21,5 +26,14 @@ export interface ProjectDomain {
 		groupId: string;
 	}): Observable<ResponseScheme<OriginProject>>;
 
+	// todo: add token to header
+	getPartByUserId(): Observable<ResponseScheme<any[]>>;
+
 	getAll(): Observable<ResponseScheme<OriginProject[]>>;
+
+	share(payload: {
+		projectId: number;
+		email: string;
+		accessLevelId: number;
+	}): Observable<ResponseScheme<any>>;
 }

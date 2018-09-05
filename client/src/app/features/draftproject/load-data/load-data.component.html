@@ -7,10 +7,10 @@
 
 			<p-tabPanel header="Paste">
 				<app-input-textarea class="load-data-paste"
-									[rows]="12"
-									autoResize="autoResize"
-									[control]="pasteDataControl"
-									placeholder="Paste your data here"
+					[rows]="12"
+					autoResize="autoResize"
+					[control]="pasteDataControl"
+					placeholder="Paste your data here"
 				></app-input-textarea>
 				<app-button (onclick)="pasteData()"
 							label="Load Data"
@@ -53,6 +53,11 @@
 			</p-tabPanel>
 
 			<p-tabPanel header="Samples">
+				<div class="ui-g">
+					<p-card *ngFor = "let sample of datasetSamples" class="samples" (click)="loadSample($event, sample)">
+						{{sample.name}}
+					</p-card>
+				</div>
 			</p-tabPanel>
 
 		</p-tabView>

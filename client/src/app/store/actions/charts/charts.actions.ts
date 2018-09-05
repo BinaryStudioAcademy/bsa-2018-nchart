@@ -34,6 +34,19 @@ export class SelectChart extends AppAction<any> {
 	readonly type = ChartsActionConstants.SELECT_CHART;
 }
 
+export class PickActiveChart extends AppAction<{
+	id: SchemeID;
+}> {
+	readonly type = ChartsActionConstants.PICK_ACTIVE_CHART;
+}
+
+export class SetDatasetChart extends AppAction<{
+	datatsetId: SchemeID;
+	chartId: SchemeID;
+}> {
+	readonly type = ChartsActionConstants.SET_DATASET_CHART;
+}
+
 export class ChangeCustomSettings extends AppAction<{
 	[key: string]: any;
 }> {
@@ -54,7 +67,25 @@ export class RemoveDimension extends AppAction<{
 	readonly type = ChartsActionConstants.REMOVE_DIMENSION;
 }
 
-export class RemoveAllDimension extends AppAction<void> {
+export class RemoveChart extends AppAction<void> {
+	readonly type = ChartsActionConstants.REMOVE_CHART;
+}
+
+export class RemoveChartComplete extends AppAction<{
+	id: SchemeID;
+	datasetId: SchemeID;
+	projectId: SchemeID;
+}> {
+	readonly type = ChartsActionConstants.REMOVE_CHART__COMPLETE;
+}
+
+export class RemoveChartFailed extends AppAction<any> {
+	readonly type = ChartsActionConstants.REMOVE_CHART__FAILED;
+}
+
+export class RemoveAllDimension extends AppAction<{
+	chartId: SchemeID;
+}> {
 	readonly type = ChartsActionConstants.REMOVE_ALL_DIMENSION;
 }
 
@@ -90,8 +121,13 @@ export type Actions =
 	| LoadCharts
 	| LoadChartsComplete
 	| LoadChartsFailed
+	| SetDatasetChart
+	| PickActiveChart
 	| ChangeCustomSettings
 	| SetDimension
+	| RemoveChart
+	| RemoveChartComplete
+	| RemoveChartFailed
 	| RemoveDimension
 	| RemoveAllDimension
 	| SelectChart

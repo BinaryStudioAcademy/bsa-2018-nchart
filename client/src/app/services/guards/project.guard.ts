@@ -11,7 +11,7 @@ import { isChartsReady } from '@app/store/selectors/charts.selectors';
 import { map, switchMap, take, withLatestFrom } from 'rxjs/internal/operators';
 import { LoadCharts } from '@app/store/actions/charts/charts.actions';
 import { ProjectComponent } from '@app/core/project/project.component';
-import { Actions } from '@ngrx/effects';
+import { Actions, ofType } from '@ngrx/effects';
 import { ChartsActionConstants } from '@app/store/actions/charts/charts.action-types';
 import {
 	LoadChartsComplete,
@@ -47,19 +47,18 @@ export class ProjectGuard
 
 				this.storeService.dispatch(new LoadCharts());
 
-				return this.action$
-					.ofType(
+				return this.action$.pipe(
+					ofType(
 						ChartsActionConstants.LOAD_CHARTS__COMPLETE,
 						ChartsActionConstants.LOAD_CHARTS__FAILED
-					)
-					.pipe(
-						map(action => {
-							return {
-								...guardPayload,
-								action
-							};
-						})
-					);
+					),
+					map(action => {
+						return {
+							...guardPayload,
+							action
+						};
+					})
+				);
 			}),
 			map(guardPayload => {
 				if (
@@ -95,11 +94,20 @@ export class ProjectGuard
 				this.storeService.createSubscription(isProjectDataset())
 			),
 			map(([isDraft, hasDataset]) => {
+				if (nextState.url.includes('login')) {
+					return true;
+				}
 				if (nextState.url.includes('app/project/')) {
 					return !isDraft;
 				} else {
 					return !hasDataset;
 				}
+			}),
+			switchMap(canLeave => {
+				if (!canLeave) {
+					return component.canDeactivate();
+				}
+				return of(canLeave);
 			})
 		);
 	}

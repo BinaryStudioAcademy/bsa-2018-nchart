@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { projects as projectsSelector } from '@app/store/selectors/projects.selectors.ts';
+import { StoreService } from '@app/services/store.service';
+import * as projectActions from '@app/store/actions/projects/projects.actions';
+import { Observable } from 'rxjs';
 
 @Component({
 	selector: 'app-projects',
@@ -6,7 +10,18 @@ import { Component, OnInit } from '@angular/core';
 	styleUrls: ['./projects.component.sass']
 })
 export class ProjectsComponent implements OnInit {
-	constructor() {}
+	projects$: Observable<any>;
 
-	ngOnInit() {}
+	constructor(private storeService: StoreService) {}
+
+	ngOnInit() {
+		this.projects$ = this.storeService.createSubscription(
+			projectsSelector()
+		);
+		this.storeService.dispatch(new projectActions.LoadProjetcsInfo());
+	}
+
+	getProjects() {
+		return this.projects$;
+	}
 }

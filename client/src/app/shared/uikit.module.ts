@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { TabMenuModule } from 'primeng/tabmenu';
+import { CardModule } from 'primeng/card';
 
 // Forms
 import { FormsModule } from '@angular/forms';
@@ -25,9 +26,13 @@ import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 // Drag&Drop
 import { DragulaModule } from 'ng2-dragula';
 import { TooltipModule } from 'primeng/tooltip';
+import { TableModule } from 'primeng/table';
+import { TieredMenuModule } from 'primeng/tieredmenu';
+import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
 	imports: [
+		DialogModule,
 		ButtonModule,
 		SplitButtonModule,
 		PasswordModule,
@@ -50,7 +55,10 @@ import { TooltipModule } from 'primeng/tooltip';
 		FormsModule,
 		ReactiveFormsModule,
 		TooltipModule,
-		SpinnerModule
+		SpinnerModule,
+		CardModule,
+		TableModule,
+		TieredMenuModule
 	],
 	exports: [
 		ButtonModule,
@@ -75,7 +83,11 @@ import { TooltipModule } from 'primeng/tooltip';
 		FormsModule,
 		ReactiveFormsModule,
 		TooltipModule,
-		SpinnerModule
+		SpinnerModule,
+		CardModule,
+		TableModule,
+		TieredMenuModule,
+		DialogModule
 	],
 	declarations: []
 })

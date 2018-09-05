@@ -7,7 +7,8 @@ import {
 	getActiveChart
 } from '@app/store/selectors/userCharts';
 import { FormGroup } from '@angular/forms';
-import { CustomizeControl } from '@app/models/customize-control.model';
+import { PieChartService } from '@app/services/charts/pie-chart.service';
+import { ScatterplotChartService } from '@app/services/charts/scatterplot-chart.service';
 
 @Component({
 	selector: 'app-custom-chart',
@@ -17,6 +18,8 @@ import { CustomizeControl } from '@app/models/customize-control.model';
 export class CustomChartComponent implements OnInit, OnDestroy {
 	constructor(
 		private barChartService: BarChartService,
+		private pieChartService: PieChartService,
+		private scatterplotChartService: ScatterplotChartService,
 		private storeService: StoreService
 	) {}
 
@@ -25,38 +28,67 @@ export class CustomChartComponent implements OnInit, OnDestroy {
 	customizeSettings;
 	chartType: string;
 	customizeForm: FormGroup;
-	customizeControls: CustomizeControl[];
+	display = false;
+
+	showDialog() {
+		this.display = true;
+	}
 
 	ngOnInit() {
 		this.disconnect = this.storeService.connect([
 			{
 				selector: getActiveChart(),
 				subscriber: t => {
-					this.chartType = t.sysName;
+					if (t) {
+						this.chartType = t.sysName;
+					}
 				}
 			},
 			{
 				selector: getCustomizeSettings(),
 				subscriber: t => {
 					this.customizeSettings = t;
+					switch (this.chartType) {
+						case 'barChart':
+							this.customizeForm = this.barChartService.createBarChartCustomizeForm(
+								this.customizeSettings
+							);
+							break;
+						case 'pieChart':
+							this.customizeForm = this.pieChartService.createPieChartCustomizeForm(
+								this.customizeSettings
+							);
+							break;
+						case 'scatterplot':
+							this.customizeForm = this.scatterplotChartService.createScatterplotChartCustomizeForm(
+								this.customizeSettings
+							);
+							break;
+						default:
+							break;
+					}
 				}
 			},
 			{
 				selector: getData(),
 				subscriber: data => {
-					switch (this.chartType) {
-						case 'barChart':
-							this.data = this.barChartService.getData(data);
-							this.customizeForm = this.barChartService.createBarChartCustomizeForm(
-								this.customizeSettings
-							);
-							this.customizeControls = this.barChartService.getCustomizeControls(
-								this.customizeForm
-							);
-							break;
+					if (!!data.length) {
+						switch (this.chartType) {
+							case 'barChart':
+								this.data = this.barChartService.getData(data);
+								break;
+							case 'pieChart':
+								this.data = this.pieChartService.getData(data);
+								break;
+							case 'scatterplot':
+								this.data = this.scatterplotChartService.getData(
+									data
+								);
+								break;
 
-						default:
-							break;
+							default:
+								break;
+						}
 					}
 				}
 			}

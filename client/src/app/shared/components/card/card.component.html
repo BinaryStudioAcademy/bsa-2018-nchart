@@ -1,0 +1,31 @@
+<p-card>
+	<div class="project-card-info">
+		<div class="project-card-user">
+			<a class="project-name" [routerLink]="['/app/project', projectId]"> {{projectName}}</a>
+		</div>
+		<!--todo: make those look like tags-->
+		<div class="user-charts">
+				<div class="chart-type" [ngClass]="getCardTypeClasses(chart)" *ngFor="let chart of userCharts">
+					{{ chart }}
+				</div>
+		</div>
+		<div class="project-card-folder">
+			<div class="card-profile-image user-image"><i class="fas fa-user-tie"></i></div>
+			<div class="card-user-name">{{userName}}</div>
+		</div>
+		<hr>
+		<div class="last-update">
+			<b>Last update:</b><span>{{date}}</span>
+		</div>
+	</div>
+	<div class="project-card-control">
+		<app-button-action [items]="itemsObjs"></app-button-action>
+		<!--<app-checkbox [value]=""></app-checkbox>-->
+		<app-dialog [projectId]="projectId" [accessLevelId]="accessLevelId" [(display)]="display"></app-dialog>
+		<app-delete-dialog
+			[projectId]="projectId"
+			[accessLevelId]="accessLevelId"
+			[(displayDelete)]="displayDelete">
+		</app-delete-dialog>
+	</div>
+</p-card>

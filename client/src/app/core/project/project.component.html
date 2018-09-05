@@ -7,11 +7,89 @@
 	<div class="main-content">
 	<app-project-name id="load" #viewItem [projectName]="projectName" (setProjectName)="changeProjectName($event)">
 	</app-project-name>
-		<app-load-data ></app-load-data>
+	<div *ngIf="listPages.length">
+			
+			<p-tabView (onChange)="onChange($event)" [controlClose]="true" (onClose)="handleClose($event)">
+				
+				<p-tabPanel 
+				*ngFor="let pageId of listPages;let i = index"
+				header="Page {{i+1}}" 
+				[closable]="true"
+				>
+				</p-tabPanel>
+			</p-tabView>
+			<app-button label="New Page" (onclick)="displayModalDataset = true" size="small"></app-button>
+			
+	</div>
+		<app-load-data 	*ngIf="!(getIsActiveChartDataset() | async)"></app-load-data>
 		<app-data-table *ngIf="isDataset()" id="table" #viewItem></app-data-table>
 		<app-list-charts *ngIf="isDataset()" id="charts" #viewItem></app-list-charts>
 		<app-dimension-settings *ngIf="isDataset()" id="settings" #viewItem></app-dimension-settings>
 		<app-custom-chart *ngIf="isCharts()" id="chart" #viewItem></app-custom-chart>
 		<app-export *ngIf="isCharts()" id="export" #viewItem></app-export>
+
+
+		<p-dialog header="Confirmation"
+				  [(visible)]="display"
+				  [modal]="true"
+				  [responsive]="true"
+				  [closable]="false"
+				  [width]="350"
+				  [minWidth]="200"
+				  [minY]="70"
+				  [draggable]="false"
+				  [baseZIndex]="10000">
+			<span>
+				Are you sure that you want to leave page with unsaved project?
+			</span>
+			<p-footer class="modal-controls">
+				<app-button
+					label="Yes"
+					class="dialog-button"
+					size="small"
+					(onclick)="accept()"
+				></app-button>
+				<app-button
+					label="No"
+					class="dialog-button"
+					size="small"
+					type="secondary"
+					size="small"
+					(onclick)="reject()"
+				></app-button>
+			</p-footer>
+		</p-dialog>
+
+		<p-dialog header="Confirmation"
+				  [(visible)]="displayModalDataset"
+				  [modal]="true"
+				  [responsive]="true"
+				  [closable]="false"
+				  [width]="350"
+				  [minWidth]="200"
+				  [resizable]="false"
+				  [minY]="70"
+				  [draggable]="false"
+				  [baseZIndex]="10000">
+			<span>
+				Do you want use current dataset?
+			</span>
+			<p-footer class="modal-controls">
+				<app-button
+					label="No"
+					class="dialog-button"
+					size="small"
+					type="secondary"
+					(onclick)="rejectDataset()"
+				></app-button>
+				<app-button
+					label="Yes"
+					class="dialog-button"
+					size="small"
+					(onclick)="acceptDataset()"
+				></app-button>
+				
+			</p-footer>
+		</p-dialog>
 	</div>
 </div>

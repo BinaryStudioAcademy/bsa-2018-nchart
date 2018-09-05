@@ -13,8 +13,6 @@ export class RadioButtonComponent implements OnInit {
 	@Input()
 	value: any;
 	@Input()
-	disabled: boolean;
-	@Input()
 	control: FormControl;
 
 	constructor() {}

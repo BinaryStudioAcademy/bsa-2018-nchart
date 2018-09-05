@@ -2,7 +2,8 @@ import { DatasetColumnState } from '@app/models/dataset.model';
 import { ProjectsActionConstants } from '@app/store/actions/projects/projects.action-types';
 import { Actions as projectActions } from '@app/store/actions/projects/projects.actions';
 import { Actions as datasetsActions } from '@app/store/actions/datasets/datasets.actions';
-import { DatasetActions } from '@app/store/actions/datasets/datasets.action-types';
+import { DatasetActionConstants as constants } from '@app/store/actions/datasets/datasets.action-types';
+import { omit } from 'lodash';
 
 export const initialState: DatasetColumnState = {};
 
@@ -13,17 +14,40 @@ export const datasetColumnsReducer = (
 	switch (action.type) {
 		case ProjectsActionConstants.LOAD_ONE_PROJECT__COMPLETE:
 			return action.payload.entities.datasetColumn;
-		case DatasetActions.PARSE_DATA__COMPLETE:
+		case constants.PARSE_DATA__COMPLETE:
 			return {
 				...state,
 				...action.payload.entities.datasetColumn
 			};
-		case DatasetActions.CHANGE_HEADER_TITLE: {
+		case constants.CHANGE_HEADER_TITLE: {
 			return {
 				...state,
 				[action.payload.id]: {
 					...state[action.payload.id],
 					title: action.payload.title
+				}
+			};
+		}
+		case constants.DELETE_COLUMN: {
+			return {
+				...omit(state, action.payload.columnId)
+			};
+		}
+		case constants.ADD_NEW_COLUMN:
+			return {
+				...state,
+				[action.payload.columnId]: {
+					title: 'Header',
+					type: 'string',
+					id: action.payload.columnId
+				}
+			};
+		case constants.CHANGE_COLUMN_TYPE: {
+			return {
+				...state,
+				[action.payload.columnId]: {
+					...state[action.payload.columnId],
+					type: action.payload.type
 				}
 			};
 		}
