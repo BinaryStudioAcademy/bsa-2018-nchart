@@ -245,7 +245,7 @@ export class ProjectsEffects {
 						} = normalize(value.payload, [projectScheme]);
 						return new projectActions.LoadProjectsInfoComplete({
 							all,
-							byId
+							byId,
 						});
 					}
 					return throwError(new Error('Cant getPartByUserId'));

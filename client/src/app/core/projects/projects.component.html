@@ -1,17 +1,26 @@
-<div class="project-card-container">
-	<ng-container *ngIf="getProjects() | async as projects">
-		<div *ngFor="let project of projects" style="float: left;">
-			<app-card
-				[projectId]="project?.id"
-				[projectName]="project?.name"
-				[companyName]="project?.companyName"
-				[groupName]="project.groupName"
-				[userName]="project.user?.name"
-				[email]="project.user?.email"
-				[accessLevelId]="project?.accessLevelId"
-				[userCharts]="project?.userCharts"
-				[updatedAt]="project?.updatedAt"
-			></app-card>
-		</div>
-	</ng-container>
+<div style="margin-top: 200px">
+	<app-input-text
+		class="ui-fluid"
+		type="text"
+		label="Project name"
+		[control]="formGroup.controls.name" style="margin-top: 100px">
+	</app-input-text><app-button label="Search"></app-button>
+	<div class="project-card-container">
+		<ng-container *ngIf="getProjects() | async as projects">
+			<div *ngFor="let project of projects" style="float: left;">
+				<app-card
+					[projectId]="project?.id"
+					[projectName]="project?.name"
+					[companyName]="project?.companyName"
+					[groupName]="project.groupName"
+					[userName]="project.user?.name"
+					[email]="project.user?.email"
+					[accessLevelId]="project?.accessLevelId"
+					[userCharts]="project?.userCharts"
+					[updatedAt]="project?.updatedAt"
+				></app-card>
+			</div>
+		</ng-container>
+	</div>
 </div>
+<app-paginator></app-paginator>

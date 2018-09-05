@@ -453,7 +453,7 @@ class ProjectService {
 
 	static pagination(page, projects) {
 		let userPage = page;
-		const pageLimit = 3;
+		const pageLimit = 10;
 		const numberOfPages = Math.floor(projects.length / pageLimit);
 		let payload;
 		if (userPage === 1) {
@@ -466,9 +466,10 @@ class ProjectService {
 			payload = projects.slice(0, pageLimit);
 		}
 		return {
-			payload,
+			projects: payload,
 			numberOfPages,
-			page: userPage
+			page: userPage,
+			totalRecords: projects.length
 		};
 	}
 
