@@ -30,13 +30,13 @@ export class ProjectTabsComponent implements OnInit {
 	}
 
 	handleClose(event) {
-		this.removePage(this.listPages[event.index]);
+		this.remove(this.listPages[event.index]);
 		event.close();
 	}
 	select(id) {
 		this.storeService.dispatch(new PickActiveChart({ id }));
 	}
-	removePage(chartId) {
+	remove(chartId) {
 		this.storeService.dispatch(new RemovePageProject({ chartId }));
 	}
 	isDisplayModalDataset() {
