@@ -444,9 +444,9 @@ class ProjectService {
 						});
 					});
 				});
-				// let payload =
-				// console.log(payload);
 				return ProjectService.pagination(params.page, projects);
+				// todo: uncomment to test
+				// return projects;
 			})
 			.catch(err => err);
 	}

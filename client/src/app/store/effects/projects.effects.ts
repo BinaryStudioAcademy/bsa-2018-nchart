@@ -236,7 +236,7 @@ export class ProjectsEffects {
 	loadInfo = this.action$.pipe(
 		ofType(ProjectsActionConstants.LOAD_PROJECTS_INFO),
 		switchMap((action: projectActions.LoadProjetcsInfo) =>
-			this.projectDomainService.getPartByUserId().pipe(
+			this.projectDomainService.getPartByUserId(action.payload).pipe(
 				map(value => {
 					if (value.isSuccess) {
 						const {

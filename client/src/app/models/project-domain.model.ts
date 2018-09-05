@@ -26,8 +26,10 @@ export interface ProjectDomain {
 		groupId: string;
 	}): Observable<ResponseScheme<OriginProject>>;
 
-	// todo: add token to header
-	getPartByUserId(): Observable<ResponseScheme<any[]>>;
+	getPartByUserId(payload: {
+		page: number;
+		name?: string;
+	}): Observable<ResponseScheme<any[]>>;
 
 	getAll(): Observable<ResponseScheme<OriginProject[]>>;
 

@@ -103,7 +103,10 @@ export class SaveProjectFailed extends FailedAction {
 	readonly type = ProjectsActionConstants.SAVE_PROJECT__FAILED;
 }
 
-export class LoadProjetcsInfo extends AppAction<void> {
+export class LoadProjetcsInfo extends AppAction<{
+	page: number;
+	name?: string;
+}> {
 	readonly type = ProjectsActionConstants.LOAD_PROJECTS_INFO;
 }
 
