@@ -31,10 +31,10 @@ const loginSchema = {
 	additionalProperties: true,
 	required: ['email', 'password'],
 	properties: {
-        email: {
-            type: 'string',
-            regex: { pattern: emailPattern.source, flags: 'i' }
-        },
+		email: {
+			type: 'string',
+			regex: { pattern: emailPattern.source, flags: 'i' }
+		},
 		password: {
 			type: 'string',
 			minLength: 5,

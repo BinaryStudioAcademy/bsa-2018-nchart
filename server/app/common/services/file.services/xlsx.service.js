@@ -69,7 +69,7 @@ const getHeaders = (path, content) => {
 		return parseHeaders(workbook);
 	}
 	// if user sent string
-    const workbook = XLSX.read(transliterate(content), { type: 'string' });
+	const workbook = XLSX.read(transliterate(content), { type: 'string' });
 	return parseHeaders(workbook);
 };
 
@@ -160,12 +160,12 @@ const readFile = path => new Promise((resolve, reject) => {
 	file.on('end', () => {
 		const buffer = Buffer.concat(buffers);
 		const workbook = XLSX.read(buffer); // works
-        const sheet = workbook.Sheets[workbook.SheetNames[0]];
-        const range = XLSX.utils.decode_range(sheet['!ref']);
-        const data = XLSX.utils.sheet_to_json(
-            workbook.Sheets[workbook.SheetNames[0]],
-            { header: headers, range: range.s.r + 1, defval: null }
-        );
+		const sheet = workbook.Sheets[workbook.SheetNames[0]];
+		const range = XLSX.utils.decode_range(sheet['!ref']);
+		const data = XLSX.utils.sheet_to_json(
+			workbook.Sheets[workbook.SheetNames[0]],
+			{ header: headers, range: range.s.r + 1, defval: null }
+		);
 		const payload = parseData(data, headers);
 		if (payload.length === 0) {
 			reject(new Error('Messed up file'));
