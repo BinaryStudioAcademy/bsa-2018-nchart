@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-// import ColorHash from 'color-hash';
+import ColorHash from 'color-hash';
 import { OptionalType, fieldsValidators, BarChartDataObj } from '@app/models';
 import { BarChartCustomize } from '@app/models/bar-chart.model';
 import { FormService } from '@app/services/form.service';
@@ -35,18 +35,18 @@ export class BarChartService {
 	}
 
 	static mapColors(original: any[], colors: any) {
-		// if (colors.length) {
-		// 	const colorHash = new ColorHash();
-		// 	return original.map(obj => ({
-		// 		name: obj.name,
-		// 		value: obj.value,
-		// 		group: obj.group,
-		// 		id: obj.id,
-		// 		color: colorHash.hex(colors[original.indexOf(obj)] + '')
-		// 	}));
-		// } else {
-		// 	return original;
-		// }
+		if (colors.length) {
+			const colorHash = new ColorHash();
+			return original.map(obj => ({
+				name: obj.name,
+				value: obj.value,
+				group: obj.group,
+				id: obj.id,
+				color: colorHash.hex(colors[original.indexOf(obj)] + '')
+			}));
+		} else {
+			return original;
+		}
 	}
 
 	static mapValues(original: any[], values: any[]) {
@@ -135,7 +135,7 @@ export class BarChartService {
 		this.data = BarChartService.mapData(dataObj.xaxis);
 		this.data = BarChartService.mapValues(this.data, dataObj.size);
 		this.data = BarChartService.mapGroupsId(this.data, dataObj.group);
-		// this.data = BarChartService.mapColors(this.data, dataObj.color);
+		this.data = BarChartService.mapColors(this.data, dataObj.color);
 		if (!dataObj.group.length) {
 			this.data = BarChartService.compressArray(this.data);
 		}

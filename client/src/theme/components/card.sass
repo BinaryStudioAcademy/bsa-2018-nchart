@@ -2,15 +2,21 @@
 @import ../colors
 
 .ui-card-content
+	box-sizing: content-box
 	background-color: $backgroundWhiteColor
-	width: 200px
-	display: grid
-	grid-template-columns: 90% 10%
+	width: 260px
 	padding: 20px
 	padding-top: 12px
-	box-shadow: $boxShadow
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)
+    transition: 0.5s
 	font-family: $fontFamily !important
 	position: relative
+
+	.project-name
+		text-decoration: none
+	.project-name:hover
+		opacity: 0.8	
+
 
 	.ui-buttonset.ui-splitbutton
 		position: absolute
@@ -32,17 +38,41 @@
 	.ui-buttonset.ui-splitbutton .ui-widget.ui-button:active,
 	.ui-buttonset.ui-splitbutton .ui-button:active
 		background-color: #fff
-	.user-name
+	.project-name
 		color: $activeColor
 		font-weight: 900
 		font-size: 1rem
 
+.ui-card-content:hover 
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2)
+
+
 .project-card-user
-	display: grid
+	margin-bottom: 0.5rem
 
 .project-card-folder
-	display: grid
-	margin: 10px 0
+	margin: 0.5rem 0 0.5rem 0
+	display: flex
+	align-items: center
+
+.card-user-name
+	font-weight: 600
+	font-family: $fontFamily
+	font-size: 1rem
+	padding: 0 12px
+
+.card-profile-image
+	cursor: pointer
+	width: 40px
+	height: 40px
+	border-radius: 50%
+	&.user-image
+		border: 2px solid $stateDefaultTextColor
+		display: flex
+		align-items: center
+		justify-content: center
+		font-size: 1.3rem
+		color: $stateDefaultTextColor
 
 .project-card-project-info
 	display: flex
@@ -57,6 +87,39 @@
 .project-access
 	margin-top: 10px
 
+
+.user-charts
+	display: inline-block
+
+.chart-type
+	float: left
+	margin: 0.1rem 0.2rem 0.1rem 0
+	letter-spacing: 0.05rem
+	font-weight: 600
+	font-size: 0.7rem
+	padding: 0 0.7rem
+	height: 1rem
+	line-height: 1rem
+	border-radius: 0.7rem
+	background-color: #f1f1f1
+.bar-chart-tag
+	background-color: #34738f
+	color: white
+.scatterplot-tag
+	background-color: #be3e2b
+	color: white
+.pie-chart-tag
+	background-color: #f6a75a
+	color: white
+
+.last-update
+	float: right
+	font-size: 0.7rem
+
+.dialog-button
+	.ui-button
+		margin: .25em
+		border: 1px solid $baseColor
 //.project-card-control
 //	position: relative
 //	& input

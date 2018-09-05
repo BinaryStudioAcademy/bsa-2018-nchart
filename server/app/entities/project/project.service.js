@@ -31,12 +31,14 @@ class ProjectService {
 					callback => {
 						if (obj.project.id) {
 							this.ProjectRepository.upsert(obj.project)
-								.then(() => callback(null, false, {
-									project: {
-										id: obj.project.id,
-										name: obj.project.name
-									}
-								}))
+								.then(() =>
+									callback(null, false, {
+										project: {
+											id: obj.project.id,
+											name: obj.project.name
+										}
+									})
+								)
 								.catch(err => callback(err, null));
 						} else {
 							this.ProjectRepository.create(obj.project.name)
@@ -376,32 +378,52 @@ class ProjectService {
 		});
 	}
 
-	findProjectsWithOwners(id) {
-		return this.ProjectRepository.findProjectsWithOwners(id)
+	findProjectsWithOwners(id, params) {
+		return this.ProjectRepository.findProjectsWithOwners(id, params.name)
 			.then(data => {
 				// data[0].group.groupProjects[0].project - id, name
 				// data[0].group.groupProjects[0].project
 				// .groupProjects[0].group.groupUsers[0].user.dataValues - name, email
 				const projects = [];
-				// todo: look very, very bad
 				data.forEach(el => {
 					el.group.groupProjects.forEach(pj => {
-						const user =							pj.project.groupProjects[0].group.groupUsers[0].user
-							.dataValues;
+						const user =
+							pj.project.groupProjects[0].group.groupUsers[0].user
+								.dataValues;
+						const userCharts = [];
+						// pj.project.projectCharts[0].chart.chartType.name
+						pj.project.projectCharts.forEach(projectChart => {
+							userCharts.push(projectChart.chart.chartType.name);
+						});
+						const uniqueCharts = userCharts.filter(
+							(item, pos) => userCharts.indexOf(item) === pos
+						);
 						projects.push({
 							id: pj.project.dataValues.id,
 							name: pj.project.dataValues.name,
+							updatedAt: pj.project.dataValues.updatedAt,
 							groupName: el.group.name,
 							companyName: el.group.company.name,
 							accessLevelId: pj.dataValues.accessLevelId,
+							userCharts: uniqueCharts,
 							user
 						});
 					});
 				});
+				// this.paggination(params.page,projects);
 				return projects;
 			})
 			.catch(err => err);
 	}
+
+	// paggination(page, projects){
+	//     const pageLimit = 3;
+	//     let payload = projects.slice(page*pageLimit, page*pageLimit+pageLimit);
+	//     if(payload.length === 0){
+	//         payload = projects.slice(pageLimit, pageLimit+pageLimit);
+	//     }
+	//     return payload;
+	// }
 
 	static getProjectFromPayload(rawProject) {
 		const charts = [];
