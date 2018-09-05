@@ -39,3 +39,8 @@ export interface ProjectEntities {
 	datasetData: DatasetDataState;
 	datasetColumn: DatasetColumnState;
 }
+
+export interface ProjectsFilter {
+	page: number;
+	search?: string;
+}

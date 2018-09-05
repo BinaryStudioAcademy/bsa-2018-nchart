@@ -242,10 +242,10 @@ export class ProjectsEffects {
 						const {
 							result: all,
 							entities: { project: byId }
-						} = normalize(value.payload, [projectScheme]);
+						} = normalize(value.payload.projects, [projectScheme]);
 						return new projectActions.LoadProjectsInfoComplete({
 							all,
-							byId,
+							byId
 						});
 					}
 					return throwError(new Error('Cant getPartByUserId'));

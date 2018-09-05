@@ -1,19 +1,18 @@
-import {Observable} from 'rxjs';
-import {Injectable} from '@angular/core';
-import {HttpService} from '@app/api/http/http.service';
-import {ServiceRequest} from '@app/models/serviceRequest.model';
-import {RequestType} from '@app/models/requestType.model';
-import {ProjectDomain} from '@app/models/project-domain.model';
-import {OriginProject} from '@app/models/project.model';
-import {ResponseScheme} from '@app/models/response-scheme.model';
-import {SchemeID} from '@app/models/normalizr.model';
+import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { HttpService } from '@app/api/http/http.service';
+import { ServiceRequest } from '@app/models/serviceRequest.model';
+import { RequestType } from '@app/models/requestType.model';
+import { ProjectDomain } from '@app/models/project-domain.model';
+import { OriginProject } from '@app/models/project.model';
+import { ResponseScheme } from '@app/models/response-scheme.model';
+import { SchemeID } from '@app/models/normalizr.model';
 
 @Injectable()
 export class ProjectDomainService implements ProjectDomain {
 	private projectPath = '/api/project';
 
-	constructor(private httpService: HttpService) {
-	}
+	constructor(private httpService: HttpService) {}
 
 	getAll(): Observable<ResponseScheme<OriginProject[]>> {
 		return this.httpService.makeRequest<ResponseScheme<OriginProject[]>>(
@@ -34,15 +33,22 @@ export class ProjectDomainService implements ProjectDomain {
 		);
 	}
 
-	getPartByUserId(payload): Observable<ResponseScheme<any[]>> {
+	getPartByUserId(payload): Observable<ResponseScheme<any>> {
 		if (payload.name) {
-			return this.httpService.makeRequest<ResponseScheme<any[]>>(
-				new ServiceRequest(RequestType.GET,
-					`${this.projectPath}/owners?page=${payload.page}&name=${payload.name}`)
+			return this.httpService.makeRequest<ResponseScheme<any>>(
+				new ServiceRequest(
+					RequestType.GET,
+					`${this.projectPath}/owners?page=${payload.page}&name=${
+						payload.name
+					}`
+				)
 			);
 		}
-		return this.httpService.makeRequest<ResponseScheme<any[]>>(
-			new ServiceRequest(RequestType.GET, `${this.projectPath}/owners?page=${payload.page}`)
+		return this.httpService.makeRequest<ResponseScheme<any>>(
+			new ServiceRequest(
+				RequestType.GET,
+				`${this.projectPath}/owners?page=${payload.page}`
+			)
 		);
 	}
 

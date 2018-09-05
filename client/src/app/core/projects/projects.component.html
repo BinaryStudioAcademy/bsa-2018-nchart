@@ -3,7 +3,7 @@
 		class="ui-fluid"
 		type="text"
 		label="Project name"
-		[control]="formGroup.controls.name" style="margin-top: 100px">
+		[control]="formGroup.controls['name']" style="margin-top: 100px">
 	</app-input-text><app-button label="Search"></app-button>
 	<div class="project-card-container">
 		<ng-container *ngIf="getProjects() | async as projects">
@@ -23,4 +23,7 @@
 		</ng-container>
 	</div>
 </div>
-<app-paginator></app-paginator>
+<app-paginator
+	[page]="filterParams.page"
+	(onpagination)="onNewPage($event)"
+></app-paginator>
