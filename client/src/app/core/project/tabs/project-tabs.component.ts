@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { SchemeID } from '@app/models/normalizr.model';
 import { StoreService } from '@app/services/store.service';
 import { PickActiveChart } from '@app/store/actions/charts/charts.actions';
@@ -9,13 +9,14 @@ import { RemovePageProject } from '@app/store/actions/projects/projects.actions'
 	templateUrl: './project-tabs.component.html',
 	styleUrls: ['./project-tabs.component.sass']
 })
-export class ProjectTabsComponent implements OnInit {
+export class ProjectTabsComponent implements OnInit, OnChanges {
 	@Input()
 	listPages = [];
 	@Input()
 	activeCharId: SchemeID;
 	@Output()
 	displayModalDataset = new EventEmitter();
+	isClosable = this.listPages.length > 1 ? true : false;
 
 	constructor(private storeService: StoreService) {}
 
@@ -23,6 +24,9 @@ export class ProjectTabsComponent implements OnInit {
 
 	onChange(event) {
 		this.select(this.listPages[event.index]);
+	}
+	ngOnChanges() {
+		this.isClosable = this.listPages.length > 1 ? true : false;
 	}
 
 	isActive(id) {

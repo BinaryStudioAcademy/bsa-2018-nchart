@@ -27,9 +27,7 @@ import {
 	isRequiredDimensionMatched
 } from '@app/store/selectors/userCharts';
 import { isActiveChartDataset } from '@app/store/selectors/dataset.selectors';
-import {
-	CreateChart
-} from '@app/store/actions/charts/charts.actions';
+import { CreateChart } from '@app/store/actions/charts/charts.actions';
 
 interface StepperStep {
 	id: number;

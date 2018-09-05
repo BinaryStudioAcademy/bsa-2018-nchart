@@ -7,7 +7,7 @@
         *ngFor="let pageId of listPages; let i = index"
         header="Page {{i+1}}"
         [selected]="isActive(pageId)"
-        [closable]="true"
+        [closable]="isClosable"
         >
     </p-tabPanel>
     <app-button
