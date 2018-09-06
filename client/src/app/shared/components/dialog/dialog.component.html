@@ -15,14 +15,16 @@
 		Share project
 		<i class="fas fa-times close-icon" (click)='close()'></i>
 	</p-header>
-		<app-input-text
-			class="ui-fluid"
-			type="text"
-			label="Email"
-			[control]="formGroup.controls.email">
-		</app-input-text>
+		<div class="email-input">
+			<app-input-text
+				class="ui-fluid"
+				type="text"
+				label="Email"
+				[control]="formGroup.controls.email">
+			</app-input-text>
+		</div>
 		<form [formGroup]="formGroup">
-			<div class="ui-g">
+			<div class="ui-g radio-access">
 				<span>Select access type:</span>
 				<div class="ui-g-12">
 					<p-radioButton

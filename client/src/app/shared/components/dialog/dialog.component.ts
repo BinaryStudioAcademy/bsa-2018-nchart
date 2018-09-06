@@ -9,7 +9,8 @@ import { StoreService } from '@app/services/store.service';
 
 @Component({
 	selector: 'app-dialog',
-	templateUrl: './dialog.component.html'
+	templateUrl: './dialog.component.html',
+	styleUrls: ['./dialog.component.sass']
 })
 export class DialogComponent implements OnInit {
 	constructor(private storeService: StoreService) {}
