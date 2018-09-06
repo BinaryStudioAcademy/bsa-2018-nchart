@@ -3,8 +3,10 @@
 
 .project-card-container
 	margin-top: 10px
-	display: flex
-	flex-wrap: wrap
+	display: grid
+	grid-row-gap: 0
+	grid-column-gap: 30px
+	grid-template-columns: repeat(auto-fill, minmax(250px, 300px))
 	justify-content: center
 
 .search-projects
