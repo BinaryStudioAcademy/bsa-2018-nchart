@@ -1,0 +1,50 @@
+div
+	left: 10px
+	bottom: 0px
+	padding: 10px 35px
+  font-size: 1.1em
+
+#notificationBarBottom
+	position: fixed
+	z-index: 101
+	text-align: center
+	overflow: hidden
+	box-shadow: 0 0 5px rgba(0,0,0,0.5)
+	border-radius: 3px
+
+=keyframes($name)
+	@-webkit-keyframes #{$name}
+		@content
+	@-moz-keyframes #{$name}
+		@content
+	@-ms-keyframes #{$name}
+		@content
+	@keyframes #{$name}
+		@content
++keyframes(slideDown)
+  0%
+    transform: translateY(0px)
+  100%
+    transform: translateY(-20px)
+
+#notificationBarBottom
+	animation: slideDown 1.5s ease forwards
+
+.close 
+  display: none
+
+.success
+	background-color: #3ccc38
+	border: 1px solid #3ccc38
+	color: #ffffff
+
+.error
+	background-color: #fd3259
+	border: 1px solid #fd3259
+	color: #ffffff
+
+span
+	position: fixed
+	right: 5px
+	top: 5px
+

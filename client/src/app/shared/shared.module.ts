@@ -13,6 +13,7 @@ import { CardComponent } from '@app/shared/components/card/card.component';
 import { DeleteDialogComponent } from '@app/shared/deleteDialog/delete-dialog.component';
 import { TableComponent } from '@app/shared/components/table/table.component';
 import { PopupMenuComponent } from '@app/shared/components/button/popup-menu/popup-menu.component';
+import { NotificationComponent } from '@app/shared/notification/notification.component';
 
 @NgModule({
 	imports: [
@@ -35,7 +36,8 @@ import { PopupMenuComponent } from '@app/shared/components/button/popup-menu/pop
 		CardComponent,
 		DeleteDialogComponent,
 		TableComponent,
-		PopupMenuComponent
+		PopupMenuComponent,
+		NotificationComponent
 	],
 	declarations: [
 		ActionButtonComponent,
@@ -46,7 +48,8 @@ import { PopupMenuComponent } from '@app/shared/components/button/popup-menu/pop
 		CardComponent,
 		DeleteDialogComponent,
 		TableComponent,
-		PopupMenuComponent
+		PopupMenuComponent,
+		NotificationComponent
 	]
 })
 export class SharedModule {}
