@@ -89,7 +89,6 @@ export class StepperComponent implements OnInit {
 	constructor(private storeService: StoreService) {}
 
 	isLoadingEl(id) {
-		console.log(this.stepsStageTwo + ' ' + this.stepsStageThree);
 		if (this.stepsStageTwo || this.stepsStageThree) {
 			if (id < this.stepsList.length && this.isStepVisible(id + 1)) {
 				return true;
