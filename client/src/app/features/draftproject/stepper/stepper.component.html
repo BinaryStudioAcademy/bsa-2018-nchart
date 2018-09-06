@@ -21,7 +21,7 @@
 			>
 				<i [ngClass]="getIconClasses(step.id)"></i>
 			</div>
-			<div *ngIf="isLoadingEl()" class="step-connection"></div>
+			<div *ngIf="isLoadingEl(step.id)" class="step-connection"></div>
 		</div>
 		</li>
 	</ul>

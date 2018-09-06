@@ -80,7 +80,7 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 		const scrollPosition = window.pageYOffset;
 		for (const i in this.viewItemsList) {
 			if (this.viewItemsList[i]) {
-				const position = this.viewItemsList[i].nativeElement.offsetTop;
+				const position = this.viewItemsList[i].nativeElement.offsetTop - 400;
 				if (scrollPosition >= position) {
 					this.selectedStep = this.stepperSteps.find(
 						el => el.id === +i + 1
@@ -97,12 +97,12 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 	}
 
 	isDataset(): boolean {
-		// this.updateViewChildren();
+		this.updateViewChildren();
 		return this.showTable;
 	}
 
 	isCharts(): boolean {
-		// this.updateViewChildren();
+		this.updateViewChildren();
 		return this.showCharts && this.isChartsReady && this.showTable;
 	}
 

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { StoreService } from '@app/services/store.service';
 import { isProjectDataset } from '@app/store/selectors/projects.selectors';
-import { hasChartDataset } from '@app/store/selectors/userCharts';
+import { hasChartDataset, isRequiredDimensionMatched } from '@app/store/selectors/userCharts';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { SchemeID } from '@app/models/normalizr.model';
 import { activeProjectId } from '../../../store/selectors/projects.selectors';
@@ -88,9 +88,12 @@ export class StepperComponent implements OnInit {
 
 	constructor(private storeService: StoreService) {}
 
-	isLoadingEl() {
-		if (this.stepsStageTwo && this.stepsStageThree) {
-			return true;
+	isLoadingEl(id) {
+		console.log(this.stepsStageTwo + ' ' + this.stepsStageThree);
+		if (this.stepsStageTwo || this.stepsStageThree) {
+			if (id < this.stepsList.length && this.isStepVisible(id + 1)) {
+				return true;
+			}
 		}
 		return false;
 	}
@@ -159,8 +162,14 @@ export class StepperComponent implements OnInit {
 			{
 				selector: hasChartDataset(),
 				subscriber: isReady => {
-					this.stepsStageThree = isReady;
+					// this.stepsStageThree = isReady;
 					this.disableSaveBtn = !isReady;
+				}
+			},
+			{
+				selector: isRequiredDimensionMatched(),
+				subscriber: t => {
+					this.stepsStageThree = t;
 				}
 			},
 			{
