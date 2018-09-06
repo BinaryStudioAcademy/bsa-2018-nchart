@@ -64,6 +64,7 @@ export class CustomChartComponent implements OnInit, OnDestroy {
 								this.customizeSettings
 							);
 							break;
+
 						default:
 							break;
 					}
