@@ -1,0 +1,56 @@
+@import ../colors
+@import ../variables
+
+.ui-modal>.ui-widget-content
+	background: $stateDefaultBgColor
+	box-shadow: 0 2px 32px $teriaryColor
+	padding: 0.6rem
+.ui-widget-overlay
+	background-color: $teriaryColor
+.ui-dialog 
+	.ui-dialog-titlebar-icon
+		position: absolute
+		top: 0
+		left: 0
+		span.pi.pi-times
+			display: flex
+			&:before
+				font-family: 'Font Awesome 5 Free'
+				content: '\f060'
+				font-weight: 900
+				color: $secondaryTextColor
+				margin-right: 5px
+			&:after
+				font-family: $fontFamily
+				content: 'Close'
+				color: $activeColor
+			&:hover
+				&:before
+					color: $stateActiveTextColor
+		&:hover
+			border-color: transparent
+	&.ui-widget .ui-dialog-titlebar
+		padding: 0 1rem
+		padding-top: 2.4rem
+		.ui-dialog-title
+			font-size: 1.6rem
+			font-weight: 500
+			padding: 0
+	.ui-dialog-titlebar
+		padding: 0 0.6rem
+	&.ui-widget .ui-dialog-content
+		padding: 1.2rem 1rem
+	.ui-dialog-footer
+		padding: 0 1rem
+		padding-bottom: 1rem
+		background: $stateDefaultBgColor
+		display: flex
+		justify-content: flex-start
+		app-button
+			.ui-button-text-icon-right:enabled
+				display: inline-block
+				margin-right: 6px
+			&:last-child
+				margin-right: 0
+			.ui-button-icon-left
+				margin-right: 10px
