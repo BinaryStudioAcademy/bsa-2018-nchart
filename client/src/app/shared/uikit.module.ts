@@ -56,13 +56,10 @@ import { DialogModule } from 'primeng/dialog';
 		ReactiveFormsModule,
 		TooltipModule,
 		SpinnerModule,
-<<<<<<< HEAD
 		CardModule,
 		TableModule,
-		TieredMenuModule
-=======
+		TieredMenuModule,
 		DialogModule
->>>>>>> 59905c92c515cfb885fec4c40f415b15e8878d11
 	],
 	exports: [
 		ButtonModule,
@@ -88,12 +85,9 @@ import { DialogModule } from 'primeng/dialog';
 		ReactiveFormsModule,
 		TooltipModule,
 		SpinnerModule,
-<<<<<<< HEAD
 		CardModule,
 		TableModule,
 		TieredMenuModule,
-=======
->>>>>>> 59905c92c515cfb885fec4c40f415b15e8878d11
 		DialogModule
 	],
 	declarations: []
