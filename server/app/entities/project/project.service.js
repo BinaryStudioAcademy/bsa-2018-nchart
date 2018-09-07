@@ -483,6 +483,21 @@ class ProjectService {
 		);
 	}
 
+	projectsPartsByGroupId(id) {
+		return this.ProjectRepository.projectsPartsByGroupId(id)
+			.then(data => {
+				const payload = [];
+				data.groupProjects.forEach(el => {
+					payload.push({
+						id: el.project.id,
+						name: el.project.name,
+						accessLevelId: el.accessLevelId
+					});
+				});
+				return payload;
+			});
+	}
+
 	export(id, type, selector) {
 		return this.DocumentGeneratingService.getDocument(id, type, selector);
 	}

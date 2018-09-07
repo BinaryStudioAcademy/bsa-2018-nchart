@@ -110,6 +110,26 @@ class ProjectRepository extends Repository {
 		});
 	}
 
+	projectsPartsByGroupId(id) {
+		this.groupModel = groupModel;
+		return this.groupModel.findOne({
+			where: { id },
+			attributes: ['id'],
+			include: [
+				{
+					model: groupProjectModel,
+					attributes: ['groupId', 'projectId', 'accessLevelId'],
+					include: [
+						{
+							model: this.projectModel,
+							attributes: ['id', 'name']
+						}
+					]
+				}
+			]
+		});
+	}
+
 	fullProjectByUserId(id) {
 		this.groupUser = groupUserModel;
 		return this.groupUser.findAll({

@@ -73,6 +73,12 @@ class CompanyService {
 	findCompanyUsers(query) {
 		return this.CompanyRepository.findCompanyUsers(query);
 	}
+
+	findGroupsByCompanyId(id) {
+		return this.CompanyRepository.findGroupsByCompanyId(id).then(
+			data => data.groups
+		);
+	}
 }
 
 module.exports = new CompanyService();

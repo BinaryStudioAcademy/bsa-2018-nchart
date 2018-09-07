@@ -29,9 +29,9 @@ project.post('/name', (req, res, next) => {
 		.catch(next);
 });
 
-// todo: what do with rout names?
 project.get('/group/:id', (req, res, next) => {
-	ProjectService.fullProjectsByGroupId(Number(req.params.id))
+	// ProjectService.fullProjectsByGroupId(Number(req.params.id))
+	ProjectService.projectsPartsByGroupId(Number(req.params.id))
 		.then(PayloadGeneratorService.nextWithData(next, res))
 		.catch(next);
 });
@@ -59,6 +59,7 @@ project.post('/shareByEmail', (req, res, next) => {
 		.catch(next);
 });
 
+// projects pagination
 project.get(
 	'/owners/:page?/:name?',
 	(req, res, next) => {
