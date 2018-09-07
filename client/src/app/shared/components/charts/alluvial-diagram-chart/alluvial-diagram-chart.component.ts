@@ -81,9 +81,6 @@ export class AlluvialDiagramChartComponent implements OnInit {
 			.append('g')
 			.attr('class', 'links')
 			.attr('fill', 'none')
-			.attr('stroke', function(d: any) {
-				return color(d.name.replace(/ .*/, ''));
-			})
 			.attr('stroke-opacity', linksOpacity)
 			.selectAll('path');
 
@@ -101,6 +98,9 @@ export class AlluvialDiagramChartComponent implements OnInit {
 			.enter()
 			.append('path')
 			.attr('d', d3Sankey.sankeyLinkHorizontal())
+			.attr('stroke', function(d: any) {
+				return color(d.source.name);
+			})
 			.attr('stroke-width', function(d: any) {
 				return Math.max(1, d.width);
 			});
@@ -130,7 +130,7 @@ export class AlluvialDiagramChartComponent implements OnInit {
 				return d.x1 - d.x0;
 			})
 			.attr('fill', function(d: any) {
-				return color(d.name.replace(/ .*/, ''));
+				return color(d.name);
 			})
 			.attr('stroke', '#000');
 
