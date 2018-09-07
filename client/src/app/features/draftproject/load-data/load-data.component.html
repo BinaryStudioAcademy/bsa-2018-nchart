@@ -52,11 +52,15 @@
 				</div>
 			</p-tabPanel>
 
-			<p-tabPanel header="Samples">
+			<p-tabPanel header="Samples" *ngIf="isSamplesExist()">
 				<div class="ui-g">
-					<p-card *ngFor = "let sample of datasetSamples" class="samples" (click)="loadSample($event, sample)">
-						{{sample.name}}
-					</p-card>
+					<app-button
+						*ngFor = "let sample of datasetSamples"
+						class="samples"
+						(click)="loadSample($event, sample)"
+						[label]="sample.name"
+					>
+					</app-button>
 				</div>
 			</p-tabPanel>
 
