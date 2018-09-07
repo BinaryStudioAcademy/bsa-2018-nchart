@@ -12,6 +12,7 @@ import { FeatureModule } from '@app/features/feature.module';
 import { CommonModule } from '@angular/common';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { FormFieldModule } from '@app/shared/components/form-field/form-field.module';
+import { ProjectTabsComponent } from '@app/core/project/tabs/project-tabs.component';
 
 @NgModule({
 	declarations: [
@@ -21,7 +22,8 @@ import { FormFieldModule } from '@app/shared/components/form-field/form-field.mo
 		LoginComponent,
 		ProjectComponent,
 		ProjectsComponent,
-		LandingPageComponent
+		LandingPageComponent,
+		ProjectTabsComponent
 	],
 	imports: [
 		CommonModule,

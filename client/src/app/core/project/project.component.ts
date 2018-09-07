@@ -11,8 +11,7 @@ import {
 import { StoreService } from '@app/services/store.service';
 import {
 	CreateDraftProject,
-	LoadOneProject,
-	RemovePageProject
+	LoadOneProject
 } from '@app/store/actions/projects/projects.actions';
 import { SchemeID } from '@app/models/normalizr.model';
 import { isChartsReady } from '@app/store/selectors/charts.selectors';
@@ -28,10 +27,7 @@ import {
 	isRequiredDimensionMatched
 } from '@app/store/selectors/userCharts';
 import { isActiveChartDataset } from '@app/store/selectors/dataset.selectors';
-import {
-	CreateChart,
-	PickActiveChart
-} from '@app/store/actions/charts/charts.actions';
+import { CreateChart } from '@app/store/actions/charts/charts.actions';
 
 interface StepperStep {
 	id: number;
@@ -52,7 +48,7 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 	showCharts = false;
 	showTable = false;
 	listPages = [];
-	activeCharId: SchemeID;
+	activeChartId: SchemeID;
 	isChartsReady = false;
 	routeParams$: Subscription;
 	subConf = new Subject<boolean>();
@@ -62,7 +58,6 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 	projectName: string;
 	projectId: SchemeID;
 	isActiveChartDataset$: Observable<boolean>;
-	activeIndex = 0;
 
 	disconnect: () => void;
 
@@ -145,10 +140,6 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.storeService.dispatch(new CreateChart({ datatsetId: null }));
 	}
 
-	removePage(chartId) {
-		this.storeService.dispatch(new RemovePageProject({ chartId }));
-	}
-
 	canDeactivate(): Observable<boolean> {
 		this.showDialog();
 		return this.subConf;
@@ -198,7 +189,7 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 			{
 				selector: getActiveChartId(),
 				subscriber: id => {
-					this.activeCharId = id;
+					this.activeChartId = id;
 				}
 			},
 			{
@@ -221,11 +212,6 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 			}
 		]);
 	}
-
-	select(id) {
-		this.storeService.dispatch(new PickActiveChart({ id }));
-	}
-
 	ngOnDestroy() {
 		this.disconnect();
 		this.routeParams$.unsubscribe();
@@ -244,18 +230,7 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 		);
 	}
 
-	onChange(event) {
-		this.select(this.listPages[event.index]);
-	}
-
-	isActive(id) {
-		return this.activeCharId === id;
-	}
-
-	handleClose(event) {
-		if (event.index !== this.activeIndex) {
-			this.removePage(this.listPages[event.index]);
-			event.close();
-		}
+	onDisplayModalDataset() {
+		this.displayModalDataset = true;
 	}
 }
