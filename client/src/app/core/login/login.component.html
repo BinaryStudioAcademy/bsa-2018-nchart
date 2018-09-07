@@ -27,13 +27,10 @@
             </p-tabView>
             <div class="ui-g-4 ui-g-offset-4">
                 <div class="link-container">
-                    <app-link
-                        class="ui-fluid"
-                        link="/app/project/draft"
-                        type="secondary"
-                        label="Skip for now"
-						(onclick)="saveProj()"
-					></app-link>
+					<span
+						class="custom-link"
+						(click)="saveProj()"
+					>Skip for now</span>
                 </div>
             </div>
         </div>

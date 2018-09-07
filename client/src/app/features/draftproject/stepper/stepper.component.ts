@@ -192,7 +192,7 @@ export class StepperComponent implements OnInit {
 				new SaveProject({ id: this.activeProjectId })
 			);
 		} else {
-			this.storeService.dispatch(new Go({ path: ['/login'] }));
+			this.storeService.dispatch(new Go({ path: ['/login'], query: { redirect: true } }));
 		}
 	}
 }
