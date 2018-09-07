@@ -1,7 +1,7 @@
-import { ProjectsActionConstants } from '@app/store/actions/projects/projects.action-types';
-import { Project, ProjectEntities } from '@app/models/project.model';
-import { SchemeID } from '@app/models/normalizr.model';
-import { AppAction, FailedAction } from '@app/models/store.model';
+import {ProjectsActionConstants} from '@app/store/actions/projects/projects.action-types';
+import {Project, ProjectEntities} from '@app/models/project.model';
+import {SchemeID} from '@app/models/normalizr.model';
+import {AppAction, FailedAction} from '@app/models/store.model';
 
 export class LoadProjetcs extends AppAction<{ groupId: string }> {
 	readonly type = ProjectsActionConstants.LOAD_PROJECTS;
@@ -113,6 +113,7 @@ export class LoadProjetcsInfo extends AppAction<{
 export class LoadProjectsInfoComplete extends AppAction<{
 	all: SchemeID[];
 	byId: any;
+	pagination: any;
 }> {
 	readonly type = ProjectsActionConstants.LOAD_PROJECTS_INFO__COMPLETE;
 }

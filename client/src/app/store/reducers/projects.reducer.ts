@@ -1,18 +1,24 @@
-import { Actions as ProjectsActions } from '@app/store/actions/projects/projects.actions';
-import { combineReducers } from '@ngrx/store';
-import { ProjectsActionConstants as constants } from '@app/store/actions/projects/projects.action-types';
-import { SchemeID } from '@app/models/normalizr.model';
-import { DatasetActionConstants } from '@app/store/actions/datasets/datasets.action-types';
-import { Actions as datasetsActions } from '@app/store/actions/datasets/datasets.actions';
-import { Actions as chartActions } from '@app/store/actions/charts/charts.actions';
-import { ChartsActionConstants } from '@app/store/actions/charts/charts.action-types';
-import { ProjectsState } from '@app/models/projects-store.model';
-import { omit } from 'lodash';
+import {Actions as ProjectsActions} from '@app/store/actions/projects/projects.actions';
+import {combineReducers} from '@ngrx/store';
+import {ProjectsActionConstants as constants} from '@app/store/actions/projects/projects.action-types';
+import {SchemeID} from '@app/models/normalizr.model';
+import {DatasetActionConstants} from '@app/store/actions/datasets/datasets.action-types';
+import {Actions as datasetsActions} from '@app/store/actions/datasets/datasets.actions';
+import {Actions as chartActions} from '@app/store/actions/charts/charts.actions';
+import {ChartsActionConstants} from '@app/store/actions/charts/charts.action-types';
+import {ProjectsState} from '@app/models/projects-store.model';
+import {omit} from 'lodash';
 
 export const initialState: ProjectsState = {
 	byId: {},
 	all: [],
 	active: null,
+	pagination: {
+		pageCount: null,
+		page: null,
+		totalRecords: null,
+		rows: null
+	},
 	isLoading: false
 };
 
@@ -37,10 +43,8 @@ const all = (state = initialState.all, action: ProjectsActions) => {
 	}
 };
 
-const byId = (
-	state = initialState.byId,
-	action: ProjectsActions | datasetsActions | chartActions
-) => {
+const byId = (state = initialState.byId,
+			  action: ProjectsActions | datasetsActions | chartActions) => {
 	switch (action.type) {
 		case constants.LOAD_PROJECTS:
 			return {};
@@ -51,11 +55,13 @@ const byId = (
 				...state,
 				[action.payload.project.id]: action.payload.project
 			};
-			// todo: change only name prop
 		case constants.UPDATE_PROJECT_NAME__COMPLETE:
 			return {
 				...state,
-				[action.payload.id]: {...action.payload}
+				[action.payload.id]: {
+					...state[action.payload.id],
+					name: action.payload.name
+				}
 			};
 		case constants.LOAD_ONE_PROJECT__COMPLETE:
 			return {
@@ -146,10 +152,8 @@ const byId = (
 	}
 };
 
-export const isLoading = (
-	state = initialState.isLoading,
-	action: ProjectsActions
-): boolean => {
+export const isLoading = (state = initialState.isLoading,
+						  action: ProjectsActions): boolean => {
 	switch (action.type) {
 		case constants.LOAD_PROJECTS:
 		case constants.LOAD_ONE_PROJECT:
@@ -167,10 +171,8 @@ export const isLoading = (
 	}
 };
 
-export const active = (
-	state = initialState.active,
-	action: ProjectsActions
-): SchemeID => {
+export const active = (state = initialState.active,
+					   action: ProjectsActions): SchemeID => {
 	switch (action.type) {
 		case constants.CREATE_DRAFT_PROJECT__COMPLETE:
 			return action.payload.project.id;
@@ -184,11 +186,24 @@ export const active = (
 	}
 };
 
+export const pagination = (state = initialState.pagination, action: ProjectsActions) => {
+	switch (action.type) {
+		case constants.LOAD_PROJECTS_INFO__COMPLETE:
+			return {
+				...state,
+				...action.payload.pagination
+			};
+		default:
+			return state;
+	}
+};
+
 const reducers = {
 	all,
 	byId,
 	isLoading,
-	active
+	active,
+	pagination
 };
 
 export const projectsReducer = combineReducers(reducers);

@@ -245,7 +245,8 @@ export class ProjectsEffects {
 						} = normalize(value.payload.projects, [projectScheme]);
 						return new projectActions.LoadProjectsInfoComplete({
 							all,
-							byId
+							byId,
+							pagination: value.payload.pagination
 						});
 					}
 					return throwError(new Error('Cant getPartByUserId'));
@@ -322,10 +323,9 @@ export class ProjectsEffects {
 			this.projectDomainService.updateName(action.payload).pipe(
 				map(value => {
 					if (value.isSuccess) {
-						return new projectActions.UpdateProjectNameComplete({
-							id: action.payload.id,
-							name: action.payload.name
-						});
+						return new projectActions.UpdateProjectNameComplete(
+							action.payload
+						);
 					}
 					return throwError(new Error('Cant rename project'));
 				}),
