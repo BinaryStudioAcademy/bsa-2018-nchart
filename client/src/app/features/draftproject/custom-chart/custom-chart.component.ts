@@ -9,6 +9,7 @@ import {
 import { FormGroup } from '@angular/forms';
 import { PieChartService } from '@app/services/charts/pie-chart.service';
 import { ScatterplotChartService } from '@app/services/charts/scatterplot-chart.service';
+import { AlluvialDiagramChartService } from '@app/services/charts/alluvial-diagram-chart.service';
 
 @Component({
 	selector: 'app-custom-chart',
@@ -21,7 +22,8 @@ export class CustomChartComponent implements OnInit, OnDestroy {
 		private barChartService: BarChartService,
 		private pieChartService: PieChartService,
 		private scatterplotChartService: ScatterplotChartService,
-		private storeService: StoreService
+		private storeService: StoreService,
+		private alluvialDiagramChartService: AlluvialDiagramChartService
 	) {}
 
 	data: any[];

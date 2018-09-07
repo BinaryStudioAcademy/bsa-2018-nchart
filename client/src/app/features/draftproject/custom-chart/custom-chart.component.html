@@ -23,13 +23,20 @@
 		</div>
 	</p-dialog>
 	<app-button type="icon" icon="fas fa-expand" class="full-screen-btn" (onclick)="showDialog()"></app-button>
-	<div class="custom-chart-container">
-	<app-chart
-		class="ui-g-9"
-		[data]="data"
-		[chartType]="chartType"
-		[customizeSettings]="customizeSettings"
-	>
-	</app-chart>
+		<div class="custom-chart-container">
+			<app-customize-chart
+				class="ui-g-3"
+				[formGroup]="customizeForm" 
+				[chartType]="chartType"
+				[customizeSettings]="customizeSettings"
+			>
+			</app-customize-chart>
+			<app-chart
+				class="ui-g-9"
+				[data]="data"
+				[chartType]="chartType"
+				[customizeSettings]="customizeSettings"
+			>
+		</app-chart>
 	</div>
 </div>

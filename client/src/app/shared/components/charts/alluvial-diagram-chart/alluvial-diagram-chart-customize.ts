@@ -15,9 +15,9 @@ export class AlluvialDiagramChartCustomizeComponent implements OnChanges {
 	ngOnChanges() {
 		this.formGroup.controls.width['id'] = this.customizeSettings.width.id;
 		this.formGroup.controls.height['id'] = this.customizeSettings.height.id;
-		this.formGroup.controls.nodeWidth[
+		this.formGroup.controls.nodesWidth[
 			'id'
-		] = this.customizeSettings.nodeWidth.id;
+		] = this.customizeSettings.nodesWidth.id;
 		this.formGroup.controls.nodePadding[
 			'id'
 		] = this.customizeSettings.nodePadding.id;

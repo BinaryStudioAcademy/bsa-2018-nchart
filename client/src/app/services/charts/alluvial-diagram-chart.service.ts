@@ -10,10 +10,36 @@ export class AlluvialDiagramChartService {
 		private formService: FormService,
 		private formBuilder: FormBuilder
 	) {}
+	static arrayToObject(data: any[]) {
+		const dataObj = data.reduce((obj, item) => {
+			item.values.length
+				? (obj[item.name] = item.values)
+				: (obj[item.name] = []);
+			return obj;
+		}, {});
+		return dataObj;
+	}
 
-	data: any[];
+	getData(data: any) {
+		const steps = [];
+		data = AlluvialDiagramChartService.arrayToObject(data);
+		if (data.steps.length > 1) {
+			for (let i = 0; i < data.steps.length - 1; i++) {
+				const sourceArr = data.steps[i].values,
+					targetArr = data.steps[i + 1].values;
 
-	getData(data: any) {}
+				for (let j = 0; j < sourceArr.length; j++) {
+					const node = {
+						source: sourceArr[j],
+						target: targetArr[j],
+						value: 1
+					};
+					steps.push(node);
+				}
+			}
+		}
+		return steps;
+	}
 
 	createCustomizeForm(alluvialDiagramChartCustomize): FormGroup {
 		const initialValues: OptionalType<
@@ -21,15 +47,14 @@ export class AlluvialDiagramChartService {
 		> = new AlluvialDiagramChartCustomize(
 			alluvialDiagramChartCustomize.width.value,
 			alluvialDiagramChartCustomize.height.value,
-			alluvialDiagramChartCustomize.nodeWidth.value,
+			alluvialDiagramChartCustomize.nodesWidth.value,
 			alluvialDiagramChartCustomize.nodePadding.value,
 			alluvialDiagramChartCustomize.linksOpacity.value
 		);
-
 		const validators: fieldsValidators<AlluvialDiagramChartCustomize> = {
 			width: [minValidator('Minimum value is', 0)],
 			height: [minValidator('Minimum value is', 0)],
-			nodeWidth: [minValidator('Minimum value is', 0)],
+			nodesWidth: [minValidator('Minimum value is', 0)],
 			nodePadding: [minValidator('Minimum value is', 0)],
 			linksOpacity: [minValidator('Minimum value is', 0)]
 		};
