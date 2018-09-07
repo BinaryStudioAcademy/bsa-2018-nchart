@@ -9,6 +9,9 @@
 </div>
 <div class="project-card-container">
 	<ng-container *ngIf="getProjects() | async as projects">
+		<div class="message" *ngIf="projects.length === 0">
+			U are бомж. Deal with it.
+		</div>
 		<div *ngFor="let project of projects" style="float: left;">
 			<app-card
 				[projectId]="project?.id"
@@ -27,6 +30,7 @@
 <app-paginator
 	*ngIf="getPagination() | async as pagination"
 	[pagination]="pagination"
-	[page]="filterParams.page"
+	[page]="pagination.page"
 	(onpagination)="onNewPage($event)"
 ></app-paginator>
+<!--[page]="filterParams.page"-->
