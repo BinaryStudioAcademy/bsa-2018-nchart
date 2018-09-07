@@ -48,7 +48,7 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 	showCharts = false;
 	showTable = false;
 	listPages = [];
-	activeCharId: SchemeID;
+	activeChartId: SchemeID;
 	isChartsReady = false;
 	routeParams$: Subscription;
 	subConf = new Subject<boolean>();
@@ -58,7 +58,6 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 	projectName: string;
 	projectId: SchemeID;
 	isActiveChartDataset$: Observable<boolean>;
-	activeIndex = 0;
 
 	disconnect: () => void;
 
@@ -190,7 +189,7 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 			{
 				selector: getActiveChartId(),
 				subscriber: id => {
-					this.activeCharId = id;
+					this.activeChartId = id;
 				}
 			},
 			{
