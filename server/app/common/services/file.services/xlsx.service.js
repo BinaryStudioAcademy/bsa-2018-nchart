@@ -150,7 +150,7 @@ const parseData = (data, headers) => {
 	return payload;
 };
 
-const readFile = path => new Promise((resolve, reject) => {
+const readFile = path => new Promise(resolve => {
 	const headers = getHeaders(path);
 	const file = fs.createReadStream(path);
 	const buffers = [];
@@ -167,14 +167,11 @@ const readFile = path => new Promise((resolve, reject) => {
 			{ header: headers, range: range.s.r + 1, defval: null }
 		);
 		const payload = parseData(data, headers);
-		if (payload.length === 0) {
-			reject(new Error('Messed up file'));
-		}
 		resolve(payload);
 	});
 });
 
-const readString = content => new Promise((resolve, reject) => {
+const readString = content => new Promise(resolve => {
 	const headers = getHeaders(null, content);
 	const workbook = XLSX.read(content, { type: 'string' });
 	const data = XLSX.utils.sheet_to_json(
@@ -182,9 +179,6 @@ const readString = content => new Promise((resolve, reject) => {
 		{ header: headers, range: 1 }
 	);
 	const payload = parseData(data, headers);
-	if (payload.data.length === 0) {
-		reject(new Error('Messed up file'));
-	}
 	resolve(payload);
 });
 

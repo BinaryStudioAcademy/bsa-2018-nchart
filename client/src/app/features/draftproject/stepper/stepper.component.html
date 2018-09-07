@@ -1,11 +1,4 @@
-<div *ngIf="!isVisible" class="show-stepper stepper-container ui-main-block" >
-	<app-button type="icon" icon="fas fa-arrow-right" (onclick)="toggleStepper()"></app-button>
-</div>
-
-<div *ngIf="isVisible" class="stepper-container ui-main-block" @toggleStepper>
-	<div class="stepper-tools">
-		<app-button type="icon" icon="fas fa-arrow-left" (onclick)="toggleStepper()"></app-button>
-	</div>
+<div *ngIf="isVisible" class="stepper-container ui-main-block">
 	<ul>
 		<li *ngFor="let step of stepsList"
 			(click)="selectChart(step.id)"
@@ -21,7 +14,7 @@
 			>
 				<i [ngClass]="getIconClasses(step.id)"></i>
 			</div>
-			<div *ngIf="isLoadingEl()" class="step-connection"></div>
+			<div *ngIf="isLoadingEl(step.id)" class="step-connection"></div>
 		</div>
 		</li>
 	</ul>

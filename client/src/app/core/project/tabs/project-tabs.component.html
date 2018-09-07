@@ -1,0 +1,23 @@
+<div class="project-tabs-wrap">
+    <p-tabView 
+        (onChange)="onChange($event)" 
+        [controlClose]="true"
+        (onClose)="handleClose($event)"
+        >
+            <p-tabPanel
+            *ngFor="let pageId of listPages; let i = index"
+            header="Page {{i+1}}"
+            [selected]="isActive(pageId)"
+            [closable]="isClosable"
+            >
+        </p-tabPanel>
+    </p-tabView>
+    <app-button
+        class="btn-add-tab"
+        type="icon"
+        icon="fas fa-plus"
+        tooltip="New Page"
+        tooltipPosition="top"
+        (onclick)="isDisplayModalDataset()"
+    ></app-button>
+</div>

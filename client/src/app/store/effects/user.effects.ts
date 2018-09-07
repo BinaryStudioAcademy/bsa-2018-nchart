@@ -20,14 +20,13 @@ import { of, throwError } from 'rxjs';
 import { UserDomainService } from '@app/api/domains/user/user.domain';
 import { TokenService } from '@app/services/token.service';
 import { Go } from '@app/store/actions/router/router.actions';
-import { concatMap, filter, withLatestFrom } from 'rxjs/internal/operators';
+import { concatMap, withLatestFrom } from 'rxjs/internal/operators';
 import { StoreService } from '@app/services/store.service';
 import {
 	activeProjectId,
 	isProjectDataset
 } from '@app/store/selectors/projects.selectors';
 import { SaveProject } from '@app/store/actions/projects/projects.actions';
-import { isRequiredDimensionMatched } from '@app/store/selectors/userCharts';
 
 @Injectable()
 export class UserEffects {
@@ -73,7 +72,7 @@ export class UserEffects {
 				concatMap(([value, state]) => {
 					if (value.isSuccess) {
 						const { user } = value.payload;
-						const canSaveProj = isRequiredDimensionMatched()(state);
+						const canSaveProj = isProjectDataset()(state);
 						if (canSaveProj) {
 							const id = activeProjectId()(state);
 							return [
@@ -112,7 +111,7 @@ export class UserEffects {
 				concatMap(([value, state]) => {
 					if (value.isSuccess) {
 						const { user } = value.payload;
-						const canSaveProj = isRequiredDimensionMatched()(state);
+						const canSaveProj = isProjectDataset()(state);
 
 						if (canSaveProj) {
 							const id = activeProjectId()(state);
@@ -156,10 +155,15 @@ export class UserEffects {
 	canSave$ = this.action$.pipe(
 		ofType(UserActionConstants.CAN_SAVE),
 		withLatestFrom(
-			this.storeService.createSubscription(isProjectDataset())
+			this.storeService.createSubscription(isProjectDataset()),
+			this.storeService.createSubscription(activeProjectId())
 		),
-		filter(([_, hasDataset]) => hasDataset),
-		withLatestFrom(this.storeService.createSubscription(activeProjectId())),
-		map(([_, id]) => new SaveProject({ id }))
+		map(([_, hasDataset, id]) => {
+			if (hasDataset) {
+				return new SaveProject({ id });
+			} else {
+				return new Go({ path: ['/app/project/draft'] });
+			}
+		})
 	);
 }

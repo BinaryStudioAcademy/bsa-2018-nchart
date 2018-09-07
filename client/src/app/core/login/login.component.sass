@@ -1,9 +1,11 @@
-.login-container 
-    margin-top: 4vh 
-    display: flex 
-    flex-direction: column 
-    align-items: center 
- 
+@import "../../../theme/colors"
+
+.login-container
+    margin-top: 4vh
+    display: flex
+    flex-direction: column
+    align-items: center
+
 .logo
     // width: 10vw
     height: 10rem
@@ -11,3 +13,10 @@
 .link-container
     display: flex
     justify-content: center
+
+.custom-link
+	cursor: pointer
+	color: $activeColor
+
+	&:hover
+		color: $secondaryTextColor

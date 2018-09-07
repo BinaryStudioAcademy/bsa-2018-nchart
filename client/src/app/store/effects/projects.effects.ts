@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
-import { map, switchMap, mergeMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { denormalize, normalize } from 'normalizr';
@@ -34,6 +34,7 @@ import {
 	getAmountUserCharts
 } from '@app/store/selectors/projects.selectors';
 import { CreateChart } from '@app/store/actions/charts/charts.actions';
+import { getRouterQueryParams } from '@app/store/selectors/router.selectors';
 
 @Injectable()
 export class ProjectsEffects {
@@ -204,8 +205,21 @@ export class ProjectsEffects {
 			};
 
 			return this.projectDomainService.save({ project }).pipe(
-				mergeMap(response => {
+				withLatestFrom(
+					this.storeService.createSubscription(getRouterQueryParams())
+				),
+				concatMap(([response, { redirect }]) => {
 					if (project.id) {
+						if (redirect) {
+							return [
+								new UpdateProjectComplete(),
+								new Go({
+									path: [
+										`/app/project/${response.payload.id}`
+									]
+								})
+							] as any;
+						}
 						return [new UpdateProjectComplete()] as any;
 					} else {
 						return [
