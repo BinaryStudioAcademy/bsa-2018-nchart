@@ -1,8 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { StoreService } from '@app/services/store.service';
-import { isProjectDataset } from '@app/store/selectors/projects.selectors';
-import { hasChartDataset } from '@app/store/selectors/userCharts';
-import { trigger, style, animate, transition } from '@angular/animations';
+import { hasChartDataset, isRequiredDimensionMatched } from '@app/store/selectors/userCharts';
 import { SchemeID } from '@app/models/normalizr.model';
 import { activeProjectId } from '../../../store/selectors/projects.selectors';
 import { SaveProject } from '../../../store/actions/projects/projects.actions';
@@ -52,18 +50,7 @@ interface StepperStep {
 @Component({
 	selector: 'app-stepper',
 	templateUrl: './stepper.component.html',
-	styleUrls: ['./stepper.component.sass'],
-	animations: [
-		trigger('toggleStepper', [
-			transition('void => *', [
-				style({ transform: 'translateX(-100%)' }),
-				animate('.3s ease-out')
-			]),
-			transition('* => void', [
-				animate(200, style({ transform: 'translateX(-100%)' }))
-			])
-		])
-	]
+	styleUrls: ['./stepper.component.sass']
 })
 export class StepperComponent implements OnInit {
 	@Input()
@@ -88,9 +75,11 @@ export class StepperComponent implements OnInit {
 
 	constructor(private storeService: StoreService) {}
 
-	isLoadingEl() {
-		if (this.stepsStageTwo && this.stepsStageThree) {
-			return true;
+	isLoadingEl(id) {
+		if (this.stepsStageTwo || this.stepsStageThree) {
+			if (id < this.stepsList.length && this.isStepVisible(id + 1)) {
+				return true;
+			}
 		}
 		return false;
 	}
@@ -140,7 +129,7 @@ export class StepperComponent implements OnInit {
 				}
 			},
 			{
-				selector: isProjectDataset(),
+				selector: isActiveChartDataset(),
 				subscriber: isReady => {
 					this.stepsStageTwo = isReady;
 				}
@@ -159,8 +148,14 @@ export class StepperComponent implements OnInit {
 			{
 				selector: hasChartDataset(),
 				subscriber: isReady => {
-					this.stepsStageThree = isReady;
+					// this.stepsStageThree = isReady;
 					this.disableSaveBtn = !isReady;
+				}
+			},
+			{
+				selector: isRequiredDimensionMatched(),
+				subscriber: t => {
+					this.stepsStageThree = t;
 				}
 			},
 			{
@@ -192,7 +187,7 @@ export class StepperComponent implements OnInit {
 				new SaveProject({ id: this.activeProjectId })
 			);
 		} else {
-			this.storeService.dispatch(new Go({ path: ['/login'] }));
+			this.storeService.dispatch(new Go({ path: ['/login'], query: { redirect: true } }));
 		}
 	}
 }
