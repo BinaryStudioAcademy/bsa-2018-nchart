@@ -28,17 +28,16 @@
 			</p-tabPanel>
 
 			<p-tabPanel header="Embed">
-				<!-- TODO make changes dynamic-->
+				<div>
+					<span>Copy the snippet below into your HTML code to embed the visualization</span>
+					<i class="fas fa-paste paste-icon" (click)="copyToClipBoard()"></i>
+				</div>
 				<app-input-textarea 
 				class="load-data-paste"
 				rows="8" 
 				autoResize="autoResize"
 				[control]='svgFormControl'>
 				</app-input-textarea>
-				<div>
-					<span>Copy the snippet above into your HTML code to embed the visualization</span>
-					<i class="fas fa-paste paste-icon" (click)="copyToClipBoard()"></i>
-				</div>
 			</p-tabPanel>
 
 		</p-tabView>
