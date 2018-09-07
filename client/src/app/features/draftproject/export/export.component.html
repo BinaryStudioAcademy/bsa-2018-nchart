@@ -29,8 +29,9 @@
 
 			<p-tabPanel header="Embed">
 				<div>
-					<span>Copy the snippet below into your HTML code to embed the visualization</span>
-					<i class="fas fa-paste paste-icon" (click)="copyToClipBoard()"></i>
+					<div style="float:left;">Copy the snippet below into your HTML code to embed the visualization</div>
+					<app-button type="icon" icon="fas fa-paste" class="paste-icon" tooltip="Copy SVG code"
+					tooltipPosition="top" (onclick)="copyToClipBoard()"></app-button>
 				</div>
 				<app-input-textarea 
 				class="load-data-paste"
