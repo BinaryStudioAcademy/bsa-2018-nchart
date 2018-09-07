@@ -2,11 +2,11 @@
 @import ../variables
 
 .ui-paginator-element
-	height: 2em !important
-	width: 2em !important
+	height: 2.5em !important
+	width: 2.5em !important
 	background-color: $backgroundWhiteColor
 	color: black !important
-	line-height: 1.75em !important
+	line-height: 2.35em !important
 	margin-left: 0 !important
 	margin-right: 0	!important
 //border: none !important
@@ -26,11 +26,18 @@
 	margin-bottom: 20px
 	margin-top: 10px
 
+	position: fixed
+	bottom: 0
+	width: 100%
+
 .ui-paginator .ui-paginator-page.ui-state-active
 	color: white !important
 	background-color: $defaultButtonColor
 	//border: none
-	height: 1.75em !important
-	width: 1.9em !important
-	border: 0
-	border-radius: 0
+	height: 2.35em !important
+	width: 2.35em !important
+	border: 1px solid #F2F2F9
+	//border-radius: 0
+
+.ui-paginator .ui-state-default
+	border: 1px solid #F2F2F9

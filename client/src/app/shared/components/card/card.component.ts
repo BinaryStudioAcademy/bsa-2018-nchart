@@ -16,7 +16,7 @@ export class CardComponent implements OnInit {
 	itemsObjs = [
 		{
 			label: 'Rename',
-			command: ()=>{
+			command: () => {
 				this.renameDialog();
 			}
 			// icon: 'fa fa-plus'

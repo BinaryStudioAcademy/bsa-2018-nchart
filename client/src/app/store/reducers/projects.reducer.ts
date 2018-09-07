@@ -51,10 +51,11 @@ const byId = (
 				...state,
 				[action.payload.project.id]: action.payload.project
 			};
+			// todo: change only name prop
 		case constants.UPDATE_PROJECT_NAME__COMPLETE:
 			return {
 				...state,
-				[action.payload.id]: action.payload
+				[action.payload.id]: {...action.payload}
 			};
 		case constants.LOAD_ONE_PROJECT__COMPLETE:
 			return {

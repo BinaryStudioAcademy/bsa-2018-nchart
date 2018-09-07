@@ -1,8 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import {
-	requiredValidator
-} from '@app/shared/components/form-field/form-validators';
+import { requiredValidator } from '@app/shared/components/form-field/form-validators';
 import * as projectActions from '@app/store/actions/projects/projects.actions';
 import { StoreService } from '@app/services/store.service';
 
@@ -33,15 +31,17 @@ export class DialogRenameComponent implements OnInit {
 
 	ngOnInit() {
 		this.formGroup = new FormGroup({
-			name: new FormControl('', [requiredValidator()]),
+			name: new FormControl('', [requiredValidator()])
 		});
 	}
 
 	rename(value) {
-		this.storeService.dispatch(new projectActions.UpdateProjectName({
-			id:this.projectId,
-			name:value.name
-		}));
+		this.storeService.dispatch(
+			new projectActions.UpdateProjectName({
+				id: this.projectId,
+				name: value.name
+			})
+		);
 		this.formGroup.reset();
 		this.formGroup.setValue({
 			name: null

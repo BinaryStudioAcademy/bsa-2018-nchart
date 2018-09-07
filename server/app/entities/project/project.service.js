@@ -74,7 +74,7 @@ class ProjectService {
 								projectId: payload.project.id,
 								accessLevelId: 1
 							})
-							// todo: error handler if groupProject  already exists
+								// todo: error handler if groupProject  already exists
 								.then(() => {
 									callback(null, payload);
 								})
@@ -385,7 +385,7 @@ class ProjectService {
 				const projects = [];
 				data.forEach(el => {
 					el.group.groupProjects.forEach(pj => {
-						const user = pj.project.groupProjects[0].group.groupUsers[0].user
+						const user =							pj.project.groupProjects[0].group.groupUsers[0].user
 							.dataValues;
 						const userCharts = [];
 						// pj.project.projectCharts[0].chart.chartType.name
@@ -422,7 +422,7 @@ class ProjectService {
 				const projects = [];
 				data.forEach(el => {
 					el.group.groupProjects.forEach(pj => {
-						const user = pj.project.groupProjects[0].group.groupUsers[0].user
+						const user =							pj.project.groupProjects[0].group.groupUsers[0].user
 							.dataValues;
 						const userCharts = [];
 						// pj.project.projectCharts[0].chart.chartType.name
@@ -444,7 +444,11 @@ class ProjectService {
 						});
 					});
 				});
-				return ProjectService.pagination(params.page, params.limit, projects);
+				return ProjectService.pagination(
+					params.page,
+					params.limit,
+					projects
+				);
 				// todo: uncomment to test
 				// return projects;
 			})
@@ -475,9 +479,9 @@ class ProjectService {
 		}
 		return {
 			projects: payload,
-            pageCount: numberOfPages,
+			pageCount: numberOfPages,
 			page: userPage,
-            totalRecords: projects.length,
+			totalRecords: projects.length,
 			rows: pageLimit
 		};
 	}
@@ -537,19 +541,17 @@ class ProjectService {
 	}
 
 	updateProjectName(obj) {
-		return this.ProjectRepository.updateProjectName(
-			obj.id,
-			obj.name
-		).then(data=>{
-			if(data[0]===1){
-				return {
-                    id: obj.id,
-                    name: obj.name
+		return this.ProjectRepository.updateProjectName(obj.id, obj.name).then(
+			data => {
+				if (data[0] === 1) {
+					return {
+						id: obj.id,
+						name: obj.name
+					};
 				}
-			} else {
 				throw new Error('Object did not exist');
 			}
-		})
+		);
 	}
 
 	export(id, type, selector) {
