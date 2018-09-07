@@ -74,7 +74,7 @@ class ProjectService {
 								projectId: payload.project.id,
 								accessLevelId: 1
 							})
-								// todo: error handler if groupProject  already exists
+							// todo: error handler if groupProject  already exists
 								.then(() => {
 									callback(null, payload);
 								})
@@ -385,7 +385,7 @@ class ProjectService {
 				const projects = [];
 				data.forEach(el => {
 					el.group.groupProjects.forEach(pj => {
-						const user =							pj.project.groupProjects[0].group.groupUsers[0].user
+						const user = pj.project.groupProjects[0].group.groupUsers[0].user
 							.dataValues;
 						const userCharts = [];
 						// pj.project.projectCharts[0].chart.chartType.name
@@ -422,7 +422,7 @@ class ProjectService {
 				const projects = [];
 				data.forEach(el => {
 					el.group.groupProjects.forEach(pj => {
-						const user =							pj.project.groupProjects[0].group.groupUsers[0].user
+						const user = pj.project.groupProjects[0].group.groupUsers[0].user
 							.dataValues;
 						const userCharts = [];
 						// pj.project.projectCharts[0].chart.chartType.name
@@ -444,24 +444,29 @@ class ProjectService {
 						});
 					});
 				});
-				return ProjectService.pagination(params.page, projects);
+				return ProjectService.pagination(params.page, params.limit, projects);
 				// todo: uncomment to test
 				// return projects;
 			})
 			.catch(err => err);
 	}
 
-	static pagination(page, projects) {
-		let userPage = page;
-		const pageLimit = 10;
-		const numberOfPages = Math.floor(projects.length / pageLimit);
+	static pagination(page, limit, projects) {
+		let pageLimit;
+		if (limit) {
+			pageLimit = Number(limit);
+		} else {
+			pageLimit = 10;
+		}
+		let userPage = Number(page);
+		const numberOfPages = Math.ceil(projects.length / pageLimit);
 		let payload;
 		if (userPage === 1) {
 			payload = projects.slice(0, userPage * pageLimit);
 		} else {
 			payload = projects.slice(
-				userPage * pageLimit,
-				userPage * pageLimit + pageLimit
+				(userPage - 1) * pageLimit,
+				(userPage - 1) * pageLimit + pageLimit
 			);
 		}
 		if (payload.length === 0) {
