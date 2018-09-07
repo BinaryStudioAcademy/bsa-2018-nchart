@@ -165,7 +165,7 @@ export class UpdateProjectNameComplete extends AppAction<{
 	id: SchemeID;
 	name: string;
 }> {
-	readonly type = ProjectsActionConstants.UPDATE_PROJECT__COMPLETE;
+	readonly type = ProjectsActionConstants.UPDATE_PROJECT_NAME__COMPLETE;
 }
 
 export class UpdateProjectNameFailed extends FailedAction {

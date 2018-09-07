@@ -51,6 +51,11 @@ const byId = (
 				...state,
 				[action.payload.project.id]: action.payload.project
 			};
+		case constants.UPDATE_PROJECT_NAME__COMPLETE:
+			return {
+				...state,
+				[action.payload.id]: action.payload
+			};
 		case constants.LOAD_ONE_PROJECT__COMPLETE:
 			return {
 				...state,

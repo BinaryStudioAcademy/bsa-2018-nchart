@@ -38,7 +38,10 @@ export class DialogRenameComponent implements OnInit {
 	}
 
 	rename(value) {
-		this.storeService.dispatch(new projectActions.UpdateProjectName({id:this.projectId,name:value.name}));
+		this.storeService.dispatch(new projectActions.UpdateProjectName({
+			id:this.projectId,
+			name:value.name
+		}));
 		this.formGroup.reset();
 		this.formGroup.setValue({
 			name: null
