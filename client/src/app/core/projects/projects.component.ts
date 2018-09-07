@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { projects as projectsSelector } from '@app/store/selectors/projects.selectors.ts';
+import {
+	projects as projectsSelector,
+	projectsPagination as projectsPaginationSelector
+} from '@app/store/selectors/projects.selectors.ts';
 import { StoreService } from '@app/services/store.service';
 import * as projectActions from '@app/store/actions/projects/projects.actions';
 import { Observable } from 'rxjs';
@@ -17,6 +20,7 @@ import { OptionalType } from '@app/models';
 })
 export class ProjectsComponent implements OnInit {
 	projects$: Observable<any>;
+	pagination$: Observable<any>;
 	filterParams: ProjectsFilter = {
 		page: 1,
 		search: ''
@@ -51,6 +55,9 @@ export class ProjectsComponent implements OnInit {
 		});
 		this.projects$ = this.storeService.createSubscription(
 			projectsSelector()
+		);
+		this.pagination$ = this.storeService.createSubscription(
+			projectsPaginationSelector()
 		);
 		/* // test
 		// this.storeService.dispatch(new projectActions.LoadProjetcsInfo({page:1,name:'group'}));
@@ -88,5 +95,9 @@ export class ProjectsComponent implements OnInit {
 
 	getProjects() {
 		return this.projects$;
+	}
+
+	getPagination(){
+		return this.pagination$;
 	}
 }

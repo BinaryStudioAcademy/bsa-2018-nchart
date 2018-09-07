@@ -25,6 +25,8 @@
 	</ng-container>
 </div>
 <app-paginator
+	*ngIf="getPagination() | async as pagination"
+	[pagination]="pagination"
 	[page]="filterParams.page"
 	(onpagination)="onNewPage($event)"
 ></app-paginator>

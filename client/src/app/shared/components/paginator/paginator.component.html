@@ -1,7 +1,7 @@
 <p-paginator
-	[rows]="rows"
+	[rows]="pagination.rows"
 	[first]="(page - 1) * rows"
-	[totalRecords]="100"
+	[totalRecords]="pagination.totalRecords"
 	(onPageChange)="paginate($event)"
 >
 </p-paginator>
