@@ -475,9 +475,10 @@ class ProjectService {
 		}
 		return {
 			projects: payload,
-			numberOfPages,
+            pageCount: numberOfPages,
 			page: userPage,
-			totalRecords: projects.length
+            totalRecords: projects.length,
+			rows: pageLimit
 		};
 	}
 
