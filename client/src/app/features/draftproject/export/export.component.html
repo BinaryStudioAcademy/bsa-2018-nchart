@@ -3,17 +3,21 @@
 	<div class="export-data-tabs-wrap">
 		<p-tabView 	activeIndex="0" (onChange)="onTabChange($event)">
 			<p-tabPanel header="Download">
-				<app-input-text		
-					[control]="controlName"
-					placeholder="File name"
-					[showStates]="true"
-					label="Enter file name"
-				></app-input-text>
-				<app-dropdown-simple 	
-					[options]="options"
-					[control]="controlType"
-					label="Select file type"
-				></app-dropdown-simple>
+				<div class='export-elem-align'>
+					<app-input-text		
+						[control]="controlName"
+						placeholder="File name"
+						[showStates]="true"
+						label="Enter file name"
+						style="flex: 1 50%; padding: 5px;"
+					></app-input-text>
+					<app-dropdown-simple 	
+						[options]="options"
+						[control]="controlType"
+						label="Select file type"
+						style="flex: 1 50%; padding: 5px;"
+					></app-dropdown-simple>
+				</div>
 				<app-button 
 					(onclick)="exportData()"
 					label="Download"
@@ -24,17 +28,17 @@
 			</p-tabPanel>
 
 			<p-tabPanel header="Embed">
-				<!-- TODO make changes dynamic-->
+				<div>
+					<div style="float:left;">Copy the snippet below into your HTML code to embed the visualization</div>
+					<app-button type="icon" icon="fas fa-paste" class="paste-icon" tooltip="Copy SVG code"
+					tooltipPosition="top" (onclick)="copyToClipBoard()"></app-button>
+				</div>
 				<app-input-textarea 
 				class="load-data-paste"
 				rows="8" 
 				autoResize="autoResize"
 				[control]='svgFormControl'>
 				</app-input-textarea>
-				<div>
-					<span>Copy the snippet above into your HTML code to embed the visualization</span>
-					<i class="fas fa-paste paste-icon" (click)="copyToClipBoard()"></i>
-				</div>
 			</p-tabPanel>
 
 		</p-tabView>
