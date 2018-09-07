@@ -3,7 +3,8 @@ import { StoreService } from '@app/services/store.service';
 import { ChangeCustomSettings } from '@app/store/actions/charts/charts.actions';
 @Component({
 	selector: 'app-pie-chart-customize',
-	templateUrl: './pie-chart-customize.component.html'
+	templateUrl: './pie-chart-customize.component.html',
+	styleUrls: ['./pie-chart-customize.component.sass']
 })
 export class PieChartCustomizeComponent implements OnChanges {
 	@Input()

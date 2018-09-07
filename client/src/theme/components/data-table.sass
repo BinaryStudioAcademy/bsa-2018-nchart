@@ -72,6 +72,8 @@
 	width: 100%!important
 	height: 100%!important
 	border-radius: 0
+	.data-table .ui-table
+		margin-top: 5px
 	.custom-chart-container[_ngcontent-c9]
 		margin: 0
 		padding: 0
@@ -115,6 +117,7 @@
 		border: none
 		color: $secondaryTextColor
 		font-weight: 400
+		padding: 0.2rem 1rem
 	tr
 		height: 20px
 		border-bottom: 2px solid $disabledColor
@@ -129,6 +132,7 @@
 		border: none
 		background-color: $stateDefaultBgColor
 		text-align: center
+		white-space: pre
 		padding: 0
 		&.ui-editable-column
 			padding: 0
@@ -157,7 +161,8 @@
 			display: inline-block
 			overflow: hidden
 			text-overflow: clip
-			// max-width: 90%
+			white-space: pre
+			max-width: 100%
 	.ui-checkbox-wrp
 		padding: 0
 	.header-cell.number-cell,
