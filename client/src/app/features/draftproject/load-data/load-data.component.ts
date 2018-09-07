@@ -24,6 +24,7 @@ import {
 })
 export class LoadDataComponent implements OnInit {
 	isLoading = false;
+	isSamplesExist: boolean;
 
 	activeTab: number;
 	datasetSamples: any;
@@ -54,6 +55,7 @@ export class LoadDataComponent implements OnInit {
 			{
 				subscriber: preloadSamples => {
 					this.datasetSamples = preloadSamples;
+					this.isSamplesExist = this.datasetSamples.length > 0;
 				},
 				selector: datasetPreloadSamples()
 			}
