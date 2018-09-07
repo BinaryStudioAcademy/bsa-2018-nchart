@@ -538,9 +538,18 @@ class ProjectService {
 
 	updateProjectName(obj) {
 		return this.ProjectRepository.updateProjectName(
-			obj.projectId,
+			obj.id,
 			obj.name
-		);
+		).then(data=>{
+			if(data[0]===1){
+				return {
+                    id: obj.id,
+                    name: obj.name
+				}
+			} else {
+				throw new Error('Object did not exist');
+			}
+		})
 	}
 
 	export(id, type, selector) {

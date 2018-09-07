@@ -9,12 +9,16 @@ import * as moment from 'moment';
 export class CardComponent implements OnInit {
 	display = false;
 	displayDelete = false;
+	displayRename = false;
 	date: string;
 	status: string;
 
 	itemsObjs = [
 		{
-			label: 'Rename'
+			label: 'Rename',
+			command: ()=>{
+				this.renameDialog();
+			}
 			// icon: 'fa fa-plus'
 		},
 		{
@@ -76,6 +80,10 @@ export class CardComponent implements OnInit {
 
 	deleteDialog() {
 		this.displayDelete = true;
+	}
+
+	renameDialog() {
+		this.displayRename = true;
 	}
 
 	shareDialog() {

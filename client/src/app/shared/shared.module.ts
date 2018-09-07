@@ -14,6 +14,7 @@ import { DeleteDialogComponent } from '@app/shared/deleteDialog/delete-dialog.co
 import { TableComponent } from '@app/shared/components/table/table.component';
 import { PopupMenuComponent } from '@app/shared/components/button/popup-menu/popup-menu.component';
 import { PaginatorComponent } from '@app/shared/components/paginator/paginator.component';
+import {DialogRenameComponent} from "@app/shared/components/dialog-rename/dialog-rename.component";
 
 @NgModule({
 	imports: [
@@ -37,7 +38,8 @@ import { PaginatorComponent } from '@app/shared/components/paginator/paginator.c
 		DeleteDialogComponent,
 		TableComponent,
 		PopupMenuComponent,
-		PaginatorComponent
+		PaginatorComponent,
+		DialogRenameComponent
 	],
 	declarations: [
 		ActionButtonComponent,
@@ -49,7 +51,8 @@ import { PaginatorComponent } from '@app/shared/components/paginator/paginator.c
 		DeleteDialogComponent,
 		TableComponent,
 		PopupMenuComponent,
-		PaginatorComponent
+		PaginatorComponent,
+		DialogRenameComponent
 	]
 })
 export class SharedModule {}

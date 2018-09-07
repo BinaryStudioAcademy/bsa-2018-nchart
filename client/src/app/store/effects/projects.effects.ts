@@ -314,4 +314,31 @@ export class ProjectsEffects {
 			)
 		)
 	);
+
+	@Effect()
+	updateName = this.action$.pipe(
+		ofType(ProjectsActionConstants.UPDATE_PROJECT_NAME),
+		switchMap((action: projectActions.UpdateProjectName) =>
+			this.projectDomainService.updateName(action.payload).pipe(
+				map(value => {
+					if (value.isSuccess) {
+						return new projectActions.UpdateProjectNameComplete({
+							id: action.payload.id,
+							name: action.payload.name
+						});
+					}
+					return throwError(new Error('Cant rename project'));
+				}),
+				catchError(error => {
+					return of(
+						new projectActions.UpdateProjectNameFailed({
+							action: action,
+							msg: 'test',
+							error: error
+						})
+					);
+				})
+			)
+		)
+	);
 }

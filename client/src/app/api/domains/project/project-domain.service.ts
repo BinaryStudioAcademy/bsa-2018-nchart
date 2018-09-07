@@ -72,7 +72,7 @@ export class ProjectDomainService implements ProjectDomain {
 		return this.httpService.makeRequest<ResponseScheme<any>>(
 			new ServiceRequest(
 				RequestType.POST,
-				`/${this.projectPath}/name`,
+				`${this.projectPath}/name`,
 				null,
 				payload
 			)
