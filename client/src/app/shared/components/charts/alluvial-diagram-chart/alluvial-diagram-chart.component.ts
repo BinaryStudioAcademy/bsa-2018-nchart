@@ -1,6 +1,7 @@
 import { Component, Input, ElementRef, ViewChild, OnInit } from '@angular/core';
 import * as d3 from 'd3';
 import * as d3Sankey from 'd3-sankey';
+import { CustomizeOption } from '@app/models/chart.model';
 interface SNodeExtra {
 	nodeId: number;
 	name: string;
@@ -18,6 +19,14 @@ interface DataType {
 	links: SLink[];
 }
 
+interface Settings<T> {
+	width: T;
+	height: T;
+	nodeWidth: T;
+	nodePadding: T;
+	linksOpacity: T;
+}
+
 @Component({
 	selector: 'app-alluvial-diagram-chart ',
 	templateUrl: './alluvial-diagram-chart.component.html'
@@ -25,9 +34,20 @@ interface DataType {
 export class AlluvialDiagramChartComponent implements OnInit {
 	@Input()
 	// data: DataType[];
+	@Input()
+	settings: Settings<CustomizeOption>;
 	@ViewChild('chart')
 	chart: ElementRef;
 
+	getSettingsValue(settings: Settings<CustomizeOption>): Settings<any> {
+		return Object.keys(settings).reduce(
+			(acc, v) => {
+				acc[v] = settings[v].value;
+				return acc;
+			},
+			{} as Settings<any>
+		);
+	}
 	margin = { top: 50, right: 10, bottom: 10, left: 20 };
 
 	ngOnInit() {
@@ -48,14 +68,20 @@ export class AlluvialDiagramChartComponent implements OnInit {
 				{ source: 2, target: 4, value: 1 }
 			]
 		};
-
-		const width = 700 - this.margin.left - this.margin.right;
-		const height = 350 - this.margin.top - this.margin.bottom;
-		const nodeWidth = 10;
-		const nodePadding = 10;
-		const linksOpacity = 0.3;
+		let {
+			width,
+			height,
+			nodeWidth,
+			nodePadding,
+			linksOpacity
+		} = this.getSettingsValue(this.settings);
+		width = 700 - this.margin.left - this.margin.right;
+		height = 350 - this.margin.top - this.margin.bottom;
+		nodeWidth = 10;
+		nodePadding = 10;
+		linksOpacity = 0.3;
 		const svg = d3
-			.select('.alluvial-diagram-chart')
+			.selectAll('.alluvial-diagram-chart')
 			.append('svg')
 			.attr('width', width + this.margin.left + this.margin.right)
 			.attr('height', height + this.margin.top + this.margin.bottom)
@@ -106,9 +132,7 @@ export class AlluvialDiagramChartComponent implements OnInit {
 			});
 
 		link.append('title').text(function(d: any) {
-			return (
-				d.source.name + ' → ' + d.target.name + '\n' + format(d.value)
-			);
+			return d.source.name + ' → ' + d.target.name;
 		});
 
 		node = node

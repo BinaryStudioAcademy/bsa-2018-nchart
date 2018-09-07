@@ -9,16 +9,18 @@ import { PieChartCustomizeComponent } from '@app/shared/components/charts/pie-ch
 import { ScatterplotChartComponent } from '@app/shared/components/charts/scatterplot-chart/scatterplot-chart.component';
 import { ScatterplotChartCustomizeComponent } from '@app/shared/components/charts/scatterplot-chart/scatterplot-chart-customize';
 import { AlluvialDiagramChartComponent } from '@app/shared/components/charts/alluvial-diagram-chart/alluvial-diagram-chart.component';
+import { AlluvialDiagramChartCustomizeComponent } from '@app/shared/components/charts/alluvial-diagram-chart/alluvial-diagram-chart-customize';
 
 const chartComponents = [
 	TestChartComponent,
 	BarChartComponent,
 	PieChartComponent,
 	ScatterplotChartComponent,
+	AlluvialDiagramChartComponent,
 	BarChartCustomizeComponent,
 	PieChartCustomizeComponent,
 	ScatterplotChartCustomizeComponent,
-	AlluvialDiagramChartComponent
+	AlluvialDiagramChartCustomizeComponent
 ];
 
 @NgModule({
