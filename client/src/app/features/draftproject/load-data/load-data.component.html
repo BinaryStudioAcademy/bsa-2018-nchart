@@ -52,7 +52,7 @@
 				</div>
 			</p-tabPanel>
 
-			<p-tabPanel header="Samples" *ngIf="isSamplesExist">
+			<p-tabPanel header="Samples" *ngIf="isSamplesExist()">
 				<div class="ui-g">
 					<app-button
 						*ngFor = "let sample of datasetSamples"
