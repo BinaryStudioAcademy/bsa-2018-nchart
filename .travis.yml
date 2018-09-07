@@ -30,11 +30,11 @@ jobs:
 
 branches:
     only:
-        - develop
+        - master
 
 deploy:
     - provider: script
       script: bash ./deploy.sh
       skip_cleanup: true
       on:
-          branch: develop
+          branch: master
