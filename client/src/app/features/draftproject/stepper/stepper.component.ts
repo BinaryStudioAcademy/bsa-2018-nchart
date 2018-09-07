@@ -2,7 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { StoreService } from '@app/services/store.service';
 import { isProjectDataset } from '@app/store/selectors/projects.selectors';
 import { hasChartDataset, isRequiredDimensionMatched } from '@app/store/selectors/userCharts';
-import { trigger, style, animate, transition } from '@angular/animations';
 import { SchemeID } from '@app/models/normalizr.model';
 import { activeProjectId } from '../../../store/selectors/projects.selectors';
 import { SaveProject } from '../../../store/actions/projects/projects.actions';
@@ -52,18 +51,7 @@ interface StepperStep {
 @Component({
 	selector: 'app-stepper',
 	templateUrl: './stepper.component.html',
-	styleUrls: ['./stepper.component.sass'],
-	animations: [
-		trigger('toggleStepper', [
-			transition('void => *', [
-				style({ transform: 'translateX(-100%)' }),
-				animate('.3s ease-out')
-			]),
-			transition('* => void', [
-				animate(200, style({ transform: 'translateX(-100%)' }))
-			])
-		])
-	]
+	styleUrls: ['./stepper.component.sass']
 })
 export class StepperComponent implements OnInit {
 	@Input()
