@@ -18,20 +18,22 @@ export class CardComponent implements OnInit {
 			label: 'Rename',
 			command: () => {
 				this.renameDialog();
-			}
-			// icon: 'fa fa-plus'
+			},
+			icon: 'fa fa-edit'
 		},
 		{
 			label: 'Delete',
 			command: () => {
 				this.deleteDialog();
-			}
+			},
+			icon: 'fa fa-trash'
 		},
 		{
 			label: 'Share',
 			command: () => {
 				this.shareDialog();
-			}
+			},
+			icon: 'fa fa-share'
 		}
 	];
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import {
 	projects as projectsSelector,
 	projectsPagination as projectsPaginationSelector
@@ -19,7 +19,7 @@ import { OptionalType } from '@app/models';
 	templateUrl: './projects.component.html',
 	styleUrls: ['./projects.component.sass']
 })
-export class ProjectsComponent implements OnInit {
+export class ProjectsComponent implements OnInit, AfterViewInit {
 	searchLabel = 'Project name';
 	projects$: Observable<any>;
 	pagination$: Observable<any>;
@@ -110,5 +110,13 @@ export class ProjectsComponent implements OnInit {
 
 	getLoadingStatus(){
 		return this.isLoading$;
+	}
+
+	ngAfterViewInit(){
+		const paginatorControl = document.getElementsByClassName("ui-paginator-icon");
+		paginatorControl[0]
+			.setAttribute('class', 'ui-paginator-icon fa fa-backward');
+		paginatorControl[3]
+			.setAttribute('class', 'ui-paginator-icon fa fa-forward');
 	}
 }
