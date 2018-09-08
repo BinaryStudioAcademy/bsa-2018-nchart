@@ -27,6 +27,10 @@ export class DialogRenameComponent implements OnInit {
 
 	close() {
 		this.displayRenameChange.emit(false);
+		this.formGroup.reset();
+		this.formGroup.setValue({
+			name: null
+		});
 	}
 
 	ngOnInit() {
@@ -43,9 +47,6 @@ export class DialogRenameComponent implements OnInit {
 			})
 		);
 		this.formGroup.reset();
-		this.formGroup.setValue({
-			name: null
-		});
 		this.displayRenameChange.emit(false);
 	}
 }

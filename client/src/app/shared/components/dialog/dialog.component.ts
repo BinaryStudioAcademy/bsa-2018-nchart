@@ -30,6 +30,12 @@ export class DialogComponent implements OnInit {
 
 	close() {
 		this.displayChange.emit(false);
+		this.formGroup.reset();
+		this.formGroup.setValue({
+			projectId: this.projectId,
+			email: null,
+			accessLevelId: '3'
+		});
 	}
 
 	ngOnInit() {
