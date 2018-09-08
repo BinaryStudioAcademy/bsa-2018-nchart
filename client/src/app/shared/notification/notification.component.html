@@ -1,4 +1,6 @@
 <div id="notificationBarBottom" *ngIf="isOpen" [class]="type">
-  <span (click)="closeNotification()"><i class="fas fa-times"></i></span>
+  <span class="close" (click)="closeNotification()">
+    <i class="fas fa-times"></i>
+  </span>
   <div class="msg">{{msg}}</div>
 </div>
