@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
-import { map, switchMap, mergeMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { denormalize, normalize } from 'normalizr';
@@ -18,22 +18,19 @@ import {
 	userChart
 } from '@app/store/selectors/userCharts';
 import {
-	RemoveChartProject,
-	RemoveChartProjectComplete,
+	RemoveChartProject, RemoveChartProjectComplete,
 	RemoveDatasetProject,
 	SaveProjectComplete,
 	UpdateProjectComplete
 } from '@app/store/actions/projects/projects.actions';
 import { concat, throwError } from 'rxjs';
 import { SaveProjectFailed } from '@app/store/actions/projects/projects.actions';
-import { concatMap, filter, withLatestFrom } from 'rxjs/internal/operators';
+import {concatMap, filter, withLatestFrom} from 'rxjs/internal/operators';
 import { Go } from '@app/store/actions/router/router.actions';
 import { AppState } from '@app/models/store.model';
-import {
-	activeProjectId,
-	getAmountUserCharts
-} from '@app/store/selectors/projects.selectors';
-import { CreateChart } from '@app/store/actions/charts/charts.actions';
+import {activeProjectId, getAmountUserCharts} from '@app/store/selectors/projects.selectors';
+import {CreateChart} from '@app/store/actions/charts/charts.actions';
+import {getRouterQueryParams} from '@app/store/selectors/router.selectors';
 
 @Injectable()
 export class ProjectsEffects {
@@ -83,14 +80,14 @@ export class ProjectsEffects {
 		ofType(ProjectsActionConstants.CREATE_DRAFT_PROJECT),
 		switchMap((action: projectActions.CreateDraftProject) =>
 			this.projectService.createDraftProject().pipe(
-				concatMap(project => {
-					return [
-						new projectActions.CreateDraftProjectComplete({
-							project
-						}),
-						new CreateChart({ datatsetId: null })
-					];
-				}),
+				concatMap(
+					project => {
+					return	[
+							new projectActions.CreateDraftProjectComplete({project}),
+							new CreateChart({ datatsetId: null })
+						];
+					}
+				),
 				catchError(error =>
 					of(new projectActions.CreateDraftProjectFailed())
 				)
@@ -122,15 +119,13 @@ export class ProjectsEffects {
 	@Effect()
 	removeChart$ = this.action$.pipe(
 		ofType(ProjectsActionConstants.REMOVE_CHART_PROJECT),
-		withLatestFrom(
-			this.storeService.createSubscription(getAmountUserCharts())
-		),
+		withLatestFrom(this.storeService.createSubscription(getAmountUserCharts())),
 		filter(([action, counts]) => counts > 1),
 		withLatestFrom(this.storeService.createSubscription()),
 		map(([[action], state]) => {
 			const chartId = (action as RemoveChartProject).payload.chartId;
 			const projectId = activeProjectId()(state);
-			return new RemoveChartProjectComplete({ chartId, projectId });
+			return new RemoveChartProjectComplete({chartId, projectId});
 		})
 	);
 
@@ -204,8 +199,17 @@ export class ProjectsEffects {
 			};
 
 			return this.projectDomainService.save({ project }).pipe(
-				mergeMap(response => {
+				withLatestFrom(this.storeService.createSubscription(getRouterQueryParams())),
+				concatMap(([response, {redirect}]) => {
 					if (project.id) {
+						if (redirect) {
+							return [
+								new UpdateProjectComplete(),
+								new Go({
+									path: [`/app/project/${response.payload.id}`]
+								})
+							] as any;
+						}
 						return [new UpdateProjectComplete()] as any;
 					} else {
 						return [

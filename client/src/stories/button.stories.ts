@@ -15,6 +15,7 @@ import { ActionButtonComponent } from '../app/shared/components/button/action-bu
 import { LoadingSpinnerComponent } from '../app/shared/components/loading-spinner/loading-spinner.component';
 import { PopupMenuComponent } from '../app/shared/components/button/popup-menu/popup-menu.component';
 import { TieredMenuModule } from 'primeng/tieredmenu';
+import { TooltipModule } from 'primeng/tooltip';
 
 export const control1 = new FormControl('', Validators.required);
 export const control2 = new FormControl('', [
@@ -33,7 +34,8 @@ storiesOf('Buttons', module)
 				RouterTestingModule,
 				BrowserAnimationsModule,
 				BrowserModule,
-				TieredMenuModule
+				TieredMenuModule,
+				TooltipModule
 			],
 			declarations: [
 				ButtonComponent,

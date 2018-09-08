@@ -2,8 +2,8 @@
     <app-spinner [label]="'Width'"(onchange)="change()" [control]="formGroup.controls.width" [min]="0" [step]="1"></app-spinner> 
     <app-spinner [label]="'Margin'"(onchange)="change()" [control]="formGroup.controls.margin" [min]="0" [step]="1"></app-spinner>
     <app-spinner [label]="'Radius'"(onchange)="change()" [control]="formGroup.controls.radius" [min]="0"  [step]="1"></app-spinner>
+    <app-dropdown-simple [control]="formGroup.controls.sortArcsBy" [options]="sortArcsBy" [label]="'Sort arcs by'" (change)="change()"></app-dropdown-simple>
+    <app-dropdown-simple [control]="formGroup.controls.sortChartsBy" [options]="sortChartsBy" [label]="'Sort charts by'" (change)="change()"></app-dropdown-simple>
     <app-checkbox [label]="'Show values'" (change)="change()" [control]="formGroup.controls.showValues"></app-checkbox>
     <app-checkbox [label]="'Donut chart'" (change)="change()" [control]="formGroup.controls.isDonut"></app-checkbox>
-    <app-dropdown-simple [control]="formGroup.controls.sortArcsBy" [options]="sortArcsBy" [label]="'Sort arcs by'" (change)="change()"></app-dropdown-simple>
-    <app-dropdown-simple [control]="formGroup.controls.sortChartsBy" [options]="sortChartsBy" [label]="'Sort charts by'" (change)="change()" ></app-dropdown-simple>
 </form>

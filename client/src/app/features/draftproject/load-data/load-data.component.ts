@@ -26,7 +26,7 @@ export class LoadDataComponent implements OnInit {
 	isLoading = false;
 
 	activeTab: number;
-	datasetSamples: any;
+	datasetSamples: any[] = [];
 
 	pasteDataControl = new FormControl('', Validators.required);
 
@@ -71,6 +71,10 @@ export class LoadDataComponent implements OnInit {
 			const link = this.pasteUrlControl.value;
 			this.storeService.dispatch(new ParseByLink({ link }));
 		}
+	}
+
+	isSamplesExist() {
+		return this.datasetSamples.length > 0;
 	}
 
 	pasteData() {

@@ -32,6 +32,8 @@ export class TableComponent implements OnInit, OnChanges {
 	cellChange = new EventEmitter();
 	@Output()
 	headerChange = new EventEmitter();
+	@Input()
+	tableHeight: string;
 
 	ngOnInit() {}
 

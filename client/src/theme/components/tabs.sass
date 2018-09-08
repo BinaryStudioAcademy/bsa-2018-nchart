@@ -2,41 +2,49 @@
 @import ../colors
 
 .ui-tabview
-	background-color: $stateDefaultBgColor
-
+	background-color: transparent
+	padding-left: 0
+	padding-right: 0
+	padding-bottom: .6rem
 	&.ui-tabview-top>.ui-tabview-nav
-		padding: 0 0 18px 0
-
+		padding: 0
 	.ui-tabview-nav
 		border: none
-		background-color: $stateDefaultBgColor
+		background-color: transparent
 
 	.ui-tabview-nav li
 		margin-right: 24px
-		padding-bottom: 3px
+		padding-bottom: 10px
 
+		&:not(.ui-state-active):not(.ui-state-disabled):hover
+			background-color: transparent
+			border-bottom: 3px solid $baseColor
+		
 		&:last-child
 			margin-right: 0
 		& a
 			padding: 0
 
-		&.ui-state-active,
+		
 		&.ui-state-default
 			border: none
-			background-color: $stateDefaultBgColor
+			border-bottom: 3px solid transparent
+			background-color: transparent
+		&.ui-state-active
+			border-bottom: 3px solid $baseColor
 
 		.ui-tabview-title
-			border-bottom: 3px solid $stateDefaultBgColor
+			border-bottom: 3px solid transparent
 
 		&.ui-tabview-selected .ui-tabview-title
-			border-bottom-color: $baseColor
+			// border-bottom-color: $baseColor
 			font-weight: 600
 			cursor: pointer
 			padding: 0
 			padding-bottom: 5px
 
 		.ui-tabview-close
-			margin: 0 0 .6rem .2rem
+			margin: 0 0 .3rem .2rem
 			color: $secondaryTextColor
 			transition: .4s ease
 			&:hover
@@ -49,3 +57,4 @@
 
 	.ui-tabview-panel
 		padding: 0
+ 

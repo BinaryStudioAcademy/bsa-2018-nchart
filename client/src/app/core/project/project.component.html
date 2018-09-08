@@ -8,18 +8,13 @@
 	<app-project-name id="load" #viewItem [projectName]="projectName" (setProjectName)="changeProjectName($event)">
 	</app-project-name>
 	<div *ngIf="listPages.length">
+			<app-project-tabs
+				[listPages]="listPages"
+				[activeChartId]="activeChartId"
+				(displayModalDataset)="onDisplayModalDataset()">
+			</app-project-tabs>
 			
-			<p-tabView (onChange)="onChange($event)" [controlClose]="true" (onClose)="handleClose($event)">
-				
-				<p-tabPanel 
-				*ngFor="let pageId of listPages;let i = index"
-				header="Page {{i+1}}" 
-				[closable]="true"
-				>
-				</p-tabPanel>
-			</p-tabView>
-			<app-button label="New Page" (onclick)="displayModalDataset = true" size="small"></app-button>
-			
+
 	</div>
 		<app-load-data 	*ngIf="!(getIsActiveChartDataset() | async)"></app-load-data>
 		<app-data-table *ngIf="isDataset()" id="table" #viewItem></app-data-table>

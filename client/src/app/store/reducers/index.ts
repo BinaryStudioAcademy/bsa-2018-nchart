@@ -41,7 +41,7 @@ import {
 	initialState as exportInitialState
 } from '@app/store/reducers/export.reducer';
 
-import { routerReducer, RouterStateSerializer } from '@ngrx/router-store';
+import {routerReducer, RouterStateSerializer} from '@ngrx/router-store';
 
 import { RouterStateSnapshot } from '@angular/router';
 
