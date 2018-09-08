@@ -10,6 +10,7 @@ export class AlluvialDiagramChartService {
 		private formService: FormService,
 		private formBuilder: FormBuilder
 	) {}
+
 	static arrayToObject(data: any[]) {
 		const dataObj = data.reduce((obj, item) => {
 			item.values.length
@@ -18,6 +19,16 @@ export class AlluvialDiagramChartService {
 			return obj;
 		}, {});
 		return dataObj;
+	}
+	static mapValues(original: any[], values: any[]) {
+		if (values.length) {
+			let j = 0;
+			for (let i = 0; i < original.length; i++) {
+				original[i].value = values[j];
+				j < values.length - 1 ? j++ : (j = 0);
+			}
+		}
+		return original;
 	}
 
 	getData(data: any) {
@@ -37,6 +48,9 @@ export class AlluvialDiagramChartService {
 					steps.push(node);
 				}
 			}
+		}
+		if (data.size.length) {
+			AlluvialDiagramChartService.mapValues(steps, data.size[0].values);
 		}
 		return steps;
 	}

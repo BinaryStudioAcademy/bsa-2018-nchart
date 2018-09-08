@@ -53,7 +53,7 @@ export class AlluvialDiagramChartComponent implements OnChanges {
 
 			const graph = { nodes: [], links: [] };
 
-			this.data.forEach(function(d) {
+			this.data.forEach(d => {
 				graph.nodes.push({ name: d.source });
 				graph.nodes.push({ name: d.target });
 				graph.links.push({
@@ -62,6 +62,8 @@ export class AlluvialDiagramChartComponent implements OnChanges {
 					value: d.value
 				});
 			});
+
+			graph.links = this.compressLinks(graph.links);
 			// return only the distinct / unique nodes
 			const nodesSet = new Set();
 			graph.nodes.forEach(element => {
@@ -72,7 +74,7 @@ export class AlluvialDiagramChartComponent implements OnChanges {
 				graph.nodes.push(element);
 			});
 			// loop through each link replacing the text with its index from node
-			graph.links.forEach(function(d, i) {
+			graph.links.forEach((d, i) => {
 				graph.links[i].source = graph.nodes.indexOf(
 					graph.links[i].source
 				);
@@ -83,7 +85,7 @@ export class AlluvialDiagramChartComponent implements OnChanges {
 
 			// now loop through each nodes to make nodes an array of objects
 			// rather than an array of strings
-			graph.nodes.forEach(function(d, i) {
+			graph.nodes.forEach((d, i) => {
 				graph.nodes[i] = {
 					nodeId: i,
 					name: d
@@ -106,7 +108,7 @@ export class AlluvialDiagramChartComponent implements OnChanges {
 				);
 
 			const formatNumber = d3.format(',.0f'),
-				format = function(d: any) {
+				format = (d: any) => {
 					return formatNumber(d);
 				},
 				color = d3.scaleOrdinal(d3.schemeCategory10);
@@ -138,14 +140,14 @@ export class AlluvialDiagramChartComponent implements OnChanges {
 				.enter()
 				.append('path')
 				.attr('d', d3Sankey.sankeyLinkHorizontal())
-				.attr('stroke', function(d: any) {
+				.attr('stroke', (d: any) => {
 					return color(d.source.name);
 				})
-				.attr('stroke-width', function(d: any) {
+				.attr('stroke-width', (d: any) => {
 					return Math.max(1, d.width);
 				});
 
-			link.append('title').text(function(d: any) {
+			link.append('title').text((d: any) => {
 				return d.source.name + ' → ' + d.target.name;
 			});
 
@@ -155,46 +157,81 @@ export class AlluvialDiagramChartComponent implements OnChanges {
 				.append('g');
 
 			node.append('rect')
-				.attr('x', function(d: any) {
+				.attr('x', (d: any) => {
 					return d.x0;
 				})
-				.attr('y', function(d: any) {
+				.attr('y', (d: any) => {
 					return d.y0;
 				})
-				.attr('height', function(d: any) {
+				.attr('height', (d: any) => {
 					return d.y1 - d.y0;
 				})
-				.attr('width', function(d: any) {
+				.attr('width', (d: any) => {
 					return d.x1 - d.x0;
 				})
-				.attr('fill', function(d: any) {
+				.attr('fill', (d: any) => {
 					return color(d.name);
 				})
 				.attr('stroke', '#000');
 
 			node.append('text')
-				.attr('x', function(d: any) {
+				.attr('x', (d: any) => {
 					return d.x0 - 6;
 				})
-				.attr('y', function(d: any) {
+				.attr('y', (d: any) => {
 					return (d.y1 + d.y0) / 2;
 				})
 				.attr('dy', '0.35em')
 				.attr('text-anchor', 'end')
-				.text(function(d: any) {
+				.text((d: any) => {
 					return d.name;
 				})
-				.filter(function(d: any) {
+				.filter((d: any) => {
 					return d.x0 < width / 2;
 				})
-				.attr('x', function(d: any) {
+				.attr('x', (d: any) => {
 					return d.x1 + 6;
 				})
 				.attr('text-anchor', 'start');
 
-			node.append('title').text(function(d: any) {
+			node.append('title').text((d: any) => {
 				return d.name + '\n' + format(d.value);
 			});
 		}
+	}
+	compressLinks(original) {
+		const compressed = [];
+		const copy = original.slice(0);
+		for (let i = 0; i < original.length; i++) {
+			let myCount = 0;
+			for (let w = 0; w < copy.length; w++) {
+				if (
+					original[i].source === copy[w].source &&
+					original[i].target === copy[w].target
+				) {
+					myCount += copy[w].value;
+					const a = {
+						name: '',
+						value: 0,
+						group: '',
+						id: '',
+						color: ''
+					};
+					copy[w] = a;
+				}
+			}
+			if (myCount > 0) {
+				const a = {
+					source: '',
+					target: '',
+					value: 0
+				};
+				a.source = original[i].source;
+				a.target = original[i].target;
+				a.value = myCount;
+				compressed.push(a);
+			}
+		}
+		return compressed;
 	}
 }
