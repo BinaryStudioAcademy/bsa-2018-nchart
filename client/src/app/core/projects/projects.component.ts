@@ -6,7 +6,8 @@ import {
 import { isProjectsLoading } from '@app/store/selectors/projects.selectors';
 import { StoreService } from '@app/services/store.service';
 import * as projectActions from '@app/store/actions/projects/projects.actions';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { FormControl, FormGroup } from '@angular/forms';
 import { debounce, omitBy } from 'lodash';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -23,6 +24,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 	searchLabel = 'Project name';
 	projects$: Observable<any>;
 	pagination$: Observable<any>;
+	isProjectsReady: Observable<any>;
 	isLoading$: Observable<any>;
 	filterParams: ProjectsFilter = {
 		page: 1,
@@ -66,10 +68,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 		this.isLoading$ = this.storeService.createSubscription(
 			isProjectsLoading()
 		);
-		/* // test
-		// this.storeService.dispatch(new projectActions.LoadProjetcsInfo({page:1,name:'group'}));
-		this.storeService.dispatch(new projectActions.LoadProjetcsInfo({page: 1}));
-		*/
+
 		this.formGroup = new FormGroup({
 			name: new FormControl(search, [])
 		});
@@ -108,8 +107,14 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 		return this.pagination$;
 	}
 
-	getLoadingStatus(){
-		return this.isLoading$;
+	getProjectsReady(){
+		return combineLatest(this.projects$,this.isLoading$)
+			.pipe(
+				map(([projects,isLoading])=>{
+					console.log(projects, isLoading);
+					return true;
+				})
+			)
 	}
 
 	ngAfterViewInit(){

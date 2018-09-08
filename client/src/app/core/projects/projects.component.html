@@ -9,8 +9,11 @@
 </div>
 <div class="project-card-container">
 	<ng-container *ngIf="getProjects() | async as projects">
-		<div class="no-projects" *ngIf="projects.length === 0">
+		<div class="no-projects" *ngIf="getProjectsReady() | async">
 			U are бомж. Deal with it.
+		</div>
+		<div class="no-projects" *ngIf="isLoading">
+			Spinner
 		</div>
 		<div *ngFor="let project of projects" style="float: left;">
 			<app-card
