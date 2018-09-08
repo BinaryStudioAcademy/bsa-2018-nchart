@@ -3,6 +3,7 @@ import {
 	projects as projectsSelector,
 	projectsPagination as projectsPaginationSelector
 } from '@app/store/selectors/projects.selectors.ts';
+import { isProjectsLoading } from '@app/store/selectors/projects.selectors';
 import { StoreService } from '@app/services/store.service';
 import * as projectActions from '@app/store/actions/projects/projects.actions';
 import { Observable } from 'rxjs';
@@ -19,8 +20,10 @@ import { OptionalType } from '@app/models';
 	styleUrls: ['./projects.component.sass']
 })
 export class ProjectsComponent implements OnInit {
+	searchLabel = 'Project name';
 	projects$: Observable<any>;
 	pagination$: Observable<any>;
+	isLoading$: Observable<any>;
 	filterParams: ProjectsFilter = {
 		page: 1,
 		search: ''
@@ -58,6 +61,10 @@ export class ProjectsComponent implements OnInit {
 		);
 		this.pagination$ = this.storeService.createSubscription(
 			projectsPaginationSelector()
+		);
+
+		this.isLoading$ = this.storeService.createSubscription(
+			isProjectsLoading()
 		);
 		/* // test
 		// this.storeService.dispatch(new projectActions.LoadProjetcsInfo({page:1,name:'group'}));
@@ -99,5 +106,9 @@ export class ProjectsComponent implements OnInit {
 
 	getPagination(){
 		return this.pagination$;
+	}
+
+	getLoadingStatus(){
+		return this.isLoading$;
 	}
 }

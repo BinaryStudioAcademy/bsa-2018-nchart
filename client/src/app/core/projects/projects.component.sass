@@ -2,7 +2,7 @@
 @import ../../../theme/colors
 
 .project-card-container
-	margin-top: 10px
+	margin-top: 200px
 	margin-bottom: 60px
 	display: grid
 	grid-row-gap: 0
@@ -11,14 +11,25 @@
 	justify-content: center
 
 .search-projects
-	margin-top: 81px
+	margin-top: 80px
 	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)
 	padding-right: 22px
 	padding-left: 22px
 	background-color: $backgroundWhiteColor
+	height: 100px
+	z-index: 1000
+	position: fixed
+	top: 0
+	width: 100%
 
 .search-label
 	font-weight: 800
 	font-family: $fontFamily
 	font-size: 1.5rem
 	padding: 0 5px
+
+.no-projects
+	grid-column: 1/ span end
+	text-align: center
+	font-size: 50px
+	font-family: "Lato", "Trebuchet MS", Arial, Helvetica, sans-serif

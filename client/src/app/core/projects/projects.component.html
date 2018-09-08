@@ -1,6 +1,6 @@
 <div class="search-projects">
-	<span class="search-label">Project name</span>
 	<app-input-text
+		[label]="searchLabel"
 		class="ui-fluid"
 		type="text"
 		icon="fa fa-filter"
@@ -9,7 +9,7 @@
 </div>
 <div class="project-card-container">
 	<ng-container *ngIf="getProjects() | async as projects">
-		<div class="message" *ngIf="projects.length === 0">
+		<div class="no-projects" *ngIf="projects.length === 0">
 			U are бомж. Deal with it.
 		</div>
 		<div *ngFor="let project of projects" style="float: left;">
@@ -34,3 +34,9 @@
 	(onpagination)="onNewPage($event)"
 ></app-paginator>
 <!--[page]="filterParams.page"-->
+<!--<div class="pj-spinner"-->
+	 <!--*ngIf="getLoadingStatus() | async as isLoading"-->
+	 <!--style="margin-top: 200px"-->
+	 <!--[loading-sp]="isLoading"-->
+<!--&gt;-->
+<!--</div>-->
