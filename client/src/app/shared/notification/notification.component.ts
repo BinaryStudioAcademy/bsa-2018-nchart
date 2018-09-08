@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { StoreService } from '@app/services/store.service';
 import { notificationSelector } from '@app/store/selectors/notification.selector';
 import { NotificationDestroy } from '@app/store/actions/notification/notification.actions';
@@ -9,11 +9,8 @@ import { NotificationDestroy } from '@app/store/actions/notification/notificatio
 	styleUrls: ['./notification.component.sass']
 })
 export class NotificationComponent implements OnInit, OnDestroy {
-	@Input()
 	isOpen: boolean;
-	@Input()
 	type: string;
-	@Input()
 	msg: string;
 
 	disconnect: () => void;
