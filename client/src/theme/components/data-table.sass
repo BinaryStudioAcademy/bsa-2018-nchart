@@ -8,6 +8,21 @@
 	margin: 0 auto
 .ui-widget-overlay
 	background-color: $teriaryColor
+.ui-dialog.no-closable
+	background-color: $stateDefaultBgColor
+	&.ui-widget .ui-dialog-titlebar
+		padding: 0
+		padding-top: 1rem
+	&.ui-widget .ui-dialog-titlebar
+		.ui-dialog-title
+			font-size: 1.2rem
+			padding: 0 1rem
+	.ui-dialog-footer
+		padding-top: 0.5rem
+		.ui-widget.ui-button-default, .ui-button-default, .ui-widget.ui-button
+			margin: 0
+			margin-right: 5px
+			border: none
 .ui-dialog 
 	.close-icon
 		float: right

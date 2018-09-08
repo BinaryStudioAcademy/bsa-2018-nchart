@@ -33,7 +33,9 @@
 				  [minWidth]="200"
 				  [minY]="70"
 				  [draggable]="false"
-				  [baseZIndex]="10000">
+				  [baseZIndex]="10000"
+				  class="no-closable"
+		>
 			<span>
 				Are you sure that you want to leave page with unsaved project?
 			</span>
@@ -65,7 +67,9 @@
 				  [resizable]="false"
 				  [minY]="70"
 				  [draggable]="false"
-				  [baseZIndex]="10000">
+				  [baseZIndex]="10000"
+				  styleClass="no-closable"
+		>
 			<span>
 				Do you want use current dataset?
 			</span>
@@ -74,13 +78,13 @@
 					label="No"
 					class="dialog-button"
 					size="small"
-					type="secondary"
 					(onclick)="rejectDataset()"
 				></app-button>
 				<app-button
 					label="Yes"
 					class="dialog-button"
 					size="small"
+					type="secondary"
 					(onclick)="acceptDataset()"
 				></app-button>
 				

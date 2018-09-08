@@ -58,7 +58,8 @@ import { DialogModule } from 'primeng/dialog';
 		SpinnerModule,
 		CardModule,
 		TableModule,
-		TieredMenuModule
+		TieredMenuModule,
+		DialogModule
 	],
 	exports: [
 		ButtonModule,
