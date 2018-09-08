@@ -422,9 +422,8 @@ class ProjectService {
 				const projects = [];
 				data.forEach(el => {
 					el.group.groupProjects.forEach(pj => {
-						const user =
-							pj.project.groupProjects[0].group.groupUsers[0].user
-								.dataValues;
+						const user =							pj.project.groupProjects[0].group.groupUsers[0].user
+							.dataValues;
 						const userCharts = [];
 						// pj.project.projectCharts[0].chart.chartType.name
 						pj.project.projectCharts.forEach(projectChart => {
@@ -480,11 +479,11 @@ class ProjectService {
 		}
 		return {
 			projects: payload,
-			pagination:{
-                pageCount: numberOfPages,
-                page: userPage,
-                totalRecords: projects.length,
-                rows: pageLimit
+			pagination: {
+				pageCount: numberOfPages,
+				page: userPage,
+				totalRecords: projects.length,
+				rows: pageLimit
 			}
 		};
 	}

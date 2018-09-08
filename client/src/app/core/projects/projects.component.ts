@@ -14,6 +14,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import * as queryString from 'query-string';
 import { ProjectsFilter } from '@app/models/project.model';
 import { OptionalType } from '@app/models';
+import { PaginationData } from '@app/models/projects-store.model';
+import { user as userSelector } from '@app/store/selectors/user.selectors';
+import { User } from '@app/models/user.model';
 
 @Component({
 	selector: 'app-projects',
@@ -21,15 +24,16 @@ import { OptionalType } from '@app/models';
 	styleUrls: ['./projects.component.sass']
 })
 export class ProjectsComponent implements OnInit, AfterViewInit {
-	searchLabel = 'Project name';
-	projects$: Observable<any>;
-	pagination$: Observable<any>;
-	isProjectsReady: Observable<any>;
-	isLoading$: Observable<any>;
+	projects$: Observable<any[]>;
+	pagination$: Observable<PaginationData>;
+	isProjectsReady: Observable<boolean>;
+	isLoading$: Observable<boolean>;
 	filterParams: ProjectsFilter = {
 		page: 1,
 		search: ''
 	};
+	userEmail: string;
+	disconnectStore: () => void;
 
 	debouncedSearch: (params: OptionalType<ProjectsFilter>) => void;
 
@@ -76,6 +80,15 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 		this.formGroup.get('name').valueChanges.subscribe(value => {
 			this.debouncedSearch({ search: value, page: 1 });
 		});
+
+		this.disconnectStore = this.storeService.connect([
+			{
+				selector: userSelector(),
+				subscriber: (value: User) => {
+					this.userEmail = value && value.email;
+				}
+			}
+		]);
 	}
 
 	onNewPage(page) {
@@ -103,25 +116,27 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 		return this.projects$;
 	}
 
-	getPagination(){
+	getPagination() {
 		return this.pagination$;
 	}
 
-	getProjectsReady(){
-		return combineLatest(this.projects$,this.isLoading$)
-			.pipe(
-				map(([projects,isLoading])=>{
-					console.log(projects, isLoading);
-					return true;
-				})
-			)
+	getUserName(user: User) {
+		return user && user.email === this.userEmail ? 'me' : user && user.name;
 	}
 
-	ngAfterViewInit(){
-		const paginatorControl = document.getElementsByClassName("ui-paginator-icon");
+	isEmptyList$() {
+		return combineLatest(this.projects$, this.isLoading$).pipe(
+			map(([projects, isLoading]) => {
+				return !projects.length && !isLoading;
+			})
+		);
+	}
+
+	ngAfterViewInit() {
+		/* const paginatorControl = document.getElementsByClassName("ui-paginator-icon");
 		paginatorControl[0]
 			.setAttribute('class', 'ui-paginator-icon fa fa-backward');
 		paginatorControl[3]
-			.setAttribute('class', 'ui-paginator-icon fa fa-forward');
+			.setAttribute('class', 'ui-paginator-icon fa fa-forward'); */
 	}
 }

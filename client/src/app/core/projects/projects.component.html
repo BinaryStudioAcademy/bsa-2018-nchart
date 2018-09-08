@@ -1,45 +1,49 @@
-<div class="search-projects">
-	<app-input-text
-		[label]="searchLabel"
-		class="ui-fluid"
-		type="text"
-		icon="fa fa-filter"
-		[control]="formGroup.controls['name']">
-	</app-input-text>
+<div
+	class="projects-container"
+	spBackgroundColor="#f2f3f9"
+>
+	<div class="search-projects">
+		<h3>Projects</h3>
+		<app-input-text
+			class="ui-fluid"
+			placeholder="e.g. Super project"
+			type="text"
+			icon="fa fa-filter"
+			[control]="formGroup.controls['name']">
+		</app-input-text>
+	</div>
+	<div class="projects-content" [loading-sp]="isLoading$ | async">
+		<div class="empty-projects-list" *ngIf="isEmptyList$() | async">
+			<i class="far fa-sad-tear"></i>
+			<span>– Empty list</span>
+		</div>
+		<ng-container *ngIf="(getProjects() | async).length" >
+			<div
+				class="project-card-container"
+			>
+				<div *ngFor="let project of (getProjects() | async)">
+					<app-card
+						[projectId]="project?.id"
+						[projectName]="project?.name"
+						[companyName]="project?.companyName"
+						[groupName]="project.groupName"
+						[userName]="getUserName(project?.user)"
+						[email]="project.user?.email"
+						[accessLevelId]="project?.accessLevelId"
+						[userCharts]="project?.userCharts"
+						[updatedAt]="project?.updatedAt"
+					></app-card>
+				</div>
+			</div>
+			<div class="projects-pagination">
+				<app-paginator
+					*ngIf="getPagination() | async as pagination"
+					[page]="pagination.page"
+					[rows]="pagination.rows"
+					[totalRecords]="pagination.totalRecords"
+					(onpagination)="onNewPage($event)"
+				></app-paginator>
+			</div>
+		</ng-container>
+	</div>
 </div>
-<div class="project-card-container">
-	<ng-container *ngIf="getProjects() | async as projects">
-		<div class="no-projects" *ngIf="getProjectsReady() | async">
-			U are бомж. Deal with it.
-		</div>
-		<div class="no-projects" *ngIf="isLoading">
-			Spinner
-		</div>
-		<div *ngFor="let project of projects" style="float: left;">
-			<app-card
-				[projectId]="project?.id"
-				[projectName]="project?.name"
-				[companyName]="project?.companyName"
-				[groupName]="project.groupName"
-				[userName]="project.user?.name"
-				[email]="project.user?.email"
-				[accessLevelId]="project?.accessLevelId"
-				[userCharts]="project?.userCharts"
-				[updatedAt]="project?.updatedAt"
-			></app-card>
-		</div>
-	</ng-container>
-</div>
-<app-paginator
-	*ngIf="getPagination() | async as pagination"
-	[pagination]="pagination"
-	[page]="pagination.page"
-	(onpagination)="onNewPage($event)"
-></app-paginator>
-<!--[page]="filterParams.page"-->
-<!--<div class="pj-spinner"-->
-	 <!--*ngIf="getLoadingStatus() | async as isLoading"-->
-	 <!--style="margin-top: 200px"-->
-	 <!--[loading-sp]="isLoading"-->
-<!--&gt;-->
-<!--</div>-->

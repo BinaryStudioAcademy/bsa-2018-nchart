@@ -1,14 +1,14 @@
 @import ../variables
 @import ../colors
 
+.ui-card-body
+	padding: 0
 .ui-card-content
 	box-sizing: content-box
 	background-color: $backgroundWhiteColor
-	width: 260px
-	padding: 20px
-	padding-top: 12px
-	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)
-		transition: 0.5s
+	padding: 1rem
+	box-shadow: -1px 1px 3px rgba(151, 155, 174, 0.2), 1px 1px 3px rgba(151, 155, 174, 0.2)
+	transition: 0.5s
 	font-family: $fontFamily !important
 	position: relative
 
@@ -41,10 +41,7 @@
 	.project-name
 		color: $activeColor
 		font-weight: 900
-		font-size: 1.2rem
-
-.ui-card-content:hover
-	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2)
+		font-size: 1.1rem
 
 
 .project-card-user
@@ -53,10 +50,10 @@
 .project-card-folder
 	margin: 0.5rem 0 0.5rem 0
 	display: flex
+	line-height: .9rem
 	align-items: center
 
 .card-user-name
-	//font-weight: 600
 	font-family: $fontFamily
 	font-size: 1rem
 	padding: 0 5px
@@ -103,16 +100,17 @@
 	border-radius: 0.4rem
 	background-color: #f1f1f1
 .bar-chart-tag
-	background-color: #6569DF
+	background-color: $statusActiveColor
 	color: white
 .scatterplot-tag
-	background-color: #FEC81E
+	background-color: $statusWarningColor
 	color: white
 .pie-chart-tag
-	background-color: #FD3258
+	background-color: $statusPendingColor
 	color: white
 
 .last-update
+	color: $secondaryTextColor
 	& span
 		padding: 0 5px
 //float: left
@@ -132,9 +130,6 @@
 .ui-card-content .pi-caret-down:before
 	content: "\e950" !important
 	font-weight: 900
-
-.last-update > b
-	color: #6569DF
 
 .ui-card-content ul
 	& a

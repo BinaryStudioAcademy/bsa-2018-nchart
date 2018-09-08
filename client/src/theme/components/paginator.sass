@@ -1,46 +1,34 @@
 @import ../colors
 @import ../variables
 
+.ui-paginator .ui-paginator-page,
+.ui-paginator .ui-paginator-next,
+.ui-paginator .ui-paginator-last,
+.ui-paginator .ui-paginator-first,
+.ui-paginator .ui-paginator-prev,
+	height: 2.5em
+	width: 2.5em
+	line-height: 2.35em
+	margin: 0 1px
+
+
 .ui-paginator-element
-	height: 2.5em !important
-	width: 2.5em !important
 	background-color: $backgroundWhiteColor
-	color: black !important
-	line-height: 2.35em !important
-	margin-left: 0 !important
-	margin-right: 0	!important
+	// color: $textColorDark !important
 	border: none !important
 	border-radius: 0
 
-.ui-dropdown .ui-dropdown-label
-	padding-left: 5px !important
-
-.ui-paginator-pages
-	margin-left: 0 !important
-	margin-right: 0	!important
+.ui-paginator .ui-paginator-pages
+	margin: 0
 
 .ui-paginator
 	display: flex
 	justify-content: center
 	background: none
-	margin-bottom: 20px
-	margin-top: 10px
-
-	position: fixed
-	bottom: 0
 	width: 100%
 
 .ui-paginator .ui-paginator-page.ui-state-active
-	color: white !important
 	background-color: $defaultButtonColor
-	//border: none
-	height: 2.35em !important
-	width: 2.35em !important
-	border: 1px solid #F2F2F9
-	//border-radius: 0
-
-.ui-paginator .ui-state-default
-	border: 1px solid #F2F2F9
 
 .ui-paginator-icon.fa.fa-forward, .ui-paginator-icon.fa.fa-backward
 	font-size: 12px
