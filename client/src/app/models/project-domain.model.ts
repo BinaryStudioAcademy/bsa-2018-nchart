@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import {OriginProject, ProjectPreview} from '@app/models/project.model';
+import { OriginProject, ProjectPreview } from '@app/models/project.model';
 import { ResponseScheme } from '@app/models/response-scheme.model';
 import { SchemeID } from '@app/models/normalizr.model';
 import { PaginationData } from '@app/models/projects-store.model';
@@ -30,7 +30,12 @@ export interface ProjectDomain {
 	getPartByUserId(payload: {
 		page: number;
 		name?: string;
-	}): Observable<ResponseScheme<{projects: ProjectPreview[], pagination: PaginationData}>>;
+	}): Observable<
+		ResponseScheme<{
+			projects: ProjectPreview[];
+			pagination: PaginationData;
+		}>
+	>;
 
 	getAll(): Observable<ResponseScheme<OriginProject[]>>;
 

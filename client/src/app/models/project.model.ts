@@ -45,18 +45,18 @@ export interface ProjectsFilter {
 	search?: string;
 }
 
-interface UserPreview{
+interface UserPreview {
 	name: string;
-	email:string;
+	email: string;
 }
 
-export interface ProjectPreview{
+export interface ProjectPreview {
 	id: SchemeID;
-	name: string,
-	updatedAt: string,
-	groupName: string,
-	companyName: string,
-	accessLevelId: SchemeID,
-	userCharts: string[],
-	user: UserPreview
+	name: string;
+	updatedAt: string;
+	groupName: string;
+	companyName: string;
+	accessLevelId: SchemeID;
+	userCharts: string[];
+	user: UserPreview;
 }
