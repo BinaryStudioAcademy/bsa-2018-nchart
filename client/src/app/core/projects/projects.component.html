@@ -1,6 +1,5 @@
 <div
 	class="projects-container"
-	spBackgroundColor="#f2f3f9"
 >
 	<div class="search-projects">
 		<h3>Projects</h3>
@@ -12,7 +11,11 @@
 			[control]="formGroup.controls['name']">
 		</app-input-text>
 	</div>
-	<div class="projects-content" [loading-sp]="isLoading$ | async">
+	<div 
+		class="projects-content"
+		[loading-sp]="isLoading$ | async"
+		spBackgroundColor="#f2f3f9"
+	>
 		<div class="empty-projects-list" *ngIf="isEmptyList$() | async">
 			<i class="far fa-sad-tear"></i>
 			<span>– Empty list</span>

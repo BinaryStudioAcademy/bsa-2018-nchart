@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import * as moment from 'moment';
 
 @Component({
@@ -37,8 +37,7 @@ export class ProjectsCardComponent implements OnInit {
 		}
 	];
 
-	constructor() {
-	}
+	constructor() {}
 
 	@Input()
 	companyName: string;

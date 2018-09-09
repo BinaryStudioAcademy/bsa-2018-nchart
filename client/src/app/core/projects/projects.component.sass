@@ -8,22 +8,24 @@ $searchBarHeight: 120px
 	padding-top: $searchBarHeight
 	height: 100%
 	box-sizing: border-box
+
 .projects-content
 	height: 100%
+	display: flex
+	flex-direction: column
+	justify-content: space-between
 
 .projects-pagination
-	position: absolute
-	bottom: 1.5rem
-	width: 100%
+	margin: 1.5rem 0
 
 .project-card-container
-	padding-top: 1.5rem
-	margin-bottom: 60px
+	padding: 1.5rem
+	padding-bottom: 0
+	overflow: auto
+	flex: 1
 	display: grid
-	grid-row-gap: 0
-	grid-column-gap: 30px
+	grid-gap: 1rem
 	grid-template-columns: repeat(auto-fill, minmax(250px, 300px))
-	justify-content: center
 
 .search-projects
 	box-shadow: 0 0 8px 0 rgba(0,0,0,0.2)
@@ -38,6 +40,7 @@ $searchBarHeight: 120px
 	justify-content: center
 	flex-direction: column
 	width: 100%
+	z-index: 1000
 	box-sizing: border-box
 	h3
 		margin: 0
