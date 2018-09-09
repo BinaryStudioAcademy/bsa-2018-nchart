@@ -3,7 +3,6 @@
 		<div class="project-card-user">
 			<a class="project-name" [routerLink]="['/app/project', projectId]"> {{projectName}}</a>
 		</div>
-		<!--todo: make those look like tags-->
 		<div class="user-charts">
 				<div class="chart-type" [ngClass]="getCardTypeClasses(chart)" *ngFor="let chart of userCharts">
 					{{ chart }}
