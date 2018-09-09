@@ -33,7 +33,8 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 	};
 	userEmail: string;
 	disconnectStore: () => void;
-
+	checks = null;
+	
 	debouncedSearch: (params: OptionalType<ProjectsFilter>) => void;
 
 	constructor(
@@ -74,8 +75,32 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 		);
 
 		this.formGroup = new FormGroup({
-			name: new FormControl(search, [])
+			name: new FormControl(search, []),
+			charts: new FormControl(search, [])
 		});
+
+		this.checks = [
+			{
+				label: 'Pie Chart',
+				value: 'Pie Chart',
+				control: this.formGroup.controls['charts']
+			},
+			{
+				label: 'Bar Chart',
+				value: 'Bar Chart',
+				control: this.formGroup.controls['charts']
+			},
+			{
+				label: 'Scatter Plot',
+				value: 'Scatter Plot',
+				control: this.formGroup.controls['charts']
+			},
+			{
+				label: 'Gantt Chart',
+				value: 'Gantt Chart',
+				control: this.formGroup.controls['charts']
+			}
+		];
 
 		this.formGroup.get('name').valueChanges.subscribe(value => {
 			this.debouncedSearch({ search: value, page: 1 });

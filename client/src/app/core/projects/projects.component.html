@@ -11,6 +11,7 @@
 			icon="fa fa-filter"
 			[control]="formGroup.controls['name']">
 		</app-input-text>
+		<app-checkbox-group [checks]="checks"></app-checkbox-group>
 	</div>
 	<div class="projects-content" [loading-sp]="isLoading$ | async">
 		<div class="empty-projects-list" *ngIf="isEmptyList$() | async">
