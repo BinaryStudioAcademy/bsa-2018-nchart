@@ -43,25 +43,11 @@ export class ProjectDomainService implements ProjectDomain {
 			pagination: PaginationData;
 		}>
 	> {
-		if (payload.name) {
-			return this.httpService.makeRequest<
-				ResponseScheme<{
-					projects: ProjectPreview[];
-					pagination: PaginationData;
-				}>
-			>(
-				new ServiceRequest(
-					RequestType.GET,
-					`${this.projectPath}/owners?page=${payload.page}&name=${
-						payload.name
-					}`
-				)
-			);
-		}
 		return this.httpService.makeRequest<ResponseScheme<any>>(
 			new ServiceRequest(
 				RequestType.GET,
-				`${this.projectPath}/owners?page=${payload.page}`
+				`${this.projectPath}/owners`,
+				null, payload
 			)
 		);
 	}
