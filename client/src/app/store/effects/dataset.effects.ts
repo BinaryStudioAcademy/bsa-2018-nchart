@@ -137,27 +137,26 @@ export class DatasetEffects {
 	preloadSamples$ = this.action$.pipe(
 		ofType(constants.PRELOAD_SAMPLES),
 		withLatestFrom(this.storeService.createSubscription(isSamplesEmpty())),
-		filter(([_, isEmpty]: [DatasetActions.PreloadSamples, boolean]) => isEmpty
-			),
-		switchMap(
-			([action, _]: [DatasetActions.PreloadSamples, boolean]) => {
-				return this.datasetDomService.preloadSamples().pipe(
-					map(res => {
-						return new DatasetActions.PreloadSamplesComplete(
-							res.payload
-						);
-					}),
-					catchError(error =>
-						of(
-							new DatasetActions.PreloadSamplesFailed({
-								msg: `Can't export project`,
-								action,
-								error
-							})
-						)
+		filter(
+			([_, isEmpty]: [DatasetActions.PreloadSamples, boolean]) => isEmpty
+		),
+		switchMap(([action, _]: [DatasetActions.PreloadSamples, boolean]) => {
+			return this.datasetDomService.preloadSamples().pipe(
+				map(res => {
+					return new DatasetActions.PreloadSamplesComplete(
+						res.payload
+					);
+				}),
+				catchError(error =>
+					of(
+						new DatasetActions.PreloadSamplesFailed({
+							msg: `Can't export project`,
+							action,
+							error
+						})
 					)
-				);
-			}
-		)
+				)
+			);
+		})
 	);
 }

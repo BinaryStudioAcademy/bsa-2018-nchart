@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import {
 	projects as projectsSelector,
 	projectsPagination as projectsPaginationSelector
-} from '@app/store/selectors/projects.selectors.ts';
+} from '@app/store/selectors/projects.selectors';
 import { isProjectsLoading } from '@app/store/selectors/projects.selectors';
 import { StoreService } from '@app/services/store.service';
 import * as projectActions from '@app/store/actions/projects/projects.actions';

@@ -12,6 +12,7 @@ import { PieChartService } from '@app/services/charts/pie-chart.service';
 import { ExportSvgBusService } from '@app/services/export-svg-bus.service';
 import { ScatterplotChartService } from '@app/services/charts/scatterplot-chart.service';
 import { AlluvialDiagramChartService } from '@app/services/charts/alluvial-diagram-chart.service';
+import { WorldMapChartService } from '@app/services/charts/world-map-chart.service';
 
 @NgModule({
 	providers: [
@@ -27,7 +28,8 @@ import { AlluvialDiagramChartService } from '@app/services/charts/alluvial-diagr
 		PieChartService,
 		ExportSvgBusService,
 		ScatterplotChartService,
-		AlluvialDiagramChartService
+		AlluvialDiagramChartService,
+		WorldMapChartService
 	]
 })
 export class ServiceModule {}

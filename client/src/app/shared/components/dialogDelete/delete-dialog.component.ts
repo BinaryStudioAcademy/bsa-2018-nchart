@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import * as projectActions from 'app/store/actions/projects/projects.actions';
-import { StoreService } from 'app/services/store.service';
+import * as projectActions from '@app/store/actions/projects/projects.actions';
+import { StoreService } from '@app/services/store.service';
 
 @Component({
 	selector: 'app-delete-dialog',

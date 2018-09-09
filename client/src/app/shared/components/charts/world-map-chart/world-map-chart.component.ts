@@ -1,30 +1,31 @@
 import {
 	Component,
 	Input,
-	OnInit,
 	OnChanges,
 	ElementRef,
 	ViewChild
 } from '@angular/core';
 import * as d3 from 'd3';
 import d3Tip from 'd3-tip';
-import * as geoRobinson from 'd3-geo-projection';
+import * as geo from 'd3-geo-projection';
 import * as topojson from 'topojson';
 import { CustomizeOption } from '@app/models/chart.model';
-import { countries } from './world-countries';
+import { countries } from '@app/shared/components/charts/world-map-chart/world-countries';
 interface Settings<T> {
 	height: T;
 	width: T;
-	leftMargin: T;
-	verticalPadding: T;
-	horizontalPadding: T;
+	rotate: T;
+	scale: T;
+	showRaticule: T;
+	chooseProjection: T;
+	chooseRegion: T;
 }
 
 @Component({
 	selector: 'app-world-map-chart',
 	templateUrl: './world-map-chart.component.html'
 })
-export class WorldMapChartComponent implements OnInit, OnChanges {
+export class WorldMapChartComponent implements OnChanges {
 	@Input()
 	data: any[];
 	@Input()
@@ -61,69 +62,13 @@ export class WorldMapChartComponent implements OnInit, OnChanges {
 	@ViewChild('chart')
 	chart: ElementRef;
 
-	ngOnInit() {
+	ngOnChanges() {
+		d3.select('svg').remove();
+		d3.select('.d3-tip').remove();
 		const populationById = {};
 		const data = countries;
-		const population = [
-			{ id: 'CHN', name: 'China', population: '1330141295' },
-			{ id: 'IND', name: 'India', population: '1173108018' },
-			{ id: 'USA', name: 'United States', population: '310232863' },
-			{ id: 'IDN', name: 'Indonesia', population: '242968342' },
-			{ id: 'BRA', name: 'Brazil', population: '201103330' },
-			{ id: 'PAK', name: 'Pakistan', population: '177276594' },
-			{ id: 'BGD', name: 'Bangladesh', population: '158065841' },
-			{ id: 'NGA', name: 'Nigeria', population: '152217341' },
-			{ id: 'RUS', name: 'Russia', population: '139390205' },
-			{ id: 'JPN', name: 'Japan', population: '126804433' },
-			{ id: 'MEX', name: 'Mexico', population: '112468855' },
-			{ id: 'PHL', name: 'Philippines', population: '99900177' },
-			{ id: 'VNM', name: 'Vietnam', population: '89571130' },
-			{ id: 'ETH', name: 'Ethiopia', population: '88013491' },
-			{ id: 'DEU', name: 'Germany', population: '82282988' },
-			{ id: 'EGY', name: 'Egypt', population: '80471869' },
-			{ id: 'TUR', name: 'Turkey', population: '77804122' },
-			{
-				id: 'COD',
-				name: 'Congo, Democratic Republic of the',
-				population: '70916439'
-			},
-			{ id: 'IRN', name: 'Iran', population: '67037517' },
-			{ id: 'THA', name: 'Thailand', population: '66404688' },
-			{ id: 'FRA', name: 'France', population: '64057792' },
-			{ id: 'GBR', name: 'United Kingdom', population: '61284806' },
-			{ id: 'ITA', name: 'Italy', population: '58090681' },
-			{ id: 'MMR', name: 'Burma', population: '53414374' },
-			{ id: 'ZAF', name: 'South Africa', population: '49109107' },
-			{ id: 'KOR', name: 'Korea, South', population: '48636068' },
-			{ id: 'UKR', name: 'Ukraine', population: '45415596' },
-			{ id: 'COL', name: 'Colombia', population: '44205293' },
-			{ id: 'SDN', name: 'Sudan', population: '41980182' },
-			{ id: 'TZA', name: 'Tanzania', population: '41892895' },
-			{ id: 'ARG', name: 'Argentina', population: '41343201' },
-			{ id: 'ESP', name: 'Spain', population: '40548753' },
-			{ id: 'KEN', name: 'Kenya', population: '40046566' },
-			{ id: 'POL', name: 'Poland', population: '38463689' },
-			{ id: 'DZA', name: 'Algeria', population: '34586184' },
-			{ id: 'CAN', name: 'Canada', population: '33759742' },
-			{ id: 'UGA', name: 'Uganda', population: '33398682' },
-			{ id: 'MAR', name: 'Morocco', population: '31627428' },
-			{ id: 'PER', name: 'Peru', population: '29907003' },
-			{ id: 'IRQ', name: 'Iraq', population: '29671605' },
-			{ id: 'SAU', name: 'Saudi Arabia', population: '29207277' },
-			{ id: 'AFG', name: 'Afghanistan', population: '29121286' },
-			{ id: 'NPL', name: 'Nepal', population: '28951852' },
-			{ id: 'UZB', name: 'Uzbekistan', population: '27865738' },
-			{ id: 'VEN', name: 'Venezuela', population: '27223228' },
-			{ id: 'MYS', name: 'Malaysia', population: '26160256' },
-			{ id: 'GHA', name: 'Ghana', population: '24339838' },
-			{ id: 'YEM', name: 'Yemen', population: '23495361' },
-			{ id: 'TWN', name: 'Taiwan', population: '23024956' },
-			{ id: 'PRK', name: 'Korea, North', population: '22757275' },
-			{ id: 'SYR', name: 'Syria', population: '22198110' },
-			{ id: 'ROU', name: 'Romania', population: '22181287' }
-		];
-		population.forEach((d: any) => {
-			populationById[d.id] = +d.population;
+		this.data.forEach((d: any) => {
+			populationById[d.id] = +d.value;
 		});
 		data.features.forEach((d: any) => {
 			d.population = populationById[d.id];
@@ -141,62 +86,174 @@ export class WorldMapChartComponent implements OnInit, OnChanges {
 						d.population
 					)}</span>`
 			);
+		const {
+			width,
+			height,
+			rotate,
+			scale,
+			showRaticule,
+			chooseProjection,
+			chooseRegion
+		} = this.getSettingsValue(this.settings);
 
-		const width = 960 - this.margin.left - this.margin.right;
-		const height = 960 - this.margin.top - this.margin.bottom;
-		const projection = <any>geoRobinson
-			.geoRobinson()
-			.scale(148)
-			.rotate([352, 0, 0])
-			.translate([width / 2, height / 2]);
+		let projection;
+		switch (chooseProjection) {
+			case 'robinson':
+				projection = geo.geoRobinson();
+				break;
+			case 'hammerRetroazimuthal':
+				projection = geo
+					.geoHammerRetroazimuthal()
+					.parallel(52)
+					.clipAngle(180 - 1e-3);
+				break;
+			case 'mercator':
+				projection = d3.geoMercator();
+				break;
+			case 'azimuthalEqualArea':
+				projection = d3.geoAzimuthalEqualArea();
+				break;
+			case 'azimuthalEquidistant':
+				projection = d3.geoAzimuthalEquidistant();
+				break;
+			case 'gnomonic':
+				projection = d3.geoGnomonic();
+				break;
+			case 'orthographic':
+				projection = d3.geoOrthographic();
+				break;
+			case 'stereographic':
+				projection = d3.geoStereographic();
+				break;
+			case 'albers':
+				projection = d3.geoAlbers();
+				break;
+			case 'conicConformal':
+				projection = d3.geoConicConformal();
+				break;
+			case 'conicEqualArea':
+				projection = d3.geoConicEqualArea();
+				break;
+			case 'equirectangular':
+				projection = d3.geoEquirectangular();
+				break;
+			case 'conicEquidistant':
+				projection = d3.geoConicEquidistant();
+				break;
+			case 'transverseMercator':
+				projection = d3.geoTransverseMercator();
+				break;
+			case 'sinusoidalRaw':
+				projection = geo.geoInterrupt(geo.geoSinusoidalRaw, [
+					[
+						// northern hemisphere
+						[[-180, 0], [-160, 90], [-140, 0]],
+						[[-140, 0], [-120, 90], [-100, 0]],
+						[[-100, 0], [-80, 90], [-60, 0]],
+						[[-60, 0], [-40, 90], [-20, 0]],
+						[[-20, 0], [0, 90], [20, 0]],
+						[[20, 0], [40, 90], [60, 0]],
+						[[60, 0], [80, 90], [100, 0]],
+						[[100, 0], [120, 90], [140, 0]],
+						[[140, 0], [160, 90], [180, 0]]
+					],
+					[
+						// southern hemisphere
+						[[-180, 0], [-180, -90], [-160, 0]],
+						[[-160, 0], [-140, -90], [-120, 0]],
+						[[-120, 0], [-100, -90], [-80, 0]],
+						[[-80, 0], [-60, -90], [-40, 0]],
+						[[-40, 0], [-20, -90], [0, 0]],
+						[[0, 0], [20, -90], [40, 0]],
+						[[40, 0], [60, -90], [80, 0]],
+						[[80, 0], [100, -90], [120, 0]],
+						[[120, 0], [140, -90], [160, 0]],
+						[[160, 0], [180, -90], [180, 0]]
+					]
+				]);
+				break;
+			case 'berghausStar':
+				projection = geo
+					.geoBerghaus()
+					.rotate([20, -90])
+					.clipAngle(180 - 1e-3);
+				break;
+			default:
+				break;
+		}
+		projection
+			.rotate([rotate, 0, 0])
+			.scale(scale)
+			.translate([width / 2, height / 2])
+			.precision(0.1);
 
-		/* var projection = <any>geoRobinson.geoCylindricalStereographic()
-            .scale(153)
-            .translate([width / 2, height / 2])
-            .precision(0.1);*/
+		switch (chooseRegion) {
+			case 'world':
+				break;
+			case 'europe':
+				projection = d3
+					.geoMercator()
+					.center([13, 52])
+					.translate([width / 2, height / 2])
+					.scale(width / 1.5);
+				break;
+			case 'asia':
+				projection = geo
+					.geoPatterson()
+					.center([58, 54])
+					.scale(520)
+					.translate([0, 0])
+					.precision(0.1);
+				break;
+			case 'africa':
+				projection = geo.geoChamberlinAfrica();
+				break;
+			case 'northAmerica':
+				projection = geo.geoModifiedStereographicGs50();
+				break;
+			case 'usa':
+				projection = d3
+					.geoAlbersUsa()
+					.translate([width / 2, height / 2])
+					.scale(1000);
+				break;
+			default:
+				break;
+		}
 
-		/*const projection = <any>geoRobinson.geoHammerRetroazimuthal()
-            .parallel(52)
-            .clipAngle(180 - 1e-3)
-            .scale(130)
-            .translate([width / 2, height / 2])
-            .precision(.1);*/
 		const path = d3.geoPath().projection(projection);
 
 		const graticule = d3.geoGraticule();
 
 		const svg = d3
-			.select('.world-map-chart')
+			.selectAll('.world-map-chart')
 			.append('svg')
 			.attr('width', width)
 			.attr('height', height);
-
 		const defs = svg.append('defs');
-
 		defs.append('path')
 			.datum({ type: 'Sphere' })
 			.attr('id', 'sphere')
 			.attr('d', path);
-
 		defs.append('clipPath')
 			.attr('id', 'clip')
 			.append('use')
 			.attr('xlink:href', '#sphere');
+		if (showRaticule) {
+			svg.append('use')
+				.attr('class', 'stroke')
+				.attr('xlink:href', '#sphere');
 
-		svg.append('use')
-			.attr('class', 'stroke')
-			.attr('xlink:href', '#sphere');
+			svg.append('use')
+				.attr('class', 'fill')
+				.attr('xlink:href', '#sphere');
 
-		svg.append('use')
-			.attr('class', 'fill')
-			.attr('xlink:href', '#sphere');
-
-		svg.append('path')
-			.datum(graticule)
-			.attr('class', 'graticule')
-			.attr('clip-path', 'url(#clip)')
-			.attr('d', path);
-
+			svg.append('path')
+				.datum(graticule)
+				.attr('class', 'graticule')
+				.attr('clip-path', 'url(#clip)')
+				.attr('d', path);
+		}
 		svg.call(tip);
 		svg.append('g')
 			.attr('class', 'countries')
@@ -239,6 +296,4 @@ export class WorldMapChartComponent implements OnInit, OnChanges {
 			{} as Settings<any>
 		);
 	}
-
-	ngOnChanges() {}
 }
