@@ -166,6 +166,88 @@ class ProjectRepository extends Repository {
 		});
 	}
 
+	findProjectsWithOwnersT(userId) {
+		this.groupUser = groupUserModel;
+		return this.groupUser.findAll({
+			where: { userId },
+			separate: true,
+			attributes: ['groupId'],
+			include: [
+				{
+					model: groupModel,
+					attributes: ['id', 'name', 'companyId'],
+					include: [
+						{
+							model: groupProjectModel,
+							attributes: ['projectId', 'accessLevelId'],
+							separate: true,
+							include: [
+								{
+									model: this.projectModel,
+									attributes: ['id', 'name', 'updatedAt'],
+									order: [
+										[this.projectModel, 'updatedAt', 'asc']],
+									include: [
+										{
+											model: groupProjectModel,
+											separate: true,
+											attributes: [
+												'projectId',
+												'groupId'
+											],
+											where: { accessLevelId: 1 },
+											include: [
+												{
+													model: groupModel,
+													attributes: ['id'],
+													include: [
+														{
+															model: groupUserModel,
+															attributes: [
+																'userId'
+															],
+															include: {
+																model: userModel,
+																attributes: [
+																	'name',
+																	'email'
+																]
+															}
+														}
+													]
+												}
+											]
+										},
+										{
+											model: this.projectChartModel,
+											attributes: ['chartId'],
+											include: [
+												{
+													model: chartModel,
+													attributes: ['chartTypeId'],
+													include: [
+														{
+															model: chartTypeModel,
+															attributes: ['name']
+														}
+													]
+												}
+											]
+										}
+									]
+								}
+							]
+						},
+						{
+							model: companyModel,
+							attributes: ['name']
+						}
+					]
+				}
+			]
+		});
+	}
+
 	findProjectsWithOwners(userId, name) {
 		let projectName = name;
 		if (!name) {

@@ -69,6 +69,16 @@ project.get(
 	successOrEmptyPayload
 );
 
+project.get(
+	'/ownersTest',
+	(req, res, next) => {
+		ProjectService.projectsWithPaginationT(res.locals.user.id, req.query)
+			.then(PayloadGeneratorService.nextWithData(next, res))
+			.catch(next);
+	},
+	successOrEmptyPayload
+);
+
 project.post('/delete', (req, res, next) => {
 	ProjectService.deleteProjects(req.body, res)
 		.then(PayloadGeneratorService.nextWithData(next, res))
