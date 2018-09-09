@@ -1,4 +1,4 @@
-@import '../../../theme/variables.sass';
+@import '../../../theme/variables.sass'
 #notificationBarBottom
 	bottom: 0px
 	padding: 0
@@ -15,33 +15,15 @@
 	box-sizing: border-box
 
 .msg
-	margin: 0.1em auto
+	margin: 0.1rem auto
 	padding: 0
 
-=keyframes($name)
-	@-webkit-keyframes #{$name}
-		@content
-	@-moz-keyframes #{$name}
-		@content
-	@-ms-keyframes #{$name}
-		@content
-	@keyframes #{$name}
-		@content
-+keyframes(slide-top)
-  0%
-    transform: translateY(100%)
-  100%
-    transform: translateY(0px)
-
-#notificationBarBottom
-	-webkit-animation: slide-top 0.5s cubic-bezier(0.23, 1.24, 0.76, 1.2) both
-
 .success
-	background-color: #61D65E
+	background-color: $successColor
 	color: #ffffff
 
 .error
-	background-color: #fd3259
+	background-color: $errorColor
 	color: #ffffff
 
 .close

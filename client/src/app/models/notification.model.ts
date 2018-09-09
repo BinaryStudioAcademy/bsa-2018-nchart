@@ -13,6 +13,7 @@ const NotificationDict = new Map([
 		UserActions.UserActionConstants.LOGIN__COMPLETE.toString(),
 		'Login completed'
 	],
+	[UserActions.UserActionConstants.LOGIN__FAILED.toString(), 'Login failed'],
 	[
 		UserActions.UserActionConstants.REGISTER__COMPLETE.toString(),
 		'Register completed'

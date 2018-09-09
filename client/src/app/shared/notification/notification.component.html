@@ -1,6 +1,8 @@
-<div id="notificationBarBottom" *ngIf="isOpen" [class]="type">
+<div id="notificationBarBottom" [class]="type" [@slide]="state">
   <span class="close" (click)="closeNotification()">
     <i class="fas fa-times"></i>
   </span>
   <div class="msg">{{msg}}</div>
 </div>
+
+        
