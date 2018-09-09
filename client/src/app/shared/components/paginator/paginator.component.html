@@ -1,0 +1,8 @@
+<p-paginator
+	[rows]="rows"
+	[first]="(page - 1) * rows"
+	[totalRecords]="totalRecords"
+	(onPageChange)="paginate($event)"
+>
+</p-paginator>
+<!--[rowsPerPageOptions]="[10,20,30]"-->

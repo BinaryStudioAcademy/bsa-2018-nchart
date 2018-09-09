@@ -9,10 +9,9 @@
 				</div>
 		</div>
 		<div class="project-card-folder">
-			<div class="card-profile-image user-image"><i class="fas fa-user-tie"></i></div>
+			<b>Owner:</b>
 			<div class="card-user-name">{{userName}}</div>
 		</div>
-		<hr>
 		<div class="last-update">
 			<b>Last update:</b><span>{{date}}</span>
 		</div>
@@ -26,5 +25,10 @@
 			[accessLevelId]="accessLevelId"
 			[(displayDelete)]="displayDelete">
 		</app-delete-dialog>
+		<app-dialog-rename
+			[projectId]="projectId"
+			[accessLevelId]="accessLevelId"
+			[(displayRename)]="displayRename">
+		></app-dialog-rename>
 	</div>
 </p-card>
