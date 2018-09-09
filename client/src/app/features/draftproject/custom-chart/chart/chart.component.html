@@ -17,7 +17,8 @@
 		[settings]="customizeSettings"
 		#chart
 	></app-scatterplot-chart>
-	<div 
-	*ngSwitchCase="'alluvialDiagram'"
-	>pieChart</div>
+	<app-world-map-chart 
+		*ngSwitchCase="'alluvialDiagram'"
+		#chart
+	></app-world-map-chart>
 </div>

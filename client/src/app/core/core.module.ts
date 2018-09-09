@@ -10,7 +10,7 @@ import { APIModule } from '@app/api/api.module';
 import { SharedModule } from '@app/shared/shared.module';
 import { FeatureModule } from '@app/features/feature.module';
 import { CommonModule } from '@angular/common';
-import { LandingPageComponent } from './landing-page/landing-page.component';
+import { LandingPageComponent } from '@app/core/landing-page/landing-page.component';
 import { FormFieldModule } from '@app/shared/components/form-field/form-field.module';
 import { ProjectTabsComponent } from '@app/core/project/tabs/project-tabs.component';
 

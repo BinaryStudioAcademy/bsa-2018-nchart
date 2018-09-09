@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { projects as projectsSelector } from '@app/store/selectors/projects.selectors.ts';
+import { projects as projectsSelector } from '@app/store/selectors/projects.selectors';
 import { StoreService } from '@app/services/store.service';
 import * as projectActions from '@app/store/actions/projects/projects.actions';
 import { Observable } from 'rxjs';

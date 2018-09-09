@@ -3,7 +3,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { switchMap } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
-import * as DatasetActions from '../actions/datasets/datasets.actions';
+import * as DatasetActions from '@app/store/actions/datasets/datasets.actions';
 import { DatasetActionConstants as constants } from '@app/store/actions/datasets/datasets.action-types';
 import { DatasetDomainService } from '@app/api/domains/source/dataset-domain.service';
 import { DatasetService } from '@app/services/dataset.service';
