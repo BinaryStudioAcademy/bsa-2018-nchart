@@ -12,7 +12,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { debounce, omitBy } from 'lodash';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as queryString from 'query-string';
-import { ProjectsFilter } from '@app/models/project.model';
+import { ProjectsFilter, ProjectPreview } from '@app/models/project.model';
 import { OptionalType } from '@app/models';
 import { PaginationData } from '@app/models/projects-store.model';
 import { user as userSelector } from '@app/store/selectors/user.selectors';
@@ -24,9 +24,8 @@ import { User } from '@app/models/user.model';
 	styleUrls: ['./projects.component.sass']
 })
 export class ProjectsComponent implements OnInit, AfterViewInit {
-	projects$: Observable<any[]>;
+	projects$: Observable<ProjectPreview[]>;
 	pagination$: Observable<PaginationData>;
-	isProjectsReady: Observable<boolean>;
 	isLoading$: Observable<boolean>;
 	filterParams: ProjectsFilter = {
 		page: 1,
@@ -133,10 +132,10 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 	}
 
 	ngAfterViewInit() {
-		/* const paginatorControl = document.getElementsByClassName("ui-paginator-icon");
+		const paginatorControl = document.getElementsByClassName("ui-paginator-icon");
 		paginatorControl[0]
 			.setAttribute('class', 'ui-paginator-icon fa fa-backward');
 		paginatorControl[3]
-			.setAttribute('class', 'ui-paginator-icon fa fa-forward'); */
+			.setAttribute('class', 'ui-paginator-icon fa fa-forward');
 	}
 }
