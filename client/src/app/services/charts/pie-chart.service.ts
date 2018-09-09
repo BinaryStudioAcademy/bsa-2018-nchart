@@ -119,7 +119,7 @@ export class PieChartService {
 		return this.data;
 	}
 
-	createPieChartCustomizeForm(pieChartCustomize): FormGroup {
+	createCustomizeForm(pieChartCustomize): FormGroup {
 		const initialValues: OptionalType<
 			PieChartCustomize
 		> = new PieChartCustomize(

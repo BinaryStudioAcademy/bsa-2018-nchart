@@ -1,5 +1,5 @@
 <app-animated-block [indicator]="activeTab" [loading]="isLoading" class="load-data-wrp">
-	<h2><i class="fas fa-upload" ></i>Load your data</h2>
+	<h2 class="ui-main-block-header"><i class="fas fa-upload" ></i>Load your data</h2>
 	<div class="load-data-tabs-wrap" >
 		<p-tabView 	activeIndex="0"
 					  (onChange)="onChange($event)"
@@ -53,7 +53,7 @@
 			</p-tabPanel>
 
 			<p-tabPanel header="Samples" *ngIf="isSamplesExist()">
-				<div class="ui-g">
+				<div class="samples-container">
 					<app-button
 						*ngFor = "let sample of datasetSamples"
 						class="samples"

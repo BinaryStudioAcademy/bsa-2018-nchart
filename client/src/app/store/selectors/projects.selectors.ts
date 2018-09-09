@@ -5,6 +5,9 @@ import { Project } from '@app/models/project.model';
 export const projects = () => (state: AppState) =>
 	state.projects.all.map(id => state.projects.byId[id]);
 
+export const projectsPagination = () => (state: AppState) =>
+	state.projects.pagination;
+
 export const project = (id?: SchemeID) => (state: AppState): Project =>
 	state.projects.byId[id || state.projects.active]
 		? state.projects.byId[id || state.projects.active]

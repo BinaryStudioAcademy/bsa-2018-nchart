@@ -29,9 +29,8 @@
 				  [modal]="true"
 				  [responsive]="true"
 				  [closable]="false"
-				  [width]="350"
-				  [minWidth]="200"
 				  [minY]="70"
+				  [resizable]="false"
 				  [draggable]="false"
 				  [baseZIndex]="10000">
 			<span>
@@ -48,8 +47,6 @@
 					label="No"
 					class="dialog-button"
 					size="small"
-					type="secondary"
-					size="small"
 					(onclick)="reject()"
 				></app-button>
 			</p-footer>
@@ -59,9 +56,7 @@
 				  [(visible)]="displayModalDataset"
 				  [modal]="true"
 				  [responsive]="true"
-				  [closable]="false"
-				  [width]="350"
-				  [minWidth]="200"
+				  [closable]="true"
 				  [resizable]="false"
 				  [minY]="70"
 				  [draggable]="false"
@@ -74,7 +69,6 @@
 					label="No"
 					class="dialog-button"
 					size="small"
-					type="secondary"
 					(onclick)="rejectDataset()"
 				></app-button>
 				<app-button

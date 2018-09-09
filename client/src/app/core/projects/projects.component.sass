@@ -1,5 +1,68 @@
-.project-card-container
-	margin-top: 100px
+@import ../../../theme/variables
+@import ../../../theme/colors
+
+$searchBarHeight: 120px
+
+.projects-container
+	position: relative
+	padding-top: $searchBarHeight
+	height: 100%
+	box-sizing: border-box
+
+.projects-content
+	height: 100%
 	display: flex
-	flex-wrap: wrap
+	flex-direction: column
+	justify-content: space-between
+
+.projects-pagination
+	margin: 1.5rem 0
+
+.project-card-container
+	padding: 1.5rem
+	padding-bottom: 0
+	overflow: auto
+	flex: 1
+	display: grid
+	grid-gap: 1rem
+	grid-template-columns: repeat(auto-fill, minmax(250px, 300px))
+
+.search-projects
+	box-shadow: -1px 1px 3px rgba(151, 155, 174, 0.1), 1px 1px 3px rgba(151, 155, 174, 0.1)
+	padding: 0 1.5rem
+	position: absolute
+	top: 0
+	left: 0
+	padding-top: 1rem
+	background-color: $backgroundWhiteColor
+	height: $searchBarHeight
+	display: flex
 	justify-content: center
+	flex-direction: column
+	width: 100%
+	z-index: 101
+	box-sizing: border-box
+	h3
+		margin: 0
+
+.search-label
+	font-weight: 800
+	font-family: $fontFamily
+	font-size: 1.5rem
+	padding: 0 5px
+
+.empty-projects-list
+	display: flex
+	flex-direction: column
+	width: 100%
+	align-items: center
+	padding-bottom: 8rem
+	box-sizing: border-box
+	height: 100%
+	justify-content: center
+	i
+		font-size: 6rem
+		margin-bottom: 1.5rem
+	span
+		font-size: 1.2rem
+		font-family: $fontFamily

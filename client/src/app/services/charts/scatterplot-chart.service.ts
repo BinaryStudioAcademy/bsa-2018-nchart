@@ -90,14 +90,14 @@ export class ScatterplotChartService {
 		return this.data;
 	}
 
-	createScatterplotChartCustomizeForm(barChartCustomize): FormGroup {
+	createCustomizeForm(scatterplotChartCustomize): FormGroup {
 		const initialValues: OptionalType<
 			ScatterplotChartCustomize
 		> = new ScatterplotChartCustomize(
-			barChartCustomize.width.value,
-			barChartCustomize.height.value,
-			barChartCustomize.maxRadius.value,
-			barChartCustomize.setOrigin.value
+			scatterplotChartCustomize.width.value,
+			scatterplotChartCustomize.height.value,
+			scatterplotChartCustomize.maxRadius.value,
+			scatterplotChartCustomize.setOrigin.value
 		);
 
 		const validators: fieldsValidators<ScatterplotChartCustomize> = {

@@ -9,7 +9,8 @@ import { StoreService } from '@app/services/store.service';
 
 @Component({
 	selector: 'app-dialog',
-	templateUrl: './dialog.component.html'
+	templateUrl: './dialog.component.html',
+	styleUrls: ['./dialog.component.sass']
 })
 export class DialogComponent implements OnInit {
 	constructor(private storeService: StoreService) {}
@@ -27,12 +28,14 @@ export class DialogComponent implements OnInit {
 
 	formGroup: FormGroup;
 
-	// showDialog() {
-	// 	this.display = true;
-	// }
-
 	close() {
 		this.displayChange.emit(false);
+		this.formGroup.reset();
+		this.formGroup.setValue({
+			projectId: this.projectId,
+			email: null,
+			accessLevelId: '3'
+		});
 	}
 
 	ngOnInit() {

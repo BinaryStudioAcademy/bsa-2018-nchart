@@ -8,21 +8,22 @@
 	[maximizable]="false"
 	[baseZIndex]="10000"
 	[(visible)]="display"
+	[resizable]="false"
 	(onHide)="close()"
-	[closable]="false"
-	(onAfterHide)="close()">
+	[closable]="true">
 	<p-header>
 		Share project
-		<i class="fas fa-times close-icon" (click)='close()'></i>
 	</p-header>
-		<app-input-text
-			class="ui-fluid"
-			type="text"
-			label="Email"
-			[control]="formGroup.controls.email">
-		</app-input-text>
+		<div class="email-input">
+			<app-input-text
+				class="ui-fluid"
+				type="text"
+				label="Email"
+				[control]="formGroup.controls['email']">
+			</app-input-text>
+		</div>
 		<form [formGroup]="formGroup">
-			<div class="ui-g">
+			<div class="ui-g radio-access">
 				<span>Select access type:</span>
 				<div class="ui-g-12">
 					<p-radioButton
@@ -44,13 +45,7 @@
 				</div>
 			</div>
 		</form>
-		<p-footer style="width: 100%">
-				<app-button label="Send" [disabled]="!formGroup.valid" (onclick)="share(formGroup.value)" style="float: right;"></app-button>
-		</p-footer>
+		<app-button label="Send" [disabled]="!formGroup.valid" (onclick)="share(formGroup.value)" style="float: right;"></app-button>
 	</p-dialog>
 
 </div>
-
-<!--<label for="email">Email: </label><input type="email" id="email">-->
-	<!--<button type="button" pButton icon="pi pi-check" (click)="display=false" label="Send" class="ui-button-secondary"></button>-->
-	<!--<button type="text" (click)="showDialog()" pButton label="share"></button>-->

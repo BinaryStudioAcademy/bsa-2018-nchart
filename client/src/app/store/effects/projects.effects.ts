@@ -250,16 +250,17 @@ export class ProjectsEffects {
 	loadInfo = this.action$.pipe(
 		ofType(ProjectsActionConstants.LOAD_PROJECTS_INFO),
 		switchMap((action: projectActions.LoadProjetcsInfo) =>
-			this.projectDomainService.getPartByUserId().pipe(
+			this.projectDomainService.getPartByUserId(action.payload).pipe(
 				map(value => {
 					if (value.isSuccess) {
 						const {
 							result: all,
 							entities: { project: byId }
-						} = normalize(value.payload, [projectScheme]);
+						} = normalize(value.payload.projects, [projectScheme]);
 						return new projectActions.LoadProjectsInfoComplete({
 							all,
-							byId
+							byId,
+							pagination: value.payload.pagination
 						});
 					}
 					return throwError(new Error('Cant getPartByUserId'));
@@ -319,6 +320,32 @@ export class ProjectsEffects {
 				catchError(error => {
 					return of(
 						new projectActions.DeleteOneProjectFailed({
+							action: action,
+							msg: 'test',
+							error: error
+						})
+					);
+				})
+			)
+		)
+	);
+
+	@Effect()
+	updateName = this.action$.pipe(
+		ofType(ProjectsActionConstants.UPDATE_PROJECT_NAME),
+		switchMap((action: projectActions.UpdateProjectName) =>
+			this.projectDomainService.updateName(action.payload).pipe(
+				map(value => {
+					if (value.isSuccess) {
+						return new projectActions.UpdateProjectNameComplete(
+							action.payload
+						);
+					}
+					return throwError(new Error('Cant rename project'));
+				}),
+				catchError(error => {
+					return of(
+						new projectActions.UpdateProjectNameFailed({
 							action: action,
 							msg: 'test',
 							error: error

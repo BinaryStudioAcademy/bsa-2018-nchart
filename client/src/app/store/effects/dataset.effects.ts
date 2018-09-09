@@ -9,7 +9,12 @@ import { DatasetDomainService } from '@app/api/domains/source/dataset-domain.ser
 import { DatasetService } from '@app/services/dataset.service';
 import { datasetScheme } from '@app/schemes/dataset.schema';
 import { normalize } from 'normalizr';
-import { withLatestFrom, map, concatMap } from 'rxjs/internal/operators';
+import {
+	withLatestFrom,
+	map,
+	concatMap,
+	filter
+} from 'rxjs/internal/operators';
 import { getActiveProject } from '@app/store/selectors/projects.selectors';
 import { SetDatasetChart } from '@app/store/actions/charts/charts.actions';
 import { StoreService } from '@app/services/store.service';
@@ -17,6 +22,7 @@ import { throwError } from 'rxjs';
 import { ResponseScheme } from '@app/models/response-scheme.model';
 import { DatasetColumn } from '@app/models/dataset.model';
 import { userChart } from '@app/store/selectors/userCharts';
+import { isSamplesEmpty } from '@app/store/selectors/dataset.selectors';
 
 @Injectable()
 export class DatasetEffects {
@@ -130,18 +136,15 @@ export class DatasetEffects {
 	@Effect()
 	preloadSamples$ = this.action$.pipe(
 		ofType(constants.PRELOAD_SAMPLES),
-		switchMap((action: DatasetActions.PreloadSamples) => {
+		withLatestFrom(this.storeService.createSubscription(isSamplesEmpty())),
+		filter(
+			([_, isEmpty]: [DatasetActions.PreloadSamples, boolean]) => isEmpty
+		),
+		switchMap(([action, _]: [DatasetActions.PreloadSamples, boolean]) => {
 			return this.datasetDomService.preloadSamples().pipe(
 				map(res => {
-					const resSamples = [];
-					res.payload.forEach(element => {
-						resSamples.push({
-							id: element.id,
-							name: element.name
-						});
-					});
 					return new DatasetActions.PreloadSamplesComplete(
-						resSamples
+						res.payload
 					);
 				}),
 				catchError(error =>
