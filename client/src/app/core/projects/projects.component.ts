@@ -45,6 +45,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 	}
 
 	formGroup: FormGroup;
+
 	ngOnInit() {
 		const { page, search } = this.route.snapshot.queryParams;
 
@@ -132,10 +133,16 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 	}
 
 	ngAfterViewInit() {
-		const paginatorControl = document.getElementsByClassName("ui-paginator-icon");
-		paginatorControl[0]
-			.setAttribute('class', 'ui-paginator-icon fa fa-backward');
-		paginatorControl[3]
-			.setAttribute('class', 'ui-paginator-icon fa fa-forward');
+		// const paginatorControl = document.getElementsByClassName(
+		// 	'ui-paginator-icon'
+		// );
+		// paginatorControl[0].setAttribute(
+		// 	'class',
+		// 	'ui-paginator-icon fa fa-backward'
+		// );
+		// paginatorControl[3].setAttribute(
+		// 	'class',
+		// 	'ui-paginator-icon fa fa-forward'
+		// );
 	}
 }

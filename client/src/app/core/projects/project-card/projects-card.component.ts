@@ -2,11 +2,12 @@ import { Component, Input, OnInit } from '@angular/core';
 import * as moment from 'moment';
 
 @Component({
-	selector: 'app-card',
-	templateUrl: './card.component.html',
+	selector: 'app-projects-card',
+	templateUrl: './projects-card.component.html',
+	styleUrls: ['./projects-card.component.sass'],
 	animations: []
 })
-export class CardComponent implements OnInit {
+export class ProjectsCardComponent implements OnInit {
 	display = false;
 	displayDelete = false;
 	displayRename = false;
