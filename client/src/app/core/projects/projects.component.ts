@@ -1,22 +1,22 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import {Component, OnInit, AfterViewInit} from '@angular/core';
 import {
 	projects as projectsSelector,
 	projectsPagination as projectsPaginationSelector
 } from '@app/store/selectors/projects.selectors.ts';
-import { isProjectsLoading } from '@app/store/selectors/projects.selectors';
-import { StoreService } from '@app/services/store.service';
+import {isProjectsLoading} from '@app/store/selectors/projects.selectors';
+import {StoreService} from '@app/services/store.service';
 import * as projectActions from '@app/store/actions/projects/projects.actions';
-import { Observable, combineLatest } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { FormControl, FormGroup } from '@angular/forms';
-import { debounce, omitBy } from 'lodash';
-import { Router, ActivatedRoute } from '@angular/router';
+import {Observable, combineLatest} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {FormControl, FormGroup} from '@angular/forms';
+import {debounce, omitBy} from 'lodash';
+import {Router, ActivatedRoute} from '@angular/router';
 import * as queryString from 'query-string';
-import { ProjectsFilter, ProjectPreview } from '@app/models/project.model';
-import { OptionalType } from '@app/models';
-import { PaginationData } from '@app/models/projects-store.model';
-import { user as userSelector } from '@app/store/selectors/user.selectors';
-import { User } from '@app/models/user.model';
+import {ProjectsFilter, ProjectPreview} from '@app/models/project.model';
+import {OptionalType} from '@app/models';
+import {PaginationData} from '@app/models/projects-store.model';
+import {user as userSelector} from '@app/store/selectors/user.selectors';
+import {User} from '@app/models/user.model';
 
 @Component({
 	selector: 'app-projects',
@@ -34,21 +34,19 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 	userEmail: string;
 	disconnectStore: () => void;
 	checks = null;
-	
+
 	debouncedSearch: (params: OptionalType<ProjectsFilter>) => void;
 
-	constructor(
-		private storeService: StoreService,
-		private router: Router,
-		private route: ActivatedRoute
-	) {
+	constructor(private storeService: StoreService,
+				private router: Router,
+				private route: ActivatedRoute) {
 		this.debouncedSearch = debounce(this.applyFilter, 500);
 	}
 
 	formGroup: FormGroup;
 
 	ngOnInit() {
-		const { page, search } = this.route.snapshot.queryParams;
+		const {page, search} = this.route.snapshot.queryParams;
 
 		if (!page) {
 			this.applyFilter(this.filterParams);
@@ -103,7 +101,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 		];
 
 		this.formGroup.get('name').valueChanges.subscribe(value => {
-			this.debouncedSearch({ search: value, page: 1 });
+			this.debouncedSearch({search: value, page: 1});
 		});
 
 		this.disconnectStore = this.storeService.connect([
@@ -117,7 +115,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 	}
 
 	onNewPage(page) {
-		this.applyFilter({ page });
+		this.applyFilter({page});
 	}
 
 	applyFilter(params: OptionalType<ProjectsFilter>) {
