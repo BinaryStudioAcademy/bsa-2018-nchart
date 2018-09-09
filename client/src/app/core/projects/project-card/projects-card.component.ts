@@ -4,7 +4,6 @@ import * as moment from 'moment';
 @Component({
 	selector: 'app-projects-card',
 	templateUrl: './projects-card.component.html',
-	styleUrls: ['./projects-card.component.sass'],
 	animations: []
 })
 export class ProjectsCardComponent implements OnInit {
