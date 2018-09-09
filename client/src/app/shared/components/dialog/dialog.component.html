@@ -8,12 +8,11 @@
 	[maximizable]="false"
 	[baseZIndex]="10000"
 	[(visible)]="display"
+	[resizable]="false"
 	(onHide)="close()"
-	[closable]="false"
-	(onAfterHide)="close()">
+	[closable]="true">
 	<p-header>
 		Share project
-		<i class="fas fa-times close-icon" (click)='close()'></i>
 	</p-header>
 		<div class="email-input">
 			<app-input-text
@@ -46,9 +45,7 @@
 				</div>
 			</div>
 		</form>
-		<p-footer style="width: 100%">
-				<app-button label="Send" [disabled]="!formGroup.valid" (onclick)="share(formGroup.value)" style="float: right;"></app-button>
-		</p-footer>
+		<app-button label="Send" [disabled]="!formGroup.valid" (onclick)="share(formGroup.value)" style="float: right;"></app-button>
 	</p-dialog>
 
 </div>
