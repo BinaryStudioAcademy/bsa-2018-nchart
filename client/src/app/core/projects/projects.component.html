@@ -22,7 +22,7 @@
 				class="project-card-container"
 			>
 				<div *ngFor="let project of (getProjects() | async)">
-					<app-card
+					<app-projects-card
 						[projectId]="project?.id"
 						[projectName]="project?.name"
 						[companyName]="project?.companyName"
@@ -32,7 +32,7 @@
 						[accessLevelId]="project?.accessLevelId"
 						[userCharts]="project?.userCharts"
 						[updatedAt]="project?.updatedAt"
-					></app-card>
+					></app-projects-card>
 				</div>
 			</div>
 			<div class="projects-pagination">

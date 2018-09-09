@@ -377,44 +377,8 @@ class ProjectService {
 		});
 	}
 
-	findProjectsWithOwners(id, params) {
-		return this.ProjectRepository.findProjectsWithOwners(id, params.name)
-			.then(data => {
-				// data[0].group.groupProjects[0].project - id, name
-				// data[0].group.groupProjects[0].project
-				// .groupProjects[0].group.groupUsers[0].user.dataValues - name, email
-				const projects = [];
-				data.forEach(el => {
-					el.group.groupProjects.forEach(pj => {
-						const user =							pj.project.groupProjects[0].group.groupUsers[0].user
-							.dataValues;
-						const userCharts = [];
-						// pj.project.projectCharts[0].chart.chartType.name
-						pj.project.projectCharts.forEach(projectChart => {
-							userCharts.push(projectChart.chart.chartType.name);
-						});
-						const uniqueCharts = userCharts.filter(
-							(item, pos) => userCharts.indexOf(item) === pos
-						);
-						projects.push({
-							id: pj.project.dataValues.id,
-							name: pj.project.dataValues.name,
-							updatedAt: pj.project.dataValues.updatedAt,
-							groupName: el.group.name,
-							companyName: el.group.company.name,
-							accessLevelId: pj.dataValues.accessLevelId,
-							userCharts: uniqueCharts,
-							user
-						});
-					});
-				});
-				// this.paggination(params.page,projects);
-				return projects;
-			})
-			.catch(err => err);
-	}
-
 	projectsWithPaginationT(id, params) {
+		console.log(1,'test',1);
 		return this.ProjectRepository.findProjectsWithOwnersT(id, params.charts)
 			.then(data => {
 				// data[0].group.groupProjects[0].project - id, name
@@ -433,33 +397,44 @@ class ProjectService {
 						const uniqueCharts = userCharts.filter(
 							(item, pos) => userCharts.indexOf(item) === pos
 						);
-						let count = 0;
-						params.charts.forEach(chart => {
-                        	userCharts.forEach(el => {
-                        		if (chart === el) {
-                        			count++;
-								}
-							});
-						});
-						if (count >= params.charts.length) {
-							projects.push({
-								id: pj.project.dataValues.id,
-								name: pj.project.dataValues.name,
-								updatedAt: moment(pj.project.dataValues.updatedAt).format('DD/MM/YYYY HH:MM:SS'),
-								groupName: el.group.name,
-								companyName: el.group.company.name,
-								accessLevelId: pj.dataValues.accessLevelId,
-								userCharts: uniqueCharts,
-								user
-							});
-						}
+						// let count = 0;
+						// params.charts.forEach(chart => {
+                        	// userCharts.forEach(el => {
+                        	// 	if (chart === el) {
+                        	// 		count++;
+						// 		}
+						// 	});
+						// });
+						// if (count >= params.charts.length) {
+						// 	projects.push({
+						// 		id: pj.project.dataValues.id,
+						// 		name: pj.project.dataValues.name,
+						// 		updatedAt: moment(pj.project.dataValues.updatedAt).format('DD/MM/YYYY HH:MM:SS'),
+						// 		groupName: el.group.name,
+						// 		companyName: el.group.company.name,
+						// 		accessLevelId: pj.dataValues.accessLevelId,
+						// 		userCharts: uniqueCharts,
+						// 		user
+						// 	});
+						// }
+                        projects.push({
+                            id: pj.project.dataValues.id,
+                            name: pj.project.dataValues.name,
+                            updatedAt: moment(pj.project.dataValues.updatedAt).format('DD/MM/YYYY HH:MM:SS'),
+                            groupName: el.group.name,
+                            companyName: el.group.company.name,
+                            accessLevelId: pj.dataValues.accessLevelId,
+                            userCharts: uniqueCharts,
+                            user
+                        });
 					});
 				});
-				return ProjectService.pagination(
-					params.page,
-					params.limit,
-					projects
-				);
+				return projects;
+				// return ProjectService.pagination(
+				// 	params.page,
+				// 	params.limit,
+				// 	projects
+				// );
 				// todo: uncomment to test
 				// return projects;
 			})
