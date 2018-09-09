@@ -77,7 +77,7 @@ export class ProjectsCardComponent implements OnInit {
 			this.status = 'Read';
 		}
 		// format data
-		this.date = moment(this.updatedAt).format('MM/DD/YYYY HH:MM');
+		this.date = moment(this.updatedAt).calendar();
 	}
 
 	deleteDialog() {
