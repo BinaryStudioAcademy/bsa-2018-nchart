@@ -1,20 +1,20 @@
 @import ../variables
 @import ../colors
 
+.ui-card-body
+	padding: 0
 .ui-card-content
 	box-sizing: content-box
 	background-color: $backgroundWhiteColor
-	width: 260px
-	padding: 20px
-	padding-top: 12px
-	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)
-    transition: 0.5s
+	padding: 1rem
+	box-shadow: -1px 1px 3px rgba(151, 155, 174, 0.2), 1px 1px 3px rgba(151, 155, 174, 0.2)
+	transition: 0.5s
 	font-family: $fontFamily !important
 	position: relative
 	.project-name
 		text-decoration: none
 	.project-name:hover
-		opacity: 0.8	
+		opacity: 0.8
 
 
 	.ui-buttonset.ui-splitbutton
@@ -40,13 +40,8 @@
 	.project-name
 		color: $activeColor
 		font-weight: 900
-		font-size: 1rem
+		font-size: 1.1rem
 
-.ui-card-content:hover 
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2)
-	
-.ui-card-body
-		padding: 0
 
 .project-card-user
 	margin-bottom: 0.5rem
@@ -54,13 +49,13 @@
 .project-card-folder
 	margin: 0.5rem 0 0.5rem 0
 	display: flex
+	line-height: .9rem
 	align-items: center
 
 .card-user-name
-	font-weight: 600
 	font-family: $fontFamily
 	font-size: 1rem
-	padding: 0 12px
+	padding: 0 5px
 
 .card-profile-image
 	cursor: pointer
@@ -78,12 +73,12 @@
 .project-card-project-info
 	display: flex
 	& a
-		color: $linkTextColor
+		color: $textActiveColor
 		text-decoration: none
 		&:visited
-			color: $linkTextColor !important
+			color: $textActiveColor !important
 		&:hover
-			color: $linkHoverTextColor !important
+			color: $secondaryTextColor !important
 
 .project-access
 	margin-top: 10px
@@ -99,30 +94,43 @@
 	font-weight: 600
 	font-size: 0.7rem
 	padding: 0 0.7rem
-	height: 1rem
-	line-height: 1rem
-	border-radius: 0.7rem
+	height: 1.4rem
+	line-height: 1.35rem
+	border-radius: 0.4rem
 	background-color: #f1f1f1
 .bar-chart-tag
-	background-color: #34738f
+	background-color: $statusActiveColor
 	color: white
 .scatterplot-tag
-	background-color: #be3e2b
+	background-color: $statusWarningColor
 	color: white
 .pie-chart-tag
-	background-color: #f6a75a
+	background-color: $statusPendingColor
 	color: white
 
 .last-update
-	float: right
-	font-size: 0.7rem
+	color: $secondaryTextColor
+	& span
+		padding: 0 5px
 
 .dialog-button
 	.ui-button
 		margin: .25em
-//.project-card-control
-//	position: relative
-//	& input
-//		position: absolute
-//		bottom: 0
-//		left: 0
+
+.ui-card-content .pi-caret-down:before
+	content: "\e950" !important
+	font-weight: 900
+
+.ui-card-content ul
+	& a
+		padding-left: 12px !important
+	& a.ui-menuitem-link
+		color: black !important
+		font-weight: normal
+		padding: 0.714em 0.857em
+	& .ui-menuitem-icon
+		margin-right: 0.85em
+
+
+ul .ui-menuitem-text
+	font-family: "Lato", "Trebuchet MS", Arial, Helvetica, sans-serif

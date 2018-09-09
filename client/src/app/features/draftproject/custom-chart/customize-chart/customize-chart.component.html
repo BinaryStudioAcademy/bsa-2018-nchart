@@ -1,5 +1,5 @@
 <div class="customize-chart-container" [ngSwitch]="chartType">
-		<app-bar-chart-customize
+	<app-bar-chart-customize
 		*ngSwitchCase="'barChart'"
 		[formGroup]="formGroup"
 		[customizeSettings]="customizeSettings"
@@ -14,4 +14,9 @@
 		[formGroup]="formGroup"
 		[customizeSettings]="customizeSettings"
 	></app-scatterplot-chart-customize>
+	<app-alluvial-diagram-chart-customize
+		*ngSwitchCase="'alluvialDiagram'"
+		[formGroup]="formGroup"
+		[customizeSettings]="customizeSettings"
+	></app-alluvial-diagram-chart-customize>
 </div>

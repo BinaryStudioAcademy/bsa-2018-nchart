@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 import { LandingPageComponent } from '@app/core/landing-page/landing-page.component';
 import { FormFieldModule } from '@app/shared/components/form-field/form-field.module';
 import { ProjectTabsComponent } from '@app/core/project/tabs/project-tabs.component';
+import { ProjectsCardComponent } from '@app/core/projects/project-card/projects-card.component';
 
 @NgModule({
 	declarations: [
@@ -23,7 +24,8 @@ import { ProjectTabsComponent } from '@app/core/project/tabs/project-tabs.compon
 		ProjectComponent,
 		ProjectsComponent,
 		LandingPageComponent,
-		ProjectTabsComponent
+		ProjectTabsComponent,
+		ProjectsCardComponent
 	],
 	imports: [
 		CommonModule,

@@ -1,7 +1,8 @@
 import { Observable } from 'rxjs';
-import { OriginProject } from '@app/models/project.model';
+import { OriginProject, ProjectPreview } from '@app/models/project.model';
 import { ResponseScheme } from '@app/models/response-scheme.model';
 import { SchemeID } from '@app/models/normalizr.model';
+import { PaginationData } from '@app/models/projects-store.model';
 
 export interface ProjectDomain {
 	save(payload: {
@@ -26,8 +27,15 @@ export interface ProjectDomain {
 		groupId: string;
 	}): Observable<ResponseScheme<OriginProject>>;
 
-	// todo: add token to header
-	getPartByUserId(): Observable<ResponseScheme<any[]>>;
+	getPartByUserId(payload: {
+		page: number;
+		name?: string;
+	}): Observable<
+		ResponseScheme<{
+			projects: ProjectPreview[];
+			pagination: PaginationData;
+		}>
+	>;
 
 	getAll(): Observable<ResponseScheme<OriginProject[]>>;
 

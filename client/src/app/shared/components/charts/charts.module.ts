@@ -9,6 +9,8 @@ import { WorldMapChartComponent } from '@app/shared/components/charts/world-map-
 import { BarChartCustomizeComponent } from '@app/shared/components/charts/bar-chart/bar-chart-customize.component';
 import { PieChartCustomizeComponent } from '@app/shared/components/charts/pie-chart/pie-chart-customize.component';
 import { ScatterplotChartCustomizeComponent } from '@app/shared/components/charts/scatterplot-chart/scatterplot-chart-customize';
+import { AlluvialDiagramChartComponent } from '@app/shared/components/charts/alluvial-diagram-chart/alluvial-diagram-chart.component';
+import { AlluvialDiagramChartCustomizeComponent } from '@app/shared/components/charts/alluvial-diagram-chart/alluvial-diagram-chart-customize';
 
 const chartComponents = [
 	TestChartComponent,
@@ -16,9 +18,11 @@ const chartComponents = [
 	PieChartComponent,
 	WorldMapChartComponent,
 	ScatterplotChartComponent,
+	AlluvialDiagramChartComponent,
 	BarChartCustomizeComponent,
 	PieChartCustomizeComponent,
-	ScatterplotChartCustomizeComponent
+	ScatterplotChartCustomizeComponent,
+	AlluvialDiagramChartCustomizeComponent
 ];
 
 @NgModule({

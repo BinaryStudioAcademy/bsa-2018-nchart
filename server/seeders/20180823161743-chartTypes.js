@@ -251,7 +251,7 @@ module.exports = {
 					{
 						value: 5,
 						description:
-								'Width of black bars representing nodes, in pixels.',
+								'Width of bars representing nodes, in pixels.',
 						option: 'Nodes Width',
 						id: 19,
 						sysName: 'nodesWidth'
@@ -264,13 +264,12 @@ module.exports = {
 						sysName: 'linksOpacity'
 					},
 					{
-						value: '',
-						options: ['size', 'name', 'automatic'],
+						value: 10,
 						description:
-								'Sorting of nodes inside each step. It can be ‘automatic’ (trying to reduce the number of overlappings among flows), ‘size’ (nodes ordered from the biggest to the smallest), and ‘alphabetical’.',
-						option: 'Sort By',
+								'Padding of srokes representing links, in pixels.',
+						option: 'Node Padding',
 						id: 21,
-						sysName: 'sortBy'
+						sysName: 'nodePadding'
 					},
 					{
 						value: [],

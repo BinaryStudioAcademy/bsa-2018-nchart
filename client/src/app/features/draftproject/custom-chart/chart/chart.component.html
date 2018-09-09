@@ -21,4 +21,11 @@
 		*ngSwitchCase="'worldMap'"
 		#chart
 	></app-world-map-chart>
+	<app-alluvial-diagram-chart 
+		*ngSwitchCase="'alluvialDiagram'"
+		[data]="data"
+		[settings]="customizeSettings"
+		#chart
+	></app-alluvial-diagram-chart>
+
 </div>

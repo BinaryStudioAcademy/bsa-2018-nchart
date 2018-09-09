@@ -9,6 +9,7 @@ import {
 import { FormGroup } from '@angular/forms';
 import { PieChartService } from '@app/services/charts/pie-chart.service';
 import { ScatterplotChartService } from '@app/services/charts/scatterplot-chart.service';
+import { AlluvialDiagramChartService } from '@app/services/charts/alluvial-diagram-chart.service';
 
 @Component({
 	selector: 'app-custom-chart',
@@ -16,11 +17,13 @@ import { ScatterplotChartService } from '@app/services/charts/scatterplot-chart.
 	styleUrls: ['./custom-chart.component.sass']
 })
 export class CustomChartComponent implements OnInit, OnDestroy {
+	[x: string]: any;
 	constructor(
 		private barChartService: BarChartService,
 		private pieChartService: PieChartService,
 		private scatterplotChartService: ScatterplotChartService,
-		private storeService: StoreService
+		private storeService: StoreService,
+		private alluvialDiagramChartService: AlluvialDiagramChartService
 	) {}
 
 	data: any[];
@@ -50,17 +53,22 @@ export class CustomChartComponent implements OnInit, OnDestroy {
 					this.customizeSettings = t;
 					switch (this.chartType) {
 						case 'barChart':
-							this.customizeForm = this.barChartService.createBarChartCustomizeForm(
+							this.customizeForm = this.barChartService.createCustomizeForm(
 								this.customizeSettings
 							);
 							break;
 						case 'pieChart':
-							this.customizeForm = this.pieChartService.createPieChartCustomizeForm(
+							this.customizeForm = this.pieChartService.createCustomizeForm(
 								this.customizeSettings
 							);
 							break;
 						case 'scatterplot':
-							this.customizeForm = this.scatterplotChartService.createScatterplotChartCustomizeForm(
+							this.customizeForm = this.scatterplotChartService.createCustomizeForm(
+								this.customizeSettings
+							);
+							break;
+						case 'alluvialDiagram':
+							this.customizeForm = this.alluvialDiagramChartService.createCustomizeForm(
 								this.customizeSettings
 							);
 							break;
@@ -85,7 +93,11 @@ export class CustomChartComponent implements OnInit, OnDestroy {
 									data
 								);
 								break;
-
+							case 'alluvialDiagram':
+								this.data = this.alluvialDiagramChartService.getData(
+									data
+								);
+								break;
 							default:
 								break;
 						}
