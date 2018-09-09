@@ -1,4 +1,4 @@
-<div class="project-container">
+<div class="project-container" [loading-sp]="isLoading" spBackgroundColor="#f2f3f9a1">
 	<app-stepper
 		(steps)="getSteps($event)"
 		[errors]="stepperErrors"
@@ -23,17 +23,16 @@
 		<app-custom-chart *ngIf="isCharts()" id="chart" #viewItem></app-custom-chart>
 		<app-export *ngIf="isCharts()" id="export" #viewItem></app-export>
 
-
 		<p-dialog header="Confirmation"
-				  [(visible)]="display"
-				  [modal]="true"
-				  [responsive]="true"
-				  [closable]="false"
-				  [width]="350"
-				  [minWidth]="200"
-				  [minY]="70"
-				  [draggable]="false"
-				  [baseZIndex]="10000">
+				[(visible)]="display"
+				[modal]="true"
+				[responsive]="true"
+				[closable]="false"
+				[width]="350"
+				[minWidth]="200"
+				[minY]="70"
+				[draggable]="false"
+				[baseZIndex]="10000">
 			<span>
 				Are you sure that you want to leave page with unsaved project?
 			</span>
@@ -56,16 +55,16 @@
 		</p-dialog>
 
 		<p-dialog header="Confirmation"
-				  [(visible)]="displayModalDataset"
-				  [modal]="true"
-				  [responsive]="true"
-				  [closable]="false"
-				  [width]="350"
-				  [minWidth]="200"
-				  [resizable]="false"
-				  [minY]="70"
-				  [draggable]="false"
-				  [baseZIndex]="10000">
+				[(visible)]="displayModalDataset"
+				[modal]="true"
+				[responsive]="true"
+				[closable]="false"
+				[width]="350"
+				[minWidth]="200"
+				[resizable]="false"
+				[minY]="70"
+				[draggable]="false"
+				[baseZIndex]="10000">
 			<span>
 				Do you want use current dataset?
 			</span>
