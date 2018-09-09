@@ -13,6 +13,9 @@ import { CommonModule } from '@angular/common';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { FormFieldModule } from '@app/shared/components/form-field/form-field.module';
 import { ProjectTabsComponent } from '@app/core/project/tabs/project-tabs.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import {ButtonComponent} from '@app/shared/components/button/button/button.component';
+import {ChartComponent} from '@app/features/draftproject/custom-chart/chart/chart.component';
 
 @NgModule({
 	declarations: [
@@ -23,6 +26,7 @@ import { ProjectTabsComponent } from '@app/core/project/tabs/project-tabs.compon
 		ProjectComponent,
 		ProjectsComponent,
 		LandingPageComponent,
+		DashboardComponent,
 		ProjectTabsComponent
 	],
 	imports: [
@@ -32,6 +36,9 @@ import { ProjectTabsComponent } from '@app/core/project/tabs/project-tabs.compon
 		SharedModule,
 		FeatureModule,
 		FormFieldModule
+	],
+	entryComponents: [
+		ChartComponent
 	],
 	exports: []
 })

@@ -29,6 +29,7 @@
 		"@ngrx/store-devtools": "^6.1.0",
 		"@nicky-lenaers/ngx-scroll-to": "^1.0.0",
 		"@types/query-string": "^6.1.0",
+		"angular-gridster2": "^6.0.10",
 		"color-hash": "^1.0.3",
 		"core-js": "^2.5.4",
 		"d3": "^5.5.0",

@@ -1,0 +1,67 @@
+<div class="wrapper">
+
+	<button (click)="addItem()">add</button>
+	<button (click)="toggleModal()">show modal</button>
+	<button (click)="addCheck()">add test chart</button>
+
+	<gridster [options]="options">
+		<gridster-item [item]="item" *ngFor="let item of dashboard">
+			<div class="controls">
+				<app-button
+					type="icon"
+					icon="fas fa-trash-alt"
+					tooltip="Remove item"
+					tooltipPosition="top"
+					(onclick)="removeItem(item)"
+				></app-button>
+
+				<app-button
+					type="icon"
+					icon="fas fa-arrows-alt"
+					tooltip="Move item"
+					tooltipPosition="top"
+				></app-button>
+			</div>
+
+			<div class="main-content" (mousedown)="$event.stopPropagation()">
+				<ng-template #host></ng-template>
+			</div>
+		</gridster-item>
+	</gridster>
+</div>
+
+<p-dialog header="Add element"
+		  [(visible)]="displayModalDashboard"
+		  [modal]="true"
+		  [responsive]="true"
+		  [closable]="true"
+		  [width]="500"
+		  [minWidth]="400"
+		  [resizable]="false"
+		  [minY]="70"
+		  [draggable]="false"
+		  [baseZIndex]="10000">
+
+	<p-tabView activeIndex="0"
+			   (onChange)="onChange($event)"
+	>
+		<p-tabPanel header="Charts">
+			<div class="ui-g">
+				<app-button
+					*ngFor="let chart of userCharts"
+					class="samples"
+					(click)="addCharts(chart)"
+					[label]="chart.sysName"
+				>
+				</app-button>
+			</div>
+		</p-tabPanel>
+
+		<p-tabPanel header="Text">
+			<span>simple input</span>
+		</p-tabPanel>
+
+	</p-tabView>
+</p-dialog>
+
+

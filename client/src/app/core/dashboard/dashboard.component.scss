@@ -1,0 +1,25 @@
+@import '../../../theme/colors';
+
+
+.wrapper {
+	width: 100%;
+	margin-top: 100px;
+}
+
+gridster {
+	height: 70.707vh !important; // temporary solution
+}
+
+.secondary-text {
+	color: $secondaryTextColor;
+}
+
+.controls {
+	display: flex;
+	justify-content: flex-end;
+	align-items: baseline; // or position absolute
+}
+
+.main-content {
+
+}
