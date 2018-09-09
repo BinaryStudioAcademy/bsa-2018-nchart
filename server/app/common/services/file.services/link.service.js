@@ -12,12 +12,21 @@ class LinkService {
 			let fileLength;
 			const protocol = this.typeOfProtocol(this.url);
 			const request = protocol.request(this.url, response => {
+				const patt = [/text/, /application/];
+				if (
+					(protocol === https
+						&& patt[0].test(response.headers['content-type']))
+					|| patt[1].test(response.headers['content-type'])
+				) {
+					return resolve(true);
+				}
 				fileLength = response.headers['content-length'];
 				if (!fileLength) {
 					reject(new Error('File size is undefined'));
 				} else if (fileLength / 1000000 > 5) {
 					reject(new Error('File is too big'));
-				} else resolve(true);
+				}
+				return resolve(true);
 			});
 			request.on('error', err => {
 				reject(err);

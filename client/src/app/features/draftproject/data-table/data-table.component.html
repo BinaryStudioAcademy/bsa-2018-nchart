@@ -27,7 +27,7 @@
 		tooltipPosition="top"
 		(onclick)="remove()"
 	></app-button>
-	<app-button type="icon" icon="fas fa-expand" class="full-screen-btn" (onclick)="showDialog()"></app-button>
+	<app-button type="icon" icon="fas fa-expand" class="full-screen-btn" (onclick)="showDialog()" tooltip="Open in full screen" tooltipPosition="top"></app-button>
 	<app-table  [columns]="columns"
 				[data]="data"
 				(cellChange)="change($event)"
