@@ -2,32 +2,38 @@ import { Component, Input, OnInit } from '@angular/core';
 import * as moment from 'moment';
 
 @Component({
-	selector: 'app-card',
-	templateUrl: './card.component.html',
+	selector: 'app-projects-card',
+	templateUrl: './projects-card.component.html',
 	animations: []
 })
-export class CardComponent implements OnInit {
+export class ProjectsCardComponent implements OnInit {
 	display = false;
 	displayDelete = false;
+	displayRename = false;
 	date: string;
 	status: string;
 
 	itemsObjs = [
 		{
-			label: 'Rename'
-			// icon: 'fa fa-plus'
+			label: 'Rename',
+			command: () => {
+				this.renameDialog();
+			},
+			icon: 'fa fa-edit'
 		},
 		{
 			label: 'Delete',
 			command: () => {
 				this.deleteDialog();
-			}
+			},
+			icon: 'fa fa-trash'
 		},
 		{
 			label: 'Share',
 			command: () => {
 				this.shareDialog();
-			}
+			},
+			icon: 'fa fa-share'
 		}
 	];
 
@@ -71,11 +77,20 @@ export class CardComponent implements OnInit {
 			this.status = 'Read';
 		}
 		// format data
-		this.date = moment(this.updatedAt).format('MM/DD/YYYY HH:MM');
+		this.date = moment(this.updatedAt).calendar(null, {
+			sameDay: '[Today] [at] hh:mm',
+			lastDay: '[Yesterday at] hh:mm',
+			lastWeek: '[Last] dddd [at] hh:mm',
+			sameElse: 'DD/MM/YYYY hh:mm'
+		});
 	}
 
 	deleteDialog() {
 		this.displayDelete = true;
+	}
+
+	renameDialog() {
+		this.displayRename = true;
 	}
 
 	shareDialog() {

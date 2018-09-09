@@ -13,6 +13,12 @@ export const initialState: ProjectsState = {
 	byId: {},
 	all: [],
 	active: null,
+	pagination: {
+		pageCount: null,
+		page: null,
+		totalRecords: null,
+		rows: null
+	},
 	isLoading: false
 };
 
@@ -50,6 +56,14 @@ const byId = (
 			return {
 				...state,
 				[action.payload.project.id]: action.payload.project
+			};
+		case constants.UPDATE_PROJECT_NAME__COMPLETE:
+			return {
+				...state,
+				[action.payload.id]: {
+					...state[action.payload.id],
+					name: action.payload.name
+				}
 			};
 		case constants.LOAD_ONE_PROJECT__COMPLETE:
 			return {
@@ -91,7 +105,7 @@ const byId = (
 				...omit(state, action.payload.oldProjectId)
 			};
 		case constants.LOAD_PROJECTS_INFO__COMPLETE:
-			return action.payload.byId;
+			return action.payload.byId || {};
 		case constants.DELETE_ONE_PROJECT__COMPLETE:
 			return {
 				...omit(state, action.payload.id)
@@ -178,11 +192,27 @@ export const active = (
 	}
 };
 
+export const pagination = (
+	state = initialState.pagination,
+	action: ProjectsActions
+) => {
+	switch (action.type) {
+		case constants.LOAD_PROJECTS_INFO__COMPLETE:
+			return {
+				...state,
+				...action.payload.pagination
+			};
+		default:
+			return state;
+	}
+};
+
 const reducers = {
 	all,
 	byId,
 	isLoading,
-	active
+	active,
+	pagination
 };
 
 export const projectsReducer = combineReducers(reducers);

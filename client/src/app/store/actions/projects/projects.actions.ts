@@ -95,7 +95,7 @@ export class SaveProjectComplete extends AppAction<{
 	readonly type = ProjectsActionConstants.SAVE_PROJECT__COMPLETE;
 }
 
-export class UpdateProjectComplete extends AppAction<void> {
+export class UpdateProjectComplete extends AppAction<{}> {
 	readonly type = ProjectsActionConstants.UPDATE_PROJECT__COMPLETE;
 }
 
@@ -103,13 +103,17 @@ export class SaveProjectFailed extends FailedAction {
 	readonly type = ProjectsActionConstants.SAVE_PROJECT__FAILED;
 }
 
-export class LoadProjetcsInfo extends AppAction<void> {
+export class LoadProjetcsInfo extends AppAction<{
+	page: number;
+	name?: string;
+}> {
 	readonly type = ProjectsActionConstants.LOAD_PROJECTS_INFO;
 }
 
 export class LoadProjectsInfoComplete extends AppAction<{
 	all: SchemeID[];
 	byId: any;
+	pagination: any;
 }> {
 	readonly type = ProjectsActionConstants.LOAD_PROJECTS_INFO__COMPLETE;
 }
@@ -152,16 +156,17 @@ export class DeleteOneProjectFailed extends FailedAction {
 }
 
 export class UpdateProjectName extends AppAction<{
-	projectId: SchemeID;
+	id: SchemeID;
 	name: string;
 }> {
 	readonly type = ProjectsActionConstants.UPDATE_PROJECT_NAME;
 }
 
 export class UpdateProjectNameComplete extends AppAction<{
+	id: SchemeID;
 	name: string;
 }> {
-	readonly type = ProjectsActionConstants.UPDATE_PROJECT__COMPLETE;
+	readonly type = ProjectsActionConstants.UPDATE_PROJECT_NAME__COMPLETE;
 }
 
 export class UpdateProjectNameFailed extends FailedAction {
