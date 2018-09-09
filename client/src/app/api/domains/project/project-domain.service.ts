@@ -47,7 +47,8 @@ export class ProjectDomainService implements ProjectDomain {
 			new ServiceRequest(
 				RequestType.GET,
 				`${this.projectPath}/owners`,
-				null, payload
+				null,
+				payload
 			)
 		);
 	}

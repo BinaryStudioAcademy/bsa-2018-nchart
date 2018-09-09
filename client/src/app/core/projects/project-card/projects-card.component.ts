@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import * as moment from 'moment';
 
 @Component({
@@ -37,7 +37,8 @@ export class ProjectsCardComponent implements OnInit {
 		}
 	];
 
-	constructor() {}
+	constructor() {
+	}
 
 	@Input()
 	companyName: string;
@@ -77,7 +78,12 @@ export class ProjectsCardComponent implements OnInit {
 			this.status = 'Read';
 		}
 		// format data
-		this.date = moment(this.updatedAt).calendar();
+		this.date = moment(this.updatedAt).calendar(null, {
+			sameDay: '[Today] [at] hh:mm',
+			lastDay: '[Yesterday at] hh:mm',
+			lastWeek: '[Last] dddd [at] hh:mm',
+			sameElse: 'DD/MM/YYYY hh:mm'
+		});
 	}
 
 	deleteDialog() {
