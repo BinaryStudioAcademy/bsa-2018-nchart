@@ -6,11 +6,10 @@
 	width: 100%
 	min-height: 20px
 	border-top: none
-	padding: 1rem 0.8rem
+	padding: 1.5rem
 	display: block
-	// overflow: hidden
 	position: relative
-	margin: 0.5rem 0
+	margin-bottom: 1rem 
 	border-radius: 3px
 	font-family: $fontFamily
 	font-size: $fontSize
@@ -18,6 +17,17 @@
 	background-color: $stateDefaultBgColor
 	box-shadow: -1px 1px 3px rgba(151, 155, 174, 0.2), 1px 1px 3px rgba(151, 155, 174, 0.2)
 	box-sizing: border-box
+	&.compact
+		padding: 1rem
+
+.ui-main-block-header
+	font-size: 1.6rem
+	display: flex
+	align-items: center
+	line-height: 1.3rem
+	i
+		font-size: 1.3rem
+		margin-bottom: 2px
 
 .animated-main-block
 	display: block

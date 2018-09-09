@@ -2,39 +2,45 @@
 @import ../variables
 
 .ui-modal>.ui-widget-content
-	background: $stateDefaultBgColor
+	background-color: white
 	box-shadow: 0 2px 32px $teriaryColor
 	padding: 0.6rem
 	margin: 0 auto
 .ui-widget-overlay
 	background-color: $teriaryColor
-.ui-dialog 
-	.close-icon
-		float: right
-		cursor: pointer
-		&:hover
-			opacity: 0.5	
+.ui-dialog
 	.ui-dialog-titlebar-icon
 		position: absolute
-		top: 0
-		right: 0
-		span.pi.pi-times
-			display: flex
-			&:before
-				font-family: 'Font Awesome 5 Free'
-				content: '\f060'
-				font-weight: 900
-				color: $secondaryTextColor
-				margin-right: 5px
-			&:after
-				font-family: $fontFamily
-				content: 'Close'
-				color: $activeColor
-			&:hover
-				&:before
-					color: $stateActiveTextColor
-		&:hover
-			border-color: transparent
+		top: 5px
+		right: 5px
+	.ui-dialog-titlebar-icon:hover
+		opacity: 0.5
+		border-color: transparent
+//	.close-icon
+	//	float: right
+	//	cursor: pointer
+	//	&:hover
+		//	opacity: 0.5	
+		
+	//		position: absolute
+	//		top: 0
+	//		right: 0
+	//		span.pi.pi-times
+	//		display: flex
+		//	&:before
+		//		font-family: 'Font Awesome 5 Free'
+		//		content: '\f060'
+		//		font-weight: 900
+		//		color: $secondaryTextColor
+		//		margin-right: 5px
+		//	&:after
+		//		font-family: $fontFamily
+		//		content: 'Close'
+		//		color: $activeColor
+		//	&:hover
+		//		&:before
+		//			color: $stateActiveTextColor
+		
 	&.ui-widget .ui-dialog-titlebar
 		.ui-dialog-title
 			font-weight: 500
@@ -42,15 +48,13 @@
 	.ui-dialog-titlebar
 		padding: 0 0.6rem
 	&.ui-widget .ui-dialog-content
-		padding: 0
 		overflow: visible
 		background: $stateDefaultBgColor
 	.ui-dialog-footer
-		padding: 0 1rem
-		padding-top: 0.6rem
+		padding: 0 1rem 0 1rem
 		background: $stateDefaultBgColor
 		display: flex
-		justify-content: flex-start
+		justify-content: flex-end
 		app-button
 			.ui-button-text-icon-right:enabled
 				display: inline-block
@@ -64,7 +68,12 @@
 			height: 30px
 .no-closable
 	.ui-widget .ui-dialog-titlebar
-		padding-top: 1.4rem
+
+
+.ui-dialog-footer	
+	padding: 0 1.5em 0 1.5em
+.ui-dialog.ui-widget .ui-dialog-titlebar
+	padding: 1.5em 1.5em 0 1.5em
 
 .ui-modal-fullscreen
 	top: 0!important
@@ -72,6 +81,8 @@
 	width: 100%!important
 	height: 100%!important
 	border-radius: 0
+	.data-table .ui-table
+		margin-top: 5px
 	.custom-chart-container[_ngcontent-c9]
 		margin: 0
 		padding: 0
@@ -79,7 +90,7 @@
 		width: 100%
 		padding: 0
 	.ui-dialog.ui-widget .ui-dialog-content
-		padding: 0
+
 	&.fullscreen-chart
 		&.ui-dialog.ui-widget .ui-dialog-content
 			padding: 0
@@ -101,7 +112,6 @@
 	.ui-table
 		border: 2px solid $disabledColor
 		border-radius: 3px
-		margin-top: 20px
 		.ui-table-tbody>tr>td.ui-editing-cell input,
 		.ui-table-thead>tr>th input
 			outline: none
@@ -115,6 +125,7 @@
 		border: none
 		color: $secondaryTextColor
 		font-weight: 400
+		padding: 0.2rem 1rem
 	tr
 		height: 20px
 		border-bottom: 2px solid $disabledColor
@@ -129,6 +140,7 @@
 		border: none
 		background-color: $stateDefaultBgColor
 		text-align: center
+		white-space: pre
 		padding: 0
 		&.ui-editable-column
 			padding: 0
@@ -157,7 +169,8 @@
 			display: inline-block
 			overflow: hidden
 			text-overflow: clip
-			// max-width: 90%
+			white-space: pre
+			max-width: 100%
 	.ui-checkbox-wrp
 		padding: 0
 	.header-cell.number-cell,
