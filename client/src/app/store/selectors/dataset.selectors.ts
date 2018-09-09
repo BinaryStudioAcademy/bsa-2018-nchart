@@ -59,3 +59,6 @@ export const isDatasetLoading = () => (state: AppState) =>
 
 export const datasetPreloadSamples = () => (state: AppState) =>
 	state.datasetPreload.preloadSamples;
+
+export const isSamplesEmpty = () => (state: AppState) =>
+	state.datasetPreload.preloadSamples.length === 0;

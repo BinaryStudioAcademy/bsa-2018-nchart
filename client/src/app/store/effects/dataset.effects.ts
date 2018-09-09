@@ -22,7 +22,7 @@ import { throwError } from 'rxjs';
 import { ResponseScheme } from '@app/models/response-scheme.model';
 import { DatasetColumn } from '@app/models/dataset.model';
 import { userChart } from '@app/store/selectors/userCharts';
-import { AppState } from '@app/models/store.model';
+import { isSamplesEmpty } from '@app/store/selectors/dataset.selectors';
 
 @Injectable()
 export class DatasetEffects {
@@ -136,23 +136,15 @@ export class DatasetEffects {
 	@Effect()
 	preloadSamples$ = this.action$.pipe(
 		ofType(constants.PRELOAD_SAMPLES),
-		withLatestFrom(this.storeService.createSubscription()),
-		filter(([action, state]: [DatasetActions.PreloadSamples, AppState]) => {
-			return state.datasetPreload.preloadSamples.length === 0;
-		}),
+		withLatestFrom(this.storeService.createSubscription(isSamplesEmpty())),
+		filter(([_, isEmpty]: [DatasetActions.PreloadSamples, boolean]) => isEmpty
+			),
 		switchMap(
-			([action, state]: [DatasetActions.PreloadSamples, AppState]) => {
+			([action, _]: [DatasetActions.PreloadSamples, boolean]) => {
 				return this.datasetDomService.preloadSamples().pipe(
 					map(res => {
-						const resSamples = [];
-						res.payload.forEach(element => {
-							resSamples.push({
-								id: element.id,
-								name: element.name
-							});
-						});
 						return new DatasetActions.PreloadSamplesComplete(
-							resSamples
+							res.payload
 						);
 					}),
 					catchError(error =>
