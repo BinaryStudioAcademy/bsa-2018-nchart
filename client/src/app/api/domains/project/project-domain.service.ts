@@ -7,6 +7,8 @@ import { ProjectDomain } from '@app/models/project-domain.model';
 import { OriginProject } from '@app/models/project.model';
 import { ResponseScheme } from '@app/models/response-scheme.model';
 import { SchemeID } from '@app/models/normalizr.model';
+import { ProjectPreview } from '@app/models';
+import { PaginationData } from '@app/models/projects-store.model';
 
 @Injectable()
 export class ProjectDomainService implements ProjectDomain {
@@ -33,9 +35,21 @@ export class ProjectDomainService implements ProjectDomain {
 		);
 	}
 
-	getPartByUserId(): Observable<ResponseScheme<any[]>> {
-		return this.httpService.makeRequest<ResponseScheme<any[]>>(
-			new ServiceRequest(RequestType.GET, `${this.projectPath}/owners`)
+	getPartByUserId(
+		payload
+	): Observable<
+		ResponseScheme<{
+			projects: ProjectPreview[];
+			pagination: PaginationData;
+		}>
+	> {
+		return this.httpService.makeRequest<ResponseScheme<any>>(
+			new ServiceRequest(
+				RequestType.GET,
+				`${this.projectPath}/owners`,
+				null,
+				payload
+			)
 		);
 	}
 
@@ -59,7 +73,7 @@ export class ProjectDomainService implements ProjectDomain {
 		return this.httpService.makeRequest<ResponseScheme<any>>(
 			new ServiceRequest(
 				RequestType.POST,
-				`/${this.projectPath}/name`,
+				`${this.projectPath}/name`,
 				null,
 				payload
 			)

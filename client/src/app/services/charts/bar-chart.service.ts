@@ -143,7 +143,7 @@ export class BarChartService {
 		return this.data;
 	}
 
-	createBarChartCustomizeForm(barChartCustomize): FormGroup {
+	createCustomizeForm(barChartCustomize): FormGroup {
 		const initialValues: OptionalType<
 			BarChartCustomize
 		> = new BarChartCustomize(

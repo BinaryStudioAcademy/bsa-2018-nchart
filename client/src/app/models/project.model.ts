@@ -39,3 +39,24 @@ export interface ProjectEntities {
 	datasetData: DatasetDataState;
 	datasetColumn: DatasetColumnState;
 }
+
+export interface ProjectsFilter {
+	page: number;
+	search?: string;
+}
+
+interface UserPreview {
+	name: string;
+	email: string;
+}
+
+export interface ProjectPreview {
+	id: SchemeID;
+	name: string;
+	updatedAt: string;
+	groupName: string;
+	companyName: string;
+	accessLevelId: SchemeID;
+	userCharts: string[];
+	user: UserPreview;
+}
