@@ -74,7 +74,8 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 
 		this.formGroup = new FormGroup({
 			name: new FormControl(search, []),
-			charts: new FormControl(search, [])
+			charts: new FormControl(search, []),
+			date: new FormControl(search, [])
 		});
 
 		this.checks = [
@@ -96,6 +97,16 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 			{
 				label: 'Gantt Chart',
 				value: 'Gantt Chart',
+				control: this.formGroup.controls['charts']
+			},
+			{
+				label: 'Map Chart',
+				value: 'Map Chart',
+				control: this.formGroup.controls['charts']
+			},
+			{
+				label: 'Last Chart',
+				value: 'Last Chart',
 				control: this.formGroup.controls['charts']
 			}
 		];

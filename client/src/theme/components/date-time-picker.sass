@@ -1,3 +1,63 @@
 @import "~ng-pick-datetime/assets/style/picker.min.css"
 @import ../colors
 @import ../variables
+
+// days
+.owl-dt-calendar-table .owl-dt-calendar-cell-content
+	font-family: $fontFamily
+
+//years
+.owl-dt-calendar-table .owl-dt-calendar-cell-content
+	font-family: $fontFamily
+	border: none
+	border-radius: 0
+
+.owl-dt-calendar-table .owl-dt-calendar-cell-selected
+	background-color: $baseColor
+
+.owl-dt-timer-content .owl-dt-timer-input
+	font-family: $fontFamily
+
+.owl-dt-calendar-multi-year-view .owl-dt-calendar-table .owl-dt-calendar-header th
+	font-family: $fontFamily
+	color: $secondaryTextColor
+
+.owl-dt-calendar-table .owl-dt-calendar-header .owl-dt-weekdays th
+	font-size: 1em
+	font-weight: 400
+	text-align: center
+	padding-bottom: 1em
+	font-family: $fontFamily
+
+.owl-dt-control-period-button .owl-dt-control-button-content
+	font-family: $fontFamily
+
+.owl-dt-container-control-button
+	min-width: 110px
+	min-height: 45px
+	font-weight: 600
+	font-family: "Lato", "Trebuchet MS", Arial, Helvetica, sans-serif
+	font-size: 0.9rem
+	color: #FFFFFF
+	background-color: $defaultButtonColor
+	border-color: $defaultButtonColor
+	&:enabled:hover
+		background-color: $defaultButtonHover
+		border-color: $defaultButtonHover
+		box-shadow: $boxShadow
+	&:enabled:focus,
+	&:enabled:active
+		color: $stateActiveBgColor
+		background-color: $defaultButtonColor
+		border-color: $defaultButtonColor
+
+.owl-dt-timer
+	height: 6em
+
+.search-projects .ui-g
+	width: 100% !important
+	display: flex
+	flex-wrap: nowrap
+	justify-content: end
+	& .ui-g-12
+		width: 200px
