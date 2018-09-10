@@ -11,6 +11,9 @@ import {ScatterplotChartService} from '@app/services/charts/scatterplot-chart.se
 import {PieChartService} from '@app/services/charts/pie-chart.service';
 import {BarChartService} from '@app/services/charts/bar-chart.service';
 import {take, withLatestFrom} from 'rxjs/internal/operators';
+import {LoadOneProject} from '@app/store/actions/projects/projects.actions';
+import {ActivatedRoute} from '@angular/router';
+import {Subscription} from 'rxjs/index';
 
 @Component({
 	selector: 'app-dashboard',
@@ -22,6 +25,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 	displayModalDashboard = true;
 	options: GridsterConfig;
 	dashboard: Array<GridsterItem>;
+	routeParams$: Subscription;
 	fromRemove = false;
 	components: ComponentRef<any>[] = [];
 	@ViewChildren('host', {read: ViewContainerRef}) hosts: QueryList<ViewContainerRef>;
@@ -34,6 +38,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 	userCharts;
 
 	constructor(private barChartService: BarChartService,
+				private route: ActivatedRoute,
 				private pieChartService: PieChartService,
 				private scatterplotChartService: ScatterplotChartService,
 				private storeService: StoreService,
@@ -41,6 +46,18 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 	}
 
 	ngOnInit() {
+		this.routeParams$ = this.route.params.subscribe(
+			(params: { id?: number }) => {
+				const { id } = params;
+
+				if (id) {
+					this.storeService.dispatch(
+						new LoadOneProject({ projectId: id + '' })
+					);
+				}
+			}
+		);
+
 		this.options = {
 			gridType: GridType.Fit,
 			displayGrid: DisplayGrid.Always,
@@ -65,7 +82,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 			defaultItemRows: 12
 		};
 
-
 		this.dashboard = [
 			// {cols: 2, rows: 1, y: 0, x: 0},
 			// {cols: 2, rows: 2, y: 0, x: 2},
@@ -79,7 +95,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 			// {cols: 1, rows: 1, y: 3, x: 4},
 			// {cols: 1, rows: 1, y: 0, x: 6}
 		];
-
 
 		this.disconnect = this.storeService.connect([
 			{
@@ -126,7 +141,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 				}
 			}
 		]);
-
 	}
 
 	ngAfterViewInit(): void {
@@ -139,7 +153,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 				const host = this.hosts.last;
 				const item = this.dashboard[this.dashboard.length - 1];
 
-				if (item.data && item.data.component) {
+				if (item && item.data && item.data.component) {
 					const componentFactory = this.componentFactoryResolver.resolveComponentFactory(item.data.component);
 					const componentRef = host.createComponent(componentFactory);
 					if ((componentRef.instance instanceof ChartComponent)) {
@@ -167,6 +181,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 	}
 
 	ngOnDestroy(): void {
+		this.routeParams$.unsubscribe();
 		this.components.forEach(c => c.changeDetectorRef.detach());
 	}
 

@@ -14,12 +14,12 @@ gridster {
 	color: $secondaryTextColor;
 }
 
-.controls {
-	display: flex;
-	justify-content: flex-end;
-	align-items: baseline; // or position absolute
+.control-remove,
+.control-move {
+	position: absolute;
+	cursor: pointer;
 }
 
-.main-content {
-
+.control-move {
+	right: 0;
 }

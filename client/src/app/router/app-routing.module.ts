@@ -52,6 +52,7 @@ const appRoutes: Routes = [
 			{
 				path: 'project/:id/dashboard',
 				component: DashboardComponent,
+				canActivate: [ProjectGuard]
 			},
 			{
 				path: 'project/:id/pdf_preview',

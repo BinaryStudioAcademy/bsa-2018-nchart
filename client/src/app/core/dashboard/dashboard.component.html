@@ -1,6 +1,6 @@
 <div class="wrapper">
 
-	<button (click)="addItem()">add</button>
+	<button (click)="addItem()">add empty item</button>
 	<button (click)="toggleModal()">show modal</button>
 	<button (click)="addCheck()">add test chart</button>
 	<button (click)="addBtn()">addBtn</button>
@@ -9,14 +9,16 @@
 		<gridster-item [item]="item" *ngFor="let item of dashboard">
 			<div class="controls">
 				<app-button
+					class="control-remove"
 					type="icon"
 					icon="fas fa-trash-alt"
 					tooltip="Remove item"
-					tooltipPosition="top"
+					tooltipPosition="right"
 					(onclick)="removeItem(item)"
 				></app-button>
 
 				<app-button
+					class="control-move"
 					type="icon"
 					icon="fas fa-arrows-alt"
 					tooltip="Move item"
