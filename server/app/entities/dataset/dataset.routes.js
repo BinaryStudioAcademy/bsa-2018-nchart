@@ -11,7 +11,14 @@ dataset.get('/', (req, res, next) => {
 
 dataset.get('/:id', (req, res, next) => {
 	datasetService
-		.getById(Number(req.params.id))
+		.getById(req.params.id)
+		.then(PayloadGeneratorService.nextWithData(next, res))
+		.catch(next);
+});
+
+dataset.get('/samples', (req, res, next) => {
+	datasetService
+		.getSamples()
 		.then(PayloadGeneratorService.nextWithData(next, res))
 		.catch(next);
 });

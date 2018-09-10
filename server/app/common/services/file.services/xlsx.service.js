@@ -3,6 +3,7 @@ const async = require('async');
 const fs = require('fs');
 const uuidv4 = require('uuid/v4');
 const FsService = require('../../middleware/file.middleware');
+const transliterate = require('../../services/file.services/transliterate.service');
 
 function renameFiles(arr) {
 	const count = {};
@@ -68,7 +69,7 @@ const getHeaders = (path, content) => {
 		return parseHeaders(workbook);
 	}
 	// if user sent string
-	const workbook = XLSX.read(content, { type: 'string' });
+	const workbook = XLSX.read(transliterate(content), { type: 'string' });
 	return parseHeaders(workbook);
 };
 
@@ -149,7 +150,7 @@ const parseData = (data, headers) => {
 	return payload;
 };
 
-const readFile = path => new Promise((resolve, reject) => {
+const readFile = path => new Promise((resolve) => {
 	const headers = getHeaders(path);
 	const file = fs.createReadStream(path);
 	const buffers = [];
@@ -159,19 +160,18 @@ const readFile = path => new Promise((resolve, reject) => {
 	file.on('end', () => {
 		const buffer = Buffer.concat(buffers);
 		const workbook = XLSX.read(buffer); // works
+		const sheet = workbook.Sheets[workbook.SheetNames[0]];
+		const range = XLSX.utils.decode_range(sheet['!ref']);
 		const data = XLSX.utils.sheet_to_json(
 			workbook.Sheets[workbook.SheetNames[0]],
-			{ header: headers, range: 1, defval: null }
+			{ header: headers, range: range.s.r + 1, defval: null }
 		);
 		const payload = parseData(data, headers);
-		if (payload.length === 0) {
-			reject(new Error('Messed up file'));
-		}
 		resolve(payload);
 	});
 });
 
-const readString = content => new Promise((resolve, reject) => {
+const readString = content => new Promise((resolve) => {
 	const headers = getHeaders(null, content);
 	const workbook = XLSX.read(content, { type: 'string' });
 	const data = XLSX.utils.sheet_to_json(
@@ -179,9 +179,6 @@ const readString = content => new Promise((resolve, reject) => {
 		{ header: headers, range: 1 }
 	);
 	const payload = parseData(data, headers);
-	if (payload.data.length === 0) {
-		reject(new Error('Messed up file'));
-	}
 	resolve(payload);
 });
 

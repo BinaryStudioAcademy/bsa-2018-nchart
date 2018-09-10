@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 @Component({
 	selector: 'app-link',
@@ -23,6 +23,9 @@ export class LinkComponent implements OnInit {
 	@Input()
 	displayWith: 'icon' | 'shape';
 
+	@Output()
+	onclick: EventEmitter<any> = new EventEmitter();
+
 	constructor() {}
 
 	private static mapClassesToObject(
@@ -40,6 +43,10 @@ export class LinkComponent implements OnInit {
 
 	ngOnInit() {
 		this.displayWith = this.detectDisplayWith();
+	}
+
+	onClick(e) {
+		this.onclick.emit(e);
 	}
 
 	detectDisplayWith() {

@@ -1,0 +1,6 @@
+<form [formGroup]="formGroup" class="customize-settings-container" class="customize-form">
+    <app-spinner [label]="'Width'"(onchange)="change()" [control]="formGroup.controls.width" [min]="0" [step]="1"></app-spinner> 
+    <app-spinner [label]="'Height'"(onchange)="change()" [control]="formGroup.controls.height" [min]="0" [step]="1"></app-spinner>
+    <app-spinner [label]="'Max Radius'"(onchange)="change()" [control]="formGroup.controls.maxRadius" [min]="0"  [step]="1"></app-spinner>
+    <app-checkbox [label]="'Set Origin At (0,0)'" (change)="change()" [control]="formGroup.controls.setOrigin"></app-checkbox>
+</form>

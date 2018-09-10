@@ -6,6 +6,9 @@ import { RequestType } from '@app/models/requestType.model';
 import { ProjectDomain } from '@app/models/project-domain.model';
 import { OriginProject } from '@app/models/project.model';
 import { ResponseScheme } from '@app/models/response-scheme.model';
+import { SchemeID } from '@app/models/normalizr.model';
+import { ProjectPreview } from '@app/models';
+import { PaginationData } from '@app/models/projects-store.model';
 
 @Injectable()
 export class ProjectDomainService implements ProjectDomain {
@@ -16,6 +19,37 @@ export class ProjectDomainService implements ProjectDomain {
 	getAll(): Observable<ResponseScheme<OriginProject[]>> {
 		return this.httpService.makeRequest<ResponseScheme<OriginProject[]>>(
 			new ServiceRequest(RequestType.GET, `${this.projectPath}`, null)
+		);
+	}
+
+	share(payload): Observable<ResponseScheme<any>> {
+		return this.httpService.makeRequest<ResponseScheme<any>>(
+			new ServiceRequest(
+				RequestType.POST,
+				`${this.projectPath}/shareByEmail`,
+				{
+					'Content-Type': 'application/json'
+				},
+				payload
+			)
+		);
+	}
+
+	getPartByUserId(
+		payload
+	): Observable<
+		ResponseScheme<{
+			projects: ProjectPreview[];
+			pagination: PaginationData;
+		}>
+	> {
+		return this.httpService.makeRequest<ResponseScheme<any>>(
+			new ServiceRequest(
+				RequestType.GET,
+				`${this.projectPath}/owners`,
+				null,
+				payload
+			)
 		);
 	}
 
@@ -32,30 +66,32 @@ export class ProjectDomainService implements ProjectDomain {
 		);
 	}
 
-	update(payload: {
-		project: OriginProject;
-	}): Observable<ResponseScheme<OriginProject>> {
-		const s = this.httpService.makeRequest<ResponseScheme<OriginProject>>(
+	updateName(payload: {
+		id: SchemeID;
+		name: string;
+	}): Observable<ResponseScheme<any>> {
+		return this.httpService.makeRequest<ResponseScheme<any>>(
 			new ServiceRequest(
-				RequestType.PUT,
-				`/${this.projectPath}/${payload.project.id}`,
-				null,
-				payload.project
-			)
-		);
-		return s;
-	}
-
-	delete(payload: { projectId: string }): Observable<ResponseScheme<null>> {
-		const s = this.httpService.makeRequest<ResponseScheme<null>>(
-			new ServiceRequest(
-				RequestType.DELETE,
-				`/${this.projectPath}/${payload.projectId}`,
+				RequestType.POST,
+				`${this.projectPath}/name`,
 				null,
 				payload
 			)
 		);
-		return s;
+	}
+
+	delete(payload: {
+		projectId: SchemeID;
+		accessLevelId: number;
+	}): Observable<ResponseScheme<any>> {
+		return this.httpService.makeRequest<ResponseScheme<any>>(
+			new ServiceRequest(
+				RequestType.POST,
+				`${this.projectPath}/delete`,
+				null,
+				payload
+			)
+		);
 	}
 
 	getByProjectId(payload: {

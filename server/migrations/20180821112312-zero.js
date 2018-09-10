@@ -109,7 +109,9 @@ module.exports = {
 								allowNull: false,
 								autoIncrement: true,
 								primaryKey: true,
-								type: Sequelize.INTEGER
+								type: Sequelize.INTEGER,
+								onDelete: 'CASCADE',
+								hooks: true
 							},
 							name: {
 								type: Sequelize.STRING
@@ -301,7 +303,8 @@ module.exports = {
 								type: Sequelize.INTEGER,
 								references: {
 									model: 'projects',
-									key: 'id'
+									key: 'id',
+									onDelete: 'CASCADE'
 								},
 								primaryKey: true
 							},

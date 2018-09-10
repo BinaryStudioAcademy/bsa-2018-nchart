@@ -5,6 +5,8 @@
 			<span class="project-name-text">{{projectName}}</span>
 			<app-button icon="fas fa-pen" 
 						type="icon"
+						tooltip="Edit name"
+						tooltipPosition="top"
 			></app-button>
 		</h3>
 
@@ -17,6 +19,8 @@
 						type="icon" 
 						(onclick)="closeEditing()"
 						[disabled]="nameControl.invalid"
+						tooltip="Save name"
+						tooltipPosition="top"
 			></app-button>
 		</div>
 

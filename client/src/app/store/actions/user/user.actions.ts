@@ -52,7 +52,12 @@ export class LogoutFailed extends FailedAction {
 	readonly type = UserActionConstants.LOGOUT__FAILED;
 }
 
+export class CanSaveProject extends AppAction<void> {
+	readonly type = UserActionConstants.CAN_SAVE;
+}
+
 export type Actions =
+	| CanSaveProject
 	| VerifyToken
 	| VerifyTokenComplete
 	| VerifyTokenFailed

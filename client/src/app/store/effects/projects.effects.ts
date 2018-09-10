@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
-import { map, switchMap, mergeMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { denormalize, normalize } from 'normalizr';
@@ -12,16 +12,29 @@ import { ProjectService } from '@app/services/project.service';
 import { projectScheme } from '@app/schemes/project.scheme';
 import { DatasetService } from '@app/services/dataset.service';
 import { StoreService } from '@app/services/store.service';
-import { getFullProject } from '@app/store/selectors/userCharts';
 import {
+	getFullProject,
+	isRepeatDataset,
+	userChart
+} from '@app/store/selectors/userCharts';
+import {
+	RemoveChartProject,
+	RemoveChartProjectComplete,
+	RemoveDatasetProject,
 	SaveProjectComplete,
 	UpdateProjectComplete
 } from '@app/store/actions/projects/projects.actions';
 import { concat, throwError } from 'rxjs';
 import { SaveProjectFailed } from '@app/store/actions/projects/projects.actions';
-import { withLatestFrom } from 'rxjs/internal/operators';
+import { concatMap, filter, withLatestFrom } from 'rxjs/internal/operators';
 import { Go } from '@app/store/actions/router/router.actions';
 import { AppState } from '@app/models/store.model';
+import {
+	activeProjectId,
+	getAmountUserCharts
+} from '@app/store/selectors/projects.selectors';
+import { CreateChart } from '@app/store/actions/charts/charts.actions';
+import { getRouterQueryParams } from '@app/store/selectors/router.selectors';
 
 @Injectable()
 export class ProjectsEffects {
@@ -71,17 +84,55 @@ export class ProjectsEffects {
 		ofType(ProjectsActionConstants.CREATE_DRAFT_PROJECT),
 		switchMap((action: projectActions.CreateDraftProject) =>
 			this.projectService.createDraftProject().pipe(
-				map(
-					project =>
+				concatMap(project => {
+					return [
 						new projectActions.CreateDraftProjectComplete({
 							project
-						})
-				),
+						}),
+						new CreateChart({ datatsetId: null })
+					];
+				}),
 				catchError(error =>
 					of(new projectActions.CreateDraftProjectFailed())
 				)
 			)
 		)
+	);
+
+	@Effect()
+	removePage$ = this.action$.pipe(
+		ofType(ProjectsActionConstants.REMOVE_PAGE_PROJECT),
+		withLatestFrom(this.storeService.createSubscription()),
+		switchMap(([action, state]) => {
+			const chartId = (action as RemoveChartProject).payload.chartId;
+			const isUseDataset = isRepeatDataset(chartId)(state);
+			const projectId = activeProjectId()(state);
+
+			if (isUseDataset) {
+				return [new RemoveChartProject({ chartId, projectId })] as any;
+			} else {
+				const { datasetId } = userChart(chartId)(state);
+				return [
+					new RemoveChartProject({ chartId, projectId }),
+					new RemoveDatasetProject({ datasetId, projectId, chartId })
+				] as any;
+			}
+		})
+	);
+
+	@Effect()
+	removeChart$ = this.action$.pipe(
+		ofType(ProjectsActionConstants.REMOVE_CHART_PROJECT),
+		withLatestFrom(
+			this.storeService.createSubscription(getAmountUserCharts())
+		),
+		filter(([action, counts]) => counts > 1),
+		withLatestFrom(this.storeService.createSubscription()),
+		map(([[action], state]) => {
+			const chartId = (action as RemoveChartProject).payload.chartId;
+			const projectId = activeProjectId()(state);
+			return new RemoveChartProjectComplete({ chartId, projectId });
+		})
 	);
 
 	@Effect()
@@ -154,8 +205,21 @@ export class ProjectsEffects {
 			};
 
 			return this.projectDomainService.save({ project }).pipe(
-				mergeMap(response => {
+				withLatestFrom(
+					this.storeService.createSubscription(getRouterQueryParams())
+				),
+				concatMap(([response, { redirect }]) => {
 					if (project.id) {
+						if (redirect) {
+							return [
+								new UpdateProjectComplete(),
+								new Go({
+									path: [
+										`/app/project/${response.payload.id}`
+									]
+								})
+							] as any;
+						}
 						return [new UpdateProjectComplete()] as any;
 					} else {
 						return [
@@ -180,5 +244,115 @@ export class ProjectsEffects {
 				})
 			);
 		})
+	);
+
+	@Effect()
+	loadInfo = this.action$.pipe(
+		ofType(ProjectsActionConstants.LOAD_PROJECTS_INFO),
+		switchMap((action: projectActions.LoadProjetcsInfo) =>
+			this.projectDomainService.getPartByUserId(action.payload).pipe(
+				map(value => {
+					if (value.isSuccess) {
+						const {
+							result: all,
+							entities: { project: byId }
+						} = normalize(value.payload.projects, [projectScheme]);
+						return new projectActions.LoadProjectsInfoComplete({
+							all,
+							byId,
+							pagination: value.payload.pagination
+						});
+					}
+					return throwError(new Error('Cant getPartByUserId'));
+				}),
+				catchError(error => {
+					return of(
+						new projectActions.LoadProjectsInfoFailed({
+							action: action,
+							msg: 'test',
+							error: error
+						})
+					);
+				})
+			)
+		)
+	);
+
+	@Effect()
+	shareProject = this.action$.pipe(
+		ofType(ProjectsActionConstants.SHARE_PROJECT),
+		switchMap((action: projectActions.ShareProject) =>
+			this.projectDomainService.share(action.payload).pipe(
+				map(value => {
+					if (value.isSuccess) {
+						return new projectActions.ShareProjectComplete(
+							value.payload
+						);
+					}
+					return throwError(new Error('Cant share project'));
+				}),
+				catchError(error => {
+					return of(
+						new projectActions.ShareProjectFailed({
+							action: action,
+							msg: 'test',
+							error: error
+						})
+					);
+				})
+			)
+		)
+	);
+
+	@Effect()
+	deleteProject = this.action$.pipe(
+		ofType(ProjectsActionConstants.DELETE_ONE_PROJECT),
+		switchMap((action: projectActions.DeleteOneProject) =>
+			this.projectDomainService.delete(action.payload).pipe(
+				map(value => {
+					if (value.isSuccess) {
+						return new projectActions.DeleteOneProjectComplete({
+							id: action.payload.projectId
+						});
+					}
+					return throwError(new Error('Cant delete project'));
+				}),
+				catchError(error => {
+					return of(
+						new projectActions.DeleteOneProjectFailed({
+							action: action,
+							msg: 'test',
+							error: error
+						})
+					);
+				})
+			)
+		)
+	);
+
+	@Effect()
+	updateName = this.action$.pipe(
+		ofType(ProjectsActionConstants.UPDATE_PROJECT_NAME),
+		switchMap((action: projectActions.UpdateProjectName) =>
+			this.projectDomainService.updateName(action.payload).pipe(
+				map(value => {
+					if (value.isSuccess) {
+						return new projectActions.UpdateProjectNameComplete(
+							action.payload
+						);
+					}
+					return throwError(new Error('Cant rename project'));
+				}),
+				catchError(error => {
+					return of(
+						new projectActions.UpdateProjectNameFailed({
+							action: action,
+							msg: 'test',
+							error: error
+						})
+					);
+				})
+			)
+		)
 	);
 }

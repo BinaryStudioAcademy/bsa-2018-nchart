@@ -1,0 +1,51 @@
+<div class="ui-dialog-wrp">
+	<p-dialog
+	[modal]="true"
+	[draggable]="false"
+	[width]="350"
+	[minWidth]="200"
+	[minY]="70"
+	[maximizable]="false"
+	[baseZIndex]="10000"
+	[(visible)]="display"
+	[resizable]="false"
+	(onHide)="close()"
+	[closable]="true">
+	<p-header>
+		Share project
+	</p-header>
+		<div class="email-input">
+			<app-input-text
+				class="ui-fluid"
+				type="text"
+				label="Email"
+				[control]="formGroup.controls['email']">
+			</app-input-text>
+		</div>
+		<form [formGroup]="formGroup">
+			<div class="ui-g radio-access">
+				<span>Select access type:</span>
+				<div class="ui-g-12">
+					<p-radioButton
+						name="group"
+		 				value='3'
+		 				label="Read"
+						formControlName="accessLevelId"
+						inputId="opt1">
+					</p-radioButton>
+				</div>
+				<div class="ui-g-12">
+					<p-radioButton
+						name="group"
+						value='2'
+						label="Read/Write"
+						formControlName="accessLevelId"
+						inputId="opt2">
+					</p-radioButton>
+				</div>
+			</div>
+		</form>
+		<app-button label="Send" [disabled]="!formGroup.valid" (onclick)="share(formGroup.value)" style="float: right;"></app-button>
+	</p-dialog>
+
+</div>
