@@ -33,14 +33,12 @@ class ProjectService {
 					callback => {
 						if (obj.project.id) {
 							this.ProjectRepository.upsert(obj.project)
-								.then(() =>
-									callback(null, false, {
-										project: {
-											id: obj.project.id,
-											name: obj.project.name
-										}
-									})
-								)
+								.then(() => callback(null, false, {
+									project: {
+										id: obj.project.id,
+										name: obj.project.name
+									}
+								}))
 								.catch(err => callback(err, null));
 						} else {
 							this.ProjectRepository.create(obj.project.name)
@@ -78,7 +76,7 @@ class ProjectService {
 								projectId: payload.project.id,
 								accessLevelId: 1
 							})
-								// todo: error handler if groupProject  already exists
+							// todo: error handler if groupProject  already exists
 								.then(() => {
 									callback(null, payload);
 								})
@@ -386,9 +384,8 @@ class ProjectService {
 				const projects = [];
 				data.forEach(el => {
 					el.group.groupProjects.forEach(pj => {
-						const user =
-							pj.project.groupProjects[0].group.groupUsers[0].user
-								.dataValues;
+						const user = pj.project.groupProjects[0].group.groupUsers[0].user
+							.dataValues;
 						const userCharts = [];
 						pj.project.projectCharts.forEach(projectChart => {
 							userCharts.push(projectChart.chart.chartType.name);
@@ -413,83 +410,104 @@ class ProjectService {
 			.catch(err => err);
 	}
 
-	projectsWithPagination(id, { name, page, limit, chart }) {
+	/*
+    "projects":[
+      {
+        "id":4,
+        "name":"rename test",
+        "updatedAt":"2018-09-08T11:26:08.029Z",
+        "groupName":"General",
+        "companyName":"General",
+        "accessLevelId":1,
+        "userCharts":[
+          "Bar chart",
+          "Pie Chart"
+        ],
+        "user":{
+          "name":"Nemchenko",
+          "email":"1user@gmail.com"
+        }
+      }
+    ],
+    "pagination":{
+      "pageCount":1,
+      "page":1,
+      "totalRecords":2,
+      "rows":10
+    }
+  }
+     */
+	projectsWithPagination(id, {
+		name, page, limit, chart
+	}) {
 		const queryLimit = limit || this.pageLimit;
-		const queryOffset = ((page || 1) - 1) * queryLimit;
+		let queryOffset = ((page || 1) - 1) * queryLimit;
 		const queryChart = (chart || '').split(',').filter(el => !!el);
+		return new Promise((resolve, reject) => {
+			async.waterfall(
+				[
+					callback => {
+						this.ProjectRepository.findProjectsWithOwners({
+							userId: id,
+							name: name || '',
+							chart: queryChart,
+							offset: queryOffset,
+							limit: queryLimit
+						})
+							.then(data => callback(null, data))
+							.catch(err => callback(err, null));
+					},
+					(payload, callback) => {
+						if (payload.rows.length === 0) {
+							queryOffset = 0;
+							this.ProjectRepository.findProjectsWithOwners({
+								userId: id,
+								name: name || '',
+								chart: queryChart,
+								offset: queryOffset,
+								limit: queryLimit
+							})
+								.then(data => callback(null, data))
+								.catch(err => callback(err, null));
+						} else {
+							callback(null, payload);
+						}
+					},
+					(data, callback) => {
+						const pageCount = Math.ceil(data.count / queryLimit); let userPage = page;
+						if (page > pageCount) {
+							userPage = 1;
+						}
+						const payload = {
+							project: [],
+							pagination: {
+								totalRecords: data.count,
+								pageCount,
+								page: userPage,
+								rows: queryLimit
+							}
+						};
 
-		return this.ProjectRepository.findProjectsWithOwners({
-			userId: id,
-			name: name || '',
-			chart: queryChart,
-			offset: queryOffset,
-			limit: queryLimit
-		})
-			.then(data => data)
-			.catch(err => err);
-	}
-
-	// const projects = [];
-	//			data.forEach(el => {
-	//				el.group.groupProjects.forEach(pj => {
-	//					const user =							pj.project.groupProjects[0].group.groupUsers[0].user
-	//						.dataValues;
-	//					const userCharts = [];
-	//					pj.project.projectCharts.forEach(projectChart => {
-	//						userCharts.push(projectChart.chart.chartType.name);
-	//					});
-	//					const uniqueCharts = userCharts.filter(
-	//						(item, pos) => userCharts.indexOf(item) === pos
-	//					);
-	//					projects.push({
-	//						id: pj.project.dataValues.id,
-	//						name: pj.project.dataValues.name,
-	//						updatedAt: pj.project.dataValues.updatedAt,
-	//						groupName: el.group.name,
-	//						companyName: el.group.company.name,
-	//						accessLevelId: pj.dataValues.accessLevelId,
-	//						userCharts: uniqueCharts,
-	//						user
-	//					});
-	//				});
-	//			});
-	//			return ProjectService.pagination(
-	//				params.page,
-	//				params.limit,
-	//				projects
-	//			);
-
-	static pagination(page, limit, projects) {
-		let pageLimit;
-		if (limit) {
-			pageLimit = Number(limit);
-		} else {
-			pageLimit = 10;
-		}
-		let userPage = Number(page);
-		const numberOfPages = Math.ceil(projects.length / pageLimit);
-		let payload;
-		if (userPage === 1) {
-			payload = projects.slice(0, userPage * pageLimit);
-		} else {
-			payload = projects.slice(
-				(userPage - 1) * pageLimit,
-				(userPage - 1) * pageLimit + pageLimit
+						data.rows.forEach(el => {
+							payload.project.push({
+								id: el.id,
+								name: el.name,
+								updatedAt: el.updatedAt,
+								accessLevelId: el.groupProjects[0].accessLevelId,
+								user: el.groupProjects[0].group.groupUsers[0].user
+							});
+						});
+						return callback(null, payload);
+					}
+				],
+				(err, payload) => {
+					if (err) {
+						reject(err);
+					}
+					resolve(payload);
+				}
 			);
-		}
-		if (payload.length === 0) {
-			userPage = 1;
-			payload = projects.slice(0, pageLimit);
-		}
-		return {
-			projects: payload,
-			pagination: {
-				pageCount: numberOfPages,
-				page: userPage,
-				totalRecords: projects.length,
-				rows: pageLimit
-			}
-		};
+		});
 	}
 
 	static getProjectFromPayload(rawProject) {
