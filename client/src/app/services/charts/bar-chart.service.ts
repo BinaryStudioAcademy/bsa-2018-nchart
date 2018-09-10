@@ -30,19 +30,18 @@ export class BarChartService {
 			value: 1,
 			group: name,
 			id: 1,
-			color: '#69bf69'
+			color: name
 		}));
 	}
 
 	static mapColors(original: any[], colors: any) {
 		if (colors.length) {
-			const colorHash = new ColorHash();
 			return original.map(obj => ({
 				name: obj.name,
 				value: obj.value,
 				group: obj.group,
 				id: obj.id,
-				color: colorHash.hex(colors[original.indexOf(obj)] + '')
+				color: colors[original.indexOf(obj)]
 			}));
 		} else {
 			return original;

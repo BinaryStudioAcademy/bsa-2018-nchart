@@ -3970,7 +3970,7 @@ export const countries = {
 					]
 				]
 			},
-			id: 'COD'
+			id: 'COG'
 		},
 		{
 			type: 'Feature',
@@ -10857,7 +10857,7 @@ export const countries = {
 					]
 				]
 			},
-			id: 'SDS'
+			id: 'SSD'
 		},
 		{
 			type: 'Feature',

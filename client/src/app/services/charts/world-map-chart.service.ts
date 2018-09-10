@@ -4,7 +4,7 @@ import { FormService } from '@app/services/form.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { minValidator } from '@app/shared/components/form-field/form-validators';
 import { WorldMapChartCustomize } from '@app/models/world-map-chart.model';
-import * as iso from 'i18n-iso-countries';
+import * as iso from 'countries-iso';
 
 @Injectable()
 export class WorldMapChartService {
@@ -27,9 +27,9 @@ export class WorldMapChartService {
 
 	static mapData(original: any[]) {
 		return original.map((name: string) => ({
-			id: iso.getAlpha3Code(name, 'en'),
+			id: iso[name],
 			name: name,
-			value: NaN
+			value: 0
 		}));
 	}
 
@@ -45,7 +45,6 @@ export class WorldMapChartService {
 		}
 	}
 	getData(data: any) {
-		iso.registerLocale(require('i18n-iso-countries/langs/en.json'));
 		const dataObj = WorldMapChartService.arrayToObject(data);
 		this.data = WorldMapChartService.mapData(dataObj.countries.values);
 		this.data = WorldMapChartService.mapValues(

@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import * as d3 from 'd3';
 import { CustomizeOption } from '@app/models/chart.model';
-import ColorHash from 'color-hash';
+import * as d3Color from 'd3-scale-chromatic';
 interface DataType {
 	label: string;
 	name: string;
@@ -59,7 +59,7 @@ export class PieChartComponent implements OnInit, OnChanges {
 				sortArcsBy,
 				showValues
 			} = this.getSettingsValue(this.settings);
-
+			const color = d3.scaleOrdinal(d3Color.schemePuOr[9]);
 			switch (sortChartsBy) {
 				case 'name(asc)':
 					this.data.sort((a, b) => {
@@ -100,8 +100,6 @@ export class PieChartComponent implements OnInit, OnChanges {
 				default:
 					break;
 			}
-
-			const colorHash = new ColorHash();
 			const arc = d3.arc().outerRadius(radius);
 
 			isDonut ? arc.innerRadius(radius / 1.5) : arc.innerRadius(0);
@@ -160,7 +158,7 @@ export class PieChartComponent implements OnInit, OnChanges {
 			g.append('path')
 				.attr('d', <any>arc)
 				.style('fill', function(d) {
-					return colorHash.hex(d.data.name + '');
+					return color(d.data.name);
 				});
 			if (showValues) {
 				g.append('title').text(function(d) {

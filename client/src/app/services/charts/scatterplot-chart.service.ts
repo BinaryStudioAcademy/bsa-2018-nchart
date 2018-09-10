@@ -33,7 +33,7 @@ export class ScatterplotChartService {
 			yAxis: 1,
 			size: 1,
 			item: '',
-			color: '#69bf69'
+			color: '#6C64B3'
 		}));
 	}
 	static mapYAxis(original: any[], values: any[]) {
