@@ -12,6 +12,8 @@
 			[control]="formGroup.controls['name']">
 		</app-input-text>
 		<app-checkbox-group [checks]="checks"></app-checkbox-group>
+		<app-sidebar></app-sidebar>
+		<app-multiselect></app-multiselect>
 		<app-date-time-picker [control]="formGroup.controls['date']"></app-date-time-picker>
 	</div>
 	<div class="projects-content" [loading-sp]="isLoading$ | async">

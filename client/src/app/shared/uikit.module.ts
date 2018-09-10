@@ -31,6 +31,8 @@ import { TooltipModule } from 'primeng/tooltip';
 import { TableModule } from 'primeng/table';
 import { TieredMenuModule } from 'primeng/tieredmenu';
 import { DialogModule } from 'primeng/dialog';
+import { SidebarModule } from 'primeng/sidebar';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @NgModule({
 	imports: [
@@ -63,7 +65,9 @@ import { DialogModule } from 'primeng/dialog';
 		TieredMenuModule,
 		PaginatorModule,
 		OwlDateTimeModule,
-		OwlNativeDateTimeModule
+		OwlNativeDateTimeModule,
+		SidebarModule,
+		MultiSelectModule
 	],
 	exports: [
 		ButtonModule,
@@ -95,7 +99,9 @@ import { DialogModule } from 'primeng/dialog';
 		DialogModule,
 		PaginatorModule,
 		OwlDateTimeModule,
-		OwlNativeDateTimeModule
+		OwlNativeDateTimeModule,
+		SidebarModule,
+		MultiSelectModule
 	],
 	declarations: []
 })
