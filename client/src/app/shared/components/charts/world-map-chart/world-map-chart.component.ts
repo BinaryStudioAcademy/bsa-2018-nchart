@@ -63,7 +63,7 @@ export class WorldMapChartComponent implements OnChanges {
 				d =>
 					`<strong>Country: </strong><span class='details'>${
 						d.properties.name
-					}<br></span><strong>Population: </strong><span class='details'>${format(
+					}<br></span><strong>Value: </strong><span class='details'>${format(
 						d.value
 					)}</span>`
 			);

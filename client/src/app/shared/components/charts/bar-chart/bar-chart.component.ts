@@ -76,7 +76,7 @@ export class BarChartComponent implements OnInit, OnChanges {
 				.html(function(d) {
 					return `<strong>${
 						d.name
-					} :</strong> <span style='color:red'> ${d.value} </span>`;
+					} :</strong> <span> ${d.value} </span>`;
 				});
 
 			d3.select('svg').remove();
