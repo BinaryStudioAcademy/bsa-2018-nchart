@@ -1,4 +1,4 @@
-// const SequilizeOp = require('sequelize').Op;
+const SequilizeOp = require('sequelize').Op;
 const Repository = require('../../common/repository/repository');
 const projectModel = require('./project.models/project');
 const projectChartModel = require('./project.models/project_chart');
@@ -169,7 +169,7 @@ class ProjectRepository extends Repository {
 	findProjectsWithOwners({
 		userId,
 		name,
-		// chart,
+		chart,
 		offset,
 		limit
 	}) {
@@ -177,147 +177,72 @@ class ProjectRepository extends Repository {
 
 		const query = {
 			'$groupProjects.group.groupUsers.id$': userId,
-			'$groupProjects.accessLevelId$': 1,
+			'$projectCharts.chart.chartType.sysName$': {
+				[SequilizeOp.in]: chart
+			},
 			name: { $iLike: `%${name}%` }
 		};
-		/* if (chart && chart.length) {
-			query.projectCharts = {
-				[SequilizeOp.contains]: {
-					chart: {
-						chartType: {
-							sysName: {
-								[SequilizeOp.in]: chart
-							}
-						}
-					}
-				}
-			};
-		} */
 
-		return projectModel.findAndCount({
-			where: query,
-			limit,
-			offset,
-			subQuery: false,
-			include: [
-				{
-					model: groupProjectModel,
-					attributes: ['accessLevelId'],
-					include: [
-						{
-							model: groupModel,
-							attributes: ['id'],
-							include: [
-								{
-									model: groupUserModel,
-									attributes: ['id'],
-									include: [
-										{
-											model: userModel,
-											attributes: ['name', 'email']
-										}
-									]
-								}
-							]
-						}
-					]
-				},
-				{
-					model: this.projectChartModel,
-					attributes: ['chartId'],
-					include: [
-						{
-							model: chartModel,
-							attributes: ['chartTypeId'],
-							include: [
-								{
-									attributes: ['name', 'sysName'],
-									model: chartTypeModel
-								}
-							]
-						}
-					]
-				}
-			]
-		});
-		/* return this.groupUser.findAll({
-			where: { userId },
-			separate: true,
-			attributes: ['groupId'],
+		const groupInclude = {
+			model: groupProjectModel,
 			include: [
 				{
 					model: groupModel,
-					attributes: ['id', 'name', 'companyId'],
+					attributes: ['id'],
 					include: [
 						{
-							model: groupProjectModel,
-							attributes: ['projectId', 'accessLevelId'],
+							model: groupUserModel,
+							attributes: ['id'],
 							include: [
 								{
-									model: this.projectModel,
-									attributes: ['id', 'name', 'updatedAt'],
-									where: {
-										name: { $like: `%${projectName}%` }
-									},
-									include: [
-										{
-											model: groupProjectModel,
-											separate: true,
-											attributes: [
-												'projectId',
-												'groupId'
-											],
-											where: { accessLevelId: 1 },
-											include: [
-												{
-													model: groupModel,
-													attributes: ['id'],
-													include: [
-														{
-															model: groupUserModel,
-															attributes: [
-																'userId'
-															],
-															include: {
-																model: userModel,
-																attributes: [
-																	'name',
-																	'email'
-																]
-															}
-														}
-													]
-												}
-											]
-										},
-										{
-											model: this.projectChartModel,
-											attributes: ['chartId'],
-											include: [
-												{
-													model: chartModel,
-													attributes: ['chartTypeId'],
-													include: [
-														{
-															model: chartTypeModel,
-															attributes: ['name']
-														}
-													]
-												}
-											]
-										}
-									]
+									model: userModel,
+									attributes: ['name', 'email']
 								}
 							]
-						},
-						{
-							model: companyModel,
-							attributes: ['name']
 						}
 					]
 				}
 			]
-		}); */
+		};
+
+		const chartInclude = {
+			model: this.projectChartModel,
+			attributes: ['chartId'],
+			include: [
+				{
+					model: chartModel,
+					attributes: ['chartTypeId'],
+					include: [
+						{
+							attributes: ['name', 'sysName'],
+							model: chartTypeModel
+						}
+					]
+				}
+			]
+		};
+
+		return new Promise((res) => {
+			projectModel.findAll({
+				where: query,
+				attributes: ['id'],
+				include: [chartInclude, groupInclude]
+			}).then(data => {
+				projectModel.findAndCount({
+					limit,
+					offset,
+					subQuery: false,
+					where: {
+						id: {
+							[SequilizeOp.in]: data.map(el => el.id)
+						}
+					},
+					include: [chartInclude, groupInclude]
+				}).then(d => {
+					res(d);
+				});
+			});
+		});
 	}
 
 	findByUserIdAndProjectId(obj) {

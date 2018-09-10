@@ -440,7 +440,7 @@ class ProjectService {
 	projectsWithPagination(id, {
 		name, page, limit, chart
 	}) {
-		const queryLimit = limit || this.pageLimit;
+		const queryLimit = Number(limit) || this.pageLimit;
 		let queryOffset = ((page || 1) - 1) * queryLimit;
 		const queryChart = (chart || '').split(',').filter(el => !!el);
 		return new Promise((resolve, reject) => {
