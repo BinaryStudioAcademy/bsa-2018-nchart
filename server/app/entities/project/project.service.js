@@ -76,7 +76,7 @@ class ProjectService {
 								projectId: payload.project.id,
 								accessLevelId: 1
 							})
-							// todo: error handler if groupProject  already exists
+								// todo: error handler if groupProject  already exists
 								.then(() => {
 									callback(null, payload);
 								})
@@ -384,7 +384,7 @@ class ProjectService {
 				const projects = [];
 				data.forEach(el => {
 					el.group.groupProjects.forEach(pj => {
-						const user = pj.project.groupProjects[0].group.groupUsers[0].user
+						const user =							pj.project.groupProjects[0].group.groupUsers[0].user
 							.dataValues;
 						const userCharts = [];
 						pj.project.projectCharts.forEach(projectChart => {
@@ -474,12 +474,13 @@ class ProjectService {
 						}
 					},
 					(data, callback) => {
-						const pageCount = Math.ceil(data.count / queryLimit); let userPage = page;
+						const pageCount = Math.ceil(data.count / queryLimit);
+						let userPage = page;
 						if (page > pageCount) {
 							userPage = 1;
 						}
 						const payload = {
-							project: [],
+							projects: [],
 							pagination: {
 								totalRecords: data.count,
 								pageCount,
@@ -489,12 +490,14 @@ class ProjectService {
 						};
 
 						data.rows.forEach(el => {
-							payload.project.push({
+							payload.projects.push({
 								id: el.id,
 								name: el.name,
 								updatedAt: el.updatedAt,
-								accessLevelId: el.groupProjects[0].accessLevelId,
-								user: el.groupProjects[0].group.groupUsers[0].user
+								accessLevelId:
+									el.groupProjects[0].accessLevelId,
+								user:
+									el.groupProjects[0].group.groupUsers[0].user
 							});
 						});
 						return callback(null, payload);
