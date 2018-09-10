@@ -5,10 +5,13 @@ import * as DatasetActions from '@app/store/actions/datasets/datasets.action-typ
 import * as NotificationActions from '@app/store/actions/notification/notification.action-types';
 
 const NotificationDict = new Map([
-	[UserActions.UserActionConstants.LOGIN__FAILED.toString(), 'Login failed'],
+	[
+		UserActions.UserActionConstants.LOGIN__FAILED.toString(),
+		'Please, try again!'
+	],
 	[
 		UserActions.UserActionConstants.REGISTER__FAILED.toString(),
-		'Register failed'
+		'Please, try again!'
 	],
 	[
 		ProjectActions.ProjectsActionConstants.LOAD_ONE_PROJECT__FAILED.toString(),

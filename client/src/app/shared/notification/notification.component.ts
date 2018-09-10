@@ -1,6 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { StoreService } from '@app/services/store.service';
-import { notificationSelector } from '@app/store/selectors/notification.selector';
+import {
+	notificationSelector,
+	serverFailedMsg
+} from '@app/store/selectors/notification.selector';
 import { NotificationDestroy } from '@app/store/actions/notification/notification.actions';
 import {
 	trigger,
@@ -42,6 +45,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
 	type: string;
 	msg: string;
 	state: string;
+	serveMsg: string;
 
 	disconnect: () => void;
 
@@ -56,9 +60,26 @@ export class NotificationComponent implements OnInit, OnDestroy {
 					this.type = notification.type
 						? notification.type
 						: this.type;
-					this.msg = notification.msg ? notification.msg : this.msg;
+					if (!this.serveMsg) {
+						this.msg = notification.msg
+							? notification.msg
+							: this.msg;
+					} else {
+						this.msg = notification.msg
+							? this.serveMsg + notification.msg
+							: this.msg;
+						this.serveMsg = '';
+					}
 				},
 				selector: notificationSelector()
+			},
+			{
+				subscriber: error => {
+					this.serveMsg = error
+						? error.error.errors.message + '. '
+						: '';
+				},
+				selector: serverFailedMsg()
 			}
 		]);
 	}
