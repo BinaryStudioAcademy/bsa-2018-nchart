@@ -172,6 +172,7 @@ export const isLoading = (
 		case constants.LOAD_PROJECTS_INFO__FAILED:
 		case constants.SAVE_PROJECT__COMPLETE:
 		case constants.SAVE_PROJECT__FAILED:
+		case constants.UPDATE_PROJECT__COMPLETE:
 			return false;
 		default:
 			return state;
