@@ -1,4 +1,7 @@
-<div class="project-container" [loading-sp]="isLoading" spBackgroundColor="#f2f3f9a1">
+<div class="project-container"
+	[loading-sp]="isLoading"
+	spBackgroundColor="#f2f3f9"
+>
 	<app-stepper
 		(steps)="getSteps($event)"
 		[errors]="stepperErrors"
