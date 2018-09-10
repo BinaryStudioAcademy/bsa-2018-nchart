@@ -141,19 +141,25 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
 				if (item.data && item.data.component) {
 					const componentFactory = this.componentFactoryResolver.resolveComponentFactory(item.data.component);
-					const component = host.createComponent(componentFactory);
-					if ((component.instance instanceof ChartComponent)) {
-						(component.instance as ChartComponent).chartType = item.data.inputs.chartType;
-						(component.instance as ChartComponent).data = item.data.inputs.data;
-						(component.instance as ChartComponent).customizeSettings = item.data.inputs.customizeSettings;
+					const componentRef = host.createComponent(componentFactory);
+					if ((componentRef.instance instanceof ChartComponent)) {
+
+						const instance: ChartComponent = componentRef.instance as ChartComponent;
+
+						instance.chartType = item.data.inputs.chartType;
+						instance.data = item.data.inputs.data;
+						instance.customizeSettings = item.data.inputs.customizeSettings;
 					}
 
-					if ((component.instance instanceof ButtonComponent)) {
-						(component.instance as ButtonComponent).label = 'WORKS!!';
+					if ((componentRef.instance instanceof ButtonComponent)) {
+						const instance: ButtonComponent = componentRef.instance as ButtonComponent;
+
+						instance.label = item.data.inputs.label;
 					}
 
-					component.changeDetectorRef.detectChanges();
-					this.components.push(component);
+
+					componentRef.changeDetectorRef.detectChanges();
+					this.components.push(componentRef);
 				}
 
 			}
@@ -175,6 +181,21 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 		const index = this.dashboard.indexOf(item);
 		this.dashboard.splice(index, 1);
 		this.components.splice(index, 1);
+	}
+
+	addBtn() {
+		this.dashboard.push({
+			x: 0,
+			y: 0,
+			cols: 20,
+			rows: 20,
+			data: {
+				component: ButtonComponent,
+				inputs: {
+					label: 'label' + Date()
+				}
+			}
+		});
 	}
 
 	addCheck() {
@@ -207,8 +228,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 	}
 
 	addCharts(chart) {
+		// userChartsId.forEach((v, i) => {
 		const chartId = chart.userChartsId[0];
-
+		// })
 		this.storeService.createSubscription(
 			getCustomizeSettings(chartId)
 		).pipe(
@@ -248,9 +270,5 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 				}
 			});
 		});
-
-		// userChartsId.forEach((v, i) => {
-		//
-		// })
 	}
 }

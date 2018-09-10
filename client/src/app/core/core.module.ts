@@ -38,7 +38,8 @@ import {ChartComponent} from '@app/features/draftproject/custom-chart/chart/char
 		FormFieldModule
 	],
 	entryComponents: [
-		ChartComponent
+		ChartComponent,
+		ButtonComponent
 	],
 	exports: []
 })
