@@ -15,8 +15,8 @@ import { PopupMenuComponent } from '@app/shared/components/button/popup-menu/pop
 import { PaginatorComponent } from '@app/shared/components/paginator/paginator.component';
 import { DialogRenameComponent } from '@app/shared/components/dialog-rename/dialog-rename.component';
 import { DateTimePickerComponent } from '@app/shared/components/date-time-picker/date-time-picker.component';
-import { SidebarComponent } from '@app/shared/components/sidebar/sidebar.component';
 import { MultiSelectComponent } from '@app/shared/components/multiselect/multiselect.component';
+import {InputGroupComponent} from '@app/shared/components/form-field/input-group/input-group.component';
 
 @NgModule({
 	imports: [
@@ -42,8 +42,8 @@ import { MultiSelectComponent } from '@app/shared/components/multiselect/multise
 		PaginatorComponent,
 		DialogRenameComponent,
 		DateTimePickerComponent,
-		SidebarComponent,
-		MultiSelectComponent
+		MultiSelectComponent,
+		InputGroupComponent
 	],
 	declarations: [
 		ActionButtonComponent,
@@ -57,8 +57,8 @@ import { MultiSelectComponent } from '@app/shared/components/multiselect/multise
 		PaginatorComponent,
 		DialogRenameComponent,
 		DateTimePickerComponent,
-		SidebarComponent,
-		MultiSelectComponent
+		MultiSelectComponent,
+		InputGroupComponent
 	]
 })
 export class SharedModule {}

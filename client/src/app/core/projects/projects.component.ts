@@ -34,6 +34,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 	userEmail: string;
 	disconnectStore: () => void;
 	checks = null;
+	display = false;
 
 	debouncedSearch: (params: OptionalType<ProjectsFilter>) => void;
 

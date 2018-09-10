@@ -4,16 +4,16 @@
 >
 	<div class="search-projects">
 		<h3>Projects</h3>
-		<app-input-text
+		<app-input-group
 			class="ui-fluid"
 			placeholder="e.g. Super project"
 			type="text"
 			icon="fa fa-filter"
-			[control]="formGroup.controls['name']">
-		</app-input-text>
-		<app-checkbox-group [checks]="checks"></app-checkbox-group>
-		<app-sidebar></app-sidebar>
-		<app-multiselect></app-multiselect>
+			[control]="formGroup.controls['name']"
+			[display]="display"
+			[checks]="checks"
+		>
+		</app-input-group>
 		<app-date-time-picker [control]="formGroup.controls['date']"></app-date-time-picker>
 	</div>
 	<div class="projects-content" [loading-sp]="isLoading$ | async">
