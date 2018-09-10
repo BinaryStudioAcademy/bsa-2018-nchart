@@ -14,6 +14,8 @@ class ProjectService {
 		this.GroupService = GroupService;
 		this.DocumentGeneratingService = DocumentGeneratingService;
 		this.MarkupTemplateService = MarkupTemplateService;
+
+		this.pageLimit = 10;
 	}
 
 	getAll() {
@@ -31,12 +33,14 @@ class ProjectService {
 					callback => {
 						if (obj.project.id) {
 							this.ProjectRepository.upsert(obj.project)
-								.then(() => callback(null, false, {
-									project: {
-										id: obj.project.id,
-										name: obj.project.name
-									}
-								}))
+								.then(() =>
+									callback(null, false, {
+										project: {
+											id: obj.project.id,
+											name: obj.project.name
+										}
+									})
+								)
 								.catch(err => callback(err, null));
 						} else {
 							this.ProjectRepository.create(obj.project.name)
@@ -379,16 +383,13 @@ class ProjectService {
 	findProjectsWithOwners(id, params) {
 		return this.ProjectRepository.findProjectsWithOwners(id, params.name)
 			.then(data => {
-				// data[0].group.groupProjects[0].project - id, name
-				// data[0].group.groupProjects[0].project
-				// .groupProjects[0].group.groupUsers[0].user.dataValues - name, email
 				const projects = [];
 				data.forEach(el => {
 					el.group.groupProjects.forEach(pj => {
-						const user =							pj.project.groupProjects[0].group.groupUsers[0].user
-							.dataValues;
+						const user =
+							pj.project.groupProjects[0].group.groupUsers[0].user
+								.dataValues;
 						const userCharts = [];
-						// pj.project.projectCharts[0].chart.chartType.name
 						pj.project.projectCharts.forEach(projectChart => {
 							userCharts.push(projectChart.chart.chartType.name);
 						});
@@ -407,53 +408,56 @@ class ProjectService {
 						});
 					});
 				});
-				// this.paggination(params.page,projects);
 				return projects;
 			})
 			.catch(err => err);
 	}
 
-	projectsWithPagination(id, params) {
-		return this.ProjectRepository.findProjectsWithOwners(id, params.name)
-			.then(data => {
-				// data[0].group.groupProjects[0].project - id, name
-				// data[0].group.groupProjects[0].project
-				// .groupProjects[0].group.groupUsers[0].user.dataValues - name, email
-				const projects = [];
-				data.forEach(el => {
-					el.group.groupProjects.forEach(pj => {
-						const user =							pj.project.groupProjects[0].group.groupUsers[0].user
-							.dataValues;
-						const userCharts = [];
-						// pj.project.projectCharts[0].chart.chartType.name
-						pj.project.projectCharts.forEach(projectChart => {
-							userCharts.push(projectChart.chart.chartType.name);
-						});
-						const uniqueCharts = userCharts.filter(
-							(item, pos) => userCharts.indexOf(item) === pos
-						);
-						projects.push({
-							id: pj.project.dataValues.id,
-							name: pj.project.dataValues.name,
-							updatedAt: pj.project.dataValues.updatedAt,
-							groupName: el.group.name,
-							companyName: el.group.company.name,
-							accessLevelId: pj.dataValues.accessLevelId,
-							userCharts: uniqueCharts,
-							user
-						});
-					});
-				});
-				return ProjectService.pagination(
-					params.page,
-					params.limit,
-					projects
-				);
-				// todo: uncomment to test
-				// return projects;
-			})
+	projectsWithPagination(id, { name, page, limit, chart }) {
+		const queryLimit = limit || this.pageLimit;
+		const queryOffset = ((page || 1) - 1) * queryLimit;
+		const queryChart = (chart || '').split(',').filter(el => !!el);
+
+		return this.ProjectRepository.findProjectsWithOwners({
+			userId: id,
+			name: name || '',
+			chart: queryChart,
+			offset: queryOffset,
+			limit: queryLimit
+		})
+			.then(data => data)
 			.catch(err => err);
 	}
+
+	// const projects = [];
+	//			data.forEach(el => {
+	//				el.group.groupProjects.forEach(pj => {
+	//					const user =							pj.project.groupProjects[0].group.groupUsers[0].user
+	//						.dataValues;
+	//					const userCharts = [];
+	//					pj.project.projectCharts.forEach(projectChart => {
+	//						userCharts.push(projectChart.chart.chartType.name);
+	//					});
+	//					const uniqueCharts = userCharts.filter(
+	//						(item, pos) => userCharts.indexOf(item) === pos
+	//					);
+	//					projects.push({
+	//						id: pj.project.dataValues.id,
+	//						name: pj.project.dataValues.name,
+	//						updatedAt: pj.project.dataValues.updatedAt,
+	//						groupName: el.group.name,
+	//						companyName: el.group.company.name,
+	//						accessLevelId: pj.dataValues.accessLevelId,
+	//						userCharts: uniqueCharts,
+	//						user
+	//					});
+	//				});
+	//			});
+	//			return ProjectService.pagination(
+	//				params.page,
+	//				params.limit,
+	//				projects
+	//			);
 
 	static pagination(page, limit, projects) {
 		let pageLimit;

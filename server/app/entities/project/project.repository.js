@@ -1,3 +1,4 @@
+// const SequilizeOp = require('sequelize').Op;
 const Repository = require('../../common/repository/repository');
 const projectModel = require('./project.models/project');
 const projectChartModel = require('./project.models/project_chart');
@@ -9,7 +10,6 @@ const groupModel = require('../group/group.models/group');
 const groupProjectModel = require('../group/group.models/group_project');
 const groupUserModel = require('../group/group.models/group_user');
 const userModel = require('../user/user.model');
-const companyModel = require('../company/company.models/company');
 
 class ProjectRepository extends Repository {
 	constructor() {
@@ -166,13 +166,81 @@ class ProjectRepository extends Repository {
 		});
 	}
 
-	findProjectsWithOwners(userId, name) {
-		let projectName = name;
-		if (!name) {
-			projectName = '';
-		}
+	findProjectsWithOwners({
+		userId,
+		name,
+		// chart,
+		offset,
+		limit
+	}) {
 		this.groupUser = groupUserModel;
-		return this.groupUser.findAll({
+
+		const query = {
+			'$groupProjects.group.groupUsers.id$': userId,
+			'$groupProjects.accessLevelId$': 1,
+			name: { $iLike: `%${name}%` }
+		};
+		/* if (chart && chart.length) {
+			query.projectCharts = {
+				[SequilizeOp.contains]: {
+					chart: {
+						chartType: {
+							sysName: {
+								[SequilizeOp.in]: chart
+							}
+						}
+					}
+				}
+			};
+		} */
+
+		return projectModel.findAndCount({
+			where: query,
+			limit,
+			offset,
+			subQuery: false,
+			include: [
+				{
+					model: groupProjectModel,
+					attributes: ['accessLevelId'],
+					include: [
+						{
+							model: groupModel,
+							attributes: ['id'],
+							include: [
+								{
+									model: groupUserModel,
+									attributes: ['id'],
+									include: [
+										{
+											model: userModel,
+											attributes: ['name', 'email']
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					model: this.projectChartModel,
+					attributes: ['chartId'],
+					include: [
+						{
+							model: chartModel,
+							attributes: ['chartTypeId'],
+							include: [
+								{
+									attributes: ['name', 'sysName'],
+									model: chartTypeModel
+								}
+							]
+						}
+					]
+				}
+			]
+		});
+		/* return this.groupUser.findAll({
 			where: { userId },
 			separate: true,
 			attributes: ['groupId'],
@@ -249,7 +317,7 @@ class ProjectRepository extends Repository {
 					]
 				}
 			]
-		});
+		}); */
 	}
 
 	findByUserIdAndProjectId(obj) {
