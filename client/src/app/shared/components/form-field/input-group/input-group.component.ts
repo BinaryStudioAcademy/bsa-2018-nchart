@@ -3,9 +3,11 @@ import {
 	OnInit,
 	Input,
 	AfterViewInit,
-	ViewChild, Output, EventEmitter
+	ViewChild,
+	Output,
+	EventEmitter
 } from '@angular/core';
-import {FormControl} from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
 @Component({
 	selector: 'app-input-group',
@@ -42,16 +44,15 @@ export class InputGroupComponent implements OnInit, AfterViewInit {
 	displayChange = new EventEmitter<boolean>();
 	@Input()
 	checks: any;
-
+	@Input()
+	dateControl: FormControl;
 
 	@ViewChild('inputText')
 	inputText;
 
-	ngOnInit() {
-	}
+	ngOnInit() {}
 
-	constructor() {
-	}
+	constructor() {}
 
 	ngAfterViewInit() {
 		if (this.autofocus) {
@@ -67,7 +68,7 @@ export class InputGroupComponent implements OnInit, AfterViewInit {
 	}
 
 	getError() {
-		const {errors} = this.control;
+		const { errors } = this.control;
 
 		return errors && errors[Object.keys(errors)[0]];
 	}
@@ -78,9 +79,9 @@ export class InputGroupComponent implements OnInit, AfterViewInit {
 				this.control.valid
 					? 'success'
 					: this.control.dirty
-					? 'error'
-					: ''
-				}`]: this.showStates
+						? 'error'
+						: ''
+			}`]: this.showStates
 		};
 	}
 

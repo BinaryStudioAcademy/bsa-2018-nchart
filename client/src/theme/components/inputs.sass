@@ -8,9 +8,9 @@
 	width: 100%
 	transition: none
 
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button 
-  -webkit-appearance: none; 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button
+  -webkit-appearance: none;
   margin: 0
 
 
@@ -62,7 +62,7 @@ input[type=number]::-webkit-outer-spin-button
 			color: $stateErrorBorderColor
 		&:focus
 			border-color: $stateErrorBorderColor
-	
+
 	&.ui-input-success
 		&:focus
 			border-color: $successColor
@@ -90,3 +90,6 @@ label, .input-label
 	font-family: $fontFamily
 	font-size: $smallFontSize
 	color: $textColorDark
+
+.ui-fluid .ui-inputgroup .ui-button
+	width: 40px

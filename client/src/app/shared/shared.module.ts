@@ -16,7 +16,7 @@ import { PaginatorComponent } from '@app/shared/components/paginator/paginator.c
 import { DialogRenameComponent } from '@app/shared/components/dialog-rename/dialog-rename.component';
 import { DateTimePickerComponent } from '@app/shared/components/date-time-picker/date-time-picker.component';
 import { MultiSelectComponent } from '@app/shared/components/multiselect/multiselect.component';
-import {InputGroupComponent} from '@app/shared/components/form-field/input-group/input-group.component';
+import { InputGroupComponent } from '@app/shared/components/form-field/input-group/input-group.component';
 
 @NgModule({
 	imports: [

@@ -23,8 +23,9 @@
 		[tooltipPosition]="tooltipPosition"
 		[autofocus]="autofocus"
     >
-	<p-sidebar [(visible)]="display" position="right" appendTo="_ngcontent-c2">
+	<p-sidebar [(visible)]="display" position="right">
 		<app-checkbox-group [checks]="checks"></app-checkbox-group>
+		<app-date-time-picker [control]="dateControl"></app-date-time-picker>
 	</p-sidebar>
 	<button
 		class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"

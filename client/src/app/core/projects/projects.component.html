@@ -10,11 +10,11 @@
 			type="text"
 			icon="fa fa-filter"
 			[control]="formGroup.controls['name']"
+			[dateControl] = "formGroup.controls['date']"
 			[display]="display"
 			[checks]="checks"
 		>
 		</app-input-group>
-		<app-date-time-picker [control]="formGroup.controls['date']"></app-date-time-picker>
 	</div>
 	<div class="projects-content" [loading-sp]="isLoading$ | async">
 		<div class="empty-projects-list" *ngIf="isEmptyList$() | async">
