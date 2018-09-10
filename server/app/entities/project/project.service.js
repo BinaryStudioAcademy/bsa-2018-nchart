@@ -1,5 +1,7 @@
 const async = require('async');
 const _ = require('lodash');
+const moment = require('moment');
+const SequilizeOp = require('sequelize').Op;
 const ProjectRepository = require('./project.repository');
 const DatasetService = require('../dataset/dataset.service');
 const ChartService = require('../chart/chart.service');
@@ -76,7 +78,7 @@ class ProjectService {
 								projectId: payload.project.id,
 								accessLevelId: 1
 							})
-								// todo: error handler if groupProject  already exists
+							// todo: error handler if groupProject  already exists
 								.then(() => {
 									callback(null, payload);
 								})
@@ -384,7 +386,7 @@ class ProjectService {
 				const projects = [];
 				data.forEach(el => {
 					el.group.groupProjects.forEach(pj => {
-						const user =							pj.project.groupProjects[0].group.groupUsers[0].user
+						const user = pj.project.groupProjects[0].group.groupUsers[0].user
 							.dataValues;
 						const userCharts = [];
 						pj.project.projectCharts.forEach(projectChart => {
@@ -437,34 +439,52 @@ class ProjectService {
     }
   }
      */
+	static formQuery(id, name, page, limit, chart, minDate, maxDate) {
+		const queryName = name || '';
+		const queryChart = (chart || '').split(',').filter(el => !!el);
+		const queryMinDate = moment(minDate, 'YYYY-MM-DD', true).isValid() ? minDate : '1700-01-01';
+		const queryMaxDate = moment(maxDate, 'YYYY-MM-DD', true).isValid() ? maxDate : '3000-01-01';
+		const duration = moment.duration(moment(queryMaxDate).diff((moment(queryMinDate)))).asDays();
+		if (duration < 0) {
+			throw new Error('Invalid date');
+		}
+		const query = {
+			'$groupProjects.group.groupUsers.id$': id,
+			name: { $iLike: `%${queryName}%` },
+			updatedAt: { [SequilizeOp.gte]: queryMinDate, [SequilizeOp.lte]: queryMaxDate }
+		};
+		if (chart && chart.length > 0) {
+			query['$projectCharts.chart.chartType.sysName$'] = {
+				[SequilizeOp.in]: queryChart
+			};
+		}
+		return query;
+	}
+
 	projectsWithPagination(id, {
-		name, page, limit, chart
+		name, page, limit, chart, minDate, maxDate
 	}) {
 		const queryLimit = Number(limit) || this.pageLimit;
-		let queryOffset = ((page || 1) - 1) * queryLimit;
-		const queryChart = (chart || '').split(',').filter(el => !!el);
+		const queryOffset = ((page || 1) - 1) * queryLimit;
+		const query = ProjectService.formQuery(id, name, page, limit, chart, minDate, maxDate);
 		return new Promise((resolve, reject) => {
 			async.waterfall(
 				[
 					callback => {
 						this.ProjectRepository.findProjectsWithOwners({
-							userId: id,
-							name: name || '',
-							chart: queryChart,
+							query,
 							offset: queryOffset,
 							limit: queryLimit
 						})
 							.then(data => callback(null, data))
+						// .then(data => callback(data, null))
 							.catch(err => callback(err, null));
 					},
 					(payload, callback) => {
 						if (payload.rows.length === 0) {
-							queryOffset = 0;
 							this.ProjectRepository.findProjectsWithOwners({
-								userId: id,
-								name: name || '',
-								chart: queryChart,
-								offset: queryOffset,
+								query,
+								offset: 0,
 								limit: queryLimit
 							})
 								.then(data => callback(null, data))
@@ -490,14 +510,30 @@ class ProjectService {
 						};
 
 						data.rows.forEach(el => {
+							// todo: users test
+							const users = [];
+							el.groupProjects.forEach(groupProject => {
+								groupProject.group.groupUsers.forEach(groupUser => {
+									users.push(groupUser.user.dataValues);
+								});
+							});
+							// console.log(users);
+							const charts = [];
+							el.projectCharts.forEach(projectChart => {
+								charts.push(projectChart.chart.chartType.name);
+							});
+							const userCharts = charts.filter(
+								(item, pos) => charts.indexOf(item) === pos
+							);
 							payload.projects.push({
 								id: el.id,
 								name: el.name,
 								updatedAt: el.updatedAt,
 								accessLevelId:
-									el.groupProjects[0].accessLevelId,
+                                el.groupProjects[0].accessLevelId,
 								user:
-									el.groupProjects[0].group.groupUsers[0].user
+                                el.groupProjects[0].group.groupUsers[0].user,
+								userCharts
 							});
 						});
 						return callback(null, payload);

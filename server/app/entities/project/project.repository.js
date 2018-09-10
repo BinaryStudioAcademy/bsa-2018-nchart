@@ -167,21 +167,11 @@ class ProjectRepository extends Repository {
 	}
 
 	findProjectsWithOwners({
-		userId,
-		name,
-		chart,
+		query,
 		offset,
 		limit
 	}) {
 		this.groupUser = groupUserModel;
-
-		const query = {
-			'$groupProjects.group.groupUsers.id$': userId,
-			'$projectCharts.chart.chartType.sysName$': {
-				[SequilizeOp.in]: chart
-			},
-			name: { $iLike: `%${name}%` }
-		};
 
 		const groupInclude = {
 			model: groupProjectModel,
