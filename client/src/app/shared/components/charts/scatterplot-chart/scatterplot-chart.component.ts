@@ -76,7 +76,17 @@ export class ScatterplotChartComponent implements OnChanges {
 
 		const yAxis = d3.axisLeft(yScale);
 
-		const color = d3.scaleOrdinal(d3.schemeCategory10);
+		const colorsSet = new Set();
+		this.data.forEach(element => {
+			colorsSet.add(element.item);
+		});
+		const colorsArr = [];
+		colorsSet.forEach(element => {
+			colorsArr.push(element);
+		});
+		const color = d3
+			.scaleSequential(d3.interpolateSpectral)
+			.domain([0, colorsArr.length - 1]);
 
 		const tooltip = d3
 			.select('body')
@@ -153,7 +163,7 @@ export class ScatterplotChartComponent implements OnChanges {
 				return radius(d.size);
 			})
 			.style('fill', function(d) {
-				return color(d.item);
+				return color(colorsArr.indexOf(d.item));
 			});
 
 		bubble
@@ -183,7 +193,7 @@ export class ScatterplotChartComponent implements OnChanges {
 
 		const legend = svg
 			.selectAll('legend')
-			.data(color.domain())
+			.data(colorsArr)
 			.enter()
 			.append('g')
 			.attr('class', 'legend')
@@ -198,7 +208,9 @@ export class ScatterplotChartComponent implements OnChanges {
 			.attr('x', width + this.margin.right / 2)
 			.attr('width', 18)
 			.attr('height', 18)
-			.style('fill', color);
+			.style('fill', function(d) {
+				return color(colorsArr.indexOf(d));
+			});
 
 		// add text to the legend elements.
 		// rects are defined at x value equal to width, we define text at width - 6, this will print name of the legends before the rects.

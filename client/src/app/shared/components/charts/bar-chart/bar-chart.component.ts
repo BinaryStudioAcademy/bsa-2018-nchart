@@ -49,7 +49,6 @@ export class BarChartComponent implements OnInit, OnChanges {
 
 	ngOnChanges() {
 		if (this.data && this.settings) {
-			debugger;
 			const {
 				width,
 				height,
@@ -66,7 +65,10 @@ export class BarChartComponent implements OnInit, OnChanges {
 			colorsSet.forEach(element => {
 				colorsArr.push(element);
 			});
-			const color = d3.scaleOrdinal(d3.schemePuOr[11]).domain(colorsArr);
+
+			const color = d3
+				.scaleSequential(d3.interpolateSpectral)
+				.domain([0, colorsArr.length - 1]);
 
 			const tip = d3Tip()
 				.attr('class', 'd3-tip')
@@ -133,7 +135,7 @@ export class BarChartComponent implements OnInit, OnChanges {
 					d => innerHeight - this.y(this.clampHeight(d.value))
 				)
 				.style('fill', function(d: any) {
-					return color(d.item);
+					return color(colorsArr.indexOf(d.color));
 				})
 				.on('mouseover', function(d) {
 					tip.show(d, this);

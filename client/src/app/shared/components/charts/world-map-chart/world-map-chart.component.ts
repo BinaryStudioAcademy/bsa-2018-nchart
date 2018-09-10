@@ -36,15 +36,16 @@ export class WorldMapChartComponent implements OnChanges {
 	color = d3
 		.scaleQuantile<any>()
 		.range([
-			'rgb(252,251,253)',
-			'rgb(239,237,245)',
-			'rgb(218,218,235)',
-			'rgb(188,189,220)',
-			'rgb(158,154,200)',
-			'rgb(128,125,186)',
-			'rgb(106,81,163)',
-			'rgb(84,39,143)',
-			'rgb(63,0,125)'
+			'rgb(247,251,255)',
+			'rgb(222,235,247)',
+			'rgb(198,219,239)',
+			'rgb(158,202,225)',
+			'rgb(107,174,214)',
+			'rgb(66,146,198)',
+			'rgb(33,113,181)',
+			'rgb(8,81,156)',
+			'rgb(8,48,107)',
+			'rgb(3,19,43)'
 		]);
 
 	@ViewChild('chart')
@@ -53,7 +54,7 @@ export class WorldMapChartComponent implements OnChanges {
 	ngOnChanges() {
 		d3.select('svg').remove();
 		d3.select('.d3-tip').remove();
-
+		const format = d3.format(',');
 		// Set tooltips
 		const tip = d3Tip()
 			.attr('class', 'd3-tip')
@@ -71,7 +72,7 @@ export class WorldMapChartComponent implements OnChanges {
 		// configuration
 		const colorVariable = 'value';
 		const geoIDVariable = 'id';
-		const format = d3.format(',');
+
 		const colorVariableValueByID = {};
 		const geography = countries;
 		const {
@@ -84,19 +85,23 @@ export class WorldMapChartComponent implements OnChanges {
 			chooseRegion
 		} = this.getSettingsValue(this.settings);
 
-		/*this.data.forEach(d => {
-			d[colorVariable] = Number(d[colorVariable].replace(',', ''));
-		})*/
-
 		this.data.forEach(d => {
 			colorVariableValueByID[d[geoIDVariable]] = d[colorVariable];
 		});
 		geography.features.forEach(d => {
 			d[colorVariable] = colorVariableValueByID[d.id];
 		});
+		const valuesSet = new Set();
+		this.data.forEach(d => {
+			valuesSet.add(d.value);
+		});
 
 		// calculate jenks natural breaks
-		const numberOfClasses = this.color.range().length - 1;
+		let numberOfClasses;
+		valuesSet.size > this.color.range().length - 1
+			? (numberOfClasses = this.color.range().length - 1)
+			: (numberOfClasses = valuesSet.size);
+
 		const jenksNaturalBreaks = this.jenks(
 			this.data.map(d => d[colorVariable]),
 			numberOfClasses
@@ -194,7 +199,7 @@ export class WorldMapChartComponent implements OnChanges {
 			})
 			.style('stroke', d => {
 				if (d[colorVariable] !== undefined) {
-					return 'white';
+					return '#777';
 				}
 				return 'lightgray';
 			})
@@ -320,68 +325,154 @@ export class WorldMapChartComponent implements OnChanges {
 
 	setTip(tip) {
 		tip.direction(function(d) {
-			if (d.properties.name === 'Antarctica') return 'n';
+			if (d.properties.name === 'Antarctica') {
+				return 'n';
+			}
 			// Americas
-			if (d.properties.name === 'Greenland') return 's';
-			if (d.properties.name === 'Canada') return 'e';
-			if (d.properties.name === 'USA') return 'e';
-			if (d.properties.name === 'Mexico') return 'e';
+			if (d.properties.name === 'Greenland') {
+				return 's';
+			}
+			if (d.properties.name === 'Canada') {
+				return 'e';
+			}
+			if (d.properties.name === 'USA') {
+				return 'e';
+			}
+			if (d.properties.name === 'Mexico') {
+				return 'e';
+			}
 			// Europe
-			if (d.properties.name === 'Iceland') return 's';
-			if (d.properties.name === 'Norway') return 's';
-			if (d.properties.name === 'Sweden') return 's';
-			if (d.properties.name === 'Finland') return 's';
-			if (d.properties.name === 'Russia') return 'w';
+			if (d.properties.name === 'Iceland') {
+				return 's';
+			}
+			if (d.properties.name === 'Norway') {
+				return 's';
+			}
+			if (d.properties.name === 'Sweden') {
+				return 's';
+			}
+			if (d.properties.name === 'Finland') {
+				return 's';
+			}
+			if (d.properties.name === 'Russia') {
+				return 'w';
+			}
 			// Asia
-			if (d.properties.name === 'China') return 'w';
-			if (d.properties.name === 'Japan') return 's';
+			if (d.properties.name === 'China') {
+				return 'w';
+			}
+			if (d.properties.name === 'Japan') {
+				return 's';
+			}
 			// Oceania
-			if (d.properties.name === 'Indonesia') return 'w';
-			if (d.properties.name === 'Papua New Guinea') return 'w';
-			if (d.properties.name === 'Australia') return 'w';
-			if (d.properties.name === 'New Zealand') return 'w';
+			if (d.properties.name === 'Indonesia') {
+				return 'w';
+			}
+			if (d.properties.name === 'Papua New Guinea') {
+				return 'w';
+			}
+			if (d.properties.name === 'Australia') {
+				return 'w';
+			}
+			if (d.properties.name === 'New Zealand') {
+				return 'w';
+			}
 			// otherwise if not specified
 			return 'n';
 		});
 
 		tip.offset(function(d) {
-			if (d.properties.name === 'Antarctica') return [0, 0];
+			if (d.properties.name === 'Antarctica') {
+				return [0, 0];
+			}
 			// Americas
-			if (d.properties.name === 'Greenland') return [10, -10];
-			if (d.properties.name === 'Canada') return [24, -28];
-			if (d.properties.name === 'USA') return [-5, 8];
-			if (d.properties.name === 'Mexico') return [12, 10];
-			if (d.properties.name === 'Chile') return [0, -15];
+			if (d.properties.name === 'Greenland') {
+				return [10, -10];
+			}
+			if (d.properties.name === 'Canada') {
+				return [24, -28];
+			}
+			if (d.properties.name === 'USA') {
+				return [-5, 8];
+			}
+			if (d.properties.name === 'Mexico') {
+				return [12, 10];
+			}
+			if (d.properties.name === 'Chile') {
+				return [0, -15];
+			}
 			// Europe
-			if (d.properties.name === 'Iceland') return [15, 0];
-			if (d.properties.name === 'Norway') return [10, -28];
-			if (d.properties.name === 'Sweden') return [10, -8];
-			if (d.properties.name === 'Finland') return [10, 0];
-			if (d.properties.name === 'France') return [-9, 66];
-			if (d.properties.name === 'Italy') return [-8, -6];
-			if (d.properties.name === 'Russia') return [5, 385];
+			if (d.properties.name === 'Iceland') {
+				return [15, 0];
+			}
+			if (d.properties.name === 'Norway') {
+				return [10, -28];
+			}
+			if (d.properties.name === 'Sweden') {
+				return [10, -8];
+			}
+			if (d.properties.name === 'Finland') {
+				return [10, 0];
+			}
+			if (d.properties.name === 'France') {
+				return [-9, 66];
+			}
+			if (d.properties.name === 'Italy') {
+				return [-8, -6];
+			}
+			if (d.properties.name === 'Russia') {
+				return [5, 385];
+			}
 			// Africa
-			if (d.properties.name === 'Madagascar') return [-10, 10];
+			if (d.properties.name === 'Madagascar') {
+				return [-10, 10];
+			}
 			// Asia
-			if (d.properties.name === 'China') return [-16, -8];
-			if (d.properties.name === 'Mongolia') return [-5, 0];
-			if (d.properties.name === 'Pakistan') return [-10, 13];
-			if (d.properties.name === 'India') return [-11, -18];
-			if (d.properties.name === 'Nepal') return [-8, 1];
-			if (d.properties.name === 'Myanmar') return [-12, 0];
-			if (d.properties.name === 'Laos') return [-12, -8];
-			if (d.properties.name === 'Vietnam') return [-12, -4];
-			if (d.properties.name === 'Japan') return [5, 5];
+			if (d.properties.name === 'China') {
+				return [-16, -8];
+			}
+			if (d.properties.name === 'Mongolia') {
+				return [-5, 0];
+			}
+			if (d.properties.name === 'Pakistan') {
+				return [-10, 13];
+			}
+			if (d.properties.name === 'India') {
+				return [-11, -18];
+			}
+			if (d.properties.name === 'Nepal') {
+				return [-8, 1];
+			}
+			if (d.properties.name === 'Myanmar') {
+				return [-12, 0];
+			}
+			if (d.properties.name === 'Laos') {
+				return [-12, -8];
+			}
+			if (d.properties.name === 'Vietnam') {
+				return [-12, -4];
+			}
+			if (d.properties.name === 'Japan') {
+				return [5, 5];
+			}
 			// Oceania
-			if (d.properties.name === 'Indonesia') return [0, -5];
-			if (d.properties.name === 'Papua New Guinea') return [-5, -10];
-			if (d.properties.name === 'Australia') return [-15, 0];
-			if (d.properties.name === 'New Zealand') return [-15, 0];
+			if (d.properties.name === 'Indonesia') {
+				return [0, -5];
+			}
+			if (d.properties.name === 'Papua New Guinea') {
+				return [-5, -10];
+			}
+			if (d.properties.name === 'Australia') {
+				return [-15, 0];
+			}
+			if (d.properties.name === 'New Zealand') {
+				return [-15, 0];
+			}
 			// otherwise if not specified
 			return [-10, 0];
 		});
 	}
-	jenks(data, n_classes) {
+	jenks(d, n_cl) {
 		// Compute the matrices required for Jenks breaks. These matrices
 		// can be used for any classing of data with `classes <= n_classes`
 		function getMatrices(data, n_classes) {
@@ -390,17 +481,16 @@ export class WorldMapChartComponent implements OnChanges {
 			//
 			// * lower_class_limits (LC): optimal lower class limits
 			// * variance_combinations (OP): optimal variance combinations for all classes
-			let lower_class_limits = [],
-				variance_combinations = [],
-				// loop counters
-				i,
+			const lower_class_limits = [],
+				variance_combinations = [];
+			let i,
 				j,
 				// the variance, as computed at each step in the calculation
 				variance = 0;
 
 			// Initialize and fill each matrix with zeroes
 			for (i = 0; i < data.length + 1; i++) {
-				let tmp1 = [],
+				const tmp1 = [],
 					tmp2 = [];
 				for (j = 0; j < n_classes + 1; j++) {
 					tmp1.push(0);
@@ -437,7 +527,7 @@ export class WorldMapChartComponent implements OnChanges {
 				// introduces an unnecessary concept.
 				for (let m = 1; m < l + 1; m++) {
 					// `III` originally
-					let lower_class_limit = l - m + 1,
+					const lower_class_limit = l - m + 1,
 						val = data[lower_class_limit - 1];
 
 					// here we're estimating variance for each potential classing
@@ -489,11 +579,10 @@ export class WorldMapChartComponent implements OnChanges {
 
 		// the second part of the jenks recipe: take the calculated matrices
 		// and derive an array of n breaks.
-		function breaks(data, lower_class_limits, n_classes) {
+		function breaks(data, lw_class_limits, n_classes) {
 			let k = data.length - 1,
-				kclass = [],
 				countNum = n_classes;
-
+			const kclass = [];
 			// the calculation of classes will never include the upper and
 			// lower bounds, so we need to explicitly set them
 			kclass[n_classes] = data[data.length - 1];
@@ -502,29 +591,30 @@ export class WorldMapChartComponent implements OnChanges {
 			// the lower_class_limits matrix is used as indexes into itself
 			// here: the `k` variable is reused in each iteration.
 			while (countNum > 1) {
-				kclass[countNum - 1] =
-					data[lower_class_limits[k][countNum] - 2];
-				k = lower_class_limits[k][countNum] - 1;
+				kclass[countNum - 1] = data[lw_class_limits[k][countNum] - 2];
+				k = lw_class_limits[k][countNum] - 1;
 				countNum--;
 			}
 
 			return kclass;
 		}
 
-		if (n_classes > data.length) return null;
+		if (n_cl > d.length) {
+			return null;
+		}
 
 		// sort data in numerical order, since this is expected
 		// by the matrices function
-		data = data.slice().sort(function(a, b) {
+		d = d.slice().sort(function(a, b) {
 			return a - b;
 		});
 
 		// get our basic matrices
-		let matrices = getMatrices(data, n_classes),
+		const matrices = getMatrices(d, n_cl),
 			// we only need lower class limits here
-			lower_class_limits = matrices.lower_class_limits;
+			lower_class_lim = matrices.lower_class_limits;
 
 		// extract n_classes out of the computed matrices
-		return breaks(data, lower_class_limits, n_classes);
+		return breaks(d, lower_class_lim, n_cl);
 	}
 }

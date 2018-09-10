@@ -26,15 +26,19 @@ export class WorldMapChartService {
 	}
 
 	static mapData(original: any[]) {
-		return original.map((name: string) => ({
-			id: iso[name],
-			name: name,
-			value: 0
-		}));
+		if (original.length) {
+			return original.map((name: string) => ({
+				id: iso[name],
+				name: name,
+				value: NaN
+			}));
+		} else {
+			return original;
+		}
 	}
 
 	static mapValues(original: any[], values) {
-		if (values.length) {
+		if (original.length && values.length) {
 			return original.map(obj => ({
 				id: obj.id,
 				name: obj.name,

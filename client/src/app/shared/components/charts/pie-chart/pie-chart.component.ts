@@ -8,7 +8,6 @@ import {
 } from '@angular/core';
 import * as d3 from 'd3';
 import { CustomizeOption } from '@app/models/chart.model';
-import * as d3Color from 'd3-scale-chromatic';
 interface DataType {
 	label: string;
 	name: string;
@@ -59,7 +58,19 @@ export class PieChartComponent implements OnInit, OnChanges {
 				sortArcsBy,
 				showValues
 			} = this.getSettingsValue(this.settings);
-			const color = d3.scaleOrdinal(d3Color.schemePuOr[9]);
+
+			const colorsSet = new Set();
+			this.data.forEach(element => {
+				colorsSet.add(element.name);
+			});
+			const colorsArr = [];
+			colorsSet.forEach(element => {
+				colorsArr.push(element);
+			});
+			const color = d3
+				.scaleSequential(d3.interpolateSpectral)
+				.domain([0, colorsArr.length - 1]);
+
 			switch (sortChartsBy) {
 				case 'name(asc)':
 					this.data.sort((a, b) => {
@@ -157,8 +168,8 @@ export class PieChartComponent implements OnInit, OnChanges {
 
 			g.append('path')
 				.attr('d', <any>arc)
-				.style('fill', function(d) {
-					return color(d.data.name);
+				.style('fill', function(d: any) {
+					return color(colorsArr.indexOf(d.data.name));
 				});
 			if (showValues) {
 				g.append('title').text(function(d) {

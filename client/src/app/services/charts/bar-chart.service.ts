@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import ColorHash from 'color-hash';
 import { OptionalType, fieldsValidators, BarChartDataObj } from '@app/models';
 import { BarChartCustomize } from '@app/models/bar-chart.model';
 import { FormService } from '@app/services/form.service';
@@ -30,7 +29,7 @@ export class BarChartService {
 			value: 1,
 			group: name,
 			id: 1,
-			color: name
+			color: 1
 		}));
 	}
 

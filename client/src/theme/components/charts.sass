@@ -29,32 +29,28 @@ rect.bar:hover
 
 .boundary 
   fill: none
-  stroke: #fff
+  stroke: #777
   stroke-width: .5px
 
 .d3-tip 
-  line-height: 1.5
-  font-weight: 400
-  padding: 6px
-  background: rgba(0, 0, 0, 0.6)
-  color: #FFA500
-  border-radius: 1px
+  min-width: 118px
+  background-color: $stateDefaultBgColor
+  color: $stateActiveTextColor
+  border-radius: 3px
+  padding: 5px
+  box-shadow: 0 2px 8px $shadowLightGrey
+  padding: 12px
   pointer-events: none
-  
-
   /* Creates a small triangle extender for the tooltip */
-.d3-tip:after    
+.d3-tip:after 
   box-sizing: border-box
   display: inline
   font-size: 8px
   width: 100%
-  line-height: 1.5
-  color: rgba(0, 0, 0, 0.6)
+  color: $stateDefaultBgColor
   position: absolute
   pointer-events: none
     
-  
-
   /* Northward tooltips */
 .d3-tip.n:after 
   content: "\25BC"
@@ -87,7 +83,4 @@ rect.bar:hover
   margin: -4px 0 0 -1px
   top: 50%
   left: 100%
-
-.details
-    color: white
   

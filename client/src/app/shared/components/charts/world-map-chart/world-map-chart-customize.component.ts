@@ -12,7 +12,7 @@ export class WorldMapChartCustomizeComponent implements OnChanges {
 	@Input()
 	customizeSettings: any;
 
-	isRegion = false;
+	isWorld = true;
 
 	constructor(private storeService: StoreService) {}
 
@@ -47,15 +47,10 @@ export class WorldMapChartCustomizeComponent implements OnChanges {
 	];
 
 	ngOnChanges() {
-		/* if(this.formGroup.controls.chooseRegion.value === 'world'){
-			this.formGroup.controls.rotate.enable();
-			this.formGroup.controls.scale.enable();
-			this.isRegion = false
-		} else {
-			this.formGroup.controls.rotate.disable();
-			this.formGroup.controls.scale.disable();
-			this.isRegion = true;
-		}*/
+		this.formGroup.controls.chooseRegion.value === 'world'
+			? (this.isWorld = true)
+			: (this.isWorld = false);
+
 		this.setIds();
 	}
 	change() {
