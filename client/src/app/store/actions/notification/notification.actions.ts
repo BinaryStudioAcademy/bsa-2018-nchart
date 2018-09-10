@@ -9,4 +9,12 @@ export class NotificationDestroy extends AppAction {
 	readonly type = NotificationActionConstants.NOTIFICATION_DESTROY;
 }
 
-export type Actions = NotificationGenerate | NotificationDestroy;
+export class NotificationSvgClipboard extends AppAction {
+	readonly type =
+		NotificationActionConstants.NOTIFICATION_SVG_CLIPBOARD__COMPLETE;
+}
+
+export type Actions =
+	| NotificationGenerate
+	| NotificationDestroy
+	| NotificationSvgClipboard;
