@@ -506,21 +506,10 @@ class ProjectService {
 						}
 					},
 					(data, callback) => {
-						const pageCount = Math.ceil(data.count / queryLimit);
-						let userPage = page;
-						if (page > pageCount) {
-							userPage = 1;
-						}
 						const payload = {
 							projects: [],
-							pagination: {
-								totalRecords: data.count,
-								pageCount,
-								page: userPage,
-								rows: queryLimit
-							}
+							pagination: {}
 						};
-
 						data.rows.forEach(el => {
 							const users = [];
 							el.groupProjects.forEach(groupProject => {
@@ -536,17 +525,31 @@ class ProjectService {
 							const userCharts = charts.filter(
 								(item, pos) => charts.indexOf(item) === pos
 							);
-							payload.projects.push({
-								id: el.id,
-								name: el.name,
-								updatedAt: el.updatedAt,
-								accessLevelId:
+							const queryChart = (chart || '').split(',').filter(ele => !!ele);
+							if (userCharts.length >= queryChart.length) {
+								payload.projects.push({
+									id: el.id,
+									name: el.name,
+									updatedAt: el.updatedAt,
+									accessLevelId:
                                 el.groupProjects[0].accessLevelId,
-								user:
+									user:
                                 el.groupProjects[0].group.groupUsers[0].user,
-								userCharts
-							});
+									userCharts
+								});
+							}
 						});
+						const pageCount = Math.ceil(payload.projects.length / queryLimit);
+						let userPage = page;
+						if (page > pageCount) {
+							userPage = 1;
+						}
+						payload.pagination = {
+							totalRecords: payload.projects.length,
+							pageCount,
+							page: userPage,
+							rows: queryLimit
+						};
 						return callback(null, payload);
 					}
 				],
