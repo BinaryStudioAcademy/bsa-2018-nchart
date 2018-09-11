@@ -83,6 +83,13 @@ class ProjectService {
 								})
 						);
 					},
+					(payload, callback)=>{
+					this.ProjectRepository.deleteAllProjectsCharts(payload.project.id)
+						.then(()=>{
+                            callback(null,payload);
+						})
+						.catch(err=>callback(err,null));
+					},
 					(payload, callback) => {
 						DatasetService.upsert(obj.project.datasets)
 							.then(data => {
