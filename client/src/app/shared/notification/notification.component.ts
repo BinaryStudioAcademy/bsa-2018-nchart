@@ -84,6 +84,9 @@ export class NotificationComponent implements OnInit, OnDestroy {
 							case 5:
 								this.serveMsg = 'User does not exist. ';
 								break;
+							case 4:
+								this.serveMsg = 'Email must be unique. ';
+								break;
 							default:
 								this.serveMsg = '';
 						}
