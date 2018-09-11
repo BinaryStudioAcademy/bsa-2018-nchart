@@ -162,7 +162,7 @@ module.exports = {
 						sysName: 'radius'
 					},
 					{
-						value: 4,
+						value: 3,
 						description: 'Number of pies in row',
 						option: 'Columns',
 						id: 42,

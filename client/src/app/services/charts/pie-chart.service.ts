@@ -68,7 +68,7 @@ export class PieChartService {
 				};
 				a.label = original[i].label;
 				a.name = original[i].name;
-				a.value = myCount;
+				a.value = +myCount.toFixed(10);
 				compressed.push(a);
 			}
 		}
@@ -126,6 +126,7 @@ export class PieChartService {
 			pieChartCustomize.width.value,
 			pieChartCustomize.margin.value,
 			pieChartCustomize.radius.value,
+			pieChartCustomize.columns.value,
 			pieChartCustomize.isDonut.value,
 			pieChartCustomize.sortChartsBy.value,
 			pieChartCustomize.sortArcsBy.value,
@@ -136,6 +137,7 @@ export class PieChartService {
 			width: [minValidator('Minimum value is', 0)],
 			margin: [minValidator('Minimum value is', 0)],
 			radius: [minValidator('Minimum value is', 0)],
+			columns: [minValidator('Minimum value is', 1)],
 			isDonut: [],
 			sortChartsBy: [],
 			sortArcsBy: [],

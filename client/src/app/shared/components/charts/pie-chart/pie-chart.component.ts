@@ -18,6 +18,7 @@ interface Settings<T> {
 	width: T;
 	margin: T;
 	radius: T;
+	columns: T;
 	isDonut: T;
 	sortChartsBy: T;
 	sortArcsBy: T;
@@ -53,6 +54,7 @@ export class PieChartComponent implements OnInit, OnChanges {
 				width,
 				margin,
 				radius,
+				columns,
 				isDonut,
 				sortChartsBy,
 				sortArcsBy,
@@ -127,13 +129,12 @@ export class PieChartComponent implements OnInit, OnChanges {
 			let row = 1;
 			let count = 0;
 			let column = 1;
-			const numInRow = 4;
-			const columns = Math.ceil(numberOfPies.size/4)
+			const numRaws = Math.ceil(numberOfPies.size / columns)
 			const svg = d3
 				.selectAll('.pie-chart')
 				.append('svg')
 				.attr('width', width)
-				.attr('height', (radius+margin)*2*columns+50)
+				.attr('height', (radius+margin) * 2 * numRaws + 50)
 				.attr('xmlns', 'http://www.w3.org/2000/svg')
 				.attr('xmlns:xlink', 'http://www.w3.org/1999/xlink')
 				.selectAll('g')
@@ -149,7 +150,7 @@ export class PieChartComponent implements OnInit, OnChanges {
 					const translate = `translate(${x}, ${y})`;
 					row++;
 					count++;
-					if (row > numInRow) {
+					if (row > columns) {
 						row = 1;
 						column++;
 					}
