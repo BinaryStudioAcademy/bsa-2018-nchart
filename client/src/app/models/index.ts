@@ -21,3 +21,5 @@ export * from '@app/models/export-store.model';
 export * from '@app/models/bar-chart.model';
 export * from '@app/models/dataset-store.model';
 export * from '@app/models/dataset-domain.model';
+export * from '@app/models/notification.model';
+export * from '@app/models/notification-store.model';
