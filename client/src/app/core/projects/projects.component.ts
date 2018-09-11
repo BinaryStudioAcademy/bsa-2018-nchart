@@ -1,22 +1,24 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import {Component, OnInit, AfterViewInit} from '@angular/core';
 import {
 	projects as projectsSelector,
 	projectsPagination as projectsPaginationSelector
 } from '@app/store/selectors/projects.selectors.ts';
-import { isProjectsLoading } from '@app/store/selectors/projects.selectors';
-import { StoreService } from '@app/services/store.service';
+import {isProjectsLoading} from '@app/store/selectors/projects.selectors';
+import {StoreService} from '@app/services/store.service';
 import * as projectActions from '@app/store/actions/projects/projects.actions';
-import { Observable, combineLatest } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { FormControl, FormGroup } from '@angular/forms';
-import { debounce, omitBy } from 'lodash';
-import { Router, ActivatedRoute } from '@angular/router';
+import {Observable, combineLatest} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {FormControl, FormGroup} from '@angular/forms';
+import {debounce, omitBy} from 'lodash';
+import {Router, ActivatedRoute} from '@angular/router';
 import * as queryString from 'query-string';
-import { ProjectsFilter, ProjectPreview } from '@app/models/project.model';
-import { OptionalType } from '@app/models';
-import { PaginationData } from '@app/models/projects-store.model';
-import { user as userSelector } from '@app/store/selectors/user.selectors';
-import { User } from '@app/models/user.model';
+import {ProjectsFilter, ProjectPreview} from '@app/models/project.model';
+import {OptionalType} from '@app/models';
+import {PaginationData} from '@app/models/projects-store.model';
+import {user as userSelector} from '@app/store/selectors/user.selectors';
+import {User} from '@app/models/user.model';
+import {SelectItem} from 'primeng/api';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
 	selector: 'app-projects',
@@ -33,21 +35,54 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 	};
 	userEmail: string;
 	disconnectStore: () => void;
-	charts = null;
 	owner = null;
 	display = false;
+	charts: SelectItem[] = [
+		{
+			label: 'Pie Chart',
+			value: 'Pie Chart'
+		},
+		{
+			label: 'Bar Chart',
+			value: 'Bar Chart'
+		},
+		{
+			label: 'Scatter Plot',
+			value: 'Scatter Plot'
+		},
+		{
+			label: 'Gantt Chart',
+			value: 'Gantt Chart'
+		},
+		{
+			label: 'Map Chart',
+			value: 'Map Chart'
+		},
+		{
+			label: 'Last Chart',
+			value: 'Last Chart'
+		}
+	];
 
 	debouncedSearch: (params: OptionalType<ProjectsFilter>) => void;
 
-	constructor(
-		private storeService: StoreService,
-		private router: Router,
-		private route: ActivatedRoute
-	) {
+	constructor(private storeService: StoreService,
+				private router: Router,
+				private route: ActivatedRoute,
+				private fb: FormBuilder) {
 		this.debouncedSearch = debounce(this.applyFilter, 500);
 	}
 
-	formGroup: FormGroup;
+	filterForm: FormGroup;
+
+	newFilterGroup = this.fb.group({
+		page: [''],
+		title: [''],
+		chart: [''],
+		owner: [''],
+		from: [''],
+		to: ['']
+	});
 
 	ngOnInit() {
 		const {
@@ -83,7 +118,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 			isProjectsLoading()
 		);
 
-		this.formGroup = new FormGroup({
+		this.filterForm = new FormGroup({
 			title: new FormControl(title),
 			owner: new FormControl(owner),
 			from: new FormControl(from),
@@ -94,49 +129,17 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 			{
 				label: 'My projects',
 				value: 'me',
-				control: this.formGroup.get('owner')
+				control: this.filterForm.get('owner')
 			},
 			{
 				label: 'Shared projects',
 				value: 'shared',
-				control: this.formGroup.get('owner')
-			}
-		];
-		this.charts = [
-			{
-				label: 'Pie Chart',
-				value: 'Pie Chart',
-				control: this.formGroup.controls['charts']
-			},
-			{
-				label: 'Bar Chart',
-				value: 'Bar Chart',
-				control: this.formGroup.controls['charts']
-			},
-			{
-				label: 'Scatter Plot',
-				value: 'Scatter Plot',
-				control: this.formGroup.controls['charts']
-			},
-			{
-				label: 'Gantt Chart',
-				value: 'Gantt Chart',
-				control: this.formGroup.controls['charts']
-			},
-			{
-				label: 'Map Chart',
-				value: 'Map Chart',
-				control: this.formGroup.controls['charts']
-			},
-			{
-				label: 'Last Chart',
-				value: 'Last Chart',
-				control: this.formGroup.controls['charts']
+				control: this.filterForm.get('owner')
 			}
 		];
 
-		this.formGroup.get('title').valueChanges.subscribe(value => {
-			this.debouncedSearch({ title: value, page: 1 });
+		this.filterForm.get('title').valueChanges.subscribe(value => {
+			this.debouncedSearch({title: value, page: 1});
 		});
 
 		this.disconnectStore = this.storeService.connect([
@@ -150,8 +153,9 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 	}
 
 	onNewPage(page) {
-		console.log(this.formGroup.value);
-		this.applyFilter({ page });
+		// console.log(this.filterForm.value);
+		console.log(this.newFilterGroup.value);
+		this.applyFilter({page});
 	}
 
 	applyFilter(params: OptionalType<ProjectsFilter>) {

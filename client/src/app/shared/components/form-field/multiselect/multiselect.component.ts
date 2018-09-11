@@ -1,48 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Input, Output} from '@angular/core';
 import { SelectItem } from 'primeng/api';
-
-interface City {
-	name: string;
-	code: string;
-}
+import {FormControl} from "@angular/forms";
 
 @Component({
 	selector: 'app-multiselect',
 	templateUrl: './multiselect.component.html'
 })
 export class MultiSelectComponent implements OnInit {
-	cities1: SelectItem[];
+	@Input()
+	items: SelectItem[];
 
-	cities2: City[];
+	@Input()
+	control: FormControl;
 
-	selectedCities1: City[];
-
-	selectedCities2: City[];
+	@Output()
+	selectedItems: any[];
 
 	constructor() {
-		// SelectItem API with label-value pairs
-		this.cities1 = [
-			{
-				label: 'New York',
-				value: { id: 1, name: 'New York', code: 'NY' }
-			},
-			{ label: 'Rome', value: { id: 2, name: 'Rome', code: 'RM' } },
-			{ label: 'London', value: { id: 3, name: 'London', code: 'LDN' } },
-			{
-				label: 'Istanbul',
-				value: { id: 4, name: 'Istanbul', code: 'IST' }
-			},
-			{ label: 'Paris', value: { id: 5, name: 'Paris', code: 'PRS' } }
-		];
-
-		// An array of cities
-		this.cities2 = [
-			{ name: 'New York', code: 'NY' },
-			{ name: 'Rome', code: 'RM' },
-			{ name: 'London', code: 'LDN' },
-			{ name: 'Istanbul', code: 'IST' },
-			{ name: 'Paris', code: 'PRS' }
-		];
 	}
 
 	ngOnInit() {}

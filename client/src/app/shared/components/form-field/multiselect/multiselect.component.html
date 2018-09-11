@@ -1,1 +1,7 @@
-<p-multiSelect [options]="cities1" [(ngModel)]="selectedCities1"></p-multiSelect>
+<p-multiSelect
+	[options]="items"
+	[(ngModel)]="selectedItems"
+	[filter]="false"
+	[formControl]="control"
+>
+</p-multiSelect>

@@ -3,12 +3,14 @@
 	spBackgroundColor="#f2f3f9"
 	#projects
 >
+	<form [formGroup]="newFilterGroup">
 	<p-sidebar [(visible)]="display" position="right" [appendTo]="projects">
-		<h4>Filter by owner</h4>
-		<!--<app-checkbox-group [checks]="formGroup.get('owner')"></app-checkbox-group>-->
-		<h4>Filter by charts</h4>
-		<!--<app-checkbox-group [checks]="charts"></app-checkbox-group>-->
-		<app-date-time-picker [control]="formGroup.get('date')"></app-date-time-picker>
+			<h4>Filter by owner</h4>
+			<app-checkbox-group [checks]="owner"></app-checkbox-group>
+			<h4>Filter by charts</h4>
+			<app-multiselect [items]="charts" [control]="newFilterGroup.controls['charts']"></app-multiselect>
+			<h4>Filter by date</h4>
+			<app-date-time-picker [control]="filterForm.get('date')"></app-date-time-picker>
 	</p-sidebar>
 	<div class="search-projects">
 		<h3>Projects</h3>
@@ -16,12 +18,13 @@
 			class="ui-fluid"
 			placeholder="e.g. Super project"
 			type="text"
-			[control]="formGroup.get('title')"
+			[control]="filterForm.get('title')"
 			[buttonIcon]="'fa fa-filter'"
 			(buttonClick)="display = true"
 		>
 		</app-input-group>
 	</div>
+	</form>
 	<div class="projects-content" [loading-sp]="isLoading$ | async">
 		<div class="empty-projects-list" *ngIf="isEmptyList$() | async">
 			<i class="far fa-sad-tear"></i>
