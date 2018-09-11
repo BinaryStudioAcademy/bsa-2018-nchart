@@ -1,23 +1,28 @@
-import {Component, OnInit, AfterViewInit, ChangeDetectionStrategy} from '@angular/core';
+import {
+	Component,
+	OnInit,
+	AfterViewInit,
+	ChangeDetectionStrategy
+} from '@angular/core';
 import {
 	projects as projectsSelector,
 	projectsPagination as projectsPaginationSelector
 } from '@app/store/selectors/projects.selectors.ts';
-import {isProjectsLoading} from '@app/store/selectors/projects.selectors';
-import {StoreService} from '@app/services/store.service';
+import { isProjectsLoading } from '@app/store/selectors/projects.selectors';
+import { StoreService } from '@app/services/store.service';
 import * as projectActions from '@app/store/actions/projects/projects.actions';
-import {Observable, combineLatest} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {FormControl, FormGroup} from '@angular/forms';
-import {debounce, omitBy} from 'lodash';
-import {Router, ActivatedRoute} from '@angular/router';
+import { Observable, combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { FormControl, FormGroup } from '@angular/forms';
+import { debounce, omitBy } from 'lodash';
+import { Router, ActivatedRoute } from '@angular/router';
 import * as queryString from 'query-string';
-import {ProjectsFilter, ProjectPreview} from '@app/models/project.model';
-import {OptionalType} from '@app/models';
-import {PaginationData} from '@app/models/projects-store.model';
-import {user as userSelector} from '@app/store/selectors/user.selectors';
-import {User} from '@app/models/user.model';
-import {SelectItem} from 'primeng/api';
+import { ProjectsFilter, ProjectPreview } from '@app/models/project.model';
+import { OptionalType } from '@app/models';
+import { PaginationData } from '@app/models/projects-store.model';
+import { user as userSelector } from '@app/store/selectors/user.selectors';
+import { User } from '@app/models/user.model';
+import { SelectItem } from 'primeng/api';
 import { FormBuilder } from '@angular/forms';
 
 @Component({
@@ -34,7 +39,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 		page: 1,
 		title: ''
 	};
-	datePicked = [];
+	datePicked: Date[] = [];
 	userEmail: string;
 	disconnectStore: () => void;
 	owner = null;
@@ -68,10 +73,12 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 
 	debouncedSearch: (params: OptionalType<ProjectsFilter>) => void;
 
-	constructor(private storeService: StoreService,
-				private router: Router,
-				private route: ActivatedRoute,
-				private fb: FormBuilder) {
+	constructor(
+		private storeService: StoreService,
+		private router: Router,
+		private route: ActivatedRoute,
+		private fb: FormBuilder
+	) {
 		this.debouncedSearch = debounce(this.applyFilter, 500);
 	}
 
@@ -90,8 +97,8 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 		const {
 			page,
 			title,
-			chart,
-			owner,
+			/*chart,
+			owner,*/
 			from,
 			to
 		} = this.route.snapshot.queryParams;
@@ -122,9 +129,8 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 
 		this.filterForm = new FormGroup({
 			title: new FormControl(title),
-			owner: new FormControl({value: false}),
-			from: new FormControl(from),
-			to: new FormControl(to),
+			owner: new FormControl({ value: false }),
+			date: new FormControl([from, to])
 		});
 
 		this.owner = [
@@ -140,8 +146,8 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 			}
 		];
 
-		this.newFilterGroup.valueChanges.subscribe(v=>{
-			this.debouncedSearch({title: v.title, page: 1});
+		this.newFilterGroup.valueChanges.subscribe(v => {
+			this.debouncedSearch({ title: v.title, page: 1 });
 		});
 
 		// this.filterForm.get('title').valueChanges.subscribe(value => {
@@ -160,7 +166,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 
 	onNewPage(page) {
 		this.newFilterGroup.controls.page.patchValue(page);
-		this.applyFilter({page});
+		this.applyFilter({ page });
 	}
 
 	applyFilter(params: OptionalType<ProjectsFilter>) {
@@ -200,17 +206,5 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 		);
 	}
 
-	ngAfterViewInit() {
-		// const paginatorControl = document.getElementsByClassName(
-		// 	'ui-paginator-icon'
-		// );
-		// paginatorControl[0].setAttribute(
-		// 	'class',
-		// 	'ui-paginator-icon fa fa-backward'
-		// );
-		// paginatorControl[3].setAttribute(
-		// 	'class',
-		// 	'ui-paginator-icon fa fa-forward'
-		// );
-	}
+	ngAfterViewInit() {}
 }

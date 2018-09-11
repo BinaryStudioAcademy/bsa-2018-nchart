@@ -1,6 +1,6 @@
-import {Component, OnInit, Input, Output} from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { SelectItem } from 'primeng/api';
-import {FormControl} from "@angular/forms";
+import { FormControl } from '@angular/forms';
 
 @Component({
 	selector: 'app-multiselect',
@@ -16,8 +16,7 @@ export class MultiSelectComponent implements OnInit {
 	@Output()
 	selectedItems: any[];
 
-	constructor() {
-	}
+	constructor() {}
 
 	ngOnInit() {}
 }

@@ -1,10 +1,10 @@
+import { EventEmitter, Output } from '@angular/core';
 import {
 	Component,
 	OnInit,
 	Input,
 	ChangeDetectionStrategy
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
 
 @Component({
 	selector: 'app-date-time-picker',
@@ -13,12 +13,15 @@ import { FormControl } from '@angular/forms';
 })
 export class DateTimePickerComponent implements OnInit {
 	@Input()
-	dateControl: FormControl;
+	dateRange: Date[];
+	@Output()
+	dateRangeChange = new EventEmitter<Date[]>();
 
 	constructor() {}
+	ngOnInit() {}
 
-	public datePicked: Date[];
-	ngOnInit() {
-		console.log(this.dateControl);
+	onDateChange(date) {
+		this.dateRange = date;
+		this.dateRangeChange.emit(this.dateRange);
 	}
 }

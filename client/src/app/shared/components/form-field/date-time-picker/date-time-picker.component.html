@@ -6,15 +6,15 @@
 	</label>
 	<div class="ui-input-wrp">
 		<input placeholder="Date Time Range From:"
-			   pInputText
-			   [formControl]="dateControl"
-			   [(ngModel)] = "datePicked"
-			   [selectMode]="'rangeFrom'"
-			   [owlDateTimeTrigger]="dtRange2"
-			   [owlDateTime]="dtRange2"
+			pInputText
+			[ngModel]="dateRange"
+			(ngModelChange)="onDateChange($event)"
+			[selectMode]="'rangeFrom'"
+			[owlDateTimeTrigger]="dtRange1"
+			[owlDateTime]="dtRange1"
 		>
 		<i class="ui-input-icon-right fa fa-calendar"></i>
-		<owl-date-time #dtRange2></owl-date-time>
+		<owl-date-time #dtRange1></owl-date-time>
 	</div>
 </div>
 <div class="ui-date-time-picker-wrp">
@@ -25,14 +25,14 @@
 	</label>
 	<div class="ui-input-wrp">
 		<input placeholder="Date Time Range To:"
-			   pInputText
-			   [formControl]="dateControl"
-			   [(ngModel)] = "datePicked"
-			   [selectMode]="'rangeTo'"
-			   [owlDateTimeTrigger]="dtRange3"
-			   [owlDateTime]="dtRange3"
+			pInputText
+			[ngModel]="dateRange"
+			(ngModelChange)="onDateChange($event)"
+			[selectMode]="'rangeTo'"
+			[owlDateTimeTrigger]="dtRange2"
+			[owlDateTime]="dtRange2"
 		>
 		<i class="ui-input-icon-right fa fa-calendar"></i>
-		<owl-date-time #dtRange3></owl-date-time>
+		<owl-date-time #dtRange2></owl-date-time>
 	</div>
 </div>

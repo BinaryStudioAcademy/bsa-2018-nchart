@@ -21,47 +21,10 @@
 			<h4>Filter by charts</h4>
 			<p-multiSelect [options]="charts" formControlName="charts"></p-multiSelect>
 			<h4>Filter by date</h4>
-			<!--<app-date-time-picker-->
-				<!--[dateControl]="filterForm.controls['date']">-->
-			<!--</app-date-time-picker>-->
-			<div class="ui-date-time-picker-wrp">
-				<label
-					class="input-label"
-				>
-					From
-				</label>
-				<div class="ui-input-wrp">
-					<input placeholder="Date Time Range From:"
-						   pInputText
-						   [formControl]="newFilterGroup.get('date')"
-						   [(ngModel)] = "datePicked"
-						   [selectMode]="'rangeFrom'"
-						   [owlDateTimeTrigger]="dtRange2"
-						   [owlDateTime]="dtRange2"
-					>
-					<i class="ui-input-icon-right fa fa-calendar"></i>
-					<owl-date-time #dtRange2></owl-date-time>
-				</div>
-			</div>
-			<div class="ui-date-time-picker-wrp">
-				<label
-					class="input-label"
-				>
-					To
-				</label>
-				<div class="ui-input-wrp">
-					<input placeholder="Date Time Range To:"
-						   pInputText
-						   [formControl]="newFilterGroup.get('date')"
-						   [(ngModel)] = "datePicked"
-						   [selectMode]="'rangeTo'"
-						   [owlDateTimeTrigger]="dtRange3"
-						   [owlDateTime]="dtRange3"
-					>
-					<i class="ui-input-icon-right fa fa-calendar"></i>
-					<owl-date-time #dtRange3></owl-date-time>
-				</div>
-			</div>
+			<app-date-time-picker
+				[(dateRange)]="datePicked"
+			>
+			</app-date-time-picker>
 		</p-sidebar>
 		<div class="search-projects">
 			<h3>Projects</h3>
@@ -75,7 +38,8 @@
 			>
 			</app-input-group>
 		</div>
-		<pre>{{newFilterGroup.value | json}}</pre>
+		<pre>{{filterForm.value | json}}</pre>
+		<pre>{{datePicked | json}}</pre>
 	</form>
 	<div class="projects-content" [loading-sp]="isLoading$ | async">
 		<div class="empty-projects-list" *ngIf="isEmptyList$() | async">
