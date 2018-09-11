@@ -1,7 +1,6 @@
 const async = require('async');
 const _ = require('lodash');
 const moment = require('moment');
-const SequilizeOp = require('sequelize').Op;
 const ProjectRepository = require('./project.repository');
 const DatasetService = require('../dataset/dataset.service');
 const ChartService = require('../chart/chart.service');
@@ -439,7 +438,7 @@ class ProjectService {
     }
   }
      */
-	static formQuery(id, name, page, limit, chart, minDate, maxDate) {
+	static formQuery(name, page, limit, chart, minDate, maxDate) {
 		const queryName = name || '';
 		const queryChart = (chart || '').split(',').filter(el => !!el);
 		const queryMinDate = moment(minDate, 'YYYY-MM-DD', true).isValid() ? minDate : '1700-01-01';
@@ -448,43 +447,42 @@ class ProjectService {
 		if (duration < 0) {
 			throw new Error('Invalid date');
 		}
-		const query = {
-			'$groupProjects.group.groupUsers.id$': id,
-			name: { $iLike: `%${queryName}%` },
-			updatedAt: { [SequilizeOp.gte]: queryMinDate, [SequilizeOp.lte]: queryMaxDate }
+		return {
+			queryName,
+			queryChart,
+			queryMinDate,
+			queryMaxDate
 		};
-		if (chart && chart.length > 0) {
-			query['$projectCharts.chart.chartType.sysName$'] = {
-				[SequilizeOp.in]: queryChart
-			};
-		}
-		return query;
 	}
 
-	static ownerMe(me) {
-		if (me === 'true') {
+	static ownerMe(owner) {
+		if (owner === 'me') {
 			return [{ accessLevelId: 1 }, { accessLevelId: 1 }];
 		}
-		if (me === 'false') {
+		if (owner === 'shared') {
 			return [{ accessLevelId: [2, 3] }, { accessLevelId: 1 }];
 		}
 		return [{ accessLevelId: [1, 2, 3] }, { accessLevelId: 1 }];
 	}
 
 	projectsWithPagination(id, {
-		name, page, limit, chart, minDate, maxDate, me
+		name, page, limit, chart, minDate, maxDate, owner
 	}) {
 		const queryLimit = Number(limit) || this.pageLimit;
 		const queryOffset = ((page || 1) - 1) * queryLimit;
-		const query = ProjectService.formQuery(id, name, page, limit, chart, minDate, maxDate);
-		const searchQuery = ProjectService.ownerMe(me);
+		const queryParams = ProjectService.formQuery(name, page, limit, chart, minDate, maxDate);
+		const searchQuery = ProjectService.ownerMe(owner);
 		return new Promise((resolve, reject) => {
 			async.waterfall(
 				[
 					callback => {
 						this.ProjectRepository.findProjectsWithOwners({
+							id,
+							queryName: queryParams.queryName,
+							queryMinDate: queryParams.queryMinDate,
+							queryMaxDate: queryParams.queryMaxDate,
+							queryChart: queryParams.queryChart,
 							searchQuery,
-							query,
 							offset: queryOffset,
 							limit: queryLimit
 						})
@@ -495,7 +493,7 @@ class ProjectService {
 					(payload, callback) => {
 						if (payload.rows.length === 0) {
 							this.ProjectRepository.findProjectsWithOwners({
-								query,
+								query: queryParams,
 								offset: 0,
 								limit: queryLimit
 							})

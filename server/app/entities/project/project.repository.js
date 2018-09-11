@@ -167,12 +167,27 @@ class ProjectRepository extends Repository {
 	}
 
 	findProjectsWithOwners({
+		id,
 		searchQuery,
-		query,
+		queryName,
+		queryMinDate,
+		queryMaxDate,
+		queryChart,
 		offset,
 		limit
 	}) {
 		this.groupUser = groupUserModel;
+
+		const query = {
+			'$groupProjects.group.groupUsers.id$': id,
+			name: { $iLike: `%${queryName}%` },
+			updatedAt: { [SequilizeOp.gte]: queryMinDate, [SequilizeOp.lte]: queryMaxDate }
+		};
+		if (queryChart && queryChart.length > 0) {
+			query['$projectCharts.chart.chartType.sysName$'] = {
+				[SequilizeOp.in]: queryChart
+			};
+		}
 
 		const groupInclude = {
 			model: groupProjectModel,
