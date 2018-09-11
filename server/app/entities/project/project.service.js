@@ -461,17 +461,29 @@ class ProjectService {
 		return query;
 	}
 
+	static ownerMe(me) {
+		if (me === 'true') {
+			return [{ accessLevelId: 1 }, { accessLevelId: 1 }];
+		}
+		if (me === 'false') {
+			return [{ accessLevelId: [2, 3] }, { accessLevelId: 1 }];
+		}
+		return [{ accessLevelId: [1, 2, 3] }, { accessLevelId: 1 }];
+	}
+
 	projectsWithPagination(id, {
-		name, page, limit, chart, minDate, maxDate
+		name, page, limit, chart, minDate, maxDate, me
 	}) {
 		const queryLimit = Number(limit) || this.pageLimit;
 		const queryOffset = ((page || 1) - 1) * queryLimit;
 		const query = ProjectService.formQuery(id, name, page, limit, chart, minDate, maxDate);
+		const searchQuery = ProjectService.ownerMe(me);
 		return new Promise((resolve, reject) => {
 			async.waterfall(
 				[
 					callback => {
 						this.ProjectRepository.findProjectsWithOwners({
+							searchQuery,
 							query,
 							offset: queryOffset,
 							limit: queryLimit
@@ -510,7 +522,6 @@ class ProjectService {
 						};
 
 						data.rows.forEach(el => {
-							// todo: users test
 							const users = [];
 							el.groupProjects.forEach(groupProject => {
 								groupProject.group.groupUsers.forEach(groupUser => {

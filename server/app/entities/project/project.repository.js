@@ -167,6 +167,7 @@ class ProjectRepository extends Repository {
 	}
 
 	findProjectsWithOwners({
+		searchQuery,
 		query,
 		offset,
 		limit
@@ -175,6 +176,7 @@ class ProjectRepository extends Repository {
 
 		const groupInclude = {
 			model: groupProjectModel,
+			where: searchQuery[0],
 			include: [
 				{
 					model: groupModel,
@@ -218,6 +220,7 @@ class ProjectRepository extends Repository {
 				attributes: ['id'],
 				include: [chartInclude, groupInclude]
 			}).then(data => {
+				groupInclude.where = { accessLevelId: searchQuery[1].accessLevelId };
 				projectModel.findAndCount({
 					limit,
 					offset,
