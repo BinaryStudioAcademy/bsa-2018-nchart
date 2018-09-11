@@ -33,7 +33,8 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 	};
 	userEmail: string;
 	disconnectStore: () => void;
-	checks = null;
+	charts = null;
+	owner = null;
 	display = false;
 
 	debouncedSearch: (params: OptionalType<ProjectsFilter>) => void;
@@ -78,10 +79,22 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 		this.formGroup = new FormGroup({
 			name: new FormControl(search, []),
 			charts: new FormControl(search, []),
+			owner: new FormControl(search, []),
 			date: new FormControl(search, [])
 		});
-
-		this.checks = [
+		this.owner = [
+			{
+				label: 'My projects',
+				value: 'me',
+				control: this.formGroup.controls['owner']
+			},
+			{
+				label: 'Shared projects',
+				value: 'shared',
+				control: this.formGroup.controls['owner']
+			}
+		];
+		this.charts = [
 			{
 				label: 'Pie Chart',
 				value: 'Pie Chart',

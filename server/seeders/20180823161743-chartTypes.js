@@ -77,7 +77,7 @@ module.exports = {
 					{
 						id: 4,
 						value: 0,
-						description: 'Distance among bar charts, in pixel.',
+						description: 'Distance among bar checks, in pixel.',
 						option: 'Vertical Padding',
 						sysName: 'verticalPadding'
 					},
@@ -164,7 +164,7 @@ module.exports = {
 					{
 						value: false,
 						description:
-								'If selected, pie charts will be drawn ad donut chart. The size is defined by the Thickness option (see below).',
+								'If selected, pie checks will be drawn ad donut chart. The size is defined by the Thickness option (see below).',
 						option: 'Donut chart',
 						id: 11,
 						sysName: 'isDonut'
@@ -180,7 +180,7 @@ module.exports = {
 					{
 						value: 'name(asc)',
 						description: 'Order of the pie chart.',
-						option: 'Sort charts by',
+						option: 'Sort checks by',
 						id: 14,
 						sysName: 'sortChartsBy'
 					},
@@ -290,7 +290,7 @@ module.exports = {
 				name: 'Gantt Chart',
 				sysName: 'ganttChart',
 				description:
-						'A Gantt chart is a type of bar chart, developed by Henry Gantt in the 1910s, that illustrates a project schedule. Gantt charts illustrate the start and finish dates of the terminal elements and summary elements of a project.',
+						'A Gantt chart is a type of bar chart, developed by Henry Gantt in the 1910s, that illustrates a project schedule. Gantt checks illustrate the start and finish dates of the terminal elements and summary elements of a project.',
 				dimensionSettings: JSON.stringify([
 					{
 						multiple: false,

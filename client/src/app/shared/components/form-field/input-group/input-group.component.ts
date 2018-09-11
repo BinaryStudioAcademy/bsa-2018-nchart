@@ -43,9 +43,13 @@ export class InputGroupComponent implements OnInit, AfterViewInit {
 	@Output()
 	displayChange = new EventEmitter<boolean>();
 	@Input()
-	checks: any;
+	charts: any;
 	@Input()
 	dateControl: FormControl;
+	@Input()
+	owner: any;
+	@Input()
+	refContainer: any;
 
 	@ViewChild('inputText')
 	inputText;

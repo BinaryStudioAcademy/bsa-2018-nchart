@@ -21,7 +21,7 @@ export const steps = [
 	},
 	{
 		id: 3,
-		scrollTo: '#charts',
+		scrollTo: '#checks',
 		name: 'Choose Chart'
 	},
 	{

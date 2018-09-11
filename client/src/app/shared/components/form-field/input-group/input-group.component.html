@@ -23,8 +23,11 @@
 		[tooltipPosition]="tooltipPosition"
 		[autofocus]="autofocus"
     >
-	<p-sidebar [(visible)]="display" position="right">
-		<app-checkbox-group [checks]="checks"></app-checkbox-group>
+	<p-sidebar [(visible)]="display" position="right" [appendTo]="refContainer">
+		<p>Filter by owner</p>
+		<app-checkbox-group [checks]="owner"></app-checkbox-group>
+		<p>Filter by charts</p>
+		<app-checkbox-group [checks]="charts"></app-checkbox-group>
 		<app-date-time-picker [control]="dateControl"></app-date-time-picker>
 	</p-sidebar>
 	<button

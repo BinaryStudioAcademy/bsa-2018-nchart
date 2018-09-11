@@ -3,7 +3,7 @@
 	<label
 		class="input-label"
 	>
-		Date picker
+		Filter by date
 	</label>
 	<div class="ui-input-wrp" id="input_wrp">
 			<input placeholder="Date Time:"
@@ -15,7 +15,7 @@
 				   class="date-time-picker-input"
 			>
 		<i class="ui-input-icon-right fa fa-calendar"></i>
-			<owl-date-time #dt4></owl-date-time>
+			<owl-date-time #dt4 pickerMode="popup" pickerType="calendar"></owl-date-time>
 			<span class="example-error" *ngIf="dateTime4.invalid && dateTime4.errors.owlDateTimeRange">
             Date Time Range Invalid.
         </span>
