@@ -140,9 +140,13 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 			}
 		];
 
-		this.filterForm.get('title').valueChanges.subscribe(value => {
-			this.debouncedSearch({title: value, page: 1});
+		this.newFilterGroup.valueChanges.subscribe(v=>{
+			this.debouncedSearch({title: v.title, page: 1});
 		});
+
+		// this.filterForm.get('title').valueChanges.subscribe(value => {
+		// 	this.debouncedSearch({title: value, page: 1});
+		// });
 
 		this.disconnectStore = this.storeService.connect([
 			{
@@ -155,8 +159,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 	}
 
 	onNewPage(page) {
-		// console.log(this.filterForm.value);
-		console.log(this.newFilterGroup.value);
+		this.newFilterGroup.controls.page.patchValue(page);
 		this.applyFilter({page});
 	}
 
