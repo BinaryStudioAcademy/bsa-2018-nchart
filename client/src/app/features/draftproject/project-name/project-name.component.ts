@@ -25,7 +25,7 @@ export class ProjectNameComponent implements OnInit, OnChanges {
 	setProjectName: EventEmitter<any> = new EventEmitter();
 
 	nameControl = new FormControl('', [
-		requiredValidator(''),
+		requiredValidator('Project name can`t be empty'),
 		maxLengthValidator('Project name can`t be more than 40 symbols', 40)
 	]);
 
