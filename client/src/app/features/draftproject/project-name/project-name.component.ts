@@ -26,7 +26,7 @@ export class ProjectNameComponent implements OnInit, OnChanges {
 
 	nameControl = new FormControl('', [
 		requiredValidator('Project name can`t be empty'),
-		maxLengthValidator('Project name can`t be more than 40 symbols')
+		maxLengthValidator('Project name length can`t be more than ', 40)
 	]);
 
 	constructor() {}
