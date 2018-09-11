@@ -1,3 +1,4 @@
+const SequilizeOp = require('sequelize').Op;
 const Repository = require('../../common/repository/repository');
 const projectModel = require('./project.models/project');
 const projectChartModel = require('./project.models/project_chart');
@@ -9,7 +10,6 @@ const groupModel = require('../group/group.models/group');
 const groupProjectModel = require('../group/group.models/group_project');
 const groupUserModel = require('../group/group.models/group_user');
 const userModel = require('../user/user.model');
-const companyModel = require('../company/company.models/company');
 
 class ProjectRepository extends Repository {
 	constructor() {
@@ -166,89 +166,90 @@ class ProjectRepository extends Repository {
 		});
 	}
 
-	findProjectsWithOwners(userId, name) {
-		let projectName = name;
-		if (!name) {
-			projectName = '';
-		}
+	findProjectsWithOwners({
+		id,
+		searchQuery,
+		queryName,
+		queryMinDate,
+		queryMaxDate,
+		queryChart,
+		offset,
+		limit
+	}) {
 		this.groupUser = groupUserModel;
-		return this.groupUser.findAll({
-			where: { userId },
-			separate: true,
-			attributes: ['groupId'],
+
+		const query = {
+			'$groupProjects.group.groupUsers.id$': id,
+			name: { $iLike: `%${queryName}%` },
+			updatedAt: { [SequilizeOp.gte]: queryMinDate, [SequilizeOp.lte]: queryMaxDate }
+		};
+		if (queryChart && queryChart.length > 0) {
+			query['$projectCharts.chart.chartType.sysName$'] = {
+				[SequilizeOp.in]: queryChart
+			};
+		}
+
+		const groupInclude = {
+			model: groupProjectModel,
+			where: searchQuery[0],
 			include: [
 				{
 					model: groupModel,
-					attributes: ['id', 'name', 'companyId'],
+					attributes: ['id'],
 					include: [
 						{
-							model: groupProjectModel,
-							attributes: ['projectId', 'accessLevelId'],
+							model: groupUserModel,
+							attributes: ['id'],
 							include: [
 								{
-									model: this.projectModel,
-									attributes: ['id', 'name', 'updatedAt'],
-									where: {
-										name: { $like: `%${projectName}%` }
-									},
-									include: [
-										{
-											model: groupProjectModel,
-											separate: true,
-											attributes: [
-												'projectId',
-												'groupId'
-											],
-											where: { accessLevelId: 1 },
-											include: [
-												{
-													model: groupModel,
-													attributes: ['id'],
-													include: [
-														{
-															model: groupUserModel,
-															attributes: [
-																'userId'
-															],
-															include: {
-																model: userModel,
-																attributes: [
-																	'name',
-																	'email'
-																]
-															}
-														}
-													]
-												}
-											]
-										},
-										{
-											model: this.projectChartModel,
-											attributes: ['chartId'],
-											include: [
-												{
-													model: chartModel,
-													attributes: ['chartTypeId'],
-													include: [
-														{
-															model: chartTypeModel,
-															attributes: ['name']
-														}
-													]
-												}
-											]
-										}
-									]
+									model: userModel,
+									attributes: ['name', 'email']
 								}
 							]
-						},
-						{
-							model: companyModel,
-							attributes: ['name']
 						}
 					]
 				}
 			]
+		};
+
+		const chartInclude = {
+			model: this.projectChartModel,
+			attributes: ['chartId'],
+			include: [
+				{
+					model: chartModel,
+					attributes: ['chartTypeId'],
+					include: [
+						{
+							attributes: ['name', 'sysName'],
+							model: chartTypeModel
+						}
+					]
+				}
+			]
+		};
+
+		return new Promise((res) => {
+			projectModel.findAll({
+				where: query,
+				attributes: ['id'],
+				include: [chartInclude, groupInclude]
+			}).then(data => {
+				groupInclude.where = { accessLevelId: searchQuery[1].accessLevelId };
+				projectModel.findAndCount({
+					limit,
+					offset,
+					subQuery: false,
+					where: {
+						id: {
+							[SequilizeOp.in]: data.map(el => el.id)
+						}
+					},
+					include: [chartInclude, groupInclude]
+				}).then(d => {
+					res(d);
+				});
+			});
 		});
 	}
 

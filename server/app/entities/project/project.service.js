@@ -1,5 +1,6 @@
 const async = require('async');
 const _ = require('lodash');
+const moment = require('moment');
 const ProjectRepository = require('./project.repository');
 const DatasetService = require('../dataset/dataset.service');
 const ChartService = require('../chart/chart.service');
@@ -14,6 +15,8 @@ class ProjectService {
 		this.GroupService = GroupService;
 		this.DocumentGeneratingService = DocumentGeneratingService;
 		this.MarkupTemplateService = MarkupTemplateService;
+
+		this.pageLimit = 10;
 	}
 
 	getAll() {
@@ -74,7 +77,7 @@ class ProjectService {
 								projectId: payload.project.id,
 								accessLevelId: 1
 							})
-								// todo: error handler if groupProject  already exists
+							// todo: error handler if groupProject  already exists
 								.then(() => {
 									callback(null, payload);
 								})
@@ -379,16 +382,12 @@ class ProjectService {
 	findProjectsWithOwners(id, params) {
 		return this.ProjectRepository.findProjectsWithOwners(id, params.name)
 			.then(data => {
-				// data[0].group.groupProjects[0].project - id, name
-				// data[0].group.groupProjects[0].project
-				// .groupProjects[0].group.groupUsers[0].user.dataValues - name, email
 				const projects = [];
 				data.forEach(el => {
 					el.group.groupProjects.forEach(pj => {
-						const user =							pj.project.groupProjects[0].group.groupUsers[0].user
+						const user = pj.project.groupProjects[0].group.groupUsers[0].user
 							.dataValues;
 						const userCharts = [];
-						// pj.project.projectCharts[0].chart.chartType.name
 						pj.project.projectCharts.forEach(projectChart => {
 							userCharts.push(projectChart.chart.chartType.name);
 						});
@@ -407,85 +406,159 @@ class ProjectService {
 						});
 					});
 				});
-				// this.paggination(params.page,projects);
 				return projects;
 			})
 			.catch(err => err);
 	}
 
-	projectsWithPagination(id, params) {
-		return this.ProjectRepository.findProjectsWithOwners(id, params.name)
-			.then(data => {
-				// data[0].group.groupProjects[0].project - id, name
-				// data[0].group.groupProjects[0].project
-				// .groupProjects[0].group.groupUsers[0].user.dataValues - name, email
-				const projects = [];
-				data.forEach(el => {
-					el.group.groupProjects.forEach(pj => {
-						const user =							pj.project.groupProjects[0].group.groupUsers[0].user
-							.dataValues;
-						const userCharts = [];
-						// pj.project.projectCharts[0].chart.chartType.name
-						pj.project.projectCharts.forEach(projectChart => {
-							userCharts.push(projectChart.chart.chartType.name);
-						});
-						const uniqueCharts = userCharts.filter(
-							(item, pos) => userCharts.indexOf(item) === pos
-						);
-						projects.push({
-							id: pj.project.dataValues.id,
-							name: pj.project.dataValues.name,
-							updatedAt: pj.project.dataValues.updatedAt,
-							groupName: el.group.name,
-							companyName: el.group.company.name,
-							accessLevelId: pj.dataValues.accessLevelId,
-							userCharts: uniqueCharts,
-							user
-						});
-					});
-				});
-				return ProjectService.pagination(
-					params.page,
-					params.limit,
-					projects
-				);
-				// todo: uncomment to test
-				// return projects;
-			})
-			.catch(err => err);
-	}
-
-	static pagination(page, limit, projects) {
-		let pageLimit;
-		if (limit) {
-			pageLimit = Number(limit);
-		} else {
-			pageLimit = 10;
-		}
-		let userPage = Number(page);
-		const numberOfPages = Math.ceil(projects.length / pageLimit);
-		let payload;
-		if (userPage === 1) {
-			payload = projects.slice(0, userPage * pageLimit);
-		} else {
-			payload = projects.slice(
-				(userPage - 1) * pageLimit,
-				(userPage - 1) * pageLimit + pageLimit
-			);
-		}
-		if (payload.length === 0) {
-			userPage = 1;
-			payload = projects.slice(0, pageLimit);
+	/*
+    "projects":[
+      {
+        "id":4,
+        "name":"rename test",
+        "updatedAt":"2018-09-08T11:26:08.029Z",
+        "groupName":"General",
+        "companyName":"General",
+        "accessLevelId":1,
+        "userCharts":[
+          "Bar chart",
+          "Pie Chart"
+        ],
+        "user":{
+          "name":"Nemchenko",
+          "email":"1user@gmail.com"
+        }
+      }
+    ],
+    "pagination":{
+      "pageCount":1,
+      "page":1,
+      "totalRecords":2,
+      "rows":10
+    }
+  }
+     */
+	static formQuery(name, page, limit, chart, minDate, maxDate) {
+		const queryName = name || '';
+		const queryChart = (chart || '').split(',').filter(el => !!el);
+		const queryMinDate = moment(minDate, 'YYYY-MM-DD', true).isValid() ? minDate : '1700-01-01';
+		const queryMaxDate = moment(maxDate, 'YYYY-MM-DD', true).isValid() ? maxDate : '3000-01-01';
+		const duration = moment.duration(moment(queryMaxDate).diff((moment(queryMinDate)))).asDays();
+		if (duration < 0) {
+			throw new Error('Invalid date');
 		}
 		return {
-			projects: payload,
-			pagination: {
-				pageCount: numberOfPages,
-				page: userPage,
-				totalRecords: projects.length,
-				rows: pageLimit
-			}
+			queryName,
+			queryChart,
+			queryMinDate,
+			queryMaxDate
 		};
+	}
+
+	static ownerMe(owner) {
+		if (owner === 'me') {
+			return [{ accessLevelId: 1 }, { accessLevelId: 1 }];
+		}
+		if (owner === 'shared') {
+			return [{ accessLevelId: [2, 3] }, { accessLevelId: 1 }];
+		}
+		return [{ accessLevelId: [1, 2, 3] }, { accessLevelId: 1 }];
+	}
+
+	projectsWithPagination(id, {
+		name, page, limit, chart, minDate, maxDate, owner
+	}) {
+		const queryLimit = Number(limit) || this.pageLimit;
+		const queryOffset = ((page || 1) - 1) * queryLimit;
+		const queryParams = ProjectService.formQuery(name, page, limit, chart, minDate, maxDate);
+		const searchQuery = ProjectService.ownerMe(owner);
+		return new Promise((resolve, reject) => {
+			async.waterfall(
+				[
+					callback => {
+						this.ProjectRepository.findProjectsWithOwners({
+							id,
+							queryName: queryParams.queryName,
+							queryMinDate: queryParams.queryMinDate,
+							queryMaxDate: queryParams.queryMaxDate,
+							queryChart: queryParams.queryChart,
+							searchQuery,
+							offset: queryOffset,
+							limit: queryLimit
+						})
+							.then(data => callback(null, data))
+						// .then(data => callback(data, null))
+							.catch(err => callback(err, null));
+					},
+					(payload, callback) => {
+						if (payload.rows.length === 0) {
+							this.ProjectRepository.findProjectsWithOwners({
+								query: queryParams,
+								offset: 0,
+								limit: queryLimit
+							})
+								.then(data => callback(null, data))
+								.catch(err => callback(err, null));
+						} else {
+							callback(null, payload);
+						}
+					},
+					(data, callback) => {
+						const payload = {
+							projects: [],
+							pagination: {}
+						};
+						data.rows.forEach(el => {
+							const users = [];
+							el.groupProjects.forEach(groupProject => {
+								groupProject.group.groupUsers.forEach(groupUser => {
+									users.push(groupUser.user.dataValues);
+								});
+							});
+							// console.log(users);
+							const charts = [];
+							el.projectCharts.forEach(projectChart => {
+								charts.push(projectChart.chart.chartType.name);
+							});
+							const userCharts = charts.filter(
+								(item, pos) => charts.indexOf(item) === pos
+							);
+							const queryChart = (chart || '').split(',').filter(ele => !!ele);
+							if (userCharts.length >= queryChart.length) {
+								payload.projects.push({
+									id: el.id,
+									name: el.name,
+									updatedAt: el.updatedAt,
+									accessLevelId:
+                                el.groupProjects[0].accessLevelId,
+									user:
+                                el.groupProjects[0].group.groupUsers[0].user,
+									userCharts
+								});
+							}
+						});
+						const pageCount = Math.ceil(payload.projects.length / queryLimit);
+						let userPage = page;
+						if (page > pageCount) {
+							userPage = 1;
+						}
+						payload.pagination = {
+							totalRecords: payload.projects.length,
+							pageCount,
+							page: userPage,
+							rows: queryLimit
+						};
+						return callback(null, payload);
+					}
+				],
+				(err, payload) => {
+					if (err) {
+						reject(err);
+					}
+					resolve(payload);
+				}
+			);
+		});
 	}
 
 	static getProjectFromPayload(rawProject) {
