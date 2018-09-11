@@ -9,7 +9,6 @@ class FileMiddleware {
 		let pathToFile = path.resolve(`${storagePath}${uuidv4()}${file.name}`);
 		return new Promise((resolve, reject) => {
 			// rename file if exists, otherwise it will be overwritten
-			console.log(pathToFile);
 			while (fs.existsSync(pathToFile)) {
 				pathToFile = `${storagePath}${uuidv4()}${file.name}`;
 			}
