@@ -75,9 +75,19 @@ export class NotificationComponent implements OnInit, OnDestroy {
 			},
 			{
 				subscriber: error => {
-					this.serveMsg = error
-						? error.error.errors.message + '. '
-						: '';
+					if (error) {
+						const code = error.error.errors.code;
+						switch (code) {
+							case 6:
+								this.serveMsg = 'Wrong password. ';
+								break;
+							case 5:
+								this.serveMsg = 'User does not exist. ';
+								break;
+							default:
+								this.serveMsg = '';
+						}
+					}
 				},
 				selector: serverFailedMsg()
 			}
