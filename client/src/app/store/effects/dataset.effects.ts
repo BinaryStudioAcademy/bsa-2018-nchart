@@ -3,7 +3,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { switchMap } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
-import * as DatasetActions from '../actions/datasets/datasets.actions';
+import * as DatasetActions from '@app/store/actions/datasets/datasets.actions';
 import { DatasetActionConstants as constants } from '@app/store/actions/datasets/datasets.action-types';
 import { DatasetDomainService } from '@app/api/domains/source/dataset-domain.service';
 import { DatasetService } from '@app/services/dataset.service';
@@ -137,27 +137,26 @@ export class DatasetEffects {
 	preloadSamples$ = this.action$.pipe(
 		ofType(constants.PRELOAD_SAMPLES),
 		withLatestFrom(this.storeService.createSubscription(isSamplesEmpty())),
-		filter(([_, isEmpty]: [DatasetActions.PreloadSamples, boolean]) => isEmpty
-			),
-		switchMap(
-			([action, _]: [DatasetActions.PreloadSamples, boolean]) => {
-				return this.datasetDomService.preloadSamples().pipe(
-					map(res => {
-						return new DatasetActions.PreloadSamplesComplete(
-							res.payload
-						);
-					}),
-					catchError(error =>
-						of(
-							new DatasetActions.PreloadSamplesFailed({
-								msg: `Can't export project`,
-								action,
-								error
-							})
-						)
+		filter(
+			([_, isEmpty]: [DatasetActions.PreloadSamples, boolean]) => isEmpty
+		),
+		switchMap(([action, _]: [DatasetActions.PreloadSamples, boolean]) => {
+			return this.datasetDomService.preloadSamples().pipe(
+				map(res => {
+					return new DatasetActions.PreloadSamplesComplete(
+						res.payload
+					);
+				}),
+				catchError(error =>
+					of(
+						new DatasetActions.PreloadSamplesFailed({
+							msg: `Can't export project`,
+							action,
+							error
+						})
 					)
-				);
-			}
-		)
+				)
+			);
+		})
 	);
 }

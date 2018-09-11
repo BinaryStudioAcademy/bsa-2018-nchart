@@ -71,7 +71,8 @@ export class ListChartsComponent implements OnInit, OnDestroy {
 			'fa-chart-pie': 'pieChart' === c.sysName,
 			'fa-random': 'alluvialDiagram' === c.sysName,
 			'fa-align-left': 'ganttChart' === c.sysName,
-			'fa-chart-line': 'scatterplot' === c.sysName
+			'fa-chart-line': 'scatterplot' === c.sysName,
+			'fa-globe-americas': 'worldMap' === c.sysName
 		};
 	}
 

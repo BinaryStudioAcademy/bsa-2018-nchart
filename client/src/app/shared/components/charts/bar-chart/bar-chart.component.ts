@@ -57,13 +57,26 @@ export class BarChartComponent implements OnInit, OnChanges {
 				verticalPadding
 			} = this.getSettingsValue(this.settings);
 
+			const colorsSet = new Set();
+			this.data.forEach(element => {
+				colorsSet.add(element.color);
+			});
+			const colorsArr = [];
+			colorsSet.forEach(element => {
+				colorsArr.push(element);
+			});
+
+			const color = d3
+				.scaleSequential(d3.interpolateSpectral)
+				.domain([0, colorsArr.length - 1]);
+
 			const tip = d3Tip()
 				.attr('class', 'd3-tip')
 				.offset([-10, 0])
 				.html(function(d) {
 					return `<strong>${
 						d.name
-					} :</strong> <span style='color:red'> ${d.value} </span>`;
+					} :</strong> <span> ${d.value} </span>`;
 				});
 
 			d3.select('svg').remove();
@@ -121,7 +134,9 @@ export class BarChartComponent implements OnInit, OnChanges {
 					'height',
 					d => innerHeight - this.y(this.clampHeight(d.value))
 				)
-				.attr('fill', d => d.color)
+				.style('fill', function(d: any) {
+					return color(colorsArr.indexOf(d.color));
+				})
 				.on('mouseover', function(d) {
 					tip.show(d, this);
 				})

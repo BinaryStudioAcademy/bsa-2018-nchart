@@ -1,9 +1,12 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { StoreService } from '@app/services/store.service';
-import { hasChartDataset, isRequiredDimensionMatched } from '@app/store/selectors/userCharts';
+import {
+	hasChartDataset,
+	isRequiredDimensionMatched
+} from '@app/store/selectors/userCharts';
 import { SchemeID } from '@app/models/normalizr.model';
-import { activeProjectId } from '../../../store/selectors/projects.selectors';
-import { SaveProject } from '../../../store/actions/projects/projects.actions';
+import { activeProjectId } from '@app/store/selectors/projects.selectors';
+import { SaveProject } from '@app/store/actions/projects/projects.actions';
 import { isActiveChartDataset } from '@app/store/selectors/dataset.selectors';
 import { isVerifiedToken } from '@app/store/selectors/user.selectors';
 import { Go } from '@app/store/actions/router/router.actions';
@@ -187,7 +190,9 @@ export class StepperComponent implements OnInit {
 				new SaveProject({ id: this.activeProjectId })
 			);
 		} else {
-			this.storeService.dispatch(new Go({ path: ['/login'], query: { redirect: true } }));
+			this.storeService.dispatch(
+				new Go({ path: ['/login'], query: { redirect: true } })
+			);
 		}
 	}
 }

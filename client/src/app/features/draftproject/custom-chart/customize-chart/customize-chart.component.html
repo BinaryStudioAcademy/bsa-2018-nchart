@@ -19,4 +19,10 @@
 		[formGroup]="formGroup"
 		[customizeSettings]="customizeSettings"
 	></app-alluvial-diagram-chart-customize>
+	<app-world-map-chart-customize
+		*ngSwitchCase="'worldMap'"
+		[formGroup]="formGroup"
+		[customizeSettings]="customizeSettings"
+	></app-world-map-chart-customize>
 </div>
+
