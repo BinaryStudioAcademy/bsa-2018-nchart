@@ -7,12 +7,12 @@
 	</label>
 	<div class="ui-input-wrp" id="input_wrp">
 			<input placeholder="Date Time:"
-				   pInputText
-				   [(ngModel)]="invalidDateTime"
-				   [selectMode]="'range'"
-				   [owlDateTimeTrigger]="dt4" [owlDateTime]="dt4"
-				   #dateTime4="ngModel"
-				   class="date-time-picker-input"
+				[formControl]="control"
+				pInputText
+				[selectMode]="'range'"
+				[owlDateTimeTrigger]="dt4" [owlDateTime]="dt4"
+				#dateTime4
+				class="date-time-picker-input"
 			>
 		<i class="ui-input-icon-right fa fa-calendar"></i>
 			<owl-date-time #dt4 pickerMode="popup" pickerType="calendar"></owl-date-time>

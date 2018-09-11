@@ -42,7 +42,11 @@ export interface ProjectEntities {
 
 export interface ProjectsFilter {
 	page: number;
-	search?: string;
+	title?: string;
+	from?: string;
+	to?: string;
+	chart?: string;
+	owner?: string;
 }
 
 interface UserPreview {

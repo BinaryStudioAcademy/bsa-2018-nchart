@@ -29,7 +29,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 	isLoading$: Observable<boolean>;
 	filterParams: ProjectsFilter = {
 		page: 1,
-		search: ''
+		title: ''
 	};
 	userEmail: string;
 	disconnectStore: () => void;
@@ -50,7 +50,10 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 	formGroup: FormGroup;
 
 	ngOnInit() {
-		const { page, search } = this.route.snapshot.queryParams;
+		const {
+			page,
+			title /*, chart, owner, from, to*/
+		} = this.route.snapshot.queryParams;
 
 		if (!page) {
 			this.applyFilter(this.filterParams);
@@ -60,7 +63,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 			this.storeService.dispatch(
 				new projectActions.LoadProjetcsInfo({
 					page: params.page,
-					name: params.search
+					title: params.title
 				})
 			);
 			this.setFilter(params);
@@ -77,16 +80,17 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 		);
 
 		this.formGroup = new FormGroup({
-			name: new FormControl(search, []),
-			charts: new FormControl(search, []),
-			owner: new FormControl(search, []),
-			date: new FormControl(search, [])
+			title: new FormControl(title),
+			owner: new FormControl(null),
+			from: new FormControl(null),
+			to: new FormControl(null)
 		});
+
 		this.owner = [
 			{
 				label: 'My projects',
 				value: 'me',
-				control: this.formGroup.controls['owner']
+				control: this.formGroup.get('owner')
 			},
 			{
 				label: 'Shared projects',
@@ -128,7 +132,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 		];
 
 		this.formGroup.get('name').valueChanges.subscribe(value => {
-			this.debouncedSearch({ search: value, page: 1 });
+			this.debouncedSearch({ title: value, page: 1 });
 		});
 
 		this.disconnectStore = this.storeService.connect([

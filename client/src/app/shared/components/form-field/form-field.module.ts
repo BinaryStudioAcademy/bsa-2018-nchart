@@ -13,6 +13,8 @@ import { InputTextareaComponent } from '@app/shared/components/form-field/input-
 import { UIKitModule } from '@app/shared/uikit.module';
 import { LoadingSpinnerComponent } from '@app/shared/components/loading-spinner/loading-spinner.component';
 import { SpinnerComponent } from '@app/shared/components/form-field/spinner/spinner.component';
+import { DateTimePickerComponent } from '@app/shared/components/form-field/date-time-picker/date-time-picker.component';
+import { MultiSelectComponent } from './multiselect/multiselect.component';
 
 const formFieldComponents = [
 	ButtonComponent,
@@ -25,7 +27,9 @@ const formFieldComponents = [
 	DropdownSimpleComponent,
 	RadioButtonComponent,
 	LoadingSpinnerComponent,
-	SpinnerComponent
+	SpinnerComponent,
+	DateTimePickerComponent,
+	MultiSelectComponent
 ];
 
 @NgModule({

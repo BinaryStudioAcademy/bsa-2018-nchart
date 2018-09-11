@@ -23,17 +23,10 @@
 		[tooltipPosition]="tooltipPosition"
 		[autofocus]="autofocus"
     >
-	<p-sidebar [(visible)]="display" position="right" [appendTo]="refContainer">
-		<p>Filter by owner</p>
-		<app-checkbox-group [checks]="owner"></app-checkbox-group>
-		<p>Filter by charts</p>
-		<app-checkbox-group [checks]="charts"></app-checkbox-group>
-		<app-date-time-picker [control]="dateControl"></app-date-time-picker>
-	</p-sidebar>
 	<button
 		class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"
-		 pbutton="" type="button" (onHide)="close()" (click)="display = true">
-		<span aria-hidden="true" class="ui-button-icon-left ui-clickable fa fa-filter"></span>
+		 pbutton="" type="button" (click)="onButtonClick()" >
+		<span aria-hidden="true" [ngClass]="getButtonIconClasses()"></span>
 		<span class="ui-button-text ui-clickable">ui-btn</span>
 	</button>
     <div class="input-label input-label-error">

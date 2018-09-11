@@ -1,4 +1,9 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	Input,
+	ChangeDetectionStrategy
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -9,7 +14,6 @@ import { FormControl } from '@angular/forms';
 export class DateTimePickerComponent implements OnInit {
 	@Input()
 	control: FormControl;
-	public invalidDateTime = [];
 	constructor() {}
 
 	ngOnInit() {}

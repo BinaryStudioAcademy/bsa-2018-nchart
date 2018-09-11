@@ -1,20 +1,24 @@
 <div
 	class="projects-container"
 	spBackgroundColor="#f2f3f9"
+	#projects
 >
-	<div class="search-projects" #search>
+	<p-sidebar [(visible)]="display" position="right" [appendTo]="projects">
+		<p>Filter by owner</p>
+		<app-checkbox-group [checks]="owner"></app-checkbox-group>
+		<p>Filter by charts</p>
+		<app-checkbox-group [checks]="charts"></app-checkbox-group>
+		<!-- <app-date-time-picker [control]="formGroup.get('date')"></app-date-time-picker> -->
+	</p-sidebar>
+	<div class="search-projects">
 		<h3>Projects</h3>
 		<app-input-group
 			class="ui-fluid"
 			placeholder="e.g. Super project"
 			type="text"
-			icon="fa fa-filter"
-			[control]="formGroup.controls['name']"
-			[dateControl] = "formGroup.controls['date']"
-			[display]="display"
-			[charts]="charts"
-			[owner]="owner"
-			[refContainer]="search"
+			[control]="formGroup.get('title')"
+			[buttonIcon]="'fa fa-filter'"
+			(buttonClick)="display = true"
 		>
 		</app-input-group>
 	</div>

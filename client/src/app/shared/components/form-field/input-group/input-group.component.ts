@@ -4,10 +4,10 @@ import {
 	Input,
 	AfterViewInit,
 	ViewChild,
-	Output,
-	EventEmitter
+	Output
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { EventEmitter } from '@angular/core';
 
 @Component({
 	selector: 'app-input-group',
@@ -27,6 +27,8 @@ export class InputGroupComponent implements OnInit, AfterViewInit {
 	@Input()
 	icon: string;
 	@Input()
+	buttonIcon: string;
+	@Input()
 	iconPosition: string;
 	@Input()
 	showStates: boolean;
@@ -38,18 +40,8 @@ export class InputGroupComponent implements OnInit, AfterViewInit {
 	tooltipPosition?: string;
 	@Input()
 	autofocus: boolean;
-	@Input()
-	display: boolean;
 	@Output()
-	displayChange = new EventEmitter<boolean>();
-	@Input()
-	charts: any;
-	@Input()
-	dateControl: FormControl;
-	@Input()
-	owner: any;
-	@Input()
-	refContainer: any;
+	buttonClick = new EventEmitter();
 
 	@ViewChild('inputText')
 	inputText;
@@ -89,6 +81,13 @@ export class InputGroupComponent implements OnInit, AfterViewInit {
 		};
 	}
 
+	getButtonIconClasses() {
+		return {
+			'ui-button-icon-left ui-clickable': true,
+			[this.buttonIcon]: true
+		};
+	}
+
 	getIconClasses() {
 		return {
 			'ui-input-icon-right': this.icon && !this.iconPosition,
@@ -97,7 +96,7 @@ export class InputGroupComponent implements OnInit, AfterViewInit {
 		};
 	}
 
-	close() {
-		this.displayChange.emit(false);
+	onButtonClick() {
+		this.buttonClick.emit();
 	}
 }

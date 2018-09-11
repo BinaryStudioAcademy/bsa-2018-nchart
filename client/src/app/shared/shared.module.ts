@@ -14,8 +14,6 @@ import { TableComponent } from '@app/shared/components/table/table.component';
 import { PopupMenuComponent } from '@app/shared/components/button/popup-menu/popup-menu.component';
 import { PaginatorComponent } from '@app/shared/components/paginator/paginator.component';
 import { DialogRenameComponent } from '@app/shared/components/dialog-rename/dialog-rename.component';
-import { DateTimePickerComponent } from '@app/shared/components/date-time-picker/date-time-picker.component';
-import { MultiSelectComponent } from '@app/shared/components/multiselect/multiselect.component';
 import { InputGroupComponent } from '@app/shared/components/form-field/input-group/input-group.component';
 
 @NgModule({
@@ -41,8 +39,6 @@ import { InputGroupComponent } from '@app/shared/components/form-field/input-gro
 		PopupMenuComponent,
 		PaginatorComponent,
 		DialogRenameComponent,
-		DateTimePickerComponent,
-		MultiSelectComponent,
 		InputGroupComponent
 	],
 	declarations: [
@@ -56,8 +52,6 @@ import { InputGroupComponent } from '@app/shared/components/form-field/input-gro
 		PopupMenuComponent,
 		PaginatorComponent,
 		DialogRenameComponent,
-		DateTimePickerComponent,
-		MultiSelectComponent,
 		InputGroupComponent
 	]
 })
