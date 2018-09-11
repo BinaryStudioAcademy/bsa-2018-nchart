@@ -52,7 +52,11 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 	ngOnInit() {
 		const {
 			page,
-			title /*, chart, owner, from, to*/
+			title,
+			chart,
+			owner,
+			from,
+			to
 		} = this.route.snapshot.queryParams;
 
 		if (!page) {
@@ -81,9 +85,9 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 
 		this.formGroup = new FormGroup({
 			title: new FormControl(title),
-			owner: new FormControl(null),
-			from: new FormControl(null),
-			to: new FormControl(null)
+			owner: new FormControl(owner),
+			from: new FormControl(from),
+			to: new FormControl(to),
 		});
 
 		this.owner = [
@@ -95,7 +99,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 			{
 				label: 'Shared projects',
 				value: 'shared',
-				control: this.formGroup.controls['owner']
+				control: this.formGroup.get('owner')
 			}
 		];
 		this.charts = [
@@ -131,7 +135,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 			}
 		];
 
-		this.formGroup.get('name').valueChanges.subscribe(value => {
+		this.formGroup.get('title').valueChanges.subscribe(value => {
 			this.debouncedSearch({ title: value, page: 1 });
 		});
 
@@ -146,6 +150,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 	}
 
 	onNewPage(page) {
+		console.log(this.formGroup.value);
 		this.applyFilter({ page });
 	}
 

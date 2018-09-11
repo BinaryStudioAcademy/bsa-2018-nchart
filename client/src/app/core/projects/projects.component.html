@@ -4,11 +4,11 @@
 	#projects
 >
 	<p-sidebar [(visible)]="display" position="right" [appendTo]="projects">
-		<p>Filter by owner</p>
-		<app-checkbox-group [checks]="owner"></app-checkbox-group>
-		<p>Filter by charts</p>
-		<app-checkbox-group [checks]="charts"></app-checkbox-group>
-		<!-- <app-date-time-picker [control]="formGroup.get('date')"></app-date-time-picker> -->
+		<h4>Filter by owner</h4>
+		<!--<app-checkbox-group [checks]="formGroup.get('owner')"></app-checkbox-group>-->
+		<h4>Filter by charts</h4>
+		<!--<app-checkbox-group [checks]="charts"></app-checkbox-group>-->
+		<app-date-time-picker [control]="formGroup.get('date')"></app-date-time-picker>
 	</p-sidebar>
 	<div class="search-projects">
 		<h3>Projects</h3>

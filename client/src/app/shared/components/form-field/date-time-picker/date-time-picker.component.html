@@ -1,23 +1,32 @@
-
 <div class="ui-date-time-picker-wrp">
 	<label
 		class="input-label"
 	>
-		Filter by date
+		From
 	</label>
-	<div class="ui-input-wrp" id="input_wrp">
-			<input placeholder="Date Time:"
-				[formControl]="control"
-				pInputText
-				[selectMode]="'range'"
-				[owlDateTimeTrigger]="dt4" [owlDateTime]="dt4"
-				#dateTime4
-				class="date-time-picker-input"
-			>
+	<div class="ui-input-wrp">
+		<input placeholder="Date Time Range From:"
+			   pInputText
+			   [(ngModel)]="dateTimeRange"
+			   [selectMode]="'rangeFrom'"
+			   [owlDateTimeTrigger]="dtRange2" [owlDateTime]="dtRange2">
 		<i class="ui-input-icon-right fa fa-calendar"></i>
-			<owl-date-time #dt4 pickerMode="popup" pickerType="calendar"></owl-date-time>
-			<span class="example-error" *ngIf="dateTime4.invalid && dateTime4.errors.owlDateTimeRange">
-            Date Time Range Invalid.
-        </span>
+		<owl-date-time #dtRange2></owl-date-time>
+	</div>
+</div>
+<div class="ui-date-time-picker-wrp">
+	<label
+		class="input-label"
+	>
+		To
+	</label>
+	<div class="ui-input-wrp">
+		<input placeholder="Date Time Range To:"
+			   pInputText
+			   [(ngModel)]="dateTimeRange"
+			   [selectMode]="'rangeTo'"
+			   [owlDateTimeTrigger]="dtRange3" [owlDateTime]="dtRange3">
+		<i class="ui-input-icon-right fa fa-calendar"></i>
+		<owl-date-time #dtRange3></owl-date-time>
 	</div>
 </div>

@@ -15,6 +15,6 @@ export class DateTimePickerComponent implements OnInit {
 	@Input()
 	control: FormControl;
 	constructor() {}
-
+	public dateTimeRange: Date[];
 	ngOnInit() {}
 }
