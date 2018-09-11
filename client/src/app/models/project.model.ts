@@ -45,7 +45,7 @@ export interface ProjectsFilter {
 	title?: string;
 	from?: string;
 	to?: string;
-	chart?: string;
+	charts?: string;
 	owner?: string;
 }
 

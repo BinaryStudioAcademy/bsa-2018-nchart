@@ -8,22 +8,23 @@ import {
 	projects as projectsSelector,
 	projectsPagination as projectsPaginationSelector
 } from '@app/store/selectors/projects.selectors.ts';
-import { isProjectsLoading } from '@app/store/selectors/projects.selectors';
-import { StoreService } from '@app/services/store.service';
+import {isProjectsLoading} from '@app/store/selectors/projects.selectors';
+import {StoreService} from '@app/services/store.service';
 import * as projectActions from '@app/store/actions/projects/projects.actions';
-import { Observable, combineLatest } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { FormControl, FormGroup } from '@angular/forms';
-import { debounce, omitBy } from 'lodash';
-import { Router, ActivatedRoute } from '@angular/router';
+import {Observable, combineLatest} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {FormGroup} from '@angular/forms';
+import {debounce, omitBy} from 'lodash';
+import {Router, ActivatedRoute} from '@angular/router';
 import * as queryString from 'query-string';
-import { ProjectsFilter, ProjectPreview } from '@app/models/project.model';
-import { OptionalType } from '@app/models';
-import { PaginationData } from '@app/models/projects-store.model';
-import { user as userSelector } from '@app/store/selectors/user.selectors';
-import { User } from '@app/models/user.model';
-import { SelectItem } from 'primeng/api';
-import { FormBuilder } from '@angular/forms';
+import {ProjectsFilter, ProjectPreview} from '@app/models/project.model';
+import {OptionalType} from '@app/models';
+import {PaginationData} from '@app/models/projects-store.model';
+import {user as userSelector} from '@app/store/selectors/user.selectors';
+import {User} from '@app/models/user.model';
+import {SelectItem} from 'primeng/api';
+import {FormBuilder} from '@angular/forms';
+import * as moment from 'moment';
 
 @Component({
 	selector: 'app-projects',
@@ -73,36 +74,33 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 
 	debouncedSearch: (params: OptionalType<ProjectsFilter>) => void;
 
-	constructor(
-		private storeService: StoreService,
-		private router: Router,
-		private route: ActivatedRoute,
-		private fb: FormBuilder
-	) {
+	constructor(private storeService: StoreService,
+				private router: Router,
+				private route: ActivatedRoute,
+				private fb: FormBuilder) {
 		this.debouncedSearch = debounce(this.applyFilter, 500);
 	}
 
-	filterForm: FormGroup;
+	// filterForm: FormGroup;
 
 	newFilterGroup: FormGroup;
 
 	ngOnInit() {
-		this.newFilterGroup = this.fb.group({
-			page: [''],
-			title: [''],
-			charts: [''],
-			owner: [''],
-			date: ['']
-		});
 		const {
 			page,
 			title,
-			/*chart,
-			owner,*/
+			charts,
+			owner,
 			from,
 			to
 		} = this.route.snapshot.queryParams;
-
+		this.newFilterGroup = this.fb.group({
+			page: [page],
+			title: [title],
+			charts: [charts],
+			owner: [owner],
+			date: [[from, to]]
+		});
 		if (!page) {
 			this.applyFilter(this.filterParams);
 		}
@@ -111,7 +109,11 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 			this.storeService.dispatch(
 				new projectActions.LoadProjetcsInfo({
 					page: params.page,
-					title: params.title
+					title: params.title,
+					charts: params.charts,
+					owner: params.owner,
+					from: params.from,
+					to: params.to
 				})
 			);
 			this.setFilter(params);
@@ -127,12 +129,6 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 			isProjectsLoading()
 		);
 
-		this.filterForm = new FormGroup({
-			title: new FormControl(title),
-			owner: new FormControl({ value: false }),
-			date: new FormControl([from, to])
-		});
-
 		this.owner = [
 			{
 				label: 'My projects',
@@ -147,12 +143,16 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 		];
 
 		this.newFilterGroup.valueChanges.subscribe(v => {
-			this.debouncedSearch({ title: v.title, page: 1 });
+			this.debouncedSearch(
+				{
+					title: v.title,
+					page: 1,
+					charts: v.charts,
+					owner: v.owner,
+					from: moment(v.date[0]).format('YYYY-MM-DD'),
+					to: moment(v.date[1]).format('YYYY-MM-DD')
+				});
 		});
-
-		// this.filterForm.get('title').valueChanges.subscribe(value => {
-		// 	this.debouncedSearch({title: value, page: 1});
-		// });
 
 		this.disconnectStore = this.storeService.connect([
 			{
@@ -166,7 +166,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 
 	onNewPage(page) {
 		this.newFilterGroup.controls.page.patchValue(page);
-		this.applyFilter({ page });
+		this.applyFilter({page});
 	}
 
 	applyFilter(params: OptionalType<ProjectsFilter>) {
@@ -206,5 +206,6 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 		);
 	}
 
-	ngAfterViewInit() {}
+	ngAfterViewInit() {
+	}
 }

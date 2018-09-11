@@ -23,6 +23,8 @@
 			<h4>Filter by date</h4>
 			<app-date-time-picker
 				[(dateRange)]="datePicked"
+				[fromControl]="newFilterGroup.get('date')"
+				[toControl]="newFilterGroup.get('date')"
 			>
 			</app-date-time-picker>
 		</p-sidebar>
@@ -38,8 +40,7 @@
 			>
 			</app-input-group>
 		</div>
-		<pre>{{filterForm.value | json}}</pre>
-		<pre>{{datePicked | json}}</pre>
+		<pre>{{newFilterGroup.value | json}}</pre>
 	</form>
 	<div class="projects-content" [loading-sp]="isLoading$ | async">
 		<div class="empty-projects-list" *ngIf="isEmptyList$() | async">
