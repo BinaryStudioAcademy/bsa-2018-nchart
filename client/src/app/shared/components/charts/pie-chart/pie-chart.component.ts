@@ -48,7 +48,7 @@ export class PieChartComponent implements OnInit, OnChanges {
 	ngOnInit() {}
 	ngOnChanges() {
 		if (this.data && this.settings) {
-			d3.select('svg').remove();
+			d3.selectAll('svg').remove();
 			const {
 				width,
 				margin,
@@ -60,7 +60,9 @@ export class PieChartComponent implements OnInit, OnChanges {
 			} = this.getSettingsValue(this.settings);
 
 			const colorsSet = new Set();
+			const numberOfPies = new Set();
 			this.data.forEach(element => {
+				numberOfPies.add(element.label);
 				colorsSet.add(element.name);
 			});
 			const colorsArr = [];
@@ -123,13 +125,15 @@ export class PieChartComponent implements OnInit, OnChanges {
 				.entries(this.data);
 
 			let row = 1;
+			let count = 0;
 			let column = 1;
 			const numInRow = 4;
+			const columns = Math.ceil(numberOfPies.size/4)
 			const svg = d3
 				.selectAll('.pie-chart')
 				.append('svg')
 				.attr('width', width)
-				.attr('height', width)
+				.attr('height', (radius+margin)*2*columns+50)
 				.attr('xmlns', 'http://www.w3.org/2000/svg')
 				.attr('xmlns:xlink', 'http://www.w3.org/1999/xlink')
 				.selectAll('g')
@@ -144,9 +148,14 @@ export class PieChartComponent implements OnInit, OnChanges {
 					const y = (radius + margin) * 2 * column - radius;
 					const translate = `translate(${x}, ${y})`;
 					row++;
+					count++;
 					if (row > numInRow) {
 						row = 1;
 						column++;
+					}
+					if(count === numberOfPies.size){
+						row = 1;
+						column = 1;
 					}
 					return translate;
 				});
@@ -171,11 +180,10 @@ export class PieChartComponent implements OnInit, OnChanges {
 				.style('fill', function(d: any) {
 					return color(colorsArr.indexOf(d.data.name));
 				});
+			g.append('title').text(function(d) {
+				return d.data.name +': '+d.data.value;
+			});
 			if (showValues) {
-				g.append('title').text(function(d) {
-					return d.data.value;
-				});
-
 				g.filter(function(d) {
 					return d.endAngle - d.startAngle > 0.2;
 				})

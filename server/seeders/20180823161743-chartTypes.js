@@ -162,6 +162,13 @@ module.exports = {
 						sysName: 'radius'
 					},
 					{
+						value: 4,
+						description: 'Number of pies in row',
+						option: 'Columns',
+						id: 42,
+						sysName: 'columns'
+					},
+					{
 						value: false,
 						description:
 								'If selected, pie charts will be drawn ad donut chart. The size is defined by the Thickness option (see below).',
@@ -529,7 +536,7 @@ module.exports = {
 					},
 					{
 						id: 37,
-						value: 140,
+						value: 125,
 						description: 'Scale map',
 						option: 'Scale',
 						sysName: 'scale'
