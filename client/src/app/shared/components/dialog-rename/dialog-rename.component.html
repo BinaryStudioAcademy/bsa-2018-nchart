@@ -4,7 +4,7 @@
 		[draggable]="false"
 		[width]="400"
 		[minWidth]="250"
-		[minHeight]="250"
+		[minHeight]="200"
 		[minY]="70"
 		[maximizable]="false"
 		[baseZIndex]="10000"
@@ -25,7 +25,7 @@
 			</app-input-text>
 		</div>
 		<p-footer>
-				<app-button label="Send" [disabled]="!formGroup.valid" (onclick)="rename(formGroup.value)"></app-button>
+				<app-button label="Send" [disabled]="!formGroup.valid" (onclick)="rename(formGroup.value)" size="small"></app-button>
 		</p-footer>
 	</p-dialog>
 
