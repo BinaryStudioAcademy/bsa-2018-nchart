@@ -14,6 +14,9 @@ import { LandingPageComponent } from '@app/core/landing-page/landing-page.compon
 import { FormFieldModule } from '@app/shared/components/form-field/form-field.module';
 import { ProjectTabsComponent } from '@app/core/project/tabs/project-tabs.component';
 import { ProjectsCardComponent } from '@app/core/projects/project-card/projects-card.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { ButtonComponent } from '@app/shared/components/button/button/button.component';
+import { ChartComponent } from '@app/features/draftproject/custom-chart/chart/chart.component';
 
 @NgModule({
 	declarations: [
@@ -25,7 +28,8 @@ import { ProjectsCardComponent } from '@app/core/projects/project-card/projects-
 		ProjectsComponent,
 		LandingPageComponent,
 		ProjectTabsComponent,
-		ProjectsCardComponent
+		ProjectsCardComponent,
+		DashboardComponent
 	],
 	imports: [
 		CommonModule,
@@ -34,6 +38,10 @@ import { ProjectsCardComponent } from '@app/core/projects/project-card/projects-
 		SharedModule,
 		FeatureModule,
 		FormFieldModule
+	],
+	entryComponents: [
+		ChartComponent,
+		ButtonComponent
 	],
 	exports: []
 })

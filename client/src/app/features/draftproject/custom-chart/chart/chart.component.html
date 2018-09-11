@@ -1,22 +1,23 @@
 <div class="chart-container" [ngSwitch]="chartType">
-	<app-bar-chart 
+	<app-bar-chart
 		*ngSwitchCase="'barChart'"
 		[data]="data"
 		[settings]="customizeSettings"
 		#chart
 	></app-bar-chart>
-	<app-pie-chart  
-		*ngSwitchCase="'pieChart'" 
+	<app-pie-chart
+		*ngSwitchCase="'pieChart'"
 		[data]="data"
 		[settings]="customizeSettings"
 		#chart
 	></app-pie-chart >
-	<app-scatterplot-chart 
+	<app-scatterplot-chart
 		*ngSwitchCase="'scatterplot'"
 		[data]="data"
 		[settings]="customizeSettings"
 		#chart
 	></app-scatterplot-chart>
+<<<<<<< HEAD
 	<app-alluvial-diagram-chart 
 		*ngSwitchCase="'alluvialDiagram'"
 		[data]="data"
@@ -30,4 +31,9 @@
 		#chart
 	></app-world-map-chart>
 
+=======
+	<div
+	*ngSwitchCase="'alluvialDiagram'"
+	>pieChart</div>
+>>>>>>> 5b3ab83e2d383a7f0e535c5f9f8d7417ec62878b
 </div>

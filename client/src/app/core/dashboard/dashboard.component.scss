@@ -1,0 +1,25 @@
+@import '../../../theme/colors';
+
+
+.wrapper {
+	width: 100%;
+	margin-top: 100px;
+}
+
+gridster {
+	height: 70.707vh !important; // temporary solution
+}
+
+.secondary-text {
+	color: $secondaryTextColor;
+}
+
+.control-remove,
+.control-move {
+	position: absolute;
+	cursor: pointer;
+}
+
+.control-move {
+	right: 0;
+}

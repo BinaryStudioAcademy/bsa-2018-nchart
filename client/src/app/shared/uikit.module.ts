@@ -30,9 +30,11 @@ import { TooltipModule } from 'primeng/tooltip';
 import { TableModule } from 'primeng/table';
 import { TieredMenuModule } from 'primeng/tieredmenu';
 import { DialogModule } from 'primeng/dialog';
+import {GridsterModule} from 'angular-gridster2';
 
 @NgModule({
 	imports: [
+		GridsterModule,
 		DialogModule,
 		ButtonModule,
 		SplitButtonModule,
@@ -63,6 +65,7 @@ import { DialogModule } from 'primeng/dialog';
 		PaginatorModule
 	],
 	exports: [
+		GridsterModule,
 		ButtonModule,
 		SplitButtonModule,
 		PasswordModule,
