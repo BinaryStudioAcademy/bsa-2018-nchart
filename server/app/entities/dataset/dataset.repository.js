@@ -16,6 +16,10 @@ class DatasetRepository extends Repository {
 	getAllById(ids) {
 		return this.model.findAll({ where: { id: ids } });
 	}
+
+	getSamples() {
+		return this.model.findAll({ attributes: { exclude: ['createdAt', 'updatedAt', 'columns', 'data', 'sample'] }, where: { sample: true } });
+	}
 }
 
 module.exports = new DatasetRepository();

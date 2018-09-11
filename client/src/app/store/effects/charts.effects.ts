@@ -12,15 +12,19 @@ import {
 	CreateChart,
 	CreateChartComplete,
 	CreateChartFailed,
+	RemoveChartComplete,
 	SelectChart,
 	SelectChartComplete
 } from '@app/store/actions/charts/charts.actions';
 import { chartScheme } from '@app/schemes/chart.schema';
 import { ChartService } from '@app/services/chart.service';
 import { Chart } from '@app/models/chart.model';
-import { getActiveProject } from '@app/store/selectors/projects.selectors';
+import {
+	activeProjectId,
+	getActiveProject
+} from '@app/store/selectors/projects.selectors';
 import { withLatestFrom } from 'rxjs/internal/operators';
-import { getActiveChartId } from '@app/store/selectors/userCharts';
+import { getActiveChartId, userChart } from '@app/store/selectors/userCharts';
 import { ChartTypeDomainService } from '@app/api/domains/chart/chart.domain';
 
 @Injectable()
@@ -62,6 +66,18 @@ export class ChartsEffects {
 	);
 
 	@Effect()
+	removeChart$ = this.action$.pipe(
+		ofType(ChartsActionConstants.REMOVE_CHART),
+		withLatestFrom(
+			this.storeService.createSubscription(userChart()),
+			this.storeService.createSubscription(activeProjectId())
+		),
+		map(([_, { id, datasetId }, projectId]) => {
+			return new RemoveChartComplete({ id, datasetId, projectId });
+		})
+	);
+
+	@Effect()
 	createChart$ = this.action$.pipe(
 		ofType(ChartsActionConstants.CREATE_CHART),
 		withLatestFrom(this.storeService.createSubscription()),
@@ -73,9 +89,7 @@ export class ChartsEffects {
 					chartTypeId: fchart.id,
 					datasetId: (action as CreateChart).payload.datatsetId,
 					customizeSettings: [...fchart.customizeSettings],
-					dimensionSettings: this.chartService.transformDimensions(
-						fchart.dimensionSettings
-					)
+					dimensionSettings: [...fchart.dimensionSettings]
 				});
 
 				const { result: chartId, entities } = normalize(
@@ -114,6 +128,7 @@ export class ChartsEffects {
 				chartTypeId: chart.id,
 				customizeSettings: [...chart.customizeSettings],
 				dimensionSettings: this.chartService.transformDimensions(
+					aChartId,
 					chart.dimensionSettings
 				)
 			};

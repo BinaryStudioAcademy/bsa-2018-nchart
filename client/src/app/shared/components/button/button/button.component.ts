@@ -8,6 +8,10 @@ export class ButtonComponent implements OnInit {
 	@Input()
 	label = 'text';
 	@Input()
+	tooltip: string = null;
+	@Input()
+	tooltipPosition: 'top' | 'left' | 'bottom' | 'right' = 'right';
+	@Input()
 	icon: string;
 	@Input()
 	iconPosition: string;
@@ -16,7 +20,7 @@ export class ButtonComponent implements OnInit {
 	@Input()
 	size: 'small' | 'middle' | 'big' = 'middle';
 	@Input()
-	type: 'default' | 'secondary' | 'icon' = 'default';
+	type: 'default' | 'secondary' | 'icon' | 'danger' = 'default';
 	@Output()
 	onclick: EventEmitter<any> = new EventEmitter();
 	@Input()
@@ -42,7 +46,8 @@ export class ButtonComponent implements OnInit {
 		const buttonTypeColors = {
 			['default']: '#29166F',
 			['secondary']: '#3ccc38',
-			['icon']: '#29166F'
+			['icon']: '#29166F',
+			['danger']: '#FD3259'
 		};
 
 		return buttonTypeColors[this.type];

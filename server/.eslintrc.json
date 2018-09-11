@@ -6,7 +6,8 @@
 		"indent": ["error", "tab"],
 		"no-tabs": "off",
 		"arrow-parens": "off",
-		"comma-dangle": ["error", "never"]
+		"comma-dangle": ["error", "never"],
+		"no-param-reassign": ["error", { "props": false }]
 	},
 	"env": {
 		"node": true

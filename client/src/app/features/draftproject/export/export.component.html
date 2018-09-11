@@ -1,27 +1,44 @@
 <div class="ui-main-block">
 	<h2><i class="fas fa-download"></i>Export</h2>
 	<div class="export-data-tabs-wrap">
-		<p-tabView 	activeIndex="0">
-
+		<p-tabView 	activeIndex="0" (onChange)="onTabChange($event)">
 			<p-tabPanel header="Download">
-				<app-input-text		[control]="controlName"
-									   placeholder="File name"
-									   [showStates]="true"
-									   label="Enter file name"
-				></app-input-text>
-				<app-dropdown-simple 	[options]="options"
-										[control]="controlType"
-										label="Select file type"
-				></app-dropdown-simple>
-				<app-button (onclick)="exportData()"
-							label="Load Data"
-							class="ui-button-position-right"
-							[disabled]="controlName.invalid"
-							[loading]="isLoading"
+				<div class='export-elem-align'>
+					<app-input-text		
+						[control]="controlName"
+						placeholder="File name"
+						[showStates]="true"
+						label="Enter file name"
+						style="flex: 1 50%; padding: 5px;"
+					></app-input-text>
+					<app-dropdown-simple 	
+						[options]="options"
+						[control]="controlType"
+						label="Select file type"
+						style="flex: 1 50%; padding: 5px;"
+					></app-dropdown-simple>
+				</div>
+				<app-button 
+					(onclick)="exportData()"
+					label="Download"
+					class="ui-button-position-right"
+					[disabled]="controlName.invalid"
+					[loading]="isLoading"
 				></app-button>
 			</p-tabPanel>
 
 			<p-tabPanel header="Embed">
+				<div>
+					<div style="float:left;">Copy the snippet below into your HTML code to embed the visualization</div>
+					<app-button type="icon" icon="fas fa-paste" class="paste-icon" tooltip="Copy SVG code"
+					tooltipPosition="top" (onclick)="copyToClipBoard()"></app-button>
+				</div>
+				<app-input-textarea 
+				class="load-data-paste"
+				rows="8" 
+				autoResize="autoResize"
+				[control]='svgFormControl'>
+				</app-input-textarea>
 			</p-tabPanel>
 
 		</p-tabView>

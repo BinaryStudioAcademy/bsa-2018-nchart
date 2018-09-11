@@ -13,19 +13,33 @@ import {
 	CreateDraftProject,
 	LoadOneProject
 } from '@app/store/actions/projects/projects.actions';
-import { isProjectDataset } from '@app/store/selectors/projects.selectors';
+import { SchemeID } from '@app/models/normalizr.model';
+import { isChartsReady } from '@app/store/selectors/charts.selectors';
+import {
+	projectCharts,
+	isProjectLoading
+} from '@app/store/selectors/projects.selectors';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import * as ProjectsActions from '@app/store/actions/projects/projects.actions';
 import { project } from '@app/store/selectors/projects.selectors';
-import { SchemeID } from '@app/models/normalizr.model';
-import { isRequiredDimensionMatched } from '@app/store/selectors/userCharts';
-import { isChartsReady } from '@app/store/selectors/charts.selectors';
+import {
+	getActiveChartId,
+	getActiveDatasetId,
+	hasChartDataset,
+	isRequiredDimensionMatched
+} from '@app/store/selectors/userCharts';
+import { isActiveChartDataset } from '@app/store/selectors/dataset.selectors';
+import { CreateChart } from '@app/store/actions/charts/charts.actions';
 
 interface StepperStep {
 	id: number;
 	scrollTo: string;
 	name: string;
+}
+
+export interface ComponentCanDeactivate {
+	canDeactivate: () => boolean | Observable<boolean>;
 }
 
 @Component({
@@ -36,11 +50,18 @@ interface StepperStep {
 export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 	showCharts = false;
 	showTable = false;
+	listPages = [];
+	activeChartId: SchemeID;
 	isChartsReady = false;
 	routeParams$: Subscription;
-
+	subConf = new Subject<boolean>();
+	display = false;
+	displayModalDataset = false;
+	currentDatasetId: SchemeID;
 	projectName: string;
 	projectId: SchemeID;
+	isActiveChartDataset$: Observable<boolean>;
+	isLoading: boolean;
 
 	disconnect: () => void;
 
@@ -59,7 +80,7 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 		for (const i in this.viewItemsList) {
 			if (this.viewItemsList[i]) {
 				const position =
-					this.viewItemsList[i].nativeElement.offsetTop - 300;
+					this.viewItemsList[i].nativeElement.offsetTop - 340;
 				if (scrollPosition >= position) {
 					this.selectedStep = this.stepperSteps.find(
 						el => el.id === +i + 1
@@ -98,6 +119,37 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 		private route: ActivatedRoute
 	) {}
 
+	showDialog() {
+		this.display = true;
+	}
+
+	accept() {
+		this.display = false;
+		this.subConf.next(true);
+	}
+
+	reject() {
+		this.display = false;
+		this.subConf.next(false);
+	}
+
+	acceptDataset() {
+		this.displayModalDataset = false;
+		this.storeService.dispatch(
+			new CreateChart({ datatsetId: this.currentDatasetId })
+		);
+	}
+
+	rejectDataset() {
+		this.displayModalDataset = false;
+		this.storeService.dispatch(new CreateChart({ datatsetId: null }));
+	}
+
+	canDeactivate(): Observable<boolean> {
+		this.showDialog();
+		return this.subConf;
+	}
+
 	ngOnInit() {
 		this.routeParams$ = this.route.params.subscribe(
 			(params: { id?: number }) => {
@@ -113,6 +165,10 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 			}
 		);
 
+		this.isActiveChartDataset$ = this.storeService.createSubscription(
+			isActiveChartDataset()
+		);
+
 		this.disconnect = this.storeService.connect([
 			{
 				subscriber: prj => {
@@ -124,7 +180,25 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 				selector: project()
 			},
 			{
-				selector: isProjectDataset(),
+				selector: projectCharts(),
+				subscriber: charts => {
+					this.listPages = charts;
+				}
+			},
+			{
+				selector: getActiveDatasetId(),
+				subscriber: id => {
+					this.currentDatasetId = id;
+				}
+			},
+			{
+				selector: getActiveChartId(),
+				subscriber: id => {
+					this.activeChartId = id;
+				}
+			},
+			{
+				selector: hasChartDataset(),
 				subscriber: t => {
 					this.showTable = t;
 				}
@@ -140,13 +214,22 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 				subscriber: t => {
 					this.isChartsReady = t;
 				}
+			},
+			{
+				selector: isProjectLoading(),
+				subscriber: t => {
+					this.isLoading = t;
+				}
 			}
 		]);
 	}
-
 	ngOnDestroy() {
 		this.disconnect();
 		this.routeParams$.unsubscribe();
+	}
+
+	getIsActiveChartDataset() {
+		return this.isActiveChartDataset$;
 	}
 
 	changeProjectName(name) {
@@ -156,5 +239,9 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 				name: name
 			})
 		);
+	}
+
+	onDisplayModalDataset() {
+		this.displayModalDataset = true;
 	}
 }

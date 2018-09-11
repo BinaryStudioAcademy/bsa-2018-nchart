@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { StoreService } from '@app/services/store.service';
 import { UserMappingColumn } from '@app/models/user-chart-store.model';
 import {
+	getActiveChartId,
 	mappingColumns,
 	mappingDimensions
 } from '@app/store/selectors/userCharts';
@@ -24,12 +25,19 @@ export class DimensionSettingsComponent implements OnInit, OnDestroy {
 	disconnect: () => void;
 	columns: UserMappingColumn[] = [];
 	dimensionsSettings;
+	activeUserChartId;
 
 	ngOnInit() {
 		this.disconnect = this.storeService.connect([
 			{
 				selector: mappingColumns(),
 				subscriber: this.onMappingColumnsUpdate
+			},
+			{
+				selector: getActiveChartId(),
+				subscriber: uChartId => {
+					this.activeUserChartId = uChartId;
+				}
 			},
 			{
 				selector: mappingDimensions(),
@@ -57,6 +65,8 @@ export class DimensionSettingsComponent implements OnInit, OnDestroy {
 	}
 
 	onRemoveAllDimension() {
-		this.storeService.dispatch(new RemoveAllDimension());
+		this.storeService.dispatch(
+			new RemoveAllDimension({ chartId: this.activeUserChartId })
+		);
 	}
 }

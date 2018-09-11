@@ -1,3 +1,52 @@
-<p>
-  projects works!
-</p>
+<div
+	class="projects-container"
+>
+	<div class="search-projects">
+		<h3>Projects</h3>
+		<app-input-text
+			class="ui-fluid"
+			placeholder="e.g. Super project"
+			type="text"
+			icon="fa fa-filter"
+			[control]="formGroup.controls['name']">
+		</app-input-text>
+	</div>
+	<div 
+		class="projects-content"
+		[loading-sp]="isLoading$ | async"
+		spBackgroundColor="#f2f3f9"
+	>
+		<div class="empty-projects-list" *ngIf="isEmptyList$() | async">
+			<i class="far fa-sad-tear"></i>
+			<span>– Empty list</span>
+		</div>
+		<ng-container *ngIf="(getProjects() | async).length" >
+			<div
+				class="project-card-container"
+			>
+				<div *ngFor="let project of (getProjects() | async)">
+					<app-projects-card
+						[projectId]="project?.id"
+						[projectName]="project?.name"
+						[companyName]="project?.companyName"
+						[groupName]="project.groupName"
+						[userName]="getUserName(project?.user)"
+						[email]="project.user?.email"
+						[accessLevelId]="project?.accessLevelId"
+						[userCharts]="project?.userCharts"
+						[updatedAt]="project?.updatedAt"
+					></app-projects-card>
+				</div>
+			</div>
+			<div class="projects-pagination">
+				<app-paginator
+					*ngIf="getPagination() | async as pagination"
+					[page]="pagination.page"
+					[rows]="pagination.rows"
+					[totalRecords]="pagination.totalRecords"
+					(onpagination)="onNewPage($event)"
+				></app-paginator>
+			</div>
+		</ng-container>
+	</div>
+</div>

@@ -1,0 +1,236 @@
+@import ../colors
+@import ../variables
+
+.ui-modal>.ui-widget-content
+	background-color: white
+	box-shadow: 0 2px 32px $teriaryColor
+	padding: 0.6rem
+	margin: 0 auto
+.ui-widget-overlay
+	background-color: $teriaryColor
+.ui-dialog
+	.ui-dialog-titlebar-icon
+		position: absolute
+		top: 5px
+		right: 5px
+	.ui-dialog-titlebar-icon:hover
+		opacity: 0.5
+		border-color: transparent
+		
+	&.ui-widget .ui-dialog-titlebar
+		.ui-dialog-title
+			font-weight: 500
+			padding: 0
+	.ui-dialog-titlebar
+		padding: 0 0.6rem
+	&.ui-widget .ui-dialog-content
+		overflow: visible
+		background: $stateDefaultBgColor
+	.ui-dialog-footer
+		padding: 0 1rem 0 1rem
+		background: $stateDefaultBgColor
+		display: flex
+		justify-content: flex-end
+		app-button
+			.ui-button-text-icon-right:enabled
+				display: inline-block
+				margin-right: 6px
+			&:last-child
+				margin-right: 0
+			.ui-button-icon-left
+				margin-right: 10px
+		.ui-widget.ui-button-default, .ui-button-default, .ui-widget.ui-button
+			margin-right: 6px
+			height: 30px
+
+
+.ui-dialog-footer	
+	padding: 0 1.5em 0 1.5em
+.ui-dialog.ui-widget .ui-dialog-titlebar
+	padding: 1.5em 1.5em 0 1.5em
+
+.ui-modal-fullscreen
+	top: 0!important
+	left: 0!important
+	width: 100%!important
+	height: 100%!important
+	border-radius: 0
+	.data-table .ui-table
+		margin-top: 5px
+	.custom-chart-container[_ngcontent-c9]
+		margin: 0
+		padding: 0
+	app-chart[_ngcontent-c9]
+		width: 100%
+		padding: 0
+	.ui-dialog.ui-widget .ui-dialog-content
+
+	&.fullscreen-chart
+		&.ui-dialog.ui-widget .ui-dialog-content
+			padding: 0
+.full-screen-btn
+	position: absolute
+	top: 0.8rem
+	right: 0.4rem
+
+.btn-remove
+	position: absolute
+	top: 0.8rem
+	right: 2.4rem
+.data-table
+	.ui-modal>.ui-widget-content
+		top: 0!important
+		left: 0!important
+		width: 100%
+		height: 100%
+	.ui-table
+		border: 2px solid $disabledColor
+		border-radius: 3px
+		.ui-table-tbody>tr>td.ui-editing-cell input,
+		.ui-table-thead>tr>th input
+			outline: none
+			text-align: center
+		.ui-table-thead>tr>th input
+			border: none
+			color: $secondaryTextColor
+			font-size: 1rem
+			width: 60px
+	.ui-table .ui-table-thead > tr > th
+		border: none
+		color: $secondaryTextColor
+		font-weight: 400
+		padding: 0.2rem 1rem
+	tr
+		height: 20px
+		border-bottom: 2px solid $disabledColor
+		background-color: $stateDefaultBgColor
+		&:last-child
+			border-bottom: 0
+	.ui-table-thead tr
+		border-bottom: 2px solid $disabledColor
+		// display: flex
+		// justify-content: space-around
+	.ui-table .ui-table-tbody > tr > td
+		border: none
+		background-color: $stateDefaultBgColor
+		text-align: center
+		white-space: pre
+		padding: 0
+		&.ui-editable-column
+			padding: 0
+	.ui-table .ui-table-tbody>tr>td.ui-editing-cell
+		padding: 0
+	.ui-table-scrollable-header
+		overflow: visible
+		th
+			position: relative
+	.ui-table-scrollable-body
+		max-height: 400px
+		// overflow: visible
+	.ui-table-tbody
+		max-height: 400px
+	.header-cell
+		font-size: 1rem
+		&>div
+			margin-right: -30px
+		span
+			vertical-align: middle
+			text-align: center
+			max-width: 100%
+		p-celleditor
+			vertical-align: middle
+			// width: 60px
+			display: inline-block
+			overflow: hidden
+			text-overflow: clip
+			white-space: pre
+			max-width: 100%
+	.ui-checkbox-wrp
+		padding: 0
+	.header-cell.number-cell,
+	.number-cell
+		margin-right: 0
+		width: 4rem
+		label
+			display: flex
+			align-items: center
+			justify-content: space-between
+			color: $secondaryTextColor
+			padding: 0 8px 
+			max-width: 4rem
+			span.column-no
+				min-width: 1rem
+				text-align: left
+			.ui-buttonset.ui-splitbutton .ui-widget.ui-button, 
+			.ui-buttonset.ui-splitbutton .ui-button
+				height: 20px
+		.ui-chkbox .ui-chkbox-box
+			position: relative
+			top: 0
+			width: 20px
+	.header-cell.number-cell
+		padding: 0
+		label
+			font-size: 1rem
+		.ui-checkbox-wrp
+			// padding-left: 22px
+	.column-type
+		margin: 0
+		padding: 0
+		font-size: 0.7rem
+	.ui-checkbox-wrp
+		width: 24px
+	.ui-buttonset.ui-splitbutton
+		border: none
+		box-shadow: none
+		position: relative
+		z-index: unset
+		width: 15px
+		// margin-right: 5px
+		margin-left: 5px
+		background-color: $stateDefaultBgColor
+		&:hover,
+		&:focus,
+		&:active,
+		&:focus-within
+			background-color: $stateDefaultBgColor
+	.ui-buttonset.ui-splitbutton .ui-widget.ui-button, 
+	.ui-buttonset.ui-splitbutton .ui-button
+		padding: 0
+		height: 28px
+		min-width: 15px
+		max-width: 15px
+		&:hover,
+		&:focus,
+		&:active,
+		&:focus-within
+			background-color: $stateDefaultBgColor
+			box-shadow: none
+			color: $stateActiveTextColor
+	.ui-menu .ui-menuitem
+		a
+			padding-left: 30px
+		margin: 0
+		&:first-child
+			border-bottom: 1px solid $disabledColor
+			a
+				padding-left: 15px
+		&:last-child
+			border-top: 1px solid $disabledColor
+			a
+				padding-left: 15px
+	.ui-menu .ui-menuitem > .ui-menuitem-link
+		text-align: left
+
+	.ui-table-tbody > tr:nth-child(even).ui-state-highlight,
+	.ui-table-tbody > tr.ui-state-highlight
+		color: $stateActiveTextColor
+
+
+.data-table .header-cell > div
+	display: flex
+	width: 100%
+	justify-content: center
+.data-table .ui-table .ui-table-tbody > tr > td.ui-editable-column
+	overflow: hidden
+	text-overflow: clip

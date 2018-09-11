@@ -2,18 +2,18 @@
 @import ../colors
 
 .stepper-container
-	padding-top: 1.5rem
-	max-width: 75px
+	max-width: 80px
 	position: fixed
-	top: 120px
-	left: 0px
+	top: 177px
+	right: calc(20% - 95px)
 	&.show-stepper
 		max-width: 50px
 	ul
 		margin: 0
 	.ui-widget.ui-button
 		margin-top: 15px
-		min-width: 50px
+		min-width: 0
+		width: 100%
 		padding: 0
 		min-height: 24px
 		&:enabled:hover
@@ -35,14 +35,16 @@
 	padding: 0.5rem 0
 	.ui-widget.ui-button
 		margin: 0
-		min-width: 50px
-	
+		min-width: 0
+		width: 100%
+
 .step
 	list-style: none
 	margin: 0 auto
 	display: flex
 	flex-wrap: wrap
 	position: relative
+	justify-content: center
 	.step-connection
 		border-left: 1px dashed $teriaryColor
 		height: 25px
@@ -58,6 +60,8 @@
 		.fa-exclamation
 			top: -0.5rem
 
+ul .step:last-child .step-connection
+	display: none
 
 .step-icon
 	height: 45px
@@ -80,5 +84,5 @@
 	&.step-selected
 		color: $baseColor
 		border: 1px solid $baseColor
-		transform: scale(1.2)
-		z-index: 2
+		z-index: 20
+		position: relative

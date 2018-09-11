@@ -10,9 +10,12 @@ import { RouterTestingModule } from '@angular/router/testing';
 // Buttons
 import { ButtonModule } from 'primeng/button';
 import { SplitButtonModule } from 'primeng/splitbutton';
-import { ButtonComponent } from '../app/shared/components/button/button/button.component';
-import { ActionButtonComponent } from '../app/shared/components/button/action-button/action-button.component';
-import { LoadingSpinnerComponent } from '../app/shared/components/loading-spinner/loading-spinner.component';
+import { ButtonComponent } from '@app/shared/components/button/button/button.component';
+import { ActionButtonComponent } from '@app/shared/components/button/action-button/action-button.component';
+import { LoadingSpinnerComponent } from '@app/shared/components/loading-spinner/loading-spinner.component';
+import { PopupMenuComponent } from '@app/shared/components/button/popup-menu/popup-menu.component';
+import { TieredMenuModule } from 'primeng/tieredmenu';
+import { TooltipModule } from 'primeng/tooltip';
 
 export const control1 = new FormControl('', Validators.required);
 export const control2 = new FormControl('', [
@@ -30,12 +33,15 @@ storiesOf('Buttons', module)
 				SplitButtonModule,
 				RouterTestingModule,
 				BrowserAnimationsModule,
-				BrowserModule
+				BrowserModule,
+				TieredMenuModule,
+				TooltipModule
 			],
 			declarations: [
 				ButtonComponent,
 				ActionButtonComponent,
-				LoadingSpinnerComponent
+				LoadingSpinnerComponent,
+				PopupMenuComponent
 			]
 		})
 	)
@@ -162,5 +168,35 @@ storiesOf('Buttons', module)
 		props: {
 			type: 'icon',
 			icon: 'fas fa-cannabis'
+		}
+	}))
+
+	.add('Popup Button', () => ({
+		component: PopupMenuComponent,
+		props: {
+			items: [
+				{
+					label: 'New column',
+					icon: 'pi pi-fw pi-plus'
+				},
+				{
+					label: 'Convert type',
+					items: [
+						{
+							label: 'To number'
+						},
+						{
+							label: 'To string'
+						},
+						{
+							label: 'To boolean'
+						}
+					]
+				},
+				{
+					label: 'Delete column',
+					icon: 'pi pi-fw pi-trash'
+				}
+			]
 		}
 	}));

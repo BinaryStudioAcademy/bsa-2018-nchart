@@ -60,4 +60,25 @@ export class DatasetDomainService implements DatasetDomain {
 			payload: fd
 		});
 	}
+
+	preloadSamples(): Observable<ResponseScheme<any>> {
+		return this.httpService.makeRequest({
+			type: RequestType.GET,
+			url: '/api/dataset/samples'
+		});
+	}
+
+	loadSample({
+		id
+	}): Observable<
+		ResponseScheme<{
+			columns?: DatasetColumn[];
+			data?: any[][];
+		}>
+	> {
+		return this.httpService.makeRequest({
+			type: RequestType.GET,
+			url: `/api/dataset/${id}`
+		});
+	}
 }

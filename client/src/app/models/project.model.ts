@@ -1,9 +1,9 @@
 import { SchemeID, NormalizedSchemeField } from '@app/models/normalizr.model';
 import {
 	DatasetTable,
-	DatasetState,
 	DatasetDataState,
-	DatasetColumnState
+	DatasetColumnState,
+	Dataset
 } from '@app/models/dataset.model';
 import {
 	Chart,
@@ -34,8 +34,29 @@ export interface ProjectEntities {
 	chart: NormalizedSchemeField<UserChart>;
 	customizeSetting: CustomizeSettingsState;
 	dimensionSetting: DimensionSettingsState;
-	dataset: DatasetState;
+	dataset: NormalizedSchemeField<Dataset>;
 	project: NormalizedSchemeField<Project>;
 	datasetData: DatasetDataState;
 	datasetColumn: DatasetColumnState;
+}
+
+export interface ProjectsFilter {
+	page: number;
+	search?: string;
+}
+
+interface UserPreview {
+	name: string;
+	email: string;
+}
+
+export interface ProjectPreview {
+	id: SchemeID;
+	name: string;
+	updatedAt: string;
+	groupName: string;
+	companyName: string;
+	accessLevelId: SchemeID;
+	userCharts: string[];
+	user: UserPreview;
 }
