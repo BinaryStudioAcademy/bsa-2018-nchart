@@ -1,4 +1,7 @@
-<div class="project-container">
+<div class="project-container"
+	[loading-sp]="isLoading"
+	spBackgroundColor="#f2f3f9"
+>
 	<app-stepper
 		(steps)="getSteps($event)"
 		[errors]="stepperErrors"
@@ -22,7 +25,6 @@
 		<app-dimension-settings *ngIf="isDataset()" id="settings" #viewItem></app-dimension-settings>
 		<app-custom-chart *ngIf="isCharts()" id="chart" #viewItem></app-custom-chart>
 		<app-export *ngIf="isCharts()" id="export" #viewItem></app-export>
-
 
 		<p-dialog header="Confirmation"
 				  [(visible)]="display"
