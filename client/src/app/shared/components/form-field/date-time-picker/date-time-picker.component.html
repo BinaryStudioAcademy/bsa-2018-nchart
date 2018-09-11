@@ -7,9 +7,12 @@
 	<div class="ui-input-wrp">
 		<input placeholder="Date Time Range From:"
 			   pInputText
-			   [(ngModel)]="dateTimeRange"
+			   [formControl]="dateControl"
+			   [(ngModel)] = "datePicked"
 			   [selectMode]="'rangeFrom'"
-			   [owlDateTimeTrigger]="dtRange2" [owlDateTime]="dtRange2">
+			   [owlDateTimeTrigger]="dtRange2"
+			   [owlDateTime]="dtRange2"
+		>
 		<i class="ui-input-icon-right fa fa-calendar"></i>
 		<owl-date-time #dtRange2></owl-date-time>
 	</div>
@@ -23,9 +26,12 @@
 	<div class="ui-input-wrp">
 		<input placeholder="Date Time Range To:"
 			   pInputText
-			   [(ngModel)]="dateTimeRange"
+			   [formControl]="dateControl"
+			   [(ngModel)] = "datePicked"
 			   [selectMode]="'rangeTo'"
-			   [owlDateTimeTrigger]="dtRange3" [owlDateTime]="dtRange3">
+			   [owlDateTimeTrigger]="dtRange3"
+			   [owlDateTime]="dtRange3"
+		>
 		<i class="ui-input-icon-right fa fa-calendar"></i>
 		<owl-date-time #dtRange3></owl-date-time>
 	</div>

@@ -13,8 +13,12 @@ import { FormControl } from '@angular/forms';
 })
 export class DateTimePickerComponent implements OnInit {
 	@Input()
-	control: FormControl;
+	dateControl: FormControl;
+
 	constructor() {}
-	public dateTimeRange: Date[];
-	ngOnInit() {}
+
+	public datePicked: Date[];
+	ngOnInit() {
+		console.log(this.dateControl);
+	}
 }

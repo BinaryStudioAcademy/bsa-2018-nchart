@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {Component, OnInit, AfterViewInit, ChangeDetectionStrategy} from '@angular/core';
 import {
 	projects as projectsSelector,
 	projectsPagination as projectsPaginationSelector
@@ -23,7 +23,8 @@ import { FormBuilder } from '@angular/forms';
 @Component({
 	selector: 'app-projects',
 	templateUrl: './projects.component.html',
-	styleUrls: ['./projects.component.sass']
+	styleUrls: ['./projects.component.sass'],
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProjectsComponent implements OnInit, AfterViewInit {
 	projects$: Observable<ProjectPreview[]>;
@@ -33,6 +34,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 		page: 1,
 		title: ''
 	};
+	datePicked = [];
 	userEmail: string;
 	disconnectStore: () => void;
 	owner = null;
@@ -75,16 +77,16 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 
 	filterForm: FormGroup;
 
-	newFilterGroup = this.fb.group({
-		page: [''],
-		title: [''],
-		chart: [''],
-		owner: [''],
-		from: [''],
-		to: ['']
-	});
+	newFilterGroup: FormGroup;
 
 	ngOnInit() {
+		this.newFilterGroup = this.fb.group({
+			page: [''],
+			title: [''],
+			charts: [''],
+			owner: [''],
+			date: ['']
+		});
 		const {
 			page,
 			title,
@@ -120,7 +122,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 
 		this.filterForm = new FormGroup({
 			title: new FormControl(title),
-			owner: new FormControl(owner),
+			owner: new FormControl({value: false}),
 			from: new FormControl(from),
 			to: new FormControl(to),
 		});
@@ -129,12 +131,12 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 			{
 				label: 'My projects',
 				value: 'me',
-				control: this.filterForm.get('owner')
+				control: this.newFilterGroup.get('owner')
 			},
 			{
 				label: 'Shared projects',
 				value: 'shared',
-				control: this.filterForm.get('owner')
+				control: this.newFilterGroup.get('owner')
 			}
 		];
 
