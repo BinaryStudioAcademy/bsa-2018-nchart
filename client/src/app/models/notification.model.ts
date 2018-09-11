@@ -1,49 +1,37 @@
-import * as UserActions from '@app/store/actions/user/user.action-types';
-import * as ProjectActions from '@app/store/actions/projects/projects.action-types';
-import * as ExportActions from '@app/store/actions/export/export.action-types';
-import * as DatasetActions from '@app/store/actions/datasets/datasets.action-types';
-import * as NotificationActions from '@app/store/actions/notification/notification.action-types';
+import { UserActionConstants } from '@app/store/actions/user/user.action-types';
+import { ProjectsActionConstants } from '@app/store/actions/projects/projects.action-types';
+import { NotificationActionConstants } from '@app/store/actions/notification/notification.action-types';
+import { ExportActionConstants } from '@app/store/actions/export/export.action-types';
+import { DatasetActionConstants } from '@app/store/actions/datasets/datasets.action-types';
 
-const NotificationDict = new Map([
+const NotificationDict = new Map<string, string>([
+	[UserActionConstants.LOGIN__FAILED, 'Please, try again'],
+	[UserActionConstants.REGISTER__FAILED, 'Please, try again'],
 	[
-		UserActions.UserActionConstants.LOGIN__FAILED.toString(),
-		'Please, try again!'
+		ProjectsActionConstants.LOAD_ONE_PROJECT__FAILED,
+		'\u2014 Oops! We cant load project for now'
 	],
+	[ProjectsActionConstants.SAVE_PROJECT__COMPLETE, 'Project has been saved'],
 	[
-		UserActions.UserActionConstants.REGISTER__FAILED.toString(),
-		'Please, try again!'
-	],
-	[
-		ProjectActions.ProjectsActionConstants.LOAD_ONE_PROJECT__FAILED.toString(),
-		'\u2014 Oops! We cant load project for now!'
-	],
-	[
-		ProjectActions.ProjectsActionConstants.SAVE_PROJECT__COMPLETE.toString(),
-		'Project has been saved'
-	],
-	[
-		ProjectActions.ProjectsActionConstants.UPDATE_PROJECT__COMPLETE.toString(),
+		ProjectsActionConstants.UPDATE_PROJECT__COMPLETE,
 		'Project has been updated'
 	],
 	[
-		ProjectActions.ProjectsActionConstants.SAVE_PROJECT__FAILED.toString(),
-		'\u2014 Oops! We cant save project for now!'
+		ProjectsActionConstants.SAVE_PROJECT__FAILED,
+		'\u2014 Oops! We cant save project for now'
 	],
 	[
-		NotificationActions.NotificationActionConstants.NOTIFICATION_SVG_CLIPBOARD__COMPLETE.toString(),
-		'Svg code copied to clipboard'
+		NotificationActionConstants.NOTIFICATION_SVG_CLIPBOARD__COMPLETE,
+		'SVG code copied to clipboard'
 	],
 	[
-		ExportActions.ExportActionConstants.EXPORT__FAILED.toString(),
-		'\u2014 Oops! We cant export project for now!'
+		ExportActionConstants.EXPORT__FAILED,
+		'\u2014 Oops! We cant export project for now'
 	],
+	[DatasetActionConstants.PARSE_DATA__COMPLETE, 'Dataset is ready for use'],
 	[
-		DatasetActions.DatasetActionConstants.PARSE_DATA__COMPLETE.toString(),
-		'Dataset is ready for use'
-	],
-	[
-		DatasetActions.DatasetActionConstants.PARSE_DATA__FAILED.toString(),
-		'\u2014 Oops! We cant parse data for now!'
+		DatasetActionConstants.PARSE_DATA__FAILED,
+		'\u2014 Oops! We cant parse data for now'
 	]
 ]);
 export default NotificationDict;
