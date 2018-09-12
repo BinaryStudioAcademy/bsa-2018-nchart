@@ -300,6 +300,7 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 	}
 
 	saveProj() {
+		// check isDraft & user logged in
 		this.storeService.dispatch(new CanSaveProject());
 	}
 }
