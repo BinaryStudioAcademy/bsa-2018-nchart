@@ -438,15 +438,17 @@ class ProjectService {
     }
   }
      */
-	static formQuery(name, page, limit, chart, minDate, maxDate) {
-		const queryName = name || '';
-		const queryChart = (chart || '').split(',').filter(el => !!el);
-		const queryMinDate = moment(minDate, 'YYYY-MM-DD', true).isValid() ? minDate : '1700-01-01';
-		const queryMaxDate = moment(maxDate, 'YYYY-MM-DD', true).isValid() ? maxDate : '3000-01-01';
+	static formQuery(title, page, limit, charts, from, to) {
+		const queryName = title || '';
+		const queryChart = (charts || '').split(',').filter(el => !!el);
+		let queryMinDate = moment(from, 'YYYY-MM-DD', true).isValid() ? from : '1700-01-01';
+		let queryMaxDate = moment(to, 'YYYY-MM-DD', true).isValid() ? to : '3000-01-01';
 		const duration = moment.duration(moment(queryMaxDate).diff((moment(queryMinDate)))).asDays();
 		if (duration < 0) {
 			throw new Error('Invalid date');
 		}
+		queryMinDate = `${queryMinDate}T00:00:00.000Z`;
+		queryMaxDate += 'T23:59:59.999Z';
 		return {
 			queryName,
 			queryChart,
@@ -466,11 +468,11 @@ class ProjectService {
 	}
 
 	projectsWithPagination(id, {
-		name, page, limit, chart, minDate, maxDate, owner
+		title, page, limit, charts, from, to, owner
 	}) {
 		const queryLimit = Number(limit) || this.pageLimit;
 		const queryOffset = ((page || 1) - 1) * queryLimit;
-		const queryParams = ProjectService.formQuery(name, page, limit, chart, minDate, maxDate);
+		const queryParams = ProjectService.formQuery(title, page, limit, charts, from, to);
 		const searchQuery = ProjectService.ownerMe(owner);
 		return new Promise((resolve, reject) => {
 			async.waterfall(
@@ -493,7 +495,12 @@ class ProjectService {
 					(payload, callback) => {
 						if (payload.rows.length === 0) {
 							this.ProjectRepository.findProjectsWithOwners({
-								query: queryParams,
+								id,
+								queryName: queryParams.queryName,
+								queryMinDate: queryParams.queryMinDate,
+								queryMaxDate: queryParams.queryMaxDate,
+								queryChart: queryParams.queryChart,
+								searchQuery,
 								offset: 0,
 								limit: queryLimit
 							})
@@ -515,15 +522,14 @@ class ProjectService {
 									users.push(groupUser.user.dataValues);
 								});
 							});
-							// console.log(users);
-							const charts = [];
+							const unsortedCharts = [];
 							el.projectCharts.forEach(projectChart => {
-								charts.push(projectChart.chart.chartType.name);
+								unsortedCharts.push(projectChart.chart.chartType.name);
 							});
-							const userCharts = charts.filter(
-								(item, pos) => charts.indexOf(item) === pos
+							const userCharts = unsortedCharts.filter(
+								(item, pos) => unsortedCharts.indexOf(item) === pos
 							);
-							const queryChart = (chart || '').split(',').filter(ele => !!ele);
+							const queryChart = (charts || '').split(',').filter(ele => !!ele);
 							if (userCharts.length >= queryChart.length) {
 								payload.projects.push({
 									id: el.id,
