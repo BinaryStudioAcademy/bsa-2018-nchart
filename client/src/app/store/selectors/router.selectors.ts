@@ -1,5 +1,5 @@
-import {AppState} from '@app/models/store.model';
-import {Params} from '@angular/router';
+import { AppState } from '@app/models/store.model';
+import { Params } from '@angular/router';
 
 export const getRouter = () => (state: AppState) => {
 	if (state.router) {
@@ -16,7 +16,6 @@ export const getRouterParams = () => (state: AppState): Params => {
 };
 
 export const getRouterQueryParams = () => (state: AppState): Params => {
-
 	if (state.router) {
 		return state.router.state.queryParams;
 	}
@@ -25,7 +24,7 @@ export const getRouterQueryParams = () => (state: AppState): Params => {
 
 export const getRouterUrl = () => (state: AppState): string => {
 	if (state.router) {
-		return 	state.router.state.url;
+		return state.router.state.url;
 	}
 	return null;
 };

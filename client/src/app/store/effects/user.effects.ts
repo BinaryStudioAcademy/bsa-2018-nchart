@@ -20,7 +20,7 @@ import { of, throwError } from 'rxjs';
 import { UserDomainService } from '@app/api/domains/user/user.domain';
 import { TokenService } from '@app/services/token.service';
 import { Go } from '@app/store/actions/router/router.actions';
-import {concatMap, withLatestFrom} from 'rxjs/internal/operators';
+import { concatMap, withLatestFrom } from 'rxjs/internal/operators';
 import { StoreService } from '@app/services/store.service';
 import {
 	activeProjectId,
@@ -162,7 +162,7 @@ export class UserEffects {
 			if (hasDataset) {
 				return new SaveProject({ id });
 			} else {
-				return new Go({ path: ['/app/project/draft']});
+				return new Go({ path: ['/app/project/draft'] });
 			}
 		})
 	);

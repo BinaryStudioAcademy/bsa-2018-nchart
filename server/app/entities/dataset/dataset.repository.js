@@ -18,7 +18,12 @@ class DatasetRepository extends Repository {
 	}
 
 	getSamples() {
-		return this.model.findAll({ attributes: { exclude: ['createdAt', 'updatedAt', 'columns', 'data', 'sample'] }, where: { sample: true } });
+		return this.model.findAll({
+			attributes: {
+				exclude: ['createdAt', 'updatedAt', 'columns', 'data', 'sample']
+			},
+			where: { sample: true }
+		});
 	}
 }
 

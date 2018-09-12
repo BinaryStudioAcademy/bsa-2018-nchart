@@ -109,7 +109,7 @@ export function passwordValidator(
 	customPattern?: string | RegExp
 ): ValidatorFn {
 	return (control: AbstractControl): ValidationMessage => {
-		const defaultPattern = /^(?=.*[a-zа-яэіїє])(?=.*[A-ZА-ЯЭІЇЄ])(?=.*\d).+$/;
+		const defaultPattern = /^[a-zA-Z0-9_ ]{1,100}$/;
 
 		const trimmedControl = trimControl(control);
 

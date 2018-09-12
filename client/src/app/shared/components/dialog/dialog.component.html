@@ -22,29 +22,6 @@
 				[control]="formGroup.controls['email']">
 			</app-input-text>
 		</div>
-		<form [formGroup]="formGroup">
-			<div class="ui-g radio-access">
-				<span>Select access type:</span>
-				<div class="ui-g-12">
-					<p-radioButton
-						name="group"
-		 				value='3'
-		 				label="Read"
-						formControlName="accessLevelId"
-						inputId="opt1">
-					</p-radioButton>
-				</div>
-				<div class="ui-g-12">
-					<p-radioButton
-						name="group"
-						value='2'
-						label="Read/Write"
-						formControlName="accessLevelId"
-						inputId="opt2">
-					</p-radioButton>
-				</div>
-			</div>
-		</form>
 		<app-button label="Send" [disabled]="!formGroup.valid" (onclick)="share(formGroup.value)" style="float: right;" size="small"></app-button>
 	</p-dialog>
 
