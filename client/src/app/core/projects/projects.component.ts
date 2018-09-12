@@ -207,5 +207,9 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 		);
 	}
 
+	hide() {
+		this.display = false;
+	}
+
 	ngAfterViewInit() {}
 }

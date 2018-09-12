@@ -4,17 +4,20 @@
 	#projects
 >
 	<form [formGroup]="newFilterGroup">
+		<div>
+		
+		</div>
 		<p-sidebar 
 			[(visible)]="display" 
 			position="right" 
 			[appendTo]="projects"
 			[showCloseIcon]='false'
 			
-		>
-			<div>
+		>	
+			<div class="hideIcon" (click)="hide()">
 				<i class="fa fas fa-arrow-right"></i>
+				<b class="label">Close</b>
 			</div>
-			
 			<h3 class="filters-header">Filters</h3>
 			<div class="filter-container">
 				<div class="filter-header">Owner</div>
