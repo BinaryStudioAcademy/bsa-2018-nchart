@@ -16,7 +16,7 @@ class ProjectService {
 		this.DocumentGeneratingService = DocumentGeneratingService;
 		this.MarkupTemplateService = MarkupTemplateService;
 
-		this.pageLimit = 10;
+		this.pageLimit = 900;
 	}
 
 	getAll() {
@@ -413,7 +413,10 @@ class ProjectService {
 
 	static formQuery(title, page, limit, charts, from, to) {
 		const queryName = title || '';
-		const queryChart = (charts || '').split(',').filter(el => !!el);
+		let queryChart = charts;
+		if (!(typeof charts === 'object')) {
+			queryChart = (charts || '').split(',').filter(el => !!el);
+		}
 		let queryMinDate = moment(from, 'YYYY-MM-DD', true).isValid() ? from : '1700-01-01';
 		let queryMaxDate = moment(to, 'YYYY-MM-DD', true).isValid() ? to : '3000-01-01';
 		const duration = moment.duration(moment(queryMaxDate).diff((moment(queryMinDate)))).asDays();
@@ -502,7 +505,11 @@ class ProjectService {
 							const userCharts = unsortedCharts.filter(
 								(item, pos) => unsortedCharts.indexOf(item) === pos
 							);
-							const queryChart = (charts || '').split(',').filter(ele => !!ele);
+							let queryChart = charts;
+							if (!(typeof queryChart === 'object')) {
+								queryChart = (charts || '').split(',').filter(ele => !!ele);
+							}
+							// todo: need to check if every value is inside userCharts
 							if (userCharts.length >= queryChart.length) {
 								payload.projects.push({
 									id: el.id,
