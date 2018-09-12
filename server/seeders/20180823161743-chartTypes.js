@@ -124,7 +124,7 @@ module.exports = {
 						required: false,
 						variable: 'Label',
 						sysName: 'label',
-						type: ['string', 'number', 'date'],
+						type: ['string', 'number'],
 						id: 5
 					},
 					{
@@ -160,6 +160,13 @@ module.exports = {
 						option: 'Radius',
 						id: 10,
 						sysName: 'radius'
+					},
+					{
+						value: 3,
+						description: 'Number of pies in row',
+						option: 'Columns',
+						id: 42,
+						sysName: 'columns'
 					},
 					{
 						value: false,
@@ -219,7 +226,7 @@ module.exports = {
 						required: true,
 						variable: 'Steps',
 						sysName: 'steps',
-						type: ['string', 'number', 'date'],
+						type: ['string', 'number'],
 						id: 7
 					},
 					{
@@ -298,7 +305,7 @@ module.exports = {
 						required: true,
 						variable: 'Group',
 						sysName: 'group',
-						type: ['string', 'number', 'date'],
+						type: ['string', 'number'],
 						id: 9
 					},
 					{
@@ -529,7 +536,7 @@ module.exports = {
 					},
 					{
 						id: 37,
-						value: 140,
+						value: 125,
 						description: 'Scale map',
 						option: 'Scale',
 						sysName: 'scale'

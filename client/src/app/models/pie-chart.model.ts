@@ -3,6 +3,7 @@ export class PieChartCustomize {
 		public width: number = null,
 		public margin: number = null,
 		public radius: number = null,
+		public columns: number = null,
 		public isDonut: boolean = null,
 		public sortChartsBy: string = null,
 		public sortArcsBy: string = null,
