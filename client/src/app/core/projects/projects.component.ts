@@ -107,7 +107,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 		this.route.queryParams.subscribe(params => {
 			this.storeService.dispatch(
 				new projectActions.LoadProjetcsInfo({
-					page: params.page,
+					page: params.page || 1,
 					title: params.title,
 					charts: params.charts,
 					owner: params.owner,
@@ -115,7 +115,10 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 					to: params.to
 				})
 			);
-			this.setFilter(params);
+			this.setFilter({
+				...params,
+				page: params.page || 1
+			});
 		});
 		this.projects$ = this.storeService.createSubscription(
 			projectsSelector()
