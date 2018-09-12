@@ -46,7 +46,21 @@ export interface ProjectsFilter {
 	from?: string;
 	to?: string;
 	charts?: string;
-	owner?: string;
+	owner?: string | string[];
+}
+
+export class ProjectFilterForm {
+	page = 1;
+	title = '';
+	charts: string[] = [];
+	owner: ProjectOwnershipFilter[] = [];
+	date: string[] = [];
+}
+
+export enum ProjectOwnershipFilter {
+	me = 'me',
+	shared = 'shared',
+	all = 'all'
 }
 
 interface UserPreview {

@@ -11,20 +11,26 @@ import {
 import { isProjectsLoading } from '@app/store/selectors/projects.selectors';
 import { StoreService } from '@app/services/store.service';
 import * as projectActions from '@app/store/actions/projects/projects.actions';
-import { Observable, combineLatest } from 'rxjs';
+import { Observable, combineLatest, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { FormGroup } from '@angular/forms';
 import { debounce, omitBy } from 'lodash';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as queryString from 'query-string';
-import { ProjectsFilter, ProjectPreview } from '@app/models/project.model';
+import {
+	ProjectsFilter,
+	ProjectPreview,
+	ProjectOwnershipFilter
+} from '@app/models/project.model';
 import { OptionalType } from '@app/models';
 import { PaginationData } from '@app/models/projects-store.model';
 import { user as userSelector } from '@app/store/selectors/user.selectors';
 import { User } from '@app/models/user.model';
 import { SelectItem } from 'primeng/api';
-import { FormBuilder } from '@angular/forms';
 import * as moment from 'moment';
+import { ProjectService } from '@app/services/project.service';
+import { OnDestroy } from '@angular/core';
+import { withLatestFrom } from 'rxjs/internal/operators';
 
 @Component({
 	selector: 'app-projects',
@@ -32,19 +38,15 @@ import * as moment from 'moment';
 	styleUrls: ['./projects.component.sass'],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProjectsComponent implements OnInit, AfterViewInit {
+export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
 	projects$: Observable<ProjectPreview[]>;
 	pagination$: Observable<PaginationData>;
 	isLoading$: Observable<boolean>;
-	filterParams: ProjectsFilter = {
-		page: 1,
-		title: ''
-	};
-	datePicked: Date[] = [];
+	formChangesSub: Subscription;
 	userEmail: string;
 	disconnectStore: () => void;
-	owner = null;
 	display = false;
+	projectOwnershipEnum = ProjectOwnershipFilter;
 	charts: SelectItem[] = [
 		{
 			label: 'Pie Chart',
@@ -71,56 +73,20 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 			value: 'alluvialDiagram'
 		}
 	];
-	debouncedSearch: (params: OptionalType<ProjectsFilter>) => void;
+	debouncedFiltering: (params: OptionalType<ProjectsFilter>) => void;
 
 	constructor(
 		private storeService: StoreService,
 		private router: Router,
 		private route: ActivatedRoute,
-		private fb: FormBuilder
+		private projectService: ProjectService
 	) {
-		this.debouncedSearch = debounce(this.applyFilter, 500);
+		this.debouncedFiltering = debounce(this.applyFilter, 500);
 	}
 
-	// filterForm: FormGroup;
-
-	newFilterGroup: FormGroup;
+	filteringForm: FormGroup;
 
 	ngOnInit() {
-		const {
-			page,
-			title,
-			charts,
-			owner,
-			from,
-			to
-		} = this.route.snapshot.queryParams;
-		this.newFilterGroup = this.fb.group({
-			title: [title],
-			charts: [charts ? charts.split(',') : null],
-			owner: [owner],
-			date: [[from, to]]
-		});
-		if (!page) {
-			this.applyFilter(this.filterParams);
-		}
-
-		this.route.queryParams.subscribe(params => {
-			this.storeService.dispatch(
-				new projectActions.LoadProjetcsInfo({
-					page: params.page || 1,
-					title: params.title,
-					charts: params.charts ? params.charts.split(',') : null,
-					owner: params.owner,
-					from: params.from,
-					to: params.to
-				})
-			);
-			this.setFilter({
-				...params,
-				page: params.page || 1
-			});
-		});
 		this.projects$ = this.storeService.createSubscription(
 			projectsSelector()
 		);
@@ -132,29 +98,6 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 			isProjectsLoading()
 		);
 
-		this.owner = [
-			{
-				label: 'My projects',
-				value: 'me',
-				control: this.newFilterGroup.get('owner')
-			},
-			{
-				label: 'Shared projects',
-				value: 'shared',
-				control: this.newFilterGroup.get('owner')
-			}
-		];
-
-		this.newFilterGroup.valueChanges.subscribe(v => {
-			this.debouncedSearch({
-				title: v.title,
-				charts: v.charts.length ? v.charts.join(',') : '',
-				owner: v.owner,
-				from: v.date[0] ? moment(v.date[0]).format('YYYY-MM-DD') : null,
-				to: v.date[1] ? moment(v.date[1]).format('YYYY-MM-DD') : null
-			});
-		});
-
 		this.disconnectStore = this.storeService.connect([
 			{
 				selector: userSelector(),
@@ -163,28 +106,114 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 				}
 			}
 		]);
+
+		const { queryParams } = this.route.snapshot;
+
+		this.filteringForm = this.projectService.createFilteringForm(
+			this.filterParamsForForm(queryParams as ProjectsFilter)
+		);
+
+		this.formChangesSub = this.filteringForm.valueChanges
+			.pipe(withLatestFrom(this.route.queryParams))
+			.subscribe(([v]) => {
+				// TODO: implement reset filters when search changed
+				this.debouncedFiltering(this.filterParamsForQuery(v));
+			});
+
+		this.route.queryParams.subscribe(params => {
+			this.storeService.dispatch(
+				new projectActions.LoadProjetcsInfo({
+					page: params.page || 1,
+					title: params.title,
+					charts: params.charts,
+					owner: params.owner || this.projectOwnershipEnum.all,
+					from: params.from,
+					to: params.to
+				})
+			);
+
+			this.filteringForm.setValue(
+				this.filterParamsForForm(params as ProjectsFilter)
+			);
+		});
 	}
 
 	onNewPage(page) {
-		this.newFilterGroup.controls.page.patchValue(page);
+		this.filteringForm.get('page').patchValue(page);
 		this.applyFilter({ page });
 	}
 
 	applyFilter(params: OptionalType<ProjectsFilter>) {
-		if (params) {
-			this.setFilter(params);
-		}
-		const actualFilters = omitBy(this.filterParams, value => !value);
+		const actualFilters = this.filtersToUse(params);
 
 		const query = queryString.stringify(actualFilters);
 		this.router.navigateByUrl(`/app/projects?${query}`);
 	}
 
-	setFilter(params: OptionalType<ProjectsFilter>) {
-		this.filterParams = {
-			...this.filterParams,
-			...params
+	filtersToUse(params) {
+		return omitBy(params, value => !value);
+	}
+
+	filterParamsForQuery(formValues): ProjectsFilter {
+		const { title, charts, owner, date, page } = formValues;
+
+		return {
+			title: title || '',
+			charts: this.chartsForQuery(charts),
+			owner: this.ownerForQuery(owner),
+			from: this.dateForQuery(date[0]),
+			to: this.dateForQuery(date[1]),
+			page: page || 1
 		};
+	}
+
+	filterParamsForForm({
+		title,
+		charts,
+		owner,
+		from,
+		to,
+		page
+	}: ProjectsFilter) {
+		return {
+			title: title || '',
+			charts: this.chartsForForm(charts),
+			owner: this.ownerForForm(owner),
+			date: [from, to],
+			page: page || 1
+		};
+	}
+
+	ownerForQuery(owner) {
+		return owner && owner.every(el => this.projectOwnershipEnum[el])
+			? owner.length === 2
+				? this.projectOwnershipEnum.all
+				: owner[0]
+			: this.projectOwnershipEnum.all;
+	}
+
+	ownerForForm(owner) {
+		const { all, me, shared } = this.projectOwnershipEnum;
+
+		return owner
+			? owner === all
+				? [me, shared]
+				: owner === me || owner === shared
+					? [owner]
+					: null
+			: null;
+	}
+
+	dateForQuery(date) {
+		return date ? moment(date).format('YYYY-MM-DD') : null;
+	}
+
+	chartsForQuery(charts) {
+		return charts && charts.length ? charts.join(',') : null;
+	}
+
+	chartsForForm(charts) {
+		return charts ? charts.split(',').filter(el => !!el) : [];
 	}
 
 	getProjects() {
@@ -205,6 +234,11 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 				return !projects.length && !isLoading;
 			})
 		);
+	}
+
+	ngOnDestroy() {
+		this.formChangesSub.unsubscribe();
+		this.disconnectStore();
 	}
 
 	ngAfterViewInit() {}

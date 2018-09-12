@@ -3,33 +3,32 @@
 	spBackgroundColor="#f2f3f9"
 	#projects
 >
-	<form [formGroup]="newFilterGroup">
-		<p-sidebar [(visible)]="display" position="right" [appendTo]="projects">
+	<form [formGroup]="filteringForm">
+		<p-sidebar [(visible)]="display" position="right" [appendTo]="projects" [showCloseIcon]="false" >
 			<h4>Filter by owner</h4>
 			<div class="owner-checkbox-group">
 				<p-checkbox
-					[formControl]="newFilterGroup.get('owner')"
+					[formControl]="filteringForm.get('owner')"
 					name="owner"
-					value="me"
+					[value]="projectOwnershipEnum.me"
 					label="My projects">
 				</p-checkbox>
 				<p-checkbox
-					[formControl]="newFilterGroup.get('owner')"
+					[formControl]="filteringForm.get('owner')"
 					name="owner"
-					value="shared"
+					[value]="projectOwnershipEnum.shared"
 					label="Shared projects">
 				</p-checkbox>
 			</div>
 			<h4>Filter by charts</h4>
 			<p-multiSelect
 				[options]="charts"
-				[formControl]="newFilterGroup.get('charts')"
+				[formControl]="filteringForm.get('charts')"
 			></p-multiSelect>
 			<h4>Filter by date</h4>
 			<app-date-time-picker
-				[(dateRange)]="datePicked"
-				[fromControl]="newFilterGroup.get('date')"
-				[toControl]="newFilterGroup.get('date')"
+				[dateRange]="filteringForm.get('date').value"
+				(dateRangeChange)="filteringForm.get('date').setValue($event)"
 			>
 			</app-date-time-picker>
 		</p-sidebar>
@@ -39,18 +38,17 @@
 				class="ui-fluid"
 				placeholder="e.g. Super project"
 				type="text"
-				[control]="newFilterGroup.get('title')"
+				[control]="filteringForm.get('title')"
 				[buttonIcon]="'fa fa-filter'"
 				(buttonClick)="display = true"
 			>
 			</app-input-group>
 		</div>
-		<!--<pre>{{newFilterGroup.value | json}}</pre>-->
 	</form>
 	<div class="projects-content" [loading-sp]="isLoading$ | async">
 		<div class="empty-projects-list" *ngIf="isEmptyList$() | async">
 			<i class="far fa-sad-tear"></i>
-			<span>– Empty list</span>
+			<span>– We can't find any project</span>
 		</div>
 		<ng-container *ngIf="(getProjects() | async).length">
 			<div
