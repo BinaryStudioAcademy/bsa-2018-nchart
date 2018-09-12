@@ -129,12 +129,12 @@ export class PieChartComponent implements OnInit, OnChanges {
 			let row = 1;
 			let count = 0;
 			let column = 1;
-			const numRaws = Math.ceil(numberOfPies.size / columns)
+			const numRaws = Math.ceil(numberOfPies.size / columns);
 			const svg = d3
 				.selectAll('.pie-chart')
 				.append('svg')
 				.attr('width', width)
-				.attr('height', (radius+margin) * 2 * numRaws + 50)
+				.attr('height', (radius + margin) * 2 * numRaws + 50)
 				.attr('xmlns', 'http://www.w3.org/2000/svg')
 				.attr('xmlns:xlink', 'http://www.w3.org/1999/xlink')
 				.selectAll('g')
@@ -154,7 +154,7 @@ export class PieChartComponent implements OnInit, OnChanges {
 						row = 1;
 						column++;
 					}
-					if(count === numberOfPies.size){
+					if (count === numberOfPies.size) {
 						row = 1;
 						column = 1;
 					}
@@ -182,7 +182,7 @@ export class PieChartComponent implements OnInit, OnChanges {
 					return color(colorsArr.indexOf(d.data.name));
 				});
 			g.append('title').text(function(d) {
-				return d.data.name +': '+d.data.value;
+				return d.data.name + ': ' + d.data.value;
 			});
 			if (showValues) {
 				g.filter(function(d) {
