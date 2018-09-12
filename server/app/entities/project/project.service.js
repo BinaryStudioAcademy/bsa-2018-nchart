@@ -16,7 +16,7 @@ class ProjectService {
 		this.DocumentGeneratingService = DocumentGeneratingService;
 		this.MarkupTemplateService = MarkupTemplateService;
 
-		this.pageLimit = 100;
+		this.pageLimit = 10;
 	}
 
 	getAll() {
@@ -411,33 +411,6 @@ class ProjectService {
 			.catch(err => err);
 	}
 
-	/*
-    "projects":[
-      {
-        "id":4,
-        "name":"rename test",
-        "updatedAt":"2018-09-08T11:26:08.029Z",
-        "groupName":"General",
-        "companyName":"General",
-        "accessLevelId":1,
-        "userCharts":[
-          "Bar chart",
-          "Pie Chart"
-        ],
-        "user":{
-          "name":"Nemchenko",
-          "email":"1user@gmail.com"
-        }
-      }
-    ],
-    "pagination":{
-      "pageCount":1,
-      "page":1,
-      "totalRecords":2,
-      "rows":10
-    }
-  }
-     */
 	static formQuery(title, page, limit, charts, from, to) {
 		const queryName = title || '';
 		const queryChart = (charts || '').split(',').filter(el => !!el);
@@ -543,13 +516,13 @@ class ProjectService {
 								});
 							}
 						});
-						const pageCount = Math.ceil(payload.projects.length / queryLimit);
+						const pageCount = Math.ceil(data.count / 2 / queryLimit);
 						let userPage = page;
 						if (page > pageCount) {
 							userPage = 1;
 						}
 						payload.pagination = {
-							totalRecords: payload.projects.length,
+							totalRecords: data.count / 2,
 							pageCount,
 							page: userPage,
 							rows: queryLimit

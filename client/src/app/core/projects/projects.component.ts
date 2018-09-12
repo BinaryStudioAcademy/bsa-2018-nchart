@@ -145,7 +145,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 			this.debouncedSearch(
 				{
 					title: v.title,
-					page: 1,
+					page: v.page,
 					charts: v.charts,
 					owner: v.owner,
 					from: moment(v.date[0]).format('YYYY-MM-DD'),

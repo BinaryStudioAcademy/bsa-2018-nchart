@@ -6,18 +6,20 @@
 	<form [formGroup]="newFilterGroup">
 		<p-sidebar [(visible)]="display" position="right" [appendTo]="projects">
 			<h4>Filter by owner</h4>
-			<p-checkbox
-				[formControl]="newFilterGroup.get('owner')"
-				name="owner"
-				value="me"
-				label="My projects">
-			</p-checkbox>
-			<p-checkbox
-				[formControl]="newFilterGroup.get('owner')"
-				name="owner"
-				value="shared"
-				label="Shared projects">
-			</p-checkbox>
+			<div class="owner-checkbox-group">
+				<p-checkbox
+					[formControl]="newFilterGroup.get('owner')"
+					name="owner"
+					value="me"
+					label="My projects">
+				</p-checkbox>
+				<p-checkbox
+					[formControl]="newFilterGroup.get('owner')"
+					name="owner"
+					value="shared"
+					label="Shared projects">
+				</p-checkbox>
+			</div>
 			<h4>Filter by charts</h4>
 			<p-multiSelect [options]="charts" formControlName="charts"></p-multiSelect>
 			<h4>Filter by date</h4>
@@ -40,7 +42,7 @@
 			>
 			</app-input-group>
 		</div>
-		<pre>{{newFilterGroup.value | json}}</pre>
+		<!--<pre>{{newFilterGroup.value | json}}</pre>-->
 	</form>
 	<div class="projects-content" [loading-sp]="isLoading$ | async">
 		<div class="empty-projects-list" *ngIf="isEmptyList$() | async">
