@@ -21,7 +21,10 @@
 				</p-checkbox>
 			</div>
 			<h4>Filter by charts</h4>
-			<p-multiSelect [options]="charts" formControlName="charts"></p-multiSelect>
+			<p-multiSelect
+				[options]="charts"
+				[formControl]="newFilterGroup.get('charts')"
+			></p-multiSelect>
 			<h4>Filter by date</h4>
 			<app-date-time-picker
 				[(dateRange)]="datePicked"

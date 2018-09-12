@@ -5,7 +5,7 @@ import {
 	Input,
 	ChangeDetectionStrategy
 } from '@angular/core';
-import {FormControl} from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
 @Component({
 	selector: 'app-date-time-picker',

@@ -8,22 +8,22 @@ import {
 	projects as projectsSelector,
 	projectsPagination as projectsPaginationSelector
 } from '@app/store/selectors/projects.selectors.ts';
-import {isProjectsLoading} from '@app/store/selectors/projects.selectors';
-import {StoreService} from '@app/services/store.service';
+import { isProjectsLoading } from '@app/store/selectors/projects.selectors';
+import { StoreService } from '@app/services/store.service';
 import * as projectActions from '@app/store/actions/projects/projects.actions';
-import {Observable, combineLatest} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {FormGroup} from '@angular/forms';
-import {debounce, omitBy} from 'lodash';
-import {Router, ActivatedRoute} from '@angular/router';
+import { Observable, combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { FormGroup } from '@angular/forms';
+import { debounce, omitBy } from 'lodash';
+import { Router, ActivatedRoute } from '@angular/router';
 import * as queryString from 'query-string';
-import {ProjectsFilter, ProjectPreview} from '@app/models/project.model';
-import {OptionalType} from '@app/models';
-import {PaginationData} from '@app/models/projects-store.model';
-import {user as userSelector} from '@app/store/selectors/user.selectors';
-import {User} from '@app/models/user.model';
-import {SelectItem} from 'primeng/api';
-import {FormBuilder} from '@angular/forms';
+import { ProjectsFilter, ProjectPreview } from '@app/models/project.model';
+import { OptionalType } from '@app/models';
+import { PaginationData } from '@app/models/projects-store.model';
+import { user as userSelector } from '@app/store/selectors/user.selectors';
+import { User } from '@app/models/user.model';
+import { SelectItem } from 'primeng/api';
+import { FormBuilder } from '@angular/forms';
 import * as moment from 'moment';
 
 @Component({
@@ -73,10 +73,12 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 	];
 	debouncedSearch: (params: OptionalType<ProjectsFilter>) => void;
 
-	constructor(private storeService: StoreService,
-				private router: Router,
-				private route: ActivatedRoute,
-				private fb: FormBuilder) {
+	constructor(
+		private storeService: StoreService,
+		private router: Router,
+		private route: ActivatedRoute,
+		private fb: FormBuilder
+	) {
 		this.debouncedSearch = debounce(this.applyFilter, 500);
 	}
 
@@ -94,9 +96,8 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 			to
 		} = this.route.snapshot.queryParams;
 		this.newFilterGroup = this.fb.group({
-			page: [page],
 			title: [title],
-			charts: [charts],
+			charts: [charts ? charts.split(',') : null],
 			owner: [owner],
 			date: [[from, to]]
 		});
@@ -109,7 +110,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 				new projectActions.LoadProjetcsInfo({
 					page: params.page || 1,
 					title: params.title,
-					charts: params.charts,
+					charts: params.charts ? params.charts.split(',') : null,
 					owner: params.owner,
 					from: params.from,
 					to: params.to
@@ -145,15 +146,13 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 		];
 
 		this.newFilterGroup.valueChanges.subscribe(v => {
-			this.debouncedSearch(
-				{
-					title: v.title,
-					page: v.page,
-					charts: v.charts,
-					owner: v.owner,
-					from: moment(v.date[0]).format('YYYY-MM-DD'),
-					to: moment(v.date[1]).format('YYYY-MM-DD')
-				});
+			this.debouncedSearch({
+				title: v.title,
+				charts: v.charts.length ? v.charts.join(',') : '',
+				owner: v.owner,
+				from: v.date[0] ? moment(v.date[0]).format('YYYY-MM-DD') : null,
+				to: v.date[1] ? moment(v.date[1]).format('YYYY-MM-DD') : null
+			});
 		});
 
 		this.disconnectStore = this.storeService.connect([
@@ -168,7 +167,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 
 	onNewPage(page) {
 		this.newFilterGroup.controls.page.patchValue(page);
-		this.applyFilter({page});
+		this.applyFilter({ page });
 	}
 
 	applyFilter(params: OptionalType<ProjectsFilter>) {
@@ -208,6 +207,5 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 		);
 	}
 
-	ngAfterViewInit() {
-	}
+	ngAfterViewInit() {}
 }

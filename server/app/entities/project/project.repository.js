@@ -181,7 +181,10 @@ class ProjectRepository extends Repository {
 		const query = {
 			'$groupProjects.group.groupUsers.id$': id,
 			name: { $iLike: `%${queryName}%` },
-			updatedAt: { [SequilizeOp.gte]: queryMinDate, [SequilizeOp.lte]: queryMaxDate }
+			updatedAt: {
+				[SequilizeOp.gte]: queryMinDate,
+				[SequilizeOp.lte]: queryMaxDate
+			}
 		};
 		if (queryChart && queryChart.length > 0) {
 			query['$projectCharts.chart.chartType.sysName$'] = {
@@ -228,27 +231,33 @@ class ProjectRepository extends Repository {
 			]
 		};
 
-		return new Promise((res) => {
-			projectModel.findAll({
-				where: query,
-				attributes: ['id'],
-				include: [chartInclude, groupInclude]
-			}).then(data => {
-				groupInclude.where = { accessLevelId: searchQuery[1].accessLevelId };
-				projectModel.findAndCount({
-					limit,
-					offset,
-					subQuery: false,
-					where: {
-						id: {
-							[SequilizeOp.in]: data.map(el => el.id)
-						}
-					},
+		return new Promise(res => {
+			projectModel
+				.findAll({
+					where: query,
+					attributes: ['id'],
 					include: [chartInclude, groupInclude]
-				}).then(d => {
-					res(d);
+				})
+				.then(data => {
+					groupInclude.where = {
+						accessLevelId: searchQuery[1].accessLevelId
+					};
+					projectModel
+						.findAndCount({
+							limit,
+							offset,
+							subQuery: false,
+							where: {
+								id: {
+									[SequilizeOp.in]: data.map(el => el.id)
+								}
+							},
+							include: [chartInclude, groupInclude]
+						})
+						.then(d => {
+							res(d);
+						});
 				});
-			});
 		});
 	}
 

@@ -77,7 +77,7 @@ class ProjectService {
 								projectId: payload.project.id,
 								accessLevelId: 1
 							})
-							// todo: error handler if groupProject  already exists
+								// todo: error handler if groupProject  already exists
 								.then(() => {
 									callback(null, payload);
 								})
@@ -385,7 +385,7 @@ class ProjectService {
 				const projects = [];
 				data.forEach(el => {
 					el.group.groupProjects.forEach(pj => {
-						const user = pj.project.groupProjects[0].group.groupUsers[0].user
+						const user =							pj.project.groupProjects[0].group.groupUsers[0].user
 							.dataValues;
 						const userCharts = [];
 						pj.project.projectCharts.forEach(projectChart => {
@@ -417,9 +417,15 @@ class ProjectService {
 		if (!(typeof charts === 'object')) {
 			queryChart = (charts || '').split(',').filter(el => !!el);
 		}
-		let queryMinDate = moment(from, 'YYYY-MM-DD', true).isValid() ? from : '1700-01-01';
-		let queryMaxDate = moment(to, 'YYYY-MM-DD', true).isValid() ? to : '3000-01-01';
-		const duration = moment.duration(moment(queryMaxDate).diff((moment(queryMinDate)))).asDays();
+		let queryMinDate = moment(from, 'YYYY-MM-DD', true).isValid()
+			? from
+			: '1700-01-01';
+		let queryMaxDate = moment(to, 'YYYY-MM-DD', true).isValid()
+			? to
+			: '3000-01-01';
+		const duration = moment
+			.duration(moment(queryMaxDate).diff(moment(queryMinDate)))
+			.asDays();
 		if (duration < 0) {
 			throw new Error('Invalid date');
 		}
@@ -443,12 +449,22 @@ class ProjectService {
 		return [{ accessLevelId: [1, 2, 3] }, { accessLevelId: 1 }];
 	}
 
-	projectsWithPagination(id, {
-		title, page, limit, charts, from, to, owner
-	}) {
+	projectsWithPagination(
+		id,
+		{
+			title, page, limit, charts, from, to, owner
+		}
+	) {
 		const queryLimit = Number(limit) || this.pageLimit;
 		const queryOffset = ((page || 1) - 1) * queryLimit;
-		const queryParams = ProjectService.formQuery(title, page, limit, charts, from, to);
+		const queryParams = ProjectService.formQuery(
+			title,
+			page,
+			limit,
+			charts,
+			from,
+			to
+		);
 		const searchQuery = ProjectService.ownerMe(owner);
 		return new Promise((resolve, reject) => {
 			async.waterfall(
@@ -465,7 +481,7 @@ class ProjectService {
 							limit: queryLimit
 						})
 							.then(data => callback(null, data))
-						// .then(data => callback(data, null))
+							// .then(data => callback(data, null))
 							.catch(err => callback(err, null));
 					},
 					(payload, callback) => {
@@ -494,20 +510,26 @@ class ProjectService {
 						data.rows.forEach(el => {
 							const users = [];
 							el.groupProjects.forEach(groupProject => {
-								groupProject.group.groupUsers.forEach(groupUser => {
-									users.push(groupUser.user.dataValues);
-								});
+								groupProject.group.groupUsers.forEach(
+									groupUser => {
+										users.push(groupUser.user.dataValues);
+									}
+								);
 							});
 							const unsortedCharts = [];
 							el.projectCharts.forEach(projectChart => {
-								unsortedCharts.push(projectChart.chart.chartType.name);
+								unsortedCharts.push(
+									projectChart.chart.chartType.name
+								);
 							});
 							const userCharts = unsortedCharts.filter(
 								(item, pos) => unsortedCharts.indexOf(item) === pos
 							);
 							let queryChart = charts;
 							if (!(typeof queryChart === 'object')) {
-								queryChart = (charts || '').split(',').filter(ele => !!ele);
+								queryChart = (charts || '')
+									.split(',')
+									.filter(ele => !!ele);
 							}
 							// todo: need to check if every value is inside userCharts
 							if (userCharts.length >= queryChart.length) {
@@ -516,14 +538,17 @@ class ProjectService {
 									name: el.name,
 									updatedAt: el.updatedAt,
 									accessLevelId:
-                                el.groupProjects[0].accessLevelId,
+										el.groupProjects[0].accessLevelId,
 									user:
-                                el.groupProjects[0].group.groupUsers[0].user,
+										el.groupProjects[0].group.groupUsers[0]
+											.user,
 									userCharts
 								});
 							}
 						});
-						const pageCount = Math.ceil(data.count / 2 / queryLimit);
+						const pageCount = Math.ceil(
+							data.count / 2 / queryLimit
+						);
 						let userPage = page;
 						if (page > pageCount) {
 							userPage = 1;
