@@ -4,33 +4,54 @@
 	#projects
 >
 	<form [formGroup]="filteringForm">
-		<p-sidebar [(visible)]="display" position="right" [appendTo]="projects" [showCloseIcon]="false" >
-			<h4>Filter by owner</h4>
-			<div class="owner-checkbox-group">
-				<p-checkbox
-					[formControl]="filteringForm.get('owner')"
-					name="owner"
-					[value]="projectOwnershipEnum.me"
-					label="My projects">
-				</p-checkbox>
-				<p-checkbox
-					[formControl]="filteringForm.get('owner')"
-					name="owner"
-					[value]="projectOwnershipEnum.shared"
-					label="Shared projects">
-				</p-checkbox>
+		<p-sidebar 
+			[(visible)]="display" 
+			position="right" 
+			[appendTo]="projects"
+			[showCloseIcon]='false'
+			
+		>	
+			<div class="hideIcon" (click)="hide()">
+				<i class="fa fas fa-arrow-right"></i>
+				<b class="label">Close</b>
 			</div>
-			<h4>Filter by charts</h4>
-			<p-multiSelect
-				[options]="charts"
-				[formControl]="filteringForm.get('charts')"
-			></p-multiSelect>
-			<h4>Filter by date</h4>
-			<app-date-time-picker
-				[dateRange]="filteringForm.get('date').value"
-				(dateRangeChange)="filteringForm.get('date').setValue($event)"
-			>
-			</app-date-time-picker>
+			<h3 class="filters-header">Filters</h3>
+			<div class="filter-container">
+				<div class="filter-header">Owner</div>
+				<div class="owner-checkbox-group">
+					<p-checkbox
+						[formControl]="filteringForm.get('owner')"
+						name="owner"
+						[value]="projectOwnershipEnum.me"
+						label="Me">
+					</p-checkbox>
+					<p-checkbox
+						[formControl]="filteringForm.get('owner')"
+						name="owner"
+						[value]="projectOwnershipEnum.shared"
+						label="Shared">
+					</p-checkbox>
+				</div>			
+			</div>
+			<div class="filter-container">
+				<div class="filter-header">Charts</div>
+				<div class="multi-select-container">
+					<p-multiSelect
+						[options]="charts"
+						[showHeader]='false'
+						[formControl]="filteringForm.get('charts')"
+					></p-multiSelect>
+				</div>
+			</div>
+			<div class="filter-container">
+				<div class="filter-header">Date</div>
+				<app-date-time-picker
+					[dateRange]="filteringForm.get('date').value"
+					(dateRangeChange)="filteringForm.get('date').setValue($event)"
+				>
+				</app-date-time-picker>
+			</div>
+			
 		</p-sidebar>
 		<div class="search-projects">
 			<h3>Projects</h3>

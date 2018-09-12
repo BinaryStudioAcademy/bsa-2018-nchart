@@ -31,6 +31,7 @@ import * as moment from 'moment';
 import { ProjectService } from '@app/services/project.service';
 import { OnDestroy } from '@angular/core';
 import { withLatestFrom } from 'rxjs/internal/operators';
+import * as deepEqual from 'fast-deep-equal';
 
 @Component({
 	selector: 'app-projects',
@@ -44,6 +45,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
 	isLoading$: Observable<boolean>;
 	formChangesSub: Subscription;
 	userEmail: string;
+	usedParams: OptionalType<ProjectsFilter>;
 	disconnectStore: () => void;
 	display = false;
 	projectOwnershipEnum = ProjectOwnershipFilter;
@@ -87,6 +89,8 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
 	filteringForm: FormGroup;
 
 	ngOnInit() {
+		const { queryParams } = this.route.snapshot;
+
 		this.projects$ = this.storeService.createSubscription(
 			projectsSelector()
 		);
@@ -107,7 +111,6 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
 			}
 		]);
 
-		const { queryParams } = this.route.snapshot;
 
 		this.filteringForm = this.projectService.createFilteringForm(
 			this.filterParamsForForm(queryParams as ProjectsFilter)
@@ -121,20 +124,25 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
 			});
 
 		this.route.queryParams.subscribe(params => {
-			this.storeService.dispatch(
-				new projectActions.LoadProjetcsInfo({
-					page: params.page || 1,
-					title: params.title,
-					charts: params.charts,
-					owner: params.owner || this.projectOwnershipEnum.all,
-					from: params.from,
-					to: params.to
-				})
-			);
+			console.log(this.filtersToUse(params), this.usedParams);
+			if (!deepEqual(this.usedParams, this.filtersToUse(params))) {
+				this.storeService.dispatch(
+					new projectActions.LoadProjetcsInfo({
+						page: params.page || 1,
+						title: params.title,
+						charts: params.charts,
+						owner: params.owner || this.projectOwnershipEnum.all,
+						from: params.from,
+						to: params.to
+					})
+				);
 
-			this.filteringForm.setValue(
-				this.filterParamsForForm(params as ProjectsFilter)
-			);
+				this.filteringForm.setValue(
+					this.filterParamsForForm(params as ProjectsFilter)
+				);
+
+				this.usedParams = this.filtersToUse(params);
+			}
 		});
 	}
 
@@ -239,6 +247,10 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
 	ngOnDestroy() {
 		this.formChangesSub.unsubscribe();
 		this.disconnectStore();
+	}
+
+	hide() {
+		this.display = false;
 	}
 
 	ngAfterViewInit() {}
