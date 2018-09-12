@@ -188,7 +188,6 @@ class ProjectRepository extends Repository {
 				[SequilizeOp.in]: queryChart
 			};
 		}
-
 		const groupInclude = {
 			model: groupProjectModel,
 			where: searchQuery[0],
