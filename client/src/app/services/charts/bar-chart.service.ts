@@ -118,7 +118,7 @@ export class BarChartService {
 					color: ''
 				};
 				a.name = original[i].name;
-				a.value = myCount;
+				a.value = +myCount.toFixed(10);
 				a.group = original[i].group;
 				a.id = original[i].id;
 				a.color = original[i].color;

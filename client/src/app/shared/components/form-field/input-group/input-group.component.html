@@ -1,0 +1,35 @@
+<label
+    *ngIf="label"
+    class="input-label"
+    [class.ui-input-label-disabled]="disabled"
+>
+    {{label}}
+</label>
+
+<div class="ui-input-wrp ui-inputgroup" id="input_wrp">
+    <i
+        [ngClass]="getIconClasses()"
+        *ngIf="icon && iconPosition=='left'"
+    ></i>
+    <input #inputText
+        pInputText
+        [formControl]="control"
+        [type]="type"
+        [placeholder]="placeholder"
+        [attr.disabled]="isDisabled()"
+		[ngClass]="getClasses()"
+		[pTooltip]="tooltip"
+		[escape]="tooltipEscape"
+		[tooltipPosition]="tooltipPosition"
+		[autofocus]="autofocus"
+    >
+	<button
+		class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only"
+		 pbutton="" type="button" (click)="onButtonClick()" >
+		<span aria-hidden="true" [ngClass]="getButtonIconClasses()"></span>
+		<span class="ui-button-text ui-clickable">ui-btn</span>
+	</button>
+    <div class="input-label input-label-error">
+        <span *ngIf="control.invalid && control.dirty">{{getError()}}</span>
+    </div>
+</div>

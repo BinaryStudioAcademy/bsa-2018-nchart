@@ -22,18 +22,18 @@ export class ProjectsCardComponent implements OnInit {
 			icon: 'fa fa-edit'
 		},
 		{
-			label: 'Delete',
-			command: () => {
-				this.deleteDialog();
-			},
-			icon: 'fa fa-trash'
-		},
-		{
 			label: 'Share',
 			command: () => {
 				this.shareDialog();
 			},
 			icon: 'fa fa-share'
+		},
+		{
+			label: 'Delete',
+			command: () => {
+				this.deleteDialog();
+			},
+			icon: 'fa fa-trash'
 		}
 	];
 
@@ -78,10 +78,10 @@ export class ProjectsCardComponent implements OnInit {
 		}
 		// format data
 		this.date = moment(this.updatedAt).calendar(null, {
-			sameDay: '[Today] [at] hh:mm',
-			lastDay: '[Yesterday at] hh:mm',
-			lastWeek: '[Last] dddd [at] hh:mm',
-			sameElse: 'DD/MM/YYYY hh:mm'
+			sameDay: '[Today] [at] HH:MM',
+			lastDay: '[Yesterday at] HH:MM',
+			lastWeek: '[Last] dddd [at] HH:MM',
+			sameElse: 'DD/MM/YYYY HH:MM'
 		});
 	}
 

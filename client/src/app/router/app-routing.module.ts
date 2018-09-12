@@ -28,11 +28,6 @@ const appRoutes: Routes = [
 		component: AppComponent,
 		canActivate: [AppAuthGuard],
 		children: [
-			// {
-			// 	path: '',
-			// 	redirectTo: 'project/draft',
-			// 	pathMatch: 'full'
-			// },
 			{
 				path: '',
 				component: LandingPageComponent

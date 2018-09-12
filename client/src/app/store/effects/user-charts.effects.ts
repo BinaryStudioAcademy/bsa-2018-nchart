@@ -6,8 +6,8 @@
 // import { Chart } from '@app/models';
 // import { normalize } from 'normalizr';
 // import { arrayOfCommonScheme } from '@app/schemes/common.schema';
-// import { ChartsActionConstants } from '@app/store/actions/charts/charts.action-types';
-// import * as chartActions from '@app/store/actions/charts/charts.actions';
+// import { ChartsActionConstants } from '@app/store/actions/checks/checks.action-types';
+// import * as chartActions from '@app/store/actions/checks/checks.actions';
 //
 // @Injectable()
 // export class UserChartsEffects {
@@ -25,7 +25,7 @@
 // 						entities: { byId }
 // 					} = normalize(value, arrayOfCommonScheme);
 // 					return new chartActions.LoadChartsComplete({
-// 						charts: {
+// 						checks: {
 // 							all,
 // 							byId
 // 						}

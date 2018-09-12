@@ -15,6 +15,7 @@ import { PopupMenuComponent } from '@app/shared/components/button/popup-menu/pop
 import { NotificationComponent } from '@app/shared/notification/notification.component';
 import { PaginatorComponent } from '@app/shared/components/paginator/paginator.component';
 import { DialogRenameComponent } from '@app/shared/components/dialog-rename/dialog-rename.component';
+import { InputGroupComponent } from '@app/shared/components/form-field/input-group/input-group.component';
 
 @NgModule({
 	imports: [
@@ -39,7 +40,8 @@ import { DialogRenameComponent } from '@app/shared/components/dialog-rename/dial
 		PopupMenuComponent,
 		NotificationComponent,
 		PaginatorComponent,
-		DialogRenameComponent
+		DialogRenameComponent,
+		InputGroupComponent
 	],
 	declarations: [
 		ActionButtonComponent,
@@ -52,7 +54,8 @@ import { DialogRenameComponent } from '@app/shared/components/dialog-rename/dial
 		PopupMenuComponent,
 		NotificationComponent,
 		PaginatorComponent,
-		DialogRenameComponent
+		DialogRenameComponent,
+		InputGroupComponent
 	]
 })
 export class SharedModule {}
