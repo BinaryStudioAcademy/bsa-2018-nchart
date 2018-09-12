@@ -124,7 +124,7 @@ module.exports = {
 						required: false,
 						variable: 'Label',
 						sysName: 'label',
-						type: ['string', 'number', 'date'],
+						type: ['string', 'number'],
 						id: 5
 					},
 					{
@@ -226,7 +226,7 @@ module.exports = {
 						required: true,
 						variable: 'Steps',
 						sysName: 'steps',
-						type: ['string', 'number', 'date'],
+						type: ['string', 'number'],
 						id: 7
 					},
 					{
@@ -305,7 +305,7 @@ module.exports = {
 						required: true,
 						variable: 'Group',
 						sysName: 'group',
-						type: ['string', 'number', 'date'],
+						type: ['string', 'number'],
 						id: 9
 					},
 					{
