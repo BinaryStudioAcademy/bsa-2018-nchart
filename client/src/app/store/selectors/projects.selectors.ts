@@ -85,3 +85,6 @@ export const getCountProjectDatasets = (id?: SchemeID) => (
 
 export const getActiveProject = () => (state: AppState) =>
 	state.projects.active;
+
+export const isProjectLoading = () => (state: AppState) =>
+	state.projects.isLoading;

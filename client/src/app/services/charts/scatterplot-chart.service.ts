@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import ColorHash from 'color-hash';
 import { OptionalType, fieldsValidators } from '@app/models';
 import { FormService } from '@app/services/form.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -33,7 +32,7 @@ export class ScatterplotChartService {
 			yAxis: 1,
 			size: 1,
 			item: '',
-			color: '#69bf69'
+			color: '#6C64B3'
 		}));
 	}
 	static mapYAxis(original: any[], values: any[]) {
@@ -52,13 +51,11 @@ export class ScatterplotChartService {
 
 	static mapColors(original: any[], colors: any) {
 		if (colors.length) {
-			const colorHash = new ColorHash();
 			return original.map(obj => ({
 				xAxis: obj.xAxis,
 				yAxis: obj.yAxis,
 				size: obj.size,
-				item: colors[original.indexOf(obj)] + '',
-				color: colorHash.hex(colors[original.indexOf(obj)] + '')
+				item: colors[original.indexOf(obj)] + ''
 			}));
 		} else {
 			return original;
@@ -90,14 +87,14 @@ export class ScatterplotChartService {
 		return this.data;
 	}
 
-	createScatterplotChartCustomizeForm(barChartCustomize): FormGroup {
+	createCustomizeForm(scatterplotChartCustomize): FormGroup {
 		const initialValues: OptionalType<
 			ScatterplotChartCustomize
 		> = new ScatterplotChartCustomize(
-			barChartCustomize.width.value,
-			barChartCustomize.height.value,
-			barChartCustomize.maxRadius.value,
-			barChartCustomize.setOrigin.value
+			scatterplotChartCustomize.width.value,
+			scatterplotChartCustomize.height.value,
+			scatterplotChartCustomize.maxRadius.value,
+			scatterplotChartCustomize.setOrigin.value
 		);
 
 		const validators: fieldsValidators<ScatterplotChartCustomize> = {

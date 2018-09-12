@@ -7,6 +7,7 @@ import { ChartsEffects } from '@app/store/effects/charts.effects';
 import { DatasetEffects } from '@app/store/effects/dataset.effects';
 import { RouterEffects } from '@app/store/effects/router.effects';
 import { ExportEffects } from '@app/store/effects/export.effects';
+import { NotificationEffects } from '@app/store/effects/notification.effects';
 
 @NgModule({
 	imports: [
@@ -17,7 +18,8 @@ import { ExportEffects } from '@app/store/effects/export.effects';
 			DatasetEffects,
 			ProjectsEffects,
 			RouterEffects,
-			ExportEffects
+			ExportEffects,
+			NotificationEffects
 		])
 	]
 })

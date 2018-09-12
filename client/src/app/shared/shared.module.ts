@@ -12,6 +12,7 @@ import { DialogComponent } from '@app/shared/components/dialog/dialog.component'
 import { DeleteDialogComponent } from '@app/shared/components/dialogDelete/delete-dialog.component';
 import { TableComponent } from '@app/shared/components/table/table.component';
 import { PopupMenuComponent } from '@app/shared/components/button/popup-menu/popup-menu.component';
+import { NotificationComponent } from '@app/shared/notification/notification.component';
 import { PaginatorComponent } from '@app/shared/components/paginator/paginator.component';
 import { DialogRenameComponent } from '@app/shared/components/dialog-rename/dialog-rename.component';
 import { InputGroupComponent } from '@app/shared/components/form-field/input-group/input-group.component';
@@ -37,6 +38,7 @@ import { InputGroupComponent } from '@app/shared/components/form-field/input-gro
 		DeleteDialogComponent,
 		TableComponent,
 		PopupMenuComponent,
+		NotificationComponent,
 		PaginatorComponent,
 		DialogRenameComponent,
 		InputGroupComponent
@@ -50,6 +52,7 @@ import { InputGroupComponent } from '@app/shared/components/form-field/input-gro
 		DeleteDialogComponent,
 		TableComponent,
 		PopupMenuComponent,
+		NotificationComponent,
 		PaginatorComponent,
 		DialogRenameComponent,
 		InputGroupComponent

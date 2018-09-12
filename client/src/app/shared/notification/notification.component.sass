@@ -1,0 +1,33 @@
+@import '../../../theme/variables.sass'
+#notificationBarBottom
+	bottom: 0px
+	padding: 0
+	width: 100%
+	height: 35px
+	position: fixed
+	font-size: 1rem
+	display: flex
+	align-items: center
+	z-index: 101
+	text-align: center
+	overflow: hidden
+	font-family: $fontFamily
+	box-sizing: border-box
+
+.msg
+	margin: 0.1rem auto
+	padding: 0
+
+.success
+	background-color: $successColor
+	color: #ffffff
+
+.error
+	background-color: $errorColor
+	color: #ffffff
+
+.close
+	cursor: pointer
+	position: absolute
+	right: 1rem
+	font-size: .9rem

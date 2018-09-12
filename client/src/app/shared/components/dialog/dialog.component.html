@@ -19,7 +19,7 @@
 				class="ui-fluid"
 				type="text"
 				label="Email"
-				[control]="formGroup.controls.email">
+				[control]="formGroup.controls['email']">
 			</app-input-text>
 		</div>
 		<form [formGroup]="formGroup">
@@ -49,7 +49,3 @@
 	</p-dialog>
 
 </div>
-
-<!--<label for="email">Email: </label><input type="email" id="email">-->
-	<!--<button type="button" pButton icon="pi pi-check" (click)="display=false" label="Send" class="ui-button-secondary"></button>-->
-	<!--<button type="text" (click)="showDialog()" pButton label="share"></button>-->

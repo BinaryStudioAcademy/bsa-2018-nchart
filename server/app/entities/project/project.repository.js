@@ -280,7 +280,13 @@ class ProjectRepository extends Repository {
 		});
 	}
 
-	publicProject(projectId) {
+    deleteAllProjectsCharts(id){
+        return this.projectChartModel.destroy({
+            where: {projectId: id}
+        })
+    }
+
+    publicProject(projectId) {
 		return this.groupProjectModel.findOne({ where: { projectId } });
 	}
 
