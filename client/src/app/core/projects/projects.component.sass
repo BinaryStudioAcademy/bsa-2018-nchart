@@ -1,12 +1,14 @@
 @import ../../../theme/variables
 @import ../../../theme/colors
 
-$searchBarHeight: 120px
+$searchBarHeight: 160px
 
 .projects-container
 	position: relative
-	padding-top: $searchBarHeight
+	padding-top: 110px
 	height: 100%
+	width: 100vw
+	overflow-x: hidden
 	box-sizing: border-box
 
 .projects-content
@@ -33,9 +35,8 @@ $searchBarHeight: 120px
 	position: absolute
 	top: 0
 	left: 0
-	padding-top: 1rem
 	background-color: $backgroundWhiteColor
-	height: $searchBarHeight
+	height: 110px
 	display: flex
 	justify-content: center
 	flex-direction: column
@@ -44,6 +45,7 @@ $searchBarHeight: 120px
 	box-sizing: border-box
 	h3
 		margin: 0
+		padding-bottom: .5rem
 
 .search-label
 	font-weight: 800
@@ -66,3 +68,29 @@ $searchBarHeight: 120px
 	span
 		font-size: 1.2rem
 		font-family: $fontFamily
+
+.owner-checkbox-group
+	display: flex
+	flex-wrap: wrap
+	& p-checkbox
+		width: 100%
+		padding-top: .5rem	
+
+.filter-container
+	padding-bottom: 1.5rem
+
+.filter-header
+	font-weight: 600
+
+.multi-select-container
+	padding-top: .5rem
+
+.filters-header
+	letter-spacing: 1px
+
+.hideIcon
+	margin-left: -1rem
+	cursor: pointer
+	.label
+		color: $activeColor
+		padding-left: .5rem

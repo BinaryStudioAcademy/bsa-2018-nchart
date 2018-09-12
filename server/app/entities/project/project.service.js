@@ -1,5 +1,6 @@
 const async = require('async');
 const _ = require('lodash');
+const moment = require('moment');
 const ProjectRepository = require('./project.repository');
 const DatasetService = require('../dataset/dataset.service');
 const ChartService = require('../chart/chart.service');
@@ -14,6 +15,8 @@ class ProjectService {
 		this.GroupService = GroupService;
 		this.DocumentGeneratingService = DocumentGeneratingService;
 		this.MarkupTemplateService = MarkupTemplateService;
+
+		this.pageLimit = 900;
 	}
 
 	getAll() {
@@ -83,12 +86,14 @@ class ProjectService {
 								})
 						);
 					},
-					(payload, callback)=>{
-					this.ProjectRepository.deleteAllProjectsCharts(payload.project.id)
-						.then(()=>{
-                            callback(null,payload);
-						})
-						.catch(err=>callback(err,null));
+					(payload, callback) => {
+						this.ProjectRepository.deleteAllProjectsCharts(
+							payload.project.id
+						)
+							.then(() => {
+								callback(null, payload);
+							})
+							.catch(err => callback(err, null));
 					},
 					(payload, callback) => {
 						DatasetService.upsert(obj.project.datasets)
@@ -386,16 +391,12 @@ class ProjectService {
 	findProjectsWithOwners(id, params) {
 		return this.ProjectRepository.findProjectsWithOwners(id, params.name)
 			.then(data => {
-				// data[0].group.groupProjects[0].project - id, name
-				// data[0].group.groupProjects[0].project
-				// .groupProjects[0].group.groupUsers[0].user.dataValues - name, email
 				const projects = [];
 				data.forEach(el => {
 					el.group.groupProjects.forEach(pj => {
 						const user =							pj.project.groupProjects[0].group.groupUsers[0].user
 							.dataValues;
 						const userCharts = [];
-						// pj.project.projectCharts[0].chart.chartType.name
 						pj.project.projectCharts.forEach(projectChart => {
 							userCharts.push(projectChart.chart.chartType.name);
 						});
@@ -414,85 +415,170 @@ class ProjectService {
 						});
 					});
 				});
-				// this.paggination(params.page,projects);
 				return projects;
 			})
 			.catch(err => err);
 	}
 
-	projectsWithPagination(id, params) {
-		return this.ProjectRepository.findProjectsWithOwners(id, params.name)
-			.then(data => {
-				// data[0].group.groupProjects[0].project - id, name
-				// data[0].group.groupProjects[0].project
-				// .groupProjects[0].group.groupUsers[0].user.dataValues - name, email
-				const projects = [];
-				data.forEach(el => {
-					el.group.groupProjects.forEach(pj => {
-						const user =							pj.project.groupProjects[0].group.groupUsers[0].user
-							.dataValues;
-						const userCharts = [];
-						// pj.project.projectCharts[0].chart.chartType.name
-						pj.project.projectCharts.forEach(projectChart => {
-							userCharts.push(projectChart.chart.chartType.name);
-						});
-						const uniqueCharts = userCharts.filter(
-							(item, pos) => userCharts.indexOf(item) === pos
-						);
-						projects.push({
-							id: pj.project.dataValues.id,
-							name: pj.project.dataValues.name,
-							updatedAt: pj.project.dataValues.updatedAt,
-							groupName: el.group.name,
-							companyName: el.group.company.name,
-							accessLevelId: pj.dataValues.accessLevelId,
-							userCharts: uniqueCharts,
-							user
-						});
-					});
-				});
-				return ProjectService.pagination(
-					params.page,
-					params.limit,
-					projects
-				);
-				// todo: uncomment to test
-				// return projects;
-			})
-			.catch(err => err);
+	static formQuery(title, page, limit, charts, from, to) {
+		const queryName = title || '';
+		let queryChart = charts;
+		if (!(typeof charts === 'object')) {
+			queryChart = (charts || '').split(',').filter(el => !!el);
+		}
+		let queryMinDate = moment(from, 'YYYY-MM-DD', true).isValid()
+			? from
+			: '1700-01-01';
+		let queryMaxDate = moment(to, 'YYYY-MM-DD', true).isValid()
+			? to
+			: '3000-01-01';
+		const duration = moment
+			.duration(moment(queryMaxDate).diff(moment(queryMinDate)))
+			.asDays();
+		if (duration < 0) {
+			throw new Error('Invalid date');
+		}
+		queryMinDate = `${queryMinDate}T00:00:00.000Z`;
+		queryMaxDate += 'T23:59:59.999Z';
+		return {
+			queryName,
+			queryChart,
+			queryMinDate,
+			queryMaxDate
+		};
 	}
 
-	static pagination(page, limit, projects) {
-		let pageLimit;
-		if (limit) {
-			pageLimit = Number(limit);
-		} else {
-			pageLimit = 10;
+	static ownerMe(owner) {
+		if (owner === 'me') {
+			return [{ accessLevelId: 1 }, { accessLevelId: 1 }];
 		}
-		let userPage = Number(page);
-		const numberOfPages = Math.ceil(projects.length / pageLimit);
-		let payload;
-		if (userPage === 1) {
-			payload = projects.slice(0, userPage * pageLimit);
-		} else {
-			payload = projects.slice(
-				(userPage - 1) * pageLimit,
-				(userPage - 1) * pageLimit + pageLimit
+		if (owner === 'shared') {
+			return [{ accessLevelId: [2, 3] }, { accessLevelId: 1 }];
+		}
+		return [{ accessLevelId: [1, 2, 3] }, { accessLevelId: 1 }];
+	}
+
+	projectsWithPagination(
+		id,
+		{
+			title, page, limit, charts, from, to, owner
+		}
+	) {
+		const queryLimit = Number(limit) || this.pageLimit;
+		const queryOffset = ((page || 1) - 1) * queryLimit;
+		const queryParams = ProjectService.formQuery(
+			title,
+			page,
+			limit,
+			charts,
+			from,
+			to
+		);
+		const searchQuery = ProjectService.ownerMe(owner);
+		return new Promise((resolve, reject) => {
+			async.waterfall(
+				[
+					callback => {
+						this.ProjectRepository.findProjectsWithOwners({
+							id,
+							queryName: queryParams.queryName,
+							queryMinDate: queryParams.queryMinDate,
+							queryMaxDate: queryParams.queryMaxDate,
+							queryChart: queryParams.queryChart,
+							searchQuery,
+							offset: queryOffset,
+							limit: queryLimit
+						})
+							.then(data => callback(null, data))
+							// .then(data => callback(data, null))
+							.catch(err => callback(err, null));
+					},
+					(payload, callback) => {
+						if (payload.rows.length === 0) {
+							this.ProjectRepository.findProjectsWithOwners({
+								id,
+								queryName: queryParams.queryName,
+								queryMinDate: queryParams.queryMinDate,
+								queryMaxDate: queryParams.queryMaxDate,
+								queryChart: queryParams.queryChart,
+								searchQuery,
+								offset: 0,
+								limit: queryLimit
+							})
+								.then(data => callback(null, data))
+								.catch(err => callback(err, null));
+						} else {
+							callback(null, payload);
+						}
+					},
+					(data, callback) => {
+						const payload = {
+							projects: [],
+							pagination: {}
+						};
+						data.rows.forEach(el => {
+							const users = [];
+							el.groupProjects.forEach(groupProject => {
+								groupProject.group.groupUsers.forEach(
+									groupUser => {
+										users.push(groupUser.user.dataValues);
+									}
+								);
+							});
+							const unsortedCharts = [];
+							el.projectCharts.forEach(projectChart => {
+								unsortedCharts.push(
+									projectChart.chart.chartType.name
+								);
+							});
+							const userCharts = unsortedCharts.filter(
+								(item, pos) => unsortedCharts.indexOf(item) === pos
+							);
+							let queryChart = charts;
+							if (!(typeof queryChart === 'object')) {
+								queryChart = (charts || '')
+									.split(',')
+									.filter(ele => !!ele);
+							}
+							// todo: need to check if every value is inside userCharts
+							if (userCharts.length >= queryChart.length) {
+								payload.projects.push({
+									id: el.id,
+									name: el.name,
+									updatedAt: el.updatedAt,
+									accessLevelId:
+										el.groupProjects[0].accessLevelId,
+									user:
+										el.groupProjects[0].group.groupUsers[0]
+											.user,
+									userCharts
+								});
+							}
+						});
+						const pageCount = Math.ceil(
+							data.count / 2 / queryLimit
+						);
+						let userPage = page;
+						if (page > pageCount) {
+							userPage = 1;
+						}
+						payload.pagination = {
+							totalRecords: data.count / 2,
+							pageCount,
+							page: userPage,
+							rows: queryLimit
+						};
+						return callback(null, payload);
+					}
+				],
+				(err, payload) => {
+					if (err) {
+						reject(err);
+					}
+					resolve(payload);
+				}
 			);
-		}
-		if (payload.length === 0) {
-			userPage = 1;
-			payload = projects.slice(0, pageLimit);
-		}
-		return {
-			projects: payload,
-			pagination: {
-				pageCount: numberOfPages,
-				page: userPage,
-				totalRecords: projects.length,
-				rows: pageLimit
-			}
-		};
+		});
 	}
 
 	static getProjectFromPayload(rawProject) {
