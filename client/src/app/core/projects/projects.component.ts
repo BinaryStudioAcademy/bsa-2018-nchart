@@ -48,30 +48,29 @@ export class ProjectsComponent implements OnInit, AfterViewInit {
 	charts: SelectItem[] = [
 		{
 			label: 'Pie Chart',
-			value: 'Pie Chart'
+			value: 'pieChart'
 		},
 		{
 			label: 'Bar Chart',
-			value: 'Bar Chart'
+			value: 'barChart'
 		},
 		{
 			label: 'Scatter Plot',
-			value: 'Scatter Plot'
+			value: 'scatterplot'
 		},
 		{
 			label: 'Gantt Chart',
-			value: 'Gantt Chart'
+			value: 'ganttChart'
 		},
 		{
 			label: 'Map Chart',
-			value: 'Map Chart'
+			value: 'mapChart'
 		},
 		{
-			label: 'Last Chart',
-			value: 'Last Chart'
+			label: 'Alluvial Diagram',
+			value: 'alluvialDiagram'
 		}
 	];
-
 	debouncedSearch: (params: OptionalType<ProjectsFilter>) => void;
 
 	constructor(private storeService: StoreService,

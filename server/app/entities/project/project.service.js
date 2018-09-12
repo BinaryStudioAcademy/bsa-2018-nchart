@@ -16,7 +16,7 @@ class ProjectService {
 		this.DocumentGeneratingService = DocumentGeneratingService;
 		this.MarkupTemplateService = MarkupTemplateService;
 
-		this.pageLimit = 10;
+		this.pageLimit = 100;
 	}
 
 	getAll() {
