@@ -1,0 +1,9 @@
+<form [formGroup]="formGroup" class="customize-settings-container" class="customize-form">
+    <app-spinner [label]="'Width'"(onchange)="change()" [control]="formGroup.controls.width" [min]="0" [step]="1"></app-spinner> 
+    <app-spinner [label]="'Height'"(onchange)="change()" [control]="formGroup.controls.height" [min]="0" [step]="1"></app-spinner>
+    <app-spinner *ngIf='isWorld' [label]="'Rotate map'"(onchange)="change()" [control]="formGroup.controls.rotate" [min]="0" [step]="1"></app-spinner>
+    <app-spinner *ngIf='isWorld' [label]="'Scale map'"(onchange)="change()" [control]="formGroup.controls.scale" [min]="0" [step]="1"></app-spinner>
+    <app-dropdown-simple *ngIf='isWorld' [control]="formGroup.controls.chooseProjection" [disabled]="isRegion" [options]="chooseProjection" [label]="'Choose projection'" (change)="change()"></app-dropdown-simple>
+    <app-dropdown-simple [control]="formGroup.controls.chooseRegion" [options]="chooseRegion" [label]="'Choose region'" (change)="change()"></app-dropdown-simple>
+    <app-checkbox [label]="'Show raticule'" (change)="change()" [control]="formGroup.controls.showRaticule"></app-checkbox>
+</form>

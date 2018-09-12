@@ -5,8 +5,8 @@ import {
 	isRequiredDimensionMatched
 } from '@app/store/selectors/userCharts';
 import { SchemeID } from '@app/models/normalizr.model';
-import { activeProjectId } from '../../../store/selectors/projects.selectors';
-import { SaveProject } from '../../../store/actions/projects/projects.actions';
+import { activeProjectId } from '@app/store/selectors/projects.selectors';
+import { SaveProject } from '@app/store/actions/projects/projects.actions';
 import { isActiveChartDataset } from '@app/store/selectors/dataset.selectors';
 import { isVerifiedToken } from '@app/store/selectors/user.selectors';
 import { Go } from '@app/store/actions/router/router.actions';

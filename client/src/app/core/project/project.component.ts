@@ -15,7 +15,10 @@ import {
 } from '@app/store/actions/projects/projects.actions';
 import { SchemeID } from '@app/models/normalizr.model';
 import { isChartsReady } from '@app/store/selectors/charts.selectors';
-import { projectCharts } from '@app/store/selectors/projects.selectors';
+import {
+	projectCharts,
+	isProjectLoading
+} from '@app/store/selectors/projects.selectors';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject, Subscription } from 'rxjs';
 import * as ProjectsActions from '@app/store/actions/projects/projects.actions';
@@ -58,6 +61,7 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 	projectName: string;
 	projectId: SchemeID;
 	isActiveChartDataset$: Observable<boolean>;
+	isLoading: boolean;
 
 	disconnect: () => void;
 
@@ -75,7 +79,8 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 		const scrollPosition = window.pageYOffset;
 		for (const i in this.viewItemsList) {
 			if (this.viewItemsList[i]) {
-				const position = this.viewItemsList[i].nativeElement.offsetTop - 340;
+				const position =
+					this.viewItemsList[i].nativeElement.offsetTop - 340;
 				if (scrollPosition >= position) {
 					this.selectedStep = this.stepperSteps.find(
 						el => el.id === +i + 1
@@ -208,6 +213,12 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 				selector: isChartsReady(),
 				subscriber: t => {
 					this.isChartsReady = t;
+				}
+			},
+			{
+				selector: isProjectLoading(),
+				subscriber: t => {
+					this.isLoading = t;
 				}
 			}
 		]);

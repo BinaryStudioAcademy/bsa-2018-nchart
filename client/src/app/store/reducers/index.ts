@@ -41,7 +41,7 @@ import {
 	initialState as exportInitialState
 } from '@app/store/reducers/export.reducer';
 
-import {routerReducer, RouterStateSerializer} from '@ngrx/router-store';
+import { routerReducer, RouterStateSerializer } from '@ngrx/router-store';
 
 import { RouterStateSnapshot } from '@angular/router';
 
@@ -70,6 +70,10 @@ import {
 	datasetPreloadReducer,
 	initialState as datasetPreloadInitialState
 } from '@app/store/reducers/dataset-samples.reducer';
+import {
+	notificationReducer,
+	initialState as notificationInitialState
+} from '@app/store/reducers/notifications.reducer';
 
 export const initialState: AppState = {
 	user: userInitialState,
@@ -84,7 +88,8 @@ export const initialState: AppState = {
 	datasetData: datasetDataInitialState,
 	defaultChartSettings: defaultChartSettingsInitialState,
 	userChartSettings: userChartSettingsInitialState,
-	datasetPreload: datasetPreloadInitialState
+	datasetPreload: datasetPreloadInitialState,
+	notification: notificationInitialState
 };
 
 export const getReducers = () => ({
@@ -101,7 +106,8 @@ export const getReducers = () => ({
 	datasetColumns: datasetColumnsReducer,
 	datasetData: datasetDataReducer,
 	router: routerReducer,
-	datasetPreload: datasetPreloadReducer
+	datasetPreload: datasetPreloadReducer,
+	notification: notificationReducer
 });
 
 export const reducersToken = new InjectionToken<ActionReducerMap<AppState>>(

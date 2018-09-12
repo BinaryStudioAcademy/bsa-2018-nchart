@@ -251,7 +251,7 @@ module.exports = {
 					{
 						value: 5,
 						description:
-								'Width of black bars representing nodes, in pixels.',
+								'Width of bars representing nodes, in pixels.',
 						option: 'Nodes Width',
 						id: 19,
 						sysName: 'nodesWidth'
@@ -264,13 +264,12 @@ module.exports = {
 						sysName: 'linksOpacity'
 					},
 					{
-						value: '',
-						options: ['size', 'name', 'automatic'],
+						value: 10,
 						description:
-								'Sorting of nodes inside each step. It can be ‘automatic’ (trying to reduce the number of overlappings among flows), ‘size’ (nodes ordered from the biggest to the smallest), and ‘alphabetical’.',
-						option: 'Sort By',
+								'Padding of srokes representing links, in pixels.',
+						option: 'Node Padding',
 						id: 21,
-						sysName: 'sortBy'
+						sysName: 'nodePadding'
 					},
 					{
 						value: [],
@@ -469,6 +468,95 @@ module.exports = {
 					},
 					{
 						id: 33,
+						value: [],
+						description:
+								'List of uniques values in the dimension mapped as “color”. If set to ordinal, you can set a color for each value. If set to linear, the app will try to find the minimum and maximum value contained in the dimension, and then creating a gradient among those two values.',
+						option: 'Colour Scale',
+						sysName: 'colourScale'
+					}
+				]),
+				createdAt: '2018-08-16T21:00:00.000Z',
+				updatedAt: '2018-08-16T21:00:00.000Z'
+			},
+			{
+				id: 6,
+				type: 'Map',
+				name: 'World map',
+				sysName: 'worldMap',
+				description:
+						'A visualization of world map with ability to map each country with numerical value',
+				dimensionSettings: JSON.stringify([
+					{
+						multiple: false,
+						description: 'List of countries',
+						required: true,
+						variable: 'Countries',
+						sysName: 'countries',
+						type: ['string'],
+						id: 17
+					},
+					{
+						multiple: false,
+						description: 'Values for each country',
+						required: false,
+						variable: 'Values',
+						sysName: 'values',
+						type: ['number'],
+						id: 18
+					}
+				]),
+				customizeSettings: JSON.stringify([
+					{
+						id: 34,
+						value: 800,
+						description: 'Artboard width in pixels.',
+						option: 'Width',
+						sysName: 'width'
+					},
+					{
+						id: 35,
+						value: 600,
+						description: 'Artboard height in pixels.',
+						option: 'Height',
+						sysName: 'height'
+					},
+					{
+						id: 36,
+						value: 0,
+						description: 'Rotate map in angles',
+						option: 'Rotate',
+						sysName: 'rotate'
+					},
+					{
+						id: 37,
+						value: 140,
+						description: 'Scale map',
+						option: 'Scale',
+						sysName: 'scale'
+					},
+					{
+						id: 38,
+						value: false,
+						description: 'Show raticule',
+						option: 'Show raticule',
+						sysName: 'showRaticule'
+					},
+					{
+						value: 'robinson',
+						description: 'Choose projection of the map',
+						option: 'Choose projection',
+						id: 39,
+						sysName: 'chooseProjection'
+					},
+					{
+						value: 'world',
+						description: 'Choose region of the map',
+						option: 'Choose region',
+						id: 40,
+						sysName: 'chooseRegion'
+					},
+					{
+						id: 41,
 						value: [],
 						description:
 								'List of uniques values in the dimension mapped as “color”. If set to ordinal, you can set a color for each value. If set to linear, the app will try to find the minimum and maximum value contained in the dimension, and then creating a gradient among those two values.',

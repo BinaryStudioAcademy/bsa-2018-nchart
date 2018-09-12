@@ -11,6 +11,7 @@ import { isProjectExporting } from '@app/store/selectors/export.selectors';
 import { ExportSvgBusService } from '@app/services/export-svg-bus.service';
 import { Subscription } from 'rxjs';
 import { ClipboardService } from 'ngx-clipboard';
+import { NotificationSvgClipboard } from '@app/store/actions/notification/notification.actions';
 
 @Component({
 	selector: 'app-export',
@@ -102,5 +103,6 @@ export class ExportComponent implements OnInit, OnDestroy {
 
 	copyToClipBoard() {
 		this.clipboardService.copyFromContent(this.svgFormControl.value);
+		this.storeService.dispatch(new NotificationSvgClipboard());
 	}
 }

@@ -150,7 +150,7 @@ const parseData = (data, headers) => {
 	return payload;
 };
 
-const readFile = path => new Promise((resolve) => {
+const readFile = path => new Promise(resolve => {
 	const headers = getHeaders(path);
 	const file = fs.createReadStream(path);
 	const buffers = [];
@@ -171,7 +171,7 @@ const readFile = path => new Promise((resolve) => {
 	});
 });
 
-const readString = content => new Promise((resolve) => {
+const readString = content => new Promise(resolve => {
 	const headers = getHeaders(null, content);
 	const workbook = XLSX.read(content, { type: 'string' });
 	const data = XLSX.utils.sheet_to_json(

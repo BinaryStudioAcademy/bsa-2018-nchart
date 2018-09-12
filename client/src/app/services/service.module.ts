@@ -9,8 +9,10 @@ import { ChartService } from '@app/services/chart.service';
 import { TokenService } from '@app/services/token.service';
 import { BarChartService } from '@app/services/charts/bar-chart.service';
 import { PieChartService } from '@app/services/charts/pie-chart.service';
-import { ExportSvgBusService } from './export-svg-bus.service';
+import { ExportSvgBusService } from '@app/services/export-svg-bus.service';
 import { ScatterplotChartService } from '@app/services/charts/scatterplot-chart.service';
+import { AlluvialDiagramChartService } from '@app/services/charts/alluvial-diagram-chart.service';
+import { WorldMapChartService } from '@app/services/charts/world-map-chart.service';
 
 @NgModule({
 	providers: [
@@ -25,7 +27,9 @@ import { ScatterplotChartService } from '@app/services/charts/scatterplot-chart.
 		BarChartService,
 		PieChartService,
 		ExportSvgBusService,
-		ScatterplotChartService
+		ScatterplotChartService,
+		AlluvialDiagramChartService,
+		WorldMapChartService
 	]
 })
 export class ServiceModule {}

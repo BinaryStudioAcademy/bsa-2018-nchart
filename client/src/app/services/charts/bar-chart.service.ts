@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import ColorHash from 'color-hash';
 import { OptionalType, fieldsValidators, BarChartDataObj } from '@app/models';
 import { BarChartCustomize } from '@app/models/bar-chart.model';
 import { FormService } from '@app/services/form.service';
@@ -30,19 +29,18 @@ export class BarChartService {
 			value: 1,
 			group: name,
 			id: 1,
-			color: '#69bf69'
+			color: 1
 		}));
 	}
 
 	static mapColors(original: any[], colors: any) {
 		if (colors.length) {
-			const colorHash = new ColorHash();
 			return original.map(obj => ({
 				name: obj.name,
 				value: obj.value,
 				group: obj.group,
 				id: obj.id,
-				color: colorHash.hex(colors[original.indexOf(obj)] + '')
+				color: colors[original.indexOf(obj)]
 			}));
 		} else {
 			return original;
@@ -143,7 +141,7 @@ export class BarChartService {
 		return this.data;
 	}
 
-	createBarChartCustomizeForm(barChartCustomize): FormGroup {
+	createCustomizeForm(barChartCustomize): FormGroup {
 		const initialValues: OptionalType<
 			BarChartCustomize
 		> = new BarChartCustomize(
