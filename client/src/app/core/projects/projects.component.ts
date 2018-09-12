@@ -111,7 +111,6 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
 			}
 		]);
 
-
 		this.filteringForm = this.projectService.createFilteringForm(
 			this.filterParamsForForm(queryParams as ProjectsFilter)
 		);
@@ -124,7 +123,6 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
 			});
 
 		this.route.queryParams.subscribe(params => {
-			console.log(this.filtersToUse(params), this.usedParams);
 			if (!deepEqual(this.usedParams, this.filtersToUse(params))) {
 				this.storeService.dispatch(
 					new projectActions.LoadProjetcsInfo({

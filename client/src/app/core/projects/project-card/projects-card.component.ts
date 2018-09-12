@@ -22,18 +22,18 @@ export class ProjectsCardComponent implements OnInit {
 			icon: 'fa fa-edit'
 		},
 		{
-			label: 'Delete',
-			command: () => {
-				this.deleteDialog();
-			},
-			icon: 'fa fa-trash'
-		},
-		{
 			label: 'Share',
 			command: () => {
 				this.shareDialog();
 			},
 			icon: 'fa fa-share'
+		},
+		{
+			label: 'Delete',
+			command: () => {
+				this.deleteDialog();
+			},
+			icon: 'fa fa-trash'
 		}
 	];
 
