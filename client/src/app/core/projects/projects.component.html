@@ -4,34 +4,55 @@
 	#projects
 >
 	<form [formGroup]="newFilterGroup">
-		<p-sidebar [(visible)]="display" position="right" [appendTo]="projects">
-			<h4>Filter by owner</h4>
-			<div class="owner-checkbox-group">
-				<p-checkbox
-					[formControl]="newFilterGroup.get('owner')"
-					name="owner"
-					value="me"
-					label="My projects">
-				</p-checkbox>
-				<p-checkbox
-					[formControl]="newFilterGroup.get('owner')"
-					name="owner"
-					value="shared"
-					label="Shared projects">
-				</p-checkbox>
+		<p-sidebar 
+			[(visible)]="display" 
+			position="right" 
+			[appendTo]="projects"
+			[showCloseIcon]='false'
+			
+		>
+			<div>
+				<i class="fa fas fa-arrow-right"></i>
 			</div>
-			<h4>Filter by charts</h4>
-			<p-multiSelect
-				[options]="charts"
-				[formControl]="newFilterGroup.get('charts')"
-			></p-multiSelect>
-			<h4>Filter by date</h4>
-			<app-date-time-picker
-				[(dateRange)]="datePicked"
-				[fromControl]="newFilterGroup.get('date')"
-				[toControl]="newFilterGroup.get('date')"
-			>
-			</app-date-time-picker>
+			
+			<h3 class="filters-header">Filters</h3>
+			<div class="filter-container">
+				<div class="filter-header">Owner</div>
+				<div class="owner-checkbox-group">
+					<p-checkbox
+						[formControl]="newFilterGroup.get('owner')"
+						name="owner"
+						value="me"
+						label="Me">
+					</p-checkbox>
+					<p-checkbox
+						[formControl]="newFilterGroup.get('owner')"
+						name="owner"
+						value="shared"
+						label="Shared">
+					</p-checkbox>
+				</div>			
+			</div>
+			<div class="filter-container">
+				<div class="filter-header">Charts</div>
+				<div class="multi-select-container">
+					<p-multiSelect
+						[options]="charts"
+						[showHeader]='false'
+						[formControl]="newFilterGroup.get('charts')"
+					></p-multiSelect>
+				</div>
+			</div>
+			<div class="filter-container">
+				<div class="filter-header">Date</div>
+				<app-date-time-picker
+					[(dateRange)]="datePicked"
+					[fromControl]="newFilterGroup.get('date')"
+					[toControl]="newFilterGroup.get('date')"
+				>
+				</app-date-time-picker>
+			</div>
+			
 		</p-sidebar>
 		<div class="search-projects">
 			<h3>Projects</h3>
