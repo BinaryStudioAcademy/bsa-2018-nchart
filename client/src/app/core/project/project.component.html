@@ -90,7 +90,10 @@
 			[resizable]="false"
 			[draggable]="false"
 			[baseZIndex]="10000"
-			[positionTop]="50">
+			[positionTop]="50"
+			[width]="400"
+			[blockScroll]="true">
+			<p-header>You can register or login to save your private project for futher edition</p-header>
 			<p-tabView
                 [activeIndex]="0"
                 (onChange)="resetForms()"

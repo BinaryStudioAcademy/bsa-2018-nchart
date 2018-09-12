@@ -5,11 +5,13 @@ import {
 	isRequiredDimensionMatched
 } from '@app/store/selectors/userCharts';
 import { SchemeID } from '@app/models/normalizr.model';
-import { activeProjectId } from '@app/store/selectors/projects.selectors';
+import {
+	activeProjectId,
+	isActiveDraft
+} from '@app/store/selectors/projects.selectors';
 import { SaveProject } from '@app/store/actions/projects/projects.actions';
 import { isActiveChartDataset } from '@app/store/selectors/dataset.selectors';
 import { isVerifiedToken } from '@app/store/selectors/user.selectors';
-// import { Go } from '@app/store/actions/router/router.actions';
 import { ProjectService } from '@app/services/project.service';
 
 export const steps = [
@@ -73,6 +75,7 @@ export class StepperComponent implements OnInit {
 	activeProjectId: SchemeID;
 
 	isVisible = true;
+	isDraft: boolean;
 
 	@Output()
 	steps: EventEmitter<StepperStep[]> = new EventEmitter();
@@ -170,6 +173,12 @@ export class StepperComponent implements OnInit {
 				subscriber: id => {
 					this.activeProjectId = id;
 				}
+			},
+			{
+				selector: isActiveDraft(),
+				subscriber: res => {
+					this.isDraft = res;
+				}
 			}
 		]);
 	}
@@ -189,14 +198,11 @@ export class StepperComponent implements OnInit {
 	}
 
 	saveProject() {
-		if (this.isAuth) {
+		if (this.isAuth || (!this.isDraft && !this.isAuth)) {
 			this.storeService.dispatch(
 				new SaveProject({ id: this.activeProjectId })
 			);
-		} else {
-			// this.storeService.dispatch(
-			// 	new Go({ path: ['/login'], query: { redirect: true } })
-			// );
+		} else if (this.isDraft && !this.isAuth) {
 			this.projectService.saveProject();
 		}
 	}

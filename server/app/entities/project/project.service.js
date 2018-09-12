@@ -31,12 +31,14 @@ class ProjectService {
 					callback => {
 						if (obj.project.id) {
 							this.ProjectRepository.upsert(obj.project)
-								.then(() => callback(null, false, {
-									project: {
-										id: obj.project.id,
-										name: obj.project.name
-									}
-								}))
+								.then(() =>
+									callback(null, false, {
+										project: {
+											id: obj.project.id,
+											name: obj.project.name
+										}
+									})
+								)
 								.catch(err => callback(err, null));
 						} else {
 							this.ProjectRepository.create(obj.project.name)
@@ -84,7 +86,9 @@ class ProjectService {
 						);
 					},
 					(payload, callback) => {
-						this.ProjectRepository.deleteAllProjectsCharts(payload.project.id)
+						this.ProjectRepository.deleteAllProjectsCharts(
+							payload.project.id
+						)
 							.then(() => {
 								callback(null, payload);
 							})
@@ -392,8 +396,9 @@ class ProjectService {
 				const projects = [];
 				data.forEach(el => {
 					el.group.groupProjects.forEach(pj => {
-						const user =							pj.project.groupProjects[0].group.groupUsers[0].user
-							.dataValues;
+						const user =
+							pj.project.groupProjects[0].group.groupUsers[0].user
+								.dataValues;
 						const userCharts = [];
 						// pj.project.projectCharts[0].chart.chartType.name
 						pj.project.projectCharts.forEach(projectChart => {
@@ -429,8 +434,9 @@ class ProjectService {
 				const projects = [];
 				data.forEach(el => {
 					el.group.groupProjects.forEach(pj => {
-						const user =							pj.project.groupProjects[0].group.groupUsers[0].user
-							.dataValues;
+						const user =
+							pj.project.groupProjects[0].group.groupUsers[0].user
+								.dataValues;
 						const userCharts = [];
 						// pj.project.projectCharts[0].chart.chartType.name
 						pj.project.projectCharts.forEach(projectChart => {

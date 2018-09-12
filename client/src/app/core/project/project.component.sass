@@ -1,3 +1,4 @@
+@import "../../../theme/colors"
 .project-container
 	width: 100%
 	margin: 0 auto
@@ -29,3 +30,18 @@ app-data-table
 	color: #3ccc38
 .page
 	cursor: pointer
+
+.link-container
+	display: flex
+	justify-content: center
+
+.custom-link
+	color: $activeColor
+	text-decoration: none
+	&:hover
+		color: $secondaryTextColor
+*:host
+	::ng-deep
+		div
+			.ui-dialog-titlebar
+				text-align: center
