@@ -1,0 +1,84 @@
+@import ../colors
+@import ../variables
+    
+.ui-modal>.ui-widget-content
+	background-color: white
+	box-shadow: 0 2px 32px $teriaryColor
+	padding: 0
+	margin: 0 auto
+.ui-widget-overlay
+	background-color: $teriaryColor
+.ui-dialog
+    display: flex
+    flex-direction: column
+    padding: 1.5rem
+    .ui-dialog-titlebar-icon
+        position: absolute
+        top: 0
+        right: 0
+        padding: 0
+        border: none
+        font-size: 1.2rem
+    .ui-dialog-titlebar-icon:hover
+        opacity: 0.5
+        border-color: transparent
+
+    &.ui-widget .ui-dialog-titlebar
+        padding: 0
+        .ui-dialog-title
+            font-size: 1.2rem
+            font-weight: 500
+            padding: 0
+    .ui-dialog-titlebar
+        padding: 0
+    &.ui-widget .ui-dialog-content
+        overflow: visible
+        background: $stateDefaultBgColor
+        margin: 1rem 0
+        padding: 0
+    .ui-dialog-footer
+        padding: 0
+        margin-top: auto
+        background: $stateDefaultBgColor
+        display: flex
+        justify-content: flex-end
+        app-button
+            .ui-button-text-icon-right:enabled
+                display: inline-block
+            &:last-child
+                margin-right: 0
+        .ui-widget.ui-button-default, .ui-button-default, .ui-widget.ui-button
+            height: 30px
+
+
+.ui-dialog-footer	
+	padding: 0
+.ui-dialog.ui-widget .ui-dialog-titlebar
+	padding: 0
+
+.dialog-button .ui-button
+    margin: 0
+    margin-left: .25rem
+
+.ui-modal-fullscreen
+    padding: 1.5rem !important
+    top: 0!important
+    left: 0!important
+    width: 100%!important
+    height: 100%!important
+    border-radius: 0
+    .data-table .ui-table
+        margin-top: 5px
+    .custom-chart-container[_ngcontent-c9]
+        margin: 0
+        padding: 0
+    app-chart[_ngcontent-c9]
+        width: 100%
+        padding: 0
+    &.fullscreen-chart
+        &.ui-dialog.ui-widget .ui-dialog-content
+            padding: 0
+.full-screen-btn
+    position: absolute
+    top: 0.8rem
+    right: 0.4rem
