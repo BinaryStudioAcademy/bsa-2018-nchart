@@ -32,6 +32,30 @@ const NotificationDict = new Map<string, string>([
 	[
 		DatasetActionConstants.PARSE_DATA__FAILED,
 		'\u2014 Oops! We cant parse data for now'
+	],
+	[
+		ProjectsActionConstants.SHARE_PROJECTS__COMPLETE,
+		'Project has been shared'
+	],
+	[
+		ProjectsActionConstants.SHARE_PROJECTS__FAILED,
+		'\u2014 Oops! We cant share project for now'
+	],
+	[
+		ProjectsActionConstants.UPDATE_PROJECT_NAME__COMPLETE,
+		'Project name has been changed'
+	],
+	[
+		ProjectsActionConstants.UPDATE_PROJECT_NAME__FAILED,
+		'\u2014 Oops! We cant change project name for now'
+	],
+	[
+		ProjectsActionConstants.DELETE_ONE_PROJECT__COMPLETE,
+		'Project has been deleted'
+	],
+	[
+		ProjectsActionConstants.DELETE_ONE_PROJECT__FAILED,
+		'\u2014 Oops! We cant delete project for now'
 	]
 ]);
 export default NotificationDict;

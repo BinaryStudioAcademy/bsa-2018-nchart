@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { v4 } from 'uuid';
-import { of } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { Project, ProjectFilterForm } from '@app/models/project.model';
 import { FormService } from '@app/services/form.service';
 import { FormBuilder } from '@angular/forms';
@@ -13,6 +13,12 @@ export class ProjectService {
 	) {}
 
 	static DRAFT_NAME = 'Project name';
+	private saveSubject = new Subject<any>();
+	saveObservable = this.saveSubject.asObservable();
+
+	saveProject() {
+		this.saveSubject.next(true);
+	}
 
 	createDraftProject() {
 		const project = new Project();
