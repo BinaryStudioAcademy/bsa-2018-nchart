@@ -20,29 +20,30 @@
 .ui-widget.ui-button
 	background-color: $defaultButtonColor
 	border-color: $defaultButtonColor
-	&:enabled:hover
-		background-color: $defaultButtonHover
-		border-color: $defaultButtonHover
-		box-shadow: $boxShadow
 	&:enabled:focus,
 	&:enabled:active
 		color: $stateActiveBgColor
 		background-color: $defaultButtonColor
 		border-color: $defaultButtonColor
+	&:enabled:hover
+		background-color: $defaultButtonHover
+		border-color: $defaultButtonHover
+		box-shadow: $boxShadow
 
 // Secondary Button
 .ui-widget.ui-button-secondary,
 .ui-button-secondary
 	background-color: $secondaryButtonColor
 	border-color: $secondaryButtonColor
-	&:enabled:hover
-		background-color: $secondaryButtonHover
-		border-color: $secondaryButtonHover
-		box-shadow: $boxShadow
 	&:enabled:active,
 	&:enabled:focus
 		background-color: $secondaryButtonColor
 		border-color: $secondaryButtonColor
+		box-shadow: $boxShadow
+	&:enabled:hover
+		background-color: $secondaryButtonHover
+		border-color: $secondaryButtonHover
+		box-shadow: $boxShadow
 
 // Tool Button
 .ui-widget.ui-button-tool,
@@ -105,7 +106,7 @@
 		margin-left: 16px
 		order: 2
 
-Action Button
+// Action Button
 .ui-buttonset.ui-splitbutton 
 	box-shadow: $boxShadow
 	background-color: $stateDefaultBgColor
@@ -232,3 +233,4 @@ Action Button
 .ui-button-position-right
 	display: flex
 	justify-content: flex-end
+	margin-top: 1.5rem
