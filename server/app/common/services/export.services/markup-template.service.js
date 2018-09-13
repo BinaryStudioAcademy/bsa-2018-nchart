@@ -30,8 +30,8 @@ class MarkupTemplateService {
 		});
 		const page = await browser.newPage();
 		await page.setViewport({
-			width: 707,
-			height: 1000
+			width: 1000,
+			height: 707
 		});
 		await page.setContent(template);
 		const buffer = await this.DocumentGeneratingService.returnBuffer(

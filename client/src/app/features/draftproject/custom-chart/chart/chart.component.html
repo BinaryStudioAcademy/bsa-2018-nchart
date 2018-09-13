@@ -1,17 +1,17 @@
 <div class="chart-container" [ngSwitch]="chartType">
-	<app-bar-chart 
+	<app-bar-chart
 		*ngSwitchCase="'barChart'"
 		[data]="data"
 		[settings]="customizeSettings"
 		#chart
 	></app-bar-chart>
-	<app-pie-chart  
-		*ngSwitchCase="'pieChart'" 
+	<app-pie-chart
+		*ngSwitchCase="'pieChart'"
 		[data]="data"
 		[settings]="customizeSettings"
 		#chart
 	></app-pie-chart >
-	<app-scatterplot-chart 
+	<app-scatterplot-chart
 		*ngSwitchCase="'scatterplot'"
 		[data]="data"
 		[settings]="customizeSettings"

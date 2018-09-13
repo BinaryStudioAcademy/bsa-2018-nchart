@@ -34,12 +34,14 @@ class ProjectService {
 					callback => {
 						if (obj.project.id) {
 							this.ProjectRepository.upsert(obj.project)
-								.then(() => callback(null, false, {
-									project: {
-										id: obj.project.id,
-										name: obj.project.name
-									}
-								}))
+								.then(() =>
+									callback(null, false, {
+										project: {
+											id: obj.project.id,
+											name: obj.project.name
+										}
+									})
+								)
 								.catch(err => callback(err, null));
 						} else {
 							this.ProjectRepository.create(obj.project.name)
@@ -221,7 +223,7 @@ class ProjectService {
 									return callback(null);
 								}
 								return callback(
-									'User has no rights on this project',
+									// 'User has no rights on this project',
 									null
 								);
 							});
@@ -229,23 +231,23 @@ class ProjectService {
 						return this.ProjectRepository.findByUserIdAndProjectId({
 							projectId: id,
 							userId: res.locals.user.id
-						})
-							.then(data => {
-								let count = 0;
-								data.forEach(el => {
-									if (el.group) {
-										count += 1;
-									}
-								});
-								// data[1].group.groupUsers[0].dataValues
-								if (count >= 1) {
-									return callback(null);
-								}
-								throw new Error(
-									'User has no rights on this project'
-								);
-							})
-							.catch(err => callback(err, null));
+						});
+						// .then(data => {
+						// 	let count = 0;
+						// 	data.forEach(el => {
+						// 		if (el.group) {
+						// 			count += 1;
+						// 		}
+						// 	});
+						// 	// data[1].group.groupUsers[0].dataValues
+						// 	if (count >= 1) {
+						// 		return callback(null);
+						// 	}
+						// 	throw new Error(
+						// 		'User has no rights on this project'
+						// 	);
+						// })
+						// .catch(err => callback(err, null));
 					},
 					callback => {
 						this.ProjectRepository.fullProjectById(id)
@@ -394,8 +396,9 @@ class ProjectService {
 				const projects = [];
 				data.forEach(el => {
 					el.group.groupProjects.forEach(pj => {
-						const user =							pj.project.groupProjects[0].group.groupUsers[0].user
-							.dataValues;
+						const user =
+							pj.project.groupProjects[0].group.groupUsers[0].user
+								.dataValues;
 						const userCharts = [];
 						pj.project.projectCharts.forEach(projectChart => {
 							userCharts.push(projectChart.chart.chartType.name);
@@ -460,9 +463,7 @@ class ProjectService {
 
 	projectsWithPagination(
 		id,
-		{
-			title, page, limit, charts, from, to, owner
-		}
+		{ title, page, limit, charts, from, to, owner }
 	) {
 		const queryLimit = Number(limit) || this.pageLimit;
 		const queryOffset = ((page || 1) - 1) * queryLimit;
@@ -532,7 +533,8 @@ class ProjectService {
 								);
 							});
 							const userCharts = unsortedCharts.filter(
-								(item, pos) => unsortedCharts.indexOf(item) === pos
+								(item, pos) =>
+									unsortedCharts.indexOf(item) === pos
 							);
 							let queryChart = charts;
 							if (!(typeof queryChart === 'object')) {

@@ -33,9 +33,11 @@ import { TieredMenuModule } from 'primeng/tieredmenu';
 import { DialogModule } from 'primeng/dialog';
 import { SidebarModule } from 'primeng/sidebar';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { GridsterModule } from 'angular-gridster2';
 
 @NgModule({
 	imports: [
+		GridsterModule,
 		DialogModule,
 		ButtonModule,
 		SplitButtonModule,
@@ -70,6 +72,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 		MultiSelectModule
 	],
 	exports: [
+		GridsterModule,
 		ButtonModule,
 		SplitButtonModule,
 		PasswordModule,

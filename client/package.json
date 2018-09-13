@@ -32,6 +32,7 @@
 		"@types/d3": "^5.0.0",
 		"@types/d3-queue": "^3.0.7",
 		"@types/query-string": "^6.1.0",
+		"angular-gridster2": "^6.0.10",
 		"color-hash": "^1.0.3",
 		"core-js": "^2.5.4",
 		"countries-iso": "^1.0.1",
