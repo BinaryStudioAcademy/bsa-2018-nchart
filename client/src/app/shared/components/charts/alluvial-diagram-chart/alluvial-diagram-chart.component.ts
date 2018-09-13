@@ -98,6 +98,8 @@ export class AlluvialDiagramChartComponent implements OnChanges {
 				.append('svg')
 				.attr('width', width + this.margin.left + this.margin.right)
 				.attr('height', height + this.margin.top + this.margin.bottom)
+				.attr('xmlns', 'http://www.w3.org/2000/svg')
+				.attr('xmlns:xlink', 'http://www.w3.org/1999/xlink')
 				.append('g')
 				.attr(
 					'transform',
