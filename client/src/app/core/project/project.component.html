@@ -58,8 +58,8 @@
 		</p-dialog>
 
 		<p-dialog header="Confirmation"
-				[modal]="true"
 				[(visible)]="displayModalDataset"
+				[modal]="true"
 				[draggable]="false"
 				[width]="400"
 				[minWidth]="250"
@@ -88,6 +88,50 @@
 				></app-button>
 				
 			</p-footer>
+		</p-dialog>
+		<p-dialog 
+			[(visible)]="displayLoginDialog"
+			[modal]="true"
+			[draggable]="false"
+			[width]="400"
+			[minWidth]="250"
+			[minHeight]="250"
+			[minY]="70"
+			[maximizable]="false"
+			[resizable]="false"
+			[closable]="true"
+			[width]="400"
+		>
+			<p-header>Saving</p-header>
+			<p style="margin: .5rem 0">
+				You can sign in to save this project as a private
+			</p>
+			<p-tabView
+                [activeIndex]="1"
+                (onChange)="resetForms()"
+            >
+                <p-tabPanel header="Sign In">
+                    <app-login-form
+                        [loginForm]="loginForm"
+                        (loginClick)="onLogin($event)"
+						[isLoading]="isLoading"
+                    ></app-login-form>
+                </p-tabPanel>
+                <p-tabPanel header="Register">
+                    <app-register-form
+                        [registerForm]="registerForm"
+                        (registerClick)="onRegister($event)"
+                        [isLoading]="isLoading"
+                    ></app-register-form>
+                </p-tabPanel>
+			</p-tabView>
+			<p style="text-align: center; margin: .5rem 0" >or</p>
+			<div class="link-container">
+				<span
+					class="custom-link"
+					(click)="saveProj()"
+				>Save as public project</span>
+			</div>
 		</p-dialog>
 	</div>
 </div>
