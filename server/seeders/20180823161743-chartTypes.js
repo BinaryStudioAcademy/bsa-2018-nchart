@@ -77,7 +77,7 @@ module.exports = {
 					{
 						id: 4,
 						value: 0,
-						description: 'Distance among bar charts, in pixel.',
+						description: 'Distance among bar checks, in pixel.',
 						option: 'Vertical Padding',
 						sysName: 'verticalPadding'
 					},
@@ -124,7 +124,7 @@ module.exports = {
 						required: false,
 						variable: 'Label',
 						sysName: 'label',
-						type: ['string', 'number', 'date'],
+						type: ['string', 'number'],
 						id: 5
 					},
 					{
@@ -162,9 +162,16 @@ module.exports = {
 						sysName: 'radius'
 					},
 					{
+						value: 3,
+						description: 'Number of pies in row',
+						option: 'Columns',
+						id: 42,
+						sysName: 'columns'
+					},
+					{
 						value: false,
 						description:
-								'If selected, pie charts will be drawn ad donut chart. The size is defined by the Thickness option (see below).',
+								'If selected, pie checks will be drawn ad donut chart. The size is defined by the Thickness option (see below).',
 						option: 'Donut chart',
 						id: 11,
 						sysName: 'isDonut'
@@ -180,7 +187,7 @@ module.exports = {
 					{
 						value: 'name(asc)',
 						description: 'Order of the pie chart.',
-						option: 'Sort charts by',
+						option: 'Sort checks by',
 						id: 14,
 						sysName: 'sortChartsBy'
 					},
@@ -219,7 +226,7 @@ module.exports = {
 						required: true,
 						variable: 'Steps',
 						sysName: 'steps',
-						type: ['string', 'number', 'date'],
+						type: ['string', 'number'],
 						id: 7
 					},
 					{
@@ -277,109 +284,6 @@ module.exports = {
 								'The color of flows. The color is defined by the source node. For each unique value found in the dimension dragged as ‘steps’ a color is defined.',
 						option: 'Colour scale',
 						id: 22,
-						sysName: 'colourScale'
-					}
-				]),
-				createdAt: '2018-08-16T21:00:00.000Z',
-				updatedAt: '2018-08-16T21:00:00.000Z'
-			},
-			{
-				id: 4,
-				type: 'Time chunks',
-				name: 'Gantt Chart',
-				sysName: 'ganttChart',
-				description:
-						'A Gantt chart is a type of bar chart, developed by Henry Gantt in the 1910s, that illustrates a project schedule. Gantt charts illustrate the start and finish dates of the terminal elements and summary elements of a project.',
-				dimensionSettings: JSON.stringify([
-					{
-						multiple: false,
-						description:
-								'For each unique value found in the column, a group (an horizontal series of bars) is created.',
-						required: true,
-						variable: 'Group',
-						sysName: 'group',
-						type: ['string', 'number', 'date'],
-						id: 9
-					},
-					{
-						multiple: false,
-						description:
-								'Starting point of the bar. RAWGraphs requires dates in a specific format.',
-						required: true,
-						variable: 'Start',
-						sysName: 'start',
-						type: ['date'],
-						id: 10
-					},
-					{
-						multiple: false,
-						description:
-								'Ending point of the bar. RAWGraphs requires dates in a specific format.',
-						required: true,
-						variable: 'End',
-						sysName: 'end',
-						type: ['date'],
-						id: 11
-					},
-					{
-						multiple: false,
-						description:
-								'Can accept both number and strings. A color will be defined for each unique value found in the list.',
-						required: false,
-						variable: 'Color',
-						sysName: 'color',
-						type: ['string'],
-						id: 12
-					}
-				]),
-				customizeSettings: JSON.stringify([
-					{
-						value: 900,
-						description: 'Artboard width in pixels',
-						option: 'Width',
-						id: 23,
-						sysName: 'width'
-					},
-					{
-						value: 600,
-						description: 'Artboard height in pixels',
-						option: 'Height',
-						id: 24,
-						sysName: 'height'
-					},
-					{
-						value: 80,
-						description: 'Artboard height in pixels',
-						option: 'Left Margin',
-						id: 25,
-						sysName: 'leftMargin'
-					},
-					{
-						value: 80,
-						description: 'Artboard height in pixels',
-						option: 'Align Labels To Bar',
-						id: 26,
-						sysName: 'alignLabesToBar'
-					},
-					{
-						value: '',
-						options: [
-							'Start date (ascending)',
-							'Start date (descending)',
-							'name'
-						],
-						description:
-								'Order of the bars series. Could be alphabetical or by date (both ascending and descending)',
-						option: 'Sort By',
-						id: 27,
-						sysName: 'sortBy'
-					},
-					{
-						value: [],
-						description:
-								'If set to ordinal, you can set a color for each value; it lists all the unique values in the dimension mapped as “color”. If set to linear, the app will try to find the minimum and maximum value contained in the dimension, and then it creates a gradient among those two values',
-						option: 'Colour scale',
-						id: 28,
 						sysName: 'colourScale'
 					}
 				]),
@@ -529,7 +433,7 @@ module.exports = {
 					},
 					{
 						id: 37,
-						value: 140,
+						value: 125,
 						description: 'Scale map',
 						option: 'Scale',
 						sysName: 'scale'
