@@ -32,10 +32,10 @@ import {
 				})
 			),
 			transition('slideOut => slideIn', [
-				animate('300ms cubic-bezier(0.23, 1.24, 0.76, 1.2)')
+				animate('400ms cubic-bezier(0.23, 1.24, 0.76, 1.2)')
 			]),
 			transition('slideIn => slideOut', [
-				animate('300ms cubic-bezier(0.23, 1.24, 0.76, 1.2)')
+				animate('500ms cubic-bezier(0.23, 1.24, 0.76, 1.2)')
 			])
 		])
 	]

@@ -34,7 +34,7 @@ const NotificationDict = new Map<string, string>([
 		'\u2014 Oops! We cant parse data for now'
 	],
 	[
-		ProjectsActionConstants.SHARE_PROJECTS__COMPLETE, 
+		ProjectsActionConstants.SHARE_PROJECTS__COMPLETE,
 		'Project has been shared'
 	],
 	[
