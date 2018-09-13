@@ -3,5 +3,5 @@
     <app-spinner [label]="'Height'"(onchange)="change()" [control]="formGroup.controls.height" [min]="0" size="26" [step]="1"></app-spinner>
     <app-spinner [label]="'Node Width'"(onchange)="change()" [control]="formGroup.controls.nodesWidth" [min]="0" size="26" [step]="1"></app-spinner>
     <app-spinner [label]="'Node Padding'"(onchange)="change()" [control]="formGroup.controls.nodePadding" [min]="0" [max]='10' size="26" [step]="1"></app-spinner>
-    <app-spinner [label]="'Links Opacity'"(onchange)="change()" [control]="formGroup.controls.linksOpacity" [min]="0" size="26" [step]="0.1"></app-spinner>
+    <app-spinner [label]="'Links Opacity'"(onchange)="change()" [control]="formGroup.controls.linksOpacity" [min]="0" [min]="1" size="26" [step]="0.1"></app-spinner>
 </form>

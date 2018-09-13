@@ -3,7 +3,10 @@ import { OptionalType, fieldsValidators, BarChartDataObj } from '@app/models';
 import { BarChartCustomize } from '@app/models/bar-chart.model';
 import { FormService } from '@app/services/form.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { minValidator, maxValidator } from '@app/shared/components/form-field/form-validators';
+import {
+	minValidator,
+	maxValidator
+} from '@app/shared/components/form-field/form-validators';
 @Injectable()
 export class BarChartService {
 	constructor(
@@ -159,7 +162,10 @@ export class BarChartService {
 			height: [minValidator('Minimum value is', 0)],
 			leftMargin: [minValidator('Minimum value is', 0)],
 			verticalPadding: [minValidator('Minimum value is', 0)],
-			horizontalPadding: [minValidator('Minimum value is', 0), maxValidator('Max value is', 0.9)],
+			horizontalPadding: [
+				minValidator('Minimum value is', 0),
+				maxValidator('Max value is', 0.9)
+			],
 			useSameScale: [],
 			colourScale: []
 		};

@@ -115,9 +115,8 @@ export class AlluvialDiagramChartComponent implements OnChanges {
 					return formatNumber(d);
 				};
 
-			const сolor = d3
-				.scaleSequential(d3.interpolateSpectral)
-				.domain([0, nodesSet.size - 1]);
+			const сolor = d3.scaleOrdinal(d3.schemeSpectral[9]);
+			// .domain([0, nodesSet.size - 1]);
 
 			const sankey = d3Sankey
 				.sankey()
@@ -147,7 +146,7 @@ export class AlluvialDiagramChartComponent implements OnChanges {
 				.append('path')
 				.attr('d', d3Sankey.sankeyLinkHorizontal())
 				.attr('stroke', (d: any) => {
-					return сolor(colors.indexOf(d.source.name));
+					return сolor(d.source.name);
 				})
 				.attr('stroke-width', (d: any) => {
 					return Math.max(1, d.width);
@@ -176,7 +175,7 @@ export class AlluvialDiagramChartComponent implements OnChanges {
 					return d.x1 - d.x0;
 				})
 				.attr('fill', (d: any) => {
-					return сolor(colors.indexOf(d.name));
+					return сolor(d.name);
 				})
 				.attr('stroke', '#000');
 
