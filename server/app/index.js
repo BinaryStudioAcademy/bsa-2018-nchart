@@ -38,5 +38,4 @@ app.use(successOrEmptyPayload);
 // error handler
 app.use(errorPayload);
 
-app.use(bodyParser({ limit: '50mb' }));
 module.exports = app;
