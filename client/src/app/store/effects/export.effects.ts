@@ -28,6 +28,16 @@ export class ExportEffects {
 					)
 				);
 			}
+			if (action.payload.dashboard) {
+				return this.api.exportDashboard(action.payload).pipe(
+					map(res => {
+						return this.mapAction(res);
+					}),
+					catchError(error =>
+						of(this.catchErrorAction(action, error))
+					)
+				);
+			}
 			return this.api.exportProject(action.payload).pipe(
 				map(res => {
 					return this.mapAction(res);

@@ -10,5 +10,6 @@ export interface ProjectExportPayload {
 	id: SchemeID;
 	type: ExportType;
 	filename: string;
-	svg: string;
+	svg?: string;
+	dashboard?: string;
 }

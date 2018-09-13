@@ -32,6 +32,9 @@ import { take, withLatestFrom } from 'rxjs/internal/operators';
 import { LoadOneProject } from '@app/store/actions/projects/projects.actions';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/index';
+import { ExportDashboardBusService } from '@app/services/export-dashboard-bus.service';
+import { ExportType } from '@app/models/export.model';
+import { ExportProject } from '@app/store/actions/export/export.actions';
 
 @Component({
 	selector: 'app-dashboard',
@@ -49,6 +52,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 	hosts: QueryList<ViewContainerRef>;
 	@ViewChild('dashboardEl')
 	dashboardEl: any;
+	exportBusResponseDashboard: Subscription;
 
 	chartType;
 	customizeSettings;
@@ -63,14 +67,14 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 		private pieChartService: PieChartService,
 		private scatterplotChartService: ScatterplotChartService,
 		private storeService: StoreService,
-		private componentFactoryResolver: ComponentFactoryResolver
+		private componentFactoryResolver: ComponentFactoryResolver,
+		private exportDashboardBus: ExportDashboardBusService
 	) {}
 
 	ngOnInit() {
 		this.routeParams$ = this.route.params.subscribe(
 			(params: { id?: number }) => {
 				const { id } = params;
-
 				if (id) {
 					this.storeService.dispatch(
 						new LoadOneProject({ projectId: id + '' })
@@ -163,6 +167,18 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 				}
 			}
 		]);
+		this.exportBusResponseDashboard = this.exportDashboardBus.responseObservable.subscribe(
+			dashboard => {
+				this.storeService.dispatch(
+					new ExportProject({
+						id: 1,
+						type: 'pdf' as ExportType,
+						filename: 'report',
+						dashboard: dashboard
+					})
+				);
+			}
+		);
 	}
 
 	ngAfterViewInit(): void {
@@ -203,6 +219,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 	ngOnDestroy(): void {
 		this.routeParams$.unsubscribe();
 		this.components.forEach(c => c.changeDetectorRef.detach());
+		this.exportBusResponseDashboard.unsubscribe();
 	}
 
 	changedOptions() {
@@ -308,7 +325,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 					}
 				});
 			});
-		// const temp = this.dashboardEl.nativeElement.innerHTML.replace(/"/g, '\'');
-		// console.log(temp);
+	}
+	exportDashboard() {
+		const item = this.dashboardEl.nativeElement.innerHTML;
+		this.exportDashboardBus.sendDashboard(item);
 	}
 }

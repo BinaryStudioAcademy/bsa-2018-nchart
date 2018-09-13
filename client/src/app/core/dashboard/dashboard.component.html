@@ -1,9 +1,10 @@
 <div class="wrapper">
 <div class="button-container">
-	<button (click)="addItem()">add empty item</button>
-	<button (click)="toggleModal()">show modal</button>
-	<button (click)="addCheck()">add test chart</button>
-	<button (click)="addBtn()">addBtn</button>
+	<app-button [label]="Export" (click)="exportDashboard()"></app-button>
+	<app-button (click)="addItem()">add empty item</app-button>
+	<app-button (click)="toggleModal()">show modal</app-button>
+	<app-button (click)="addCheck()">add test chart</app-button>
+	<app-button (click)="addBtn()">addBtn</app-button>
 </div>
 <div class="gridster-container" #dashboardEl>
 	<gridster [options]="options">

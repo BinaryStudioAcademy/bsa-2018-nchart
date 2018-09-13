@@ -12,7 +12,6 @@ import { ExportSvgBusService } from '@app/services/export-svg-bus.service';
 import { Subscription } from 'rxjs';
 import { ClipboardService } from 'ngx-clipboard';
 import { NotificationSvgClipboard } from '@app/store/actions/notification/notification.actions';
-
 @Component({
 	selector: 'app-export',
 	templateUrl: './export.component.html',
