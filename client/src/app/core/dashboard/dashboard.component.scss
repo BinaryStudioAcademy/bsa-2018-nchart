@@ -1,13 +1,36 @@
 @import '../../../theme/colors';
 
-
 .wrapper {
 	width: 100%;
-	margin-top: 100px;
+	margin-top: 15px;
 }
 
 gridster {
-	height: 70.707vh !important; // temporary solution
+	// min-height: 70.707vh !important; // temporary solution
+}
+
+gridster .gridster-row {
+    border-top: none!important;
+    border-bottom: 1px solid #fff!important;
+}
+
+.gridster-row {
+    border-top: none!important;
+    border-bottom: 1px solid red!important;
+}
+
+gridster.fixed.horizontal {
+	width: 1180px;
+	height: 840px;
+	margin: 0 auto;
+	background-color: $teriaryColor;
+}
+
+gridster.fixed.vertical {
+	width: 840px;
+	height: 1180px;
+	margin: 0 auto;
+	background-color: $teriaryColor;
 }
 
 .secondary-text {
@@ -22,4 +45,16 @@ gridster {
 
 .control-move {
 	right: 0;
+}
+
+.gridster-buttons {
+	width: 1188px;
+	margin: 0 auto;
+	display: flex;
+	justify-content: flex-end;
+}
+
+gridster .gridster-row {
+    border-top: none!important;
+    border-bottom: 1px solid green!important;
 }

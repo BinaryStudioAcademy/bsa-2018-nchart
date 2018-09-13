@@ -11,7 +11,7 @@ import { AppComponent } from '@app/core/app/app.component';
 import { ExportPdfComponent } from '@app/features/export-pdf/export-pdf.component';
 import { LandingPageComponent } from '@app/core/landing-page/landing-page.component';
 import { ProjectGuard } from '@app/services/guards/project.guard';
-import {DashboardComponent} from '@app/core/dashboard/dashboard.component';
+import { DashboardComponent } from '@app/core/dashboard/dashboard.component';
 
 const appRoutes: Routes = [
 	{

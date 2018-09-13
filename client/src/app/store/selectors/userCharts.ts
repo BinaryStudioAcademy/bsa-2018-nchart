@@ -1,10 +1,10 @@
-import {SchemeID} from '@app/models/normalizr.model';
-import {AppState} from '@app/models/store.model';
+import { SchemeID } from '@app/models/normalizr.model';
+import { AppState } from '@app/models/store.model';
 import {
 	UserMappingColumn,
 	UserChart
 } from '@app/models/user-chart-store.model';
-import {dataset} from '@app/store/selectors/dataset.selectors';
+import { dataset } from '@app/store/selectors/dataset.selectors';
 import {
 	Chart,
 	CustomizeSettingsState,
@@ -14,7 +14,7 @@ import {
 	DatasetColumnState,
 	DatasetDataState
 } from '@app/models/dataset.model';
-import {project} from '@app/store/selectors/projects.selectors';
+import { project } from '@app/store/selectors/projects.selectors';
 
 export const userChart = (id?: SchemeID) => (state: AppState): UserChart =>
 	state.userCharts.byId[id || state.userCharts.active]
@@ -76,37 +76,35 @@ export const getAllUserCharts = () => (state: AppState): UserChart[] => {
 	return null;
 };
 
-export const getAllUserChartTypes = () => (state: AppState): {
-	sysName: string,
-	chartTypeId: SchemeID,
-	userChartsId: SchemeID[]
+export const getAllUserChartTypes = () => (
+	state: AppState
+): {
+	sysName: string;
+	chartTypeId: SchemeID;
+	userChartsId: SchemeID[];
 }[] => {
 	const userCharts = getAllUserCharts()(state);
 
 	if (userCharts) {
-		const charts = userCharts
-			.reduce((acc, {id, chartTypeId}) => {
-					acc[chartTypeId] = {
-						sysName: state.charts.byId[chartTypeId].sysName,
-						chartTypeId,
-						userChartsId: [
-							...(!!acc[chartTypeId] ? acc[chartTypeId].userChartsId : []),
-							id
-						]
-					};
-					return acc;
-				},
-				{}
-			);
+		const charts = userCharts.reduce((acc, { id, chartTypeId }) => {
+			acc[chartTypeId] = {
+				sysName: state.charts.byId[chartTypeId].sysName,
+				chartTypeId,
+				userChartsId: [
+					...(!!acc[chartTypeId]
+						? acc[chartTypeId].userChartsId
+						: []),
+					id
+				]
+			};
+			return acc;
+		}, {});
 
-		return Object
-			.keys(charts)
-			.map(id => charts[id]);
+		return Object.keys(charts).map(id => charts[id]);
 	}
 
 	return null;
 };
-
 
 export const isRepeatDataset = (userChartId: SchemeID) => (state: AppState) => {
 	const userCharts = getAllUserCharts()(state);
@@ -153,7 +151,7 @@ export const mappingDimensions = () => (state: AppState): any => {
 				value: value,
 				...state.defaultChartSettings.dimensionSettings[
 					(id as string).slice(37)
-					]
+				]
 			};
 		});
 	}
@@ -179,9 +177,13 @@ export const getAllDatasetByProject = (id: SchemeID) => (state: AppState) => {
 	}, {});
 };
 
-export const getDimensionSet = () => (state: AppState): DimensionSettingsState => state.userChartSettings.dimensionSettings;
+export const getDimensionSet = () => (
+	state: AppState
+): DimensionSettingsState => state.userChartSettings.dimensionSettings;
 
-export const getCustomizeSet = () => (state: AppState): CustomizeSettingsState => state.userChartSettings.customizeSettings;
+export const getCustomizeSet = () => (
+	state: AppState
+): CustomizeSettingsState => state.userChartSettings.customizeSettings;
 
 export const getDatasetCol = () => (state: AppState): DatasetColumnState =>
 	state.datasetColumns;
@@ -203,19 +205,23 @@ export const getFullProject = id => (state: AppState) => {
 	};
 };
 
-export const getCustomizeSettings = (chartId?: SchemeID) => (state: AppState) => {
+export const getCustomizeSettings = (chartId?: SchemeID) => (
+	state: AppState
+) => {
 	const aChart = userChart(chartId)(state);
 	if (aChart) {
 		return aChart.customizeSettings.reduce((obj, id) => {
 			const option = state.userChartSettings.customizeSettings[id];
-			obj[option.sysName] = {...option};
+			obj[option.sysName] = { ...option };
 			return obj;
 		}, {});
 	}
 	return [];
 };
 
-export const getColumnValues = (datasetId: SchemeID, columnId: SchemeID) => (state: AppState) => {
+export const getColumnValues = (datasetId: SchemeID, columnId: SchemeID) => (
+	state: AppState
+) => {
 	const dS = dataset(datasetId)(state);
 	if (dS) {
 		const values = dS.modified.data
@@ -239,8 +245,8 @@ export const getData = (chartId?: SchemeID) => (state: AppState) => {
 		if (dS) {
 			const values = uC.dimensionSettings.map(id => ({
 				name:
-				state.defaultChartSettings.dimensionSettings[
-					(id as string).slice(37)
+					state.defaultChartSettings.dimensionSettings[
+						(id as string).slice(37)
 					].sysName,
 				values: state.userChartSettings.dimensionSettings[id].columnIds
 					.map(el => ({
@@ -260,7 +266,9 @@ export const getData = (chartId?: SchemeID) => (state: AppState) => {
 	return [];
 };
 
-export const getActiveChart = () => (state: AppState): Chart<SchemeID[], SchemeID[]> => {
+export const getActiveChart = () => (
+	state: AppState
+): Chart<SchemeID[], SchemeID[]> => {
 	const activeUserChart = userChart()(state);
 	if (activeUserChart) {
 		const c = state.charts.byId[activeUserChart.chartTypeId];
@@ -279,7 +287,7 @@ export const isRequiredDimensionMatched = () => (state: AppState): boolean => {
 				required: (
 					state.defaultChartSettings.dimensionSettings[
 						(d as string).slice(37)
-						] || {
+					] || {
 						required: false
 					}
 				).required

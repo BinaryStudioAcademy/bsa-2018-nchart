@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, ViewChild, OnDestroy} from '@angular/core';
+import { Component, OnInit, Input, ViewChild, OnDestroy } from '@angular/core';
 import { ExportSvgBusService } from '@app/services/export-svg-bus.service';
 import { Subscription } from 'rxjs';
 import { BarChartComponent } from '@app/shared/components/charts/bar-chart/bar-chart.component';

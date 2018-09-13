@@ -1,11 +1,11 @@
 <div class="wrapper">
 
-	<button (click)="addItem()">add empty item</button>
-	<button (click)="toggleModal()">show modal</button>
-	<button (click)="addCheck()">add test chart</button>
-	<button (click)="addBtn()">addBtn</button>
+	<div class="gridster-buttons">
+		<app-button type="icon" icon="fas fa-plus" (onclick)="toggleModal()"></app-button>
+		<app-button type="icon" icon="fas fa-redo" (onclick)="changeLayout()"></app-button>
+	</div>
 
-	<gridster [options]="options">
+	<gridster [options]="options" [ngClass]="getClasses()">
 		<gridster-item [item]="item" *ngFor="let item of dashboard">
 			<div class="controls">
 				<app-button
@@ -54,7 +54,7 @@
 					*ngFor="let chart of userCharts"
 					class="samples"
 					(click)="addCharts(chart)"
-					[label]="chart.sysName"
+					[label]="getNormalName(chart.sysName)"
 				>
 				</app-button>
 			</div>
