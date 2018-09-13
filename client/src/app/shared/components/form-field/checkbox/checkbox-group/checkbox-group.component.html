@@ -1,5 +1,5 @@
-<div class="ui-g" style="width:250px;margin-bottom:10px">
-	<div *ngFor="let check of checks" class="ui-g-12 ui-checkbox-wrp">
+<div>
+	<div *ngFor="let check of checks" class="ui-checkbox-wrp">
 		<p-checkbox name="groupname" 
 					[value]="check.value" 
 					[formControl]="check.control"

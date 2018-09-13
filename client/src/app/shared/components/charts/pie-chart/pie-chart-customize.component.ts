@@ -28,6 +28,9 @@ export class PieChartCustomizeComponent implements OnChanges {
 		this.formGroup.controls.width['id'] = this.customizeSettings.width.id;
 		this.formGroup.controls.margin['id'] = this.customizeSettings.margin.id;
 		this.formGroup.controls.radius['id'] = this.customizeSettings.radius.id;
+		this.formGroup.controls.columns[
+			'id'
+		] = this.customizeSettings.columns.id;
 		this.formGroup.controls.isDonut[
 			'id'
 		] = this.customizeSettings.isDonut.id;

@@ -131,10 +131,8 @@ class UserService {
 				],
 				(err, payload) => {
 					if (err) {
-						// console.log(err);
 						return reject(err);
 					}
-					// console.log(payload);
 					return resolve({
 						token: payload.tokenSecret,
 						user: payload.user

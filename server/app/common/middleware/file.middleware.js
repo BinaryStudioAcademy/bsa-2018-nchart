@@ -35,12 +35,18 @@ class FileMiddleware {
 				directory: `${this.path}`,
 				filename: `${uuidv4()}.file`
 			};
-			while (fs.existsSync(path.resolve(options.directory + options.filename))) {
+			while (
+				fs.existsSync(
+					path.resolve(options.directory + options.filename)
+				)
+			) {
 				options.filename = `${uuidv4()}.file`;
 			}
 			download(url, options, err => {
 				if (err) return reject(err);
-				return resolve(path.resolve(options.directory + options.filename));
+				return resolve(
+					path.resolve(options.directory + options.filename)
+				);
 			});
 		});
 	}
