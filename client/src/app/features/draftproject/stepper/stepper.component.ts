@@ -27,7 +27,7 @@ export const steps = [
 	},
 	{
 		id: 3,
-		scrollTo: '#checks',
+		scrollTo: '#charts',
 		name: 'Choose Chart'
 	},
 	{
@@ -63,6 +63,8 @@ export class StepperComponent implements OnInit {
 	selectedStep: StepperStep;
 	@Input()
 	errors: number[];
+	@Input()
+	isLoading: boolean;
 
 	btnMsg = 'Save';
 	isAuth: boolean;

@@ -72,6 +72,7 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 	projectId: SchemeID;
 	isActiveChartDataset$: Observable<boolean>;
 	isLoading: boolean;
+	isProjectLoading: boolean;
 	displayLoginDialog: boolean;
 	loginForm: FormGroup;
 	registerForm: FormGroup;
@@ -267,6 +268,7 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 				selector: isProjectLoading(),
 				subscriber: t => {
 					this.isLoading = t;
+					this.isProjectLoading = t && !this.projectId;
 				}
 			}
 		]);
