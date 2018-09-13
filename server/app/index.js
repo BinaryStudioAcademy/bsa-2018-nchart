@@ -23,6 +23,7 @@ app.get('/*', (req, res, next) => {
 app.use(logger('dev'));
 app.use(cors());
 
+app.use(bodyParser({ limit: '50mb' }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.text());
