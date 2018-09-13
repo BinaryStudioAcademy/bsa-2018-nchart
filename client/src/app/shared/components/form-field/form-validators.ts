@@ -57,6 +57,16 @@ export function minValidator(msg?: string, min?: number): ValidatorFn {
 	};
 }
 
+export function maxValidator(msg?: string, max?: number): ValidatorFn {
+	return (control: AbstractControl): ValidationMessage => {
+		const validationErrors =
+			(control.value !== undefined && isNaN(control.value)) ||
+			!isNumber(control.value) ||
+			control.value > max;
+		return validationErrors ? { max: `${msg} ${max}` } : null;
+	};
+}
+
 export function maxLengthValidator(
 	msg?: string,
 	maxLength?: number
