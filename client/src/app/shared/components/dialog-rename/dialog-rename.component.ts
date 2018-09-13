@@ -31,14 +31,15 @@ export class DialogRenameComponent implements OnInit {
 	close() {
 		this.displayRenameChange.emit(false);
 		this.formGroup.reset();
-		this.formGroup.setValue({
-			name: null
-		});
+	}
+
+	onShow() {
+		this.formGroup.get('name').setValue(this.projectName);
 	}
 
 	ngOnInit() {
 		this.formGroup = new FormGroup({
-			name: new FormControl(this.projectName, [requiredValidator()])
+			name: new FormControl(null, [requiredValidator()])
 		});
 	}
 

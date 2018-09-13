@@ -1,31 +1,33 @@
 <div class="ui-dialog-wrp">
 	<p-dialog
-		[modal]="true"
+		
 		[draggable]="false"
 		[width]="400"
 		[minWidth]="250"
-		[minHeight]="200"
+		[minHeight]="250"
 		[minY]="70"
 		[maximizable]="false"
-		[baseZIndex]="10000"
+		[resizable]="false"
+		[closable]="true"
 		[(visible)]="displayRename"
 		(onHide)="close()"
-		[closable]="true"
-		(onAfterHide)="close()"
+		(onShow)="onShow()"
 	>
 	<p-header>
-		Rename project
+		Renaming
 	</p-header>
 		<div class="email-input">
 			<app-input-text
 				class="ui-fluid"
 				type="text"
 				label="Project name"
-				[control]="formGroup.controls['name']">
+				[control]="formGroup.controls['name']"
+				[autofocus]="true"
+			>
 			</app-input-text>
 		</div>
 		<p-footer>
-				<app-button label="Send" [disabled]="!formGroup.valid" (onclick)="rename(formGroup.value)" size="small"></app-button>
+			<app-button label="Send" [disabled]="!formGroup.valid" (onclick)="rename(formGroup.value)" size="small" ></app-button>
 		</p-footer>
 	</p-dialog>
 
