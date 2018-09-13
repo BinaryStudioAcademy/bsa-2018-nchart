@@ -58,8 +58,8 @@
 		</p-dialog>
 
 		<p-dialog header="Confirmation"
-				[modal]="true"
 				[(visible)]="displayModalDataset"
+				[modal]="true"
 				[draggable]="false"
 				[width]="400"
 				[minWidth]="250"
@@ -92,17 +92,22 @@
 		<p-dialog 
 			[(visible)]="displayLoginDialog"
 			[modal]="true"
-			[responsive]="true"
-			[closable]="true"
-			[resizable]="false"
 			[draggable]="false"
-			[baseZIndex]="10000"
-			[positionTop]="50"
 			[width]="400"
-			[blockScroll]="true">
-			<p-header>You can register or login to save your private project for futher edition</p-header>
+			[minWidth]="250"
+			[minHeight]="250"
+			[minY]="70"
+			[maximizable]="false"
+			[resizable]="false"
+			[closable]="true"
+			[width]="400"
+		>
+			<p-header>Saving</p-header>
+			<p style="margin: .5rem 0">
+				You can sign in to save this project as a private
+			</p>
 			<p-tabView
-                [activeIndex]="0"
+                [activeIndex]="1"
                 (onChange)="resetForms()"
             >
                 <p-tabPanel header="Sign In">
@@ -120,6 +125,7 @@
                     ></app-register-form>
                 </p-tabPanel>
 			</p-tabView>
+			<p style="text-align: center; margin: .5rem 0" >or</p>
 			<div class="link-container">
 				<span
 					class="custom-link"
