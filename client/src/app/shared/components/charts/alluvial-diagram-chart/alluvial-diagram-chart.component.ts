@@ -42,7 +42,6 @@ export class AlluvialDiagramChartComponent implements OnChanges {
 	ngOnChanges() {
 		if (this.data.length && this.settings) {
 			d3.select('svg').remove();
-
 			const {
 				width,
 				height,
@@ -70,8 +69,10 @@ export class AlluvialDiagramChartComponent implements OnChanges {
 				nodesSet.add(element.name);
 			});
 			graph.nodes = [];
+			const colors = [];
 			nodesSet.forEach(element => {
 				graph.nodes.push(element);
+				colors.push(element);
 			});
 			// loop through each link replacing the text with its index from node
 			graph.links.forEach((d, i) => {
@@ -110,8 +111,11 @@ export class AlluvialDiagramChartComponent implements OnChanges {
 			const formatNumber = d3.format(',.0f'),
 				format = (d: any) => {
 					return formatNumber(d);
-				},
-				color = d3.scaleOrdinal(d3.schemeCategory10);
+				};
+
+			const сolor = d3
+				.scaleSequential(d3.interpolateSpectral)
+				.domain([0, nodesSet.size - 1]);
 
 			const sankey = d3Sankey
 				.sankey()
@@ -141,7 +145,7 @@ export class AlluvialDiagramChartComponent implements OnChanges {
 				.append('path')
 				.attr('d', d3Sankey.sankeyLinkHorizontal())
 				.attr('stroke', (d: any) => {
-					return color(d.source.name);
+					return сolor(colors.indexOf(d.source.name));
 				})
 				.attr('stroke-width', (d: any) => {
 					return Math.max(1, d.width);
@@ -170,7 +174,7 @@ export class AlluvialDiagramChartComponent implements OnChanges {
 					return d.x1 - d.x0;
 				})
 				.attr('fill', (d: any) => {
-					return color(d.name);
+					return сolor(colors.indexOf(d.name));
 				})
 				.attr('stroke', '#000');
 
