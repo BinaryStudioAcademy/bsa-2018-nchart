@@ -157,7 +157,9 @@ export class WorldMapChartComponent implements OnChanges {
 			.selectAll('.world-map-chart')
 			.append('svg')
 			.attr('width', width)
-			.attr('height', height);
+			.attr('height', height)
+			.attr('xmlns', 'http://www.w3.org/2000/svg')
+			.attr('xmlns:xlink', 'http://www.w3.org/1999/xlink');
 		const defs = svg.append('defs');
 		defs.append('path')
 			.datum({ type: 'Sphere' })
