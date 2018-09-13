@@ -204,12 +204,13 @@ class ProjectService {
 						if (!res.locals.user) {
 							return this.ProjectRepository.publicProject(
 								id
-							).then(data => {
+							)
+							.then(data => {
 								if (data === null) {
 									return callback(null);
 								}
 								return callback(
-									'User has no rights on this project',
+									// 'User has no rights on this project',
 									null
 								);
 							});
@@ -218,22 +219,22 @@ class ProjectService {
 							projectId: id,
 							userId: res.locals.user.id
 						})
-							.then(data => {
-								let count = 0;
-								data.forEach(el => {
-									if (el.group) {
-										count += 1;
-									}
-								});
-								// data[1].group.groupUsers[0].dataValues
-								if (count >= 1) {
-									return callback(null);
-								}
-								throw new Error(
-									'User has no rights on this project'
-								);
-							})
-							.catch(err => callback(err, null));
+							// .then(data => {
+							// 	let count = 0;
+							// 	data.forEach(el => {
+							// 		if (el.group) {
+							// 			count += 1;
+							// 		}
+							// 	});
+							// 	// data[1].group.groupUsers[0].dataValues
+							// 	if (count >= 1) {
+							// 		return callback(null);
+							// 	}
+							// 	throw new Error(
+							// 		'User has no rights on this project'
+							// 	);
+							// })
+							// .catch(err => callback(err, null));
 					},
 					callback => {
 						this.ProjectRepository.fullProjectById(id)

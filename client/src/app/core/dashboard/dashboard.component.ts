@@ -1,6 +1,6 @@
 import {
 	AfterViewInit,
-	Component, ComponentFactoryResolver, ComponentRef, OnDestroy, OnInit, QueryList, ViewChildren, ViewContainerRef,
+	Component, ComponentFactoryResolver, ComponentRef, OnDestroy, OnInit, QueryList, ViewChildren, ViewContainerRef, ViewChild
 } from '@angular/core';
 import {DisplayGrid, GridsterConfig, GridsterItem, GridType} from 'angular-gridster2';
 import {ButtonComponent} from '@app/shared/components/button/button/button.component';
@@ -29,6 +29,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 	fromRemove = false;
 	components: ComponentRef<any>[] = [];
 	@ViewChildren('host', {read: ViewContainerRef}) hosts: QueryList<ViewContainerRef>;
+	@ViewChild('dashboardEl')
+	dashboardEl:any;
 
 	chartType;
 	customizeSettings;
@@ -59,6 +61,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 		);
 
 		this.options = {
+			width: "auto",
 			gridType: GridType.Fit,
 			displayGrid: DisplayGrid.Always,
 			pushItems: true,
@@ -271,10 +274,10 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 			}
 
 			this.dashboard.push({
-				x: 0,
-				y: 0,
-				cols: 20,
-				rows: 20,
+				x: 10,
+				y: 10,
+				cols: 40,
+				rows: 40,
 				data: {
 					component: ChartComponent,
 					inputs: {
@@ -285,5 +288,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 				}
 			});
 		});
+		let temp = this.dashboardEl.nativeElement.innerHTML.replace(/"/g, "'");
+		console.log(temp);
 	}
 }

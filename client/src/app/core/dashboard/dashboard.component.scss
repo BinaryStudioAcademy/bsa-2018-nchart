@@ -2,13 +2,23 @@
 
 
 .wrapper {
-	width: 100%;
-	margin-top: 100px;
+	padding-top: 120px;
+	margin: 0 auto
 }
 
-gridster {
-	height: 70.707vh !important; // temporary solution
+.button-container {
+	margin-left: 50px;
 }
+
+.gridster-container {
+	margin: 0 auto;
+	width: 1000px;
+	height: 707px;
+}
+
+// gridster {
+// 	height: 70.707vh !important; // temporary solution
+// }
 
 .secondary-text {
 	color: $secondaryTextColor;
