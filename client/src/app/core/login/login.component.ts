@@ -7,7 +7,6 @@ import { StoreService } from '@app/services/store.service';
 import { Login as LoginModel } from '@app/models/login.model';
 import { Register as RegisterModel } from '@app/models/register.model';
 import {
-	CanSaveProject,
 	Login as LoginAction,
 	Register as RegisterAction
 } from '@app/store/actions/user/user.actions';
@@ -73,10 +72,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 			},
 			{} as T
 		);
-	}
-
-	saveProj() {
-		this.storeService.dispatch(new CanSaveProject());
 	}
 
 	ngOnDestroy(): void {

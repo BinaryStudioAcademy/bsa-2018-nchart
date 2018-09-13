@@ -2,27 +2,32 @@
 	<p-dialog
 	[modal]="true"
 	[draggable]="false"
-	[width]="350"
-	[minWidth]="200"
+	[width]="400"
+	[minWidth]="250"
+	[minHeight]="250"
 	[minY]="70"
 	[maximizable]="false"
-	[baseZIndex]="10000"
 	[(visible)]="display"
 	[resizable]="false"
 	(onHide)="close()"
 	[closable]="true">
 	<p-header>
-		Share project
+		Sharing
 	</p-header>
 		<div class="email-input">
+			<p>Please provide user email for granting access</p>
 			<app-input-text
 				class="ui-fluid"
 				type="text"
 				label="Email"
-				[control]="formGroup.controls['email']">
+				[control]="formGroup.controls['email']"
+				[autofocus]="true"
+			>
 			</app-input-text>
 		</div>
-		<app-button label="Send" [disabled]="!formGroup.valid" (onclick)="share(formGroup.value)" style="float: right;"></app-button>
+		<p-footer>
+			<app-button label="Send" [disabled]="!formGroup.valid" (onclick)="share(formGroup.value)" size="small"></app-button>
+		</p-footer>
 	</p-dialog>
 
 </div>

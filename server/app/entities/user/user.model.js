@@ -8,7 +8,7 @@ const User = sequelize.define('users', {
 		type: Sequelize.STRING,
 		allowNull: false,
 		validate: {
-			is: { args: /^[a-zа-яэіїє]+$/i, msg: 'Not valid name' }
+			is: { args: /^[a-zA-Z0-9_ ]{1,100}$/i, msg: 'Not valid name' }
 		}
 	},
 	email: {
