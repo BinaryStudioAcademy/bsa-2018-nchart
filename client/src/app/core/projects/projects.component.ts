@@ -63,12 +63,8 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
 			value: 'scatterplot'
 		},
 		{
-			label: 'Gantt Chart',
-			value: 'ganttChart'
-		},
-		{
 			label: 'Map Chart',
-			value: 'mapChart'
+			value: 'worldMap'
 		},
 		{
 			label: 'Alluvial Diagram',
