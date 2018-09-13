@@ -10,6 +10,7 @@ import { FormGroup } from '@angular/forms';
 import { PieChartService } from '@app/services/charts/pie-chart.service';
 import { ScatterplotChartService } from '@app/services/charts/scatterplot-chart.service';
 import { AlluvialDiagramChartService } from '@app/services/charts/alluvial-diagram-chart.service';
+import { WorldMapChartService } from '@app/services/charts/world-map-chart.service';
 
 @Component({
 	selector: 'app-custom-chart',
@@ -23,7 +24,8 @@ export class CustomChartComponent implements OnInit, OnDestroy {
 		private pieChartService: PieChartService,
 		private scatterplotChartService: ScatterplotChartService,
 		private storeService: StoreService,
-		private alluvialDiagramChartService: AlluvialDiagramChartService
+		private alluvialDiagramChartService: AlluvialDiagramChartService,
+		private worldMapChartService: WorldMapChartService
 	) {}
 
 	data: any[];
@@ -72,6 +74,11 @@ export class CustomChartComponent implements OnInit, OnDestroy {
 								this.customizeSettings
 							);
 							break;
+						case 'worldMap':
+							this.customizeForm = this.worldMapChartService.createCustomizeForm(
+								this.customizeSettings
+							);
+							break;
 						default:
 							break;
 					}
@@ -95,6 +102,11 @@ export class CustomChartComponent implements OnInit, OnDestroy {
 								break;
 							case 'alluvialDiagram':
 								this.data = this.alluvialDiagramChartService.getData(
+									data
+								);
+								break;
+							case 'worldMap':
+								this.data = this.worldMapChartService.getData(
 									data
 								);
 								break;

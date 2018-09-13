@@ -25,6 +25,7 @@ export const initialState: ProjectsState = {
 const all = (state = initialState.all, action: ProjectsActions) => {
 	switch (action.type) {
 		case constants.LOAD_PROJECTS:
+		case constants.LOAD_PROJECTS_INFO:
 			return [];
 		case constants.LOAD_PROJECTS__COMPLETE:
 			return action.payload.projects.all;
@@ -162,6 +163,7 @@ export const isLoading = (
 		case constants.LOAD_PROJECTS:
 		case constants.LOAD_ONE_PROJECT:
 		case constants.LOAD_PROJECTS_INFO:
+		case constants.SAVE_PROJECT:
 			return true;
 		case constants.LOAD_PROJECTS__COMPLETE:
 		case constants.LOAD_ONE_PROJECT__COMPLETE:
@@ -169,6 +171,9 @@ export const isLoading = (
 		case constants.LOAD_PROJECTS__FAILED:
 		case constants.LOAD_PROJECTS_INFO__COMPLETE:
 		case constants.LOAD_PROJECTS_INFO__FAILED:
+		case constants.SAVE_PROJECT__COMPLETE:
+		case constants.SAVE_PROJECT__FAILED:
+		case constants.UPDATE_PROJECT__COMPLETE:
 			return false;
 		default:
 			return state;

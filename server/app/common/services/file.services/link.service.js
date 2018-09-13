@@ -14,9 +14,9 @@ class LinkService {
 			const request = protocol.request(this.url, response => {
 				const patt = [/text/, /application/];
 				if (
-					(protocol === https &&
-						patt[0].test(response.headers['content-type'])) ||
-					patt[1].test(response.headers['content-type'])
+					(protocol === https
+						&& patt[0].test(response.headers['content-type']))
+					|| patt[1].test(response.headers['content-type'])
 				) {
 					return resolve(true);
 				}

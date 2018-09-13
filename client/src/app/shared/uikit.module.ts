@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { CardModule } from 'primeng/card';
 import { PaginatorModule } from 'primeng/paginator';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 // Forms
 import { FormsModule } from '@angular/forms';
@@ -30,6 +31,8 @@ import { TooltipModule } from 'primeng/tooltip';
 import { TableModule } from 'primeng/table';
 import { TieredMenuModule } from 'primeng/tieredmenu';
 import { DialogModule } from 'primeng/dialog';
+import { SidebarModule } from 'primeng/sidebar';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @NgModule({
 	imports: [
@@ -60,7 +63,11 @@ import { DialogModule } from 'primeng/dialog';
 		CardModule,
 		TableModule,
 		TieredMenuModule,
-		PaginatorModule
+		PaginatorModule,
+		OwlDateTimeModule,
+		OwlNativeDateTimeModule,
+		SidebarModule,
+		MultiSelectModule
 	],
 	exports: [
 		ButtonModule,
@@ -90,7 +97,11 @@ import { DialogModule } from 'primeng/dialog';
 		TableModule,
 		TieredMenuModule,
 		DialogModule,
-		PaginatorModule
+		PaginatorModule,
+		OwlDateTimeModule,
+		OwlNativeDateTimeModule,
+		SidebarModule,
+		MultiSelectModule
 	],
 	declarations: []
 })

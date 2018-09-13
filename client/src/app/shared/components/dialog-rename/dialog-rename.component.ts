@@ -21,6 +21,9 @@ export class DialogRenameComponent implements OnInit {
 	projectId: number;
 
 	@Input()
+	projectName: string;
+
+	@Input()
 	accessLevelId: number;
 
 	formGroup: FormGroup;
@@ -28,14 +31,15 @@ export class DialogRenameComponent implements OnInit {
 	close() {
 		this.displayRenameChange.emit(false);
 		this.formGroup.reset();
-		this.formGroup.setValue({
-			name: null
-		});
+	}
+
+	onShow() {
+		this.formGroup.get('name').setValue(this.projectName);
 	}
 
 	ngOnInit() {
 		this.formGroup = new FormGroup({
-			name: new FormControl('', [requiredValidator()])
+			name: new FormControl(null, [requiredValidator()])
 		});
 	}
 

@@ -1,4 +1,7 @@
-<div class="project-container" [loading-sp]="isLoading" spBackgroundColor="#f2f3f9a1">
+<div class="project-container"
+	[loading-sp]="isLoading"
+	spBackgroundColor="#f2f3f9"
+>
 	<app-stepper
 		(steps)="getSteps($event)"
 		[errors]="stepperErrors"
@@ -26,14 +29,16 @@
 		<p-dialog header="Confirmation"
 				  [(visible)]="display"
 				  [modal]="true"
-				  [responsive]="true"
-				  [closable]="false"
-				  [minY]="70"
-				  [resizable]="false"
 				  [draggable]="false"
-				  [baseZIndex]="10000">
+				[width]="400"
+				[minWidth]="250"
+				[minHeight]="150"
+				[minY]="70"
+				[maximizable]="false"
+				[resizable]="false"
+				[closable]="true">
 			<span>
-				Are you sure that you want to leave page with unsaved project?
+				Are you sure that you want to leave page without saving this project?
 			</span>
 			<p-footer class="modal-controls">
 				<app-button
@@ -44,6 +49,7 @@
 				></app-button>
 				<app-button
 					label="No"
+					type="secondary"
 					class="dialog-button"
 					size="small"
 					(onclick)="reject()"
@@ -52,16 +58,19 @@
 		</p-dialog>
 
 		<p-dialog header="Confirmation"
-				  [(visible)]="displayModalDataset"
-				  [modal]="true"
-				  [responsive]="true"
-				  [closable]="true"
-				  [resizable]="false"
-				  [minY]="70"
-				  [draggable]="false"
-				  [baseZIndex]="10000">
+				[modal]="true"
+				[(visible)]="displayModalDataset"
+				[draggable]="false"
+				[width]="400"
+				[minWidth]="250"
+				[minHeight]="150"
+				[minY]="70"
+				[maximizable]="false"
+				[resizable]="false"
+				[closable]="true"
+		>
 			<span>
-				Do you want use current dataset?
+				Do you want to use current dataset? <br> If not you can upload any other data.
 			</span>
 			<p-footer class="modal-controls">
 				<app-button
@@ -74,6 +83,7 @@
 					label="Yes"
 					class="dialog-button"
 					size="small"
+					type="secondary"
 					(onclick)="acceptDataset()"
 				></app-button>
 				
