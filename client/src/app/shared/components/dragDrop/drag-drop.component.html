@@ -3,7 +3,7 @@
       <div class="ui-g-4 dragContainer" [dragula]="DIMENSIONS" id="columns" [(dragulaModel)]='columns'>
         <div class="draggble" *ngFor='let el of columns' id={{el.variable}}>{{el.variable}}<small style="margin-left: 10px">{{el.type}}</small></div>
       </div>
-      <div class="ui-g-8 ">
+      <div class="ui-g-8 dropContainer">
 		  	<app-button type="icon"
 						icon="fa fa-trash-alt"
 						class="remove-all-icon"

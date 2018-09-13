@@ -3,6 +3,7 @@
 
 .dd-container
     position: relative
+    justify-content: center
         
 .drop-area
     position: relative
@@ -11,16 +12,16 @@
     font-weight: 600
     font-family: $fontFamily
     color: $secondaryTextColor
-    margin: 5px
     border-radius: 2px
     min-height: 180px
-    width: 45%
-    float: left
     background-color: white
     transition: border .15s ease-in-out
     box-shadow: $boxShadow
+    flex-basis: 49%
+    margin-bottom: 0.25rem
 
 .drop-container
+    padding: 0 .25rem
     margin-top: 10px
     min-height: 100px
 
@@ -29,8 +30,8 @@
     cursor: grab
     color: white
     font-weight: 600
-    margin: 7px
-    padding: 10px
+    padding: 0.5rem
+    margin-bottom: 0.25rem
     font-family: $fontFamily
     font-size: 0.9rem
     letter-spacing: 1px
@@ -73,5 +74,18 @@
 .remove-all-icon
     cursor: pointer
     position: absolute
-    right: 6px
-    top: -30px
+    right: -0.6rem
+    top: -3.4rem
+
+.dragContainer
+    padding: 0
+    padding-right: 0.25rem
+    flex-basis: 33.33%
+
+.dropContainer
+    margin-left: auto
+    padding: 0
+    display: flex
+    flex-wrap: wrap
+    flex-basis: 66%
+    justify-content: space-around
