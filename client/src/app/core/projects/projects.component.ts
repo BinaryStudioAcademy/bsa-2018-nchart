@@ -141,7 +141,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
 	}
 
 	onNewPage(page) {
-		this.filteringForm.get('page').patchValue(page);
+		// this.filteringForm.get('page').patchValue(page);
 		this.applyFilter({ page });
 	}
 

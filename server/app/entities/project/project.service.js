@@ -474,9 +474,13 @@ class ProjectService {
 							offset: queryOffset,
 							limit: queryLimit
 						})
-							.then(data => callback(null, data))
+							.then(data => {
+								callback(null, data);
+							})
 							// .then(data => callback(data, null))
-							.catch(err => callback(err, null));
+							.catch(err => {
+								callback(err, null);
+							});
 					},
 					(payload, callback) => {
 						if (payload.rows.length === 0) {
@@ -496,12 +500,12 @@ class ProjectService {
 							callback(null, payload);
 						}
 					},
-					(data, callback) => {
+					({ rows, count }, callback) => {
 						const payload = {
 							projects: [],
 							pagination: {}
 						};
-						data.rows.forEach(el => {
+						rows.forEach(el => {
 							const users = [];
 							el.groupProjects.forEach(groupProject => {
 								groupProject.group.groupUsers.forEach(
@@ -511,13 +515,20 @@ class ProjectService {
 								);
 							});
 							const unsortedCharts = [];
+							const unsortedSysCharts = [];
 							el.projectCharts.forEach(projectChart => {
 								unsortedCharts.push(
 									projectChart.chart.chartType.name
 								);
+								unsortedSysCharts.push(
+									projectChart.chart.chartType.sysName
+								);
 							});
 							const userCharts = unsortedCharts.filter(
 								(item, pos) => unsortedCharts.indexOf(item) === pos
+							);
+							const userSysCharts = unsortedSysCharts.filter(
+								(item, pos) => unsortedSysCharts.indexOf(item) === pos
 							);
 							let queryChart = charts;
 							if (!(typeof queryChart === 'object')) {
@@ -526,7 +537,15 @@ class ProjectService {
 									.filter(ele => !!ele);
 							}
 							// todo: need to check if every value is inside userCharts
-							if (userCharts.length >= queryChart.length) {
+							let c = 0;
+							queryChart.forEach(qChart => {
+								userSysCharts.forEach(uChart => {
+									if (qChart === uChart) {
+										c += 1;
+									}
+								});
+							});
+							if (c >= queryChart.length) {
 								payload.projects.push({
 									id: el.id,
 									name: el.name,
@@ -540,15 +559,13 @@ class ProjectService {
 								});
 							}
 						});
-						const pageCount = Math.ceil(
-							data.count / 2 / queryLimit
-						);
+						const pageCount = Math.ceil(count / queryLimit);
 						let userPage = page;
 						if (page > pageCount) {
 							userPage = 1;
 						}
 						payload.pagination = {
-							totalRecords: data.count / 2,
+							totalRecords: count,
 							pageCount,
 							page: userPage,
 							rows: queryLimit
