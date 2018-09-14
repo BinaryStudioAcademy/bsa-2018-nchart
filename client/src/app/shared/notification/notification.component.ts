@@ -76,7 +76,10 @@ export class NotificationComponent implements OnInit, OnDestroy {
 			{
 				subscriber: error => {
 					if (error) {
-						const code = error.error.errors.code;
+						const code =
+							error.error &&
+							error.error.errors &&
+							error.error.errors.code;
 						switch (code) {
 							case 6:
 								this.serveMsg = 'Wrong password. ';

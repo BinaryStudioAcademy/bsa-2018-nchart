@@ -58,22 +58,10 @@ class ProjectService {
 						if (!status || (!groupId && !defaultGroupId)) {
 							return callback(null, payload);
 						}
-						if (groupId) {
-							return this.GroupService.saveGroupProject({
-								groupId,
-								projectId: payload.project.id,
-								accessLevelId: 1
-							})
-								.then(() => {
-									callback(null, payload);
-								})
-								.catch(err => {
-									callback(null, err);
-								});
-						}
+
 						return (
 							this.GroupService.saveGroupProject({
-								groupId: defaultGroupId,
+								groupId: groupId || defaultGroupId,
 								projectId: payload.project.id,
 								accessLevelId: 1
 							})
@@ -212,54 +200,51 @@ class ProjectService {
 		return new Promise((resolve, reject) => {
 			async.waterfall(
 				[
-					callback => {
-						if (!res.locals.user) {
-							return this.ProjectRepository.publicProject(
-								id
-							).then(data => {
-								if (data === null) {
-									return callback(null);
-								}
-								return callback(
-									'User has no rights on this project',
-									null
+					callback => this.ProjectRepository.fullProjectById(id)
+						.then(data => {
+							if (data) {
+								const project = ProjectService.getProjectFromPayload(
+									data.dataValues
 								);
-							});
-						}
-						return this.ProjectRepository.findByUserIdAndProjectId({
-							projectId: id,
-							userId: res.locals.user.id
+								return callback(null, project);
+							}
+							throw new Error('Object did not exist');
 						})
-							.then(data => {
-								let count = 0;
-								data.forEach(el => {
-									if (el.group) {
-										count += 1;
-									}
-								});
-								// data[1].group.groupUsers[0].dataValues
-								if (count >= 1) {
-									return callback(null);
-								}
-								throw new Error(
+						.catch(err => callback(err, null)),
+					(project, callback) => this.ProjectRepository.publicProject(id)
+						.then(data => {
+							if (!data) {
+								return callback(null, project);
+							}
+							if (!res.locals.user) {
+								return callback(
 									'User has no rights on this project'
 								);
-							})
-							.catch(err => callback(err, null));
-					},
-					callback => {
-						this.ProjectRepository.fullProjectById(id)
-							.then(data => {
-								if (data) {
-									const project = ProjectService.getProjectFromPayload(
-										data.dataValues
-									);
-									return callback(null, project);
+							}
+
+							return this.ProjectRepository.findByUserIdAndProjectId(
+								{
+									projectId: id,
+									userId: res.locals.user.id
 								}
-								throw new Error('Object did not exist');
-							})
-							.catch(err => callback(err, null));
-					}
+							)
+								.then(d => {
+									let count = 0;
+									d.forEach(el => {
+										if (el.group) {
+											count += 1;
+										}
+									});
+									if (count >= 1) {
+										return callback(null, project);
+									}
+									throw new Error(
+										'User has no rights on this project'
+									);
+								})
+								.catch(err => callback(err, null));
+						})
+						.catch(err => callback(err, null))
 				],
 				(err, payload) => {
 					if (err) {
@@ -388,38 +373,6 @@ class ProjectService {
 		});
 	}
 
-	findProjectsWithOwners(id, params) {
-		return this.ProjectRepository.findProjectsWithOwners(id, params.name)
-			.then(data => {
-				const projects = [];
-				data.forEach(el => {
-					el.group.groupProjects.forEach(pj => {
-						const user =							pj.project.groupProjects[0].group.groupUsers[0].user
-							.dataValues;
-						const userCharts = [];
-						pj.project.projectCharts.forEach(projectChart => {
-							userCharts.push(projectChart.chart.chartType.name);
-						});
-						const uniqueCharts = userCharts.filter(
-							(item, pos) => userCharts.indexOf(item) === pos
-						);
-						projects.push({
-							id: pj.project.dataValues.id,
-							name: pj.project.dataValues.name,
-							updatedAt: pj.project.dataValues.updatedAt,
-							groupName: el.group.name,
-							companyName: el.group.company.name,
-							accessLevelId: pj.dataValues.accessLevelId,
-							userCharts: uniqueCharts,
-							user
-						});
-					});
-				});
-				return projects;
-			})
-			.catch(err => err);
-	}
-
 	static formQuery(title, page, limit, charts, from, to) {
 		const queryName = title || '';
 		let queryChart = charts;
@@ -450,16 +403,16 @@ class ProjectService {
 
 	static ownerMe(owner) {
 		if (owner === 'me') {
-			return [{ accessLevelId: 1 }, { accessLevelId: 1 }];
+			return [1];
 		}
 		if (owner === 'shared') {
-			return [{ accessLevelId: [2, 3] }, { accessLevelId: 1 }];
+			return [2, 3];
 		}
-		return [{ accessLevelId: [1, 2, 3] }, { accessLevelId: 1 }];
+		return [1, 2, 3];
 	}
 
 	projectsWithPagination(
-		id,
+		obj,
 		{
 			title, page, limit, charts, from, to, owner
 		}
@@ -480,7 +433,7 @@ class ProjectService {
 				[
 					callback => {
 						this.ProjectRepository.findProjectsWithOwners({
-							id,
+							id: obj.id,
 							queryName: queryParams.queryName,
 							queryMinDate: queryParams.queryMinDate,
 							queryMaxDate: queryParams.queryMaxDate,
@@ -489,14 +442,18 @@ class ProjectService {
 							offset: queryOffset,
 							limit: queryLimit
 						})
-							.then(data => callback(null, data))
+							.then(data => {
+								callback(null, data);
+							})
 							// .then(data => callback(data, null))
-							.catch(err => callback(err, null));
+							.catch(err => {
+								callback(err, null);
+							});
 					},
 					(payload, callback) => {
 						if (payload.rows.length === 0) {
 							this.ProjectRepository.findProjectsWithOwners({
-								id,
+								id: obj.id,
 								queryName: queryParams.queryName,
 								queryMinDate: queryParams.queryMinDate,
 								queryMaxDate: queryParams.queryMaxDate,
@@ -511,12 +468,12 @@ class ProjectService {
 							callback(null, payload);
 						}
 					},
-					(data, callback) => {
+					({ rows, count }, callback) => {
 						const payload = {
 							projects: [],
 							pagination: {}
 						};
-						data.rows.forEach(el => {
+						rows.forEach(el => {
 							const users = [];
 							el.groupProjects.forEach(groupProject => {
 								groupProject.group.groupUsers.forEach(
@@ -526,13 +483,20 @@ class ProjectService {
 								);
 							});
 							const unsortedCharts = [];
+							const unsortedSysCharts = [];
 							el.projectCharts.forEach(projectChart => {
 								unsortedCharts.push(
 									projectChart.chart.chartType.name
 								);
+								unsortedSysCharts.push(
+									projectChart.chart.chartType.sysName
+								);
 							});
 							const userCharts = unsortedCharts.filter(
 								(item, pos) => unsortedCharts.indexOf(item) === pos
+							);
+							const userSysCharts = unsortedSysCharts.filter(
+								(item, pos) => unsortedSysCharts.indexOf(item) === pos
 							);
 							let queryChart = charts;
 							if (!(typeof queryChart === 'object')) {
@@ -540,30 +504,36 @@ class ProjectService {
 									.split(',')
 									.filter(ele => !!ele);
 							}
+							const userAccessLvlId =								el.groupProjects[0].accessLevelId;
 							// todo: need to check if every value is inside userCharts
-							if (userCharts.length >= queryChart.length) {
+							let c = 0;
+							queryChart.forEach(qChart => {
+								userSysCharts.forEach(uChart => {
+									if (qChart === uChart) {
+										c += 1;
+									}
+								});
+							});
+							if (c >= queryChart.length) {
 								payload.projects.push({
 									id: el.id,
 									name: el.name,
 									updatedAt: el.updatedAt,
-									accessLevelId:
-										el.groupProjects[0].accessLevelId,
-									user:
-										el.groupProjects[0].group.groupUsers[0]
-											.user,
+									accessLevelId: userAccessLvlId,
+									user: el.groupProjects.find(
+										g => g.accessLevelId === 1
+									).group.groupUsers[0].user,
 									userCharts
 								});
 							}
 						});
-						const pageCount = Math.ceil(
-							data.count / 2 / queryLimit
-						);
+						const pageCount = Math.ceil(count / queryLimit);
 						let userPage = page;
 						if (page > pageCount) {
 							userPage = 1;
 						}
 						payload.pagination = {
-							totalRecords: data.count / 2,
+							totalRecords: count,
 							pageCount,
 							page: userPage,
 							rows: queryLimit

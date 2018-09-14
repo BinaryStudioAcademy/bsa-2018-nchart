@@ -29,15 +29,13 @@ if (isMainThread) {
 						workerData: { path, contents, link }
 					});
 					worker.on('message', resolve);
-					worker.on('error', reject);
-					worker.on('exit', code => {
-						if (code !== 0) {
-							reject(
-								new Error(
-									`Worker stopped with exit code ${code}`
-								)
-							);
-						}
+					worker.on('error', err => {
+						reject(err);
+					});
+					worker.on('exit', () => {
+						worker.on('exit', () => {
+							reject(new Error('Incorrect file extension'));
+						});
 					});
 				});
 			} else if (link) {
@@ -48,15 +46,11 @@ if (isMainThread) {
 							workerData: { path, contents, link }
 						});
 						worker.on('message', resolve);
-						worker.on('error', reject);
-						worker.on('exit', code => {
-							if (code !== 0) {
-								reject(
-									new Error(
-										`Worker stopped with exit code ${code}`
-									)
-								);
-							}
+						worker.on('error', err => {
+							reject(err);
+						});
+						worker.on('exit', () => {
+							reject(new Error('Incorrect file extension'));
 						});
 					})
 					.catch(err => reject(err));
@@ -83,9 +77,7 @@ if (isMainThread) {
 			.then(payload => {
 				parentPort.postMessage(payload);
 			})
-			.catch(err => {
-				throw err;
-			});
+			.catch(() => { throw new Error('Incorrect file extension'); });
 	}
 	if (data.contents) {
 		readString(data.contents)
