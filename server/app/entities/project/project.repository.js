@@ -1,4 +1,4 @@
-const SequilizeOp = require('sequelize').Op;
+const Sequilize = require('sequelize');
 const Repository = require('../../common/repository/repository');
 const projectModel = require('./project.models/project');
 const projectChartModel = require('./project.models/project_chart');
@@ -10,6 +10,8 @@ const groupModel = require('../group/group.models/group');
 const groupProjectModel = require('../group/group.models/group_project');
 const groupUserModel = require('../group/group.models/group_user');
 const userModel = require('../user/user.model');
+
+const SequilizeOp = Sequilize.Op;
 
 class ProjectRepository extends Repository {
 	constructor() {
@@ -168,7 +170,7 @@ class ProjectRepository extends Repository {
 
 	findProjectsWithOwners({
 		id,
-		searchQuery,
+		// searchQuery,
 		queryName,
 		queryMinDate,
 		queryMaxDate,
@@ -193,19 +195,16 @@ class ProjectRepository extends Repository {
 		}
 		const groupInclude = {
 			model: groupProjectModel,
-			where: searchQuery[0],
+			// where: searchQuery[0],
 			include: [
 				{
 					model: groupModel,
-					attributes: ['id'],
 					include: [
 						{
 							model: groupUserModel,
-							attributes: ['id'],
 							include: [
 								{
-									model: userModel,
-									attributes: ['name', 'email']
+									model: userModel
 								}
 							]
 						}
@@ -216,14 +215,11 @@ class ProjectRepository extends Repository {
 
 		const chartInclude = {
 			model: this.projectChartModel,
-			attributes: ['chartId', 'projectId'],
 			include: [
 				{
 					model: chartModel,
-					attributes: ['chartTypeId', 'id'],
 					include: [
 						{
-							attributes: ['name', 'sysName', 'id'],
 							model: chartTypeModel
 						}
 					]
@@ -231,31 +227,33 @@ class ProjectRepository extends Repository {
 			]
 		};
 
+		const include = [chartInclude, groupInclude];
+
 		return new Promise(res => {
 			projectModel
-				.findAll({
+				.findAndCountAll({
 					where: query,
 					attributes: ['id'],
-					include: [chartInclude, groupInclude]
+					include
 				})
-				.then(data => {
-					groupInclude.where = {
-						accessLevelId: searchQuery[1].accessLevelId
-					};
+				.then(({ rows }) => {
 					projectModel
-						.findAndCount({
-							subQuery: false,
-							offset,
-							limit,
+						.findAll({
 							where: {
 								id: {
-									[SequilizeOp.in]: data.map(el => el.id)
+									[SequilizeOp.in]: rows.map(el => el.id)
 								}
 							},
-							include: [chartInclude, groupInclude]
+							include
 						})
 						.then(d => {
-							res(d);
+							const projects = d.filter(el => queryChart.every(e => el.projectCharts
+								.map(c => c.chart.chartType.sysName)
+								.includes(e)));
+							res({
+								count: projects.length,
+								rows: projects.slice(offset, offset + limit)
+							});
 						});
 				});
 		});
