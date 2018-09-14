@@ -216,14 +216,14 @@ class ProjectRepository extends Repository {
 
 		const chartInclude = {
 			model: this.projectChartModel,
-			attributes: ['chartId'],
+			attributes: ['chartId', 'projectId'],
 			include: [
 				{
 					model: chartModel,
-					attributes: ['chartTypeId'],
+					attributes: ['chartTypeId', 'id'],
 					include: [
 						{
-							attributes: ['name', 'sysName'],
+							attributes: ['name', 'sysName', 'id'],
 							model: chartTypeModel
 						}
 					]
