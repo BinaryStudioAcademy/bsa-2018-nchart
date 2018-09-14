@@ -1,5 +1,9 @@
 import { ProjectsActionConstants } from '@app/store/actions/projects/projects.action-types';
-import { Project, ProjectEntities } from '@app/models/project.model';
+import {
+	Project,
+	ProjectEntities,
+	ProjectsFilter
+} from '@app/models/project.model';
 import { SchemeID } from '@app/models/normalizr.model';
 import { AppAction, FailedAction } from '@app/models/store.model';
 
@@ -103,10 +107,7 @@ export class SaveProjectFailed extends FailedAction {
 	readonly type = ProjectsActionConstants.SAVE_PROJECT__FAILED;
 }
 
-export class LoadProjetcsInfo extends AppAction<{
-	page: number;
-	name?: string;
-}> {
+export class LoadProjetcsInfo extends AppAction<ProjectsFilter> {
 	readonly type = ProjectsActionConstants.LOAD_PROJECTS_INFO;
 }
 

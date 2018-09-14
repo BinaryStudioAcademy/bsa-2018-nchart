@@ -1,11 +1,12 @@
 <div class="project-container"
-	[loading-sp]="isLoading"
+	[loading-sp]="isProjectLoading"
 	spBackgroundColor="#f2f3f9"
 >
 	<app-stepper
 		(steps)="getSteps($event)"
 		[errors]="stepperErrors"
 		[selectedStep]="selectedStep"
+		[isLoading]="isLoading"
 	></app-stepper>
 	<div class="main-content">
 	<app-project-name id="load" #viewItem [projectName]="projectName" (setProjectName)="changeProjectName($event)">
@@ -29,14 +30,16 @@
 		<p-dialog header="Confirmation"
 				  [(visible)]="display"
 				  [modal]="true"
-				  [responsive]="true"
-				  [closable]="false"
-				  [minY]="70"
-				  [resizable]="false"
 				  [draggable]="false"
-				  [baseZIndex]="10000">
+				[width]="400"
+				[minWidth]="250"
+				[minHeight]="150"
+				[minY]="70"
+				[maximizable]="false"
+				[resizable]="false"
+				[closable]="true">
 			<span>
-				Are you sure that you want to leave page with unsaved project?
+				Are you sure that you want to leave page without saving this project?
 			</span>
 			<p-footer class="modal-controls">
 				<app-button
@@ -47,6 +50,7 @@
 				></app-button>
 				<app-button
 					label="No"
+					type="secondary"
 					class="dialog-button"
 					size="small"
 					(onclick)="reject()"
@@ -55,16 +59,19 @@
 		</p-dialog>
 
 		<p-dialog header="Confirmation"
-				  [(visible)]="displayModalDataset"
-				  [modal]="true"
-				  [responsive]="true"
-				  [closable]="true"
-				  [resizable]="false"
-				  [minY]="70"
-				  [draggable]="false"
-				  [baseZIndex]="10000">
+				[(visible)]="displayModalDataset"
+				[modal]="true"
+				[draggable]="false"
+				[width]="400"
+				[minWidth]="250"
+				[minHeight]="150"
+				[minY]="70"
+				[maximizable]="false"
+				[resizable]="false"
+				[closable]="true"
+		>
 			<span>
-				Do you want use current dataset?
+				Do you want to use current dataset? <br> If not you can upload any other data.
 			</span>
 			<p-footer class="modal-controls">
 				<app-button
@@ -77,10 +84,54 @@
 					label="Yes"
 					class="dialog-button"
 					size="small"
+					type="secondary"
 					(onclick)="acceptDataset()"
 				></app-button>
 				
 			</p-footer>
+		</p-dialog>
+		<p-dialog 
+			[(visible)]="displayLoginDialog"
+			[modal]="true"
+			[draggable]="false"
+			[width]="400"
+			[minWidth]="250"
+			[minHeight]="650"
+			[maximizable]="false"
+			[resizable]="false"
+			[closable]="true"
+			[width]="400"
+		>
+			<p-header>Saving</p-header>
+			<p style="margin: .5rem 0">
+				You can sign in to save this project as a private
+			</p>
+			<p-tabView
+                [activeIndex]="1"
+                (onChange)="resetForms()"
+            >
+                <p-tabPanel header="Sign In">
+                    <app-login-form
+                        [loginForm]="loginForm"
+                        (loginClick)="onLogin($event)"
+						[isLoading]="isLoading"
+                    ></app-login-form>
+                </p-tabPanel>
+                <p-tabPanel header="Register">
+                    <app-register-form
+                        [registerForm]="registerForm"
+                        (registerClick)="onRegister($event)"
+                        [isLoading]="isLoading"
+                    ></app-register-form>
+                </p-tabPanel>
+			</p-tabView>
+			<p style="text-align: center; margin: .5rem 0" >or</p>
+			<div class="link-container">
+				<span
+					class="custom-link"
+					(click)="saveProj()"
+				>Save as public project</span>
+			</div>
 		</p-dialog>
 	</div>
 </div>

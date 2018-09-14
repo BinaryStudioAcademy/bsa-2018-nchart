@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { CardModule } from 'primeng/card';
 import { PaginatorModule } from 'primeng/paginator';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 // Forms
 import { FormsModule } from '@angular/forms';
@@ -31,6 +32,8 @@ import { TableModule } from 'primeng/table';
 import { TieredMenuModule } from 'primeng/tieredmenu';
 import { DialogModule } from 'primeng/dialog';
 import { GridsterModule } from 'angular-gridster2';
+import { SidebarModule } from 'primeng/sidebar';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @NgModule({
 	imports: [
@@ -62,7 +65,11 @@ import { GridsterModule } from 'angular-gridster2';
 		CardModule,
 		TableModule,
 		TieredMenuModule,
-		PaginatorModule
+		PaginatorModule,
+		OwlDateTimeModule,
+		OwlNativeDateTimeModule,
+		SidebarModule,
+		MultiSelectModule
 	],
 	exports: [
 		GridsterModule,
@@ -93,7 +100,11 @@ import { GridsterModule } from 'angular-gridster2';
 		TableModule,
 		TieredMenuModule,
 		DialogModule,
-		PaginatorModule
+		PaginatorModule,
+		OwlDateTimeModule,
+		OwlNativeDateTimeModule,
+		SidebarModule,
+		MultiSelectModule
 	],
 	declarations: []
 })

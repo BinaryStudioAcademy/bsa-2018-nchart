@@ -15,8 +15,9 @@ import { CompaniesState } from '@app/models/companies-store.model';
 import { ProjectsState } from '@app/models/projects-store.model';
 import { UserChartsState } from '@app/models/user-chart-store.model';
 import { DatasetPreloadSamplesState } from '@app/models/dataset-store.model';
-import {RouterStateUrl} from '@app/models/router-state-url.model';
-import {RouterReducerState} from '@ngrx/router-store';
+import { NotificationState } from '@app/models/notification-store.model';
+import { RouterStateUrl } from '@app/models/router-state-url.model';
+import { RouterReducerState } from '@ngrx/router-store';
 
 export class AppAction<T = undefined> {
 	readonly type: string;
@@ -46,5 +47,6 @@ export interface AppState {
 	defaultChartSettings: DefaultChartSettingsState;
 	userChartSettings: UserChartSettingsState;
 	datasetPreload: DatasetPreloadSamplesState;
+	notification: NotificationState;
 	router?: RouterReducerState<RouterStateUrl>;
 }

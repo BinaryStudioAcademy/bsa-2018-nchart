@@ -134,8 +134,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	getClasses() {
 		return {
-			'horizontal': this.horizontalLayout,
-			'vertical': !this.horizontalLayout
+			horizontal: this.horizontalLayout,
+			vertical: !this.horizontalLayout
 		};
 	}
 
@@ -177,7 +177,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 			margin: 0,
 			fixedColWidth: 10,
 			fixedRowHeight: 10
-
 		};
 
 		this.dashboard = [
@@ -403,7 +402,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 					// 	dataFormated = this.gantChartService.getData(data);
 					// 	break;
 					case 'alluvialDiagram':
-						dataFormated = this.alluvialDiagramChartService.getData(data);
+						dataFormated = this.alluvialDiagramChartService.getData(
+							data
+						);
 						item.data.component = AlluvialDiagramChartComponent;
 						break;
 					case 'worldMap':

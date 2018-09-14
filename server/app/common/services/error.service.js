@@ -17,7 +17,8 @@ class DBError extends Error {
 			{ message: 'User has no rights on this project', code: 13 },
 			{ message: 'Folder with such name already exists', code: 14 },
 			{ message: 'Company with such name already exists', code: 15 },
-			{ message: 'Company does not belong to user', code: 16 }
+			{ message: 'Company does not belong to user', code: 16 },
+			{ message: 'Invalid date', code: 17 }
 		];
 	}
 

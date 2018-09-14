@@ -1,82 +1,10 @@
 @import ../colors
 @import ../variables
 
-.ui-modal>.ui-widget-content
-	background-color: white
-	box-shadow: 0 2px 32px $teriaryColor
-	padding: 0.6rem
-	margin: 0 auto
-.ui-widget-overlay
-	background-color: $teriaryColor
-.ui-dialog
-	.ui-dialog-titlebar-icon
-		position: absolute
-		top: 5px
-		right: 5px
-	.ui-dialog-titlebar-icon:hover
-		opacity: 0.5
-		border-color: transparent
-		
-	&.ui-widget .ui-dialog-titlebar
-		.ui-dialog-title
-			font-weight: 500
-			padding: 0
-	.ui-dialog-titlebar
-		padding: 0 0.6rem
-	&.ui-widget .ui-dialog-content
-		overflow: visible
-		background: $stateDefaultBgColor
-	.ui-dialog-footer
-		padding: 0 1rem 0 1rem
-		background: $stateDefaultBgColor
-		display: flex
-		justify-content: flex-end
-		app-button
-			.ui-button-text-icon-right:enabled
-				display: inline-block
-				margin-right: 6px
-			&:last-child
-				margin-right: 0
-			.ui-button-icon-left
-				margin-right: 10px
-		.ui-widget.ui-button-default, .ui-button-default, .ui-widget.ui-button
-			margin-right: 6px
-			height: 30px
-
-
-.ui-dialog-footer	
-	padding: 0 1.5em 0 1.5em
-.ui-dialog.ui-widget .ui-dialog-titlebar
-	padding: 1.5em 1.5em 0 1.5em
-
-.ui-modal-fullscreen
-	top: 0!important
-	left: 0!important
-	width: 100%!important
-	height: 100%!important
-	border-radius: 0
-	.data-table .ui-table
-		margin-top: 5px
-	.custom-chart-container[_ngcontent-c9]
-		margin: 0
-		padding: 0
-	app-chart[_ngcontent-c9]
-		width: 100%
-		padding: 0
-	.ui-dialog.ui-widget .ui-dialog-content
-
-	&.fullscreen-chart
-		&.ui-dialog.ui-widget .ui-dialog-content
-			padding: 0
-.full-screen-btn
-	position: absolute
-	top: 0.8rem
-	right: 0.4rem
-
 .btn-remove
 	position: absolute
-	top: 0.8rem
-	right: 2.4rem
+	top: 1rem
+	right: 3rem
 .data-table
 	.ui-modal>.ui-widget-content
 		top: 0!important
@@ -108,8 +36,6 @@
 			border-bottom: 0
 	.ui-table-thead tr
 		border-bottom: 2px solid $disabledColor
-		// display: flex
-		// justify-content: space-around
 	.ui-table .ui-table-tbody > tr > td
 		border: none
 		background-color: $stateDefaultBgColor
@@ -126,7 +52,6 @@
 			position: relative
 	.ui-table-scrollable-body
 		max-height: 400px
-		// overflow: visible
 	.ui-table-tbody
 		max-height: 400px
 	.header-cell
@@ -139,14 +64,11 @@
 			max-width: 100%
 		p-celleditor
 			vertical-align: middle
-			// width: 60px
 			display: inline-block
 			overflow: hidden
 			text-overflow: clip
 			white-space: pre
 			max-width: 100%
-	.ui-checkbox-wrp
-		padding: 0
 	.header-cell.number-cell,
 	.number-cell
 		margin-right: 0
@@ -172,21 +94,16 @@
 		padding: 0
 		label
 			font-size: 1rem
-		.ui-checkbox-wrp
-			// padding-left: 22px
 	.column-type
 		margin: 0
 		padding: 0
 		font-size: 0.7rem
-	.ui-checkbox-wrp
-		width: 24px
 	.ui-buttonset.ui-splitbutton
 		border: none
 		box-shadow: none
 		position: relative
 		z-index: unset
 		width: 15px
-		// margin-right: 5px
 		margin-left: 5px
 		background-color: $stateDefaultBgColor
 		&:hover,

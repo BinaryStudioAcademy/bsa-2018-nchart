@@ -25,6 +25,7 @@ export const initialState: ProjectsState = {
 const all = (state = initialState.all, action: ProjectsActions) => {
 	switch (action.type) {
 		case constants.LOAD_PROJECTS:
+		case constants.LOAD_PROJECTS_INFO:
 			return [];
 		case constants.LOAD_PROJECTS__COMPLETE:
 			return action.payload.projects.all;

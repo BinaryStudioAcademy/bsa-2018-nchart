@@ -31,6 +31,16 @@ import {
 } from '@app/store/selectors/userCharts';
 import { isActiveChartDataset } from '@app/store/selectors/dataset.selectors';
 import { CreateChart } from '@app/store/actions/charts/charts.actions';
+import { FormGroup } from '@angular/forms';
+import { LoginService } from '@app/services/login.service';
+import { Login as LoginModel } from '@app/models/login.model';
+import { Register as RegisterModel } from '@app/models/register.model';
+import {
+	CanSaveProject,
+	Login as LoginAction,
+	Register as RegisterAction
+} from '@app/store/actions/user/user.actions';
+import { ProjectService } from '@app/services/project.service';
 
 interface StepperStep {
 	id: number;
@@ -62,6 +72,11 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 	projectId: SchemeID;
 	isActiveChartDataset$: Observable<boolean>;
 	isLoading: boolean;
+	isProjectLoading: boolean;
+	displayLoginDialog: boolean;
+	loginForm: FormGroup;
+	registerForm: FormGroup;
+	saveProject: Subscription;
 
 	disconnect: () => void;
 
@@ -90,6 +105,36 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 		}
 	}
 
+	resetForms() {
+		this.loginForm.reset();
+		this.registerForm.reset();
+	}
+
+	onLogin(loginModel: LoginModel) {
+		const user = this.trimStringFields<LoginModel>(loginModel);
+		this.storeService.dispatch(new LoginAction({ user }));
+	}
+
+	onRegister(registerModel: RegisterModel) {
+		const user = this.trimStringFields<RegisterModel>(registerModel);
+		this.storeService.dispatch(new RegisterAction({ user }));
+	}
+
+	private trimStringFields<T>(obj: T): T {
+		return Object.keys(obj).reduce(
+			(trimmedObj, key) => {
+				const isString = typeof obj[key] === 'string';
+				trimmedObj[key] = isString ? obj[key].trim() : obj[key];
+				return trimmedObj;
+			},
+			{} as T
+		);
+	}
+	private createForms() {
+		this.loginForm = this.loginService.createLoginForm();
+		this.registerForm = this.loginService.createRegisterForm();
+	}
+
 	updateViewChildren(): void {
 		if (this.viewItemsList) {
 			this.viewItemsList = this.viewItems.toArray();
@@ -116,7 +161,9 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	constructor(
 		private storeService: StoreService,
-		private route: ActivatedRoute
+		private route: ActivatedRoute,
+		private loginService: LoginService,
+		private projectService: ProjectService
 	) {}
 
 	showDialog() {
@@ -151,6 +198,8 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 	}
 
 	ngOnInit() {
+		this.displayLoginDialog = false;
+		this.createForms();
 		this.routeParams$ = this.route.params.subscribe(
 			(params: { id?: number }) => {
 				const { id } = params;
@@ -219,13 +268,20 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 				selector: isProjectLoading(),
 				subscriber: t => {
 					this.isLoading = t;
+					this.isProjectLoading = t && !this.projectId;
 				}
 			}
 		]);
+		this.saveProject = this.projectService.saveObservable.subscribe(
+			(res: boolean) => {
+				this.displayLoginDialog = res;
+			}
+		);
 	}
 	ngOnDestroy() {
 		this.disconnect();
 		this.routeParams$.unsubscribe();
+		this.saveProject.unsubscribe();
 	}
 
 	getIsActiveChartDataset() {
@@ -243,5 +299,9 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	onDisplayModalDataset() {
 		this.displayModalDataset = true;
+	}
+
+	saveProj() {
+		this.storeService.dispatch(new CanSaveProject());
 	}
 }
