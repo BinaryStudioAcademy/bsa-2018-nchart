@@ -58,22 +58,10 @@ class ProjectService {
 						if (!status || (!groupId && !defaultGroupId)) {
 							return callback(null, payload);
 						}
-						if (groupId) {
-							return this.GroupService.saveGroupProject({
-								groupId,
-								projectId: payload.project.id,
-								accessLevelId: 1
-							})
-								.then(() => {
-									callback(null, payload);
-								})
-								.catch(err => {
-									callback(null, err);
-								});
-						}
+
 						return (
 							this.GroupService.saveGroupProject({
-								groupId: defaultGroupId,
+								groupId: groupId || defaultGroupId,
 								projectId: payload.project.id,
 								accessLevelId: 1
 							})
@@ -212,54 +200,51 @@ class ProjectService {
 		return new Promise((resolve, reject) => {
 			async.waterfall(
 				[
-					callback => {
-						if (!res.locals.user) {
-							return this.ProjectRepository.publicProject(
-								id
-							).then(data => {
-								if (data === null) {
-									return callback(null);
-								}
-								return callback(
-									'User has no rights on this project',
-									null
+					callback => this.ProjectRepository.fullProjectById(id)
+						.then(data => {
+							if (data) {
+								const project = ProjectService.getProjectFromPayload(
+									data.dataValues
 								);
-							});
-						}
-						return this.ProjectRepository.findByUserIdAndProjectId({
-							projectId: id,
-							userId: res.locals.user.id
+								return callback(null, project);
+							}
+							throw new Error('Object did not exist');
 						})
-							.then(data => {
-								let count = 0;
-								data.forEach(el => {
-									if (el.group) {
-										count += 1;
-									}
-								});
-								// data[1].group.groupUsers[0].dataValues
-								if (count >= 1) {
-									return callback(null);
-								}
-								throw new Error(
+						.catch(err => callback(err, null)),
+					(project, callback) => this.ProjectRepository.publicProject(id)
+						.then(data => {
+							if (!data) {
+								return callback(null, project);
+							}
+							if (!res.locals.user) {
+								return callback(
 									'User has no rights on this project'
 								);
-							})
-							.catch(err => callback(err, null));
-					},
-					callback => {
-						this.ProjectRepository.fullProjectById(id)
-							.then(data => {
-								if (data) {
-									const project = ProjectService.getProjectFromPayload(
-										data.dataValues
-									);
-									return callback(null, project);
+							}
+
+							return this.ProjectRepository.findByUserIdAndProjectId(
+								{
+									projectId: id,
+									userId: res.locals.user.id
 								}
-								throw new Error('Object did not exist');
-							})
-							.catch(err => callback(err, null));
-					}
+							)
+								.then(d => {
+									let count = 0;
+									d.forEach(el => {
+										if (el.group) {
+											count += 1;
+										}
+									});
+									if (count >= 1) {
+										return callback(null, project);
+									}
+									throw new Error(
+										'User has no rights on this project'
+									);
+								})
+								.catch(err => callback(err, null));
+						})
+						.catch(err => callback(err, null))
 				],
 				(err, payload) => {
 					if (err) {
