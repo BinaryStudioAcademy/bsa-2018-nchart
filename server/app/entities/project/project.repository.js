@@ -244,9 +244,9 @@ class ProjectRepository extends Repository {
 					};
 					projectModel
 						.findAndCount({
-							limit,
-							offset,
 							subQuery: false,
+                            offset,
+                            limit,
 							where: {
 								id: {
 									[SequilizeOp.in]: data.map(el => el.id)

@@ -444,7 +444,7 @@ class ProjectService {
 	}
 
 	projectsWithPagination(
-		id,
+		obj,
 		{
 			title, page, limit, charts, from, to, owner
 		}
@@ -465,7 +465,7 @@ class ProjectService {
 				[
 					callback => {
 						this.ProjectRepository.findProjectsWithOwners({
-							id,
+							id: obj.id,
 							queryName: queryParams.queryName,
 							queryMinDate: queryParams.queryMinDate,
 							queryMaxDate: queryParams.queryMaxDate,
@@ -481,7 +481,7 @@ class ProjectService {
 					(payload, callback) => {
 						if (payload.rows.length === 0) {
 							this.ProjectRepository.findProjectsWithOwners({
-								id,
+								id: obj.id,
 								queryName: queryParams.queryName,
 								queryMinDate: queryParams.queryMinDate,
 								queryMaxDate: queryParams.queryMaxDate,
@@ -525,14 +525,18 @@ class ProjectService {
 									.split(',')
 									.filter(ele => !!ele);
 							}
+							const userAccessLvlId =								obj.email
+								=== el.groupProjects[0].group.groupUsers[0].user
+									.email
+								? 1
+								: 3;
 							// todo: need to check if every value is inside userCharts
 							if (userCharts.length >= queryChart.length) {
 								payload.projects.push({
 									id: el.id,
 									name: el.name,
 									updatedAt: el.updatedAt,
-									accessLevelId:
-										el.groupProjects[0].accessLevelId,
+									accessLevelId: userAccessLvlId,
 									user:
 										el.groupProjects[0].group.groupUsers[0]
 											.user,
