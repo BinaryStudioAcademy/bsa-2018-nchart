@@ -23,11 +23,12 @@ $searchBarHeight: 160px
 .project-card-container
 	padding: 1.5rem
 	padding-bottom: 0
-	overflow: auto
-	flex: 1
+	overflow: visible
+	// flex: 1
 	display: grid
 	grid-gap: 1rem
 	grid-template-columns: repeat(auto-fill, minmax(250px, 300px))
+	// justify-content: space-between
 
 .search-projects
 	box-shadow: -1px 1px 3px rgba(151, 155, 174, 0.1), 1px 1px 3px rgba(151, 155, 174, 0.1)
@@ -89,7 +90,6 @@ $searchBarHeight: 160px
 	letter-spacing: 1px
 
 .hideIcon
-	margin-left: -1rem
 	cursor: pointer
 	.label
 		color: $activeColor
