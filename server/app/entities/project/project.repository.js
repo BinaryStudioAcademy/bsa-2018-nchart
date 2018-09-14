@@ -170,7 +170,7 @@ class ProjectRepository extends Repository {
 
 	findProjectsWithOwners({
 		id,
-		// searchQuery,
+		searchQuery,
 		queryName,
 		queryMinDate,
 		queryMaxDate,
@@ -182,6 +182,7 @@ class ProjectRepository extends Repository {
 
 		const query = {
 			'$groupProjects.group.groupUsers.id$': id,
+			'$groupProjects.accessLevelId$': searchQuery,
 			name: { $iLike: `%${queryName}%` },
 			updatedAt: {
 				[SequilizeOp.gte]: queryMinDate,
@@ -195,7 +196,6 @@ class ProjectRepository extends Repository {
 		}
 		const groupInclude = {
 			model: groupProjectModel,
-			// where: searchQuery[0],
 			include: [
 				{
 					model: groupModel,

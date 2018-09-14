@@ -373,38 +373,6 @@ class ProjectService {
 		});
 	}
 
-	findProjectsWithOwners(id, params) {
-		return this.ProjectRepository.findProjectsWithOwners(id, params.name)
-			.then(data => {
-				const projects = [];
-				data.forEach(el => {
-					el.group.groupProjects.forEach(pj => {
-						const user =							pj.project.groupProjects[0].group.groupUsers[0].user
-							.dataValues;
-						const userCharts = [];
-						pj.project.projectCharts.forEach(projectChart => {
-							userCharts.push(projectChart.chart.chartType.name);
-						});
-						const uniqueCharts = userCharts.filter(
-							(item, pos) => userCharts.indexOf(item) === pos
-						);
-						projects.push({
-							id: pj.project.dataValues.id,
-							name: pj.project.dataValues.name,
-							updatedAt: pj.project.dataValues.updatedAt,
-							groupName: el.group.name,
-							companyName: el.group.company.name,
-							accessLevelId: pj.dataValues.accessLevelId,
-							userCharts: uniqueCharts,
-							user
-						});
-					});
-				});
-				return projects;
-			})
-			.catch(err => err);
-	}
-
 	static formQuery(title, page, limit, charts, from, to) {
 		const queryName = title || '';
 		let queryChart = charts;
@@ -435,12 +403,12 @@ class ProjectService {
 
 	static ownerMe(owner) {
 		if (owner === 'me') {
-			return [{ accessLevelId: 1 }, { accessLevelId: 1 }];
+			return [1];
 		}
 		if (owner === 'shared') {
-			return [{ accessLevelId: [2, 3] }, { accessLevelId: 1 }];
+			return [2, 3];
 		}
-		return [{ accessLevelId: [1, 2, 3] }, { accessLevelId: 1 }];
+		return [1, 2, 3];
 	}
 
 	projectsWithPagination(
@@ -536,11 +504,7 @@ class ProjectService {
 									.split(',')
 									.filter(ele => !!ele);
 							}
-							const userAccessLvlId =								obj.email
-								=== el.groupProjects[0].group.groupUsers[0].user
-									.email
-								? 1
-								: 3;
+							const userAccessLvlId =	el.groupProjects[0].accessLevelId;
 							// todo: need to check if every value is inside userCharts
 							let c = 0;
 							queryChart.forEach(qChart => {
@@ -557,7 +521,7 @@ class ProjectService {
 									updatedAt: el.updatedAt,
 									accessLevelId: userAccessLvlId,
 									user:
-										el.groupProjects[0].group.groupUsers[0]
+										el.groupProjects.find(g => g.accessLevelId === 1).group.groupUsers[0]
 											.user,
 									userCharts
 								});
