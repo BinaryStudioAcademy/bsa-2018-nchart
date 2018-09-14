@@ -504,7 +504,7 @@ class ProjectService {
 									.split(',')
 									.filter(ele => !!ele);
 							}
-							const userAccessLvlId =	el.groupProjects[0].accessLevelId;
+							const userAccessLvlId =								el.groupProjects[0].accessLevelId;
 							// todo: need to check if every value is inside userCharts
 							let c = 0;
 							queryChart.forEach(qChart => {
@@ -520,9 +520,9 @@ class ProjectService {
 									name: el.name,
 									updatedAt: el.updatedAt,
 									accessLevelId: userAccessLvlId,
-									user:
-										el.groupProjects.find(g => g.accessLevelId === 1).group.groupUsers[0]
-											.user,
+									user: el.groupProjects.find(
+										g => g.accessLevelId === 1
+									).group.groupUsers[0].user,
 									userCharts
 								});
 							}
