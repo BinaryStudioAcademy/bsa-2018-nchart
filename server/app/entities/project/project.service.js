@@ -221,7 +221,7 @@ class ProjectService {
 									return callback(null);
 								}
 								return callback(
-									'User has no rights on this project',
+									// 'User has no rights on this project',
 									null
 								);
 							});
@@ -229,23 +229,23 @@ class ProjectService {
 						return this.ProjectRepository.findByUserIdAndProjectId({
 							projectId: id,
 							userId: res.locals.user.id
-						})
-							.then(data => {
-								let count = 0;
-								data.forEach(el => {
-									if (el.group) {
-										count += 1;
-									}
-								});
-								// data[1].group.groupUsers[0].dataValues
-								if (count >= 1) {
-									return callback(null);
-								}
-								throw new Error(
-									'User has no rights on this project'
-								);
-							})
-							.catch(err => callback(err, null));
+						});
+						// .then(data => {
+						// 	let count = 0;
+						// 	data.forEach(el => {
+						// 		if (el.group) {
+						// 			count += 1;
+						// 		}
+						// 	});
+						// 	// data[1].group.groupUsers[0].dataValues
+						// 	if (count >= 1) {
+						// 		return callback(null);
+						// 	}
+						// 	throw new Error(
+						// 		'User has no rights on this project'
+						// 	);
+						// })
+						// .catch(err => callback(err, null));
 					},
 					callback => {
 						this.ProjectRepository.fullProjectById(id)
@@ -654,7 +654,11 @@ class ProjectService {
 	}
 
 	exportHtml(content, type) {
-		return this.MarkupTemplateService.getDocument(content, type);
+		return this.MarkupTemplateService.getDocument(content, type, false);
+	}
+
+	exportDashboard(content, type) {
+		return this.MarkupTemplateService.getDocument(content, type, true);
 	}
 }
 

@@ -6,6 +6,7 @@ import {
 	OnDestroy,
 	OnInit,
 	QueryList,
+	ViewChild,
 	ViewChildren,
 	ViewContainerRef
 } from '@angular/core';
@@ -38,6 +39,9 @@ import { PieChartComponent } from '@app/shared/components/charts/pie-chart/pie-c
 import { ScatterplotChartComponent } from '@app/shared/components/charts/scatterplot-chart/scatterplot-chart.component';
 import { AlluvialDiagramChartComponent } from '@app/shared/components/charts/alluvial-diagram-chart/alluvial-diagram-chart.component';
 import { WorldMapChartComponent } from '@app/shared/components/charts/world-map-chart/world-map-chart.component';
+import { ExportDashboardBusService } from '@app/services/export-dashboard-bus.service';
+import { ExportType } from '@app/models/export.model';
+import { ExportProject } from '@app/store/actions/export/export.actions';
 
 @Component({
 	selector: 'app-dashboard',
@@ -53,6 +57,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 	components: ComponentRef<any>[] = [];
 	@ViewChildren('host', { read: ViewContainerRef })
 	hosts: QueryList<ViewContainerRef>;
+	@ViewChild('dashboardEl')
+	dashboardEl: any;
+	exportBusResponseDashboard: Subscription;
 
 	chartType;
 	customizeSettings;
@@ -70,7 +77,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 		private storeService: StoreService,
 		private componentFactoryResolver: ComponentFactoryResolver,
 		private alluvialDiagramChartService: AlluvialDiagramChartService,
-		private worldMapChartService: WorldMapChartService
+		private worldMapChartService: WorldMapChartService,
+		private exportDashboardBus: ExportDashboardBusService
 	) {}
 
 	changeLayout() {
@@ -143,7 +151,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 		this.routeParams$ = this.route.params.subscribe(
 			(params: { id?: number }) => {
 				const { id } = params;
-
 				if (id) {
 					this.storeService.dispatch(
 						new LoadOneProject({ projectId: id + '' })
@@ -153,7 +160,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 		);
 
 		this.options = {
-			gridType: GridType.Fixed,
+			width: 'auto',
+			gridType: GridType.Fit,
 			displayGrid: DisplayGrid.Always,
 			pushItems: true,
 			draggable: {
@@ -238,6 +246,18 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 				}
 			}
 		]);
+		this.exportBusResponseDashboard = this.exportDashboardBus.responseObservable.subscribe(
+			dashboard => {
+				this.storeService.dispatch(
+					new ExportProject({
+						id: 1,
+						type: 'pdf' as ExportType,
+						filename: 'report',
+						dashboard: dashboard
+					})
+				);
+			}
+		);
 	}
 
 	ngAfterViewInit(): void {
@@ -278,6 +298,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 	ngOnDestroy(): void {
 		this.routeParams$.unsubscribe();
 		this.components.forEach(c => c.changeDetectorRef.detach());
+		this.exportBusResponseDashboard.unsubscribe();
 	}
 
 	changedOptions() {
@@ -329,9 +350,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 		this.displayModalDashboard = !this.displayModalDashboard;
 	}
 
-	// addItem() {
-	// 	this.dashboard.push({ x: 0, y: 0, cols: 20, rows: 20 });
-	// }
+	addItem() {
+		this.dashboard.push({ x: 0, y: 0, cols: 20, rows: 20 });
+	}
 
 	onChange(e) {
 		this.activeTab = e.index;
@@ -398,9 +419,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 						);
 						item.data.component = ScatterplotChartComponent;
 						break;
-					// case 'ganttChart':
-					// 	dataFormated = this.gantChartService.getData(data);
-					// 	break;
 					case 'alluvialDiagram':
 						dataFormated = this.alluvialDiagramChartService.getData(
 							data
@@ -415,13 +433,11 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 						break;
 				}
 
-				item.data.inputs.data = dataFormated;
-
 				this.dashboard.push({
-					x: 0,
-					y: 0,
-					cols: 20,
-					rows: 20,
+					x: 10,
+					y: 10,
+					cols: 40,
+					rows: 40,
 					data: {
 						component: ChartComponent,
 						inputs: {
@@ -432,5 +448,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 					}
 				});
 			});
+	}
+	exportDashboard() {
+		const item = this.dashboardEl.nativeElement.innerHTML;
+		this.exportDashboardBus.sendDashboard(item);
 	}
 }

@@ -13,6 +13,7 @@ import { ExportSvgBusService } from '@app/services/export-svg-bus.service';
 import { ScatterplotChartService } from '@app/services/charts/scatterplot-chart.service';
 import { AlluvialDiagramChartService } from '@app/services/charts/alluvial-diagram-chart.service';
 import { WorldMapChartService } from '@app/services/charts/world-map-chart.service';
+import { ExportDashboardBusService } from '@app/services/export-dashboard-bus.service';
 
 @NgModule({
 	providers: [
@@ -29,7 +30,8 @@ import { WorldMapChartService } from '@app/services/charts/world-map-chart.servi
 		ExportSvgBusService,
 		ScatterplotChartService,
 		AlluvialDiagramChartService,
-		WorldMapChartService
+		WorldMapChartService,
+		ExportDashboardBusService
 	]
 })
 export class ServiceModule {}

@@ -3,6 +3,7 @@
 	<div class="gridster-buttons">
 		<app-button type="icon" icon="fas fa-plus" (onclick)="toggleModal()"></app-button>
 		<app-button type="icon" icon="fas fa-redo" (onclick)="changeLayout()"></app-button>
+		<app-button [label]="Export" (click)="exportDashboard()"></app-button>
 	</div>
 
 	<gridster [options]="options" [ngClass]="getClasses()">
@@ -31,6 +32,7 @@
 			</div>
 		</gridster-item>
 	</gridster>
+</div>
 </div>
 
 <p-dialog header="Add element"

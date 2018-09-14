@@ -67,4 +67,32 @@ export class ExportDomainService implements ExportDomain {
 				})
 			);
 	}
+
+	exportDashboard(
+		payload: ProjectExportPayload
+	): Observable<{
+		filename: string;
+		data: Blob;
+	}> {
+		return this.httpService
+			.makeFileRequest(
+				new ServiceRequest(
+					RequestType.POST,
+					`${this.projectPath}/${payload.id}/export-dashboard`,
+					null,
+					{
+						type: payload.type,
+						content: payload.dashboard
+					}
+				)
+			)
+			.pipe(
+				map(res => {
+					return {
+						filename: `${payload.filename}.${payload.type}`,
+						data: res
+					};
+				})
+			);
+	}
 }
