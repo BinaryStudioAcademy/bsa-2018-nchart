@@ -511,13 +511,20 @@ class ProjectService {
 								);
 							});
 							const unsortedCharts = [];
+							const unsortedSysCharts = [];
 							el.projectCharts.forEach(projectChart => {
 								unsortedCharts.push(
 									projectChart.chart.chartType.name
 								);
+								unsortedSysCharts.push(
+									projectChart.chart.chartType.sysName
+								);
 							});
 							const userCharts = unsortedCharts.filter(
 								(item, pos) => unsortedCharts.indexOf(item) === pos
+							);
+							const userSysCharts = unsortedSysCharts.filter(
+								(item, pos) => unsortedSysCharts.indexOf(item) === pos
 							);
 							let queryChart = charts;
 							if (!(typeof queryChart === 'object')) {
@@ -526,7 +533,15 @@ class ProjectService {
 									.filter(ele => !!ele);
 							}
 							// todo: need to check if every value is inside userCharts
-							if (userCharts.length >= queryChart.length) {
+							let count = 0;
+							queryChart.forEach(qChart => {
+								userSysCharts.forEach(uChart => {
+									if (qChart === uChart) {
+										count += 1;
+									}
+								});
+							});
+							if (count >= queryChart.length) {
 								payload.projects.push({
 									id: el.id,
 									name: el.name,
