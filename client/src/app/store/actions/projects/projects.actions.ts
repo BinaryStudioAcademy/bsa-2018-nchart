@@ -191,7 +191,7 @@ export class CloseDialog extends AppAction {
 	readonly type = ProjectsActionConstants.CLOSE_DIALOG;
 }
 
-export class SetButtonUrl extends AppAction<{ redirectUrl : RedirectUrl}> {
+export class SetButtonUrl extends AppAction<{ redirectUrl: RedirectUrl }> {
 	readonly type = ProjectsActionConstants.SET_BUTTON_URL;
 }
 
@@ -226,7 +226,6 @@ export type Actions =
 	| UpdateProjectName
 	| UpdateProjectNameComplete
 	| UpdateProjectNameFailed
-	
 	| AddedNewPage
 	| DiscardFlagNewPage
 	| ShowDialog

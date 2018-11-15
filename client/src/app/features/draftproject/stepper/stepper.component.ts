@@ -9,7 +9,10 @@ import {
 	activeProjectId,
 	isActiveDraft
 } from '@app/store/selectors/projects.selectors';
-import { SaveProject, DiscardFlagNewPage } from '@app/store/actions/projects/projects.actions';
+import {
+	SaveProject,
+	DiscardFlagNewPage
+} from '@app/store/actions/projects/projects.actions';
 import { isActiveChartDataset } from '@app/store/selectors/dataset.selectors';
 import { isVerifiedToken } from '@app/store/selectors/user.selectors';
 import { ProjectService } from '@app/services/project.service';
@@ -204,9 +207,7 @@ export class StepperComponent implements OnInit {
 			this.storeService.dispatch(
 				new SaveProject({ id: this.activeProjectId })
 			);
-			this.storeService.dispatch(
-				new DiscardFlagNewPage()
-			);
+			this.storeService.dispatch(new DiscardFlagNewPage());
 		} else if (this.isDraft && !this.isAuth) {
 			this.projectService.saveProject();
 		}

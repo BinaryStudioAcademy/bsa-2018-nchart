@@ -84,7 +84,7 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 	loginForm: FormGroup;
 	registerForm: FormGroup;
 	saveProject: Subscription;
-	redirectUrl : RedirectUrl;
+	redirectUrl: RedirectUrl;
 
 	disconnect: () => void;
 
@@ -172,7 +172,7 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 		private route: ActivatedRoute,
 		private loginService: LoginService,
 		private projectService: ProjectService,
-		private router : Router
+		private router: Router
 	) {}
 
 	showDialog() {
@@ -184,7 +184,10 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.subConf.next(true);
 		this.storeService.dispatch(new CloseDialog());
 		this.storeService.dispatch(new DiscardFlagNewPage());
-		this.router.navigate([this.redirectUrl.url],this.redirectUrl.queryParams);
+		this.router.navigate(
+			[this.redirectUrl.url],
+			this.redirectUrl.queryParams
+		);
 	}
 
 	reject() {
@@ -289,17 +292,14 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 			{
 				selector: isShowDialog(),
 				subscriber: res => {
-					if(res)
-						this.display = true;
+					if (res) this.display = true;
 				}
 			},
 			{
 				selector: toRedirect(),
-				subscriber : res => {
+				subscriber: res => {
 					console.log(res);
-					if(res)
-						this.redirectUrl = res;
-					
+					if (res) this.redirectUrl = res;
 				}
 			}
 		]);

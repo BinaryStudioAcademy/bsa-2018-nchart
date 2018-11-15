@@ -9,7 +9,10 @@ import {
 import { SchemeID } from '@app/models/normalizr.model';
 import { StoreService } from '@app/services/store.service';
 import { PickActiveChart } from '@app/store/actions/charts/charts.actions';
-import { RemovePageProject, AddedNewPage } from '@app/store/actions/projects/projects.actions';
+import {
+	RemovePageProject,
+	AddedNewPage
+} from '@app/store/actions/projects/projects.actions';
 
 @Component({
 	selector: 'app-project-tabs',

@@ -1,9 +1,9 @@
-export interface RedirectUrl{
-    url: string;
-    queryParams : any
+export interface RedirectUrl {
+	url: string;
+	queryParams: any;
 }
 
-export const RedirectUrlProp : RedirectUrl =  {
-    url : '',
-    queryParams : null
-  }
+export const RedirectUrlProp: RedirectUrl = {
+	url: '',
+	queryParams: null
+};

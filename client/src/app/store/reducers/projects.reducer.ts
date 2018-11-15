@@ -19,9 +19,9 @@ export const initialState: ProjectsState = {
 		totalRecords: null,
 		rows: null
 	},
-	isHasNewPage : false,
-	showDialog : false,
-	redirectToUrl : null,
+	isHasNewPage: false,
+	showDialog: false,
+	redirectToUrl: null,
 	isLoading: false
 };
 
@@ -234,16 +234,14 @@ export const redirectToUrl = (
 ) => {
 	switch (action.type) {
 		case constants.SET_BUTTON_URL:
-			return{
+			return {
 				...state,
 				...action.payload.redirectUrl
-			};		
+			};
 		default:
 			return state;
 	}
 };
-
-
 
 export const pagination = (
 	state = initialState.pagination,

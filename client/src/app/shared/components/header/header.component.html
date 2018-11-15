@@ -1,22 +1,21 @@
 <div class="ui-widget-header header-container">
 	<div class="header-component">
-		<a
-			[routerLink]="['/app']"
-			class="header-logo"
-		>
-			<img src="assets/nChartLogo.svg">
+		<a [routerLink]="['/app']" class="header-logo">
+			<img src="assets/nChartLogo.svg" />
 		</a>
 	</div>
-	<div class="header-component">
-		<p-tabMenu [model]="items"></p-tabMenu>
-	</div>
+	<div class="header-component"><p-tabMenu [model]="items"></p-tabMenu></div>
 	<div class="header-component">
 		<div class="header-profile-container">
 			<app-button
-				(click)="redirectTo('/app/projects',{queryParams: { owner: 'all', page: 1 }})"
+				(click)="
+					redirectTo('/app/projects', {
+						queryParams: { owner: 'all', page: 1 }
+					})
+				"
 				label="Projects"
 				size="middle"
-				type="default"				
+				type="default"
 				class="header-newProject-button"
 				*ngIf="isAuthorized"
 			></app-button>
@@ -46,8 +45,7 @@
 	</div>
 </div>
 
-
-<!-- 
+<!--
 	routerLink="/app/projects"
-	[queryParams]="{ owner: 'all', page: 1 }" 
+	[queryParams]="{ owner: 'all', page: 1 }"
 -->

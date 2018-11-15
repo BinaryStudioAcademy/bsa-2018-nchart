@@ -17,8 +17,8 @@ export class ProjectsState<U = SchemeID, R = undefined>
 	extends NormalizedSchemeWithFetching<Project, R>
 	implements NormalizedActiveEntity<U, R> {
 	active = null;
-	isHasNewPage : boolean = false;
-	showDialog : boolean = false;
-	redirectToUrl : RedirectUrl;
+	isHasNewPage: boolean = false;
+	showDialog: boolean = false;
+	redirectToUrl: RedirectUrl;
 	pagination: PaginationData;
 }
