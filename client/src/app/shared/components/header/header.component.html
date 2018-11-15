@@ -13,11 +13,10 @@
 	<div class="header-component">
 		<div class="header-profile-container">
 			<app-button
+				(click)="redirectTo('/app/projects',{queryParams: { owner: 'all', page: 1 }})"
 				label="Projects"
 				size="middle"
-				type="default"
-				routerLink="/app/projects"
-				[queryParams]="{ owner: 'all', page: 1 }"
+				type="default"				
 				class="header-newProject-button"
 				*ngIf="isAuthorized"
 			></app-button>
@@ -25,7 +24,7 @@
 				label="New project"
 				size="middle"
 				type="default"
-				routerLink="/app/projects/draft"
+				(click)="redirectTo('/app/projects/draft')"
 				icon="fas fa-plus"
 				iconPosition="left"
 				class="header-newProject-button"
@@ -46,3 +45,9 @@
 		</div>
 	</div>
 </div>
+
+
+<!-- 
+	routerLink="/app/projects"
+	[queryParams]="{ owner: 'all', page: 1 }" 
+-->

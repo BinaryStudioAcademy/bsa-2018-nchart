@@ -19,6 +19,9 @@ export const initialState: ProjectsState = {
 		totalRecords: null,
 		rows: null
 	},
+	isHasNewPage : false,
+	showDialog : false,
+	redirectToUrl : null,
 	isLoading: false
 };
 
@@ -197,6 +200,51 @@ export const active = (
 	}
 };
 
+export const isHasNewPage = (
+	state = initialState.isHasNewPage,
+	action: ProjectsActions
+) => {
+	switch (action.type) {
+		case constants.ADDED_NEW_PAGE:
+			return true;
+		case constants.DISCARD_FLAG_NEW_PAGE:
+			return false;
+		default:
+			return state;
+	}
+};
+
+export const showDialog = (
+	state = initialState.showDialog,
+	action: ProjectsActions
+) => {
+	switch (action.type) {
+		case constants.SHOW_DIALOG:
+			return true;
+		case constants.CLOSE_DIALOG:
+			return false;
+		default:
+			return state;
+	}
+};
+
+export const redirectToUrl = (
+	state = initialState.redirectToUrl,
+	action: ProjectsActions
+) => {
+	switch (action.type) {
+		case constants.SET_BUTTON_URL:
+			return{
+				...state,
+				...action.payload.redirectUrl
+			};		
+		default:
+			return state;
+	}
+};
+
+
+
 export const pagination = (
 	state = initialState.pagination,
 	action: ProjectsActions
@@ -216,6 +264,9 @@ const reducers = {
 	all,
 	byId,
 	isLoading,
+	isHasNewPage,
+	showDialog,
+	redirectToUrl,
 	active,
 	pagination
 };

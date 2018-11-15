@@ -3,10 +3,16 @@ import { MenuItem } from 'primeng/api';
 import { StoreService } from '@app/services/store.service';
 import {
 	project,
-	hasActiveProject
+	hasActiveProject,
+	isHasNewPage,
+	toRedirect
 } from '@app/store/selectors/projects.selectors';
 import { user } from '@app/store/selectors/user.selectors';
 import { Logout } from '@app/store/actions/user/user.actions';
+import { ShowDialog, SetButtonUrl} from '@app/store/actions/projects/projects.actions';
+import { Router, NavigationEnd, NavigationStart } from '@angular/router';
+import { filter } from 'rxjs/operators';
+import { RedirectUrl, RedirectUrlProp } from '@app/models/redirect.model';
 
 @Component({
 	selector: 'app-header',
@@ -20,11 +26,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
 	items: MenuItem[];
 	authItems: MenuItem[];
 	profileItems: MenuItem[];
+	redirectUrl : string;
 
 	private disconnectStore = null;
 	userName: string;
 	userImage = 'fas fa-user-tie';
-	constructor(private storeService: StoreService) {}
+	isHasNewPage : boolean = false;
+
+	constructor(private storeService: StoreService,private router: Router) {}
 
 	ngOnInit() {
 		this.items = [
@@ -74,8 +83,30 @@ export class HeaderComponent implements OnInit, OnDestroy {
 					this.isAuthorized = !!usr.id;
 				},
 				selector: user()
+			},
+			{
+				subscriber: res => {
+					this.isHasNewPage = res
+				},
+				selector: isHasNewPage()
 			}
 		]);
+	}
+
+	redirectTo(url,param){
+
+		RedirectUrlProp.queryParams = param;
+		RedirectUrlProp.url = url
+
+		this.storeService.dispatch(new SetButtonUrl({redirectUrl : RedirectUrlProp}))
+		if(this.isHasNewPage)
+		{
+			this.storeService.dispatch(new ShowDialog());
+		}
+		else
+		{
+			this.router.navigate([url],param);
+		}
 	}
 
 	logout() {

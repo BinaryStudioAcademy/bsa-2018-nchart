@@ -4,6 +4,7 @@ import {
 	SchemeID,
 	NormalizedActiveEntity
 } from '@app/models/normalizr.model';
+import { RedirectUrl } from './redirect.model';
 
 export interface PaginationData {
 	pageCount: number;
@@ -16,5 +17,8 @@ export class ProjectsState<U = SchemeID, R = undefined>
 	extends NormalizedSchemeWithFetching<Project, R>
 	implements NormalizedActiveEntity<U, R> {
 	active = null;
+	isHasNewPage : boolean = false;
+	showDialog : boolean = false;
+	redirectToUrl : RedirectUrl;
 	pagination: PaginationData;
 }
