@@ -298,7 +298,6 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 			{
 				selector: toRedirect(),
 				subscriber: res => {
-					console.log(res);
 					if (res) this.redirectUrl = res;
 				}
 			}

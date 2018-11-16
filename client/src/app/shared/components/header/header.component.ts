@@ -103,15 +103,27 @@ export class HeaderComponent implements OnInit, OnDestroy {
 		this.storeService.dispatch(
 			new SetButtonUrl({ redirectUrl: RedirectUrlProp })
 		);
-		if (this.isHasNewPage) {
+
+		if (this.isHasNewPage) 
+		{
 			this.storeService.dispatch(new ShowDialog());
-		} else {
+		} 
+		else
+		{
 			this.router.navigate([url], param);
 		}
 	}
 
 	logout() {
-		this.storeService.dispatch(new Logout());
+
+		if (this.isHasNewPage) 
+		{
+			this.storeService.dispatch(new ShowDialog());
+		} 
+		else
+		{
+			this.storeService.dispatch(new Logout());
+		}
 	}
 
 	ngOnDestroy(): void {

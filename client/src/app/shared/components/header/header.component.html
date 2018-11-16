@@ -33,7 +33,7 @@
 				size="middle"
 				type="secondary"
 				*ngIf="!isAuthorized"
-				routerLink="/login"
+				(click)="redirectTo('/login')"
 			></app-button>
 			<app-header-profile
 				[label]="userName"
