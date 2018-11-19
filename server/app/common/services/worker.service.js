@@ -13,6 +13,7 @@ const {
 	processFile,
 	readString
 } = require('../../common/services/file.services/xlsx.service');
+const parseFileTXT = require('../../common/services/file.services/txt.service');
 
 // todo: expand error handling, tests need to be done
 if (isMainThread) {
@@ -73,11 +74,23 @@ if (isMainThread) {
 } else {
 	const data = workerData;
 	if (data.path) {
-		processFile(data.path)
-			.then(payload => {
-				parentPort.postMessage(payload);
-			})
-			.catch(() => { throw new Error('Incorrect file extension'); });
+		if ((data.path).match(/.txt?/)) {
+			parseFileTXT(data.path)
+				.then(payload => {
+					parentPort.postMessage(payload);
+				})
+				.catch(() => { 
+					throw new Error('Incorrect file extension'); 
+				});
+		} else {
+			processFile(data.path)
+				.then(payload => {
+					parentPort.postMessage(payload);
+				})
+				.catch(() => { 
+					throw new Error('Incorrect file extension'); 
+				});
+		}
 	}
 	if (data.contents) {
 		readString(data.contents)
