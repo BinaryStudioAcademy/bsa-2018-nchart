@@ -122,6 +122,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 		} 
 		else
 		{
+			localStorage.setItem('isAuthorized', 'false');
 			this.storeService.dispatch(new Logout());
 		}
 	}

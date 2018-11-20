@@ -3,7 +3,8 @@ import {
 	CanActivate,
 	ActivatedRouteSnapshot,
 	RouterStateSnapshot,
-	CanDeactivate
+	CanDeactivate,
+	Router
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { StoreService } from '@app/services/store.service';
@@ -28,7 +29,7 @@ import { Go } from '@app/store/actions/router/router.actions';
 })
 export class ProjectGuard
 	implements CanActivate, CanDeactivate<ProjectComponent> {
-	constructor(private storeService: StoreService, private action$: Actions) {}
+	constructor(private storeService: StoreService, private action$: Actions,private _Router: Router) {}
 
 	getChartsFromStoreOrAPI() {
 		return this.storeService.createSubscription(isChartsReady()).pipe(
@@ -80,6 +81,12 @@ export class ProjectGuard
 		next: ActivatedRouteSnapshot,
 		state: RouterStateSnapshot
 	): Observable<boolean> | Promise<boolean> | boolean {
+		let isAuthorized = JSON.parse(localStorage.getItem('isAuthorized'));
+        if (!isAuthorized)
+        {
+            this._Router.navigate(['login']);
+            return false;
+        }
 		return this.getChartsFromStoreOrAPI();
 	}
 
