@@ -167,6 +167,7 @@ const readFile = path => new Promise(resolve => {
 			{ header: headers, range: range.s.r + 1, defval: null }
 		);
 		const payload = parseData(data, headers);
+		console.log(payload);
 		resolve(payload);
 	});
 });
