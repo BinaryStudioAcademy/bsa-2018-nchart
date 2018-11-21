@@ -14,6 +14,7 @@ const {
 	readString
 } = require('../../common/services/file.services/xlsx.service');
 const parseFileTXT = require('../../common/services/file.services/txt.service');
+const parseFileCSV = require('../../common/services/file.services/csv.service')
 
 // todo: expand error handling, tests need to be done
 if (isMainThread) {
@@ -74,7 +75,7 @@ if (isMainThread) {
 } else {
 	const data = workerData;
 	if (data.path) {
-		if ((data.path).match(/.txt?/)) {
+		if ((data.path).match(/.txt?/)) {		
 			parseFileTXT(data.path)
 				.then(payload => {
 					parentPort.postMessage(payload);
@@ -82,7 +83,17 @@ if (isMainThread) {
 				.catch(() => { 
 					throw new Error('Incorrect file extension'); 
 				});
-		} else {
+		} 
+		if ((data.path).match(/.csv?/)) {
+			parseFileCSV(data.path)
+				.then(payload => {
+					parentPort.postMessage(payload);
+				})
+				.catch(() => { 
+					throw new Error('Incorrect file extension'); 
+				});
+		} 
+		else {
 			processFile(data.path)
 				.then(payload => {
 					parentPort.postMessage(payload);

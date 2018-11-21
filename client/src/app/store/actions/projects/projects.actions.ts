@@ -6,6 +6,7 @@ import {
 } from '@app/models/project.model';
 import { SchemeID } from '@app/models/normalizr.model';
 import { AppAction, FailedAction } from '@app/models/store.model';
+import { RedirectUrl } from '@app/models/redirect.model';
 
 export class LoadProjetcs extends AppAction<{ groupId: string }> {
 	readonly type = ProjectsActionConstants.LOAD_PROJECTS;
@@ -174,6 +175,26 @@ export class UpdateProjectNameFailed extends FailedAction {
 	readonly type = ProjectsActionConstants.UPDATE_PROJECT_NAME__FAILED;
 }
 
+export class AddedNewPage extends AppAction {
+	readonly type = ProjectsActionConstants.ADDED_NEW_PAGE;
+}
+
+export class DiscardFlagNewPage extends AppAction {
+	readonly type = ProjectsActionConstants.DISCARD_FLAG_NEW_PAGE;
+}
+
+export class ShowDialog extends AppAction {
+	readonly type = ProjectsActionConstants.SHOW_DIALOG;
+}
+
+export class CloseDialog extends AppAction {
+	readonly type = ProjectsActionConstants.CLOSE_DIALOG;
+}
+
+export class SetButtonUrl extends AppAction<{ redirectUrl: RedirectUrl }> {
+	readonly type = ProjectsActionConstants.SET_BUTTON_URL;
+}
+
 export type Actions =
 	| LoadProjetcs
 	| LoadProjectsComplete
@@ -204,4 +225,9 @@ export type Actions =
 	| DeleteOneProjectFailed
 	| UpdateProjectName
 	| UpdateProjectNameComplete
-	| UpdateProjectNameFailed;
+	| UpdateProjectNameFailed
+	| AddedNewPage
+	| DiscardFlagNewPage
+	| ShowDialog
+	| CloseDialog
+	| SetButtonUrl;

@@ -18,6 +18,7 @@ import { DatasetPreloadSamplesState } from '@app/models/dataset-store.model';
 import { NotificationState } from '@app/models/notification-store.model';
 import { RouterStateUrl } from '@app/models/router-state-url.model';
 import { RouterReducerState } from '@ngrx/router-store';
+import { SvgFilesState } from '@app/store/reducers/svg.reducer';
 
 export class AppAction<T = undefined> {
 	readonly type: string;
@@ -49,4 +50,6 @@ export interface AppState {
 	datasetPreload: DatasetPreloadSamplesState;
 	notification: NotificationState;
 	router?: RouterReducerState<RouterStateUrl>;
+	svgfiles : SvgFilesState;
 }
+

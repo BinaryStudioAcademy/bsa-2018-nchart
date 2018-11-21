@@ -146,4 +146,36 @@ project.post('/:id/export', (req, res) => {
 	});
 });
 
+project.post('/:id/export-dashboard', (req, res) => {
+	ProjectService.exportDashboard(req.body.content, req.body.type).then(
+		result => {
+			let contentType;
+			switch (req.body.type) {
+			case 'pdf':
+				contentType = 'application/pdf';
+				break;
+			case 'png':
+				contentType = 'image/png';
+				break;
+			case 'svg':
+				contentType = 'image/svg+xml';
+				break;
+			default:
+				contentType = 'application/json';
+				break;
+			}
+			if (result) {
+				res.writeHead(200, {
+					'Content-Disposition': 'inline',
+					'Content-Length': result.length,
+					'Content-Type': `${contentType}`
+				});
+				res.end(result);
+			} else {
+				res.sendStatus(400);
+			}
+		}
+	);
+});
+
 module.exports = project;

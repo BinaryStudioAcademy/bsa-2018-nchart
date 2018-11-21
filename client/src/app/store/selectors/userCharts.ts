@@ -76,6 +76,36 @@ export const getAllUserCharts = () => (state: AppState): UserChart[] => {
 	return null;
 };
 
+export const getAllUserChartTypes = () => (
+	state: AppState
+): {
+	sysName: string;
+	chartTypeId: SchemeID;
+	userChartsId: SchemeID[];
+}[] => {
+	const userCharts = getAllUserCharts()(state);
+
+	if (userCharts) {
+		const charts = userCharts.reduce((acc, { id, chartTypeId }) => {
+			acc[chartTypeId] = {
+				sysName: state.charts.byId[chartTypeId].sysName,
+				chartTypeId,
+				userChartsId: [
+					...(!!acc[chartTypeId]
+						? acc[chartTypeId].userChartsId
+						: []),
+					id
+				]
+			};
+			return acc;
+		}, {});
+
+		return Object.keys(charts).map(id => charts[id]);
+	}
+
+	return null;
+};
+
 export const isRepeatDataset = (userChartId: SchemeID) => (state: AppState) => {
 	const userCharts = getAllUserCharts()(state);
 
@@ -175,8 +205,10 @@ export const getFullProject = id => (state: AppState) => {
 	};
 };
 
-export const getCustomizeSettings = () => (state: AppState) => {
-	const aChart = userChart()(state);
+export const getCustomizeSettings = (chartId?: SchemeID) => (
+	state: AppState
+) => {
+	const aChart = userChart(chartId)(state);
 	if (aChart) {
 		return aChart.customizeSettings.reduce((obj, id) => {
 			const option = state.userChartSettings.customizeSettings[id];
@@ -204,8 +236,8 @@ export const getColumnValues = (datasetId: SchemeID, columnId: SchemeID) => (
 	return [];
 };
 
-export const getData = () => (state: AppState) => {
-	const uC = userChart()(state);
+export const getData = (chartId?: SchemeID) => (state: AppState) => {
+	const uC = userChart(chartId)(state);
 
 	if (uC) {
 		const dS = dataset(uC.datasetId)(state);

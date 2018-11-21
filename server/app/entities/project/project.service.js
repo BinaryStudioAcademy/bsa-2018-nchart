@@ -624,7 +624,11 @@ class ProjectService {
 	}
 
 	exportHtml(content, type) {
-		return this.MarkupTemplateService.getDocument(content, type);
+		return this.MarkupTemplateService.getDocument(content, type, false);
+	}
+
+	exportDashboard(content, type) {
+		return this.MarkupTemplateService.getDocument(content, type, true);
 	}
 }
 

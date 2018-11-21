@@ -11,7 +11,7 @@ class MarkupTemplateService {
 		this.Path = path;
 	}
 
-	async getDocument(content, type) {
+	async getDocument(content, type, isDashboard) {
 		const templateName = 'template';
 		const template = this.compileHtml(templateName, { content });
 
@@ -29,12 +29,25 @@ class MarkupTemplateService {
 			]
 		});
 		const page = await browser.newPage();
-
 		await page.setContent(template);
-		const buffer = await this.DocumentGeneratingService.returnBuffer(
-			type,
-			page
-		);
+		let buffer;
+		if (!isDashboard) {
+			buffer = await this.DocumentGeneratingService.returnBuffer(
+				type,
+				page
+			);
+		} else {
+			await page.setViewport({
+				width: 1000,
+				height: 707
+			});
+			buffer = await page.pdf({
+				width: '1000px',
+				height: '707px',
+				printBackground: true,
+				landscape: true
+			});
+		}
 		await browser.close();
 		return buffer;
 	}

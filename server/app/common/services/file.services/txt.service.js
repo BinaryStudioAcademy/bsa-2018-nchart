@@ -74,3 +74,4 @@ const parseFile = filePath => {
 }
 
 module.exports = parseFile;
+module.exports.getTypes = getTypes;

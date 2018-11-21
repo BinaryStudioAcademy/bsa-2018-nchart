@@ -11,6 +11,7 @@ import { AppComponent } from '@app/core/app/app.component';
 import { ExportPdfComponent } from '@app/features/export-pdf/export-pdf.component';
 import { LandingPageComponent } from '@app/core/landing-page/landing-page.component';
 import { ProjectGuard } from '@app/services/guards/project.guard';
+import { DashboardComponent } from '@app/core/dashboard/dashboard.component';
 
 const appRoutes: Routes = [
 	{
@@ -29,6 +30,11 @@ const appRoutes: Routes = [
 		canActivate: [AppAuthGuard],
 		children: [
 			{
+				path: 'dashboard',
+				component: DashboardComponent
+			}
+			,
+			{
 				path: '',
 				component: LandingPageComponent
 			},
@@ -44,12 +50,19 @@ const appRoutes: Routes = [
 				canActivate: [ProjectGuard]
 			},
 			{
+				path: 'project/:id/dashboard',
+				component: DashboardComponent,
+				canActivate: [ProjectGuard]
+			},
+			{
 				path: 'project/:id/pdf_preview',
-				component: ExportPdfComponent
+				component: ExportPdfComponent,
+				canActivate: [ProjectGuard]
 			},
 			{
 				path: 'projects',
-				component: ProjectsComponent
+				component: ProjectsComponent,
+				canActivate: [ProjectGuard]
 			},
 			{
 				path: 'companies',

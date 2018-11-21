@@ -31,11 +31,13 @@ import { TooltipModule } from 'primeng/tooltip';
 import { TableModule } from 'primeng/table';
 import { TieredMenuModule } from 'primeng/tieredmenu';
 import { DialogModule } from 'primeng/dialog';
+import { GridsterModule } from 'angular-gridster2';
 import { SidebarModule } from 'primeng/sidebar';
 import { MultiSelectModule } from 'primeng/multiselect';
 
 @NgModule({
 	imports: [
+		GridsterModule,
 		DialogModule,
 		ButtonModule,
 		SplitButtonModule,
@@ -70,6 +72,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 		MultiSelectModule
 	],
 	exports: [
+		GridsterModule,
 		ButtonModule,
 		SplitButtonModule,
 		PasswordModule,
