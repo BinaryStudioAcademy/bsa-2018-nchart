@@ -4,7 +4,6 @@
 	"description": "",
 	"main": "server/bin/www",
 	"scripts": {
-		
 		"format:fix": "pretty-quick --branch origin/develop --write",
 		"lint:client": "cd client && npm run lint",
 		"lint:server": "cd server && npm run lint",
@@ -12,11 +11,11 @@
 	},
 	"husky": {
 		"hooks": {
-		  "pre-commit": "npm test",
-		  "pre-push": "npm test",
-		  "...": "..."
+			"pre-commit": "npm test",
+			"pre-push": "npm test",
+			"...": "..."
 		}
-	  },
+	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/BinaryStudioAcademy/bsa-2018-nchart.git"

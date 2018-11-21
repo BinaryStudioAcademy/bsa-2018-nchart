@@ -30,6 +30,11 @@ const appRoutes: Routes = [
 		canActivate: [AppAuthGuard],
 		children: [
 			{
+				path: 'dashboard',
+				component: DashboardComponent
+			}
+			,
+			{
 				path: '',
 				component: LandingPageComponent
 			},
