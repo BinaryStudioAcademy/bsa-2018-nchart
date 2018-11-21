@@ -9,15 +9,19 @@
 			"request": "attach",
 			"name": "Attach to client 4200",
 			"urlFilter": "http://localhost:4200/*",
-			"port": 9222,
+			"port": 4200,
 			"webRoot": "${workspaceFolder}/client"
-		},
+		},{
+		"type": "chrome",
+           "request": "launch",
+           "name": "Launch Chrome against localhost",
+           "url": "http://localhost:4200",
+           "webRoot": "${workspaceFolder}"},
 		{
 			"type": "node",
 			"request": "attach",
 			"name": "Attach to Node: Nodemon",
 			"processId": "${command:PickProcess}",
-			"restart": true,
 			"protocol": "inspector"
 		},
 		{

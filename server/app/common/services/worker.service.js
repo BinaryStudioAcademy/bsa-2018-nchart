@@ -13,6 +13,8 @@ const {
 	processFile,
 	readString
 } = require('../../common/services/file.services/xlsx.service');
+const parseFileTXT = require('../../common/services/file.services/txt.service');
+const parseFileCSV = require('../../common/services/file.services/csv.service')
 
 // todo: expand error handling, tests need to be done
 if (isMainThread) {
@@ -29,15 +31,13 @@ if (isMainThread) {
 						workerData: { path, contents, link }
 					});
 					worker.on('message', resolve);
-					worker.on('error', reject);
-					worker.on('exit', code => {
-						if (code !== 0) {
-							reject(
-								new Error(
-									`Worker stopped with exit code ${code}`
-								)
-							);
-						}
+					worker.on('error', err => {
+						reject(err);
+					});
+					worker.on('exit', () => {
+						worker.on('exit', () => {
+							reject(new Error('Incorrect file extension'));
+						});
 					});
 				});
 			} else if (link) {
@@ -48,15 +48,11 @@ if (isMainThread) {
 							workerData: { path, contents, link }
 						});
 						worker.on('message', resolve);
-						worker.on('error', reject);
-						worker.on('exit', code => {
-							if (code !== 0) {
-								reject(
-									new Error(
-										`Worker stopped with exit code ${code}`
-									)
-								);
-							}
+						worker.on('error', err => {
+							reject(err);
+						});
+						worker.on('exit', () => {
+							reject(new Error('Incorrect file extension'));
 						});
 					})
 					.catch(err => reject(err));
@@ -79,13 +75,33 @@ if (isMainThread) {
 } else {
 	const data = workerData;
 	if (data.path) {
-		processFile(data.path)
-			.then(payload => {
-				parentPort.postMessage(payload);
-			})
-			.catch(err => {
-				throw err;
-			});
+		if ((data.path).match(/.txt?/)) {		
+			parseFileTXT(data.path)
+				.then(payload => {
+					parentPort.postMessage(payload);
+				})
+				.catch(() => { 
+					throw new Error('Incorrect file extension'); 
+				});
+		} 
+		if ((data.path).match(/.csv?/)) {
+			parseFileCSV(data.path)
+				.then(payload => {
+					parentPort.postMessage(payload);
+				})
+				.catch(() => { 
+					throw new Error('Incorrect file extension'); 
+				});
+		} 
+		else {
+			processFile(data.path)
+				.then(payload => {
+					parentPort.postMessage(payload);
+				})
+				.catch(() => { 
+					throw new Error('Incorrect file extension'); 
+				});
+		}
 	}
 	if (data.contents) {
 		readString(data.contents)

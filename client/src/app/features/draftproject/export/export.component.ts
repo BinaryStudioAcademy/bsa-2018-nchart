@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, ChangeDetectorRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import {
 	requiredValidator,
@@ -12,6 +12,12 @@ import { ExportSvgBusService } from '@app/services/export-svg-bus.service';
 import { Subscription } from 'rxjs';
 import { ClipboardService } from 'ngx-clipboard';
 import { NotificationSvgClipboard } from '@app/store/actions/notification/notification.actions';
+import { getActiveChartId } from '@app/store/selectors/userCharts';
+import { SaveSvgAction } from '@app/store/actions/svg/svg.actions';
+import { SvgFile } from '@app/models/svg.model';
+import { addedNewSvg } from '@app/store/selectors/svg.selector';
+import { TouchSequence } from 'selenium-webdriver';
+
 @Component({
 	selector: 'app-export',
 	templateUrl: './export.component.html',
@@ -30,8 +36,9 @@ export class ExportComponent implements OnInit, OnDestroy {
 		),
 		requiredValidator('Filename can`t be empty')
 	]);
+	pageId : any;
+	CurrSvg : string;
 	controlType = new FormControl(ExportType.PDF, [requiredValidator('')]);
-
 	options = [
 		{
 			label: '.pdf',
@@ -59,7 +66,6 @@ export class ExportComponent implements OnInit, OnDestroy {
 	) {}
 
 	ngOnInit() {
-		this.exportSvgBus.requestSvg();
 		this.svgFormControl = new FormControl('');
 		this.disconnect = this.storeService.connect([
 			{
@@ -67,11 +73,30 @@ export class ExportComponent implements OnInit, OnDestroy {
 					this.isLoading = isExporting;
 				},
 				selector: isProjectExporting()
-			}
+			},
+			{
+				selector: getActiveChartId(),
+				subscriber: id => {
+					if(id)
+						this.exportSvgBus.requestSvg();
+				}
+			},
+			// {
+			// 	selector: addedNewSvg(),
+			// 	subscriber : res =>
+			// 	{console.log(res)}
+			// }
 		]);
 		this.exportBusResponse = this.exportSvgBus.responseObservable.subscribe(
 			svg => {
-				this.svgFormControl.patchValue(svg);
+				this.CurrSvg = svg;
+				this.svgFormControl.setValue(svg);
+				//  let temp = Object.create(SvgFile);	
+				//  temp.id = this.pageId;
+				//  temp.svg = Object.assign(svg);
+				//  this.CurrSvg = JSON.parse(JSON.stringify(svg));
+				//  this.svgFormControl.setValue([...temp.svg]);
+				//this.storeService.dispatch(new SaveSvgAction({svg : temp}));
 				if (this.isLoadTab) {
 					const filename = this.controlName.value.trim();
 					const type = this.controlType.value as ExportType;
@@ -101,7 +126,7 @@ export class ExportComponent implements OnInit, OnDestroy {
 	}
 
 	copyToClipBoard() {
-		this.clipboardService.copyFromContent(this.svgFormControl.value);
+		this.clipboardService.copyFromContent(this.CurrSvg);
 		this.storeService.dispatch(new NotificationSvgClipboard());
 	}
 }

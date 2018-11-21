@@ -21,7 +21,9 @@ function validateRequest(file, contents, link) {
 			/.+(\.uos)$/,
 			/.+(\.qpw)$/
 		],
-		url: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w-]+)+[\w\-_~:/?#[\]@!&',;=.]+$/
+		/* eslint-disable */
+		url: /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+        /* eslint-enable */
 	};
 	if (contents !== '' && typeof contents === 'string') {
 		return true;

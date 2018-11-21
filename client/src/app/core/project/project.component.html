@@ -1,4 +1,5 @@
-<div class="project-container"
+<div
+	class="project-container"
 	[loading-sp]="isProjectLoading"
 	spBackgroundColor="#f2f3f9"
 >
@@ -9,37 +10,62 @@
 		[isLoading]="isLoading"
 	></app-stepper>
 	<div class="main-content">
-	<app-project-name id="load" #viewItem [projectName]="projectName" (setProjectName)="changeProjectName($event)">
-	</app-project-name>
-	<div *ngIf="listPages.length">
+		<app-project-name
+			id="load"
+			#viewItem
+			[projectName]="projectName"
+			(setProjectName)="changeProjectName($event)"
+		>
+		</app-project-name>
+		<div *ngIf="listPages.length">
 			<app-project-tabs
 				[listPages]="listPages"
 				[activeChartId]="activeChartId"
-				(displayModalDataset)="onDisplayModalDataset()">
+				(displayModalDataset)="onDisplayModalDataset()"
+			>
 			</app-project-tabs>
-			
-
-	</div>
-		<app-load-data 	*ngIf="!(getIsActiveChartDataset() | async)"></app-load-data>
-		<app-data-table *ngIf="isDataset()" id="table" #viewItem></app-data-table>
-		<app-list-charts *ngIf="isDataset()" id="charts" #viewItem></app-list-charts>
-		<app-dimension-settings *ngIf="isDataset()" id="settings" #viewItem></app-dimension-settings>
-		<app-custom-chart *ngIf="isCharts()" id="chart" #viewItem></app-custom-chart>
+		</div>
+		<app-load-data
+			*ngIf="!(getIsActiveChartDataset() | async)"
+		></app-load-data>
+		<app-data-table
+			*ngIf="isDataset()"
+			id="table"
+			#viewItem
+		></app-data-table>
+		<app-list-charts
+			*ngIf="isDataset()"
+			id="charts"
+			#viewItem
+		></app-list-charts>
+		<app-dimension-settings
+			*ngIf="isDataset()"
+			id="settings"
+			#viewItem
+		></app-dimension-settings>
+		<app-custom-chart
+			*ngIf="isCharts()"
+			id="chart"
+			#viewItem
+		></app-custom-chart>
 		<app-export *ngIf="isCharts()" id="export" #viewItem></app-export>
 
-		<p-dialog header="Confirmation"
-				  [(visible)]="display"
-				  [modal]="true"
-				  [draggable]="false"
-				[width]="400"
-				[minWidth]="250"
-				[minHeight]="150"
-				[minY]="70"
-				[maximizable]="false"
-				[resizable]="false"
-				[closable]="true">
+		<p-dialog
+			header="Confirmation"
+			[(visible)]="display"
+			[modal]="true"
+			[draggable]="false"
+			[width]="400"
+			[minWidth]="250"
+			[minHeight]="150"
+			[minY]="70"
+			[maximizable]="false"
+			[resizable]="false"
+			[closable]="false"
+		>
 			<span>
-				Are you sure that you want to leave page without saving this project?
+				Are you sure that you want to leave page without saving this
+				project?
 			</span>
 			<p-footer class="modal-controls">
 				<app-button
@@ -58,20 +84,22 @@
 			</p-footer>
 		</p-dialog>
 
-		<p-dialog header="Confirmation"
-				[(visible)]="displayModalDataset"
-				[modal]="true"
-				[draggable]="false"
-				[width]="400"
-				[minWidth]="250"
-				[minHeight]="150"
-				[minY]="70"
-				[maximizable]="false"
-				[resizable]="false"
-				[closable]="true"
+		<p-dialog
+			header="Confirmation"
+			[(visible)]="displayModalDataset"
+			[modal]="true"
+			[draggable]="false"
+			[width]="400"
+			[minWidth]="250"
+			[minHeight]="150"
+			[minY]="70"
+			[maximizable]="false"
+			[resizable]="false"
+			[closable]="true"
 		>
 			<span>
-				Do you want to use current dataset? <br> If not you can upload any other data.
+				Do you want to use current dataset? <br />
+				If not you can upload any other data.
 			</span>
 			<p-footer class="modal-controls">
 				<app-button
@@ -87,10 +115,9 @@
 					type="secondary"
 					(onclick)="acceptDataset()"
 				></app-button>
-				
 			</p-footer>
 		</p-dialog>
-		<p-dialog 
+		<p-dialog
 			[(visible)]="displayLoginDialog"
 			[modal]="true"
 			[draggable]="false"
@@ -106,31 +133,27 @@
 			<p style="margin: .5rem 0">
 				You can sign in to save this project as a private
 			</p>
-			<p-tabView
-                [activeIndex]="1"
-                (onChange)="resetForms()"
-            >
-                <p-tabPanel header="Sign In">
-                    <app-login-form
-                        [loginForm]="loginForm"
-                        (loginClick)="onLogin($event)"
+			<p-tabView [activeIndex]="1" (onChange)="resetForms()">
+				<p-tabPanel header="Sign In">
+					<app-login-form
+						[loginForm]="loginForm"
+						(loginClick)="onLogin($event)"
 						[isLoading]="isLoading"
-                    ></app-login-form>
-                </p-tabPanel>
-                <p-tabPanel header="Register">
-                    <app-register-form
-                        [registerForm]="registerForm"
-                        (registerClick)="onRegister($event)"
-                        [isLoading]="isLoading"
-                    ></app-register-form>
-                </p-tabPanel>
+					></app-login-form>
+				</p-tabPanel>
+				<p-tabPanel header="Register">
+					<app-register-form
+						[registerForm]="registerForm"
+						(registerClick)="onRegister($event)"
+						[isLoading]="isLoading"
+					></app-register-form>
+				</p-tabPanel>
 			</p-tabView>
-			<p style="text-align: center; margin: .5rem 0" >or</p>
+			<p style="text-align: center; margin: .5rem 0">or</p>
 			<div class="link-container">
-				<span
-					class="custom-link"
-					(click)="saveProj()"
-				>Save as public project</span>
+				<span class="custom-link" (click)="saveProj()"
+					>Save as public project</span
+				>
 			</div>
 		</p-dialog>
 	</div>

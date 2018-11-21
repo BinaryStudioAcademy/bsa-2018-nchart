@@ -51,11 +51,13 @@ const appRoutes: Routes = [
 			},
 			{
 				path: 'project/:id/pdf_preview',
-				component: ExportPdfComponent
+				component: ExportPdfComponent,
+				canActivate: [ProjectGuard]
 			},
 			{
 				path: 'projects',
-				component: ProjectsComponent
+				component: ProjectsComponent,
+				canActivate: [ProjectGuard]
 			},
 			{
 				path: 'companies',

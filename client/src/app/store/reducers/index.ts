@@ -74,6 +74,7 @@ import {
 	notificationReducer,
 	initialState as notificationInitialState
 } from '@app/store/reducers/notifications.reducer';
+import { initialSvgState, saveSvgReducer } from './svg.reducer';
 
 export const initialState: AppState = {
 	user: userInitialState,
@@ -89,7 +90,8 @@ export const initialState: AppState = {
 	defaultChartSettings: defaultChartSettingsInitialState,
 	userChartSettings: userChartSettingsInitialState,
 	datasetPreload: datasetPreloadInitialState,
-	notification: notificationInitialState
+	notification: notificationInitialState,
+	svgfiles: initialSvgState
 };
 
 export const getReducers = () => ({
@@ -107,7 +109,8 @@ export const getReducers = () => ({
 	datasetData: datasetDataReducer,
 	router: routerReducer,
 	datasetPreload: datasetPreloadReducer,
-	notification: notificationReducer
+	notification: notificationReducer,
+	svgFiles : saveSvgReducer
 });
 
 export const reducersToken = new InjectionToken<ActionReducerMap<AppState>>(

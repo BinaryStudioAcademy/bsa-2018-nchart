@@ -1,23 +1,21 @@
 <div class="ui-widget-header header-container">
 	<div class="header-component">
-		<a
-			[routerLink]="['/app']"
-			class="header-logo"
-		>
-			<img src="assets/nChartLogo.svg">
+		<a [routerLink]="['/app']" class="header-logo">
+			<img src="assets/nChartLogo.svg" />
 		</a>
 	</div>
-	<div class="header-component">
-		<p-tabMenu [model]="items"></p-tabMenu>
-	</div>
+	<div class="header-component"><p-tabMenu [model]="items"></p-tabMenu></div>
 	<div class="header-component">
 		<div class="header-profile-container">
 			<app-button
+				(click)="
+					redirectTo('/app/projects', {
+						queryParams: { owner: 'all', page: 1 }
+					})
+				"
 				label="Projects"
 				size="middle"
 				type="default"
-				routerLink="/app/projects"
-				[queryParams]="{ owner: 'all', page: 1 }"
 				class="header-newProject-button"
 				*ngIf="isAuthorized"
 			></app-button>
@@ -25,7 +23,7 @@
 				label="New project"
 				size="middle"
 				type="default"
-				routerLink="/app/projects/draft"
+				(click)="redirectTo('/app/projects/draft')"
 				icon="fas fa-plus"
 				iconPosition="left"
 				class="header-newProject-button"
@@ -35,7 +33,7 @@
 				size="middle"
 				type="secondary"
 				*ngIf="!isAuthorized"
-				routerLink="/login"
+				(click)="redirectTo('/login')"
 			></app-button>
 			<app-header-profile
 				[label]="userName"
@@ -46,3 +44,8 @@
 		</div>
 	</div>
 </div>
+
+<!--
+	routerLink="/app/projects"
+	[queryParams]="{ owner: 'all', page: 1 }"
+-->

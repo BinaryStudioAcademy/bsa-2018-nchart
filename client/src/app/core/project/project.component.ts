@@ -11,15 +11,21 @@ import {
 import { StoreService } from '@app/services/store.service';
 import {
 	CreateDraftProject,
-	LoadOneProject
+	LoadOneProject,
+	AddedNewPage,
+	DiscardFlagNewPage,
+	CloseDialog
 } from '@app/store/actions/projects/projects.actions';
 import { SchemeID } from '@app/models/normalizr.model';
 import { isChartsReady } from '@app/store/selectors/charts.selectors';
 import {
 	projectCharts,
-	isProjectLoading
+	isProjectLoading,
+	isHasNewPage,
+	isShowDialog,
+	toRedirect
 } from '@app/store/selectors/projects.selectors';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject, Subscription } from 'rxjs';
 import * as ProjectsActions from '@app/store/actions/projects/projects.actions';
 import { project } from '@app/store/selectors/projects.selectors';
@@ -41,6 +47,7 @@ import {
 	Register as RegisterAction
 } from '@app/store/actions/user/user.actions';
 import { ProjectService } from '@app/services/project.service';
+import { RedirectUrl } from '@app/models/redirect.model';
 
 interface StepperStep {
 	id: number;
@@ -77,6 +84,7 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 	loginForm: FormGroup;
 	registerForm: FormGroup;
 	saveProject: Subscription;
+	redirectUrl: RedirectUrl;
 
 	disconnect: () => void;
 
@@ -163,7 +171,8 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 		private storeService: StoreService,
 		private route: ActivatedRoute,
 		private loginService: LoginService,
-		private projectService: ProjectService
+		private projectService: ProjectService,
+		private router: Router
 	) {}
 
 	showDialog() {
@@ -173,11 +182,18 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 	accept() {
 		this.display = false;
 		this.subConf.next(true);
+		this.storeService.dispatch(new CloseDialog());
+		this.storeService.dispatch(new DiscardFlagNewPage());
+		this.router.navigate(
+			[this.redirectUrl.url],
+			this.redirectUrl.queryParams
+		);
 	}
 
 	reject() {
 		this.display = false;
 		this.subConf.next(false);
+		this.storeService.dispatch(new CloseDialog());
 	}
 
 	acceptDataset() {
@@ -185,11 +201,13 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.storeService.dispatch(
 			new CreateChart({ datatsetId: this.currentDatasetId })
 		);
+		this.storeService.dispatch(new AddedNewPage());
 	}
 
 	rejectDataset() {
 		this.displayModalDataset = false;
 		this.storeService.dispatch(new CreateChart({ datatsetId: null }));
+		this.storeService.dispatch(new AddedNewPage());
 	}
 
 	canDeactivate(): Observable<boolean> {
@@ -269,6 +287,18 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 				subscriber: t => {
 					this.isLoading = t;
 					this.isProjectLoading = t && !this.projectId;
+				}
+			},
+			{
+				selector: isShowDialog(),
+				subscriber: res => {
+					if (res) this.display = true;
+				}
+			},
+			{
+				selector: toRedirect(),
+				subscriber: res => {
+					if (res) this.redirectUrl = res;
 				}
 			}
 		]);

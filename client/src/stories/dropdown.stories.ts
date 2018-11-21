@@ -62,9 +62,32 @@ storiesOf('Dropdowns', module)
 			component: DropdownSimpleComponent,
 			props: {
 				placeholder: 'Select item',
-				options: [
-					{ label: 'Group name', items: [{ label: 'Select me!' }] }
-				],
+				options:[
+            {
+                label: 'Germany', 
+                items: [
+                    {label: 'Audi', value: 'Audi'},
+                    {label: 'BMW', value: 'BMW'},
+                    {label: 'Mercedes', value: 'Mercedes'}
+                ]
+            },
+            {
+                label: 'USA', 
+                items: [
+                    {label: 'Cadillac', value: 'Cadillac'},
+                    {label: 'Ford', value: 'Ford'},
+                    {label: 'GMC', value: 'GMC'}
+                ]
+            },
+            {
+                label: 'Japan', 
+                items: [
+                    {label: 'Honda', value: 'Honda'},
+                    {label: 'Mazda', value: 'Mazda'},
+                    {label: 'Toyota', value: 'Toyota'}
+                ]
+            }
+        ],
 				control: new FormControl('', Validators.required),
 				group: true
 			}

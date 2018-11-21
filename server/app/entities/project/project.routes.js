@@ -63,7 +63,7 @@ project.get(
 	'/owners',
 	(req, res, next) => {
 		// console.log(req.query);
-		ProjectService.projectsWithPagination(res.locals.user.id, req.query)
+		ProjectService.projectsWithPagination(res.locals.user, req.query)
 			.then(PayloadGeneratorService.nextWithData(next, res))
 			.catch(next);
 	},

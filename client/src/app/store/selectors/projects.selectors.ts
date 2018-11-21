@@ -88,3 +88,12 @@ export const getActiveProject = () => (state: AppState) =>
 
 export const isProjectLoading = () => (state: AppState) =>
 	state.projects.isLoading;
+
+export const isHasNewPage = () => (state: AppState) =>
+	state.projects.isHasNewPage;
+
+export const isShowDialog = () => (state: AppState) =>
+	state.projects.showDialog;
+
+export const toRedirect = () => (state: AppState) =>
+	state.projects.redirectToUrl;
