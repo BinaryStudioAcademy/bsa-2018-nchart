@@ -7,6 +7,14 @@
 	<div class="header-component"><p-tabMenu [model]="items"></p-tabMenu></div>
 	<div class="header-component">
 		<div class="header-profile-container">
+				<app-button
+				(click)="redirectTo('/app/dashboard')"
+				label="Dashboard"
+				size="middle"
+				type="default"
+				class="header-newProject-button"
+				*ngIf="isAuthorized"
+			></app-button>
 			<app-button
 				(click)="
 					redirectTo('/app/projects', {

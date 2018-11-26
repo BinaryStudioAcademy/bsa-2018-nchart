@@ -17,6 +17,7 @@ import { ProjectsCardComponent } from '@app/core/projects/project-card/projects-
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ButtonComponent } from '@app/shared/components/button/button/button.component';
 import { ChartComponent } from '@app/features/draftproject/custom-chart/chart/chart.component';
+import { InputTextareaComponent } from '@app/shared/components/form-field/input-textarea/input-textarea.component';
 
 @NgModule({
 	declarations: [
@@ -39,7 +40,7 @@ import { ChartComponent } from '@app/features/draftproject/custom-chart/chart/ch
 		FeatureModule,
 		FormFieldModule
 	],
-	entryComponents: [ChartComponent, ButtonComponent],
+	entryComponents: [ChartComponent, ButtonComponent,InputTextareaComponent],
 	exports: []
 })
 export class CoreModule {}

@@ -42,6 +42,10 @@ import { WorldMapChartComponent } from '@app/shared/components/charts/world-map-
 import { ExportDashboardBusService } from '@app/services/export-dashboard-bus.service';
 import { ExportType } from '@app/models/export.model';
 import { ExportProject } from '@app/store/actions/export/export.actions';
+import { InputTextareaComponent } from '@app/shared/components/form-field/input-textarea/input-textarea.component';
+import { FormControl } from '@angular/forms';
+import { InputTextComponent } from '@app/shared/components/form-field/input-text/input-text.component';
+import { control } from 'stories/tooltip.stories';
 
 @Component({
 	selector: 'app-dashboard',
@@ -49,7 +53,7 @@ import { ExportProject } from '@app/store/actions/export/export.actions';
 	styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
-	displayModalDashboard = true;
+	displayModalDashboard = false;//true;
 	options: GridsterConfig;
 	dashboard: Array<GridsterItem>;
 	routeParams$: Subscription;
@@ -85,7 +89,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 		if (this.horizontalLayout) {
 			this.options = {
 				gridType: GridType.Fixed,
-				displayGrid: DisplayGrid.Always,
+				displayGrid: DisplayGrid.None,
 				pushItems: true,
 				draggable: {
 					enabled: true
@@ -93,10 +97,10 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 				resizable: {
 					enabled: true
 				},
-				minCols: 70,
-				maxCols: 70,
-				minRows: 99,
-				maxRows: 99,
+				minCols: 30,
+				maxCols: 30,
+				minRows: 59,
+				maxRows: 59,
 				// maxItemCols: 77,
 				// minItemCols: 10,
 				// maxItemRows: 99,
@@ -106,13 +110,13 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 				// defaultItemCols: 12,
 				// defaultItemRows: 12,
 				margin: 0,
-				fixedColWidth: 10,
-				fixedRowHeight: 10
+				fixedColWidth:20,
+				fixedRowHeight: 20
 			};
 		} else {
 			this.options = {
 				gridType: GridType.Fixed,
-				displayGrid: DisplayGrid.Always,
+				displayGrid: DisplayGrid.None,
 				pushItems: true,
 				draggable: {
 					enabled: true
@@ -133,8 +137,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 				defaultItemCols: 12,
 				defaultItemRows: 12,
 				margin: 0,
-				fixedColWidth: 10,
-				fixedRowHeight: 10
+				fixedColWidth: 20,
+				fixedRowHeight: 20
 			};
 		}
 		this.horizontalLayout = !this.horizontalLayout;
@@ -187,6 +191,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 			fixedRowHeight: 10
 		};
 
+		this.changeLayout();
+
 		this.dashboard = [
 			// {cols: 2, rows: 1, y: 0, x: 0},
 			// {cols: 2, rows: 2, y: 0, x: 2},
@@ -213,6 +219,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 			{
 				selector: getAllUserChartTypes(),
 				subscriber: t => {
+					console.log(t);
 					this.userCharts = t;
 				}
 			},
@@ -248,6 +255,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 		]);
 		this.exportBusResponseDashboard = this.exportDashboardBus.responseObservable.subscribe(
 			dashboard => {
+				debugger;
 				this.storeService.dispatch(
 					new ExportProject({
 						id: 1,
@@ -289,6 +297,13 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 					instance.label = item.data.inputs.label;
 				}
 
+				if(componentRef.instance instanceof InputTextareaComponent){
+					const instance: InputTextareaComponent = componentRef.instance as InputTextareaComponent;
+
+					instance.control = item.data.inputs.control;
+					instance.label = item.data.inputs.label;
+				}
+
 				componentRef.changeDetectorRef.detectChanges();
 				this.components.push(componentRef);
 			}
@@ -321,7 +336,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 			cols: 20,
 			rows: 20,
 			data: {
-				component: ButtonComponent,
+				component: ButtonComponent, 
 				inputs: {
 					label: 'label' + Date()
 				}
@@ -450,7 +465,32 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 			});
 	}
 	exportDashboard() {
-		const item = this.dashboardEl.nativeElement.innerHTML;
+		//this.exportDashboardBus.requestDashboad();
+		console.log(this.dashboardEl);
+		//this.exportDashboardBus.sendDashboard('Heh');
+		const item = this.dashboardEl.el.innerHTML;
+		// const item = this.dashboardEl.nativeElement.innerHTML;
+		//console.log(this.dashboard);
 		this.exportDashboardBus.sendDashboard(item);
+	}
+	addTextBloack(){
+		let temp = new FormControl();
+		temp.setValue('Text that I`ve inputed in areatext component!');
+		this.dashboard.push({
+			x: 10,
+			y: 10,
+			cols: 20,
+			rows: 6,
+			data: {
+				component: InputTextareaComponent,
+				inputs : {
+					label : "new label",
+					control : temp
+				}				
+			}
+		});
+	//	this.addCheck()
+	//this.addBtn()
+
 	}
 }

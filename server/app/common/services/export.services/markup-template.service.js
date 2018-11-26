@@ -13,7 +13,11 @@ class MarkupTemplateService {
 
 	async getDocument(content, type, isDashboard) {
 		const templateName = 'template';
-		const template = this.compileHtml(templateName, { content });
+		const template1 = this.compileHtml(templateName, { content });
+		const template2 = template1.replace(content,'');
+		//Remove buttons 
+		let d = '';
+		const template = template2.replace("",'');
 
 		if (type === 'svg') {
 			const buffer = Buffer.from(template, 'utf-8');

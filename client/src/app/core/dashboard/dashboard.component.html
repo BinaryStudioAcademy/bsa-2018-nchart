@@ -1,12 +1,12 @@
 <div class="wrapper">
 
-	<div class="gridster-buttons">
+	 <div class="gridster-buttons">
 		<app-button type="icon" icon="fas fa-plus" (onclick)="toggleModal()"></app-button>
 		<app-button type="icon" icon="fas fa-redo" (onclick)="changeLayout()"></app-button>
-		<app-button [label]="Export" (click)="exportDashboard()"></app-button>
-	</div>
+		<app-button label='Export' (click)="exportDashboard()"></app-button>
+	</div> 
 
-	<gridster [options]="options" [ngClass]="getClasses()">
+	<gridster [options]="options" #dashboardEl [ngClass]="getClasses()">
 		<gridster-item [item]="item" *ngFor="let item of dashboard">
 			<div class="controls">
 				<app-button
@@ -26,13 +26,14 @@
 					tooltipPosition="top"
 				></app-button>
 			</div>
-
-			<div class="main-content" (mousedown)="$event.stopPropagation()">
+			<!-- (mousedown)="$event.stopPropagation()"-->
+			<div style="margin-top: 20px;" (mousedown)="$event.stopPropagation()" class="main-content">
 				<ng-template #host></ng-template>
 			</div>
 		</gridster-item>
 	</gridster>
 </div>
+
 <p-dialog header="Add element"
 		  [(visible)]="displayModalDashboard"
 		  [modal]="true"
@@ -54,14 +55,17 @@
 					*ngFor="let chart of userCharts"
 					class="samples"
 					(click)="addCharts(chart)"
-					[label]="getNormalName(chart.sysName)"
+					label="getNormalName(chart.sysName)"
 				>
 				</app-button>
 			</div>
 		</p-tabPanel>
 
 		<p-tabPanel header="Text">
-			<span>simple input</span>
+			<span>Input text</span>
+			<app-button label='add text block' (click)="addTextBloack()">
+
+			</app-button>
 		</p-tabPanel>
 
 	</p-tabView>

@@ -1,0 +1,6 @@
+.gridster-column, .gridster-row {
+    position: absolute;
+    display: none;
+    transition: .3s;
+    box-sizing: border-box;
+}
