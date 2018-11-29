@@ -12,4 +12,5 @@ export interface ProjectExportPayload {
 	filename: string;
 	svg?: string;
 	dashboard?: string;
+	landscape?: boolean;
 }

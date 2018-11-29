@@ -4,3 +4,11 @@
     transition: .3s;
     box-sizing: border-box;
 }
+
+gridster-item{
+    position: absolute;
+}
+
+.controls {
+    display: none;
+}

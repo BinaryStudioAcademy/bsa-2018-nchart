@@ -18,6 +18,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ButtonComponent } from '@app/shared/components/button/button/button.component';
 import { ChartComponent } from '@app/features/draftproject/custom-chart/chart/chart.component';
 import { InputTextareaComponent } from '@app/shared/components/form-field/input-textarea/input-textarea.component';
+import { DashboardTextblockComponent } from './dashboard/dashboard.components/dashboard-textblock/dashboard-textblock.component';
 
 @NgModule({
 	declarations: [
@@ -30,7 +31,8 @@ import { InputTextareaComponent } from '@app/shared/components/form-field/input-
 		LandingPageComponent,
 		ProjectTabsComponent,
 		ProjectsCardComponent,
-		DashboardComponent
+		DashboardComponent,
+		DashboardTextblockComponent
 	],
 	imports: [
 		CommonModule,
@@ -40,7 +42,7 @@ import { InputTextareaComponent } from '@app/shared/components/form-field/input-
 		FeatureModule,
 		FormFieldModule
 	],
-	entryComponents: [ChartComponent, ButtonComponent,InputTextareaComponent],
+	entryComponents: [ChartComponent, ButtonComponent,DashboardTextblockComponent,InputTextareaComponent],
 	exports: []
 })
 export class CoreModule {}

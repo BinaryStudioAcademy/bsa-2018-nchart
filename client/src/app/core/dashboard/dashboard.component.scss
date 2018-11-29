@@ -20,15 +20,16 @@ gridster .gridster-row {
 }
 
 gridster.fixed.horizontal {
-	width: 1180px;
-	height: 840px;
+	margin-top: 10px!important;
+	width: 29.7cm;
+  	height: 21cm ;
 	margin: 0 auto;
 	background-color: $teriaryColor;
 }
 
 gridster.fixed.vertical {
-	width: 840px;
-	height: 1180px;
+	width: 21cm;
+  	height: 29.7cm;
 	margin: 0 auto;
 	background-color: $teriaryColor;
 }

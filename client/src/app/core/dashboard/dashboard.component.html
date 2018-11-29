@@ -1,9 +1,9 @@
 <div class="wrapper">
 
 	 <div class="gridster-buttons">
-		<app-button type="icon" icon="fas fa-plus" (onclick)="toggleModal()"></app-button>
-		<app-button type="icon" icon="fas fa-redo" (onclick)="changeLayout()"></app-button>
-		<app-button label='Export' (click)="exportDashboard()"></app-button>
+		<app-button type="icon" icon="fas fa-plus" style="margin-top:6px;margin-left:5px;margin-right:5px" (onclick)="toggleModal()"></app-button>
+		<app-button type="icon" icon="fas fa-redo" style="margin-top:6px;margin-left:5px;margin-right:15px" (onclick)="changeLayout()"></app-button>
+		<app-button label='Export'(click)="exportDashboard()"></app-button>
 	</div> 
 
 	<gridster [options]="options" #dashboardEl [ngClass]="getClasses()">
@@ -27,7 +27,7 @@
 				></app-button>
 			</div>
 			<!-- (mousedown)="$event.stopPropagation()"-->
-			<div style="margin-top: 20px;" (mousedown)="$event.stopPropagation()" class="main-content">
+			<div style="margin-top: 30px;padding:5px;border: 1px solid gray;" (mousedown)="$event.stopPropagation()" class="main-content">
 				<ng-template #host></ng-template>
 			</div>
 		</gridster-item>
@@ -55,17 +55,18 @@
 					*ngFor="let chart of userCharts"
 					class="samples"
 					(click)="addCharts(chart)"
-					label="getNormalName(chart.sysName)"
+					style="margin-left:5px;margin-right:5px"
+					[label]="getNormalName(chart.sysName)"
 				>
 				</app-button>
 			</div>
 		</p-tabPanel>
 
 		<p-tabPanel header="Text">
-			<span>Input text</span>
-			<app-button label='add text block' (click)="addTextBloack()">
-
-			</app-button>
+			<app-button label='Add' (click)="addTextBlock()"></app-button>
+			<app-input-text style="position: absolute;
+			margin-left: 20px;width: 300px;" type="text" [control]='textControll'
+            ></app-input-text> 
 		</p-tabPanel>
 
 	</p-tabView>

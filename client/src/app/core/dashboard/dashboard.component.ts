@@ -46,6 +46,8 @@ import { InputTextareaComponent } from '@app/shared/components/form-field/input-
 import { FormControl } from '@angular/forms';
 import { InputTextComponent } from '@app/shared/components/form-field/input-text/input-text.component';
 import { control } from 'stories/tooltip.stories';
+import { items } from 'stories/input.stories';
+import { DashboardTextblockComponent } from './dashboard.components/dashboard-textblock/dashboard-textblock.component';
 
 @Component({
 	selector: 'app-dashboard',
@@ -55,7 +57,7 @@ import { control } from 'stories/tooltip.stories';
 export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 	displayModalDashboard = false;//true;
 	options: GridsterConfig;
-	dashboard: Array<GridsterItem>;
+	dashboard: Array<GridsterItem> = [];
 	routeParams$: Subscription;
 	fromRemove = false;
 	components: ComponentRef<any>[] = [];
@@ -72,6 +74,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 	activeTab: number;
 	userCharts;
 	horizontalLayout = true;
+	landscape : boolean = true;
+	textControll : FormControl = new FormControl('');
 
 	constructor(
 		private barChartService: BarChartService,
@@ -89,7 +93,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 		if (this.horizontalLayout) {
 			this.options = {
 				gridType: GridType.Fixed,
-				displayGrid: DisplayGrid.None,
+				displayGrid: DisplayGrid.Always,
 				pushItems: true,
 				draggable: {
 					enabled: true
@@ -97,45 +101,61 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 				resizable: {
 					enabled: true
 				},
-				minCols: 30,
-				maxCols: 30,
-				minRows: 59,
-				maxRows: 59,
-				// maxItemCols: 77,
+				minCols: 55,
+				maxCols: 55,
+				minRows: 39,
+				maxRows: 39,
+				margin: 0,
+				fixedColWidth:20,
+				fixedRowHeight: 20
+				// gridType: GridType.Fixed,
+				// displayGrid: DisplayGrid.Always,
+				// pushItems: true,
+				// draggable: {
+				// 	enabled: true
+				// },
+				// resizable: {
+				// 	enabled: false
+				// },
+				// minCols: 31,
+				// maxCols: 31,
+				// minRows: 60,
+				// maxRows: 60,
+				// // maxItemCols: 77,
+				// // minItemCols: 10,
+				// // maxItemRows: 99,
+				// // minItemRows: 10,
+				// // maxItemArea: 6930,
+				// // minItemArea: 100,
+				// // defaultItemCols: 12,
+				// // defaultItemRows: 12,
+				// margin: 0,
+				// fixedColWidth:20,
+				// fixedRowHeight: 20
+			};
+		} else {
+			this.options = {
+				gridType: GridType.Fixed,
+				displayGrid: DisplayGrid.Always,
+				pushItems: true,
+				draggable: {
+					enabled: true
+				},
+				resizable: {
+					enabled: true
+				},
+				minCols: 35,
+				maxCols: 35,
+				minRows: 20,
+				maxRows: 20,
+				// maxItemCols: 99,
 				// minItemCols: 10,
-				// maxItemRows: 99,
+				// maxItemRows: 77,
 				// minItemRows: 10,
 				// maxItemArea: 6930,
 				// minItemArea: 100,
 				// defaultItemCols: 12,
 				// defaultItemRows: 12,
-				margin: 0,
-				fixedColWidth:20,
-				fixedRowHeight: 20
-			};
-		} else {
-			this.options = {
-				gridType: GridType.Fixed,
-				displayGrid: DisplayGrid.None,
-				pushItems: true,
-				draggable: {
-					enabled: true
-				},
-				resizable: {
-					enabled: true
-				},
-				minCols: 99,
-				maxCols: 99,
-				minRows: 70,
-				maxRows: 70,
-				maxItemCols: 99,
-				minItemCols: 10,
-				maxItemRows: 77,
-				minItemRows: 10,
-				maxItemArea: 6930,
-				minItemArea: 100,
-				defaultItemCols: 12,
-				defaultItemRows: 12,
 				margin: 0,
 				fixedColWidth: 20,
 				fixedRowHeight: 20
@@ -163,49 +183,62 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 			}
 		);
 
+		// this.options = {};
+		// this.options = {
+		// 	width: 'auto',
+		// 	gridType: GridType.Fit,
+		// 	displayGrid: DisplayGrid.Always,
+		// 	pushItems: true,
+		// 	draggable: {
+		// 		enabled: true
+		// 	},
+		// 	resizable: {
+		// 		enabled: false
+		// 	},
+		// 	minCols: 61,
+		// 	maxCols: 61,
+		// 	minRows: 30,
+		// 	maxRows: 70,
+		// 	maxItemCols: 99,
+		// 	minItemCols: 10,
+		// 	maxItemRows: 77,
+		// 	minItemRows: 10,
+		// 	maxItemArea: 6930,
+		// 	minItemArea: 100,
+		// 	defaultItemCols: 12,
+		// 	defaultItemRows: 12,
+		// 	margin: 0,
+		// 	fixedColWidth: 10,
+		// 	fixedRowHeight: 10
+		// };
+
 		this.options = {
-			width: 'auto',
-			gridType: GridType.Fit,
+			gridType: GridType.Fixed,
 			displayGrid: DisplayGrid.Always,
 			pushItems: true,
 			draggable: {
 				enabled: true
 			},
 			resizable: {
-				enabled: true
+				enabled: true,
+				handles : {s: false, e: true, n: false, w: true, se: true, ne:true, sw: true, nw: true}
 			},
-			minCols: 99,
-			maxCols: 99,
-			minRows: 70,
-			maxRows: 70,
-			maxItemCols: 99,
-			minItemCols: 10,
-			maxItemRows: 77,
-			minItemRows: 10,
-			maxItemArea: 6930,
-			minItemArea: 100,
-			defaultItemCols: 12,
-			defaultItemRows: 12,
+			minCols: 55,
+			maxCols: 55,
+			minRows: 39,
+			maxRows: 39,
+			// maxItemCols: 77,
+			// minItemCols: 10,
+			// maxItemRows: 99,
+			// minItemRows: 10,
+			// maxItemArea: 6930,
+			// minItemArea: 100,
+			// defaultItemCols: 12,
+			// defaultItemRows: 12,
 			margin: 0,
-			fixedColWidth: 10,
-			fixedRowHeight: 10
+			fixedColWidth:20,
+			fixedRowHeight: 20
 		};
-
-		this.changeLayout();
-
-		this.dashboard = [
-			// {cols: 2, rows: 1, y: 0, x: 0},
-			// {cols: 2, rows: 2, y: 0, x: 2},
-			// {cols: 1, rows: 1, y: 0, x: 4},
-			// {cols: 3, rows: 2, y: 1, x: 4},
-			// {cols: 1, rows: 1, y: 4, x: 5},
-			// {cols: 1, rows: 1, y: 2, x: 1},
-			// {cols: 2, rows: 2, y: 5, x: 5},
-			// {cols: 2, rows: 2, y: 3, x: 2},
-			// {cols: 2, rows: 1, y: 2, x: 2},
-			// {cols: 1, rows: 1, y: 3, x: 4},
-			// {cols: 1, rows: 1, y: 0, x: 6}
-		];
 
 		this.disconnect = this.storeService.connect([
 			{
@@ -255,13 +288,13 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 		]);
 		this.exportBusResponseDashboard = this.exportDashboardBus.responseObservable.subscribe(
 			dashboard => {
-				debugger;
 				this.storeService.dispatch(
 					new ExportProject({
 						id: 1,
 						type: 'pdf' as ExportType,
 						filename: 'report',
-						dashboard: dashboard
+						landscape : !this.horizontalLayout,
+						dashboard: dashboard						
 					})
 				);
 			}
@@ -302,6 +335,13 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
 					instance.control = item.data.inputs.control;
 					instance.label = item.data.inputs.label;
+				}
+
+				if(componentRef.instance instanceof DashboardTextblockComponent){
+					const instance: DashboardTextblockComponent = componentRef.instance as DashboardTextblockComponent;
+
+					instance.text = item.data.inputs.text;
+
 				}
 
 				componentRef.changeDetectorRef.detectChanges();
@@ -391,9 +431,10 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 	}
 
 	addCharts(chart) {
-		// userChartsId.forEach((v, i) => {
+		debugger;
+		
 		const chartId = chart.userChartsId[0];
-		// })
+
 		this.storeService
 			.createSubscription(getCustomizeSettings(chartId))
 			.pipe(
@@ -403,12 +444,14 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 				take(1)
 			)
 			.subscribe(([customizeSettings, data]) => {
+				customizeSettings.width.value = 600;
+				customizeSettings.height.value = 350;
 				let dataFormated;
 				const item = {
 					x: 0,
 					y: 0,
-					cols: 20,
-					rows: 20,
+					cols: 15,
+					rows: 15,
 					data: {
 						component: null,
 						inputs: {
@@ -449,10 +492,10 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 				}
 
 				this.dashboard.push({
-					x: 10,
-					y: 10,
-					cols: 40,
-					rows: 40,
+					x: 0,
+					y: 0,
+					cols: 30,
+					rows: 21,
 					data: {
 						component: ChartComponent,
 						inputs: {
@@ -463,34 +506,26 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 					}
 				});
 			});
+			this.userCharts = this.userCharts.filter(x => x !== chart);
 	}
 	exportDashboard() {
-		//this.exportDashboardBus.requestDashboad();
-		console.log(this.dashboardEl);
-		//this.exportDashboardBus.sendDashboard('Heh');
-		const item = this.dashboardEl.el.innerHTML;
-		// const item = this.dashboardEl.nativeElement.innerHTML;
-		//console.log(this.dashboard);
+		let item : string = this.dashboardEl.el.innerHTML;
 		this.exportDashboardBus.sendDashboard(item);
 	}
-	addTextBloack(){
-		let temp = new FormControl();
-		temp.setValue('Text that I`ve inputed in areatext component!');
+	
+	addTextBlock(){
+		let str = this.textControll.value;
 		this.dashboard.push({
-			x: 10,
-			y: 10,
-			cols: 20,
-			rows: 6,
+			x: 0,
+			y: 0,
+			cols: 15,
+			rows: 5,
 			data: {
-				component: InputTextareaComponent,
+				component: DashboardTextblockComponent,
 				inputs : {
-					label : "new label",
-					control : temp
+					text : str
 				}				
 			}
 		});
-	//	this.addCheck()
-	//this.addBtn()
-
 	}
 }

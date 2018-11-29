@@ -82,7 +82,8 @@ export class ExportDomainService implements ExportDomain {
 					null,
 					{
 						type: payload.type,
-						content: payload.dashboard
+						content: payload.dashboard,
+						landscape : payload.landscape
 					}
 				)
 			)

@@ -147,7 +147,7 @@ project.post('/:id/export', (req, res) => {
 });
 
 project.post('/:id/export-dashboard', (req, res) => {
-	ProjectService.exportDashboard(req.body.content, req.body.type).then(
+	ProjectService.exportDashboard(req.body.content, req.body.type, { landscape : req.body.landscape}).then(
 		result => {
 			let contentType;
 			switch (req.body.type) {

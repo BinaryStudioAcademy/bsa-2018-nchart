@@ -11,13 +11,12 @@ class MarkupTemplateService {
 		this.Path = path;
 	}
 
-	async getDocument(content, type, isDashboard) {
+	async getDocument(content, type, isDashboard,options) {
 		const templateName = 'template';
-		const template1 = this.compileHtml(templateName, { content });
-		const template2 = template1.replace(content,'');
-		//Remove buttons 
-		let d = '';
-		const template = template2.replace("",'');
+		//Fix bug with <> signs
+		const templateTemp = this.compileHtml(templateName, { content });
+		let temp = '<' + content + '>';
+		const template = templateTemp.replace(temp,'').replace('>>','>');
 
 		if (type === 'svg') {
 			const buffer = Buffer.from(template, 'utf-8');
@@ -49,7 +48,7 @@ class MarkupTemplateService {
 				width: '1000px',
 				height: '707px',
 				printBackground: true,
-				landscape: true
+				landscape: options.landscape
 			});
 		}
 		await browser.close();
