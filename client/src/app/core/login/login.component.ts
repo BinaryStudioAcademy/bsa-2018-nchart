@@ -54,7 +54,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
 	onLogin(loginModel: LoginModel) {
 		const user = this.trimStringFields<LoginModel>(loginModel);
-		localStorage.setItem('isAuthorized', 'true');
 		this.storeService.dispatch(new LoginAction({ user }));
 	}
 

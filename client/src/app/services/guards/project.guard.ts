@@ -23,13 +23,14 @@ import {
 	isProjectDataset
 } from '@app/store/selectors/projects.selectors';
 import { Go } from '@app/store/actions/router/router.actions';
+import { TokenService } from '../token.service';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class ProjectGuard
 	implements CanActivate, CanDeactivate<ProjectComponent> {
-	constructor(private storeService: StoreService, private action$: Actions,private _Router: Router) {}
+	constructor(private storeService: StoreService, private action$: Actions,private _Router: Router,public tokenService : TokenService) {}
 
 	getChartsFromStoreOrAPI() {
 		return this.storeService.createSubscription(isChartsReady()).pipe(
@@ -81,8 +82,8 @@ export class ProjectGuard
 		next: ActivatedRouteSnapshot,
 		state: RouterStateSnapshot
 	): Observable<boolean> | Promise<boolean> | boolean {
-		let isAuthorized = JSON.parse(localStorage.getItem('isAuthorized'));
-        if (!isAuthorized)
+
+        if (!this.tokenService.getToken())
         {
             this._Router.navigate(['login']);
             return false;
