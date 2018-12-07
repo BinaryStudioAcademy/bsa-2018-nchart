@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, OnChanges, SimpleChange } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import {
 	requiredValidator,
@@ -12,20 +12,18 @@ import { ExportSvgBusService } from '@app/services/export-svg-bus.service';
 import { Subscription } from 'rxjs';
 import { ClipboardService } from 'ngx-clipboard';
 import { NotificationSvgClipboard } from '@app/store/actions/notification/notification.actions';
-import { getActiveChartId } from '@app/store/selectors/userCharts';
-import { SaveSvgAction } from '@app/store/actions/svg/svg.actions';
-import { SvgFile } from '@app/models/svg.model';
-import { addedNewSvg } from '@app/store/selectors/svg.selector';
-import { TouchSequence } from 'selenium-webdriver';
 
 @Component({
 	selector: 'app-export',
 	templateUrl: './export.component.html',
 	styleUrls: ['./export.component.sass']
 })
-export class ExportComponent implements OnInit, OnDestroy {
+export class ExportComponent implements OnInit, OnDestroy,OnChanges {
 	@Input()
 	isLoading = false;
+	@Input()
+	svgFile;
+
 	svgFormControl: FormControl;
 	exportBusResponse: Subscription;
 	isLoadTab = true;
@@ -37,7 +35,8 @@ export class ExportComponent implements OnInit, OnDestroy {
 		requiredValidator('Filename can`t be empty')
 	]);
 	pageId : any;
-	CurrSvg : string;
+	activeTabIndex;
+
 	controlType = new FormControl(ExportType.PDF, [requiredValidator('')]);
 	options = [
 		{
@@ -67,50 +66,25 @@ export class ExportComponent implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		this.svgFormControl = new FormControl('');
+		this.svgFormControl.setValue(this.svgFile);
 		this.disconnect = this.storeService.connect([
 			{
 				subscriber: isExporting => {
 					this.isLoading = isExporting;
 				},
 				selector: isProjectExporting()
-			},
-			{
-				selector: getActiveChartId(),
-				subscriber: id => {
-					if(id)
-						this.exportSvgBus.requestSvg();
-				}
-			},
-			// {
-			// 	selector: addedNewSvg(),
-			// 	subscriber : res =>
-			// 	{console.log(res)}
-			// }
-		]);
-		this.exportBusResponse = this.exportSvgBus.responseObservable.subscribe(
-			svg => {
-				this.CurrSvg = svg;
-				this.svgFormControl.setValue(svg);
-				//  let temp = Object.create(SvgFile);	
-				//  temp.id = this.pageId;
-				//  temp.svg = Object.assign(svg);
-				//  this.CurrSvg = JSON.parse(JSON.stringify(svg));
-				//  this.svgFormControl.setValue([...temp.svg]);
-				//this.storeService.dispatch(new SaveSvgAction({svg : temp}));
-				if (this.isLoadTab) {
-					const filename = this.controlName.value.trim();
-					const type = this.controlType.value as ExportType;
-					this.storeService.dispatch(
-						new ExportProject({ id: 1, type, filename, svg })
-					);
-				}
 			}
-		);
+		]);
 	}
 
 	ngOnDestroy() {
-		this.disconnect();
 		this.exportBusResponse.unsubscribe();
+		this.disconnect();
+	}
+
+	ngOnChanges(changes: {[propKey: string]: SimpleChange}){
+		this.svgFormControl = new FormControl('');
+		this.svgFormControl.setValue(changes.svgFile.currentValue);
 	}
 
 	onTabChange(event) {
@@ -122,11 +96,15 @@ export class ExportComponent implements OnInit, OnDestroy {
 	}
 
 	exportData() {
-		this.exportSvgBus.requestSvg();
+		const filename = this.controlName.value.trim();
+		const type = this.controlType.value as ExportType;
+		this.storeService.dispatch(
+						new ExportProject({ id: 1, type, filename, svg : this.svgFile })
+					);
 	}
 
 	copyToClipBoard() {
-		this.clipboardService.copyFromContent(this.CurrSvg);
+		this.clipboardService.copyFromContent(this.svgFile);
 		this.storeService.dispatch(new NotificationSvgClipboard());
 	}
 }

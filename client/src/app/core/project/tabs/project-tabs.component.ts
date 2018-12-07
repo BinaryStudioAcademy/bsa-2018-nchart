@@ -26,6 +26,9 @@ export class ProjectTabsComponent implements OnInit, OnChanges {
 	activeChartId: SchemeID;
 	@Output()
 	displayModalDataset = new EventEmitter();
+	@Output()
+	onChangeTab = new EventEmitter();
+
 	isClosable = this.listPages.length > 1 ? true : false;
 
 	constructor(private storeService: StoreService) {}
@@ -33,6 +36,7 @@ export class ProjectTabsComponent implements OnInit, OnChanges {
 	ngOnInit() {}
 
 	onChange(event) {
+		this.onChangeTab.emit();
 		this.select(this.listPages[event.index]);
 	}
 	ngOnChanges() {

@@ -252,7 +252,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 			{
 				selector: getAllUserChartTypes(),
 				subscriber: t => {
-					console.log(t);
 					this.userCharts = t;
 				}
 			},

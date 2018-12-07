@@ -48,6 +48,7 @@ import {
 } from '@app/store/actions/user/user.actions';
 import { ProjectService } from '@app/services/project.service';
 import { RedirectUrl } from '@app/models/redirect.model';
+import { ExportSvgBusService } from '@app/services/export-svg-bus.service';
 
 interface StepperStep {
 	id: number;
@@ -85,6 +86,8 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 	registerForm: FormGroup;
 	saveProject: Subscription;
 	redirectUrl: RedirectUrl;
+	getSvg:Subscription;
+	svg : any;
 
 	disconnect: () => void;
 
@@ -145,7 +148,7 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	updateViewChildren(): void {
 		if (this.viewItemsList) {
-			this.viewItemsList = this.viewItems.toArray();
+			this.viewItemsList = this.viewItems.toArray();			
 		}
 	}
 
@@ -172,7 +175,8 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 		private route: ActivatedRoute,
 		private loginService: LoginService,
 		private projectService: ProjectService,
-		private router: Router
+		private router: Router,
+		private exportSvgBus: ExportSvgBusService
 	) {}
 
 	showDialog() {
@@ -255,13 +259,13 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 			{
 				selector: getActiveDatasetId(),
 				subscriber: id => {
-					this.currentDatasetId = id;
+					this.currentDatasetId = id;			
 				}
 			},
 			{
 				selector: getActiveChartId(),
 				subscriber: id => {
-					this.activeChartId = id;
+					this.activeChartId = id;			
 				}
 			},
 			{
@@ -302,16 +306,27 @@ export class ProjectComponent implements OnInit, OnDestroy, AfterViewInit {
 				}
 			}
 		]);
+		this.getSvg = this.exportSvgBus.responseObservable.subscribe(
+			(res : string) => {
+			this.svg = res;
+		});
 		this.saveProject = this.projectService.saveObservable.subscribe(
 			(res: boolean) => {
 				this.displayLoginDialog = res;
 			}
 		);
+		
 	}
+	
+	requestSvg(){
+		setTimeout(() => this.exportSvgBus.requestSvg());	 
+	}
+	
 	ngOnDestroy() {
 		this.disconnect();
 		this.routeParams$.unsubscribe();
 		this.saveProject.unsubscribe();
+		this.getSvg.unsubscribe();
 	}
 
 	getIsActiveChartDataset() {
